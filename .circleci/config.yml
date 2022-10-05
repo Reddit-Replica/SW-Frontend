@@ -5,14 +5,14 @@ commands:
     description: Install Node.js 13.8.0
     steps:
       - run:
-          name: Install Node.js 13.8.0
+          name: Install Node.js 16.17.1
           command: |
             # Install Node.js LTS version as our base Node.js version
             curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
             sudo apt install -y nodejs
             # Use n version manager to use Node.js v13.8.0
             sudo npm install --global n
-            sudo n 13.8.0
+            sudo n 16.17.1
   config_docker:
     description: login step with docker_hub account
     steps:
@@ -23,7 +23,7 @@ jobs:
 
   build-img:
     docker: 
-      - image: circleci/node:16.0.0
+      - image: circleci/node:16.17.1
     steps:
       - checkout
       - install_nodejs
@@ -34,7 +34,7 @@ jobs:
             docker tag frontend:v1  waer
   push-img:
     docker: 
-      - image: circleci/node:16.0.0
+      - image: circleci/node:16.17.1
     steps:
       - config_docker
       - install_nodejs
