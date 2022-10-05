@@ -36,7 +36,7 @@ jobs:
 
   build-img:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - install_nodejs
@@ -47,8 +47,8 @@ jobs:
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer
   push-img:
-    docker: 
-      - image: docker:17.05.0-ce-git
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - config_docker
       - install_nodejs
