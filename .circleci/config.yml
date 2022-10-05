@@ -27,3 +27,10 @@ jobs:
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer/frontend
             docker push waer/frontend
+
+workflows:
+  default:
+    jobs:
+      - lint-app
+      - build-frontend:
+          requires: [lint-app]
