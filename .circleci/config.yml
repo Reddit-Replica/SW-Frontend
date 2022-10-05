@@ -13,6 +13,19 @@ commands:
             # Use n version manager to use Node.js v13.8.0
             sudo npm install --global n
             sudo n 13.8.0
+  
+  install_docker:
+    description: Install docker
+    steps:
+      - run:
+          name: Install docker
+          command: |
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+
   config_docker:
     description: login step with docker_hub account
     steps:
@@ -27,6 +40,7 @@ jobs:
     steps:
       - checkout
       - install_nodejs
+      - install_docker
       - run:
           name: build and tag img
           command: |
@@ -38,6 +52,7 @@ jobs:
     steps:
       - config_docker
       - install_nodejs
+      - install_docker
       - run:
           name: build and tag img
           command: |
