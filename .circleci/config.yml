@@ -35,20 +35,16 @@ commands:
 jobs:
 
   build-img:
-    docker:
-      - image: circleci/node:13.8.0
+    machine: true
     steps:
       - checkout
-      - install_nodejs
-      - install_docker
       - run:
           name: build and tag img
           command: |
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer
   push-img:
-    docker:
-      - image: circleci/node:13.8.0
+    machine: true
     steps:
       - config_docker
       - install_nodejs
