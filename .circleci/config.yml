@@ -31,6 +31,6 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint-app
+      - install_nodejs
       - build-frontend:
           requires: [lint-app]
