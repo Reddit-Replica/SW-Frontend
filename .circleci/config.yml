@@ -13,24 +13,44 @@ commands:
             # Use n version manager to use Node.js v13.8.0
             sudo npm install --global n
             sudo n 13.8.0
+
+  config_docker:
+    description: login step with docker_hub account
+    steps:
+      - run: 
+          command: docker login -u $DOCKERNAME -p $DOCKERPASS
+
 jobs:
-  build-frontend:
+
+  build-img:
     docker:
-      - image: circleci/node:lts
+      - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [frontend-build]
+      - install_nodejs
       - run:
-          name: Build , tag , push front-end
+          name: build and tag img
           command: |
             docker build -t frontend:v1 .
-            docker tag frontend:v1  waer/frontend
+            docker tag frontend:v1  waer
+  push-img:
+    docker: 
+      - image: circleci/node:13.8.0
+    steps:
+      - config_docker
+      - install_nodejs
+      - run:
+          name: build and tag img
+          command: |
             docker push waer/frontend
 
+
+
 workflows:
-  default:
+  front-pipline:
     jobs:
-      - install_nodejs
-      - build-frontend:
-          requires: [lint-app]
+      - build-img
+      - push-img:
+          requires: [build-img]
+
+
