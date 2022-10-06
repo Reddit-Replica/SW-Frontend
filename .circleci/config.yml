@@ -5,62 +5,53 @@ commands:
     description: Install Node.js 13.8.0
     steps:
       - run:
-          name: Install Node.js 16.17.1
+          name: Install Node.js 13.8.0
           command: |
             # Install Node.js LTS version as our base Node.js version
             curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
             sudo apt install -y nodejs
             # Use n version manager to use Node.js v13.8.0
             sudo npm install --global n
-            sudo n 13.8.0
+            sudo n 13.8.
   
+  configure_docker:
+    description: login with my dockerhub
+    steps:
+      - run:
+          name: Install Node.js 13.8.0
+          command: |
+            docker login -u $DOCKERNAME -p $DOCKERPASS
+
   install_docker:
     description: Install docker
     steps:
+      - setup_remote_docker
+      - configure_docker
       - run:
-          name: Install docker
+          name: install docker
           command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
+            apk add --no-cache \
+            py-pip=9.0.0-r1
+            pip install \
+            docker-compose==1.12.0 \
 
-  config_docker:
-    description: login step with docker_hub account
-    steps:
-      - run: 
-          command: docker login -u $DOCKERNAME -p $DOCKERPASS
 
 jobs:
-
-  build-img:
-    machine: true
+  build-tag-push-frontend:
+    docker:
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
-      - run:
-          name: build and tag img
-          command: |
-            docker build -t frontend:v1 .
-            docker tag frontend:v1  waer
-  push-img:
-    machine: true
-    steps:
-      - config_docker
-      - install_nodejs
       - install_docker
       - run:
-          name: build and tag img
+          name: Build , tag , push frontend
           command: |
-            docker push waer/frontend
-
+            docker build -t frontend:v1 .
+            docker tag frontend:v1  waer/frontend
+            docker push  waer/frontend
 
 
 workflows:
-  front-pipline:
+  default:
     jobs:
-      - build-img
-      - push-img:
-          requires: [build-img]
-
-
+      - build-tag-push-front
