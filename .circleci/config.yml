@@ -54,4 +54,4 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-tag-push-front
+      - build-tag-push-frontend
