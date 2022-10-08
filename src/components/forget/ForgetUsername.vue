@@ -1,12 +1,19 @@
 <template>
-   
+    
+
+    
+
     <div class="container">
+        <div class="x"> </div> 
         <div class="box">
         <form>
     <h1>Recover your username</h1>
     <p class="description">Tell us the email address associated with your Reddit account, and we’ll send you an email with your username.</p>
-    <input type="email" placeholder="Email"/> 
+    <input type="email" placeholder="Email Address"/> 
+    <p class="invalid">Please enter an email address to continue
+    </p>
      <base-button buttonText="Email Me" class="emailMe"> </base-button>
+     
      <div class="bottomText">
         Don't have an email or need assistance logging in?  <a>Get Help </a>
     </div>
@@ -96,12 +103,16 @@ border-radius: 24px;
     background-color:white ;
     border: 0.1px solid #00000066 ;
     border-radius: 10px;
-    min-height: 100v;
+    
     margin: 10px auto 10px auto;
     padding:20px;
     display: flex;
     align-items: center;
-    max-width: 500px;
+    max-width: 400px;
+    height:640px;
+    min-height: 100v;
+    overflow-x: hidden;
+    position: relative;
    /* display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -113,14 +124,14 @@ border-radius: 24px;
 }
 .box
 {
-    padding: 24px;
+    padding: 20px;
     min-width: 260px;
     max-width: 440px;
 }
 h1 
 {
     color: #1A1A1B;
-    margin: 24px 0px 0px;
+    margin: 24px 0px 8px 0px;
     font-size:20px;
     font-family:IBMPlexSans,sans-serif;
     font-weight: 500;
@@ -131,20 +142,72 @@ h1
 .description
 {
     color: #1A1A1B;
-    margin: 8px 0px 0px;
+    margin: 8px 0px 8px ;
     font-size: 12px;
     font-family:Noto Sans,sans-serif;
     font-weight: 400;
     line-height:21px ;
     width:100%;
 }
+.bottomText
+{
+    font-family: Noto Sans,sans-serif;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    font-weight: 400;
+   
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 14px;
+    margin-top: 14px;
+}
 
 
+.invalid
+{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-top: 4px;
+    max-height: 1000px;
+    opacity: 1;
+    color: #ea0027;
+    transition: all .2s ease-in-out;
+}
 
+.x{
+    position: absolute;
+    width:14px;
+    height:2px;
+    left:95%;
+    top:3%;
+    transform: translate(-50%,-50%);
+    background:transparent;
+
+}
+.x::before,.x::after
+{
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    background:  #72727c;
+
+}
+
+.x::before
+{
+    transform: rotate(-45deg);
+}
+.x::after
+{
+    transform: rotate(45deg);
+}
 
 
 .linkSeparator {
     color: #0079d3;
     margin: 0 4px;
 }
+
 </style>

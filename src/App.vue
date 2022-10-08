@@ -1,6 +1,5 @@
 <template>
   <the-header></the-header>
-  <base-button buttonText="click me"/>
   <router-view></router-view>
 </template>
 
