@@ -1,14 +1,14 @@
 <template>
-  <the-main></the-main>
+  <router-view></router-view>
 </template>
 
 <script>
-import TheMain from "./components/TheMain.vue";
+
 
 export default {
   name: "App",
   components: {
-    TheMain,
+   
   },
 };
 </script>
