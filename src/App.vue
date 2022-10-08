@@ -1,15 +1,17 @@
 <template>
   <the-header></the-header>
+  <base-button buttonText="click me"/>
   <!-- <router-view></router-view> -->
 </template>
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
-
+import BaseButton from "./components/BaseComponents/BaseButton.vue";
 export default {
   name: "App",
   components: {
     TheHeader,
+    BaseButton,
   },
   data() {
     return {
@@ -111,5 +113,4 @@ body {
     font-size: 50%;
   }
 }
-
 </style>
