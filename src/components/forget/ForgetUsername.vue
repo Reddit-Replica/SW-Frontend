@@ -6,7 +6,7 @@
     <h1>Recover your username</h1>
     <p class="description">Tell us the email address associated with your Reddit account, and we’ll send you an email with your username.</p>
     <input type="email" placeholder="Email"/> 
-     
+     <base-button buttonText="Email Me" class="emailMe"> </base-button>
      <div class="bottomText">
         Don't have an email or need assistance logging in?  <a>Get Help </a>
     </div>
@@ -31,6 +31,10 @@ export default {
     
     
   },
+  components:
+  {
+   
+  }
 };
 </script>
 
@@ -72,6 +76,20 @@ input
     height: 46px;
     padding-left: 16px;
     padding-right: 36px;
+}
+.emailMe{
+    margin:20px auto;
+color:#ffffff;
+padding:5px 10px;
+background: linear-gradient(89.57deg,#ec0623,#ff8717);
+border-radius: 24px;
+    font-size: 16px;
+    height: 48px;
+    line-height: 20px;
+    text-transform: capitalize;
+    width: 100%;
+
+
 }
 .container
 {
