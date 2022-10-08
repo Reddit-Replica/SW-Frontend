@@ -93,6 +93,11 @@ export default {};
   /* width: 40rem; */
   grid-column-gap: 13rem;
   align-items: center;
+  border: var(--line-3);
+  border-radius: 5px;
+}
+.home:hover, .home:focus{
+  border: var(--line);
 }
 
 .search {
@@ -119,6 +124,10 @@ export default {};
   outline: navajowhite;
   width: 100%;
   background-color: var(--color-grey-light-3);
+  border: var(--line-2);
+}
+.search__input:hover {
+  border: var(--line-2);
 }
 
 .search__input::-webkit-input-placeholder {

@@ -1,6 +1,5 @@
 <template>
   <the-header></the-header>
-  <base-button buttonText="click me"/>
   <router-view></router-view>
 </template>
 
@@ -44,6 +43,8 @@ export default {
   --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
 
   --line: 1px solid var(--color-grey-light-2);
+  --line-2: 1px solid rgb(2, 2, 206);
+  --line-3: 1px solid var(--color-white-1);
   /* 1200px */
   --bp-largest: 75em;
   /* 1100px */
@@ -113,4 +114,5 @@ body {
     font-size: 50%;
   }
 }
+
 </style>
