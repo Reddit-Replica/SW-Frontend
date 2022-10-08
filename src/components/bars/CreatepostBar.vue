@@ -5,13 +5,17 @@
       <input type="text" class="search__post" placeholder="Create Post" />
       <button class="post__button"></button>
     </form>
-    <div class="post__icon-box">
-      <svg class="post__icon">
-        <use xlink:href="../../../img/sprite.svg#icon-image-inverted"></use>
-      </svg>
-      <svg class="post__icon">
-        <use xlink:href="../../../img/sprite.svg#icon-link"></use>
-      </svg>
+    <div class="box">
+      <div class="post__icon-box">
+        <svg class="post__icon">
+          <use xlink:href="../../../img/sprite.svg#icon-image-inverted"></use>
+        </svg>
+      </div>
+      <div class="post__icon-box">
+        <svg class="post__icon">
+          <use xlink:href="../../../img/sprite.svg#icon-link"></use>
+        </svg>
+      </div>
     </div>
   </div>
 </template>
@@ -43,22 +47,22 @@ button {
 .post {
   width: 80%;
 }
-.post__icon-box {
+.box {
   align-self: stretch;
-  /* width: 10rem; */
+  width: 4rem;
   margin: 0;
 
   display: flex;
   align-items: center;
 }
-.post__icon-box > * {
+.box > * {
   cursor: pointer;
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.post__icon-box > *:hover {
+.box > *:hover {
   background-color: var(--color-grey-light-2);
 }
 .post__icon {
