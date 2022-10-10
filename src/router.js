@@ -10,6 +10,22 @@ const router = createRouter({
     { path: "/main", component: MainPage },
     { path: '/forgetPassword', component: ForgetPassword },
     { path: '/forgetUsername', component: ForgetUsername},
+    {
+      path:"/user/:userName",
+      name: "user",
+      component: MainPage,
+    },//render user component
+    {
+      path:"/subreddit/:subredditName",
+      name: "subreddit",
+      component: MainPage,
+    },//render subreddit component
+    {
+      path:"/post/:postName",
+      name: "post",
+      component: MainPage,
+    },//render post component
+    //{ path: '/test', component: null },
     //  { path: '', component: null },
   ],
 });
