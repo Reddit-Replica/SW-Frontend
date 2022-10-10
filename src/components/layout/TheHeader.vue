@@ -53,7 +53,7 @@
           class="user-nav__user-photo"
         />
         <div class="user-nav__user">
-          <span class="user-nav__user-name">User Name</span>
+          <span class="user-nav__user-name">asmaaadel0</span>
           <svg class="user-nav__icon">
             <use
               xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
@@ -77,12 +77,23 @@ export default {};
   background-color: #fff;
   border-bottom: var(--line);
 
-  display: flex;
+  /* display: flex;
   justify-content: left;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: max-content min-content 24% max-content;
+  grid-template-rows: max-content;
+  grid-column-gap: 1rem;
   align-items: center;
+  justify-content: left;
+  border: var(--line-3);
+  border-radius: 5px;
+}
+img {
+  cursor: pointer;
 }
 .logo {
-  margin-left: 1.2rem;
+  margin-left: 0.5rem;
   display: flex;
   flex-direction: row;
 }
@@ -90,7 +101,7 @@ export default {};
   height: 4rem;
 }
 .home {
-  margin-left: 1.2rem;
+  margin-left: 0.5rem;
   display: grid;
   grid-template-columns: min-content min-content;
   /* width: 40rem; */
@@ -164,11 +175,16 @@ export default {};
   width: 1rem;
   margin: 0;
 
-  display: flex;
+  /* display: flex;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: repeat(4, min-content) max-content;
+  grid-column-gap: 1.5rem;
+  align-items: center;
   align-items: center;
 }
 .user-nav > * {
-  padding: 0 1.7rem;
+  /* padding: 0 1.7rem; */
   cursor: pointer;
   height: 100%;
   display: flex;
@@ -183,7 +199,7 @@ export default {};
 .user-nav__icon {
   height: 2rem;
   width: 2rem;
-  fill: var(--color-grey-dark-3);
+  fill: var(--color-grey-dark-2);
 }
 .user-nav__notification {
   font-size: 0.8rem;
@@ -200,30 +216,39 @@ export default {};
   justify-content: center;
   align-items: center;
 }
-.user-nav__box{
-  margin-left: 15rem;
-
+.user-nav__box {
+  margin-left: 22rem;
+  border: var(--line-3);
+  border-radius: 5px;
+  height: 4.5rem;
 }
-.user-nav__user{
+.user-nav__box:hover,
+.user-nav__box:focus {
+  background-color: var(--color-white-1);
+  border: var(--line);
+}
+.user-nav__user {
   display: grid;
   grid-template-columns: max-content max-content;
   grid-template-rows: max-content;
-  grid-column-gap: 3rem;
+  grid-column-gap: 7rem;
   align-items: center;
   border: var(--line-3);
   border-radius: 5px;
 }
 .user-nav__user-photo {
-  width: 3.75rem;
-  height: 3.75rem;
-  border-radius: 50%;
-  margin-right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  /* border-radius: 50%; */
+  border-radius: 10%;
+  margin-right: 0.3rem;
+  margin-left: 0.9rem;
 }
-.user-nav__user-name{
-  color: black;
-  font-size: 1.2rem;
+.user-nav__user-name {
+  color: var(--color-dark-1);
+  font-size: 1.1rem;
 }
-.user-nav__karma{
+.user-nav__karma {
   color: var(--color-grey-dark-4);
   font-size: 1rem;
   font-weight: 600;

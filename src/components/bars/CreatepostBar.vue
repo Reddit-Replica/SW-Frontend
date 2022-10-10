@@ -25,6 +25,9 @@ export default {};
 </script>
 
 <style scoped>
+img {
+  cursor: pointer;
+}
 .content {
   margin-top: 1.5rem;
   margin-left: 17rem;

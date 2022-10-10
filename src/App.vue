@@ -35,6 +35,8 @@ export default {
   --color-grey-dark-3: #999;
   --color-grey-dark-4: rgb(177, 176, 176);
 
+  --color-dark-1:#000;
+
   --color-orange: #ff2c00;
   --color-blue: #6094fe;
 
