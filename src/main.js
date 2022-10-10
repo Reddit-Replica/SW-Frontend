@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-
+import "bootstrap/dist/css/bootstrap.css"
 import router from "./router.js";
 import store from "./store/index";
 import App from "./App.vue";
@@ -12,3 +12,4 @@ app.use(store);
 app.component('base-button',BaseButton);
 
 app.mount("#app");
+import "bootstrap/dist/js/bootstrap.js"
