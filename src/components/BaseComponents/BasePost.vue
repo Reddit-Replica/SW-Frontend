@@ -111,7 +111,7 @@
         }
     };
 </script>
-<style>
+<style scoped>
     .postCard{
         background-color: white;
         border-radius: 5px;
