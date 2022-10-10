@@ -1,39 +1,17 @@
 <template>
   <the-header></the-header>
   <router-view></router-view>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-        <base-post :post=post></base-post>
-      </div>
-    </div>
-  </div>
   <!-- <router-view></router-view> -->
 </template>
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
-import BasePost from "./components/BaseComponents/BasePost.vue"
 export default {
   name: "App",
   components: {
     TheHeader,
-    BasePost
   },
-  data() {
-    return {
-      colorGreyDark2: "#0099CC",
-      post:{
-        userName:"mena",
-        voteCount:22,
-        subredditName:"sub-com",
-        duration:"22 minutes",
-        postName:"Hello World",
-        postDescription:"post description",
-        commentsCount:22
-      }
-    };
-  },
+
 };
 </script>
 
@@ -55,6 +33,7 @@ export default {
   --color-grey-dark-1: #333;
   --color-grey-dark-2: #777;
   --color-grey-dark-3: #999;
+  --color-grey-dark-4: rgb(177, 176, 176);
 
   --color-orange: #ff2c00;
   --color-blue: #6094fe;

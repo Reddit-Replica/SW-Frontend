@@ -46,18 +46,21 @@
         </svg>
       </div>
 
-      <div class="user-nav__user">
+      <div class="user-nav__box">
         <img
           src="../../../img/user-image.jpg"
           alt="user photo"
           class="user-nav__user-photo"
         />
-        <span class="user-nav__user-name">User Name</span>
-        <svg class="user-nav__icon">
-          <use
-            xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
-          ></use>
-        </svg>
+        <div class="user-nav__user">
+          <span class="user-nav__user-name">User Name</span>
+          <svg class="user-nav__icon">
+            <use
+              xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
+            ></use>
+          </svg>
+          <span class="user-nav__karma">2 karma</span>
+        </div>
       </div>
     </nav>
   </header>
@@ -96,7 +99,8 @@ export default {};
   border: var(--line-3);
   border-radius: 5px;
 }
-.home:hover, .home:focus{
+.home:hover,
+.home:focus {
   border: var(--line);
 }
 
@@ -196,11 +200,33 @@ export default {};
   justify-content: center;
   align-items: center;
 }
+.user-nav__box{
+  margin-left: 15rem;
+
+}
+.user-nav__user{
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: max-content;
+  grid-column-gap: 3rem;
+  align-items: center;
+  border: var(--line-3);
+  border-radius: 5px;
+}
 .user-nav__user-photo {
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 50%;
   margin-right: 1rem;
+}
+.user-nav__user-name{
+  color: black;
+  font-size: 1.2rem;
+}
+.user-nav__karma{
+  color: var(--color-grey-dark-4);
+  font-size: 1rem;
+  font-weight: 600;
 }
 @media only screen and (max-width: 31.25em) {
   .header {
