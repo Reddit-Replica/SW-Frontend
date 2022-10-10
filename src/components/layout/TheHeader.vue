@@ -54,7 +54,7 @@
         />
         <div class="user-nav__user">
           <span class="user-nav__user-name">asmaaadel0</span>
-          <svg class="user-nav__icon">
+          <svg class="user-nav__icon icon-user">
             <use
               xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
             ></use>
@@ -221,6 +221,7 @@ img {
   border: var(--line-3);
   border-radius: 5px;
   height: 4.5rem;
+  position: relative;
 }
 .user-nav__box:hover,
 .user-nav__box:focus {
@@ -229,12 +230,13 @@ img {
 }
 .user-nav__user {
   display: grid;
-  grid-template-columns: max-content max-content;
+  grid-template-columns: max-content;
   grid-template-rows: max-content;
   grid-column-gap: 7rem;
   align-items: center;
   border: var(--line-3);
   border-radius: 5px;
+  width: 16rem;
 }
 .user-nav__user-photo {
   width: 2.5rem;
@@ -252,6 +254,10 @@ img {
   color: var(--color-grey-dark-4);
   font-size: 1rem;
   font-weight: 600;
+}
+.icon-user{
+  position: absolute;
+  right: 0rem;
 }
 @media only screen and (max-width: 31.25em) {
   .header {
