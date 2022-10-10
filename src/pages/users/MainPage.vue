@@ -1,5 +1,4 @@
 <template>
-  <!-- calling create postbar -->
   <createpost-bar></createpost-bar>
   <div class="container">
     <div class="row justify-content-center">
