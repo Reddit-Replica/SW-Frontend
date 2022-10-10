@@ -17,13 +17,13 @@
      <base-button buttonText="Email Me" class="emailMe"> </base-button>
      
      <div class="bottomText">
-        Don't have an email or need assistance logging in?  <a>Get Help </a>
+        Don't have an email or need assistance logging in?  <a class="link">Get Help </a>
     </div>
     </form>
     <div class="">
-        <a>Sign Up </a>
+        <a class="link">Sign Up </a>
         <span class="linkSeparator">•</span>
-        <a>Log In </a>
+        <a class="link">Log In </a>
     </div>
     </div>
     </div>
@@ -61,7 +61,7 @@ export default {
 div{
     display: block;
 }
-a{
+.link{
     color:#0079d3;
     text-decoration: underline;
     font-family:IBMPlexSans,sans-serif;
