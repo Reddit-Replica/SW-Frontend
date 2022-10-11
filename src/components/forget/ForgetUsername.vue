@@ -4,7 +4,7 @@
     
 
     <div class="container">
-        <div class="x"> </div> 
+       <button class="x-button"> <div class="x"> </div> </button>
         <div class="box">
         <form>
     <h1>Recover your username</h1>
@@ -175,12 +175,18 @@ h1
     transition: all .2s ease-in-out;
 }
 
-.x{
+.x-button
+{
     position: absolute;
-    width:14px;
-    height:2px;
-    left:95%;
+    left:93%;
     top:3%;
+   visibility: hidden;
+}
+.x{
+    visibility:visible;
+    width:1.7px;
+    height:14.9px;
+ 
     transform: translate(-50%,-50%);
     background:transparent;
 
@@ -191,7 +197,7 @@ h1
     position: absolute;
     width: inherit;
     height: inherit;
-    background:  #72727c;
+    background:  #878a8c;
 
 }
 
