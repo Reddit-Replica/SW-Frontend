@@ -4,7 +4,8 @@
     
 
     <div class="container">
-    <button><div class="x"> </div> </button>
+    <button class="x-button"><div class="x"> </div> </button>
+    <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Times_symbol.svg/640px-Times_symbol.svg.png" alt="My Happy SVG" width="45" height="45" /> -->
         <div class="box">
         <form>
     <h1>Reset your password</h1>
@@ -185,12 +186,18 @@ h1
     color: #ea0027;
     transition: all .2s ease-in-out;
 }
-.x{
+.x-button
+{
     position: absolute;
-    width:14px;
-    height:2px;
     left:93%;
     top:3%;
+   visibility: hidden;
+}
+.x{
+    visibility:visible;
+    width:1.7px;
+    height:14.9px;
+ 
     transform: translate(-50%,-50%);
     background:transparent;
 
@@ -201,7 +208,7 @@ h1
     position: absolute;
     width: inherit;
     height: inherit;
-    background:  #72727c;
+    background:  #878a8c;
 
 }
 
