@@ -5,8 +5,21 @@
       <img src="../../../img/reddit.png" alt="reddit" />
     </div>
     <div class="home">
-      <img src="../../../img/home.png" alt="home" />
-      <!-- <img src="../../../img/arrow-down.png" alt="arrow" /> -->
+      <div class="icon__home">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-house-door-fill user-nav__icon"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"
+          />
+        </svg>
+        <span>Home</span>
+      </div>
       <svg class="user-nav__icon">
         <use xlink:href="../../../img/sprite.svg#icon-chevron-small-down"></use>
       </svg>
@@ -21,9 +34,6 @@
     </form>
     <nav class="user-nav">
       <div class="user-nav__icon-box">
-        <!-- <svg class="user-nav__icon">
-          <use xlink:href="../../../img/sprite.svg#icon-fire"></use>
-        </svg> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -40,9 +50,16 @@
       </div>
 
       <div class="user-nav__icon-box">
-        <!-- <svg class="user-nav__icon">
-          <use xlink:href="../../../img/sprite.svg#icon-chat"></use>
-        </svg> -->
+        <img
+          src="../../../img/dollar-coin.png"
+          alt="coins"
+          class="user-nav__icon"
+        />
+      </div>
+
+      |
+
+      <div class="user-nav__icon-box">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -62,9 +79,6 @@
       </div>
 
       <div class="user-nav__icon-box">
-        <!-- <svg class="user-nav__icon">
-          <use xlink:href="../../../img/sprite.svg#icon-bell"></use>
-        </svg> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -81,9 +95,6 @@
       </div>
 
       <div class="user-nav__icon-box">
-        <!-- <svg class="user-nav__icon">
-          <use xlink:href="../../../img/sprite.svg#icon-plus"></use>
-        </svg> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -96,6 +107,23 @@
             d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
           />
         </svg>
+      </div>
+      <div class="user-nav__box box">
+        <button class="button-advertise">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-megaphone"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975 1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z"
+            />
+          </svg>
+          Advertise
+        </button>
       </div>
 
       <div class="user-nav__box">
@@ -111,7 +139,22 @@
               xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
             ></use>
           </svg>
-          <span class="user-nav__karma">2 karma</span>
+
+          <span class="user-nav__karma">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-stars star"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"
+              />
+            </svg>
+            2 karma</span
+          >
         </div>
       </div>
     </nav>
@@ -135,7 +178,7 @@ export default {};
   display: grid;
   grid-template-columns: max-content min-content 24% max-content;
   grid-template-rows: max-content;
-  grid-column-gap: 1rem;
+  grid-column-gap: 0rem;
   align-items: center;
   justify-content: left;
   border: var(--line-3);
@@ -152,7 +195,17 @@ img {
 .logo img {
   height: 4rem;
 }
+.icon__home {
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
+  /* width: 40rem; */
+  grid-column-gap: 1rem;
+  align-items: center;
+  border: var(--line-3);
+  border-radius: 5px;
+}
 .home {
+  padding: 0.5rem;
   margin-left: 0.5rem;
   display: grid;
   grid-template-columns: min-content min-content;
@@ -183,30 +236,28 @@ img {
   border: none;
   padding: 0.7rem 2rem;
   border-radius: 100px;
-  width: 90%;
-  transition: all 0.2s;
-  margin-right: -3.25rem;
-}
-.search__input:focus {
-  outline: navajowhite;
   width: 100%;
-  background-color: var(--color-grey-light-3);
-  border: var(--line-2);
+  /* transition: all 0.2s; */
+  margin-right: -3.75rem;
 }
+.search__input:focus,
 .search__input:hover {
+  outline: navajowhite;
   border: var(--line-2);
+  background-color: var(--color-white-1);
 }
 
 .search__input::-webkit-input-placeholder {
-  font-weight: 100;
-  color: var(--color-grey-light-4);
+  font-weight: 50;
+  color: var(--color-grey-dark-2);
 }
-.search__input:focus + .search__button {
-  background-color: var(--color-grey-light-3);
+.search__input:focus + .search__button,
+.search__input:hover + .search__button {
+  background-color: var(--color-white-1);
 }
 .search__button {
   border: none;
-  background-color: var(--color-grey-light-3);
+  /* background-color: var(--color-grey-light-3); */
 }
 
 .search__button:focus {
@@ -223,22 +274,33 @@ img {
 }
 
 .user-nav {
-  align-self: stretch;
+  /* align-self: stretch; */
   width: 1rem;
-  margin: 0;
+  margin-left: 4rem;
 
   /* display: flex;
   align-items: center; */
   display: grid;
-  grid-template-columns: repeat(4, min-content) max-content;
-  grid-column-gap: 1.5rem;
+  grid-template-columns: repeat(7, min-content) max-content;
+  grid-column-gap: 0.8rem;
   align-items: center;
   align-items: center;
 }
+
+.button-advertise {
+  width: 10rem;
+  height: 3rem;
+  border: none;
+  border-radius: 10rem;
+  background-color: var(--color-grey-light-2);
+}
+.button-advertise:hover {
+  background-color: var(--color-grey-light-4);
+}
 .user-nav > * {
-  /* padding: 0 1.7rem; */
+  padding: 0 0.3rem;
   cursor: pointer;
-  height: 100%;
+  height: 80%;
   display: flex;
   align-items: center;
 }
@@ -249,12 +311,12 @@ img {
   position: relative;
 }
 .user-nav__icon {
-  height: 2.2rem;
-  width: 2.2rem;
-  /* font-size: 3rem; */
-  fill: var(--color-grey-dark-2);
+  height: 1.9rem;
+  width: 1.9rem;
+  fill: var(--color-grey-dark-1);
 }
-.plus{
+
+.plus {
   height: 3.3rem;
   width: 3.3rem;
 }
@@ -266,15 +328,15 @@ img {
   background-color: var(--color-primary);
   color: #fff;
   position: absolute;
-  top: 0.5rem;
-  right: -1rem;
+  top: 0.2rem;
+  right: -.7rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .user-nav__box {
-  margin-left: 25rem;
+  margin-left: 0rem;
   border: var(--line-3);
   border-radius: 5px;
   height: 4.5rem;
@@ -285,15 +347,18 @@ img {
   background-color: var(--color-white-1);
   border: var(--line);
 }
+.box:hover {
+  border: var(--line-3);
+}
 .user-nav__user {
   display: grid;
-  grid-template-columns: max-content;
+  grid-template-columns:  max-content;
   grid-template-rows: max-content;
-  grid-column-gap: 7rem;
+  grid-column-gap: 0rem;
   align-items: center;
   border: var(--line-3);
   border-radius: 5px;
-  width: 17rem;
+  width: 16rem;
 }
 .user-nav__user-photo {
   width: 2.5rem;
@@ -312,9 +377,12 @@ img {
   font-size: 1rem;
   font-weight: 600;
 }
+.star {
+  fill: var(--color-primary);
+}
 .icon-user {
   position: absolute;
-  right: 0rem;
+  right: 1rem;
 }
 @media only screen and (max-width: 31.25em) {
   .header {
