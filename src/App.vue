@@ -19,9 +19,9 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 :root {
-  --color-primary: #eb2f64;
-  --color-Primary-light: #ff3366;
-  --color-Primary-dark: #ba265d;
+  --color-primary: #ff4500;
+  --color-Primary-light: #ff5213;
+  --color-Primary-dark: #f24303;
 
   --color-white-1: white;
 
