@@ -1,5 +1,5 @@
 <template>
-<div class="postCard d-flex flex-row">
+<div class="postCard d-flex flex-row" v-if="!postHidden">
     <!-- section to display votes -->
         <div class="d-flex flex-column voteBox">
             <div class="upvote" @click="upvote">
@@ -15,9 +15,9 @@
         <div class="postContent">
         <router-link :to="{name:'post', params: {postName: post.postName}}">
         <div class="subredditInfo">
+            <span class="subredditImage"><img src="../../../img/user-image.jpg" alt=""></span>
             <span class="subredditName"><router-link :to="{name:'subreddit', params: {subredditName: post.subredditName}}">{{post.subredditName}} </router-link></span>
-            <span> Posted by . <router-link :to="{name:'user', params: {userName: post.userName}}"> {{post.userName}} </router-link></span>
-            <span> {{post.duration}} ago</span>
+            <span> . Posted by . <router-link :to="{name:'user', params: {userName: post.userName}}"> {{post.userName}} </router-link>&nbsp;{{post.duration}} ago</span>
         </div>
         <div class="postTitle">
             <h3>{{post.postName}}</h3>
@@ -35,7 +35,7 @@
                     <svg class="icon icon-arrow-down p-1" :class="downClicked? 'downClicked':''"><use xlink:href="../../../img/vote.svg#icon-arrow-down"></use></svg>           
                 </span>
             </span>
-            <ul>
+            <ul class="services">
                 <li>
                     <svg class="icon icon-bubble2"><use xlink:href="../../../img/postServices.svg#icon-bubble2"></use></svg>
                     {{post.commentsCount}} Comments
@@ -52,10 +52,14 @@
                     <svg class="icon icon-folder-download"><use xlink:href="../../../img/postServices.svg#icon-folder-download"></use></svg>
                     Save
                 </li>
-                <li>
+                <li @click="showSubMenu">
                     <svg class="icon icon-list2"><use xlink:href="../../../img/postServices.svg#icon-list2"></use></svg>
+                    <ul class="subMenu" v-if="subMenuDisplay">
+                        <li @click="hidePost"><svg class="icon icon-eye-blocked"><use xlink:href="../../../img/postServices.svg#icon-eye-blocked"></use></svg>Hide</li>
+                    </ul>
                 </li>
             </ul>
+
         </div>
     </router-link>
     </div>
@@ -68,6 +72,8 @@
                 counter: this.post.voteCount,
                 upClicked: false,
                 downClicked: false,
+                subMenuDisplay: false,
+                postHidden : false,
             }
         },
         props: {
@@ -107,6 +113,12 @@
                     this.upClicked = false;
                     this.counter--;
                 }
+            },
+            showSubMenu(){
+                this.subMenuDisplay = !this.subMenuDisplay;
+            },
+            hidePost(){
+                this.postHidden = true;
             }
         }
     };
@@ -177,12 +189,12 @@
     .postContent .postText p{
         color: black;
     }
-    .postServices ul{
+    .postServices .services{
         padding: 0px;
         margin: 0px;
         display: inline;
     }
-    .postServices li{
+    .postServices .services >li{
         display: inline-block;
         list-style: none;
         height: 40px;
@@ -194,10 +206,10 @@
         font-weight: bold;
         font-size: 10px;
     }
-    .postServices li:hover{
+    .postServices .services >li:hover{
         background-color: var( --color-grey-light-2);
     }
-    .postServices li svg{
+    .postServices .services >li >svg{
         width: 20px;
         height: 20px;
         fill: var( --color-grey-dark-2);
@@ -205,15 +217,72 @@
     a{
         text-decoration: none;
     }
+    .postCard .subredditInfo .subredditImage img{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+    .postCard .subredditInfo .subredditImage{
+        padding-right: 5px;
+    }
+    .postCard .subredditInfo .subredditName a{
+        font-weight: 700;
+        color: black;
+    }
+    .postCard .subredditInfo .subredditName a:hover{
+        text-decoration: underline;
+    }
+    .postCard .subredditInfo span:nth-of-type(3),
+    .postCard .subredditInfo span:nth-of-type(3) a{
+        color: var(--color-grey-dark-2);
+    }
+    .postCard .subredditInfo span:nth-of-type(3) a:hover{
+        text-decoration: underline;
+    }
+    .postCard .postContent .postServices .services >li:last-of-type{
+        position: relative;
+    }
+    .postCard .postContent .postServices .services .subMenu{
+        position: absolute;
+        background-color: white;
+        padding: 0px;
+        left:0px;
+        box-shadow: 0px 2px 4px var(--color-grey-dark-2);
+        border-radius: 5px;
+     }
+    .postCard .postContent .postServices .services .subMenu li{
+        color: var(--color-grey-dark-2);
+        font-size: 15px;
+        font-weight: lighter;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .postCard .postContent .postServices .services .subMenu li:hover{
+        color: black;
+    }
+    .postCard .postContent .postServices .services .subMenu li svg{
+        fill: var(--color-grey-dark-2);
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+    .postCard .postContent .postServices .services .subMenu li:hover svg{
+        fill: black;
+    }
+    .postCard .postContent .postServices .services .subMenu li{
+        padding: 0px 10px;
+    }
+    .postCard .postContent .postServices .services .subMenu li:not(:last-of-type){
+        border-bottom: 1px solid var(--color-grey-dark-2);
+    }
     @media (max-width: 767px){
         .voteBox{
             display: none !important;
         }
         .postServices .voteServices{
             display: inline !important;
-        }
-        .postContent{
-        padding: 10px;
         }
     }
 </style>
