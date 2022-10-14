@@ -1,8 +1,8 @@
 <template>
-  <i class="fa-solid fa-shirt"></i>
+  <!-- <i class="fa-solid fa-shirt"></i>
   <i class="fa-regular fa-square-plus"></i>
   <i class="fa-solid fa-plus"></i>
-  <i class="fa-solid fa-gear"></i>
+  <i class="fa-solid fa-gear"></i> -->
   <aside>
     <div class="profile-card">
       <div class="cover-pic">
@@ -123,11 +123,12 @@ a {
 }
 
 aside {
-  display: flex;
+  /* display: flex;
   margin: auto;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  min-height: 80vh; */
+  margin-left: 24px;
 }
 
 .profile-card {
