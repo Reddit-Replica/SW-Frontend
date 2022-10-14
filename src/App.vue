@@ -1,6 +1,12 @@
 <template>
   <the-header></the-header>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
   <router-view></router-view>
+    </div>
+  </div>
+</div>
   <!-- <router-view></router-view> -->
 </template>
 
