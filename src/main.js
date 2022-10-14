@@ -4,6 +4,8 @@ import router from "./router.js";
 import store from "./store/index";
 import App from "./App.vue";
 import BaseButton from './components/BaseComponents/BaseButton.vue'
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 const app = createApp(App);
 

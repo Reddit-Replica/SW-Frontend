@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import MainPage from "./pages/users/MainPage.vue";
 import ForgetPassword from './components/forget/ForgetPassword.vue'
 import ForgetUsername from './components/forget/ForgetUsername'
-
+import UserPage from './pages/users/UserPage.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -13,7 +13,8 @@ const router = createRouter({
     {
       path:"/user/:userName",
       name: "user",
-      component: MainPage,
+      component: UserPage,
+      props:true
     },//render user component
     {
       path:"/subreddit/:subredditName",
