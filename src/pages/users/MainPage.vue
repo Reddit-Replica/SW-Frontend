@@ -1,8 +1,8 @@
 <template>
-  <createpost-bar></createpost-bar>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6">
+        <createpost-bar></createpost-bar>
         <base-post :post="post"></base-post>
       </div>
     </div>
