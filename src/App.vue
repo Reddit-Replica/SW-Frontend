@@ -56,6 +56,18 @@ export default {
   --bp-small: 37.5em;
   /* 500px */
   --bp-smallest: 31.25em;
+
+
+  /* profile page colors */
+  --back-color :#1A1A1B;
+  --main-blue-color: #277e98;
+  --main-black-color: #1f2021;
+  --main-grey-color: #353235;
+  --main-white-color: #ffffff;
+  --main-transparent-color: rgb(15 116 143 / 70%);
+  --gray-color: #777;
+  --main-duration: 0.5s;
+  /*/////////////////////////////////*/
 }
 * {
   margin: 0;
