@@ -30,10 +30,10 @@ img {
 }
 .content {
   margin-top: 1.5rem;
-  margin-left: 17rem;
+  /* margin-left: 17rem; */
   font-size: 1.4rem;
   height: 5.5rem;
-  width: 46%;
+  /* width: 46%; */
   background-color: #fff;
   border-bottom: var(--line);
 
