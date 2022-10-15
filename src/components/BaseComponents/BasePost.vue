@@ -156,6 +156,12 @@
                   </svg>
                   Hide
                 </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
+                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"/>
+                    </svg>
+                    Report
+                </li>
               </ul>
             </li>
           </ul>
@@ -215,34 +221,34 @@ export default {
 };
 </script>
 <style scoped>
-.postCard {
-  background-color: white;
-  border-radius: 5px;
-  margin: 20px 0px;
+.postCard{
+    background-color: white;
+    border-radius: 5px;
+    margin: 20px 0px;
 }
-.postCard:hover {
-  outline: 1px solid;
+.postCard:hover{
+    outline: 1px solid;
 }
-.voteBox {
-  background-color: var(--color-grey-light-2);
-  text-align: center;
-  border-radius: 5px 0px 0px 5px;
-  width: 40px;
+.voteBox{
+    background-color: var(--color-grey-light-2);
+    text-align: center;
+    border-radius: 5px 0px 0px 5px;
+    width: 40px;
 }
 .voteBox .downvote svg,
-.voteBox .upvote svg {
-  width: 22px;
-  height: 22px;
-  fill: white;
+.voteBox .upvote svg{
+    width: 22px;
+    height: 22px;
+    fill: white;
 }
 .postServices .downvote svg,
-.postServices .upvote svg {
-  width: 22px;
-  height: 22px;
-  fill: var(--color-grey-dark-2);
+.postServices .upvote svg{
+    width: 22px;
+    height: 22px;
+    fill: var( --color-grey-dark-2);
 }
-.postServices .voteServices {
-  display: none;
+.postServices .voteServices{
+    display: none;
 }
 .voteBox .downvote:hover svg,
 .voteBox .upvote:hover svg,
@@ -251,129 +257,137 @@ export default {
 .postServices .downvote:hover svg,
 .postServices .upvote:hover svg,
 .postServices .upvote svg.upClicked,
-.postServices .downvote svg.downClicked {
-  background-color: var(--color-grey-light-4);
+.postServices .downvote svg.downClicked{
+    background-color: var( --color-grey-light-4);
 }
 .voteBox svg.upClicked,
-.postServices .voteServices svg.upClicked {
-  fill: var(--color-orange);
+.postServices .voteServices svg.upClicked{
+    fill: var(--color-orange);
 }
 .voteBox .voteCount.upClicked,
-.postServices .voteServices .voteCount.upClicked {
-  color: var(--color-orange);
+.postServices .voteServices .voteCount.upClicked{
+    color: var(--color-orange);
 }
 .voteBox svg.downClicked,
-.postServices .voteServices svg.downClicked {
-  fill: var(--color-blue);
+.postServices .voteServices svg.downClicked{
+    fill: var(--color-blue);
 }
 .voteBox .voteCount.downClicked,
-.postServices .voteServices .voteCount.downClicked {
-  color: var(--color-blue);
+.postServices .voteServices .voteCount.downClicked{
+    color: var(--color-blue);
 }
-.postContent {
-  padding: 10px;
+.postContent{
+    padding: 10px;
 }
-.postContent .postTitle h3 {
-  color: black;
-  margin: 10px 0px;
+.postContent .postTitle h3{
+    color: black;
+    margin: 10px 0px;
 }
-.postContent .postText p {
-  color: black;
+.postContent .postText p{
+    color: black;
 }
-.postServices .services {
-  padding: 0px;
-  margin: 0px;
-  display: inline;
+.postServices .services{
+    padding: 0px;
+    margin: 0px;
+    display: inline;
 }
-.postServices .services > li {
-  display: inline-block;
-  list-style: none;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  padding: 0px 20px;
-  border-radius: 5px;
-  color: var(--color-grey-dark-2);
-  font-weight: bold;
-  font-size: 10px;
+.postServices .services >li{
+    display: inline-block;
+    list-style: none;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    padding: 0px 20px;
+    border-radius: 5px;
+    color: var( --color-grey-dark-2);
+    font-weight: bold;
+    font-size: 10px;
 }
-.postServices .services > li:hover {
-  background-color: var(--color-grey-light-2);
+.postServices .services >li:hover{
+    background-color: var( --color-grey-light-2);
 }
-.postServices .services > li > svg {
-  width: 20px;
-  height: 20px;
-  fill: var(--color-grey-dark-2);
+.postServices .services >li >svg{
+    width: 20px;
+    height: 20px;
+    fill: var( --color-grey-dark-2);
 }
-a {
-  text-decoration: none;
+a{
+    text-decoration: none;
 }
-.postCard .subredditInfo .subredditImage img {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+.postCard .subredditInfo .subredditImage img{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
 }
-.postCard .subredditInfo .subredditImage {
-  padding-right: 5px;
+.postCard .subredditInfo .subredditImage{
+    padding-right: 5px;
 }
-.postCard .subredditInfo .subredditName a {
-  font-weight: 700;
-  color: black;
+.postCard .subredditInfo .subredditName a{
+    font-weight: 700;
+    color: black;
 }
-.postCard .subredditInfo .subredditName a:hover {
-  text-decoration: underline;
+.postCard .subredditInfo .subredditName a:hover{
+    text-decoration: underline;
 }
 .postCard .subredditInfo span:nth-of-type(3),
-.postCard .subredditInfo span:nth-of-type(3) a {
-  color: var(--color-grey-dark-2);
+.postCard .subredditInfo span:nth-of-type(3) a{
+    color: var(--color-grey-dark-2);
 }
-.postCard .subredditInfo span:nth-of-type(3) a:hover {
-  text-decoration: underline;
+.postCard .subredditInfo span:nth-of-type(3) a:hover{
+    text-decoration: underline;
 }
-.postCard .postContent .postServices .services > li:last-of-type {
-  position: relative;
+.postCard .postContent .postServices .services >li:last-of-type{
+    position: relative;
 }
-.postCard .postContent .postServices .services .subMenu {
-  position: absolute;
-  background-color: white;
-  padding: 0px;
-  left: 0px;
-  box-shadow: 0px 2px 4px var(--color-grey-dark-2);
-  border-radius: 5px;
+.postCard .postContent .postServices .services .subMenu{
+    position: absolute;
+    background-color: white;
+    padding: 0px;
+    left:0px;
+    box-shadow: 0px 2px 4px var(--color-grey-dark-2);
+    border-radius: 5px;
+    }
+.postCard .postContent .postServices .services .subMenu li{
+    color: var(--color-grey-dark-2);
+    font-size: 15px;
+    font-weight: lighter;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
-.postCard .postContent .postServices .services .subMenu li {
-  color: var(--color-grey-dark-2);
-  font-size: 15px;
-  font-weight: lighter;
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.postCard .postContent .postServices .services .subMenu li:hover{
+    color: black;
+    background-color: var(--color-blue-light-2);
 }
-.postCard .postContent .postServices .services .subMenu li:hover {
-  color: black;
+.postCard .postContent .postServices .services .subMenu li:first-of-type:hover{
+    border-radius: 5px 5px 0px 0px;
 }
-.postCard .postContent .postServices .services .subMenu li svg {
-  fill: var(--color-grey-dark-2);
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+.postCard .postContent .postServices .services .subMenu li:last-of-type:hover{
+    border-radius: 0px 0px 5px 5px;
 }
-.postCard .postContent .postServices .services .subMenu li:hover svg {
-  fill: black;
+.postCard .postContent .postServices .services .subMenu li svg{
+    fill: var(--color-grey-dark-2);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
-.postCard .postContent .postServices .services .subMenu li {
-  padding: 0px 10px;
+.postCard .postContent .postServices .services .subMenu li:hover svg{
+    fill: black;
 }
-.postCard .postContent .postServices .services .subMenu li:not(:last-of-type) {
-  border-bottom: 1px solid var(--color-grey-dark-2);
+.postCard .postContent .postServices .services .subMenu li{
+    padding: 0px 10px;
 }
-@media (max-width: 767px) {
-  .voteBox {
-    display: none !important;
-  }
-  .postServices .voteServices {
-    display: inline !important;
-  }
+.postCard .postContent .postServices .services .subMenu li:not(:last-of-type){
+    border-bottom: 1px solid var(--color-grey-light-3);
+}
+
+@media (max-width: 767px){
+    .voteBox{
+        display: none !important;
+    }
+    .postServices .voteServices{
+        display: inline !important;
+    }
 }
 </style>
