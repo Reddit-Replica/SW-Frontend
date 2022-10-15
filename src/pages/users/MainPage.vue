@@ -1,6 +1,15 @@
 <template>
+  <div class="wrapper container">
+    <div class="row left-col">
+      <div class="col-lg-12">
         <createpost-bar></createpost-bar>
         <base-post :post="post"></base-post>
+      </div>
+    </div>
+    <div class="row right-col">
+      <div class="col-lg-12">right</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -28,4 +37,36 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-gap: 30px;
+}
+.left-col {
+  margin-left: 5rem;
+}
+.right-col {
+  padding: 20px;
+  margin-left: 15rem;
+  margin-top: 4rem;
+}
+@media only screen and (max-width: 60em) {
+  .container{
+    max-width: 100% ;
+  }
+  .wrapper {
+    grid-template-columns: 100%;
+  }
+  .right-col {
+    display: none;
+    padding: 0;
+    margin-left: 0;
+    margin-top: 0;
+  }
+  .left-col {
+    margin: auto;
+    width: 100%;
+  }
+}
+</style>
