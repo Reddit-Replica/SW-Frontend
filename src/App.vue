@@ -66,15 +66,15 @@ export default {
   /* 788 */
   --bg-medium-2: 49.25em;
   /* 635 */
-  --bg-medium-3:40em;
+  --bg-medium-3: 40em;
   /* 600px */
   --bp-small: 37.5em;
   /* 520 */
-  --bg-small-2:32.5em;
+  --bg-small-2: 32.5em;
   /* 500px */
   --bp-smallest: 31.25em;
   /* 400 */
-  --bg-smallest-2:25em;
+  --bg-smallest-2: 25em;
 }
 * {
   margin: 0;
