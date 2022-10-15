@@ -63,9 +63,6 @@ export default {
   }
   .right-col {
     display: none;
-    padding: 0;
-    margin-left: 0;
-    margin-top: 0;
   }
   .left-col {
     margin: auto;
