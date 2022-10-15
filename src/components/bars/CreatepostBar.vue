@@ -94,8 +94,8 @@ button {
   background-color: var(--color-white-1);
 }
 @media only screen and (max-width: 60em) {
-  .post{
-    width: 87% ;
+  .post {
+    width: 87%;
   }
 }
 </style>
