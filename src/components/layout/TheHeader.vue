@@ -2,7 +2,7 @@
   <header class="header">
     <div class="logo">
       <img src="../../../img/logo.png" alt="reddit" class="logo" />
-      <img src="../../../img/reddit.png" alt="reddit" />
+      <img src="../../../img/reddit.png" alt="reddit" class="reddit" />
     </div>
     <div class="home">
       <div class="icon__home">
@@ -20,7 +20,7 @@
         </svg>
         <span>Home</span>
       </div>
-      <svg class="user-nav__icon">
+      <svg class="user-nav__icon down-arrow">
         <use xlink:href="../../../img/sprite.svg#icon-chevron-small-down"></use>
       </svg>
     </div>
@@ -33,7 +33,7 @@
       </button>
     </form>
     <nav class="user-nav">
-      <div class="user-nav__icon-box">
+      <div class="user-nav__icon-box popular">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -41,7 +41,7 @@
           fill="currentColor"
           class="bi bi-arrow-up-right-circle user-nav__icon"
           viewBox="0 0 16 16"
-          >
+        >
           <title>Popular</title>
           <path
             fill-rule="evenodd"
@@ -50,7 +50,7 @@
         </svg>
       </div>
 
-      <div class="user-nav__icon-box">
+      <!-- <div class="user-nav__icon-box">
         <img
           src="../../../img/dollar-coin.png"
           alt="coins"
@@ -59,7 +59,7 @@
         />
       </div>
 
-      |
+      | -->
 
       <div class="user-nav__icon-box">
         <svg
@@ -69,7 +69,7 @@
           fill="currentColor"
           class="bi bi-chat-dots user-nav__icon"
           viewBox="0 0 16 16"
-          >
+        >
           <title>Chat</title>
           <path
             d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
@@ -89,7 +89,7 @@
           fill="currentColor"
           class="bi bi-bell user-nav__icon"
           viewBox="0 0 16 16"
-          >
+        >
           <title>Notifications</title>
           <path
             d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
@@ -106,7 +106,7 @@
           fill="currentColor"
           class="bi bi-plus user-nav__icon plus"
           viewBox="0 0 16 16"
-          >
+        >
           <title>Create Post</title>
           <path
             d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
@@ -131,12 +131,14 @@
         </button>
       </div>
 
-      <div class="user-nav__box">
+      <div class="user-nav__box user">
         <img
           src="../../../img/user-image.jpg"
           alt="user photo"
           class="user-nav__user-photo"
         />
+        <span class="user-nav__online"></span>
+
         <div class="user-nav__user">
           <span class="user-nav__user-name">asmaaadel0</span>
           <svg class="user-nav__icon icon-user">
@@ -176,12 +178,13 @@ export default {};
   height: 5rem;
   background-color: #fff;
   border-bottom: var(--line);
+  width: auto;
 
   /* display: flex;
   justify-content: left;
   align-items: center; */
   display: grid;
-  grid-template-columns: max-content min-content 24% max-content;
+  grid-template-columns: max-content 20% 26% max-content;
   grid-template-rows: max-content;
   grid-column-gap: 0rem;
   align-items: center;
@@ -211,14 +214,20 @@ img {
 }
 .home {
   padding: 0.5rem;
-  margin-left: 0.5rem;
-  display: grid;
-  grid-template-columns: min-content min-content;
-  /* width: 40rem; */
-  grid-column-gap: 13rem;
+  margin-left: 1.2rem;
   align-items: center;
   border: var(--line-3);
   border-radius: 5px;
+  position: relative;
+}
+.down-arrow {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .home:hover,
 .home:focus {
@@ -227,6 +236,7 @@ img {
 
 .search {
   flex: 0 0 23%;
+  /* width: 35rem; */
 
   display: flex;
   align-items: center;
@@ -293,7 +303,7 @@ img {
 }
 
 .button-advertise {
-  width: 10rem;
+  width: 11rem;
   height: 3rem;
   border: none;
   border-radius: 10rem;
@@ -303,11 +313,12 @@ img {
   background-color: var(--color-grey-light-4);
 }
 .user-nav > * {
-  padding: 0 0.3rem;
+  padding: 0 1.3rem;
   cursor: pointer;
   height: 80%;
   display: flex;
   align-items: center;
+  border-radius: 0.3rem;
 }
 .user-nav > *:hover {
   background-color: var(--color-grey-light-2);
@@ -326,26 +337,46 @@ img {
   width: 3.3rem;
 }
 .user-nav__notification {
-  font-size: 0.8rem;
-  height: 1.75rem;
-  width: 1.75rem;
+  font-size: 1rem;
+  height: 1.9rem;
+  width: 1.9rem;
   border-radius: 50%;
   background-color: var(--color-primary);
   color: #fff;
   position: absolute;
-  top: 0.2rem;
-  right: -.7rem;
+  /* top: 0.2rem;
+  right: -.7rem; */
+  top: 0.1rem;
+  right: 0.1rem;
+  border: var(--line-4);
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .user-nav__box {
-  margin-left: 0rem;
+  margin-left: -1rem;
   border: var(--line-3);
   border-radius: 5px;
   height: 4.5rem;
   position: relative;
+}
+.user-nav__online {
+  font-size: 1rem;
+  height: 0.9rem;
+  width: 0.9rem;
+  border-radius: 50%;
+  background-color: var(--color-green);
+  color: #fff;
+  position: absolute;
+  top: 2.6rem;
+  left: 3.9rem;
+  border: var(--line-3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .user-nav__box:hover,
 .user-nav__box:focus {
@@ -357,7 +388,7 @@ img {
 }
 .user-nav__user {
   display: grid;
-  grid-template-columns:  max-content;
+  grid-template-columns: max-content;
   grid-template-rows: max-content;
   grid-column-gap: 0rem;
   align-items: center;
@@ -389,24 +420,82 @@ img {
   position: absolute;
   right: 1rem;
 }
-@media only screen and (max-width: 31.25em) {
+/* 1200px */
+@media only screen and (max-width: 75em) {
   .header {
-    flex-wrap: wrap;
-    align-content: space-around;
-    height: 11rem;
+    grid-template-columns: max-content 20% 23% max-content;
   }
-  .search {
-    order: 1;
-    flex: 0 0 100%;
-    background-color: var(--color-grey-light-2);
+  .user-nav__user-name {
+    display: none;
+  }
+  .user-nav__karma,
+  .user-nav__user-name,
+  .star {
+    display: none;
+  }
+  .icon-user {
+    left: 5rem;
+  }
+  .user-nav__user {
+    width: 2rem;
   }
 }
-
-header a {
-  text-decoration: none;
-  color: #08c0c6;
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid transparent;
+/* 1100px */
+@media only screen and (max-width: 68.75em) {
+  .header {
+    grid-template-columns: max-content 10% 40% max-content;
+  }
+  .home span {
+    display: none;
+  }
+  .reddit {
+    display: none;
+  }
+}
+/* 900px */
+@media only screen and (max-width: 56.25em) {
+  .header {
+    grid-template-columns: max-content 10% 30% max-content;
+  }
+}
+/* 788px */
+@media only screen and (max-width: 49.25em) {
+  .header {
+    grid-template-columns: max-content 10% 30% max-content;
+  }
+  .user-nav > * {
+    padding: 0 0.7rem;
+  }
+  .user-nav__icon {
+    height: 1.7rem;
+    width: 1.7rem;
+  }
+  .popular {
+    display: none;
+  }
+}
+/* 635px */
+@media only screen and (max-width: 40em) {
+  .down-arrow {
+    display: none;
+  }
+}
+/* 520px */
+@media only screen and (max-width: 32.5em) {
+  .user {
+    display: none;
+  }
+}
+/* 400px */
+@media only screen and (max-width: 25em) {
+  .header {
+    grid-template-columns: 10% 10% 30% auto;
+  }
+  .box {
+    display: none;
+  }
+  .user-nav > * {
+    padding: 0 0.9rem;
+  }
 }
 </style>
