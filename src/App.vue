@@ -1,13 +1,13 @@
 <template>
   <the-header></the-header>
-  <div class="container">
+  <!-- <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6">
-  <router-view></router-view>
+        <router-view></router-view>
+      </div>
     </div>
-  </div>
-</div>
-  <!-- <router-view></router-view> -->
+  </div> -->
+  <router-view></router-view>
 </template>
 
 <script>
@@ -17,7 +17,6 @@ export default {
   components: {
     TheHeader,
   },
-
 };
 </script>
 
@@ -41,7 +40,7 @@ export default {
   --color-grey-dark-3: #999;
   --color-grey-dark-4: rgb(177, 176, 176);
 
-  --color-dark-1:#000;
+  --color-dark-1: #000;
 
   --color-orange: #ff2c00;
   --color-blue: #6094fe;
@@ -56,6 +55,8 @@ export default {
   --bp-largest: 75em;
   /* 1100px */
   --bp-large: 68.75em;
+  /* 960 */
+  --bp-meduim-1:60em
   /* 900px */
   --bp-medium: 56.25em;
   /* 600px */
@@ -121,5 +122,4 @@ body {
     font-size: 50%;
   }
 }
-
 </style>
