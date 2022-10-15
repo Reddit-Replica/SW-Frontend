@@ -44,6 +44,7 @@ export default {
 
   --color-orange: #ff2c00;
   --color-blue: #6094fe;
+  --color-green: rgb(62, 231, 62);
 
   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
   --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
@@ -51,18 +52,29 @@ export default {
   --line: 1px solid var(--color-grey-light-2);
   --line-2: 1px solid rgb(2, 2, 206);
   --line-3: 1px solid var(--color-white-1);
+  --line-4: 2px solid var(--color-white-1);
+  /* 2000px */
+  --bp-largest-1: 125em;
   /* 1200px */
   --bp-largest: 75em;
   /* 1100px */
   --bp-large: 68.75em;
   /* 960 */
-  --bp-meduim-1:60em
+  --bp-meduim-1: 60em;
   /* 900px */
   --bp-medium: 56.25em;
+  /* 788 */
+  --bg-medium-2: 49.25em;
+  /* 635 */
+  --bg-medium-3:40em;
   /* 600px */
   --bp-small: 37.5em;
+  /* 520 */
+  --bg-small-2:32.5em;
   /* 500px */
   --bp-smallest: 31.25em;
+  /* 400 */
+  --bg-smallest-2:25em;
 }
 * {
   margin: 0;
