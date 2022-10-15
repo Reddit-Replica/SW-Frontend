@@ -44,6 +44,7 @@ export default {
 
   --color-orange: #ff2c00;
   --color-blue: #6094fe;
+  --color-blue-light:rgb(67, 198, 249);
   --color-green: rgb(62, 231, 62);
 
   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
