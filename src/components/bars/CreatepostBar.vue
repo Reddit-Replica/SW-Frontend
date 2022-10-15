@@ -1,5 +1,5 @@
 <template>
-  <div class="content d-flex flex-row">
+  <div class="content">
     <img src="../../../img/reddit-white-grey.png" alt="reddit" />
     <form action="#" class="post">
       <input type="text" class="search__post" placeholder="Create Post" />
