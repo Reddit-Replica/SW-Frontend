@@ -25,17 +25,13 @@ export default {};
 </script>
 
 <style scoped>
-img {
-  cursor: pointer;
-}
 .content {
   margin-top: 1.5rem;
-  /* margin-left: 17rem; */
   font-size: 1.4rem;
   height: 5.5rem;
-  /* width: 46%; */
   background-color: #fff;
   border-bottom: var(--line);
+  border-radius: 0.5rem;
 
   display: flex;
   justify-content: left;
@@ -43,26 +39,27 @@ img {
 }
 .content img {
   height: 5rem;
+  cursor: pointer;
 }
 button {
   display: none;
 }
 .post {
-  width: 80%;
+  width: 78%;
 }
 .box {
-  align-self: stretch;
-  width: 4rem;
   margin: 0;
 
   display: flex;
   align-items: center;
 }
 .box > * {
+  padding: 0 0.2rem;
   cursor: pointer;
   height: 100%;
   display: flex;
   align-items: center;
+  border-radius: 0.3rem;
 }
 
 .box > *:hover {
@@ -90,9 +87,15 @@ button {
 .search__post:focus {
   outline: navajowhite;
   border: var(--line-2);
-  background-color: var(--color-grey-light-3);
+  background-color: var(--color-white-1);
 }
 .search__post:hover {
   border: var(--line-2);
+  background-color: var(--color-white-1);
+}
+@media only screen and (max-width: 60em) {
+  .post {
+    width: 87%;
+  }
 }
 </style>

@@ -1,12 +1,13 @@
 <template>
   <the-header></the-header>
-  <div class="container">
+  <router-view></router-view>
+  <!-- <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6">
   <router-view></router-view>
     </div>
   </div>
-</div>
+</div> -->
   <!-- <router-view></router-view> -->
 </template>
 
@@ -17,7 +18,6 @@ export default {
   components: {
     TheHeader,
   },
-
 };
 </script>
 
@@ -41,10 +41,13 @@ export default {
   --color-grey-dark-3: #999;
   --color-grey-dark-4: rgb(177, 176, 176);
 
-  --color-dark-1:#000;
+  --color-dark-1: #000;
 
   --color-orange: #ff2c00;
   --color-blue: #6094fe;
+  --color-blue-light:rgb(67, 198, 249);
+  --color-blue-light-2:#e5f5fd;
+  --color-green: rgb(62, 231, 62);
 
   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
   --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
@@ -52,17 +55,29 @@ export default {
   --line: 1px solid var(--color-grey-light-2);
   --line-2: 1px solid rgb(2, 2, 206);
   --line-3: 1px solid var(--color-white-1);
+  --line-4: 2px solid var(--color-white-1);
+  /* 2000px */
+  --bp-largest-1: 125em;
   /* 1200px */
   --bp-largest: 75em;
   /* 1100px */
   --bp-large: 68.75em;
+  /* 960 */
+  --bp-meduim-1: 60em;
   /* 900px */
   --bp-medium: 56.25em;
+  /* 788 */
+  --bg-medium-2: 49.25em;
+  /* 635 */
+  --bg-medium-3: 40em;
   /* 600px */
   --bp-small: 37.5em;
+  /* 520 */
+  --bg-small-2: 32.5em;
   /* 500px */
   --bp-smallest: 31.25em;
-
+  /* 400 */
+  --bg-smallest-2: 25em;
 
   /* profile page colors */
   --back-color :#1A1A1B;
@@ -133,5 +148,4 @@ body {
     font-size: 50%;
   }
 }
-
 </style>

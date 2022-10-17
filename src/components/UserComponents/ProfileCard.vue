@@ -12,10 +12,9 @@
           <img src="../../assets/avatar.png" alt="">
         </div>
       </div>
-      <h2 class="profile-name">Agile_Relative7435</h2>
+      <h2 class="profile-name">{{ userName || 'Agile_Relative7435'}}</h2>
       <p class="profile-desc">u/Agile_Relative7435 · 8d</p>
       <div class="profile-button">
-
         <button><i class="fa-solid fa-shirt avatar-style"></i>Style Avatar</button>
       </div>
       <div class="profile-items">
@@ -475,5 +474,11 @@ button.fewer-options:hover::before,
 ul.profile-options li:hover::before
 {
   opacity: .08;
+}
+
+@media (max-width:960px) {
+  .profile-card {
+    display: none;
+  }
 }
 </style>

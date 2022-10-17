@@ -14,6 +14,7 @@ const router = createRouter({
       path:"/user/:userName",
       name: "user",
       component: UserPage,
+      children: [ {path:'/:jnj(.*)' ,component: UserPage} ],
       props:true
     },//render user component
     {
