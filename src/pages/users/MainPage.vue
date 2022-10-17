@@ -48,27 +48,27 @@ export default {
   grid-template-columns: 60% 40%;
   grid-gap: 30px;
 } */
-/* .left-col {
-	margin-left: 5rem;
-} */
-/* .right-col {
-	padding: 20px;
+.left-col {
+	/* margin-left: 5rem; */
+}
+.right-col {
+	/* padding: 20px;
   margin-left: 15rem;
-  margin-top: 4rem;
-} */
+  margin-top: 4rem; */
+}
 @media only screen and (max-width: 991px) {
 	.container {
 		max-width: 100%;
 	}
 	/* .wrapper {
     grid-template-columns: 100%;
-  }
-  .right-col {
-    display: none;
-  }
-  .left-col {
+  } */
+	.right-col {
+		display: none;
+	}
+	/* .left-col {
     margin: auto;
     width: 100%;
-  } */
+  }  */
 }
 </style>
