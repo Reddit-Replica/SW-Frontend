@@ -45,8 +45,8 @@ export default {
 
   --color-orange: #ff2c00;
   --color-blue: #6094fe;
-  --color-blue-light:rgb(67, 198, 249);
-  --color-blue-light-2:#e5f5fd;
+  --color-blue-light: rgb(67, 198, 249);
+  --color-blue-light-2: #e5f5fd;
   --color-green: rgb(62, 231, 62);
 
   --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
@@ -80,7 +80,7 @@ export default {
   --bg-smallest-2: 25em;
 
   /* profile page colors */
-  --back-color :#1A1A1B;
+  --back-color: #1a1a1b;
   --main-blue-color: #277e98;
   --main-black-color: #1f2021;
   --main-grey-color: #353235;
