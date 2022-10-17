@@ -1,16 +1,18 @@
 <template>
-  <div class="wrapper container">
-    <div class="row left-col">
-      <div class="col-lg-12">
-        <createpost-bar></createpost-bar>
-        <sortposts-bar></sortposts-bar>
-        <base-post :post="post"></base-post>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="left-col">
+          <createpost-bar></createpost-bar>
+          <sortposts-bar></sortposts-bar>
+          <base-post :post="post"></base-post>
       </div>
-    </div>
-    <div class="row right-col">
-      <div class="col-lg-12">right</div>
+      </div>
+      <div class="col-lg-3">
+        <div class="right-col">right</div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -41,24 +43,24 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+/* .wrapper {
   display: grid;
   grid-template-columns: 60% 40%;
   grid-gap: 30px;
-}
+} */
 .left-col {
-  margin-left: 5rem;
+  /* margin-left: 5rem; */
 }
 .right-col {
-  padding: 20px;
+  /* padding: 20px;
   margin-left: 15rem;
-  margin-top: 4rem;
-}
-@media only screen and (max-width: 60em) {
+  margin-top: 4rem; */
+} 
+@media only screen and (max-width: 991px) {
   .container {
     max-width: 100%;
   }
-  .wrapper {
+  /* .wrapper {
     grid-template-columns: 100%;
   }
   .right-col {
@@ -67,6 +69,6 @@ export default {
   .left-col {
     margin: auto;
     width: 100%;
-  }
+  } */
 }
 </style>
