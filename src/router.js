@@ -3,6 +3,8 @@ import MainPage from "./pages/users/MainPage.vue";
 import ForgetPassword from './components/forget/ForgetPassword.vue'
 import ForgetUsername from './components/forget/ForgetUsername'
 import UserPage from './pages/users/UserPage.vue'
+
+import NotFound from "./pages/NotFound.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -29,6 +31,7 @@ const router = createRouter({
     },//render post component
     //{ path: '/test', component: null },
     //  { path: '', component: null },
+    { path: "/:notFound(.*)", component: NotFound },
   ],
 });
 
