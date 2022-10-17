@@ -5,13 +5,13 @@
       <img src="../../../img/reddit.png" alt="reddit" class="reddit" />
     </div>
     <div class="home">
-      <div class="icon__home">
+      <div class="icon-home">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-house-door-fill user-nav__icon"
+          class="bi bi-house-door-fill user-nav-icon"
           viewBox="0 0 16 16"
         >
           <path
@@ -20,26 +20,26 @@
         </svg>
         <span>Home</span>
       </div>
-      <svg class="user-nav__icon down-arrow">
+      <svg class="user-nav-icon down-arrow">
         <use xlink:href="../../../img/sprite.svg#icon-chevron-small-down"></use>
       </svg>
     </div>
     <form action="#" class="search">
-      <input type="text" class="search__input" placeholder="Search Reddit" />
-      <button class="search__button">
-        <svg class="search__icon">
+      <input type="text" class="search-input" placeholder="Search Reddit" />
+      <button class="search-button">
+        <svg class="search-icon">
           <use xlink:href="../../../img/sprite.svg#icon-magnifying-glass"></use>
         </svg>
       </button>
     </form>
     <nav class="user-nav">
-      <div class="user-nav__icon-box popular">
+      <div class="user-nav-icon-box popular">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-arrow-up-right-circle user-nav__icon"
+          class="bi bi-arrow-up-right-circle user-nav-icon"
           viewBox="0 0 16 16"
         >
           <title>Popular</title>
@@ -61,13 +61,13 @@
 
       | -->
 
-      <div class="user-nav__icon-box">
+      <div class="user-nav-icon-box">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-chat-dots user-nav__icon"
+          class="bi bi-chat-dots user-nav-icon"
           viewBox="0 0 16 16"
         >
           <title>Chat</title>
@@ -78,16 +78,16 @@
             d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
           />
         </svg>
-        <span class="user-nav__notification">2</span>
+        <span class="user-nav-notification">2</span>
       </div>
 
-      <div class="user-nav__icon-box">
+      <div class="user-nav-icon-box">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-bell user-nav__icon"
+          class="bi bi-bell user-nav-icon"
           viewBox="0 0 16 16"
         >
           <title>Notifications</title>
@@ -95,16 +95,16 @@
             d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
           />
         </svg>
-        <span class="user-nav__notification">2</span>
+        <span class="user-nav-notification">2</span>
       </div>
 
-      <div class="user-nav__icon-box">
+      <div class="user-nav-icon-box">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-plus user-nav__icon plus"
+          class="bi bi-plus user-nav-icon plus"
           viewBox="0 0 16 16"
         >
           <title>Create Post</title>
@@ -113,7 +113,7 @@
           />
         </svg>
       </div>
-      <div class="user-nav__box box">
+      <div class="user-nav-box box">
         <button class="button-advertise">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -131,17 +131,17 @@
         </button>
       </div>
 
-      <div class="user-nav__box user">
+      <div class="user-nav-box user">
         <img
           src="../../../img/user-image.jpg"
           alt="user photo"
-          class="user-nav__user-photo"
+          class="user-nav-user-photo"
         />
-        <span class="user-nav__online"></span>
+        <span class="user-nav-online"></span>
 
-        <div class="user-nav__user">
-          <span class="user-nav__user-name">asmaaadel0</span>
-          <svg class="user-nav__icon icon-user">
+        <div class="user-nav-user">
+          <span class="user-nav-user-name">asmaaadel0</span>
+          <svg class="user-nav-icon icon-user">
             <use
               xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
             ></use>
@@ -203,7 +203,7 @@ img {
 .logo img {
   height: 4rem;
 }
-.icon__home {
+.icon-home {
   display: grid;
   grid-template-columns: min-content min-content min-content;
   /* width: 40rem; */
@@ -243,7 +243,7 @@ img {
   justify-content: center;
 }
 
-.search__input {
+.search-input {
   font-family: inherit;
   font-size: inherit;
   background-color: var(--color-grey-light-2);
@@ -255,34 +255,34 @@ img {
   /* transition: all 0.2s; */
   margin-right: -3.75rem;
 }
-.search__input:focus,
-.search__input:hover {
+.search-input:focus,
+.search-input:hover {
   outline: navajowhite;
   border: var(--line-2);
   background-color: var(--color-white-1);
 }
 
-.search__input::-webkit-input-placeholder {
+.search-input::-webkit-input-placeholder {
   font-weight: 50;
   color: var(--color-grey-dark-2);
 }
-.search__input:focus + .search__button,
-.search__input:hover + .search__button {
+.search-input:focus + .search-button,
+.search-input:hover + .search-button {
   background-color: var(--color-white-1);
 }
-.search__button {
+.search-button {
   border: none;
   /* background-color: var(--color-grey-light-3); */
 }
 
-.search__button:focus {
+.search-button:focus {
   outline: none;
 }
 
-.search__button:active {
+.search-button:active {
   transform: translateY(2px);
 }
-.search__icon {
+.search-icon {
   height: 2rem;
   width: 2rem;
   fill: var(--color-grey-dark-2);
@@ -323,10 +323,10 @@ img {
 .user-nav > *:hover {
   background-color: var(--color-grey-light-2);
 }
-.user-nav__icon-box {
+.user-nav-icon-box {
   position: relative;
 }
-.user-nav__icon {
+.user-nav-icon {
   height: 1.9rem;
   width: 1.9rem;
   fill: var(--color-grey-dark-1);
@@ -336,7 +336,7 @@ img {
   height: 3.3rem;
   width: 3.3rem;
 }
-.user-nav__notification {
+.user-nav-notification {
   font-size: 1rem;
   height: 1.9rem;
   width: 1.9rem;
@@ -355,14 +355,14 @@ img {
   align-items: center;
 }
 
-.user-nav__box {
+.user-nav-box {
   margin-left: -1rem;
   border: var(--line-3);
   border-radius: 5px;
   height: 4.5rem;
   position: relative;
 }
-.user-nav__online {
+.user-nav-online {
   font-size: 1rem;
   height: 0.9rem;
   width: 0.9rem;
@@ -378,15 +378,15 @@ img {
   justify-content: center;
   align-items: center;
 }
-.user-nav__box:hover,
-.user-nav__box:focus {
+.user-nav-box:hover,
+.user-nav-box:focus {
   background-color: var(--color-white-1);
   border: var(--line);
 }
 .box:hover {
   border: var(--line-3);
 }
-.user-nav__user {
+.user-nav-user {
   display: grid;
   grid-template-columns: max-content;
   grid-template-rows: max-content;
@@ -396,7 +396,7 @@ img {
   border-radius: 5px;
   width: 16rem;
 }
-.user-nav__user-photo {
+.user-nav-user-photo {
   width: 2.5rem;
   height: 2.5rem;
   /* border-radius: 50%; */
@@ -404,11 +404,11 @@ img {
   margin-right: 0.3rem;
   margin-left: 0.9rem;
 }
-.user-nav__user-name {
+.user-nav-user-name {
   color: var(--color-dark-1);
   font-size: 1.1rem;
 }
-.user-nav__karma {
+.user-nav-karma {
   color: var(--color-grey-dark-4);
   font-size: 1rem;
   font-weight: 600;
@@ -425,18 +425,18 @@ img {
   .header {
     grid-template-columns: max-content 20% 23% max-content;
   }
-  .user-nav__user-name {
+  .user-nav-user-name {
     display: none;
   }
-  .user-nav__karma,
-  .user-nav__user-name,
+  .user-nav-karma,
+  .user-nav-user-name,
   .star {
     display: none;
   }
   .icon-user {
     left: 5rem;
   }
-  .user-nav__user {
+  .user-nav-user {
     width: 2rem;
   }
 }
@@ -466,7 +466,7 @@ img {
   .user-nav > * {
     padding: 0 0.7rem;
   }
-  .user-nav__icon {
+  .user-nav-icon {
     height: 1.7rem;
     width: 1.7rem;
   }
