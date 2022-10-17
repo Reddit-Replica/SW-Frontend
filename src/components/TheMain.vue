@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1>{{ text }}</h1>
-    <button @click="clicked">
-      Click me!
-    </button>
+    <button @click="clicked">Click me!</button>
   </div>
 </template>
 

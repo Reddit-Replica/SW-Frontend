@@ -1,14 +1,8 @@
 <template>
-  <div
-    class="postCard d-flex flex-row"
-    v-if="!postHidden"
-  >
+  <div class="postCard d-flex flex-row" v-if="!postHidden">
     <!-- section to display votes -->
     <div class="d-flex flex-column voteBox">
-      <div
-        class="upvote"
-        @click="upvote"
-      >
+      <div class="upvote" @click="upvote">
         <svg
           class="icon icon-arrow-down p-1"
           :class="upClicked ? 'upClicked' : ''"
@@ -22,10 +16,7 @@
       >
         {{ counter }}
       </div>
-      <div
-        class="downvote"
-        @click="downvote"
-      >
+      <div class="downvote" @click="downvote">
         <svg
           class="icon icon-arrow-down p-1"
           :class="downClicked ? 'downClicked' : ''"
@@ -39,23 +30,26 @@
     <div class="postContent">
       <router-link :to="{ name: 'post', params: { postName: post.postName } }">
         <div class="subredditInfo">
-          <span class="subredditImage"><img
-            src="../../../img/user-image.jpg"
-            alt=""
-          ></span>
-          <span class="subredditName"><router-link
-            :to="{
-              name: 'subreddit',
-              params: { subredditName: post.subredditName },
-            }"
-          >{{ post.subredditName }}
-          </router-link></span>
+          <span class="subredditImage"
+            ><img src="../../../img/user-image.jpg" alt=""
+          /></span>
+          <span class="subredditName"
+            ><router-link
+              :to="{
+                name: 'subreddit',
+                params: { subredditName: post.subredditName },
+              }"
+              >{{ post.subredditName }}
+            </router-link></span
+          >
           <span>
             . Posted by .
             <router-link
               :to="{ name: 'user', params: { userName: post.userName } }"
             >
-              {{ post.userName }} </router-link>&nbsp;{{ post.duration }} ago</span>
+              {{ post.userName }} </router-link
+            >&nbsp;{{ post.duration }} ago</span
+          >
         </div>
         <div class="postTitle">
           <h3>{{ post.postName }}</h3>
@@ -65,10 +59,7 @@
         </div>
         <div class="postServices">
           <span class="voteServices">
-            <span
-              class="upvote"
-              @click="upvote"
-            >
+            <span class="upvote" @click="upvote">
               <svg
                 class="icon icon-arrow-down p-1"
                 :class="upClicked ? 'upClicked' : ''"
@@ -81,11 +72,9 @@
               :class="
                 upClicked ? 'upClicked' : downClicked ? 'downClicked' : ''
               "
-            >{{ counter }}</span>
-            <span
-              class="downvote"
-              @click="downvote"
+              >{{ counter }}</span
             >
+            <span class="downvote" @click="downvote">
               <svg
                 class="icon icon-arrow-down p-1"
                 :class="downClicked ? 'downClicked' : ''"
@@ -143,10 +132,7 @@
                   d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
                 />
               </svg>
-              <ul
-                class="subMenu"
-                v-if="subMenuDisplay"
-              >
+              <ul class="subMenu" v-if="subMenuDisplay">
                 <li @click="hidePost">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

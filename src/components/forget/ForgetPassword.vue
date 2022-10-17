@@ -12,24 +12,11 @@
           account, and we’ll send you an email with a link to reset your
           password.
         </p>
-        <input
-          type="text"
-          placeholder="Username"
-        >
-        <p class="invalid">
-          Please enter a username to continue
-        </p>
-        <input
-          type="email"
-          placeholder="Email "
-        >
-        <p class="invalid">
-          Please enter an email address to continue
-        </p>
-        <base-button
-          button-text="Email Me"
-          class="emailMe"
-        />
+        <input type="text" placeholder="Username" />
+        <p class="invalid">Please enter a username to continue</p>
+        <input type="email" placeholder="Email " />
+        <p class="invalid">Please enter an email address to continue</p>
+        <base-button button-text="Email Me" class="emailMe" />
 
         <div class="bottomText">
           Don't have an email or need assistance logging in?

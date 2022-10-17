@@ -8,9 +8,7 @@
       </div>
     </div>
     <div class="row right-col">
-      <div class="col-lg-12">
-        right
-      </div>
+      <div class="col-lg-12">right</div>
     </div>
   </div>
 </template>
