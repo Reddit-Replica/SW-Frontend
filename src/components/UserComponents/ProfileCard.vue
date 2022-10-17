@@ -6,28 +6,18 @@
   <aside>
     <div class="profile-card">
       <div class="cover-pic">
-        <a
-          href=""
-          class="add-image"
-        >
-          <i class="fa-regular fa-square-plus add-image-icon" /></a>
-        <a
-          href=""
-          class="settings"
-        ><i class="fa-solid fa-gear" /></a>
+        <a href="" class="add-image">
+          <i class="fa-regular fa-square-plus add-image-icon"
+        /></a>
+        <a href="" class="settings"><i class="fa-solid fa-gear" /></a>
         <div class="profile-avatar">
-          <img
-            src="../../assets/avatar.png"
-            alt=""
-          >
+          <img src="../../assets/avatar.png" alt="" />
         </div>
       </div>
       <h2 class="profile-name">
         {{ userName || "Agile_Relative7435" }}
       </h2>
-      <p class="profile-desc">
-        u/Agile_Relative7435 · 8d
-      </p>
+      <p class="profile-desc">u/Agile_Relative7435 · 8d</p>
       <div class="profile-button">
         <button>
           <i class="fa-solid fa-shirt avatar-style" />Style Avatar
@@ -47,8 +37,7 @@
           <h5>Cake day</h5>
           <span>
             <p>
-              <span><i class="fa-solid fa-cake-candles" /></span>october
-              2,2022
+              <span><i class="fa-solid fa-cake-candles" /></span>october 2,2022
             </p>
           </span>
         </span>
@@ -56,26 +45,25 @@
       <ul class="social-link">
         <li>
           <button>
-            <span class="social-link-image"><img
-              src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM"
-              alt=""
-            ></span>socail media
+            <span class="social-link-image"
+              ><img
+                src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM"
+                alt="" /></span
+            >socail media
           </button>
         </li>
         <li>
           <button>
-            <span class="social-link-image"><img
-              src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=z3ESiuXOiGuxXM"
-              alt=""
-            ></span>hhh
+            <span class="social-link-image"
+              ><img
+                src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=z3ESiuXOiGuxXM"
+                alt="" /></span
+            >hhh
           </button>
         </li>
         <li>
           <button>
-            <span class="social-link-image"><img
-              src=""
-              alt=""
-            ></span>hhh
+            <span class="social-link-image"><img src="" alt="" /></span>hhh
           </button>
         </li>
         <li>
@@ -84,9 +72,7 @@
           </button>
         </li>
       </ul>
-      <button class="new-post">
-        New post
-      </button>
+      <button class="new-post">New post</button>
       <button
         class="more-options"
         @click="toggleShowMoreOptions"
@@ -94,10 +80,7 @@
       >
         More options
       </button>
-      <ul
-        class="profile-options"
-        v-show="showMoreOptions"
-      >
+      <ul class="profile-options" v-show="showMoreOptions">
         <li>
           <a href="">Profile to Moderation</a>
         </li>

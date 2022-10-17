@@ -1,18 +1,8 @@
 <template>
   <div class="content">
-    <img
-      src="../../../img/reddit-white-grey.png"
-      alt="reddit"
-    >
-    <form
-      action="#"
-      class="post"
-    >
-      <input
-        type="text"
-        class="search-post"
-        placeholder="Create Post"
-      >
+    <img src="../../../img/reddit-white-grey.png" alt="reddit" />
+    <form action="#" class="post">
+      <input type="text" class="search-post" placeholder="Create Post" />
       <button class="post__button" />
     </form>
     <div class="box">

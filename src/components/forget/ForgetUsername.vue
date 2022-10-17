@@ -10,17 +10,9 @@
           Tell us the email address associated with your Reddit account, and
           we’ll send you an email with your username.
         </p>
-        <input
-          type="email"
-          placeholder="Email Address"
-        >
-        <p class="invalid">
-          Please enter an email address to continue
-        </p>
-        <base-button
-          button-text="Email Me"
-          class="emailMe"
-        />
+        <input type="email" placeholder="Email Address" />
+        <p class="invalid">Please enter an email address to continue</p>
+        <base-button button-text="Email Me" class="emailMe" />
 
         <div class="bottomText">
           Don't have an email or need assistance logging in?

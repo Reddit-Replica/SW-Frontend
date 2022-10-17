@@ -14,18 +14,12 @@
             {{ profileLink.linkName }}
           </router-link>
         </li>
-        <li
-          @click="showLinkBox = !showLinkBox"
-          class="overflow"
-        >
+        <li @click="showLinkBox = !showLinkBox" class="overflow">
           <span>...</span>
         </li>
       </ul>
     </div>
-    <ul
-      v-show="showLinkBox"
-      class="linkbox"
-    >
+    <ul v-show="showLinkBox" class="linkbox">
       <li
         v-for="profileLink in hiddenLinks"
         :key="profileLink.id"

@@ -1,10 +1,7 @@
 <template>
   <div class="content">
     <div class="box-1-1">
-      <div
-        class="icon-box clicked"
-        @click="showSubMenu()"
-      >
+      <div class="icon-box clicked" @click="showSubMenu()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -20,9 +17,7 @@
         <!-- <i class="fa-brands fa-space-awesome icon"></i> -->
         <span>{{ clicked }}</span>
         <svg class="arrow-icon icon">
-          <use
-            xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
-          />
+          <use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
         </svg>
       </div>
     </div>
@@ -146,16 +141,11 @@
           <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
         </svg>
         <svg class="arrow-icon icon">
-          <use
-            xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
-          />
+          <use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
         </svg>
       </div>
     </div>
-    <ul
-      class="sub-menu"
-      v-if="showMenu"
-    >
+    <ul class="sub-menu" v-if="showMenu">
       <li
         class="icon-box"
         :class="{ clicked: clicked == 'Best' }"
