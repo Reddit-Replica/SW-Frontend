@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "npm run prettier && npm run lint && vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "prettier": "prettier --config .prettierrc src/**/*.js --write"
+    "prettier": "prettier --config .prettierrc src/**/*.js --write && prettier --config .prettierrc src/**/*.vue --write"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
