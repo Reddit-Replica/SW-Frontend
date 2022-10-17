@@ -1,18 +1,18 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-        <div class="left-col">
-          <createpost-bar></createpost-bar>
-          <sortposts-bar></sortposts-bar>
-          <base-post :post="post"></base-post>
-      </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="right-col">right</div>
-    </div>
-  </div>
-</div>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-6">
+				<div class="left-col">
+					<createpost-bar></createpost-bar>
+					<sortposts-bar></sortposts-bar>
+					<base-post :post="post"></base-post>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="right-col">right</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -48,19 +48,19 @@ export default {
   grid-template-columns: 60% 40%;
   grid-gap: 30px;
 } */
-.left-col {
-  /* margin-left: 5rem; */
-}
-.right-col {
-  /* padding: 20px;
+/* .left-col {
+	margin-left: 5rem;
+} */
+/* .right-col {
+	padding: 20px;
   margin-left: 15rem;
-  margin-top: 4rem; */
-} 
+  margin-top: 4rem;
+} */
 @media only screen and (max-width: 991px) {
-  .container {
-    max-width: 100%;
-  }
-  /* .wrapper {
+	.container {
+		max-width: 100%;
+	}
+	/* .wrapper {
     grid-template-columns: 100%;
   }
   .right-col {
