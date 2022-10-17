@@ -1,7 +1,7 @@
 <template>
   <div class="content">
-    <div class="box-1__1">
-      <div class="icon__box clicked" @click="showSubMenu()">
+    <div class="box-1-1">
+      <div class="icon-box clicked" @click="showSubMenu()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -25,7 +25,7 @@
     </div>
     <div class="box-1">
       <div
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'Best' }"
         @click="selectSort('Best')"
       >
@@ -46,7 +46,7 @@
       </div>
 
       <div
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'Hot' }"
         @click="selectSort('Hot')"
       >
@@ -66,7 +66,7 @@
         <span>Hot</span>
       </div>
       <div
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'New' }"
         @click="selectSort('New')"
       >
@@ -86,7 +86,7 @@
         <span>New</span>
       </div>
       <div
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'Top' }"
         @click="selectSort('Top')"
       >
@@ -149,9 +149,9 @@
         </svg>
       </div>
     </div>
-    <ul class="subMenu" v-if="showMenu">
+    <ul class="sub-menu" v-if="showMenu">
       <li
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'Best' }"
         @click="selectSort('Best')"
       >
@@ -170,9 +170,8 @@
         <!-- <i class="fa-brands fa-space-awesome icon"></i> -->
         <span>Best</span>
       </li>
-
       <li
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'Hot' }"
         @click="selectSort('Hot')"
       >
@@ -192,7 +191,7 @@
         <span>Hot</span>
       </li>
       <li
-        class="icon__box"
+        class="icon-box"
         :class="{ clicked: clicked == 'New' }"
         @click="selectSort('New')"
       >
@@ -279,7 +278,7 @@ export default {
   height: 5rem;
   cursor: pointer;
 }
-.box-1__1 {
+.box-1-1 {
   display: none;
 }
 .box-1 {
@@ -289,7 +288,7 @@ export default {
 }
 .box-1 > *,
 .box-2 > *,
-.box-1__1 > * {
+.box-1-1 > * {
   padding: 0 1rem;
   cursor: pointer;
   height: 100%;
@@ -299,7 +298,7 @@ export default {
 
 .box-1 > *:hover,
 .box-2 > *:hover,
-.box-1__1 > *:hover {
+.box-1-1 > *:hover {
   background-color: var(--color-grey-light-2);
   border-radius: 2rem;
 }
@@ -325,7 +324,7 @@ export default {
 .clicked .icon {
   fill: var(--color-blue-light);
 }
-.subMenu {
+.sub-menu {
   display: flex;
   position: absolute;
   background-color: white;
@@ -335,7 +334,7 @@ export default {
   box-shadow: 0px 2px 4px var(--color-grey-dark-2);
   border-radius: 5px;
 }
-.subMenu li {
+.sub-menu li {
   color: var(--color-grey-dark-2);
   font-size: 15px;
   font-weight: lighter;
@@ -344,21 +343,21 @@ export default {
   flex-direction: row;
   align-items: center;
 }
-.subMenu li:hover {
+.sub-menu li:hover {
   background-color: var(--color-grey-light-2);
   border-radius: 2rem;
 }
-.subMenu li {
+.sub-menu li {
   padding: 0px 10px;
 }
-.subMenu li.clicked {
+.sub-menu li.clicked {
   background-color: var(--color-white-1);
 }
 @media only screen and (max-width: 40em) {
   .box-1{
     display: none;
   }
-  .box-1__1{
+  .box-1-1{
     display: flex;
   }
 }

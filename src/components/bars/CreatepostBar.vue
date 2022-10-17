@@ -2,17 +2,17 @@
   <div class="content">
     <img src="../../../img/reddit-white-grey.png" alt="reddit" />
     <form action="#" class="post">
-      <input type="text" class="search__post" placeholder="Create Post" />
+      <input type="text" class="search-post" placeholder="Create Post" />
       <button class="post__button"></button>
     </form>
     <div class="box">
-      <div class="post__icon-box">
-        <svg class="post__icon">
+      <div class="post-icon-box">
+        <svg class="post-icon">
           <use xlink:href="../../../img/sprite.svg#icon-image-inverted"></use>
         </svg>
       </div>
-      <div class="post__icon-box">
-        <svg class="post__icon">
+      <div class="post-icon-box">
+        <svg class="post-icon">
           <use xlink:href="../../../img/sprite.svg#icon-link"></use>
         </svg>
       </div>
@@ -65,14 +65,14 @@ button {
 .box > *:hover {
   background-color: var(--color-grey-light-2);
 }
-.post__icon {
+.post-icon {
   height: 2rem;
   width: 2rem;
   margin: 0.6rem;
   fill: var(--color-grey-dark-3);
 }
 
-.search__post {
+.search-post {
   font-family: inherit;
   font-size: inherit;
   background-color: var(--color-grey-light-2);
@@ -84,12 +84,12 @@ button {
   transition: all 0.2s;
   margin-right: -3.25rem;
 }
-.search__post:focus {
+.search-post:focus {
   outline: navajowhite;
   border: var(--line-2);
   background-color: var(--color-white-1);
 }
-.search__post:hover {
+.search-post:hover {
   border: var(--line-2);
   background-color: var(--color-white-1);
 }
