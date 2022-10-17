@@ -16,29 +16,29 @@
 </template>
 
 <script>
-import CreatepostBar from "../../components/bars/CreatepostBar.vue";
-import SortpostsBar from "../../components/bars/SortpostsBar.vue";
-import BasePost from "../../components/BaseComponents/BasePost.vue";
+import CreatepostBar from '../../components/bars/CreatepostBar.vue';
+import SortpostsBar from '../../components/bars/SortpostsBar.vue';
+import BasePost from '../../components/BaseComponents/BasePost.vue';
 export default {
-  components: {
-    CreatepostBar,
-    SortpostsBar,
-    BasePost,
-  },
-  data() {
-    return {
-      colorGreyDark2: "#0099CC",
-      post: {
-        userName: "mena",
-        voteCount: 22,
-        subredditName: "sub-com",
-        duration: "22 minutes",
-        postName: "Hello World",
-        postDescription: "post description",
-        commentsCount: 22,
-      },
-    };
-  },
+	components: {
+		CreatepostBar,
+		SortpostsBar,
+		BasePost,
+	},
+	data() {
+		return {
+			colorGreyDark2: '#0099CC',
+			post: {
+				userName: 'mena',
+				voteCount: 22,
+				subredditName: 'sub-com',
+				duration: '22 minutes',
+				postName: 'Hello World',
+				postDescription: 'post description',
+				commentsCount: 22,
+			},
+		};
+	},
 };
 </script>
 
