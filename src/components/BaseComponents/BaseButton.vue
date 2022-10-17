@@ -5,7 +5,11 @@
 <script>
 export default {
   props: {
-    buttonText: String,
+    buttonText: {
+      type: String,
+      required: false,
+      default: "",
+    },
   },
 };
 </script>

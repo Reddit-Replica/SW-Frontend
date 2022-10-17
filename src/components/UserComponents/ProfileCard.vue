@@ -6,49 +6,98 @@
   <aside>
     <div class="profile-card">
       <div class="cover-pic">
-        <a href="" class="add-image"> <i class="fa-regular fa-square-plus add-image-icon"></i></a>
-        <a href="" class="settings"><i class="fa-solid fa-gear"></i></a>
+        <a
+          href=""
+          class="add-image"
+        >
+          <i class="fa-regular fa-square-plus add-image-icon" /></a>
+        <a
+          href=""
+          class="settings"
+        ><i class="fa-solid fa-gear" /></a>
         <div class="profile-avatar">
-          <img src="../../assets/avatar.png" alt="">
+          <img
+            src="../../assets/avatar.png"
+            alt=""
+          >
         </div>
       </div>
-      <h2 class="profile-name">{{ userName || 'Agile_Relative7435'}}</h2>
-      <p class="profile-desc">u/Agile_Relative7435 · 8d</p>
+      <h2 class="profile-name">
+        {{ userName || "Agile_Relative7435" }}
+      </h2>
+      <p class="profile-desc">
+        u/Agile_Relative7435 · 8d
+      </p>
       <div class="profile-button">
-        <button><i class="fa-solid fa-shirt avatar-style"></i>Style Avatar</button>
+        <button>
+          <i class="fa-solid fa-shirt avatar-style" />Style Avatar
+        </button>
       </div>
       <div class="profile-items">
         <span class="i karma">
           <h5>Karma</h5>
           <span>
-            <i></i>
-            <p><span><i class="fa-solid fa-fan"></i></span>1</p>
+            <i />
+            <p>
+              <span><i class="fa-solid fa-fan" /></span>1
+            </p>
           </span>
         </span>
         <span class="i cake-day">
           <h5>Cake day</h5>
           <span>
-            <p><span><i class="fa-solid fa-cake-candles"></i></span>october 2,2022</p>
+            <p>
+              <span><i class="fa-solid fa-cake-candles" /></span>october
+              2,2022
+            </p>
           </span>
         </span>
       </div>
       <ul class="social-link">
         <li>
-          <button><span class="social-link-image"><img src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM" alt=""></span>socail media</button>
+          <button>
+            <span class="social-link-image"><img
+              src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM"
+              alt=""
+            ></span>socail media
+          </button>
         </li>
         <li>
-          <button><span class="social-link-image"><img src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=z3ESiuXOiGuxXM" alt=""></span>hhh</button>
+          <button>
+            <span class="social-link-image"><img
+              src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=z3ESiuXOiGuxXM"
+              alt=""
+            ></span>hhh
+          </button>
         </li>
         <li>
-          <button><span class="social-link-image"><img src="" alt=""></span>hhh</button>
+          <button>
+            <span class="social-link-image"><img
+              src=""
+              alt=""
+            ></span>hhh
+          </button>
         </li>
         <li>
-          <button class="add-social-link"><span><i class="fa-solid fa-plus"></i></span>Add social link</button>
+          <button class="add-social-link">
+            <span><i class="fa-solid fa-plus" /></span>Add social link
+          </button>
         </li>
       </ul>
-      <button class="new-post">New post</button>
-      <button class="more-options" @click="toggleShowMoreOptions" v-show="!showMoreOptions">More options</button>
-      <ul class="profile-options" v-show="showMoreOptions">
+      <button class="new-post">
+        New post
+      </button>
+      <button
+        class="more-options"
+        @click="toggleShowMoreOptions"
+        v-show="!showMoreOptions"
+      >
+        More options
+      </button>
+      <ul
+        class="profile-options"
+        v-show="showMoreOptions"
+      >
         <li>
           <a href="">Profile to Moderation</a>
         </li>
@@ -59,30 +108,38 @@
           <a href="">Invite someone to chat</a>
         </li>
       </ul>
-      <button class="fewer-options" v-show="showMoreOptions" @click="toggleShowMoreOptions">Fewer options</button>
-
+      <button
+        class="fewer-options"
+        v-show="showMoreOptions"
+        @click="toggleShowMoreOptions"
+      >
+        Fewer options
+      </button>
     </div>
   </aside>
 </template>
 
 <script>
 export default {
-  props: ['userName'],
+  props: {
+    userName: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       showMoreOptions: false,
       // showMoreOptionsButton:false,
-    }
+    };
   },
   methods: {
     toggleShowMoreOptions() {
       this.showMoreOptions = !this.showMoreOptions;
       console.log(this.userName, this.$route.props.userName);
-    }
-
-  }
-
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -151,7 +208,6 @@ aside {
   top: -12px;
   margin-bottom: calc(160px + 12px + 0px - 94px);
   /* 160 pic hieght 12px -> top Avatar , 0 for margin bottom , -94 cover height*/
-
 }
 
 .cover-pic .add-image {
@@ -172,16 +228,16 @@ a.add-image i {
   color: #d7dadc;
 }
 .add-image::before {
-  content: '';
+  content: "";
   position: absolute;
   height: 35px;
   width: 35px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, calc(-50% ));
+  transform: translate(-50%, calc(-50%));
   /* background: #ec0623; */
-  background: #1A1A1B;
-  border:1px solid #D7DADC;
+  background: #1a1a1b;
+  border: 1px solid #d7dadc;
   border-radius: 50%;
   z-index: -1;
   /* opacity: 50%; */
@@ -193,7 +249,6 @@ a.add-image i {
   right: 15px;
   bottom: -36px;
   color: #d7dadc;
-
 }
 .profile-avatar img {
   height: 160px;
@@ -205,14 +260,14 @@ a.add-image i {
 }
 
 .profile-name {
-  color: #D7DADC;
+  color: #d7dadc;
   text-align: center;
-  margin: 5px
-    /* line-height: 40px; */
+  margin: 5px;
+  /* line-height: 40px; */
 }
 
 .profile-desc {
-  color: #D7DADC;
+  color: #d7dadc;
   text-align: center;
   font-size: 12px;
   font-weight: 500;
@@ -231,7 +286,7 @@ a.add-image i {
   color: #fff;
   font-size: 14px;
   font-weight: 700;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   text-transform: capitalize;
   line-height: 17px;
   border-radius: 999px;
@@ -246,21 +301,21 @@ a.add-image i {
 }
 
 .profile-button button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  background-color: #1A1A1B;
+  background-color: #1a1a1b;
   z-index: 55;
   opacity: 0;
   /* opacity: .08; */
 }
 
 .profile-button button:hover::before {
-  opacity: .08;
+  opacity: 0.08;
 }
 
 .profile-items {
@@ -312,13 +367,12 @@ a.add-image i {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-
 }
 
 .social-link button {
   background-color: #343536;
   border-radius: 9999px;
-  color: #D7DADC;
+  color: #d7dadc;
   font-size: 12px;
   font-weight: 700;
   line-height: 16px;
@@ -346,8 +400,8 @@ button.new-post {
   margin-top: 10px;
   height: 37px;
   text-align: center;
-  color: #1A1A1B;
-  background-color: #D7DADC;
+  color: #1a1a1b;
+  background-color: #d7dadc;
   border-radius: 9999px;
   font-size: 14px;
   font-weight: 700;
@@ -356,25 +410,23 @@ button.new-post {
   padding: 4px 16px;
   cursor: pointer;
   position: relative;
-
 }
 
 button.new-post::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  background-color: #1A1A1B;
+  background-color: #1a1a1b;
   z-index: 55;
   opacity: 0;
-
 }
 
 button.new-post:hover::before {
-  opacity: .08;
+  opacity: 0.08;
 }
 
 button.more-options {
@@ -385,7 +437,7 @@ button.more-options {
   background-color: transparent;
   border-radius: 9999px;
   width: fit-content;
-  color: #D7DADC;
+  color: #d7dadc;
   padding: 4px 16px;
   border: 1px solid transparent;
   min-height: 32px;
@@ -414,24 +466,24 @@ ul.profile-options li {
   display: flex;
   align-items: center;
   margin-top: 8px;
-  color: #D7DADC;
+  color: #d7dadc;
   position: relative;
   padding: 4px 8px;
 }
 ul.profile-options li::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  background-color: #D7DADC;
+  background-color: #d7dadc;
   z-index: 55;
   opacity: 0;
 }
 ul.profile-options li a {
-  color: #D7DADC;
+  color: #d7dadc;
 }
 
 button.fewer-options {
@@ -442,7 +494,7 @@ button.fewer-options {
   background-color: transparent;
   border-radius: 9999px;
   width: fit-content;
-  color: #D7DADC;
+  color: #d7dadc;
   padding: 4px 16px;
   border: 1px solid transparent;
   min-height: 32px;
@@ -457,26 +509,25 @@ button.fewer-options {
 
 button.more-options::before,
 button.fewer-options::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  background-color: #D7DADC;
+  background-color: #d7dadc;
   z-index: 55;
   opacity: 0;
 }
 
 button.more-options:hover::before,
 button.fewer-options:hover::before,
-ul.profile-options li:hover::before
-{
-  opacity: .08;
+ul.profile-options li:hover::before {
+  opacity: 0.08;
 }
 
-@media (max-width:960px) {
+@media (max-width: 960px) {
   .profile-card {
     display: none;
   }

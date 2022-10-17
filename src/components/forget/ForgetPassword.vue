@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <button class="x-button"><div class="x"></div></button>
+    <button class="x-button">
+      <div class="x" />
+    </button>
     <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Times_symbol.svg/640px-Times_symbol.svg.png" alt="My Happy SVG" width="45" height="45" /> -->
     <div class="box">
       <form>
@@ -10,11 +12,24 @@
           account, and we’ll send you an email with a link to reset your
           password.
         </p>
-        <input type="text" placeholder="Username" />
-        <p class="invalid">Please enter a username to continue</p>
-        <input type="email" placeholder="Email " />
-        <p class="invalid">Please enter an email address to continue</p>
-        <base-button buttonText="Email Me" class="emailMe"> </base-button>
+        <input
+          type="text"
+          placeholder="Username"
+        >
+        <p class="invalid">
+          Please enter a username to continue
+        </p>
+        <input
+          type="email"
+          placeholder="Email "
+        >
+        <p class="invalid">
+          Please enter an email address to continue
+        </p>
+        <base-button
+          button-text="Email Me"
+          class="emailMe"
+        />
 
         <div class="bottomText">
           Don't have an email or need assistance logging in?
@@ -30,7 +45,7 @@
   </div>
 </template>
 
-  <script>
+<script>
 export default {
   data() {
     return {};

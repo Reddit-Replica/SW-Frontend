@@ -1,7 +1,10 @@
 <template>
   <div class="content">
     <div class="box-1-1">
-      <div class="icon-box clicked" @click="showSubMenu()">
+      <div
+        class="icon-box clicked"
+        @click="showSubMenu()"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -19,7 +22,7 @@
         <svg class="arrow-icon icon">
           <use
             xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
-          ></use>
+          />
         </svg>
       </div>
     </div>
@@ -145,11 +148,14 @@
         <svg class="arrow-icon icon">
           <use
             xlink:href="../../../img/sprite.svg#icon-chevron-small-down"
-          ></use>
+          />
         </svg>
       </div>
     </div>
-    <ul class="sub-menu" v-if="showMenu">
+    <ul
+      class="sub-menu"
+      v-if="showMenu"
+    >
       <li
         class="icon-box"
         :class="{ clicked: clicked == 'Best' }"
@@ -238,8 +244,8 @@
     </ul>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   data() {
     return {
@@ -257,8 +263,8 @@ export default {
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .content {
   margin-top: 1.5rem;
   font-size: 1.4rem;
@@ -354,12 +360,11 @@ export default {
   background-color: var(--color-white-1);
 }
 @media only screen and (max-width: 40em) {
-  .box-1{
+  .box-1 {
     display: none;
   }
-  .box-1-1{
+  .box-1-1 {
     display: flex;
   }
 }
 </style>
-  

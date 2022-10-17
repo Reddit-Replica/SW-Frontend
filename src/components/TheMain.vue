@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>{{ text }}</h1>
-    <button @click="clicked">Click me!</button>
+    <button @click="clicked">
+      Click me!
+    </button>
   </div>
 </template>
 
@@ -14,15 +16,13 @@ export default {
   },
   methods: {
     async clicked() {
-      const response = await fetch(
-        `/api/`
-      );
+      const response = await fetch(`/api/`);
       const responseData = await response.json();
       if (!response.ok) {
         const error = new Error(responseData.message || "Failed to fetch!");
         throw error;
       }
-      this.text=responseData.text;
+      this.text = responseData.text;
     },
   },
 };

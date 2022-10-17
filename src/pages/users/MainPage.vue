@@ -2,13 +2,15 @@
   <div class="wrapper container">
     <div class="row left-col">
       <div class="col-lg-12">
-        <createpost-bar></createpost-bar>
-        <sortposts-bar></sortposts-bar>
-        <base-post :post="post"></base-post>
+        <createpost-bar />
+        <sortposts-bar />
+        <base-post :post="post" />
       </div>
     </div>
     <div class="row right-col">
-      <div class="col-lg-12">right</div>
+      <div class="col-lg-12">
+        right
+      </div>
     </div>
   </div>
 </template>

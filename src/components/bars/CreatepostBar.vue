@@ -1,19 +1,29 @@
 <template>
   <div class="content">
-    <img src="../../../img/reddit-white-grey.png" alt="reddit" />
-    <form action="#" class="post">
-      <input type="text" class="search-post" placeholder="Create Post" />
-      <button class="post__button"></button>
+    <img
+      src="../../../img/reddit-white-grey.png"
+      alt="reddit"
+    >
+    <form
+      action="#"
+      class="post"
+    >
+      <input
+        type="text"
+        class="search-post"
+        placeholder="Create Post"
+      >
+      <button class="post__button" />
     </form>
     <div class="box">
       <div class="post-icon-box">
         <svg class="post-icon">
-          <use xlink:href="../../../img/sprite.svg#icon-image-inverted"></use>
+          <use xlink:href="../../../img/sprite.svg#icon-image-inverted" />
         </svg>
       </div>
       <div class="post-icon-box">
         <svg class="post-icon">
-          <use xlink:href="../../../img/sprite.svg#icon-link"></use>
+          <use xlink:href="../../../img/sprite.svg#icon-link" />
         </svg>
       </div>
     </div>
