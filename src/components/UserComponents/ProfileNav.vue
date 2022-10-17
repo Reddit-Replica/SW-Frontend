@@ -2,17 +2,41 @@
   <nav>
     <div class="basecontainer">
       <ul>
-        <li v-for="profileLink in viewedLinks" :key="profileLink.id" :class="{active : profileLink.active}">
-          <router-link :to="`/user/${userName}`+ profileLink.path" :class="{ linkactive : profileLink.active}">
-            {{profileLink.linkName}}</router-link>
+        <li
+          v-for="profileLink in viewedLinks"
+          :key="profileLink.id"
+          :class="{ active: profileLink.active }"
+        >
+          <router-link
+            :to="`/user/${userName}` + profileLink.path"
+            :class="{ linkactive: profileLink.active }"
+          >
+            {{ profileLink.linkName }}
+          </router-link>
         </li>
-        <li @click="showLinkBox = !showLinkBox" class="overflow"><span>...</span></li>
+        <li
+          @click="showLinkBox = !showLinkBox"
+          class="overflow"
+        >
+          <span>...</span>
+        </li>
       </ul>
     </div>
-    <ul v-show="showLinkBox" class="linkbox">
-      <li v-for="profileLink in hiddenLinks" :key="profileLink.id" :class="{active : profileLink.active}">
-        <router-link :to="$route.path+ profileLink.path" :class="{ linkactive : profileLink.active}">
-          {{profileLink.linkName}}</router-link>
+    <ul
+      v-show="showLinkBox"
+      class="linkbox"
+    >
+      <li
+        v-for="profileLink in hiddenLinks"
+        :key="profileLink.id"
+        :class="{ active: profileLink.active }"
+      >
+        <router-link
+          :to="$route.path + profileLink.path"
+          :class="{ linkactive: profileLink.active }"
+        >
+          {{ profileLink.linkName }}
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -20,85 +44,91 @@
 
 <script>
 export default {
-  props: ['userName'],
+  props: {
+    userName: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       showLinkBox: false,
       profileLinks: [
         {
-          id: '1',
-          linkName: 'overview',
-          path: '/',
+          id: "1",
+          linkName: "overview",
+          path: "/",
           active: false,
         },
         {
-          id: '2',
-          linkName: 'Posts',
-          path: '/submitted',
-          active: false
+          id: "2",
+          linkName: "Posts",
+          path: "/submitted",
+          active: false,
         },
         {
-          id: '3',
-          linkName: 'Comments',
-          path: '/comments',
-          active: false
-        }, {
-          id: '4',
-          linkName: 'history',
-          path: '/history',
-          active: false
+          id: "3",
+          linkName: "Comments",
+          path: "/comments",
+          active: false,
         },
         {
-          id: '5',
-          linkName: 'hidden',
-          path: '/hidden',
-          active: false
+          id: "4",
+          linkName: "history",
+          path: "/history",
+          active: false,
         },
         {
-          id: '6',
-          linkName: 'saved',
-          path: '/saved',
-          active: false
+          id: "5",
+          linkName: "hidden",
+          path: "/hidden",
+          active: false,
         },
         {
-          id: '7',
-          linkName: 'upvoted',
-          path: '/upvoted',
-          active: false
+          id: "6",
+          linkName: "saved",
+          path: "/saved",
+          active: false,
         },
         {
-          id: '8',
-          linkName: 'Down voted',
-          path: '/downvoted',
-          active: false
+          id: "7",
+          linkName: "upvoted",
+          path: "/upvoted",
+          active: false,
         },
         {
-          id: '9',
-          linkName: 'awards received',
-          path: '/gilded',
-          active: false
+          id: "8",
+          linkName: "Down voted",
+          path: "/downvoted",
+          active: false,
         },
         {
-          id: '10',
-          linkName: 'awards given',
-          path: '/gildedgiven',
-          active: false
-        }
+          id: "9",
+          linkName: "awards received",
+          path: "/gilded",
+          active: false,
+        },
+        {
+          id: "10",
+          linkName: "awards given",
+          path: "/gildedgiven",
+          active: false,
+        },
       ],
       viewedLinks: [],
       hiddenLinks: [],
-      windowWidths: window.innerWidth
-    }
+      windowWidths: window.innerWidth,
+    };
   },
   mounted() {
     this.viewedLinks = this.profileLinks;
     this.onResize();
     this.$nextTick(() => {
-      window.addEventListener('resize', this.onResize);
-    })
+      window.addEventListener("resize", this.onResize);
+    });
   },
   unmounted() {
-    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener("resize", this.onResize);
   },
   methods: {
     onResize() {
@@ -127,31 +157,30 @@ export default {
 
   // computed: {
   //   windowSize(){
-  //   this.windowWidths = window.innerWidth; 
+  //   this.windowWidths = window.innerWidth;
   //   return this.windowSize;
   //   }
   // }
-}
+};
 </script>
-
 
 <style scoped>
 a {
   text-decoration: none;
   text-decoration: none;
   display: inline-block;
-  color: #1A1A1B;
+  color: #1a1a1b;
   text-transform: uppercase;
   white-space: nowrap;
   /* word-wrap:initial; */
 }
 
 a.router-link-active {
-  color: #0079D3;
+  color: #0079d3;
 }
 
 li:has(> a.router-link-active) {
-  box-shadow: inset 0 -2px 0 0 #0079D3;
+  box-shadow: inset 0 -2px 0 0 #0079d3;
 }
 
 nav {
@@ -159,8 +188,8 @@ nav {
   width: 100%;
   background-color: #ffffff;
   height: 39px;
-  border-bottom: 1px solid #EDEFF1;
-  border-top: 1px solid #EDEFF1;
+  border-bottom: 1px solid #edeff1;
+  border-top: 1px solid #edeff1;
 }
 
 nav ul:first-child {
@@ -183,16 +212,15 @@ nav ul:first-child li:not(:last-child) {
   margin: 0 5px;
   padding: 0 5px;
   height: 100%;
-
 }
 
 nav ul:first-child li:hover a {
-  color: #0079D3;
+  color: #0079d3;
   /* box-shadow: inset 0 -2px 0 0 #0079D3; */
 }
 
 li.active {
-  box-shadow: inset 0 -2px 0 0 #0079D3;
+  box-shadow: inset 0 -2px 0 0 #0079d3;
   /* border-bottom: 2px solid #0079D3; */
 }
 
@@ -250,10 +278,10 @@ li.active {
   z-index: 1000;
   overflow: hidden;
   border-radius: 4px;
-  border: 1px solid #EDEFF1;
+  border: 1px solid #edeff1;
   box-shadow: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
   color: #1c1c1c;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   transform: translateY(1px);
 }
 
@@ -261,10 +289,9 @@ li.active {
   cursor: pointer;
   box-sizing: border-box;
   display: block;
-  color: #1A1A1B;
-  fill: #1A1A1B;
+  color: #1a1a1b;
+  fill: #1a1a1b;
   padding: 10px 16px;
-
 }
 
 .linkbox li {
@@ -281,13 +308,13 @@ li.active {
   /* display: none; */
 }
 
-@media (max-width:1000px) {
+@media (max-width: 1000px) {
   .overflow {
     display: block;
   }
 }
 
-@media (min-width:1000px) {
+@media (min-width: 1000px) {
   .linkbox {
     display: none;
   }

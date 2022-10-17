@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MainPage from "./pages/users/MainPage.vue";
-import ForgetPassword from './components/forget/ForgetPassword.vue'
-import ForgetUsername from './components/forget/ForgetUsername'
-import UserPage from './pages/users/UserPage.vue'
+import ForgetPassword from "./components/forget/ForgetPassword.vue";
+import ForgetUsername from "./components/forget/ForgetUsername";
+import UserPage from "./pages/users/UserPage.vue";
 
 import NotFound from "./pages/NotFound.vue";
 const router = createRouter({
@@ -10,25 +10,25 @@ const router = createRouter({
   routes: [
     { path: "/", redirect: "/main" },
     { path: "/main", component: MainPage },
-    { path: '/forgetPassword', component: ForgetPassword },
-    { path: '/forgetUsername', component: ForgetUsername},
+    { path: "/forgetPassword", component: ForgetPassword },
+    { path: "/forgetUsername", component: ForgetUsername },
     {
-      path:"/user/:userName",
+      path: "/user/:userName",
       name: "user",
       component: UserPage,
-      children: [ {path:'/:jnj(.*)' ,component: UserPage} ],
-      props:true
-    },//render user component
+      children: [{ path: "/:jnj(.*)", component: UserPage }],
+      props: true,
+    }, //render user component
     {
-      path:"/subreddit/:subredditName",
+      path: "/subreddit/:subredditName",
       name: "subreddit",
       component: MainPage,
-    },//render subreddit component
+    }, //render subreddit component
     {
-      path:"/post/:postName",
+      path: "/post/:postName",
       name: "post",
       component: MainPage,
-    },//render post component
+    }, //render post component
     //{ path: '/test', component: null },
     //  { path: '', component: null },
     { path: "/:notFound(.*)", component: NotFound },
