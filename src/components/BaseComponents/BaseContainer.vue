@@ -1,7 +1,7 @@
 <template>
-  <div class="basecontainer">
-    <slot />
-  </div>
+	<div class="basecontainer">
+		<slot />
+	</div>
 </template>
 <script>
 export default {};
@@ -9,9 +9,9 @@ export default {};
 
 <style scoped>
 .basecontainer {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  padding: 20px 24px;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	padding: 20px 24px;
 }
 </style>
