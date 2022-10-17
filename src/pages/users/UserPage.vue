@@ -1,10 +1,10 @@
 <template>
-  <profile-nav></profile-nav>
+  <profile-nav ></profile-nav>
   <base-container>
   <div class="profilebox">
   <createpost-bar></createpost-bar>
   <!-- <h1>user page</h1> -->
-  <profile-card></profile-card>
+  <profile-card :userName="userName"></profile-card>
 </div>
 </base-container>
 </template>
@@ -15,6 +15,12 @@ import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
 import createpostBar from '../../components/bars/CreatepostBar.vue';
 export default {
+  props:{
+    userName:{
+      type:String,
+      default:'Abdelhameed'
+    }
+  },
   components:{
     ProfileCard,
     BaseContainer,
