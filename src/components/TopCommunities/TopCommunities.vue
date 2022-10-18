@@ -21,7 +21,7 @@
 		<div class="viewAllBlock">
 			<a href="https://www.google.com/" class="viewAll">View All</a>
 		</div>
-		<div>
+		<div class="topCommunitiesRecommendations">
 			<span>
 				<a
 					v-for="recommendation in topCommunitiesRecommendations"
@@ -84,8 +84,11 @@ export default {
 
 <style scoped>
 .topCommunities {
+	background-color: var(--color-white-1);
+	color: var(--color-dark-1);
+	fill: var(--color-dark-1);
 	width: 310px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--color-grey-light-4);
 	border-radius: 4px;
 	overflow: visible;
 	word-wrap: break-word;
@@ -97,7 +100,7 @@ export default {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 	height: 80px;
-	width: 310px;
+	/* width: 310px; */
 	position: relative;
 }
 .topCommunitiesTitle {
@@ -137,5 +140,14 @@ export default {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
+}
+.viewAll:hover {
+	opacity: 0.92;
+}
+.topCommunitiesRecommendations {
+	flex-flow: row wrap;
+	justify-content: start;
+	padding: 0 8px 12px;
+	display: flex;
 }
 </style>

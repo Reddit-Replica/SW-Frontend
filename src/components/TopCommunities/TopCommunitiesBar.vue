@@ -24,11 +24,23 @@ export default {
 						'https://b.thumbs.redditmedia.com/voAwqXNBDO4JwIODmO4HXXkUJbnVo_mL_bENHeagDNo.png',
 					link: 'https://www.google.com/',
 				},
+				{
+					id: 'com2',
+					name: 'r/learn',
+					image:
+						'https://b.thumbs.redditmedia.com/voAwqXNBDO4JwIODmO4HXXkUJbnVo_mL_bENHeagDNo.png',
+					link: 'https://www.google.com/',
+				},
 			],
 			topCommunitiesRecommendations: [
 				{
 					id: 'r1',
 					name: 'news',
+					link: 'https://www.google.com/',
+				},
+				{
+					id: 'r2',
+					name: 'sports',
 					link: 'https://www.google.com/',
 				},
 			],
