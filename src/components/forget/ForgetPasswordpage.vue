@@ -67,12 +67,6 @@ export default {
 * {
 	box-sizing: border-box;
 	margin: 0;
-	/* font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    color: #1a1a1b;
-    font-family: IBMPlexSans,sans-serif;
-    position: relative;*/
 }
 div {
 	display: block;
@@ -107,21 +101,8 @@ div {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
 	background-color: #fcfcfb;
-	/*overflow: visible;
-	background: rgb(246, 247, 248);
-	background-color: #f6f7f8;
-	padding: 22px 12px 10px;
-	width: 100%;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	
-	font-family: IBMPlexSans, sans-serif;
 	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
-	height: 46px;
-	padding-left: 16px;
-	transition: all 0.2s ease-in-out;
-	padding-right: 36px;*/
+	margin-top: 5px;
 }
 
 .input-field .span-input {
@@ -136,14 +117,25 @@ div {
 	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
 }
+.input-field .span-input::after {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 7px;
+	content: '\2022';
+	color: #24a0ed;
+}
 .input-field input:valid ~ .span-input,
 .input-field input:focus ~ .span-input,
 .input-field input:hover ~ .span-input {
-	transform: translateX(3px) translateY(-10px);
+	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
-	background-color: #fff;
 }
-
+.input-field input:hover ~ .span-input::after {
+	display: none;
+}
 .input-field input:active {
 	border: 0.5px solid #0079d3;
 }
@@ -152,7 +144,6 @@ div {
 }*/
 .button-class {
 	color: #ffffff;
-	/*background: linear-gradient(89.57deg, #ec0623, #ff8717);*/
 	background: var(--color-blue-2);
 	text-transform: uppercase;
 	cursor: pointer;
@@ -174,13 +165,6 @@ div {
 	font-size: 14px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
-
-	/*border-radius: 24px;
-	font-family: 'IBM Plex Sans', sans-serif;
-	font-size: 14px;
-	height: 40px;
-	line-height: 10px;
-	width: 100%;*/
 }
 .container {
 	background-color: white;
