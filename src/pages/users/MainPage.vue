@@ -9,7 +9,7 @@
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="right-col">right</div>
+				<div class="right-col"><top-communities-bar></top-communities-bar></div>
 			</div>
 		</div>
 	</div>
@@ -19,11 +19,14 @@
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import BasePost from '../../components/BaseComponents/BasePost.vue';
+import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar.vue';
+
 export default {
 	components: {
 		CreatepostBar,
 		SortpostsBar,
 		BasePost,
+		TopCommunitiesBar,
 	},
 	data() {
 		return {
