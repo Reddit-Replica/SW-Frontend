@@ -107,13 +107,48 @@
 							</svg>
 							Awards
 						</li>
-						<li>
+						<li @click="showShareSubMenu">
 							<svg class="icon icon-share">
 								<use
 									xlink:href="../../../img/postServices.svg#icon-share"
 								></use>
 							</svg>
 							Share
+							<ul class="sub-menu" v-if="shareSubMenuDisplay">
+								<li>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-link-45deg"
+										viewBox="0 0 16 16"
+									>
+										<path
+											d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"
+										/>
+										<path
+											d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"
+										/>
+									</svg>
+									Copy Link
+								</li>
+								<li>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-signpost-2"
+										viewBox="0 0 16 16"
+									>
+										<path
+											d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z"
+										/>
+									</svg>
+									Crosspost
+								</li>
+							</ul>
 						</li>
 						<li id="post-direct-save">
 							<div v-if="!saved" @click="savePost">
@@ -249,6 +284,7 @@ export default {
 			upClicked: false,
 			downClicked: false,
 			subMenuDisplay: false,
+			shareSubMenuDisplay: false,
 			postHidden: false,
 			saved: false,
 		};
@@ -256,24 +292,7 @@ export default {
 	props: {
 		post: {
 			type: Object,
-			requires: {
-				userName: true,
-				voteCount: true,
-				subredditName: true,
-				duration: true,
-				postName: true,
-				postDescription: true,
-				commentsCount: true,
-			},
-			default: () => {
-				'';
-				0;
-				('');
-				('');
-				('');
-				('');
-				0;
-			},
+			required: true,
 		},
 	},
 	methods: {
@@ -311,6 +330,9 @@ export default {
 		},
 		savePost() {
 			this.saved = !this.saved;
+		},
+		showShareSubMenu() {
+			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
 		},
 	},
 };
@@ -412,6 +434,7 @@ export default {
 	color: var(--color-grey-dark-2);
 	font-weight: bold;
 	font-size: 10px;
+	position: relative;
 }
 
 .post-services .services > li:hover {
@@ -455,11 +478,6 @@ a {
 .post-card .subreddit-info span:nth-of-type(3) a:hover {
 	text-decoration: underline;
 }
-
-.post-card .post-content .post-services .services > li:last-of-type {
-	position: relative;
-}
-
 .post-card .post-content .post-services .services .sub-menu {
 	position: absolute;
 	background-color: white;
