@@ -55,6 +55,7 @@ export default {
 	/* margin-left: 5rem; */
 }
 .right-col {
+	margin: 12px;
 	/* padding: 20px;
   margin-left: 15rem;
   margin-top: 4rem; */

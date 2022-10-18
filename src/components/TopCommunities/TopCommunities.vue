@@ -19,16 +19,25 @@
 			</top-community>
 		</ol>
 		<div class="viewAllBlock">
-			<a href="https://www.google.com/" class="viewAll">View All</a>
+			<base-button
+				link
+				to="/"
+				class="viewAll"
+				button-text="View All"
+			></base-button>
 		</div>
 		<div class="topCommunitiesRecommendations">
-			<span>
-				<a
-					v-for="recommendation in topCommunitiesRecommendations"
-					:key="recommendation.id"
-					:href="recommendation.link"
-					>{{ recommendation.name }}</a
-				>
+			<span
+				class="topRecommendations"
+				v-for="recommendation in topCommunitiesRecommendations"
+				:key="recommendation.id"
+			>
+				<base-button
+					class="Recommendation"
+					link
+					:to="recommendation.link"
+					:button-text="recommendation.name"
+				></base-button>
 			</span>
 		</div>
 	</div>
@@ -36,8 +45,9 @@
 
 <script>
 import TopCommunity from '../TopCommunities/TopCommunity.vue';
+import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
-	components: { TopCommunity },
+	components: { TopCommunity, BaseButton },
 	props: {
 		topCommunitiesCaption: {
 			type: String,
@@ -134,12 +144,10 @@ export default {
 	font-family: Noto Sans, Arial, sans-serif;
 	font-size: 14px;
 	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 17px;
-	text-transform: unset;
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
+	width: 100%;
 }
 .viewAll:hover {
 	opacity: 0.92;
@@ -149,5 +157,26 @@ export default {
 	justify-content: start;
 	padding: 0 8px 12px;
 	display: flex;
+}
+.topRecommendations {
+	display: flex;
+	margin: 4px;
+}
+.Recommendation {
+	position: relative;
+	background-color: var(--color-grey-light-2);
+	border: 1px solid transparent;
+	color: var(--color-blue-2);
+	fill: var(--color-blue-2);
+
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	min-height: 24px;
+	min-width: 24px;
+	padding: 4px 8px;
+}
+.Recommendation :hover {
+	opacity: 0.92;
 }
 </style>
