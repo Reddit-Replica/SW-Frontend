@@ -1,5 +1,5 @@
 <template>
-	<button>{{ buttonText }}</button>
+	<button :disabled="disableButton">{{ buttonText }}</button>
 </template>
 
 <script>
@@ -9,6 +9,11 @@ export default {
 			type: String,
 			required: false,
 			default: '',
+		},
+		disableButton: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 };
@@ -27,5 +32,6 @@ button {
 }
 button:disabled {
 	cursor: not-allowed;
+	opacity: 0.2;
 }
 </style>
