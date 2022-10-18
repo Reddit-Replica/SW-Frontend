@@ -5,6 +5,8 @@ import ForgetUsername from './components/forget/ForgetUsername.vue';
 import ForgetPasswordpage from './components/forget/ForgetPasswordpage.vue';
 import forgetUsernamepage from './components/forget/forgetUsernamepage.vue';
 import UserPage from './pages/users/UserPage.vue';
+import login from './pages/login/login.vue';
+import signupPage from './pages/sign-up-page/sign-up-page.vue';
 import NotFound from './pages/NotFound.vue';
 const router = createRouter({
 	history: createWebHistory(),
@@ -13,8 +15,8 @@ const router = createRouter({
 		{ path: '/main', component: MainPage },
 		{ path: '/forgetPassword', component: ForgetPassword },
 		{ path: '/forgetUsername', component: ForgetUsername },
-		{ path: '/forgetPassword/main', component: ForgetPasswordpage },
-		{ path: '/forgetUsername/main', component: forgetUsernamepage },
+		{ path: '/login', component: login },
+		{ path: '/signup', component: signupPage },
 		{
 			path: '/user/:userName',
 			name: 'user',
