@@ -12,14 +12,23 @@
 					account, and we’ll send you an email with a link to reset your
 					password.
 				</p>
-				<input type="text" placeholder="Username" />
+				<div class="input-field">
+					<input type="text" required="required" />
+					<span class="span-input"> Username</span>
+				</div>
 				<p class="invalid">Please enter a username to continue</p>
-				<input type="email" placeholder="Email " />
+				<div class="input-field">
+					<input type="email" required="required" />
+					<span class="span-input"> Email</span>
+				</div>
 				<p class="invalid">Please enter an email address to continue</p>
-				<base-button button-text="Email Me" class="emailMe" />
+				<label class="label-class"> Forget your </label
+				><a class="link user-name">username</a>?
+				<base-button button-text="Reset password" class="button-class">
+				</base-button>
 
 				<div class="bottomText">
-					Don't have an email or need assistance logging in?
+					<label> Don't have an email or need assistance logging in? </label>
 					<a class="link">Get Help </a>
 				</div>
 			</form>
@@ -65,13 +74,13 @@ div {
 	letter-spacing: 0.5px;
 	text-transform: capitalize;
 }
-input {
-	overflow: visible;
-	background: rgb(246, 247, 248);
-	background-color: #f6f7f8;
-	padding: 22px 12px 10px;
-	width: 100%;
-	border: 1px solid rgba(0, 0, 0, 0.1);
+.user-name {
+	text-transform: lowercase;
+}
+.input-field {
+	position: relative;
+}
+.input-field input {
 	border-radius: 100px;
 	font-family: IBMPlexSans, sans-serif;
 	font-size: 14px;
@@ -79,20 +88,65 @@ input {
 	line-height: 18px;
 	height: 46px;
 	padding-left: 16px;
+	width: 100%;
 	padding-right: 36px;
+	background: rgb(246, 247, 248);
+	border-color: transparent;
+	outline: none;
+	/*overflow: visible;
+	background: rgb(246, 247, 248);
+	background-color: #f6f7f8;
+	padding: 22px 12px 10px;
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	
+	font-family: IBMPlexSans, sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	height: 46px;
+	padding-left: 16px;
+	transition: all 0.2s ease-in-out;
+	padding-right: 36px;*/
 }
-input:hover,
-input:focus {
-	border-color: rgba(0, 0, 0, 0.2);
+
+.input-field .span-input {
+	position: absolute;
+	left: 0;
+	padding: 15px 20px 20px 15px;
+	pointer-events: none;
+	font-size: 14px;
+	font-family: IBMPlexSans, sans-serif;
+	transition: all 0.2s ease-in-out;
 }
-.emailMe {
-	margin: 20px auto;
+.input-field input:valid ~ .span-input,
+.input-field input:focus ~ .span-input,
+.input-field input:hover ~ .span-input {
+	transform: translateX(10px) translateY(-10px);
+	font-size: 10px;
+}
+
+.input-field input:active {
+	border: 0.5px solid #0079d3;
+}
+.label-class {
+	color: #1a1a1b;
+	font-size: 12px;
+	font-family: Noto Sans, sans-serif;
+	margin: 16px 2px 0px 0px;
+	font-weight: 400;
+	line-height: 16px;
+	padding: 0px 1px 0px 0px;
+}
+.button-class {
+	margin: 16px 0px 0px;
 	color: #ffffff;
 	padding: 5px 10px;
-	background: linear-gradient(89.57deg, #ec0623, #ff8717);
+	/*background: linear-gradient(89.57deg, #ec0623, #ff8717);*/
+	background: var(--button-color);
 	border-radius: 24px;
 	font-size: 16px;
-	height: 48px;
+	height: 40px;
 	line-height: 20px;
 	text-transform: capitalize;
 	width: 100%;
@@ -101,7 +155,7 @@ input:focus {
 	background-color: white;
 	border: 0.1px solid #00000066;
 	border-radius: 10px;
-
+	-webkit-box-align: center;
 	margin: 10px auto 10px auto;
 	padding: 20px;
 	display: flex;
@@ -121,8 +175,8 @@ input:focus {
     min-height: 100vh;*/
 }
 .box {
-	padding: 20px;
-	min-width: 260px;
+	padding: 36px;
+	min-width: 150px;
 	max-width: 440px;
 }
 h1 {

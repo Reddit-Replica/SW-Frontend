@@ -89,6 +89,8 @@ export default {
 	--gray-color: #777;
 	--main-duration: 0.5s;
 	/*/////////////////////////////////*/
+	/* forget colors*/
+	--button-color: rgb(217, 58, 0);
 }
 * {
 	margin: 0;
