@@ -216,7 +216,7 @@ h1 {
 	font-size: 12px;
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 400;
-	line-height: 21px;
+	line-height: 16px;
 	width: 100%;
 }
 .bottomText {
