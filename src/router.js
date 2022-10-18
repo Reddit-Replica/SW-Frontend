@@ -15,6 +15,8 @@ const router = createRouter({
 		{ path: '/main', component: MainPage },
 		{ path: '/forgetPassword', component: ForgetPassword },
 		{ path: '/forgetUsername', component: ForgetUsername },
+		{ path: '/ForgetPasswordpage', component: ForgetPasswordpage },
+		{ path: '/forgetUsernamepage', component: forgetUsernamepage },
 		{ path: '/login', component: login },
 		{ path: '/signup', component: signupPage },
 		{
