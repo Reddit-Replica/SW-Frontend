@@ -12,7 +12,7 @@
 				</p>
 				<div class="input-field">
 					<input type="text" required="required" />
-					<span class="span-input">Email Address</span>
+					<span class="span-input">Email</span>
 				</div>
 				<p class="invalid">Please enter an email address to continue</p>
 				<base-button
@@ -22,8 +22,10 @@
 				/>
 
 				<div class="bottomText">
-					Don't have an email or need assistance logging in?
-					<a class="link">Get Help </a>
+					<label
+						>Don't have an email or need assistance logging in?
+						<a class="link">Get Help </a></label
+					>
 				</div>
 			</form>
 			<div class="">
@@ -63,11 +65,11 @@ div {
 .link {
 	color: #0079d3;
 	text-decoration: underline;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
 	cursor: pointer;
 	font-size: 12px;
-	font-weight: 600;
-	letter-spacing: 0.5px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
 	text-transform: capitalize;
 }
 .input-field {
@@ -75,7 +77,7 @@ div {
 }
 .input-field input {
 	border-radius: 100px;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 18px;
@@ -113,7 +115,7 @@ div {
 	padding: 15px 20px 20px 15px;
 	pointer-events: none;
 	font-size: 14px;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
 	transition: all 0.2s ease-in-out;
 }
 .input-field input:valid ~ .span-input,
@@ -126,6 +128,9 @@ div {
 .input-field input:active {
 	border: 0.5px solid #0079d3;
 }
+/*.input-field input:focus {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}*/
 .button-class {
 	margin: 16px 0px 0px;
 	color: #ffffff;
@@ -133,9 +138,10 @@ div {
 	/*background: linear-gradient(89.57deg, #ec0623, #ff8717);*/
 	background: var(--button-color);
 	border-radius: 24px;
-	font-size: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-size: 14px;
 	height: 40px;
-	line-height: 20px;
+	line-height: 10px;
 	width: 100%;
 }
 .container {
@@ -168,22 +174,21 @@ h1 {
 	color: #1a1a1b;
 	margin: 24px 0px 8px 0px;
 	font-size: 20px;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
 	font-weight: 500;
 	line-height: 24px;
 }
 
 .description {
-	color: #1a1a1b;
 	margin: 8px 0px 8px;
 	font-size: 12px;
-	font-family: Noto Sans, sans-serif;
+	font-family: 'Noto Sans', sans-serif;
 	font-weight: 400;
 	line-height: 21px;
 	width: 100%;
 }
 .bottomText {
-	font-family: Noto Sans, sans-serif;
+	font-family: 'Noto Sans', sans-serif;
 	margin-top: 8px;
 	margin-bottom: 20px;
 	font-weight: 400;
