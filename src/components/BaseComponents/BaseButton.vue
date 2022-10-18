@@ -23,6 +23,7 @@ button {
 	box-sizing: border-box;
 	cursor: pointer;
 	transition: background-color 0.2s;
+	border: none;
 }
 button:disabled {
 	cursor: not-allowed;

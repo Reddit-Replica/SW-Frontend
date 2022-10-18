@@ -10,9 +10,12 @@
 					Tell us the email address associated with your Reddit account, and
 					we’ll send you an email with your username.
 				</p>
-				<input type="email" placeholder="Email Address" />
+				<div class="input-field">
+					<input type="text" required="required" />
+					<span class="span-input">Email Address</span>
+				</div>
 				<p class="invalid">Please enter an email address to continue</p>
-				<base-button button-text="Email Me" class="emailMe" />
+				<base-button button-text="Email Me" class="button-class" />
 
 				<div class="bottomText">
 					Don't have an email or need assistance logging in?
@@ -61,11 +64,10 @@ div {
 	letter-spacing: 0.5px;
 	text-transform: capitalize;
 }
-input {
-	background-color: #f6f7f8;
-	padding: 22px 12px 10px;
-	width: 100%;
-	border: 1px solid rgba(0, 0, 0, 0.1);
+.input-field {
+	position: relative;
+}
+.input-field input {
 	border-radius: 100px;
 	font-family: IBMPlexSans, sans-serif;
 	font-size: 14px;
@@ -73,16 +75,56 @@ input {
 	line-height: 18px;
 	height: 46px;
 	padding-left: 16px;
+	width: 100%;
 	padding-right: 36px;
+	background: rgb(246, 247, 248);
+	border-color: transparent;
+	outline: none;
+	/*overflow: visible;
+	background: rgb(246, 247, 248);
+	background-color: #f6f7f8;
+	padding: 22px 12px 10px;
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	
+	font-family: IBMPlexSans, sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	height: 46px;
+	padding-left: 16px;
+	transition: all 0.2s ease-in-out;
+	padding-right: 36px;*/
 }
-.emailMe {
-	margin: 20px auto;
+
+.input-field .span-input {
+	position: absolute;
+	left: 0;
+	padding: 15px 20px 20px 15px;
+	pointer-events: none;
+	font-size: 14px;
+	font-family: IBMPlexSans, sans-serif;
+	transition: all 0.2s ease-in-out;
+}
+.input-field input:valid ~ .span-input,
+.input-field input:focus ~ .span-input,
+.input-field input:hover ~ .span-input {
+	transform: translateX(10px) translateY(-10px);
+	font-size: 10px;
+}
+
+.input-field input:active {
+	border: 0.5px solid #0079d3;
+}
+.button-class {
+	margin: 16px 0px 0px;
 	color: #ffffff;
 	padding: 5px 10px;
-	background: linear-gradient(89.57deg, #ec0623, #ff8717);
+	/*background: linear-gradient(89.57deg, #ec0623, #ff8717);*/
+	background: var(--button-color);
 	border-radius: 24px;
 	font-size: 16px;
-	height: 48px;
+	height: 40px;
 	line-height: 20px;
 	text-transform: capitalize;
 	width: 100%;
@@ -111,7 +153,7 @@ input {
     min-height: 100vh;*/
 }
 .box {
-	padding: 20px;
+	padding: 36px;
 	min-width: 260px;
 	max-width: 440px;
 }
