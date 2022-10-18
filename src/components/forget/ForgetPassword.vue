@@ -23,8 +23,13 @@
 				</div>
 				<p class="invalid">Please enter an email address to continue</p>
 				<label class="label-class"> Forget your </label
-				><a class="link user-name">username</a>?
-				<base-button button-text="Reset password" class="button-class">
+				><a class="link user-name">username</a>
+				<label class="question-mark"> ?</label>
+				<base-button
+					button-text="Reset password"
+					:disable-button="buttonIsactive"
+					class="button-class"
+				>
 				</base-button>
 
 				<div class="bottomText">
@@ -44,7 +49,9 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			buttonIsactive: true,
+		};
 	},
 	methods: {},
 	components: {},
@@ -63,6 +70,14 @@ export default {
 }
 div {
 	display: block;
+}
+
+.question-mark {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 18px;
+	color: #1a1a1b;
+	font-family: IBMPlexSans, sans-serif;
 }
 .link {
 	color: #0079d3;
@@ -93,6 +108,10 @@ div {
 	background: rgb(246, 247, 248);
 	border-color: transparent;
 	outline: none;
+	transition: all 0.2s ease-in-out;
+	box-sizing: border-box;
+	padding-top: 15px;
+	text-align: left;
 	/*overflow: visible;
 	background: rgb(246, 247, 248);
 	background-color: #f6f7f8;
@@ -122,7 +141,7 @@ div {
 .input-field input:valid ~ .span-input,
 .input-field input:focus ~ .span-input,
 .input-field input:hover ~ .span-input {
-	transform: translateX(10px) translateY(-10px);
+	transform: translateX(3px) translateY(-10px);
 	font-size: 10px;
 }
 
@@ -148,12 +167,11 @@ div {
 	font-size: 16px;
 	height: 40px;
 	line-height: 20px;
-	text-transform: capitalize;
 	width: 100%;
 }
 .container {
 	background-color: white;
-	border: 0.1px solid #00000066;
+	border-color: transparent;
 	border-radius: 10px;
 	-webkit-box-align: center;
 	margin: 10px auto 10px auto;
@@ -203,7 +221,7 @@ h1 {
 	margin-bottom: 20px;
 	font-weight: 400;
 
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 18px;
 	margin-bottom: 14px;
 	margin-top: 14px;

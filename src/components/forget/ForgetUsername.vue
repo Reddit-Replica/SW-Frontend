@@ -15,7 +15,11 @@
 					<span class="span-input">Email Address</span>
 				</div>
 				<p class="invalid">Please enter an email address to continue</p>
-				<base-button button-text="Email Me" class="button-class" />
+				<base-button
+					button-text="Email Me"
+					:disable-button="buttonIsactive"
+					class="button-class"
+				/>
 
 				<div class="bottomText">
 					Don't have an email or need assistance logging in?
@@ -34,7 +38,9 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			buttonIsactive: true,
+		};
 	},
 	methods: {},
 	components: {},
@@ -80,6 +86,10 @@ div {
 	background: rgb(246, 247, 248);
 	border-color: transparent;
 	outline: none;
+	transition: all 0.2s ease-in-out;
+	box-sizing: border-box;
+	padding-top: 15px;
+	text-align: left;
 	/*overflow: visible;
 	background: rgb(246, 247, 248);
 	background-color: #f6f7f8;
@@ -109,7 +119,7 @@ div {
 .input-field input:valid ~ .span-input,
 .input-field input:focus ~ .span-input,
 .input-field input:hover ~ .span-input {
-	transform: translateX(10px) translateY(-10px);
+	transform: translateX(3px) translateY(-10px);
 	font-size: 10px;
 }
 
@@ -126,14 +136,11 @@ div {
 	font-size: 16px;
 	height: 40px;
 	line-height: 20px;
-	text-transform: capitalize;
 	width: 100%;
 }
 .container {
 	background-color: white;
-	border: 0.1px solid #00000066;
 	border-radius: 10px;
-
 	margin: 10px auto 10px auto;
 	padding: 20px;
 	display: flex;
@@ -181,7 +188,7 @@ h1 {
 	margin-bottom: 20px;
 	font-weight: 400;
 
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 18px;
 	margin-bottom: 14px;
 	margin-top: 14px;
