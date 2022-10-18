@@ -8,7 +8,7 @@
 					width="20"
 					height="20"
 					fill="currentColor"
-					class="icon bi bi-chevron-up"
+					class="bi bi-chevron-up"
 					viewBox="0 0 16 16"
 					style="color: #46d160"
 				>
@@ -61,68 +61,51 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	flex-direction: row;
-	border-bottom: thin solid var(--color-grey-light-4);
 	position: relative;
-	width: 310px;
-	height: 48px;
-	flex-direction: row;
 	background-color: var(--main-white-color);
+	/* width: 310px; */
+	height: 48px;
+}
+.topCommunity:not(:last-of-type) {
+	border-bottom: thin solid var(--color-grey-light-4);
 }
 .topCommunityLink {
 	padding: 0;
 	margin: 0 12px;
-	/* overflow: hidden;
-    text-overflow: ellipsis;
-    flex-shrink: 1; */
+	overflow: hidden;
+	text-overflow: ellipsis;
 	height: 48px;
-
 	align-items: center;
 	display: flex;
-
-	vertical-align: baseline;
 }
 .topCommunityBlock {
 	overflow: hidden;
 	align-items: center;
 	display: flex;
-
-	vertical-align: baseline;
-
-	/* padding: 8px; */
 }
 .topCommunityIndex {
-	color: #1c1c1c;
+	color: var(--color-dark-1);
 	text-align: right;
 	min-width: 20px;
+	font-size: 14px;
 	font-weight: 500;
-	line-height: 18px;
 }
 .topCommunityImage {
 	background-position: 50%;
 	background-repeat: no-repeat;
 	background-size: 100%;
 	border-radius: 24px;
-	box-sizing: border-box;
-	flex: none;
 	font-size: 32px;
 	height: 32px;
-	line-height: 32px;
 	margin: 0 8px;
 	width: 32px;
-
-	vertical-align: middle;
-}
-a {
-	text-decoration: none;
-	color: black;
 }
 
-.icon {
+.bi-chevron-up {
 	color: var(--color-green);
 	font-size: 20px;
 	font-weight: 400;
 	height: 20px;
-	line-height: 20px;
 	vertical-align: middle;
 	width: 20px;
 	margin-left: 8px;
@@ -133,6 +116,10 @@ a {
 	overflow: hidden;
 	white-space: nowrap;
 	display: inline-block;
+	text-decoration: none;
+	color: var(--color-dark-1);
+	font-size: 14px;
+	font-weight: 500;
 }
 .joinBlock {
 	margin-right: 12px;
@@ -144,15 +131,13 @@ a {
 	border: none;
 	color: var(--main-white-color);
 	fill: var(--main-white-color);
-
-	font-family: Noto Sans, Arial, sans-serif;
 	font-size: 12px;
 	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 16px;
-	text-transform: unset;
 	min-height: 24px;
 	min-width: 24px;
 	padding: 4px 16px;
+}
+.join:hover {
+	opacity: 0.92;
 }
 </style>
