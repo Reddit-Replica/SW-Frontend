@@ -116,6 +116,7 @@ div {
 	pointer-events: none;
 	font-size: 14px;
 	font-family: 'IBM Plex Sans', sans-serif;
+	font-weight: 500;
 	transition: all 0.2s ease-in-out;
 }
 .input-field input:valid ~ .span-input,
