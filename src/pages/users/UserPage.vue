@@ -1,10 +1,10 @@
 <template>
-	<profile-nav :userName="getUserName" />
+	<profile-nav :user-name="getUserName" />
 	<base-container>
 		<div class="profilebox">
 			<createpost-bar />
 			<!-- <h1>user page</h1> -->
-			<profile-card :userName="getUserName" />
+			<profile-card :user-name="getUserName" />
 		</div>
 	</base-container>
 </template>
