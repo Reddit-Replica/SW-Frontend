@@ -33,16 +33,8 @@
 					</div>
 
 					<fieldset class="email-field">
-						<input
-							id="signup-email"
-							class="email-text"
-							type="text"
-							v-model="email"
-							name="email"
-							required
-							placeholder="
-          Email"
-						/>
+						<input type="text" required="required" />
+						<span class="animation-email">Email</span>
 					</fieldset>
 
 					<fieldset class="submit-signup-field">
@@ -163,8 +155,9 @@ h1 {
 }
 fieldset {
 	border: none;
-	margin: 0;
+	margin: 10px 0;
 	padding: 0;
+	position: relative;
 }
 button {
 	display: inline-flex;
@@ -182,7 +175,7 @@ button {
 	overflow: hidden;
 }
 .back-image {
-	background-image: url('https://www.redditstatic.com/accountmanager/bbb584033aa89e39bad69436c504c9bd.png');
+	background-image: url('../../../img/bck.png');
 	min-height: 100%;
 	width: 20%;
 	float: left;
@@ -221,10 +214,6 @@ button {
 	padding: 12px 28px;
 	width: 60%;
 }
-
-.email-field {
-	position: relative;
-}
 .page-divider {
 	align-items: center;
 	display: flex;
@@ -243,14 +232,9 @@ button {
 	color: #878a8c;
 	font-size: 14px;
 }
-
-.field-pass-usr,
-.email-field {
+.email-field input {
 	position: relative;
-	margin: 10px 0px;
-}
-.usr-pass-text,
-.email-text {
+	transform: translateZ(0);
 	width: 60%;
 	transition: all 0.2s ease-in-out;
 	height: 48px;
@@ -258,18 +242,49 @@ button {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
 	background-color: #fcfcfb;
-	line-height: 14px;
+	font-size: 14px;
+	margin-top: 5px;
+}
+.animation-email {
+	width: 55%;
+}
+.email-field .animation-email {
 	font-size: 10px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
-	display: inline-block;
-	vertical-align: middle;
-	top: 14px;
-	left: 12px;
+	font-family: 'IBM Plex Sans', sans-serif;
 	color: #a5a4a4;
+	position: absolute;
+	left: 12px;
+	padding: 20px;
+	pointer-events: none;
+	line-height: 20px;
+	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
+	/* justify-content: space-between; */
 }
-
+.email-field input:focus ~ .animation-email,
+.email-field input:hover ~ .animation-email,
+.email-field input:active ~ .animation-email,
+.email-field ~ .animation-email {
+	transform: translateX(0.8px) translateY(-10px);
+	font-size: 9px;
+	padding: 12px 0px;
+	padding-right: 36px;
+	border-radius: 4px;
+	border-color: #24a0ed;
+}
+.animation-email::after {
+	content: '\2713';
+	display: inline-block;
+	color: #24a0ed;
+	right: 2px;
+	top: 18.5px;
+	position: absolute;
+	display: block;
+	transition: all 0.2s ease-in-out;
+	display: none;
+}
 .register-bottom {
 	font-family: Noto Sans, sans-serif;
 	font-size: 12px;
@@ -323,17 +338,10 @@ button {
 	text-transform: uppercase;
 }
 
-/* fieldset {
-        border: none;
-        margin: 10px 0;
-        padding: 0;
-        position: relative;
-
-    } */
 .submit-signup {
 	font-size: 14px;
 	font-weight: 600;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	letter-spacing: 0.5px;
 	border: none;
 	border-radius: 4px;
