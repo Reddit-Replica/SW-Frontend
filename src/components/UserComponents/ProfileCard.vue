@@ -14,10 +14,12 @@
 					<img src="../../assets/avatar.png" alt="" />
 				</div>
 			</div>
-			<h2 class="profile-name">
-				{{ userName || 'Agile_Relative7435' }}
-			</h2>
-			<p class="profile-desc">u/Agile_Relative7435 · 8d</p>
+			<div>
+				<h2 class="profile-name">
+					{{ userName || 'Agile_Relative7435' }}
+				</h2>
+				<p class="profile-desc">u/Agile_Relative7435 · 8d</p>
+			</div>
 			<div class="profile-button">
 				<button>
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
@@ -237,7 +239,8 @@ a.add-image i {
 	height: 160px;
 	/* max-width: 120px; */
 	position: absolute;
-	top: 12px;
+	/* top: 12px;  this for handling*/
+	top: 18px;
 	left: 50%;
 	transform: translateX(-50%);
 }
@@ -245,7 +248,7 @@ a.add-image i {
 .profile-name {
 	color: #d7dadc;
 	text-align: center;
-	margin: 5px;
+	/* margin: 5px; */
 	/* line-height: 40px; */
 }
 
@@ -350,6 +353,7 @@ a.add-image i {
 	justify-content: flex-start;
 	align-items: center;
 	flex-wrap: wrap;
+	row-gap: 8px;
 }
 
 .social-link button {
@@ -439,6 +443,7 @@ ul.profile-options {
 	font-weight: 700;
 	line-height: 16px;
 	padding: 4px 8px;
+	cursor: pointer;
 	/* min-height: 26px; */
 	/* display: none; */
 }
