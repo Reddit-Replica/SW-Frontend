@@ -41,16 +41,9 @@
 					<fieldset class="username-field field-pass-usr">
 						<!--Group of UserName Element -->
 
-						<input
-							id="login-username"
-							class="username-text usr-pass-text"
-							type="text"
-							v-model="username"
-							name="username"
-							required
-							placeholder="
-          Username"
-						/>
+						<input type="text" required="required" />
+						<span class="animation-usr-pass">UserName</span>
+
 						<div class="username-error-message"></div>
 						<!--Error Message Shown here -->
 					</fieldset>
@@ -58,17 +51,8 @@
 					<fieldset class="password-field field-pass-usr">
 						<!--Group of Password Element -->
 
-						<input
-							id="login-password"
-							class="password-text usr-pass-text"
-							type="password"
-							v-model="password"
-							name="password"
-							required
-							placeholder="
-          Password
-        "
-						/>
+						<input type="password" required="required" />
+						<span class="animation-usr-pass">Password</span>
 
 						<div class="username-error-message"></div>
 						<!--Error Message Shown here -->
@@ -78,7 +62,7 @@
 
 					<div class="forgot-usr-pass">
 						<span>Forgot your</span> <a href="/username">username</a>
-						<span>or</span> <a href="/password">password</a><span>?</span>
+						<span> or </span> <a href="/password">password</a><span>?</span>
 					</div>
 					<div class="register-bottom">
 						New to Reddit?
@@ -125,7 +109,7 @@ export default {
 .Abd {
 	margin: 0;
 	height: 100vh;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 18px;
@@ -153,7 +137,6 @@ button {
 	border-radius: 100px;
 	box-sizing: border-box;
 	cursor: pointer;
-	transition: background-color 0.2s;
 }
 .largest-div {
 	width: 50%;
@@ -186,7 +169,7 @@ button {
 /* class of log in with google and log in with apple */
 .log-ag {
 	font-size: 14px;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	letter-spacing: 0.5px;
 	border: 1px solid #0079d3;
 	border-radius: 4px;
@@ -200,10 +183,6 @@ button {
 	margin: 8px 0;
 	padding: 12px 28px;
 	width: 60%;
-}
-
-.field-pass-usr {
-	position: relative;
 }
 .page-divider {
 	align-items: center;
@@ -223,20 +202,73 @@ button {
 	color: #878a8c;
 	font-size: 14px;
 }
+.field-pass-usr input {
+	position: relative;
+	transform: translateZ(0);
+	width: 60%;
+	transition: all 0.2s ease-in-out;
+	height: 48px;
+	padding: 22px 12px 10px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	background-color: #fcfcfb;
+	font-size: 14px;
+	margin-top: 5px;
+}
+.field-pass-usr .animation-usr-pass {
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	color: #a5a4a4;
+	position: absolute;
+	left: 12px;
+	padding: 15px 20px 20px 15px;
+	pointer-events: none;
+	line-height: 20px;
+	transition: all 0.2s ease-in-out;
+	text-transform: uppercase;
+}
+.animation-usr-pass::after {
+	content: '\2022';
+	color: #24a0ed;
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 25px;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.field-pass-usr input:focus ~ .animation-usr-pass,
+.field-pass-usr input:hover ~ .animation-usr-pass,
+.field-pass-usr input:valid ~ .animation-usr-pass,
+.field-pass-usr ~ .animation-usr-pass {
+	transform: translateX(0.8px) translateY(-15px);
+	font-size: 9px;
+	padding: 20px 0px;
+	padding-right: 36px;
+	border-radius: 4px;
+	border-color: #24a0ed;
+}
+.field-pass-usr input:focus ~ .animation-usr-pass::after,
+.field-pass-usr input:hover ~ .animation-usr-pass::after,
+.field-pass-usr input:valid ~ .animation-usr-pass::after,
+.field-pass-usr ~ .animation-usr-pass::after {
+	display: none;
+}
 .forgot-usr-pass,
 .register-bottom {
-	font-family: Noto Sans, sans-serif;
+	font-family: 'Noto Sans', sans-serif;
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 18px;
 	margin-top: 8px;
 	margin-bottom: 20px;
 }
-.submit-login,
-.submit-signup {
+.submit-login {
 	font-size: 14px;
 	font-weight: 600;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	letter-spacing: 0.5px;
 	border: none;
 	border-radius: 4px;
@@ -249,24 +281,5 @@ button {
 	max-width: 392px;
 	width: 60%;
 	min-width: 155px;
-}
-.usr-pass-text {
-	width: 60%;
-	transition: all 0.2s ease-in-out;
-	height: 48px;
-	padding: 22px 12px 10px;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
-	background-color: #fcfcfb;
-	line-height: 14px;
-	font-size: 10px;
-	font-weight: 600;
-	letter-spacing: 0.5px;
-	display: inline-block;
-	vertical-align: middle;
-	top: 14px;
-	left: 12px;
-	color: #a5a4a4;
-	text-transform: uppercase;
 }
 </style>
