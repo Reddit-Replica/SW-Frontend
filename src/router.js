@@ -8,8 +8,8 @@ import ForgetUsername from './components/forget/ForgetUsername.vue';
 import ForgetPasswordpage from './components/forget/ForgetPasswordpage.vue';
 import ForgetUsernamepage from './components/forget/ForgetUsernamepage.vue';
 
-import login from './pages/login/login.vue';
-import signupPage from './pages/sign-up-page/sign-up-page.vue';
+import login from './pages/login/LoginPage.vue';
+import signupPage from './pages/signup/SignupPage.vue';
 
 import TheSettings from './pages/settings/TheSettings.vue';
 import ProfileSettings from './pages/settings/ProfileSettings.vue';
