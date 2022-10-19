@@ -3,18 +3,16 @@
 		<!-- section to display votes -->
 		<div class="d-flex flex-column vote-box">
 			<div class="upvote" @click="upvote">
-				<svg
-					class="icon icon-arrow-down p-1"
-					:class="upClicked ? 'up-clicked' : ''"
-				>
+				<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 					<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
+				</svg>
+				<svg class="icon icon-shift" v-else>
+					<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 				</svg>
 			</div>
 			<div
 				class="p-2 vote-count"
-				:class="
-					up - clicked ? 'upClicked' : down - clicked ? 'down-clicked' : ''
-				"
+				:class="upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''"
 			>
 				{{ counter }}
 			</div>
@@ -22,8 +20,12 @@
 				<svg
 					class="icon icon-arrow-down p-1"
 					:class="downClicked ? 'down-clicked' : ''"
+					v-if="downClicked"
 				>
 					<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
+				</svg>
+				<svg class="icon icon-shift" v-else>
+					<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 				</svg>
 			</div>
 		</div>
@@ -57,22 +59,26 @@
 					<h3>{{ post.postName }}</h3>
 				</div>
 				<div class="post-text">
-					<p>{{ post.postDescription }}</p>
+					<p>
+						{{
+							post.postDescription.substr(0, post.postDescription.length * 0.7)
+						}}
+					</p>
 				</div>
 				<div class="post-services">
-					<span class="vote-services">
+					<span class="vote-services vote-box">
 						<span class="upvote" @click="upvote">
-							<svg
-								class="icon icon-arrow-down p-1"
-								:class="upClicked ? 'up-clicked' : ''"
-							>
+							<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 								<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
+							</svg>
+							<svg class="icon icon-shift" v-else>
+								<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 							</svg>
 						</span>
 						<span
-							class="p-2 voteCount"
+							class="p-2 vote-count"
 							:class="
-								upClicked ? 'up-clicked' : down - clicked ? 'down-clicked' : ''
+								upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''
 							"
 							>{{ counter }}</span
 						>
@@ -80,8 +86,12 @@
 							<svg
 								class="icon icon-arrow-down p-1"
 								:class="downClicked ? 'down-clicked' : ''"
+								v-if="downClicked"
 							>
 								<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
+							</svg>
+							<svg class="icon icon-shift" v-else>
+								<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 							</svg>
 						</span>
 					</span>
@@ -102,8 +112,17 @@
 							{{ post.commentsCount }} Comments
 						</li>
 						<li id="awards">
-							<svg class="icon icon-gift">
-								<use xlink:href="../../../img/postServices.svg#icon-gift"></use>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								fill="currentColor"
+								class="bi bi-gift"
+								viewBox="0 0 16 16"
+							>
+								<path
+									d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z"
+								/>
 							</svg>
 							Awards
 						</li>
@@ -420,6 +439,7 @@ export default {
 		},
 		showSubMenu() {
 			this.subMenuDisplay = !this.subMenuDisplay;
+			this.shareSubMenuDisplay = false;
 		},
 		hidePost() {
 			this.postHidden = true;
@@ -429,6 +449,7 @@ export default {
 		},
 		showShareSubMenu() {
 			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
+			this.subMenuDisplay = false;
 		},
 	},
 };
@@ -444,31 +465,26 @@ export default {
 	outline: 1px solid;
 }
 
-.vote-box {
+.post-card div.vote-box {
 	background-color: var(--color-grey-light-2);
 	text-align: center;
 	border-radius: 5px 0px 0px 5px;
 	width: 40px;
+	padding-top: 10px;
 }
 
 .vote-box .downvote svg,
 .vote-box .upvote svg {
 	width: 22px;
 	height: 22px;
-	fill: white;
-}
-
-.post-services .downvote svg,
-.post-services .upvote svg {
-	width: 22px;
-	height: 22px;
 	fill: var(--color-grey-dark-2);
 }
-
+.downvote .icon-shift {
+	transform: rotate(180deg);
+}
 .post-services .vote-services {
 	display: none;
 }
-
 .vote-box .downvote:hover svg,
 .vote-box .upvote:hover svg,
 .vote-box .upvote svg.up-clicked,
@@ -479,29 +495,34 @@ export default {
 .post-services .downvote svg.down-clicked {
 	background-color: var(--color-grey-light-4);
 }
-
-.vote-box svg.up-clicked,
-.post-services .vote-services svg.up-clicked {
+.vote-box .downvote:hover svg {
+	fill: var(--color-blue);
+}
+.vote-box .upvote:hover svg {
 	fill: var(--color-orange);
 }
-
-.vote-box .voteCount.up-clicked,
-.post-services .vote-services .voteCount.up-clicked {
+.vote-box svg.up-clicked {
+	fill: var(--color-orange);
+}
+.vote-box .vote-count {
+	color: black;
+	font-weight: 700;
+}
+.vote-box .vote-count.up-clicked {
 	color: var(--color-orange);
 }
 
-.vote-box svg.down-clicked,
-.post-services .vote-services svg.down-clicked {
+.vote-box svg.down-clicked {
 	fill: var(--color-blue);
 }
 
-.vote-box .voteCount.down-clicked,
-.post-services .vote-services .voteCount.down-clicked {
+.vote-box .vote-count.down-clicked {
 	color: var(--color-blue);
 }
 
 .post-content {
 	padding: 8px 8px 3px 5px;
+	width: 100%;
 }
 
 .post-content .post-title h3 {
@@ -509,8 +530,11 @@ export default {
 	margin: 10px 0px;
 }
 
-.post-content .post-text p {
+.post-content .post-text {
 	color: black;
+	mask-image: linear-gradient(180deg, #000 60%, transparent);
+	overflow: hidden;
+	font-size: 12px;
 }
 
 .post-services .services {
@@ -529,7 +553,7 @@ export default {
 	border-radius: 5px;
 	color: var(--color-grey-dark-2);
 	font-weight: bold;
-	font-size: 10px;
+	font-size: 11px;
 	position: relative;
 }
 
@@ -541,6 +565,7 @@ export default {
 	width: 20px;
 	height: 20px;
 	fill: var(--color-grey-dark-2);
+	padding: 2px;
 }
 
 a {
@@ -645,13 +670,12 @@ a {
 .post-card .post-content .post-services .services .sub-menu li#unsave svg {
 	fill: var(--color-blue);
 }
-.post-card .post-content .post-services .services .sub-menu li.post-sub-save {
+.post-content .post-services .services .sub-menu li.post-sub-save,
+.post-content .post-services .services .sub-menu li.share-items-in-sub-menu,
+.post-content .post-services .services .sub-menu li.awards-item-in-sub-menu {
 	display: none;
 }
-.post-content .post-services .services .sub-menu .share-items-in-sub-menu,
-.post-content .post-services .services .sub-menu .awards-item-in-sub-menu {
-	display: none;
-}
+
 @media (max-width: 1079px) {
 	.post-card .post-content .post-services .services .sub-menu li.post-sub-save {
 		display: flex;
@@ -679,7 +703,10 @@ a {
 }
 @media (max-width: 495px) {
 	.awards-item-in-sub-menu {
-		display: flex;
+		display: flex !important;
+	}
+	#awards {
+		display: none;
 	}
 }
 </style>
