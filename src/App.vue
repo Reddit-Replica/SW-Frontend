@@ -1,6 +1,11 @@
 <template>
 	<the-header />
-	<router-view />
+	<!-- <router-view /> -->
+	<router-view v-slot="slotProps">
+		<transition name="route" mode="out-in">
+			<component :is="slotProps.Component"></component>
+		</transition>
+	</router-view>
 	<!-- <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6">
