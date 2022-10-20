@@ -49,7 +49,6 @@ jobs:
     - run:
         name: Run Unit Tests
         command: |
-          sleep 1m
           npm run test
 
 
