@@ -39,7 +39,7 @@ commands:
 jobs:
   unit-testing:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:lts
     steps:
     - checkout
     - run:
@@ -51,9 +51,6 @@ jobs:
         command: |
           sleep 1m
           npm run test
-          mkdir /home/circleci/project/test-results
-    - store_test_results:
-        path: ./test-results
 
 
 
