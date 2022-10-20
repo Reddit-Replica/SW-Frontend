@@ -51,6 +51,11 @@ jobs:
         command: |
           sleep 1m
           npm run test
+          mkdir /home/circleci/project/test-results
+    - store_test_results:
+        path: ./test-results
+
+
 
   integration-testing:
     docker:
@@ -62,7 +67,7 @@ jobs:
         command: |
           npm i
     - run:
-        name: Run Unit Tests
+        name: Run integration Tests
         command: |
           ls
 
