@@ -50,20 +50,19 @@ const router = createRouter({
 		}, //render post component
 		//{ path: '/test', component: null },
 		//  { path: '', component: null },
-		{ path: '/:notFound(.*)', component: NotFound },
 		{
 			path: '/settings',
 			name: 'settings',
 			component: TheSettings,
-			children: [
-				{ path: '/Account ', component: AccountSettings, alias: '/settings' },
-				{ path: '/Profile ', component: ProfileSettings },
-				{ path: '/privacy ', component: PrivacySettings },
-				{ path: '/feed ', component: FeedSettings },
-				{ path: '/emails ', component: EmailsSettings },
-				{ path: '/messaging ', component: MessagingSettings },
-			],
+			props: true,
 		},
+		{ path: '/settings/account', component: AccountSettings },
+		{ path: '/settings/profile', component: ProfileSettings },
+		{ path: '/settings/privacy', component: PrivacySettings },
+		{ path: '/settings/feed', component: FeedSettings },
+		{ path: '/settings/emails', component: EmailsSettings },
+		{ path: '/settings/messaging', component: MessagingSettings },
+		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });
 
