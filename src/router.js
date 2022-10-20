@@ -1,8 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import MainPage from './pages/users/MainPage.vue';
-import ForgetPassword from './components/forget/ForgetPassword.vue';
-import ForgetUsername from './components/forget/ForgetUsername';
 import UserPage from './pages/users/UserPage.vue';
+
+import ForgetPassword from './components/forget/ForgetPassword.vue';
+import ForgetUsername from './components/forget/ForgetUsername.vue';
+import ForgetPasswordpage from './components/forget/ForgetPasswordpage.vue';
+import ForgetUsernamepage from './components/forget/ForgetUsernamepage.vue';
+
+import login from './pages/login/LoginPage.vue';
+import signupPage from './pages/signup/SignupPage.vue';
+
+import TheSettings from './pages/settings/TheSettings.vue';
+import ProfileSettings from './pages/settings/ProfileSettings.vue';
+import PrivacySettings from './pages/settings/PrivacySettings.vue';
+import EmailsSettings from './pages/settings/EmailsSettings.vue';
+import FeedSettings from './pages/settings/FeedSettings.vue';
+import MessagingSettings from './pages/settings/MessagingSettings.vue';
+import AccountSettings from './pages/settings/AccountSettings.vue';
 
 import NotFound from './pages/NotFound.vue';
 const router = createRouter({
@@ -12,6 +27,10 @@ const router = createRouter({
 		{ path: '/main', component: MainPage },
 		{ path: '/forgetPassword', component: ForgetPassword },
 		{ path: '/forgetUsername', component: ForgetUsername },
+		{ path: '/forgetPasswordpage', component: ForgetPasswordpage },
+		{ path: '/forgetUsernamepage', component: ForgetUsernamepage },
+		{ path: '/login', component: login },
+		{ path: '/signup', component: signupPage },
 		{
 			path: '/user/:userName',
 			name: 'user',
@@ -31,6 +50,18 @@ const router = createRouter({
 		}, //render post component
 		//{ path: '/test', component: null },
 		//  { path: '', component: null },
+		{
+			path: '/settings',
+			name: 'settings',
+			component: TheSettings,
+			props: true,
+		},
+		{ path: '/settings/account', component: AccountSettings },
+		{ path: '/settings/profile', component: ProfileSettings },
+		{ path: '/settings/privacy', component: PrivacySettings },
+		{ path: '/settings/feed', component: FeedSettings },
+		{ path: '/settings/emails', component: EmailsSettings },
+		{ path: '/settings/messaging', component: MessagingSettings },
 		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });

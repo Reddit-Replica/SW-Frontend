@@ -145,7 +145,7 @@
 						<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 					</svg>
 
-					<span class="user-nav__karma">
+					<span class="user-nav-karma">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"

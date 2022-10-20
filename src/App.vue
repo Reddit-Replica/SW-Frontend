@@ -1,6 +1,11 @@
 <template>
 	<the-header />
-	<router-view />
+	<!-- <router-view /> -->
+	<router-view v-slot="slotProps">
+		<transition name="route" mode="out-in">
+			<component :is="slotProps.Component"></component>
+		</transition>
+	</router-view>
 	<!-- <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6">
@@ -58,6 +63,7 @@ export default {
 	--line-2: 1px solid rgb(2, 2, 206);
 	--line-3: 1px solid var(--color-white-1);
 	--line-4: 2px solid var(--color-white-1);
+	--line-5: 1px solid var(--color-blue-2);
 	/* 2000px */
 	--bp-largest-1: 125em;
 	/* 1200px */
