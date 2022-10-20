@@ -15,7 +15,19 @@
 					</router-link>
 				</li>
 				<li @click="showLinkBox = !showLinkBox" class="overflow">
-					<span>...</span>
+					<!-- <span>...</span> -->
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-three-dots"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+						/>
+					</svg>
 				</li>
 			</ul>
 		</div>
@@ -127,8 +139,6 @@ export default {
 	methods: {
 		onResize() {
 			this.windowWidths = window.innerWidth;
-			// if (this.windowWidths < 1000)
-			//10 - 900/100
 			const x = ++this.windowWidths / 100;
 			if (this.windowWidths < 1000) {
 				this.viewedLinks = this.profileLinks.slice(0, x);
@@ -136,25 +146,9 @@ export default {
 			} else {
 				this.viewedLinks = this.profileLinks;
 			}
-			// for(let i=0; i<x; i++)
-			// {
-			//   this.profilelinks.pop();
-			// }
 		},
 	},
-	computed: {
-		// for(profilelink in this.profilelinks) {
-		// x =document.querySelector("a.router-link-active");
-		// profilelink.active = profilelink.path ? this.
-		// }
-	},
-
-	// computed: {
-	//   windowSize(){
-	//   this.windowWidths = window.innerWidth;
-	//   return this.windowSize;
-	//   }
-	// }
+	computed: {},
 };
 </script>
 
@@ -194,6 +188,8 @@ nav ul:first-child {
 	justify-content: center;
 	font-size: 12px;
 	list-style: none;
+	margin: 0px 0px;
+	padding: 0px 0px;
 }
 
 nav ul:first-child li:not(:last-child) {
@@ -236,7 +232,7 @@ li.active {
 	position: absolute;
 	top: 0;
 	transform: translateY(50%);
-	cursor: pointer;
+
 	/* font-weight: 500; */
 	/* display: flex; */
 	/* align-items: center; */
@@ -244,8 +240,22 @@ li.active {
 	/* width: 100%; */
 	/* min-height: 100%;  */
 }
+li.overflow {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #1a1a1b;
+	margin: 0 5px;
+	padding: 0 8px;
+	/* font-size: 20px; */
+}
 
-.overflow {
+li.overflow:hover {
+	color: #0079d3;
+}
+
+li.overflow {
 	position: relative;
 	height: 100%;
 	display: none;
@@ -257,15 +267,11 @@ li.active {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 18px;
 	flex-direction: column;
-	/* width: 200px; */
 	align-items: center;
-	/* justify-content: center; */
-	/* padding: 15px; */
 	height: max-content;
 	position: absolute;
 	right: 0;
@@ -303,8 +309,8 @@ li.active {
 }
 
 @media (max-width: 1000px) {
-	.overflow {
-		display: block;
+	li.overflow {
+		display: flex;
 	}
 }
 
