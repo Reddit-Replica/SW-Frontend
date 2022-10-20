@@ -22,7 +22,7 @@
 					:titles="['Everyone', 'Accounts Older Than 30 Days', 'Nobody']"
 					:display="showFirstMenu"
 					@changeTitle="changeFirstTitle"
-					clickedProp="Everyone"
+					clicked-prop="Everyone"
 				/>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 					:titles="['Everyone', 'Nobody']"
 					:display="showSecondMenu"
 					@changeTitle="changeSecondTitle"
-					clickedProp="Everyone"
+					clicked-prop="Everyone"
 				/>
 			</div>
 			<div class="choice-details">
