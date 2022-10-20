@@ -28,6 +28,9 @@ export default {
 		BasePost,
 		TopCommunitiesBar,
 	},
+	created() {
+		document.title = 'Reddit - Dive into anything';
+	},
 	data() {
 		return {
 			colorGreyDark2: '#0099CC',
@@ -52,9 +55,9 @@ export default {
   grid-template-columns: 60% 40%;
   grid-gap: 30px;
 } */
-.left-col {
-	/* margin-left: 5rem; */
-}
+/* .left-col {
+	margin-left: 5rem;
+} */
 .right-col {
 	margin: 12px;
 	/* padding: 20px;

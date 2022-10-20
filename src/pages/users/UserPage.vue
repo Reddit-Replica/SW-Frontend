@@ -21,6 +21,9 @@ export default {
 		// 	default: 'Abdelhameed',
 		// },
 	},
+	created() {
+		document.title = this.$store.state.userName + ' - Reddit';
+	},
 	components: {
 		ProfileCard,
 		BaseContainer,
