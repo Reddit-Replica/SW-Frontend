@@ -38,7 +38,7 @@ const router = createRouter({
 			path: '/user/:userName',
 			name: 'user',
 			component: UserPage,
-			children: [{ path: '/:jnj(.*)', component: UserPage }],
+			//children: [{ path: '/:jnj(.*)', component: UserPage }],
 			props: true,
 		}, //render user component
 		{
@@ -51,22 +51,21 @@ const router = createRouter({
 			name: 'post',
 			component: MainPage,
 		}, //render post component
-		//{ path: '/test', component: null },
-		//  { path: '', component: null },
-
 		{
 			path: '/settings',
 			name: 'settings',
 			component: TheSettings,
 			props: true,
+			children: [
+				{ path: '', component: AccountSettings },
+				{ path: '/settings/account', component: AccountSettings },
+				{ path: '/settings/profile', component: ProfileSettings },
+				{ path: '/settings/privacy', component: PrivacySettings },
+				{ path: '/settings/feed', component: FeedSettings },
+				{ path: '/settings/emails', component: EmailsSettings },
+				{ path: '/settings/messaging', component: MessagingSettings },
+			],
 		},
-		{ path: '/settings/account', component: AccountSettings },
-		{ path: '/settings/profile', component: ProfileSettings },
-		{ path: '/settings/privacy', component: PrivacySettings },
-		{ path: '/settings/feed', component: FeedSettings },
-		{ path: '/settings/emails', component: EmailsSettings },
-		{ path: '/settings/messaging', component: MessagingSettings },
-
 		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });
