@@ -21,7 +21,7 @@
 					</p>
 				</div>
 				<div @click="showGenderMenu">
-					<span>{{ gender }}</span>
+					<span class="span-blue">{{ gender }}</span>
 					<span>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -600,7 +600,7 @@ export default {
 .section button:active {
 	background-color: #d7eaf8;
 }
-.section:nth-of-type(2) span:first-of-type {
+.section:nth-of-type(2) .span-blue {
 	font-size: 11.2px;
 	font-weight: 700;
 	letter-spacing: 0.5px;
