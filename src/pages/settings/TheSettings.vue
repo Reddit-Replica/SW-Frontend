@@ -1,6 +1,5 @@
 <template>
 	<div>the settings</div>
-	<div><profile-settings></profile-settings></div>
 </template>
 
 <!-- <script>
@@ -11,6 +10,14 @@ export default {
 	},
 };
 </script> -->
+
+<script>
+export default {
+	created() {
+		document.title = 'Reddit Settings';
+	},
+};
+</script>
 
 <style>
 .settings-page {
