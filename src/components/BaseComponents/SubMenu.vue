@@ -28,6 +28,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ['change-title'],
 	data() {
 		return {
 			clicked: this.clickedProp,
@@ -36,7 +37,7 @@ export default {
 	methods: {
 		clickedFunction(title) {
 			this.clicked = title;
-			this.$emit('changeTitle', title);
+			this.$emit('change-title', title);
 		},
 	},
 };
