@@ -1,11 +1,11 @@
 <template>
 	<header class="header">
-		<div class="logo">
-			<img src="../../../img/logo.png" alt="reddit" class="logo" />
-			<img src="../../../img/reddit.png" alt="reddit" class="reddit" />
+		<div class="header-logo">
+			<img src="../../../img/logo.png" alt="reddit" class="header-logo" />
+			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
-		<div class="home">
-			<div class="icon-home">
+		<div class="header-home">
+			<div class="header-icon-home">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -20,26 +20,30 @@
 				</svg>
 				<span>Home</span>
 			</div>
-			<svg class="user-nav-icon down-arrow">
+			<svg class="header-user-nav-icon header-down-arrow">
 				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 			</svg>
 		</div>
 		<form action="#" class="search">
-			<input type="text" class="search-input" placeholder="Search Reddit" />
-			<button class="search-button">
-				<svg class="search-icon">
+			<input
+				type="text"
+				class="header-search-input"
+				placeholder="Search Reddit"
+			/>
+			<button class="header-search-button">
+				<svg class="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
 				</svg>
 			</button>
 		</form>
-		<nav class="user-nav">
-			<div class="user-nav-icon-box popular">
+		<nav class="header-user-nav">
+			<div class="header-user-nav-icon-box header-popular">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-arrow-up-right-circle user-nav-icon"
+					class="bi bi-arrow-up-right-circle header-user-nav-icon"
 					viewBox="0 0 16 16"
 				>
 					<title>Popular</title>
@@ -61,13 +65,13 @@
 
       | -->
 
-			<div class="user-nav-icon-box">
+			<div class="header-user-nav-icon-box">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-chat-dots user-nav-icon"
+					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
 				>
 					<title>Chat</title>
@@ -78,16 +82,16 @@
 						d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
 					/>
 				</svg>
-				<span class="user-nav-notification">2</span>
+				<span class="header-user-nav-notification">2</span>
 			</div>
 
-			<div class="user-nav-icon-box">
+			<div class="header-user-nav-icon-box">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-bell user-nav-icon"
+					class="bi bi-bell header-user-nav-icon"
 					viewBox="0 0 16 16"
 				>
 					<title>Notifications</title>
@@ -95,16 +99,16 @@
 						d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
 					/>
 				</svg>
-				<span class="user-nav-notification">2</span>
+				<span class="header-user-nav-notification">2</span>
 			</div>
 
-			<div class="user-nav-icon-box">
+			<div class="header-user-nav-icon-box">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-plus user-nav-icon plus"
+					class="bi bi-plus header-user-nav-icon header-plus"
 					viewBox="0 0 16 16"
 				>
 					<title>Create Post</title>
@@ -113,8 +117,8 @@
 					/>
 				</svg>
 			</div>
-			<div class="user-nav-box box">
-				<button class="button-advertise">
+			<div class="header-user-nav-box header-box">
+				<button class="header-button-advertise">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -131,27 +135,27 @@
 				</button>
 			</div>
 
-			<div class="user-nav-box user">
+			<div class="header-user-nav-box header-user">
 				<img
 					src="../../../img/user-image.jpg"
 					alt="user photo"
-					class="user-nav-user-photo"
+					class="header-user-nav-user-photo"
 				/>
-				<span class="user-nav-online" />
+				<span class="header-user-nav-online" />
 
-				<div class="user-nav-user">
-					<span class="user-nav-user-name">asmaaadel0</span>
-					<svg class="user-nav-icon icon-user">
+				<div class="header-user-nav-user">
+					<span class="header-user-nav-user-name">asmaaadel0</span>
+					<svg class="header-user-nav-icon header-icon-user">
 						<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 					</svg>
 
-					<span class="user-nav-karma">
+					<span class="header-user-nav-karma">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
 							height="16"
 							fill="currentColor"
-							class="bi bi-stars star"
+							class="bi bi-stars header-star"
 							viewBox="0 0 16 16"
 						>
 							<path
@@ -190,18 +194,18 @@ export default {};
 	border: var(--line-3);
 	border-radius: 5px;
 }
-img {
+.header img {
 	cursor: pointer;
 }
-.logo {
+.header-logo {
 	margin-left: 0.5rem;
 	display: flex;
 	flex-direction: row;
 }
-.logo img {
+.header-logo img {
 	height: 4rem;
 }
-.icon-home {
+.header-icon-home {
 	display: grid;
 	grid-template-columns: min-content min-content min-content;
 	/* width: 40rem; */
@@ -210,7 +214,7 @@ img {
 	border: var(--line-3);
 	border-radius: 5px;
 }
-.home {
+.header-home {
 	padding: 0.5rem;
 	margin-left: 1.2rem;
 	align-items: center;
@@ -218,7 +222,7 @@ img {
 	border-radius: 5px;
 	position: relative;
 }
-.down-arrow {
+.header-down-arrow {
 	position: absolute;
 	top: 0.6rem;
 	right: 0.5rem;
@@ -227,12 +231,12 @@ img {
 	justify-content: center;
 	align-items: center;
 }
-.home:hover,
-.home:focus {
+.header-home:hover,
+.header-home:focus {
 	border: var(--line);
 }
 
-.search {
+.header-search {
 	flex: 0 0 23%;
 	/* width: 35rem; */
 
@@ -241,7 +245,7 @@ img {
 	justify-content: center;
 }
 
-.search-input {
+.header-search-input {
 	font-family: inherit;
 	font-size: inherit;
 	background-color: var(--color-grey-light-2);
@@ -253,40 +257,40 @@ img {
 	/* transition: all 0.2s; */
 	margin-right: -3.75rem;
 }
-.search-input:focus,
-.search-input:hover {
+.header-search-input:focus,
+.header-search-input:hover {
 	outline: navajowhite;
 	border: var(--line-2);
 	background-color: var(--color-white-1);
 }
 
-.search-input::-webkit-input-placeholder {
+.header-search-input::-webkit-input-placeholder {
 	font-weight: 50;
 	color: var(--color-grey-dark-2);
 }
-.search-input:focus + .search-button,
-.search-input:hover + .search-button {
+.header-search-input:focus + .header-search-button,
+.header-search-input:hover + .header-search-button {
 	background-color: var(--color-white-1);
 }
-.search-button {
+.header-search-button {
 	border: none;
 	/* background-color: var(--color-grey-light-3); */
 }
 
-.search-button:focus {
+.header-search-button:focus {
 	outline: none;
 }
 
-.search-button:active {
+.header-search-button:active {
 	transform: translateY(2px);
 }
-.search-icon {
+.header-search-icon {
 	height: 2rem;
 	width: 2rem;
 	fill: var(--color-grey-dark-2);
 }
 
-.user-nav {
+.header-user-nav {
 	/* align-self: stretch; */
 	width: 1rem;
 	margin-left: 4rem;
@@ -300,17 +304,17 @@ img {
 	align-items: center;
 }
 
-.button-advertise {
+.header-button-advertise {
 	width: 11rem;
 	height: 3rem;
 	border: none;
 	border-radius: 10rem;
 	background-color: var(--color-grey-light-2);
 }
-.button-advertise:hover {
+.header-button-advertise:hover {
 	background-color: var(--color-grey-light-4);
 }
-.user-nav > * {
+.header-user-nav > * {
 	padding: 0 1.3rem;
 	cursor: pointer;
 	height: 80%;
@@ -318,23 +322,23 @@ img {
 	align-items: center;
 	border-radius: 0.3rem;
 }
-.user-nav > *:hover {
+.header-user-nav > *:hover {
 	background-color: var(--color-grey-light-2);
 }
-.user-nav-icon-box {
+.header-user-nav-icon-box {
 	position: relative;
 }
-.user-nav-icon {
+.header-user-nav-icon {
 	height: 1.9rem;
 	width: 1.9rem;
 	fill: var(--color-grey-dark-1);
 }
 
-.plus {
+.header-plus {
 	height: 3.3rem;
 	width: 3.3rem;
 }
-.user-nav-notification {
+.header-user-nav-notification {
 	font-size: 1rem;
 	height: 1.9rem;
 	width: 1.9rem;
@@ -353,14 +357,14 @@ img {
 	align-items: center;
 }
 
-.user-nav-box {
+.header-user-nav-box {
 	margin-left: -1rem;
 	border: var(--line-3);
 	border-radius: 5px;
 	height: 4.5rem;
 	position: relative;
 }
-.user-nav-online {
+.header-user-nav-online {
 	font-size: 1rem;
 	height: 0.9rem;
 	width: 0.9rem;
@@ -376,15 +380,15 @@ img {
 	justify-content: center;
 	align-items: center;
 }
-.user-nav-box:hover,
-.user-nav-box:focus {
+.header-user-nav-box:hover,
+.header-user-nav-box:focus {
 	background-color: var(--color-white-1);
 	border: var(--line);
 }
-.box:hover {
+.header-box:hover {
 	border: var(--line-3);
 }
-.user-nav-user {
+.header-user-nav-user {
 	display: grid;
 	grid-template-columns: max-content;
 	grid-template-rows: max-content;
@@ -394,7 +398,7 @@ img {
 	border-radius: 5px;
 	width: 16rem;
 }
-.user-nav-user-photo {
+.header-user-nav-user-photo {
 	width: 2.5rem;
 	height: 2.5rem;
 	/* border-radius: 50%; */
@@ -402,19 +406,19 @@ img {
 	margin-right: 0.3rem;
 	margin-left: 0.9rem;
 }
-.user-nav-user-name {
+.header-user-nav-user-name {
 	color: var(--color-dark-1);
 	font-size: 1.1rem;
 }
-.user-nav-karma {
+.header-user-nav-karma {
 	color: var(--color-grey-dark-4);
 	font-size: 1rem;
 	font-weight: 600;
 }
-.star {
+.header-star {
 	fill: var(--color-primary);
 }
-.icon-user {
+.header-icon-user {
 	position: absolute;
 	right: 1rem;
 }
@@ -423,18 +427,18 @@ img {
 	.header {
 		grid-template-columns: max-content 20% 23% max-content;
 	}
-	.user-nav-user-name {
+	.header-user-nav-user-name {
 		display: none;
 	}
-	.user-nav-karma,
-	.user-nav-user-name,
-	.star {
+	.header-user-nav-karma,
+	.header-user-nav-user-name,
+	.header-star {
 		display: none;
 	}
-	.icon-user {
+	.header-icon-user {
 		left: 5rem;
 	}
-	.user-nav-user {
+	.header-user-nav-user {
 		width: 2rem;
 	}
 }
@@ -443,10 +447,10 @@ img {
 	.header {
 		grid-template-columns: max-content 10% 40% max-content;
 	}
-	.home span {
+	.header-home span {
 		display: none;
 	}
-	.reddit {
+	.header-reddit {
 		display: none;
 	}
 }
@@ -461,26 +465,26 @@ img {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
-	.user-nav > * {
+	.header-user-nav > * {
 		padding: 0 0.7rem;
 	}
-	.user-nav-icon {
+	.header-user-nav-icon {
 		height: 1.7rem;
 		width: 1.7rem;
 	}
-	.popular {
+	.header-popular {
 		display: none;
 	}
 }
 /* 635px */
 @media only screen and (max-width: 40em) {
-	.down-arrow {
+	.header-down-arrow {
 		display: none;
 	}
 }
 /* 520px */
 @media only screen and (max-width: 32.5em) {
-	.user {
+	.header-user {
 		display: none;
 	}
 }
@@ -489,10 +493,10 @@ img {
 	.header {
 		grid-template-columns: 10% 10% 30% auto;
 	}
-	.box {
+	.header-box {
 		display: none;
 	}
-	.user-nav > * {
+	.header-user-nav > * {
 		padding: 0 0.9rem;
 	}
 }
