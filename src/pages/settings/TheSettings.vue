@@ -137,4 +137,29 @@ export default {
 	justify-content: flex-end;
 	flex-grow: 1;
 }
+.section {
+	display: flex;
+	flex-flow: row wrap;
+	margin-bottom: 32px;
+	justify-content: space-between;
+}
+.section button {
+	border: 1px solid var(--color-blue);
+	color: var(--color-blue);
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	height: 32px;
+	padding: 4px 16px;
+	background-color: white;
+}
+.section button:hover {
+	background-color: #f5fafd;
+}
+.section button:active {
+	background-color: #d7eaf8;
+}
+.section div:first-of-type {
+	max-width: 70%;
+}
 </style>
