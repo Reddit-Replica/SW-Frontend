@@ -3,12 +3,7 @@
 		<li>
 			ِ<router-link
 				to="/settings/account"
-				:class="
-					$route.path ==
-					('/settings' || ('/settings/' && $route.params.id == ''))
-						? 'router-link-active'
-						: ''
-				"
+				:class="$route.path == '/settings' ? 'router-link-active' : ''"
 				>Account</router-link
 			>
 		</li>
