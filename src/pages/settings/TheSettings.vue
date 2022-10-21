@@ -12,7 +12,7 @@ export default {
 };
 </script> -->
 
-<style scoped>
+<style>
 .settings-page {
 	max-width: 1200px;
 	margin: 0 auto;
