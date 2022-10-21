@@ -25,12 +25,15 @@ const router = createRouter({
 	routes: [
 		{ path: '/', redirect: '/main' },
 		{ path: '/main', component: MainPage },
+
 		{ path: '/forgetPassword', component: ForgetPassword },
 		{ path: '/forgetUsername', component: ForgetUsername },
 		{ path: '/forgetPasswordpage', component: ForgetPasswordpage },
 		{ path: '/forgetUsernamepage', component: ForgetUsernamepage },
+
 		{ path: '/login', component: login },
 		{ path: '/signup', component: signupPage },
+
 		{
 			path: '/user/:userName',
 			name: 'user',
@@ -50,6 +53,7 @@ const router = createRouter({
 		}, //render post component
 		//{ path: '/test', component: null },
 		//  { path: '', component: null },
+
 		{
 			path: '/settings',
 			name: 'settings',
@@ -62,6 +66,7 @@ const router = createRouter({
 		{ path: '/settings/feed', component: FeedSettings },
 		{ path: '/settings/emails', component: EmailsSettings },
 		{ path: '/settings/messaging', component: MessagingSettings },
+
 		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });

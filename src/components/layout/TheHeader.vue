@@ -11,7 +11,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-house-door-fill user-nav-icon"
+					class="bi bi-house-door-fill header-user-nav-icon"
 					viewBox="0 0 16 16"
 				>
 					<path

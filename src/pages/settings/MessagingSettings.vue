@@ -21,7 +21,7 @@
 				<subMenu
 					:titles="['Everyone', 'Accounts Older Than 30 Days', 'Nobody']"
 					:display="showFirstMenu"
-					v-on-change-title="changeFirstTitle"
+					@change-title="changeFirstTitle"
 					clicked-prop="Everyone"
 				/>
 			</div>
@@ -46,7 +46,7 @@
 				<subMenu
 					:titles="['Everyone', 'Nobody']"
 					:display="showSecondMenu"
-					v-on-change-title="changeSecondTitle"
+					@change-title="changeSecondTitle"
 					clicked-prop="Everyone"
 				/>
 			</div>
