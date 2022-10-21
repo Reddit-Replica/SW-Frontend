@@ -36,38 +36,18 @@
 							/>
 						</svg>
 					</span>
-					<ul v-if="genderMenuDisplayed">
-						<li
-							@click="setGender('woman')"
-							:class="gender == 'woman' ? 'blue' : ''"
-						>
-							Woman
-						</li>
-						<li
-							@click="setGender('man')"
-							:class="gender == 'man' ? 'blue' : ''"
-						>
-							Man
-						</li>
-						<li
-							@click="setGender('Non-Binary')"
-							:class="gender == 'Non-Binary' ? 'blue' : ''"
-						>
-							Non-Binary
-						</li>
-						<li
-							@click="setGender('I Refer To Myself As....')"
-							:class="gender == 'I Refer To Myself As....' ? 'blue' : ''"
-						>
-							I&nbsp;Refer&nbsp;To&nbsp;Myself&nbsp;As....
-						</li>
-						<li
-							@click="setGender('I Prefer Not To Say')"
-							:class="gender == 'I Prefer Not To Say' ? 'blue' : ''"
-						>
-							I Prefer Not To Say
-						</li>
-					</ul>
+					<subMenu
+						:titles="[
+							'Woman',
+							'Man',
+							'Non-Binary',
+							'I Refer To Myself As....',
+							'I Prefer Not To Say',
+						]"
+						:display="genderMenuDisplayed"
+						@change-title="changeGender"
+						clicked-prop=""
+					/>
 				</div>
 			</div>
 			<div class="section">
@@ -549,10 +529,12 @@
 <script>
 import SwitchButton from '../../components/SwitchButton.vue';
 import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: {
 		SwitchButton,
 		BaseButton,
+		SubMenu,
 	},
 	data() {
 		return {
@@ -565,6 +547,9 @@ export default {
 			this.genderMenuDisplayed = !this.genderMenuDisplayed;
 		},
 		setGender(gender) {
+			this.gender = gender;
+		},
+		changeGender(gender) {
 			this.gender = gender;
 		},
 	},
