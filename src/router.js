@@ -8,8 +8,8 @@ import ForgetUsername from './components/forget/ForgetUsername.vue';
 import ForgetPasswordpage from './components/forget/ForgetPasswordpage.vue';
 import ForgetUsernamepage from './components/forget/ForgetUsernamepage.vue';
 
-import login from './pages/login/LoginPage.vue';
-import signupPage from './pages/signup/SignupPage.vue';
+import LoginPage from './pages/login/LoginPage.vue';
+import SignupPage from './pages/signup/SignupPage.vue';
 
 import TheSettings from './pages/settings/TheSettings.vue';
 import ProfileSettings from './pages/settings/ProfileSettings.vue';
@@ -18,6 +18,8 @@ import EmailsSettings from './pages/settings/EmailsSettings.vue';
 import FeedSettings from './pages/settings/FeedSettings.vue';
 import MessagingSettings from './pages/settings/MessagingSettings.vue';
 import AccountSettings from './pages/settings/AccountSettings.vue';
+
+import SubmitPage from './pages/submit/SubmitPage.vue';
 
 import NotFound from './pages/NotFound.vue';
 const router = createRouter({
@@ -31,8 +33,8 @@ const router = createRouter({
 		{ path: '/forgetPasswordpage', component: ForgetPasswordpage },
 		{ path: '/forgetUsernamepage', component: ForgetUsernamepage },
 
-		{ path: '/login', component: login },
-		{ path: '/signup', component: signupPage },
+		{ path: '/login', component: LoginPage },
+		{ path: '/signup', component: SignupPage },
 
 		{
 			path: '/user/:userName',
@@ -66,6 +68,9 @@ const router = createRouter({
 				{ path: '/settings/messaging', component: MessagingSettings },
 			],
 		},
+
+		{ path: '/submit', component: SubmitPage },
+
 		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });
