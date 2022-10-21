@@ -1,25 +1,43 @@
 <template>
-	<div>the settings</div>
+	<div class="settings">
+		<div class="container">
+			<div class="row">
+				<div class="settings-bar">
+					<h3>User Settings</h3>
+					<user-settings></user-settings>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<router-view></router-view>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
-<!-- <script>
-import SwitchButton from '../../components/SwitchButton.vue';
+<script>
+import UserSettings from '../../components/bars/UserSettings.vue';
 export default {
 	components: {
-		SwitchButton,
+		UserSettings,
 	},
-};
-</script> -->
-
-<script>
-export default {
 	created() {
 		document.title = 'Reddit Settings';
 	},
 };
 </script>
-
 <style>
+.settings {
+	background-color: white;
+	border-top: 1px solid #eceff1;
+}
+.settings-bar h3 {
+	font-size: 18px;
+	font-weight: 500;
+	padding: 16px 20px 20px;
+	color: black;
+}
 .settings-page {
 	max-width: 1200px;
 	margin: 0 auto;
