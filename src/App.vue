@@ -22,7 +22,6 @@ export default {
 	name: 'App',
 	components: {
 		TheHeader,
-		TheChat,
 	},
 };
 </script>
