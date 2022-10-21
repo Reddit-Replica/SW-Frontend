@@ -2,21 +2,26 @@
 	<div>submit page</div>
 	<div class="submit-container">
 		<nav id="submit-nav" class="submit-nav">
-			<ul class="submit-list">
-				<li id="0" @click="selectPostType" class="li-active">
-					<i id="0" class="fa-regular fa-bookmark icon"></i>Post
+			<ul class="submit-list" @click="selectPostType">
+				<li class="li-active">
+					<div id="0" class="clicked-button"></div>
+					<i class="fa-regular fa-bookmark icon"></i>Post
 				</li>
-				<li id="1" @click="selectPostType">
-					<i id="1" class="fa-regular fa-image icon"></i>Images & Video
+				<li>
+					<div id="1" class="clicked-button"></div>
+					<i class="fa-regular fa-image icon"></i>Images & Video
 				</li>
-				<li id="2" @click="selectPostType">
-					<i id="2" class="fa-solid fa-link icon"></i>Link
+				<li>
+					<div id="2" class="clicked-button"></div>
+					<i class="fa-solid fa-link icon"></i>Link
 				</li>
-				<li id="3" @click="selectPostType">
-					<i id="3" class="fa-solid fa-list-check icon"></i>Poll
+				<li>
+					<div id="3" class="clicked-button"></div>
+					<i class="fa-solid fa-list-check icon"></i>Poll
 				</li>
-				<li id="4" @click="selectPostType">
-					<i id="4" class="fa-solid fa-microphone icon"></i>Talk
+				<li>
+					<div id="4" class="clicked-button"></div>
+					<i class="fa-solid fa-microphone icon"></i>Talk
 				</li>
 			</ul>
 		</nav>
@@ -103,6 +108,7 @@ nav ul li {
 	color: #878a8c;
 	text-align: center;
 	white-space: nowrap;
+	position: relative;
 }
 nav ul li .icon {
 	font-size: 20px;
@@ -112,6 +118,14 @@ nav ul li .icon {
 	vertical-align: middle;
 	width: 20px;
 	margin-right: 8px;
+}
+.clicked-button {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: transparent;
 }
 nav ul li:hover {
 	background-color: rgba(0, 121, 211, 0.05);
