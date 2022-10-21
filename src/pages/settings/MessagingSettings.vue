@@ -61,45 +61,6 @@
 				</div>
 			</div>
 
-			<!-- <div class="setting-box">
-				<div class="setting-choice">Who can send you private messages</div>
-				<div class="choice" @click="showSecondMenuFunction">
-					<span class="title">{{ titleSecond }}</span>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="currentColor"
-						class="bi bi-caret-down-fill icon"
-						viewBox="0 0 16 16"
-					>
-						<path
-							d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-						/>
-					</svg>
-					<subMenu
-						:titles="['Everyone', 'Nobody']"
-						:display="showSecondMenu"
-						@change-title="changeSecondTitle"
-						clicked-prop="Everyone"
-					/>
-				</div>
-				<div class="choice-details">
-					Heads up—Reddit admins and moderators of communities you've joined can
-					message you even if they're not approved.
-				</div>
-			</div> -->
-
-			<!-- <div class="setting-box">
-				<div class="setting-choice">Invite someone to chat</div>
-				<button class="button">Copy link</button>
-				<div>
-					<base-button button-text="Change" />
-				</div>
-				<div class="choice-details">
-					Copy a link to invite someone to a direct chatroom with you.
-				</div>
-			</div> -->
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Invite someone to chat</h3>
@@ -108,17 +69,10 @@
 					</p>
 				</div>
 				<div>
-					<base-button button-text="Copy link" />
+					<base-button class="section-button" button-text="Copy link" />
 				</div>
 			</div>
 
-			<!-- <div class="setting-box">
-				<div class="setting-choice">Mark all as read</div>
-				<button class="button button-2">Mark as Read</button>
-				<div class="choice-details">
-					Mark all conversations and invites as read.
-				</div>
-			</div> -->
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Mark all as read</h3>
@@ -127,7 +81,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button button-text="Mark as Read" />
+					<base-button class="section-button" button-text="Mark as Read" />
 				</div>
 			</div>
 		</div>
@@ -168,23 +122,6 @@ export default {
 <style scoped>
 .settings-page {
 	min-height: 45.7rem;
-}
-.heading-2 {
-	margin-bottom: 3rem;
-	color: var(--color-dark-1);
-}
-.setting-box {
-	display: grid;
-	grid-template-columns: repeat(2, 4fr);
-	grid-template-rows: repeat(2, 4fr);
-	grid-row-gap: 0rem;
-	align-items: center;
-	justify-content: left;
-}
-.setting-choice {
-	font-size: 1.6rem;
-	color: var(--color-dark-1);
-	margin: 0;
 }
 .choice {
 	position: relative;
