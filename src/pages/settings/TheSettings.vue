@@ -8,7 +8,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-7">
 					<router-view></router-view>
 				</div>
 			</div>
