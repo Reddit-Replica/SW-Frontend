@@ -634,6 +634,7 @@ export default {
 	align-items: center;
 	padding: 0px 10px;
 	height: 35px;
+	width: 100%;
 }
 .section:nth-of-type(2) li:hover {
 	color: black;
