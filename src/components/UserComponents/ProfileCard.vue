@@ -1,9 +1,5 @@
 <template>
-	<!-- <i class="fa-solid fa-shirt"></i>
-  <i class="fa-regular fa-square-plus"></i>
-  <i class="fa-solid fa-plus"></i>
-  <i class="fa-solid fa-gear"></i> -->
-	<aside>
+	<div class="card">
 		<div class="profile-card">
 			<div class="cover-pic">
 				<a href="" class="add-image">
@@ -101,7 +97,7 @@
 				Fewer options
 			</button>
 		</div>
-	</aside>
+	</div>
 </template>
 
 <script>
@@ -115,7 +111,6 @@ export default {
 	data() {
 		return {
 			showMoreOptions: false,
-			// showMoreOptionsButton:false,
 		};
 	},
 	methods: {
@@ -163,7 +158,7 @@ a {
 	text-decoration: none;
 }
 
-aside {
+.card {
 	/* display: flex;
   margin: auto;
   justify-content: center;
