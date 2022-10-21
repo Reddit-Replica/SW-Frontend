@@ -1,13 +1,13 @@
 <template>
-	<div class="content">
-		<div class="box-1-1">
-			<div class="icon-box clicked" @click="showSubMenu()">
+	<div class="sort-post-content">
+		<div class="sort-post-box-1-1">
+			<div class="sort-post-icon-box clicked" @click="showSubMenu()">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-airplane-fill icon"
+					class="bi bi-airplane-fill sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -16,14 +16,14 @@
 				</svg>
 				<!-- <i class="fa-brands fa-space-awesome icon"></i> -->
 				<span>{{ clicked }}</span>
-				<svg class="arrow-icon icon">
+				<svg class="sort-post-arrow-icon sort-post-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</div>
 		</div>
-		<div class="box-1">
+		<div class="sort-post-box-1">
 			<div
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Best' }"
 				@click="selectSort('Best')"
 			>
@@ -32,19 +32,18 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-airplane-fill icon"
+					class="bi bi-airplane-fill sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
 						d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"
 					/>
 				</svg>
-				<!-- <i class="fa-brands fa-space-awesome icon"></i> -->
 				<span>Best</span>
 			</div>
 
 			<div
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Hot' }"
 				@click="selectSort('Hot')"
 			>
@@ -53,7 +52,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-fire icon"
+					class="bi bi-fire sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -64,7 +63,7 @@
 				<span>Hot</span>
 			</div>
 			<div
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'New' }"
 				@click="selectSort('New')"
 			>
@@ -74,7 +73,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-brightness-high icon"
+					class="bi bi-brightness-high sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -84,7 +83,7 @@
 				<span>New</span>
 			</div>
 			<div
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Top' }"
 				@click="selectSort('Top')"
 			>
@@ -93,7 +92,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-box-arrow-up icon"
+					class="bi bi-box-arrow-up sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -124,15 +123,15 @@
         </svg>
       </div>  -->
 		</div>
-		<div class="box-2">
-			<div class="icon__box">
+		<div class="sort-post-box-2">
+			<div class="sort-post-icon-box">
 				<!-- <i class="fa-regular fa-square-minus icon"></i> -->
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-dash-square icon icon-square"
+					class="bi bi-dash-square sort-post-icon sort-post-icon-square"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -140,14 +139,14 @@
 					/>
 					<path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
 				</svg>
-				<svg class="arrow-icon icon">
+				<svg class="sort-post-arrow-icon sort-post-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</div>
 		</div>
-		<ul class="sub-menu" v-if="showMenu">
+		<ul class="sort-post-sub-menu" v-if="showMenu">
 			<li
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Best' }"
 				@click="selectSort('Best')"
 			>
@@ -156,7 +155,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-airplane-fill icon"
+					class="bi bi-airplane-fill sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -167,7 +166,7 @@
 				<span>Best</span>
 			</li>
 			<li
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Hot' }"
 				@click="selectSort('Hot')"
 			>
@@ -176,7 +175,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-fire icon"
+					class="bi bi-fire sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -187,7 +186,7 @@
 				<span>Hot</span>
 			</li>
 			<li
-				class="icon-box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'New' }"
 				@click="selectSort('New')"
 			>
@@ -197,7 +196,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-brightness-high icon"
+					class="bi bi-brightness-high sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -207,7 +206,7 @@
 				<span>New</span>
 			</li>
 			<li
-				class="icon__box"
+				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Top' }"
 				@click="selectSort('Top')"
 			>
@@ -216,7 +215,7 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-box-arrow-up icon"
+					class="bi bi-box-arrow-up sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
@@ -246,6 +245,7 @@ export default {
 	methods: {
 		selectSort(title) {
 			this.clicked = title;
+			if (this.showMenu) this.showSubMenu();
 		},
 		showSubMenu() {
 			this.showMenu = !this.showMenu;
@@ -255,7 +255,7 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.sort-post-content {
 	margin-top: 1.5rem;
 	font-size: 1.4rem;
 	height: 5.5rem;
@@ -270,21 +270,21 @@ export default {
 	justify-content: space-between;
 	position: relative;
 }
-.content img {
+.sort-post-content img {
 	height: 5rem;
 	cursor: pointer;
 }
-.box-1-1 {
+.sort-post-box-1-1 {
 	display: none;
 }
-.box-1 {
+.sort-post-box-1 {
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
 }
-.box-1 > *,
-.box-2 > *,
-.box-1-1 > * {
+.sort-post-box-1 > *,
+.sort-post-box-2 > *,
+.sort-post-box-1-1 > * {
 	padding: 0 1rem;
 	cursor: pointer;
 	height: 100%;
@@ -292,24 +292,24 @@ export default {
 	align-items: center;
 }
 
-.box-1 > *:hover,
-.box-2 > *:hover,
-.box-1-1 > *:hover {
+.sort-post-box-1 > *:hover,
+.sort-post-box-2 > *:hover,
+.sort-post-box-1-1 > *:hover {
 	background-color: var(--color-grey-light-2);
 	border-radius: 2rem;
 }
-.icon {
+.sort-post-icon {
 	height: 2em;
 	width: 2rem;
 	margin: 0.6rem;
 	fill: var(--color-grey-dark-3);
 }
-.arrow-icon {
+.sort-post-arrow-icon {
 	height: 2.5em;
 	width: 2.5rem;
 	margin: 0;
 }
-.icon-square {
+.sort-post-icon-square {
 	margin: 0;
 }
 .clicked {
@@ -317,10 +317,10 @@ export default {
 	color: var(--color-blue-light);
 	border-radius: 2rem;
 }
-.clicked .icon {
+.clicked .sort-post-icon {
 	fill: var(--color-blue-light);
 }
-.sub-menu {
+.sort-post-sub-menu {
 	display: flex;
 	position: absolute;
 	background-color: white;
@@ -330,7 +330,7 @@ export default {
 	box-shadow: 0px 2px 4px var(--color-grey-dark-2);
 	border-radius: 5px;
 }
-.sub-menu li {
+.sort-post-sub-menu li {
 	color: var(--color-grey-dark-2);
 	font-size: 15px;
 	font-weight: lighter;
@@ -339,21 +339,21 @@ export default {
 	flex-direction: row;
 	align-items: center;
 }
-.sub-menu li:hover {
+.sort-post-sub-menu li:hover {
 	background-color: var(--color-grey-light-2);
 	border-radius: 2rem;
 }
 .sub-menu li {
 	padding: 0px 10px;
 }
-.sub-menu li.clicked {
+.sort-post-sub-menu li.clicked {
 	background-color: var(--color-white-1);
 }
 @media only screen and (max-width: 40em) {
-	.box-1 {
+	.sort-post-box-1 {
 		display: none;
 	}
-	.box-1-1 {
+	.sort-post-box-1-1 {
 		display: flex;
 	}
 }
