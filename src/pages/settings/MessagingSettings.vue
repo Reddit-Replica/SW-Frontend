@@ -102,9 +102,6 @@ export default {
 			this.titleSecond = title;
 		},
 	},
-	created() {
-		document.title = 'Reddit Settings';
-	},
 };
 </script>
 
