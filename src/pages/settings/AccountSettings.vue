@@ -9,7 +9,7 @@
 					<p class="p-title-description">menna.said00@eng-st.cu.edu.eg</p>
 				</div>
 				<div>
-					<base-button button-text="Change" />
+					<base-button class="section-button" button-text="Change" />
 				</div>
 			</div>
 			<div class="section">
@@ -438,7 +438,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button button-text="Connect to Twitter">
+					<base-button class="section-button" button-text="Connect to Twitter">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -471,7 +471,7 @@
 					<div>Connect account to log in to Reddit with Apple</div>
 				</div>
 				<div>
-					<base-button button-text="Connect to Apple">
+					<base-button class="section-button" button-text="Connect to Apple">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -498,7 +498,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button button-text="(disconnect)" />
+					<base-button class="section-button" button-text="(disconnect)" />
 				</div>
 			</div>
 			<h3 class="h3-main-title">BETA TESTS</h3>
