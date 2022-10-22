@@ -1,6 +1,6 @@
 <template>
 	<div>the settings</div>
-	<div><profile-settings></profile-settings></div>
+	<!-- <div><profile-settings></profile-settings></div> -->
 </template>
 
 <!-- <script>
