@@ -32,7 +32,7 @@ export default {
 	},
 };
 </script>
-<style scoped>
+<style>
 .settings {
 	background-color: white;
 	border-top: 1px solid #eceff1;
