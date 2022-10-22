@@ -1,7 +1,8 @@
 <template>
 	<div class="content">
 		<h3 class="heading-3">Drag and drop images or</h3>
-		<base-button class="blue-button" button-text="Upload" />
+		<input type="file" class="blue-button" id="actual-btn" hidden />
+		<label class="blue-button" for="actual-btn">Upload</label>
 	</div>
 </template>
 
@@ -24,5 +25,15 @@ export default {};
 }
 .heading-3 {
 	color: var(--color-blue);
+}
+.blue-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 100px;
+	box-sizing: border-box;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	border: none;
 }
 </style>
