@@ -221,6 +221,7 @@ export default {};
 	border: var(--line-3);
 	border-radius: 5px;
 	position: relative;
+	cursor: pointer;
 }
 .header-down-arrow {
 	position: absolute;
