@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="big-container">
 		<div class="left-box">
 			<div class="art"></div>
 		</div>
@@ -163,7 +163,7 @@ div {
 	line-height: 10px;
 	width: 100%;*/
 }
-.container {
+.big-container {
 	background-color: white;
 	display: flex;
 	-webkit-box-align: center;
