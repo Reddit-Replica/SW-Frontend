@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="big-container">
 		<button class="x-button">
 			<div class="x" />
 		</button>
@@ -12,12 +12,12 @@
 					account, and we’ll send you an email with a link to reset your
 					password.
 				</p>
-				<div class="input-field">
+				<div class="input-box">
 					<input type="text" required="required" />
 					<span class="span-input"> Username</span>
 				</div>
 				<p class="invalid">Please enter a username to continue</p>
-				<div class="input-field">
+				<div class="input-box">
 					<input type="email" required="required" />
 					<span class="span-input"> Email</span>
 				</div>
@@ -94,10 +94,10 @@ div {
 .user-name {
 	text-transform: lowercase;
 }
-.input-field {
+.input-box {
 	position: relative;
 }
-.input-field input {
+.input-box input {
 	border-radius: 100px;
 	font-family: 'IBM Plex Sans', sans-serif;
 	font-size: 14px;
@@ -131,7 +131,7 @@ div {
 	padding-right: 36px;*/
 }
 
-.input-field .span-input {
+.input-box .span-input {
 	position: absolute;
 	left: 0;
 	padding: 15px 20px 20px 15px;
@@ -141,14 +141,14 @@ div {
 	font-weight: 500;
 	transition: all 0.2s ease-in-out;
 }
-.input-field input:valid ~ .span-input,
-.input-field input:focus ~ .span-input,
-.input-field input:hover ~ .span-input {
+.input-box input:valid ~ .span-input,
+.input-box input:focus ~ .span-input,
+.input-box input:hover ~ .span-input {
 	transform: translateX(3px) translateY(-10px);
 	font-size: 10px;
 }
 
-.input-field input:active {
+.input-box input:active {
 	border: 0.5px solid #0079d3;
 }
 /*.input-field input:focus {
@@ -175,7 +175,7 @@ div {
 	line-height: 10px;
 	width: 100%;
 }
-.container {
+.big-container {
 	background-color: white;
 	border-color: transparent;
 	border-radius: 10px;
