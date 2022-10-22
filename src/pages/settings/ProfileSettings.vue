@@ -55,7 +55,14 @@
 				</div>
 				<div class="box-2">
 					<div class="box-social-links">
-						<div class="box-icon-social-links">
+						<!-- <div class="social-link">
+							<img
+								class="social-link-image"
+								src="https://www.redditstatic.com/desktop2x/img/social-links/reddit.png"
+							/>
+							Custom URL
+						</div> -->
+						<div class="box-icon-social-links" @click="socialLinksClick">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -70,6 +77,61 @@
 							</svg>
 							Add social link
 						</div>
+						<base-dialog
+							:show="socialLinksClicked"
+							@close="socialLinksClick"
+							title="Add Social Links"
+							center
+						>
+							<div class="social-links-dialog">
+								<social-link
+									v-for="link in links"
+									:key="link.title"
+									:title="link.title"
+									:image-url="link.imageURL"
+								>
+								</social-link>
+							</div>
+						</base-dialog>
+						<base-dialog :show="isLinkChosen" @close="ChooseLink" center>
+							<template #header>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-arrow-left"
+									viewBox="0 0 16 16"
+									@click="ChooseLink"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+									/>
+								</svg>
+								<h2 class="h2-social-links">Add Social Links</h2>
+								<base-button
+									class="save-button"
+									button-text="Save"
+								></base-button>
+							</template>
+							<div class="social-links-dialog" @click="ChooseLink">
+								<!-- <div class="social-link">
+									<img
+										class="social-link-image"
+										src="https://www.redditstatic.com/desktop2x/img/social-links/reddit.png"
+									/>
+									Custom URL
+								</div> -->
+								<!-- <social-link
+									v-for="link in socialLinks"
+									:key="link.title"
+									:title="link.title"
+									:image-url="link.imageURL"
+								>
+								</social-link> -->
+							</div>
+						</base-dialog>
 					</div>
 				</div>
 			</div>
@@ -108,7 +170,11 @@
 									Drag and Drop or Upload
 									<span class="bold">Profile</span> Image
 								</div>
-								<img v-if="images[0].imageUrl" :src="images[0].imageUrl" />
+								<img
+									v-if="images[0].imageUrl"
+									:src="images[0].imageUrl"
+									class="image"
+								/>
 								<div class="initial-image-input">
 									<input
 										class="image-input"
@@ -160,7 +226,11 @@
 								<div v-if="!images[1].imageUrl" class="drag-drop-title">
 									Drag and Drop or Upload <span class="bold">Banner</span> Image
 								</div>
-								<img v-if="images[1].imageUrl" :src="images[1].imageUrl" />
+								<img
+									v-if="images[1].imageUrl"
+									:src="images[1].imageUrl"
+									class="image"
+								/>
 								<div class="initial-image-input">
 									<input
 										class="image-input"
@@ -313,13 +383,25 @@
 <script>
 import SwitchButton from '../../components/SwitchButton.vue';
 import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
+import BaseButton from '@/components/BaseComponents/BaseButton.vue';
+import SocialLink from './SocialLink.vue';
 export default {
 	components: {
 		SwitchButton,
 		BaseDialog,
+		BaseButton,
+		SocialLink,
 	},
+	props: {},
 	data() {
 		return {
+			links: [
+				{
+					imageUrl:
+						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
+					title: 'Custom URL',
+				},
+			],
 			images: [
 				{
 					image: null,
@@ -335,6 +417,8 @@ export default {
 			nsfwClicked: false,
 			nsfwCancel: false,
 			nsfwUnderstand: false,
+			socialLinksClicked: false,
+			isLinkChosen: false,
 		};
 	},
 	methods: {
@@ -354,6 +438,13 @@ export default {
 			this.nsfwUnderstand = !this.nsfwUnderstand;
 			this.nsfwClick();
 		},
+		socialLinksClick() {
+			this.socialLinksClicked = !this.socialLinksClicked;
+		},
+		ChooseLink() {
+			this.isLinkChosen = !this.isLinkChosen;
+			this.socialLinksClicked = !this.socialLinksClicked;
+		},
 	},
 };
 </script>
@@ -364,6 +455,7 @@ export default {
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 8px;
+	align-items: center;
 }
 .box-icon-social-links {
 	font-size: 12px;
@@ -441,7 +533,7 @@ export default {
 a {
 	text-decoration: underline;
 }
-img {
+.image {
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
@@ -510,5 +602,54 @@ img {
 	color: var(--color-white-1);
 	fill: var(--color-blue-2);
 	background-color: var(--color-blue-2);
+}
+.social-links-dialog {
+	display: flex;
+	flex-wrap: wrap;
+}
+/* .social-link {
+	margin: 6px 2px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	align-items: center;
+	background-color: var(--color-grey-light-2);
+	border-radius: 100px;
+	color: var(--color-dark-1);
+	cursor: pointer;
+	display: flex;
+	height: 20px;
+	margin-right: 8px;
+	padding: 10px 12px;
+	white-space: nowrap;
+	box-sizing: content-box;
+} */
+/* .social-link-image {
+	margin-right: 8px;
+} */
+.bi-arrow-left {
+	cursor: pointer;
+	color: var(--color-grey-dark-1);
+}
+.save-button {
+	font-size: 14px;
+	font-weight: 700;
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	position: relative;
+	background-color: var(--color-blue-2);
+	border: none;
+	color: var(--color-white-1);
+}
+.h2-social-links {
+	color: var(--color-dark-1);
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 20px;
+	margin: 0;
+	flex: 1 1 100%;
+	width: 100%;
+	text-align: center;
 }
 </style>

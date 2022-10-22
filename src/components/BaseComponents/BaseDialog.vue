@@ -4,7 +4,7 @@
 			<dialog open v-if="show">
 				<header>
 					<slot name="header">
-						<h2>{{ title }}</h2>
+						<h2 :class="{ 'header-center': center }">{{ title }}</h2>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -39,6 +39,11 @@ export default {
 			type: String,
 			required: false,
 			default: '',
+		},
+		center: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 	emits: ['close'],
@@ -82,6 +87,7 @@ header {
 	padding: 16px;
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 }
 header h2 {
 	color: var(--color-dark-1);
@@ -100,5 +106,8 @@ section {
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
+}
+.header-center {
+	text-align: center;
 }
 </style>
