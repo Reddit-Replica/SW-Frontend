@@ -1,34 +1,43 @@
 <template>
-	<h3 class="heading-3">Create a post</h3>
-	<div class="submit-container">
-		<nav id="submit-nav" class="submit-nav">
-			<ul class="submit-list" @click="selectPostType">
-				<li class="li-active">
-					<div id="0" class="clicked-button"></div>
-					<i class="fa-regular fa-bookmark icon"></i>Post
-				</li>
-				<li>
-					<div id="1" class="clicked-button"></div>
-					<i class="fa-regular fa-image icon"></i>Images & Video
-				</li>
-				<li>
-					<div id="2" class="clicked-button"></div>
-					<i class="fa-solid fa-link icon"></i>Link
-				</li>
-				<li>
-					<div id="3" class="clicked-button"></div>
-					<i class="fa-solid fa-list-check icon"></i>Poll
-				</li>
-				<li>
-					<div id="4" class="clicked-button"></div>
-					<i class="fa-solid fa-microphone icon"></i>Talk
-				</li>
-			</ul>
-		</nav>
-		<!-- todo here add the components 0->post 1->image 2->...... -->
-		<title-input></title-input>
-		<image-submit v-if="submitTypesActive[2]"></image-submit>
-		<div v-if="submitTypesActive[0]">kjbkj</div>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="left-col">
+					<h3 class="heading-3">Create a post</h3>
+					<div class="submit-container">
+						<nav id="submit-nav" class="submit-nav">
+							<ul class="submit-list" @click="selectPostType">
+								<li class="li-active">
+									<div id="0" class="clicked-button"></div>
+									<i class="fa-regular fa-bookmark icon"></i>Post
+								</li>
+								<li>
+									<div id="1" class="clicked-button"></div>
+									<i class="fa-regular fa-image icon"></i>Images & Video
+								</li>
+								<li>
+									<div id="2" class="clicked-button"></div>
+									<i class="fa-solid fa-link icon"></i>Link
+								</li>
+								<li>
+									<div id="3" class="clicked-button"></div>
+									<i class="fa-solid fa-list-check icon"></i>Poll
+								</li>
+								<li>
+									<div id="4" class="clicked-button"></div>
+									<i class="fa-solid fa-microphone icon"></i>Talk
+								</li>
+							</ul>
+						</nav>
+						<!-- todo here add the components 0->post 1->image 2->...... -->
+						<title-input></title-input>
+						<div v-if="submitTypesActive[0]">kjbkj</div>
+						<image-submit v-if="submitTypesActive[1]"></image-submit>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">right</div>
+		</div>
 	</div>
 </template>
 
@@ -84,11 +93,11 @@ li {
 	border: none;
 }
 .submit-container {
-	margin: 50px 50px; /* delete this when making layout */
+	/* margin: 50px 50px; delete this when making layout */
 	background-color: #ffffff;
 	margin-bottom: 15px;
 	border-radius: 5px;
-	width: 740px; /* you must delete this line when making layout */
+	/* max-width: 740rem; you must delete this line when making layout */
 }
 nav {
 	margin: 0 0 12px;
