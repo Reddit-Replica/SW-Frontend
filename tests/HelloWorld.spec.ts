@@ -9,7 +9,6 @@ describe('HelloWorld.vue', () => {
 		const wrapper = mount(HelloWorld, {
 			props: { message },
 		});
-
 		expect(wrapper.text()).toBe(testMessage);
 	});
 
@@ -19,7 +18,6 @@ describe('HelloWorld.vue', () => {
 		const wrapper = mount(HelloWorld, {
 			props: { message },
 		});
-
 		expect(wrapper.vm.message).toBe(testMessage);
 	});
 });

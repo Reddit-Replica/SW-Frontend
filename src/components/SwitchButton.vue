@@ -4,27 +4,29 @@
 <style scoped>
 input[type='checkbox'] {
 	appearance: none;
-	width: 40px;
-	height: 15px;
+	width: 35px;
+	height: 22px;
 	background-color: #ddd;
-	border-radius: 11px;
+	border-radius: 100px;
+	border: 2px solid transparent;
 	position: relative;
 }
 input[type='checkbox']::before {
 	content: '';
 	position: absolute;
-	right: 25px;
-	top: 3px;
-	width: 10px;
-	height: 10px;
+	left: 0px;
+	top: 0px;
+	width: 18px;
+	height: 18px;
 	background-color: white;
 	border-radius: 50%;
 	transition: 0.5s all;
+	cursor: pointer;
 }
 input[type='checkbox']:checked {
 	background-color: var(--color-blue);
 }
 input[type='checkbox']:checked::before {
-	right: 5px;
+	left: 14px;
 }
 </style>
