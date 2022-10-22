@@ -69,7 +69,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button class="section-button" button-text="Copy link" />
+					<base-button class="blue-button" button-text="Copy link" />
 				</div>
 			</div>
 
@@ -81,7 +81,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button class="section-button" button-text="Mark as Read" />
+					<base-button class="blue-button" button-text="Mark as Read" />
 				</div>
 			</div>
 		</div>

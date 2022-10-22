@@ -148,7 +148,7 @@ export default {
 	margin-bottom: 32px;
 	justify-content: space-between;
 }
-.section .section-button {
+.section .blue-button {
 	border: 1px solid var(--color-blue);
 	color: var(--color-blue);
 	font-family: Noto Sans, Arial, sans-serif;
@@ -158,10 +158,10 @@ export default {
 	padding: 4px 16px;
 	background-color: white;
 }
-.section .section-button:hover {
+.section .blue-button:hover {
 	background-color: #f5fafd;
 }
-.section .section-button:active {
+.section .blue-button:active {
 	background-color: #d7eaf8;
 }
 .section div:first-of-type {
