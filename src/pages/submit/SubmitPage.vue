@@ -1,5 +1,5 @@
 <template>
-	<h2>Create a post</h2>
+	<h3 class="heading-3">Create a post</h3>
 	<div class="submit-container">
 		<nav id="submit-nav" class="submit-nav">
 			<ul class="submit-list" @click="selectPostType">
@@ -27,15 +27,18 @@
 		</nav>
 		<!-- todo here add the components 0->post 1->image 2->...... -->
 		<title-input></title-input>
+		<image-submit v-if="submitTypesActive[2]"></image-submit>
 		<div v-if="submitTypesActive[0]">kjbkj</div>
 	</div>
 </template>
 
 <script>
 import TitleInput from '../../components/SubmitComponents/TitleInput.vue';
+import ImageSubmit from '../../components/SubmitComponents/ImageSubmit.vue';
 export default {
 	components: {
 		TitleInput,
+		ImageSubmit,
 	},
 	created() {
 		document.title = 'Submit to Reddit';
