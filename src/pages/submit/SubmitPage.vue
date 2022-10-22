@@ -33,6 +33,9 @@
 						<title-input></title-input>
 						<div v-if="submitTypesActive[0]">kjbkj</div>
 						<image-submit v-if="submitTypesActive[1]"></image-submit>
+						<footer-buttons></footer-buttons>
+						<div class="border-bottom"></div>
+						<div>post button</div>
 					</div>
 				</div>
 			</div>
@@ -44,10 +47,12 @@
 <script>
 import TitleInput from '../../components/SubmitComponents/TitleInput.vue';
 import ImageSubmit from '../../components/SubmitComponents/ImageSubmit.vue';
+import FooterButtons from '../../components/SubmitComponents/FooterButtons.vue';
 export default {
 	components: {
 		TitleInput,
 		ImageSubmit,
+		FooterButtons,
 	},
 	created() {
 		document.title = 'Submit to Reddit';
@@ -150,5 +155,10 @@ nav ul li:hover {
 .li-active {
 	border-bottom: 3px solid #0079d3;
 	color: #0079d3;
+}
+.border-bottom {
+	margin: auto;
+	width: 95%;
+	border-bottom: var(--line);
 }
 </style>

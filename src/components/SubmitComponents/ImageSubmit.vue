@@ -19,7 +19,7 @@ export default {};
 	align-items: center;
 	justify-content: center;
 	height: 33rem;
-	border: var(--line);
+	border: var(--line-dashed);
 	margin-top: 1.5rem;
 	border-radius: 5px;
 }
