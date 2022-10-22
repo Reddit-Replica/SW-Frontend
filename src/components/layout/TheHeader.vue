@@ -257,6 +257,7 @@ export default {};
 	width: 100%;
 	/* transition: all 0.2s; */
 	margin-right: -3.75rem;
+	border: var(--line-3);
 }
 .header-search-input:focus,
 .header-search-input:hover {
