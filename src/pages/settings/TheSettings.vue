@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="settings-bar">
-					<h3>User Settings</h3>
+					<h3 class="heading-3">User Settings</h3>
 					<user-settings></user-settings>
 				</div>
 			</div>
@@ -37,7 +37,7 @@ export default {
 	background-color: white;
 	border-top: 1px solid #eceff1;
 }
-.settings-bar h3 {
+.heading-3 {
 	font-size: 18px;
 	font-weight: 500;
 	padding: 16px 20px 20px;
@@ -148,8 +148,8 @@ export default {
 	margin-bottom: 32px;
 	justify-content: space-between;
 }
-.section .blue-button {
-	border: 1px solid var(--color-blue);
+.blue-button {
+	border: 1px solid var(--color-blue) !important;
 	color: var(--color-blue);
 	font-family: Noto Sans, Arial, sans-serif;
 	font-size: 14px;
@@ -158,10 +158,10 @@ export default {
 	padding: 4px 16px;
 	background-color: white;
 }
-.section .blue-button:hover {
+.blue-button:hover {
 	background-color: #f5fafd;
 }
-.section .blue-button:active {
+.blue-button:active {
 	background-color: #d7eaf8;
 }
 .section div:first-of-type {
