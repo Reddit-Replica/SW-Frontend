@@ -64,6 +64,7 @@ export default {
 	--line-3: 1px solid var(--color-white-1);
 	--line-4: 2px solid var(--color-white-1);
 	--line-5: 1px solid var(--color-blue-2);
+	--line-6: 1px solid var(--color-dark-1);
 	/* 2000px */
 	--bp-largest-1: 125em;
 	/* 1200px */

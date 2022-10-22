@@ -1,5 +1,5 @@
 <template>
-	<div>submit page</div>
+	<h2>Create a post</h2>
 	<div class="submit-container">
 		<nav id="submit-nav" class="submit-nav">
 			<ul class="submit-list" @click="selectPostType">
@@ -26,12 +26,17 @@
 			</ul>
 		</nav>
 		<!-- todo here add the components 0->post 1->image 2->...... -->
+		<title-input></title-input>
 		<div v-if="submitTypesActive[0]">kjbkj</div>
 	</div>
 </template>
 
 <script>
+import TitleInput from '../../components/SubmitComponents/TitleInput.vue';
 export default {
+	components: {
+		TitleInput,
+	},
 	created() {
 		document.title = 'Submit to Reddit';
 	},
