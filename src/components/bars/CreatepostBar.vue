@@ -2,8 +2,13 @@
 	<div class="content">
 		<img src="../../../img/reddit-white-grey.png" alt="reddit" />
 		<form action="#" class="post">
-			<input type="text" class="search-post" placeholder="Create Post" />
-			<button class="post__button" />
+			<input
+				type="text"
+				class="search-post"
+				placeholder="Create Post"
+				@click="changeRouter"
+			/>
+			<button class="post-button" />
 		</form>
 		<div class="box">
 			<div class="post-icon-box">
@@ -21,7 +26,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+	methods: {
+		changeRouter() {
+			this.$router.push('/submit');
+		},
+	},
+};
 </script>
 
 <style scoped>
