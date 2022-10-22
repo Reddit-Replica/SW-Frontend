@@ -81,8 +81,9 @@ button {
 	padding: 0.7rem 2rem;
 	border-radius: 5px;
 	width: 98%;
-	transition: all 0.2s;
+	/* transition: all 0.2s; */
 	margin-right: -3.25rem;
+	border: var(--line-3);
 }
 .search-post:focus {
 	outline: navajowhite;
