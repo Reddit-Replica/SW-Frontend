@@ -13,12 +13,12 @@
 						account, and we’ll send you an email with a link to reset your
 						password.
 					</p>
-					<div class="input-field">
+					<div class="input-box">
 						<input type="text" required="required" />
 						<span class="span-input"> Username</span>
 					</div>
 					<p class="invalid">Please enter a username to continue</p>
-					<div class="input-field">
+					<div class="input-box">
 						<input type="email" required="required" />
 						<span class="span-input"> Email Address</span>
 					</div>
@@ -88,10 +88,10 @@ div {
 	padding: 5px 0 0 0;
 }
 
-.input-field {
+.input-box {
 	position: relative;
 }
-.input-field input {
+.input-box input {
 	transform: translateZ(0);
 	outline: 0;
 	width: 100%;
@@ -107,7 +107,7 @@ div {
 	margin-top: 5px;
 }
 
-.input-field .span-input {
+.input-box .span-input {
 	position: absolute;
 	left: 0;
 	padding: 15px 20px 20px 15px;
@@ -119,7 +119,7 @@ div {
 	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
 }
-.input-field .span-input::after {
+.input-box .span-input::after {
 	font-size: 20px;
 	font-weight: 500;
 	line-height: 24px;
@@ -129,16 +129,16 @@ div {
 	content: '\2022';
 	color: #24a0ed;
 }
-.input-field input:valid ~ .span-input,
-.input-field input:focus ~ .span-input,
-.input-field input:hover ~ .span-input {
+.input-box input:valid ~ .span-input,
+.input-box input:focus ~ .span-input,
+.input-box input:hover ~ .span-input {
 	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
 }
-.input-field input:hover ~ .span-input::after {
+.input-box input:hover ~ .span-input::after {
 	display: none;
 }
-.input-field input:active {
+.input-box input:active {
 	border: 0.5px solid #0079d3;
 }
 /*.input-field input:focus {
