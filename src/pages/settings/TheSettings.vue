@@ -1,18 +1,48 @@
 <template>
-	<div>the settings</div>
-	<!-- <div><profile-settings></profile-settings></div> -->
+	<div class="settings">
+		<div class="container">
+			<div class="row">
+				<div class="settings-bar">
+					<h3>User Settings</h3>
+					<user-settings></user-settings>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-7">
+					<!-- <router-view></router-view> -->
+					<router-view v-slot="slotProps">
+						<transition name="route" mode="out-in">
+							<component :is="slotProps.Component"></component>
+						</transition>
+					</router-view>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
-<!-- <script>
-import SwitchButton from '../../components/SwitchButton.vue';
+<script>
+import UserSettings from '../../components/bars/UserSettings.vue';
 export default {
 	components: {
-		SwitchButton,
+		UserSettings,
+	},
+	created() {
+		document.title = 'Reddit Settings';
 	},
 };
-</script> -->
-
-<style>
+</script>
+<style scoped>
+.settings {
+	background-color: white;
+	border-top: 1px solid #eceff1;
+}
+.settings-bar h3 {
+	font-size: 18px;
+	font-weight: 500;
+	padding: 16px 20px 20px;
+	color: black;
+}
 .settings-page {
 	max-width: 1200px;
 	margin: 0 auto;
@@ -111,5 +141,30 @@ export default {
 	display: flex;
 	justify-content: flex-end;
 	flex-grow: 1;
+}
+.section {
+	display: flex;
+	flex-flow: row wrap;
+	margin-bottom: 32px;
+	justify-content: space-between;
+}
+.section .section-button {
+	border: 1px solid var(--color-blue);
+	color: var(--color-blue);
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	height: 32px;
+	padding: 4px 16px;
+	background-color: white;
+}
+.section .section-button:hover {
+	background-color: #f5fafd;
+}
+.section .section-button:active {
+	background-color: #d7eaf8;
+}
+.section div:first-of-type {
+	max-width: 70%;
 }
 </style>

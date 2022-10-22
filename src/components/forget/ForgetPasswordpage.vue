@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="big-container">
 		<div class="left-box">
 			<div class="art"></div>
 		</div>
@@ -67,7 +67,9 @@ export default {
 * {
 	box-sizing: border-box;
 	margin: 0;
+	padding: 0;
 }
+
 div {
 	display: block;
 }
@@ -166,7 +168,7 @@ div {
 	font-weight: 600;
 	letter-spacing: 0.5px;
 }
-.container {
+.big-container {
 	background-color: white;
 	display: flex;
 	-webkit-box-align: center;
@@ -179,12 +181,15 @@ div {
 }
 .right-box {
 	width: 100%;
+	padding: 0px;
+	margin: 0;
 	/*padding: 36px;
 	min-width: 150px;
 	max-width: 440px;*/
 }
 .left-box {
 	width: 156px;
+	margin: 0;
 }
 .box {
 	padding: 24px;

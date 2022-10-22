@@ -28,6 +28,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ['change-title'],
 	data() {
 		return {
 			clicked: this.clickedProp,
@@ -36,7 +37,7 @@ export default {
 	methods: {
 		clickedFunction(title) {
 			this.clicked = title;
-			this.$emit('changeTitle', title);
+			this.$emit('change-title', title);
 		},
 	},
 };
@@ -54,6 +55,7 @@ export default {
 	box-shadow: 0px 2px 4px var(--color-grey-dark-2);
 	border-radius: 5px;
 	z-index: 10;
+	width: max-content;
 }
 .sub-menu li {
 	color: var(--color-grey-dark-2);
@@ -64,6 +66,7 @@ export default {
 	flex-direction: row;
 	align-items: center;
 	border-bottom: var(--line);
+	width: 100%;
 }
 .sub-menu li:hover {
 	background-color: var(--color-blue-light-2);

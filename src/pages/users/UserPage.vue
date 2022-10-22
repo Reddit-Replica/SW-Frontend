@@ -2,9 +2,12 @@
 	<profile-nav :user-name="getUserName" />
 	<base-container>
 		<div class="profilebox">
-			<createpost-bar />
-			<!-- <h1>user page</h1> -->
-			<profile-card :user-name="getUserName" />
+			<main>
+				<createpost-bar />
+			</main>
+			<aside>
+				<profile-card :user-name="getUserName" />
+			</aside>
 		</div>
 	</base-container>
 </template>
