@@ -31,7 +31,7 @@
 						</nav>
 						<!-- todo here add the components 0->post 1->image 2->...... -->
 						<title-input></title-input>
-						<div v-if="submitTypesActive[0]">kjbkj</div>
+						<post-submit v-if="submitTypesActive[0]"></post-submit>
 						<image-submit v-if="submitTypesActive[1]"></image-submit>
 						<footer-buttons></footer-buttons>
 						<div class="border-bottom"></div>
@@ -47,12 +47,14 @@
 <script>
 import TitleInput from '../../components/SubmitComponents/TitleInput.vue';
 import ImageSubmit from '../../components/SubmitComponents/ImageSubmit.vue';
+import PostSubmit from '../../components/SubmitComponents/PostSubmit.vue';
 import FooterButtons from '../../components/SubmitComponents/FooterButtons.vue';
 export default {
 	components: {
 		TitleInput,
 		ImageSubmit,
 		FooterButtons,
+		PostSubmit,
 	},
 	created() {
 		document.title = 'Submit to Reddit';
