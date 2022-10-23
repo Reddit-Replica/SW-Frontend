@@ -135,7 +135,10 @@
 				</button>
 			</div>
 
-			<div class="header-user-nav-box header-user">
+			<div
+				class="header-user-nav-box header-user"
+				@click="showSettingsSubMenu()"
+			>
 				<img
 					src="../../../img/user-image.jpg"
 					alt="user photo"
@@ -165,13 +168,81 @@
 						2 karma</span
 					>
 				</div>
+				<ul class="sub-menu" v-if="settingsSubMenuDisplay">
+					<li>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-person-circle"
+							viewBox="0 0 16 16"
+						>
+							<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+							<path
+								fill-rule="evenodd"
+								d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+							/>
+						</svg>
+						My Stuff
+					</li>
+					<li class="setting-choice">
+						Online Status
+						<switch-button></switch-button>
+					</li>
+					<li class="setting-choice">Profile</li>
+					<li class="setting-choice" @click="showUserSettings()">
+						User Settings
+					</li>
+					<div class="line"></div>
+					<li>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-eye"
+							viewBox="0 0 16 16"
+						>
+							<path
+								d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+							/>
+							<path
+								d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+							/>
+						</svg>
+						View Options
+					</li>
+					<li class="setting-choice">
+						Dark Mode
+						<switch-button></switch-button>
+					</li>
+				</ul>
 			</div>
 		</nav>
 	</header>
 </template>
 
 <script>
-export default {};
+import SwitchButton from '../../components/SwitchButton.vue';
+export default {
+	components: {
+		SwitchButton,
+	},
+	data() {
+		return {
+			settingsSubMenuDisplay: false,
+		};
+	},
+	methods: {
+		showSettingsSubMenu() {
+			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
+		},
+		showUserSettings() {
+			this.$router.push('/settings');
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -423,6 +494,57 @@ export default {};
 .header-icon-user {
 	position: absolute;
 	right: 1rem;
+}
+.header-user {
+	position: relative;
+}
+.line {
+	border-bottom: var(--line);
+}
+
+.sub-menu {
+	position: absolute;
+	background-color: white;
+	padding: 0px;
+	right: 1rem;
+	top: 5rem;
+	border-radius: 5px;
+	max-height: 80rem;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: var(--line);
+	width: 25rem;
+	z-index: 90;
+}
+
+.sub-menu li {
+	font-size: 15px;
+	font-weight: lighter;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+.sub-menu li svg {
+	fill: var(--color-grey-dark-2);
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+.sub-menu li {
+	padding: 0px 10px;
+}
+.setting-choice {
+	color: var(--color-dark-1);
+	padding: 1rem 4rem !important;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.setting-choice:hover {
+	background-color: var(--color-grey-light-2);
 }
 /* 1200px */
 @media only screen and (max-width: 75em) {
