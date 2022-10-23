@@ -33,6 +33,7 @@ li {
 }
 a {
 	color: #7c7c7c;
+	font-family: 'IBM Plex Sans', Arial, sans-serif;
 }
 li:hover a {
 	color: black;
