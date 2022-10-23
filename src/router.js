@@ -3,10 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from './pages/users/MainPage.vue';
 import UserPage from './pages/users/UserPage.vue';
 
-import ForgetPassword from './components/forget/ForgetPassword.vue';
-import ForgetUsername from './components/forget/ForgetUsername.vue';
-import ForgetPasswordpage from './components/forget/ForgetPasswordpage.vue';
-import ForgetUsernamepage from './components/forget/ForgetUsernamepage.vue';
+import ForgetPassword from './pages/forget/ForgetPassword.vue';
+import ForgetUsername from './pages/forget/ForgetUsername.vue';
+import ForgetPasswordpage from './pages/forget/ForgetPasswordpage.vue';
+import ForgetUsernamepage from './pages/forget/ForgetUsernamepage.vue';
 
 import LoginPage from './pages/login/LoginPage.vue';
 import SignupPage from './pages/signup/SignupPage.vue';
