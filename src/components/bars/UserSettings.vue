@@ -10,7 +10,7 @@
 		<li><router-link to="/settings/profile">Profile</router-link></li>
 		<li><router-link to="/settings/privacy">Safety & Privacy</router-link></li>
 		<li><router-link to="/settings/feed">Feed Settings</router-link></li>
-		<li><router-link to="/settings/emails">Email</router-link></li>
+		<li><router-link to="/settings/emails">Emails</router-link></li>
 		<li>
 			<router-link to="/settings/messaging">Chat & Messaging</router-link>
 		</li>

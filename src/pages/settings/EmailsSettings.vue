@@ -118,8 +118,8 @@ export default {
 </script>
 
 <style scoped>
-body {
-	font-family: 'IBM Plex Sans', sans-serif;
+* {
+	font-family: 'IBM Plex Sans', Arial, sans-serif;
 }
 .box-con {
 	display: flex;
