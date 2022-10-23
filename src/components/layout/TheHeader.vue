@@ -4,7 +4,7 @@
 			<img src="../../../img/logo.png" alt="reddit" class="header-logo" />
 			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
-		<div class="header-home">
+		<div class="header-home" @click="showHomeSubMenu()">
 			<div class="header-icon-home">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +23,165 @@
 			<svg class="header-user-nav-icon header-down-arrow">
 				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 			</svg>
+			<ul class="sub-menu sub-menu-2" v-if="homeSubMenuDisplay">
+				<li>
+					<input type="text" class="input-filter" placeholder="Filter" />
+				</li>
+				<h4 class="heading-4">Your Communities</h4>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-plus-lg"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+							/>
+						</svg>
+						Create Community
+					</div>
+				</li>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						r/announcements
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						r/Makeup
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<h4 class="heading-4">Following</h4>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						u/Lamiaa
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						u/sama
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<h4 class="heading-4">Feeds</h4>
+				<li class="setting-choice" @click="goToHome()">
+					<div>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-house-door-fill home"
+							viewBox="0 0 16 16"
+						>
+							<path
+								d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"
+							/>
+						</svg>
+						Home
+					</div>
+				</li>
+				<li class="setting-choice" @click="goToSettings()">
+					<div>
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						User Settings
+					</div>
+				</li>
+				<li class="setting-choice" @click="goToSubmit()">
+					<div>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-plus-lg"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+							/>
+						</svg>
+						Create Post
+					</div>
+				</li>
+			</ul>
 		</div>
 		<form action="#" class="search">
 			<input
@@ -191,9 +350,7 @@
 						<switch-button></switch-button>
 					</li>
 					<li class="setting-choice">Profile</li>
-					<li class="setting-choice" @click="showUserSettings()">
-						User Settings
-					</li>
+					<li class="setting-choice" @click="goToSettings()">User Settings</li>
 					<div class="line"></div>
 					<li>
 						<svg
@@ -252,14 +409,24 @@ export default {
 	data() {
 		return {
 			settingsSubMenuDisplay: false,
+			homeSubMenuDisplay: false,
 		};
 	},
 	methods: {
 		showSettingsSubMenu() {
 			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
 		},
-		showUserSettings() {
+		showHomeSubMenu() {
+			this.homeSubMenuDisplay = !this.homeSubMenuDisplay;
+		},
+		goToSettings() {
 			this.$router.push('/settings');
+		},
+		goToHome() {
+			this.$router.push('/');
+		},
+		goToSubmit() {
+			this.$router.push('/submit');
 		},
 	},
 };
@@ -529,12 +696,17 @@ export default {
 	right: 1rem;
 	top: 5rem;
 	border-radius: 5px;
-	max-height: 80rem;
+	max-height: 40rem;
 	overflow-y: auto;
 	overflow-x: hidden;
 	border: var(--line);
 	width: 25rem;
 	z-index: 90;
+}
+.sub-menu-2 {
+	top: 3rem;
+	left: 0rem;
+	width: 26rem;
 }
 
 .sub-menu li {
@@ -558,7 +730,7 @@ export default {
 }
 .setting-choice {
 	color: var(--color-dark-1);
-	padding: 1rem 4rem !important;
+	padding: 1rem 2rem !important;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -570,6 +742,39 @@ export default {
 .setting-choice-with-icon {
 	color: var(--color-dark-1);
 	padding: 1rem !important;
+}
+.users-img {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	margin-right: 1rem;
+}
+.input-filter {
+	width: 100%;
+	border: var(--line-3);
+	padding: 0.3rem;
+	background-color: var(--color-grey-light-1);
+}
+.input-filter:hover,
+.input-filter:focus {
+	outline: navajowhite;
+	border: var(--line-2);
+	background-color: var(--color-white-1);
+}
+.heading-4 {
+	text-transform: uppercase;
+	margin: 1rem;
+	font-size: 1rem;
+	font-weight: bold;
+}
+.sub-menu-2 div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 1.2rem;
+}
+.home {
+	fill: var(--color-dark-1) !important;
 }
 /* 1200px */
 @media only screen and (max-width: 75em) {
