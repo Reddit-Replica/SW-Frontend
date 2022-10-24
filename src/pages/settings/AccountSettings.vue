@@ -527,13 +527,9 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
-import BaseButton from '../../components/BaseComponents/BaseButton.vue';
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: {
-		SwitchButton,
-		BaseButton,
 		SubMenu,
 	},
 	data() {

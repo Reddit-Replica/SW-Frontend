@@ -109,12 +109,7 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
-export default {
-	components: {
-		SwitchButton,
-	},
-};
+export default {};
 </script>
 
 <style scoped>
