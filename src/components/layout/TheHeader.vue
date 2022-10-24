@@ -355,9 +355,9 @@
 						</svg>
 						My Stuff
 					</li>
-					<li class="setting-choice">
+					<li class="setting-choice" @click="showSettingsSubMenu()">
 						Online Status
-						<switch-button></switch-button>
+						<switch-button />
 					</li>
 					<li class="setting-choice">Profile</li>
 					<li class="setting-choice" @click="goToSettings()">User Settings</li>
@@ -380,9 +380,9 @@
 						</svg>
 						View Options
 					</li>
-					<li class="setting-choice">
+					<li class="setting-choice" @click="showSettingsSubMenu()">
 						Dark Mode
-						<switch-button></switch-button>
+						<switch-button />
 					</li>
 					<li class="setting-choice-with-icon">
 						<svg
@@ -411,11 +411,7 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
 export default {
-	components: {
-		SwitchButton,
-	},
 	data() {
 		return {
 			settingsSubMenuDisplay: false,
