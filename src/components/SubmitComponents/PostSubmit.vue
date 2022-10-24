@@ -9,6 +9,6 @@ export default {};
 </script>
 
 <style scoped>
-.bold-icon {
-}
+/* .bold-icon {
+} */
 </style>
