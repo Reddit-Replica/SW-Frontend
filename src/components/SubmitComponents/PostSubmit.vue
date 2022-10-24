@@ -5,8 +5,11 @@
 				<div class="bold-icon"></div>
 			</button>
 		</div>
-		<div class="text-box"></div>
-		<!-- <textarea class="text-box"> </textarea> -->
+		<div class="text-box">
+			<!-- <div class="text-optitional"></div> -->
+			<!-- <textarea class="text-box" placeholder="Text (optional)"> </textarea> -->
+			<span class="text-optitional">Text (optional)</span>
+		</div>
 	</div>
 </template>
 
@@ -44,10 +47,9 @@ div {
 	flex-wrap: nowrap;
 }
 .text-box {
-	background-color: var(--newCommunityTheme-body);
+	overflow: auto;
 	border-radius: 4px;
-	color: var(--newCommunityTheme-bodyText);
-	font-family: Noto Sans, Arial, sans-serif;
+	font-family: 'Noto Sans', Arial, sans-serif;
 	min-height: 122px;
 	overflow: hidden;
 	padding: 8px 16px;
@@ -62,12 +64,25 @@ div {
 	font-weight: 400;
 	line-height: 21px;
 	z-index: 11;
+	position: relative;
 }
 
 .big-box:focus-within {
 	border: 0.5px solid black;
 }
 
+.text-optitional {
+	position: absolute;
+	content: 'Text (optional)';
+	cursor: text;
+	top: 1px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 70;
+	line-height: 30px;
+	color: #6c6e70;
+	font-family: inherit;
+}
 .icons {
 	align-items: center;
 	box-sizing: border-box;
