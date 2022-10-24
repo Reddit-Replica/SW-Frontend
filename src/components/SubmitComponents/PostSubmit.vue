@@ -33,8 +33,6 @@ div {
 	position: relative;
 }
 .icons-box {
-	position: sticky;
-	top: 48px;
 	z-index: 8;
 	height: 42px;
 	align-items: center;
@@ -63,6 +61,7 @@ div {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 21px;
+	z-index: 11;
 }
 
 .big-box:focus-within {
