@@ -401,11 +401,7 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
 export default {
-	components: {
-		SwitchButton,
-	},
 	data() {
 		return {
 			settingsSubMenuDisplay: false,
