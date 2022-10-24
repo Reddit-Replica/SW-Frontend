@@ -451,7 +451,7 @@
 					<div>Connect account to log in to Reddit with Apple</div>
 				</div>
 				<div>
-					<base-button class="blue-button" button-text="Connect to Apple">
+					<base-button button-text="Connect to Apple">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -478,7 +478,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button class="blue-button" button-text="(disconnect)" />
+					<base-button button-text="(disconnect)" />
 				</div>
 			</div>
 			<h3 class="h3-main-title">BETA TESTS</h3>
@@ -719,6 +719,11 @@ export default {
 	color: white;
 	fill: white;
 	border: none;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	height: 32px;
+	padding: 4px 16px;
 }
 .section:nth-of-type(8) button {
 	color: var(--color-blue);
@@ -726,6 +731,8 @@ export default {
 	padding: 0px;
 	font-size: 12px;
 	font-weight: 200;
+	background-color: white;
+	height: 22px;
 }
 .section:nth-of-type(8) button:hover {
 	background-color: #f5fafd;
