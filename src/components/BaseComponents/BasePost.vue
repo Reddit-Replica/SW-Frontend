@@ -616,6 +616,7 @@ a {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	width: 100%;
 }
 
 .post-card .post-content .post-services .services .sub-menu li:hover {
