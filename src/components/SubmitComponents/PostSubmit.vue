@@ -2,7 +2,64 @@
 	<div class="big-box">
 		<div class="icons-box">
 			<button class="icons">
-				<div class="bold-icon"></div>
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-bold " />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-italic" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-link" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-strikethrough" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-code" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-heading" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<i class="fa-solid fa-list-ul"></i>
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<i class="fa-solid fa-list-ol"></i>
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<i class="fa-solid fa-quote-right"></i>
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-solid fa-table" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-regular fa-image" />
+				</div>
+			</button>
+			<button class="icons">
+				<div class="icon">
+					<font-awesome-icon icon="fa-brands fa-youtube" />
+				</div>
 			</button>
 		</div>
 		<div class="text-box">
@@ -78,7 +135,7 @@ div {
 	top: 1px;
 	font-family: 'Noto Sans', Arial, sans-serif;
 	font-size: 14px;
-	font-weight: 70;
+	font-weight: 400;
 	line-height: 30px;
 	color: #6c6e70;
 	font-family: inherit;
@@ -96,17 +153,18 @@ div {
 	margin-left: 5px;
 }
 
-.bold-icon {
+.icon {
+	font-size: 2rem;
+	color: grey;
 	/*content: ; url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNDMxLjkzIDM2NC4zNWMxMS4yMTEtMTUuMDkgMTYuNDEtMzMuODA5IDE0LjU5LTUyLjUyLTEuODIwMy0xOC43MDctMTAuNTMxLTM2LjA3LTI0LjQzOC00OC43MTktMTMuOTA2LTEyLjY0OC0zMi4wMi0xOS42NzItNTAuODE2LTE5LjcxNWgtOTQuNzE1djI2NS4yMWgxMjMuMTNjMjMuMDk4LTAuMDU4NTk0IDQ0LjkwNi0xMC42NDUgNTkuMjM0LTI4Ljc1NCAxNC4zMzItMTguMTA5IDE5LjYyMS00MS43NyAxNC4zNjctNjQuMjU4LTUuMjUzOS0yMi40OTItMjAuNDc3LTQxLjM1NS00MS4zNTItNTEuMjQyem0tMTE3LjQ5LTgzLjA2Nmg1Ni44MjhjMTMuNTM1IDAgMjYuMDQzIDcuMjIyNyAzMi44MTIgMTguOTQxIDYuNzY1NiAxMS43MjMgNi43NjU2IDI2LjE2OCAwIDM3Ljg4Ny02Ljc2OTUgMTEuNzIzLTE5LjI3NyAxOC45NDUtMzIuODEyIDE4Ljk0NWgtNTYuODI4em04NS4yNDIgMTg5LjQzaC04NS4yNDJ2LTc1Ljc3M2g4NS4yNDJjMTMuNTM1IDAgMjYuMDQzIDcuMjE4OCAzMi44MTIgMTguOTQxIDYuNzY1NiAxMS43MjMgNi43NjU2IDI2LjE2NCAwIDM3Ljg4Ny02Ljc2OTUgMTEuNzIzLTE5LjI3NyAxOC45NDUtMzIuODEyIDE4Ljk0NXoiIGZpbGw9IiM2NzY3NjciLz4KPC9zdmc+Cg==);*/
 }
-.link-icon {
-}
+
 button {
 	display: flex;
 	align-items: center;
 	width: 32px;
 	height: 32px;
-	background-color: #dae0e6;
 	border-radius: 4px;
+	background-color: #f6f7f8;
 }
 </style>
