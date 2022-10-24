@@ -5,7 +5,7 @@
 			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
 		<div class="header-home" @click="showHomeSubMenu()">
-			<div class="header-icon-home">
+			<div class="header-icon-home" v-if="$route.path == '/main'">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -19,6 +19,16 @@
 					/>
 				</svg>
 				<span>Home</span>
+			</div>
+			<div
+				@click="goToSettings()"
+				class="color-black"
+				v-else-if="$route.path == '/settings' || '/settings/'"
+			>
+				<div>
+					<img src="../../../img/user-image.jpg" alt="img" class="users-img" />
+					User Settings
+				</div>
 			</div>
 			<svg class="header-user-nav-icon header-down-arrow">
 				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
@@ -345,9 +355,9 @@
 						</svg>
 						My Stuff
 					</li>
-					<li class="setting-choice">
+					<li class="setting-choice" @click="showSettingsSubMenu()">
 						Online Status
-						<switch-button></switch-button>
+						<switch-button />
 					</li>
 					<li class="setting-choice">Profile</li>
 					<li class="setting-choice" @click="goToSettings()">User Settings</li>
@@ -370,9 +380,9 @@
 						</svg>
 						View Options
 					</li>
-					<li class="setting-choice">
+					<li class="setting-choice" @click="showSettingsSubMenu()">
 						Dark Mode
-						<switch-button></switch-button>
+						<switch-button />
 					</li>
 					<li class="setting-choice-with-icon">
 						<svg
@@ -401,11 +411,7 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
 export default {
-	components: {
-		SwitchButton,
-	},
 	data() {
 		return {
 			settingsSubMenuDisplay: false,
@@ -772,6 +778,9 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	font-size: 1.2rem;
+}
+.color-black {
+	color: black;
 }
 .home {
 	fill: var(--color-dark-1) !important;

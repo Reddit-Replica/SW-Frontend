@@ -16,7 +16,7 @@
 		</li>
 	</ul>
 </template>
-<style scopde>
+<style scoped>
 ul {
 	list-style: none;
 	padding: 0px 20px;
