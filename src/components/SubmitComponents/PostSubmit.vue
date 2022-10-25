@@ -96,6 +96,8 @@
 					<font-awesome-icon icon="fa-brands fa-youtube" />
 				</div>
 			</button>
+
+			<button class="mark-down">Markdown Mode</button>
 		</div>
 		<div class="text-box">
 			<!-- <div class="text-optitional"></div> -->
@@ -178,14 +180,13 @@ div {
 .icons {
 	align-items: center;
 	box-sizing: border-box;
-	display: -ms-flexbox;
 	display: flex;
 	line-height: 0;
 	outline: none;
 	padding: 4px;
 	position: relative;
-	transition: background-color 0.1s;
 	margin-left: 5px;
+	flex-wrap: nowrap;
 }
 .icons:hover {
 	background-color: #ccc;
@@ -204,7 +205,29 @@ div {
 	margin: 0 6px;
 	width: 1px;
 }
+.mark-down {
+	border-radius: 9999px;
+	position: absolute;
+	left: 88%;
+	width: 94px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 16px;
+	text-transform: unset;
+	min-height: 24px;
+	height: 40px;
+	min-width: 24px;
+	padding: 4px 8px;
+	color: #0079d3;
+}
+.mark-down:hover {
+	background-color: #ccc;
+}
+
 button {
+	color: black;
 	display: flex;
 	align-items: center;
 	width: 32px;
