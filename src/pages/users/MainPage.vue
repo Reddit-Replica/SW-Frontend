@@ -16,6 +16,9 @@
 					<div class="component">
 						<createpost-sidebar></createpost-sidebar>
 					</div>
+					<div class="component">
+						<rightside-footer></rightside-footer>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -28,6 +31,7 @@ import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import BasePost from '../../components/BaseComponents/BasePost.vue';
 import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar.vue';
 import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar.vue';
+import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
 
 export default {
 	components: {
@@ -36,6 +40,7 @@ export default {
 		BasePost,
 		TopCommunitiesBar,
 		CreatepostSidebar,
+		RightsideFooter,
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
