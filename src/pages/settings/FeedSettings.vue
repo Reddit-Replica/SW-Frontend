@@ -227,7 +227,7 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
+import SwitchButton from '../../components/BaseComponents/SwitchButton.vue';
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: {
