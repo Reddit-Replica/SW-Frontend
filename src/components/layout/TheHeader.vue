@@ -21,6 +21,26 @@
 				<span>Home</span>
 			</div>
 			<div
+				@click="goToSubmit()"
+				class="header-icon-home"
+				v-else-if="$route.path == '/submit'"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-plus-lg"
+					viewBox="0 0 16 16"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+					/>
+				</svg>
+				<span>Create Post</span>
+			</div>
+			<div
 				@click="goToSettings()"
 				class="color-black"
 				v-else-if="$route.path == '/settings' || '/settings/'"
@@ -30,6 +50,7 @@
 					User Settings
 				</div>
 			</div>
+
 			<svg class="header-user-nav-icon header-down-arrow">
 				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 			</svg>
@@ -471,12 +492,13 @@ export default {
 }
 .header-icon-home {
 	display: grid;
-	grid-template-columns: min-content min-content min-content;
+	grid-template-columns: min-content max-content min-content;
 	/* width: 40rem; */
 	grid-column-gap: 1rem;
 	align-items: center;
 	border: var(--line-3);
 	border-radius: 5px;
+	color: var(--color-dark-1);
 }
 .header-home {
 	padding: 0.5rem;
