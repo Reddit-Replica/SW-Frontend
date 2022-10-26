@@ -462,7 +462,7 @@ export default {
 	cursor: pointer;
 }
 .header-logo {
-	margin-left: 0.5rem;
+	margin-left: 0.4rem;
 	display: flex;
 	flex-direction: row;
 }
@@ -480,7 +480,7 @@ export default {
 }
 .header-home {
 	padding: 0.5rem;
-	margin-left: 1.2rem;
+	margin-left: 1rem;
 	align-items: center;
 	border: var(--line-3);
 	border-radius: 5px;
@@ -559,7 +559,7 @@ export default {
 .header-user-nav {
 	/* align-self: stretch; */
 	width: 1rem;
-	margin-left: 4rem;
+	margin-left: 2rem;
 
 	/* display: flex;
   align-items: center; */

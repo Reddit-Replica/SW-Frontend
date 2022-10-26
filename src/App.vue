@@ -72,6 +72,7 @@ export default {
 	--line-5: 1px solid var(--color-blue-2);
 	--line-6: 1px solid var(--color-dark-1);
 	--line-7: 1px solid var(--color-grey-dark-3);
+	--line-8: 1px solid var(--color-grey-light-3);
 	--line-dashed: 1px dashed var(--color-grey-light-2);
 
 	/* screen sizes variables */

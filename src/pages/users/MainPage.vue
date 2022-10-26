@@ -9,7 +9,14 @@
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="right-col"><top-communities-bar></top-communities-bar></div>
+				<div class="right-col">
+					<div class="component">
+						<top-communities-bar></top-communities-bar>
+					</div>
+					<div class="component">
+						<createpost-sidebar></createpost-sidebar>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -20,6 +27,7 @@ import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import BasePost from '../../components/BaseComponents/BasePost.vue';
 import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar.vue';
+import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar.vue';
 
 export default {
 	components: {
@@ -27,6 +35,7 @@ export default {
 		SortpostsBar,
 		BasePost,
 		TopCommunitiesBar,
+		CreatepostSidebar,
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
@@ -63,6 +72,9 @@ export default {
 	/* padding: 20px;
   margin-left: 15rem;*/
 	margin-top: 1.5rem;
+}
+.component {
+	margin-bottom: 1.3rem;
 }
 @media only screen and (max-width: 991px) {
 	.container {
