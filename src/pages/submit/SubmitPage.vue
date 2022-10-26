@@ -33,6 +33,7 @@
 						<title-input></title-input>
 						<post-submit v-if="submitTypesActive[0]"></post-submit>
 						<image-submit v-if="submitTypesActive[1]"></image-submit>
+						<link-submit v-if="submitTypesActive[2]"></link-submit>
 						<footer-buttons></footer-buttons>
 						<div class="border-bottom"></div>
 						<div>post button</div>
@@ -49,12 +50,14 @@ import TitleInput from '../../components/SubmitComponents/TitleInput.vue';
 import ImageSubmit from '../../components/SubmitComponents/ImageSubmit.vue';
 import PostSubmit from '../../components/SubmitComponents/PostSubmit.vue';
 import FooterButtons from '../../components/SubmitComponents/FooterButtons.vue';
+import LinkSubmit from '../../components/SubmitComponents/LinkSubmit.vue';
 export default {
 	components: {
 		TitleInput,
 		ImageSubmit,
 		FooterButtons,
 		PostSubmit,
+		LinkSubmit,
 	},
 	created() {
 		document.title = 'Submit to Reddit';
