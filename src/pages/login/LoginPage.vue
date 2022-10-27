@@ -20,7 +20,7 @@
 					>.
 				</p>
 
-				<form class="logining-in" @submit.prevent="handleSubmit">
+				<form class="logining-in">
 					<!--LogIn with google and apple accounts -->
 
 					<div class="login-google-apple">
@@ -44,7 +44,9 @@
 						<input type="text" required="required" />
 						<span class="animation-usr-pass">UserName</span>
 
-						<div class="username-error-message"></div>
+						<div class="username-error-message" v-if="error_show">
+							{{ error_message }}
+						</div>
 						<!--Error Message Shown here -->
 					</fieldset>
 
@@ -80,22 +82,13 @@ export default {
 	name: 'LogIn',
 	data() {
 		return {
-			user: {
-				username: '',
-				password: '',
-			},
-			test: 'BEFORE SUBMIT',
+			username: '',
+			password: '',
+			error_message: '',
+			error_show: false,
 		};
 	},
-	method: {
-		handleSubmit() {
-			let user = new user({
-				username: this.username,
-				password: this.password,
-			});
-			this.test = 'AFTER SUBMIT';
-		},
-	},
+	method: {},
 };
 </script>
 
@@ -139,7 +132,7 @@ button {
 	cursor: pointer;
 }
 .largest-div {
-	width: 50%;
+	width: 70rem;
 	height: 100%;
 	overflow: hidden;
 }
@@ -147,7 +140,7 @@ button {
 	background-image: url('../../../img/bck.png');
 	background-color: #0079d3;
 	height: 100%;
-	width: 20%;
+	width: 12rem;
 	float: left;
 	/* background-position: center; */
 	background-repeat: no-repeat;
@@ -158,6 +151,7 @@ button {
 	/* align-self: center; */
 	padding: 24px;
 	overflow: hidden;
+	/* width: 50rem; */
 }
 .user-agreement {
 	margin-bottom: 48px;
