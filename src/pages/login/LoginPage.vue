@@ -24,9 +24,11 @@
 					<!--LogIn with google and apple accounts -->
 
 					<div class="login-google-apple">
-						<div id="google-login" class="log-google log-ag">
-							Continue with Google
-						</div>
+						<GoogleLogin>
+							<div id="google-login" class="log-google log-ag">
+								Continue with Google
+							</div>
+						</GoogleLogin>
 						<div id="apple-login" class="log-apple log-ag">
 							Continue with Apple
 						</div>
@@ -78,6 +80,11 @@
 </template>
 
 <script>
+// const callback = (response) => {
+// 	// This callback will be triggered when the user selects or login to
+// 	// his Google account from the popup
+// 	console.log('Handle the response', response);
+// };
 export default {
 	name: 'LogIn',
 	data() {
