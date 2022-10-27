@@ -1,6 +1,6 @@
 <template>
 	<div class="Abd">
-		<div class="largest-div">
+		<div class="largest-div" v-if="page1">
 			<div class="back-image"></div>
 			<div class="sec-largest-div">
 				<h1>Sign Up</h1>
@@ -16,7 +16,7 @@
 					>.
 				</p>
 
-				<form class="signing-up" @submit.prevent="handleSubmit">
+				<form class="signing-up">
 					<div class="signup-google-apple">
 						<div id="google-signup" class="sign-google sign-ag">
 							Continue with Google
@@ -33,12 +33,16 @@
 					</div>
 
 					<fieldset class="email-field">
-						<input type="text" required="required" />
+						<input v-model="email" type="text" required="required" />
 						<span class="animation-email">Email</span>
 					</fieldset>
 
 					<fieldset class="submit-signup-field">
-						<button class="submit-signup continue-button" type="submit">
+						<button
+							class="submit-signup continue-button"
+							type="submit"
+							@click="togglepages"
+						>
 							Continue
 						</button>
 					</fieldset>
@@ -52,9 +56,9 @@
 			</div>
 		</div>
 
-		<div class="all-div">
+		<div class="all-div" v-if="page2">
 			<div class="div-1">
-				<h1>Choose your username</h1>
+				<h1 class="page-header">Choose your username</h1>
 				<p class="description">
 					Your username is how other community members will see you. This name
 					will be used to credit you for things you share on Reddit. What should
@@ -63,7 +67,7 @@
 			</div>
 
 			<div class="div-2">
-				<form @submit.prevent="handleSubmit">
+				<form>
 					<fieldset class="register-username-field">
 						<input
 							id="regUsername"
@@ -90,10 +94,10 @@
 				</form>
 			</div>
 		</div>
-		<div class="bottom-div">
-			<a href="#" class="back-bottom" data-step="username-and-password">Back</a>
+		<div class="bottom-div" v-if="bottom_div">
+			<button class="back-bottom" @click="togglepages">Back</button>
 			<button
-				class="signup-button"
+				class="submit-signup signup-page2"
 				type="submit"
 				data-step="username-and-password"
 			>
@@ -107,22 +111,19 @@
 export default {
 	data() {
 		return {
-			user: {
-				email: '',
-				username: '',
-				password: '',
-			},
-			test: 'BEFORE SUBMIT',
+			email: '',
+			username: '',
+			password: '',
+			page1: true,
+			page2: false,
+			bottom_div: false,
 		};
 	},
 	methods: {
-		handleSubmit() {
-			let user = new user({
-				email: this.email,
-				username: this.username,
-				password: this.password,
-			});
-			this.test = 'AFTER SUBMIT';
+		togglepages() {
+			this.page1 = !this.page1;
+			this.page2 = !this.page2;
+			this.bottom_div = !this.bottom_div;
 		},
 	},
 	components: {},
@@ -170,14 +171,14 @@ button {
 }
 
 .largest-div {
-	width: 50%;
+	width: 70rem;
 	height: 100%;
 	overflow: hidden;
 }
 .back-image {
 	background-image: url('../../../img/bck.png');
 	min-height: 100%;
-	width: 20%;
+	width: 12rem;
 	float: left;
 	/* background-position: center; */
 	background-repeat: no-repeat;
@@ -301,21 +302,33 @@ button {
 	height: 100%;
 	position: relative;
 	padding: 24px;
-	display: none;
+	/* display: none; */
 }
 
 .bottom-div {
 	background-color: #fcfcfb;
 	border-top: 1px solid hsla(195, 2%, 65%, 0.36);
-	padding: 8px 16px;
-	/* display: flex; */
+	/* padding: 8px 16px; */
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	min-height: 55px;
 	position: absolute;
 	bottom: 0px;
-	width: 96%;
-	display: none;
+	width: 100%;
+	/* display: none; */
+}
+.div-1 {
+	border-bottom: 1px solid hsla(195, 2%, 65%, 0.36);
+}
+.description {
+	margin-bottom: 20px;
+}
+.page-header {
+	margin: 0px;
+	font-size: 18px;
+	font-weight: 100;
+	line-height: 22px;
 }
 .password-textInput,
 .username-textInput {
@@ -355,7 +368,13 @@ button {
 	width: auto;
 	min-width: 155px;
 }
+.back-bottom {
+	border: none;
+}
 .submit-signup {
 	width: 60%;
+}
+.signup-page2 {
+	width: 3rem;
 }
 </style>
