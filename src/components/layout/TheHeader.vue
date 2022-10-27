@@ -1,10 +1,10 @@
 <template>
 	<header class="header">
-		<div class="header-logo">
+		<div class="header-logo" @click="goToHome()" id="reddit-logo">
 			<img src="../../../img/logo.png" alt="reddit" class="header-logo" />
 			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
-		<div class="header-home" @click="showHomeSubMenu()">
+		<div class="header-home" @click="showHomeSubMenu()" id="home-header">
 			<div class="header-icon-home" v-if="$route.path == '/main'">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -20,11 +20,7 @@
 				</svg>
 				<span>Home</span>
 			</div>
-			<div
-				@click="goToSubmit()"
-				class="header-icon-home"
-				v-else-if="$route.path == '/submit'"
-			>
+			<div class="header-icon-home" v-else-if="$route.path == '/submit'">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -41,7 +37,6 @@
 				<span>Create Post</span>
 			</div>
 			<div
-				@click="goToSettings()"
 				class="color-black"
 				v-else-if="$route.path == '/settings' || '/settings/'"
 			>
@@ -54,13 +49,22 @@
 			<svg class="header-user-nav-icon header-down-arrow">
 				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 			</svg>
-			<ul class="sub-menu sub-menu-2" v-if="homeSubMenuDisplay">
+			<ul
+				class="sub-menu sub-menu-2"
+				v-if="homeSubMenuDisplay"
+				id="home-sub-menu"
+			>
 				<li>
-					<input type="text" class="input-filter" placeholder="Filter" />
+					<input
+						type="text"
+						class="input-filter"
+						placeholder="Filter"
+						id="input-filter"
+					/>
 				</li>
 				<h4 class="heading-4">Your Communities</h4>
 				<li class="setting-choice">
-					<div class="settings-box">
+					<div class="settings-box" id="create-community">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -93,6 +97,7 @@
 						fill="currentColor"
 						class="bi bi-star"
 						viewBox="0 0 16 16"
+						id="star-community"
 					>
 						<path
 							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
@@ -115,6 +120,7 @@
 						fill="currentColor"
 						class="bi bi-star"
 						viewBox="0 0 16 16"
+						id="star-community"
 					>
 						<path
 							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
@@ -138,6 +144,7 @@
 						fill="currentColor"
 						class="bi bi-star"
 						viewBox="0 0 16 16"
+						id="star-user"
 					>
 						<path
 							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
@@ -160,6 +167,7 @@
 						fill="currentColor"
 						class="bi bi-star"
 						viewBox="0 0 16 16"
+						id="star-user"
 					>
 						<path
 							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
@@ -167,7 +175,7 @@
 					</svg>
 				</li>
 				<h4 class="heading-4">Feeds</h4>
-				<li class="setting-choice" @click="goToHome()">
+				<li class="setting-choice" @click="goToHome()" id="go-to-home-page">
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -184,7 +192,11 @@
 						Home
 					</div>
 				</li>
-				<li class="setting-choice" @click="goToSettings()">
+				<li
+					class="setting-choice"
+					@click="goToSettings()"
+					id="go-to-user-settings"
+				>
 					<div>
 						<img
 							src="../../../img/user-image.jpg"
@@ -194,7 +206,7 @@
 						User Settings
 					</div>
 				</li>
-				<li class="setting-choice" @click="goToSubmit()">
+				<li class="setting-choice" @click="goToSubmit()" id="go-to-submit-page">
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -219,9 +231,10 @@
 				type="text"
 				class="header-search-input"
 				placeholder="Search Reddit"
+				id="header-search"
 			/>
 			<button class="header-search-button">
-				<svg class="header-search-icon">
+				<svg class="header-search-icon" id="search-button">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
 				</svg>
 			</button>
@@ -235,6 +248,7 @@
 					fill="currentColor"
 					class="bi bi-arrow-up-right-circle header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="popular"
 				>
 					<title>Popular</title>
 					<path
@@ -263,6 +277,7 @@
 					fill="currentColor"
 					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="chat"
 				>
 					<title>Chat</title>
 					<path
@@ -283,6 +298,7 @@
 					fill="currentColor"
 					class="bi bi-bell header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="notifications"
 				>
 					<title>Notifications</title>
 					<path
@@ -292,7 +308,7 @@
 				<span class="header-user-nav-notification">2</span>
 			</div>
 
-			<div class="header-user-nav-icon-box">
+			<div class="header-user-nav-icon-box" @click="goToSubmit()">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -300,6 +316,7 @@
 					fill="currentColor"
 					class="bi bi-plus header-user-nav-icon header-plus"
 					viewBox="0 0 16 16"
+					id="create-post"
 				>
 					<title>Create Post</title>
 					<path
@@ -328,6 +345,7 @@
 			<div
 				class="header-user-nav-box header-user"
 				@click="showSettingsSubMenu()"
+				id="show-settings-submenu"
 			>
 				<img
 					src="../../../img/user-image.jpg"
@@ -376,12 +394,22 @@
 						</svg>
 						My Stuff
 					</li>
-					<li class="setting-choice" @click="showSettingsSubMenu()">
+					<li
+						class="setting-choice"
+						@click="showSettingsSubMenu()"
+						id="online-status"
+					>
 						Online Status
 						<switch-button />
 					</li>
-					<li class="setting-choice">Profile</li>
-					<li class="setting-choice" @click="goToSettings()">User Settings</li>
+					<li class="setting-choice" @click="goToUserPage()">Profile</li>
+					<li
+						class="setting-choice"
+						@click="goToSettings()"
+						id="go-to-settings"
+					>
+						User Settings
+					</li>
 					<div class="line"></div>
 					<li>
 						<svg
@@ -401,11 +429,15 @@
 						</svg>
 						View Options
 					</li>
-					<li class="setting-choice" @click="showSettingsSubMenu()">
+					<li
+						class="setting-choice"
+						@click="showSettingsSubMenu()"
+						id="dark-mode"
+					>
 						Dark Mode
 						<switch-button />
 					</li>
-					<li class="setting-choice-with-icon">
+					<li class="setting-choice-with-icon" id="logout">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -454,6 +486,9 @@ export default {
 		},
 		goToSubmit() {
 			this.$router.push('/submit');
+		},
+		goToUserPage() {
+			this.$router.push('/user/abdelhamed');
 		},
 	},
 };
