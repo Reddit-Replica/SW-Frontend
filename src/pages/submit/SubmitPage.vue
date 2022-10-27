@@ -71,7 +71,7 @@ export default {
 	},
 	data() {
 		return {
-			submitTypesActive: [1, 0, 0, 0, 0],
+			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
 		};
 	},
 	methods: {
@@ -112,6 +112,7 @@ li {
 .submit-container {
 	/* margin: 50px 50px; delete this when making layout */
 	background-color: #ffffff;
+
 	margin-bottom: 15px;
 	border-radius: 5px;
 	/* max-width: 740rem; you must delete this line when making layout */
