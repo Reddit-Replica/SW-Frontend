@@ -88,12 +88,13 @@
 									v-for="link in links"
 									:key="link.title"
 									:title="link.title"
-									:image-url="link.imageURL"
+									:image-url="link.imageUrl"
+									@click="chooseLink"
 								>
 								</social-link>
 							</div>
 						</base-dialog>
-						<base-dialog :show="isLinkChosen" @close="ChooseLink" center>
+						<base-dialog :show="isLinkChosen" @close="chooseLink" center>
 							<template #header>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +103,7 @@
 									fill="currentColor"
 									class="bi bi-arrow-left"
 									viewBox="0 0 16 16"
-									@click="ChooseLink"
+									@click="chooseLink"
 								>
 									<path
 										fill-rule="evenodd"
@@ -115,21 +116,8 @@
 									button-text="Save"
 								></base-button>
 							</template>
-							<div class="social-links-dialog" @click="ChooseLink">
-								<!-- <div class="social-link">
-									<img
-										class="social-link-image"
-										src="https://www.redditstatic.com/desktop2x/img/social-links/reddit.png"
-									/>
-									Custom URL
-								</div> -->
-								<!-- <social-link
-									v-for="link in socialLinks"
-									:key="link.title"
-									:title="link.title"
-									:image-url="link.imageURL"
-								>
-								</social-link> -->
+							<div class="social-links-dialog">
+								<!-- <social-link > </social-link> -->
 							</div>
 						</base-dialog>
 					</div>
@@ -399,7 +387,10 @@ export default {
 				{
 					imageUrl:
 						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
-					title: 'Custom URL',
+
+					title: 'Reddit',
+					placeholder1: 'r/community, u/user',
+					placeholder2: '',
 				},
 			],
 			images: [
@@ -441,9 +432,9 @@ export default {
 		socialLinksClick() {
 			this.socialLinksClicked = !this.socialLinksClicked;
 		},
-		ChooseLink() {
+		chooseLink() {
 			this.isLinkChosen = !this.isLinkChosen;
-			this.socialLinksClicked = !this.socialLinksClicked;
+			this.socialLinksClicked = false;
 		},
 	},
 };

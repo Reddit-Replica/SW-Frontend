@@ -1,6 +1,6 @@
 <template>
 	<div class="social-link">
-		<img class="social-link-image" :src="imageUrl" />
+		<img class="social-link-image" :src="imageUrl" :alt="title" />
 		<p>{{ title }}</p>
 	</div>
 </template>
@@ -17,6 +17,14 @@ export default {
 			default: '',
 		},
 	},
+	data() {
+		return {
+			linkData: {
+				imageUrl: this.imageUrl,
+				title: this.title,
+			},
+		};
+	},
 };
 </script>
 
@@ -26,7 +34,6 @@ export default {
 	font-size: 12px;
 	font-weight: 700;
 	line-height: 16px;
-	align-items: center;
 	background-color: var(--color-grey-light-2);
 	border-radius: 100px;
 	color: var(--color-dark-1);
