@@ -123,9 +123,8 @@
         </svg>
       </div>  -->
 		</div>
-		<div class="sort-post-box-2">
+		<!-- <div class="sort-post-box-2">
 			<div class="sort-post-icon-box">
-				<!-- <i class="fa-regular fa-square-minus icon"></i> -->
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -143,7 +142,7 @@
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</div>
-		</div>
+		</div> -->
 		<ul class="sort-post-sub-menu" v-if="showMenu">
 			<li
 				class="sort-post-icon-box"
