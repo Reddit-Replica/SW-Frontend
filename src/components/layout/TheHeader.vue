@@ -37,6 +37,17 @@
 				<span>Create Post</span>
 			</div>
 			<div
+				class="header-icon-home"
+				v-else-if="$route.path == '/user/abdelhamed'"
+			>
+				<img
+					src="../../../img/user-image.jpg"
+					alt="img"
+					class="header-user-nav-user-photo"
+				/>
+				<span>u/asmaaadel0</span>
+			</div>
+			<div
 				class="color-black"
 				v-else-if="$route.path == '/settings' || '/settings/'"
 			>
