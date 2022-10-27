@@ -3,7 +3,8 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-8">
 				<div class="left-col">
-					<h3 class="heading-3">Create a post</h3>
+					<!-- <h3 class="heading-3">Create a post</h3> -->
+					<submit-bar></submit-bar>
 					<div class="submit-container">
 						<nav id="submit-nav" class="submit-nav">
 							<ul class="submit-list" @click="selectPostType">
@@ -37,6 +38,7 @@
 						<footer-buttons></footer-buttons>
 						<div class="border-bottom"></div>
 						<div>post button</div>
+						<submit-footer></submit-footer>
 					</div>
 				</div>
 			</div>
@@ -51,6 +53,9 @@ import ImageSubmit from '../../components/SubmitComponents/ImageSubmit.vue';
 import PostSubmit from '../../components/SubmitComponents/PostSubmit.vue';
 import FooterButtons from '../../components/SubmitComponents/FooterButtons.vue';
 import LinkSubmit from '../../components/SubmitComponents/LinkSubmit.vue';
+import SubmitBar from '../../components/SubmitComponents/SubmitBar.vue';
+import SubmitFooter from '../../components/SubmitComponents/SubmitFooter.vue';
+
 export default {
 	components: {
 		TitleInput,
@@ -58,6 +63,8 @@ export default {
 		FooterButtons,
 		PostSubmit,
 		LinkSubmit,
+		SubmitBar,
+		SubmitFooter,
 	},
 	created() {
 		document.title = 'Submit to Reddit';
