@@ -980,10 +980,48 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
+"@fortawesome/fontawesome-common-types@6.2.0":
+  "integrity" "sha512-rBevIsj2nclStJ7AxTdfsa3ovHb1H+qApwrxcTVo+NNdeJiB9V75hsKfrkG5AwNcRUNxrPPiScGYCNmLMoh8pg=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.2.0.tgz"
+  "version" "6.2.0"
+
 "@fortawesome/fontawesome-free@^6.2.0":
   "integrity" "sha512-CNR7qRIfCwWHNN7FnKUniva94edPdyQzil/zCwk3v6k4R6rR2Fr8i4s3PM7n/lyfPA6Zfko9z5WDzFxG9SW1uQ=="
   "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.2.0.tgz"
   "version" "6.2.0"
+
+"@fortawesome/fontawesome-svg-core@^6.2.0", "@fortawesome/fontawesome-svg-core@~1 || ~6":
+  "integrity" "sha512-Cf2mAAeMWFMzpLC7Y9H1I4o3wEU+XovVJhTiNG8ZNgSQj53yl7OCJaS80K4YjrABWZzbAHVaoHE1dVJ27AAYXw=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.2.0.tgz"
+  "version" "6.2.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.2.0"
+
+"@fortawesome/free-brands-svg-icons@^6.2.0":
+  "integrity" "sha512-fm1y4NyZ2qKYNmYhdMz9VAWRw1Et7PMHNunSw3W0SVAwKwv6o0qiJworLH3Y9SnmhHzAymXJwCX1op22FFvGiA=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.2.0.tgz"
+  "version" "6.2.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.2.0"
+
+"@fortawesome/free-regular-svg-icons@^6.2.0":
+  "integrity" "sha512-M1dG+PAmkYMTL9BSUHFXY5oaHwBYfHCPhbJ8qj8JELsc9XCrUJ6eEHWip4q0tE+h9C0DVyFkwIM9t7QYyCpprQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.2.0.tgz"
+  "version" "6.2.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.2.0"
+
+"@fortawesome/free-solid-svg-icons@^6.2.0":
+  "integrity" "sha512-UjCILHIQ4I8cN46EiQn0CZL/h8AwCGgR//1c4R96Q5viSRwuKVo0NdQEc4bm+69ZwC0dUvjbDqAHF1RR5FA3XA=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.2.0.tgz"
+  "version" "6.2.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.2.0"
+
+"@fortawesome/vue-fontawesome@^3.0.1":
+  "integrity" "sha512-CdXZJoCS+aEPec26ZP7hWWU3SaJlQPZSCGdgpQ2qGl2HUmtUUNrI3zC4XWdn1JUmh3t5OuDeRG1qB4eGRNSD4A=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/vue-fontawesome/-/vue-fontawesome-3.0.1.tgz"
+  "version" "3.0.1"
 
 "@hapi/hoek@^9.0.0":
   "integrity" "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="
@@ -4489,6 +4527,11 @@
     "@sideway/formula" "^3.0.0"
     "@sideway/pinpoint" "^2.0.0"
 
+"jquery@^3.6.1":
+  "integrity" "sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw=="
+  "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.6.1.tgz"
+  "version" "3.6.1"
+
 "js-message@1.0.7":
   "integrity" "sha512-efJLHhLjIyKRewNS9EGZ4UpI8NguuL6fKkhRxVuMmrGV2xN/0APGdQYwLFky5w9naebSZ0OwAGp0G6/2Cg90rA=="
   "resolved" "https://registry.npmjs.org/js-message/-/js-message-1.0.7.tgz"
@@ -6858,7 +6901,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2 || ^3.2.13", "vue@^3.0.1", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.25", "vue@3.2.40":
+"vue@*", "vue@^2 || ^3.2.13", "vue@^3.0.1", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.13", "vue@^3.2.25", "vue@>= 3.0.0 < 4", "vue@3.2.40":
   "integrity" "sha512-1mGHulzUbl2Nk3pfvI5aXYYyJUs1nm4kyvuz38u4xlQkLUn1i2R7nDbI4TufECmY8v1qNBHYy62bCaM+3cHP2A=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.40.tgz"
   "version" "3.2.40"

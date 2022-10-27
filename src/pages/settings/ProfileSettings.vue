@@ -369,15 +369,11 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
 import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
-import BaseButton from '@/components/BaseComponents/BaseButton.vue';
 import SocialLink from './SocialLink.vue';
 export default {
 	components: {
-		SwitchButton,
 		BaseDialog,
-		BaseButton,
 		SocialLink,
 	},
 	props: {},

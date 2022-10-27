@@ -5,7 +5,7 @@
 			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
 		<div class="header-home" @click="showHomeSubMenu()">
-			<div class="header-icon-home">
+			<div class="header-icon-home" v-if="$route.path == '/main'">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -20,6 +20,37 @@
 				</svg>
 				<span>Home</span>
 			</div>
+			<div
+				@click="goToSubmit()"
+				class="header-icon-home"
+				v-else-if="$route.path == '/submit'"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-plus-lg"
+					viewBox="0 0 16 16"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+					/>
+				</svg>
+				<span>Create Post</span>
+			</div>
+			<div
+				@click="goToSettings()"
+				class="color-black"
+				v-else-if="$route.path == '/settings' || '/settings/'"
+			>
+				<div>
+					<img src="../../../img/user-image.jpg" alt="img" class="users-img" />
+					User Settings
+				</div>
+			</div>
+
 			<svg class="header-user-nav-icon header-down-arrow">
 				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 			</svg>
@@ -345,9 +376,9 @@
 						</svg>
 						My Stuff
 					</li>
-					<li class="setting-choice">
+					<li class="setting-choice" @click="showSettingsSubMenu()">
 						Online Status
-						<switch-button></switch-button>
+						<switch-button />
 					</li>
 					<li class="setting-choice">Profile</li>
 					<li class="setting-choice" @click="goToSettings()">User Settings</li>
@@ -370,9 +401,9 @@
 						</svg>
 						View Options
 					</li>
-					<li class="setting-choice">
+					<li class="setting-choice" @click="showSettingsSubMenu()">
 						Dark Mode
-						<switch-button></switch-button>
+						<switch-button />
 					</li>
 					<li class="setting-choice-with-icon">
 						<svg
@@ -401,11 +432,7 @@
 </template>
 
 <script>
-import SwitchButton from '../../components/SwitchButton.vue';
 export default {
-	components: {
-		SwitchButton,
-	},
 	data() {
 		return {
 			settingsSubMenuDisplay: false,
@@ -456,7 +483,7 @@ export default {
 	cursor: pointer;
 }
 .header-logo {
-	margin-left: 0.5rem;
+	margin-left: 0.4rem;
 	display: flex;
 	flex-direction: row;
 }
@@ -465,16 +492,17 @@ export default {
 }
 .header-icon-home {
 	display: grid;
-	grid-template-columns: min-content min-content min-content;
+	grid-template-columns: min-content max-content min-content;
 	/* width: 40rem; */
 	grid-column-gap: 1rem;
 	align-items: center;
 	border: var(--line-3);
 	border-radius: 5px;
+	color: var(--color-dark-1);
 }
 .header-home {
 	padding: 0.5rem;
-	margin-left: 1.2rem;
+	margin-left: 1rem;
 	align-items: center;
 	border: var(--line-3);
 	border-radius: 5px;
@@ -553,7 +581,7 @@ export default {
 .header-user-nav {
 	/* align-self: stretch; */
 	width: 1rem;
-	margin-left: 4rem;
+	margin-left: 2rem;
 
 	/* display: flex;
   align-items: center; */
@@ -772,6 +800,9 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	font-size: 1.2rem;
+}
+.color-black {
+	color: black;
 }
 .home {
 	fill: var(--color-dark-1) !important;
