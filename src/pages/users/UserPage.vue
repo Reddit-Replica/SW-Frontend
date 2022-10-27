@@ -2,8 +2,11 @@
 	<profile-nav :user-name="getUserName" />
 	<base-container>
 		<div class="profilebox">
-			<main>
+			<!-- <main>
 				<createpost-bar />
+			</main> -->
+			<main>
+				<sortposts-bar></sortposts-bar>
 			</main>
 			<aside>
 				<profile-card :user-name="getUserName" />
@@ -16,7 +19,8 @@
 import ProfileCard from '../../components/UserComponents/ProfileCard.vue';
 import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
-import createpostBar from '../../components/bars/CreatepostBar.vue';
+// import createpostBar from '../../components/bars/CreatepostBar.vue';
+import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 export default {
 	props: {
 		// userName: {
@@ -31,7 +35,8 @@ export default {
 		ProfileCard,
 		BaseContainer,
 		profileNav,
-		createpostBar,
+		// createpostBar,
+		SortpostsBar,
 	},
 	computed: {
 		getUserName() {
