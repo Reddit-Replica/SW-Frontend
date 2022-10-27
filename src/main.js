@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import router from './router.js';
 import store from './store/index';
 import App from './App.vue';
-import { VueRecaptcha } from 'vue-recaptcha';
+/*import { VueRecaptcha } from 'vue-recaptcha';*/
 import vue3GoogleLogin from 'vue3-google-login';
 
 import BaseButton from './components/BaseComponents/BaseButton.vue';
@@ -39,6 +39,6 @@ app.component('BaseButton', BaseButton);
 app.component('SwitchButton', SwitchButton);
 
 // app.config.globalProperties.$hostname = 'http://localhost:3000';
-app.component('vue-recaptcha', VueRecaptcha);
+// app.component('VueRecaptcha', VueRecaptcha);
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';
