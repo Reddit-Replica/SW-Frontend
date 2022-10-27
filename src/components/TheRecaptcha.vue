@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
+import { VueRecaptcha } from 'vue-recaptcha';
 export default {
 	components: { VueRecaptcha },
 	methods: {
