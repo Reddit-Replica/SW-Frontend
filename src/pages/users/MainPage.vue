@@ -6,10 +6,26 @@
 					<createpost-bar></createpost-bar>
 					<sortposts-bar></sortposts-bar>
 					<base-post :post="post"></base-post>
+					<base-post :post="post"></base-post>
+					<base-post :post="post"></base-post>
+					<base-post :post="post"></base-post>
+					<base-post :post="post"></base-post>
+					<base-post :post="post"></base-post>
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="right-col"><top-communities-bar></top-communities-bar></div>
+				<div class="right-col">
+					<div class="component">
+						<top-communities-bar></top-communities-bar>
+					</div>
+					<div class="component">
+						<createpost-sidebar></createpost-sidebar>
+					</div>
+					<div class="component">
+						<rightside-footer></rightside-footer>
+					</div>
+					<backtotop-button></backtotop-button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -20,6 +36,9 @@ import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import BasePost from '../../components/BaseComponents/BasePost.vue';
 import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar.vue';
+import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar.vue';
+import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
+import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 
 export default {
 	components: {
@@ -27,6 +46,9 @@ export default {
 		SortpostsBar,
 		BasePost,
 		TopCommunitiesBar,
+		CreatepostSidebar,
+		RightsideFooter,
+		BacktotopButton,
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
@@ -59,24 +81,31 @@ export default {
 	margin-left: 5rem;
 } */
 .right-col {
-	margin: 12px;
-	/* padding: 20px;
-  margin-left: 15rem;*/
+	margin: 1.2rem;
 	margin-top: 1.5rem;
+	margin-left: 8rem;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	height: 100%;
+	display: flex;
+}
+.component {
+	margin-bottom: 1.3rem;
+}
+@media only screen and (max-width: 75em) {
+	.right-col {
+		margin-left: 12rem;
+	}
 }
 @media only screen and (max-width: 991px) {
 	.container {
 		max-width: 100%;
 	}
-	/* .wrapper {
-    grid-template-columns: 100%;
-  } */
 	.right-col {
 		display: none;
 	}
-	/* .left-col {
-    margin: auto;
-    width: 100%;
-  }  */
 }
 </style>
