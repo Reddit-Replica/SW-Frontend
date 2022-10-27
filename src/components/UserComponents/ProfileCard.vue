@@ -1,11 +1,12 @@
 <template>
-	<div class="card">
+	<div class="card-prof">
 		<div class="profile-card">
 			<div class="cover-pic">
 				<a href="" class="add-image">
-					<i class="fa-regular fa-square-plus add-image-icon"
-				/></a>
-				<a href="" class="settings"><i class="fa-solid fa-gear" /></a>
+					<input type="file" class="insert-cover-image" id="5" />
+					<i class="fa-regular fa-square-plus add-image-icon" />
+				</a>
+				<a href="" class="profile-settings"><i class="fa-solid fa-gear" /></a>
 				<div class="profile-avatar">
 					<img src="../../assets/avatar.png" alt="" />
 				</div>
@@ -152,13 +153,14 @@ export default {
 
 ul {
 	list-style: none;
+	border-bottom: none;
 }
 
 a {
 	text-decoration: none;
 }
 
-.card {
+.card-prof {
 	/* display: flex;
   margin: auto;
   justify-content: center;
@@ -169,10 +171,10 @@ a {
 
 .profile-card {
 	width: 312px;
-	background-color: var(--back-color);
+	background-color: var(--main-white-color);
 	display: flex;
 	flex-direction: column;
-	border: 1px solid #474748;
+	border: 1px solid var(--color-grey-light-4);
 	padding: 12px;
 	border-radius: 5px 5px 4px 4px;
 	position: relative;
@@ -180,8 +182,8 @@ a {
 
 .cover-pic {
 	height: 94px;
-	width: calc(100% + 24px);
-	background-color: #2d97d8;
+	width: calc(100% + 23px);
+	background-color: #2d97d8; /* cover picture default color */
 	border-radius: 4px 4px 0 0;
 	position: relative;
 	left: -12px;
@@ -195,17 +197,18 @@ a {
 	position: absolute;
 	right: 15px;
 	bottom: 8px;
-	color: #d7dadc;
+	/* color: var(--main-white-color); */
+	color: var(--color-blue-2);
 }
 
 a.add-image {
 	position: relative;
 	z-index: 50;
-	color: #d7dadc;
+	color: var(--main-white-color);
 }
 a.add-image i {
 	z-index: 50;
-	color: #d7dadc;
+	color: var(--main-white-color);
 }
 .add-image::before {
 	content: '';
@@ -216,19 +219,20 @@ a.add-image i {
 	left: 50%;
 	transform: translate(-50%, calc(-50%));
 	/* background: #ec0623; */
-	background: #1a1a1b;
-	border: 1px solid #d7dadc;
+	background: var(--main-white-color);
+	border: 1px solid var(--color-blue-2);
 	border-radius: 50%;
 	z-index: -1;
 	/* opacity: 50%; */
 }
-.settings {
+.profile-settings {
 	font-size: 20px;
 	height: fit-content;
 	position: absolute;
 	right: 15px;
 	bottom: -36px;
-	color: #d7dadc;
+	/* color: var(--main-white-color); */
+	/* border: 1px solid var(--color-blue-2); */
 }
 .profile-avatar img {
 	height: 160px;
@@ -241,19 +245,18 @@ a.add-image i {
 }
 
 .profile-name {
-	color: #d7dadc;
+	color: var(--color-dark-2);
 	text-align: center;
 	/* margin: 5px; */
 	/* line-height: 40px; */
 }
 
 .profile-desc {
-	color: #d7dadc;
 	text-align: center;
 	font-size: 12px;
 	font-weight: 500;
 	margin: 0px 4px 4px 4px;
-	color: #818384;
+	color: var(--color-grey-light-4);
 }
 
 .profile-button {
@@ -274,6 +277,7 @@ a.add-image i {
 	padding: 8px 16px;
 	cursor: pointer;
 	position: relative;
+	border: none;
 }
 
 .avatar-style {
@@ -289,7 +293,7 @@ a.add-image i {
 	width: 100%;
 	height: 100%;
 	border-radius: 9999px;
-	background-color: #1a1a1b;
+	background-color: var(--main-white-color);
 	z-index: 55;
 	opacity: 0;
 	/* opacity: .08; */
@@ -306,13 +310,18 @@ a.add-image i {
 
 .profile-items {
 	display: flex;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	align-items: center;
-	color: #d7dadc;
+	color: var(--color-dark-2);
 	flex-wrap: wrap;
 	/* margin-bottom: 13px; */
 }
-
+.profile-items span.i.karma {
+	flex: 1 1 50%;
+}
+.profile-items span.i.cake-day {
+	flex: 1 1 50%;
+}
 .profile-items h5 {
 	font-size: 14px;
 	font-weight: 500;
@@ -342,6 +351,7 @@ a.add-image i {
 .cake-day p span {
 	margin-right: 4px;
 	color: #24a0ed;
+	flex: 1 1 50%;
 }
 .social-link {
 	display: flex;
@@ -352,9 +362,9 @@ a.add-image i {
 }
 
 .social-link button {
-	background-color: #343536;
+	background-color: var(--color-grey-dark-5);
 	border-radius: 9999px;
-	color: #d7dadc;
+	color: var(--color-dark-3);
 	font-size: 12px;
 	font-weight: 700;
 	line-height: 16px;
@@ -365,6 +375,7 @@ a.add-image i {
 	line-height: 16px;
 	display: flex;
 	align-items: center;
+	border: none;
 }
 .social-link button span {
 	font-size: 20px;
@@ -380,10 +391,9 @@ a.add-image i {
 button.new-post {
 	width: 100%;
 	margin-top: 10px;
-	height: 37px;
 	text-align: center;
-	color: #1a1a1b;
-	background-color: #d7dadc;
+	color: var(--main-white-color);
+	background-color: var(--color-blue-2);
 	border-radius: 9999px;
 	font-size: 14px;
 	font-weight: 700;
@@ -392,6 +402,7 @@ button.new-post {
 	padding: 4px 16px;
 	cursor: pointer;
 	position: relative;
+	border: none;
 }
 
 button.new-post::before {
@@ -402,7 +413,7 @@ button.new-post::before {
 	width: 100%;
 	height: 100%;
 	border-radius: 9999px;
-	background-color: #1a1a1b;
+	background-color: var(--main-white-color);
 	z-index: 55;
 	opacity: 0;
 }
@@ -419,7 +430,7 @@ button.more-options {
 	background-color: transparent;
 	border-radius: 9999px;
 	width: fit-content;
-	color: #d7dadc;
+	color: var(--color-blue-2);
 	padding: 4px 16px;
 	border: 1px solid transparent;
 	min-height: 32px;
@@ -449,7 +460,7 @@ ul.profile-options li {
 	display: flex;
 	align-items: center;
 	margin-top: 8px;
-	color: #d7dadc;
+	color: var(--color-blue-2);
 	position: relative;
 	padding: 4px 8px;
 }
@@ -461,12 +472,12 @@ ul.profile-options li::before {
 	width: 100%;
 	height: 100%;
 	border-radius: 9999px;
-	background-color: #d7dadc;
+	background-color: var(--color-dark-3);
 	z-index: 55;
 	opacity: 0;
 }
 ul.profile-options li a {
-	color: #d7dadc;
+	color: var(--color-blue-2);
 }
 
 button.fewer-options {
@@ -477,7 +488,7 @@ button.fewer-options {
 	background-color: transparent;
 	border-radius: 9999px;
 	width: fit-content;
-	color: #d7dadc;
+	color: var(--color-blue-2);
 	padding: 4px 16px;
 	border: 1px solid transparent;
 	min-height: 32px;
@@ -499,7 +510,7 @@ button.fewer-options::before {
 	width: 100%;
 	height: 100%;
 	border-radius: 9999px;
-	background-color: #d7dadc;
+	background-color: var(--color-dark-3);
 	z-index: 55;
 	opacity: 0;
 }
@@ -514,5 +525,16 @@ ul.profile-options li:hover::before {
 	.profile-card {
 		display: none;
 	}
+}
+input.insert-cover-image {
+	position: absolute;
+	height: 35px;
+	width: 35px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, calc(-50%));
+	border-radius: 50%;
+	opacity: 0;
+	cursor: pointer;
 }
 </style>
