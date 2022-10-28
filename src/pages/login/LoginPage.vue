@@ -27,9 +27,34 @@
 						<div id="google-login" class="log-google log-ag">
 							Continue with Google
 						</div>
-						<div id="apple-login" class="log-apple log-ag">
-							Continue with Apple
-						</div>
+						<a
+							id="facebook-login"
+							class="log-facebook log-ag"
+							href="/auth/facebook"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								fill="currentColor"
+								class="bi bi-facebook logo-img"
+								viewBox="0 0 16 16"
+							>
+								<path
+									d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
+								/>
+							</svg>
+							<span>Continue with Facebook</span>
+						</a>
+						<!-- <facebook-login
+							class="button"
+							appId="420905468863679"
+							@login="onLogin"
+							@logout="onLogout"
+							@get-initial-status="getUserData"
+							@sdk-loaded="sdkLoaded"
+						>
+						</facebook-login> -->
 
 						<div class="page-divider">
 							<span class="page-divider-line"></span>
@@ -76,8 +101,12 @@
 </template>
 
 <script>
+// import facebookLogin from 'facebook-login-vuejs';
 export default {
 	name: 'LogIn',
+	// components: {
+	// 	facebookLogin,
+	// },
 	data() {
 		return {
 			user: {
@@ -85,6 +114,12 @@ export default {
 				password: '',
 			},
 			test: 'BEFORE SUBMIT',
+			// isConnected: false,
+			// name: '',
+			// email: '',
+			// personalID: '',
+			// picture: '',
+			// FB: undefined,
 		};
 	},
 	method: {
@@ -95,6 +130,26 @@ export default {
 			});
 			this.test = 'AFTER SUBMIT';
 		},
+		// getUserData() {
+		// 	this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' }, (user) => {
+		// 		this.personalID = user.id;
+		// 		this.email = user.email;
+		// 		this.name = user.name;
+		// 		this.picture = user.picture.data.url;
+		// 	});
+		// },
+		// sdkLoaded(payload) {
+		// 	this.isConnected = payload.isConnected;
+		// 	this.FB = payload.FB;
+		// 	if (this.isConnected) this.getUserData();
+		// },
+		// onLogin() {
+		// 	this.isConnected = true;
+		// 	this.getUserData();
+		// },
+		// onLogout() {
+		// 	this.isConnected = false;
+		// },
 	},
 };
 </script>
@@ -281,5 +336,19 @@ button {
 	max-width: 392px;
 	width: 60%;
 	min-width: 155px;
+}
+.log-facebook {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.log-facebook:hover {
+	background-color: var(--color-blue-2);
+	color: var(--color-white-1);
+}
+.logo-img {
+	height: 2rem;
+	width: 2rem;
+	margin: 0.5rem 0;
 }
 </style>
