@@ -116,7 +116,6 @@ export default {
 			}
 		},
 		validatEmail(value) {
-			//eslint - disable - next - line;
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
 				console.log('hello');
