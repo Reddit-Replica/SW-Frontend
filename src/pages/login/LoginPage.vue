@@ -20,41 +20,16 @@
 					>.
 				</p>
 
-				<form class="logining-in" @submit.prevent="handleSubmit">
+				<form class="logining-in">
 					<!--LogIn with google and apple accounts -->
 
 					<div class="login-google-apple">
 						<div id="google-login" class="log-google log-ag">
 							Continue with Google
 						</div>
-						<a
-							id="facebook-login"
-							class="log-facebook log-ag"
-							href="/auth/facebook"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								class="bi bi-facebook logo-img"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
-								/>
-							</svg>
-							<span>Continue with Facebook</span>
-						</a>
-						<!-- <facebook-login
-							class="button"
-							appId="420905468863679"
-							@login="onLogin"
-							@logout="onLogout"
-							@get-initial-status="getUserData"
-							@sdk-loaded="sdkLoaded"
-						>
-						</facebook-login> -->
+						<div id="apple-login" class="log-apple log-ag">
+							Continue with Apple
+						</div>
 
 						<div class="page-divider">
 							<span class="page-divider-line"></span>
@@ -69,7 +44,9 @@
 						<input type="text" required="required" />
 						<span class="animation-usr-pass">UserName</span>
 
-						<div class="username-error-message"></div>
+						<div class="username-error-message" v-if="error_show">
+							{{ error_message }}
+						</div>
 						<!--Error Message Shown here -->
 					</fieldset>
 
@@ -101,7 +78,6 @@
 </template>
 
 <script>
-// import facebookLogin from 'facebook-login-vuejs';
 export default {
 	name: 'LogIn',
 	// components: {
@@ -114,12 +90,6 @@ export default {
 				password: '',
 			},
 			test: 'BEFORE SUBMIT',
-			// isConnected: false,
-			// name: '',
-			// email: '',
-			// personalID: '',
-			// picture: '',
-			// FB: undefined,
 		};
 	},
 	method: {
@@ -130,26 +100,6 @@ export default {
 			});
 			this.test = 'AFTER SUBMIT';
 		},
-		// getUserData() {
-		// 	this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' }, (user) => {
-		// 		this.personalID = user.id;
-		// 		this.email = user.email;
-		// 		this.name = user.name;
-		// 		this.picture = user.picture.data.url;
-		// 	});
-		// },
-		// sdkLoaded(payload) {
-		// 	this.isConnected = payload.isConnected;
-		// 	this.FB = payload.FB;
-		// 	if (this.isConnected) this.getUserData();
-		// },
-		// onLogin() {
-		// 	this.isConnected = true;
-		// 	this.getUserData();
-		// },
-		// onLogout() {
-		// 	this.isConnected = false;
-		// },
 	},
 };
 </script>
@@ -194,7 +144,7 @@ button {
 	cursor: pointer;
 }
 .largest-div {
-	width: 50%;
+	width: 70rem;
 	height: 100%;
 	overflow: hidden;
 }
@@ -202,7 +152,7 @@ button {
 	background-image: url('../../../img/bck.png');
 	background-color: #0079d3;
 	height: 100%;
-	width: 20%;
+	width: 12rem;
 	float: left;
 	/* background-position: center; */
 	background-repeat: no-repeat;
@@ -213,6 +163,7 @@ button {
 	/* align-self: center; */
 	padding: 24px;
 	overflow: hidden;
+	/* width: 50rem; */
 }
 .user-agreement {
 	margin-bottom: 48px;

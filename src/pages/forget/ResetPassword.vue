@@ -5,34 +5,42 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form>
+				<form @submit.prevent="">
 					<div class="snoo-icon"></div>
-					<h1>Recover your username</h1>
+					<h1>Reset your password</h1>
 					<p class="description">
-						Tell us the email address associated with your Reddit account, and
-						we’ll send you an email with your username.
+						Choose a new password here, then log in to your account.
 					</p>
 					<div class="input-box">
-						<input type="email" required="required" />
-						<span class="span-input"> Email Address</span>
+						<input type="password" required="required" />
+						<span class="span-input"> New password</span>
+						<!-- <span class="correct-check"></span> -->
+						<span class="wrong-check"></span>
+					</div>
+					<p class="invalid">Please enter a username to continue</p>
+					<div class="input-box">
+						<input type="password" required="required" />
+						<span class="span-input"> verify password</span>
 					</div>
 					<p class="invalid">Please enter an email address to continue</p>
+
+					<label class="check-box">
+						<input type="checkbox" />
+						Changing your password logs you out of all browsers on your
+						device(s). Checking this box also logs you out of all apps you have
+						authorized.
+					</label>
+
 					<div>
 						<base-button
-							button-text="Reset password"
+							button-text="Set password"
 							:disable-button="buttonIsactive"
 							class="button-class"
 						>
 						</base-button>
 					</div>
-					<div class="bottomText">
-						<label>
-							Don't have an email or need assistance logging in?
-							<a class="link">Get Help </a></label
-						>
-					</div>
 				</form>
-				<div class="">
+				<div class="end">
 					<router-link to="/login" class="link">Log in</router-link>
 					<span class="linkSeparator">•</span>
 					<router-link to="/signup" class="link">Sign Up</router-link>
@@ -58,7 +66,9 @@ export default {
 * {
 	box-sizing: border-box;
 	margin: 0;
+	padding: 0;
 }
+
 div {
 	display: block;
 }
@@ -77,6 +87,7 @@ div {
 .input-box {
 	position: relative;
 }
+
 .input-box input {
 	transform: translateZ(0);
 	outline: 0;
@@ -105,7 +116,6 @@ div {
 	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
 }
-
 .input-box .span-input::after {
 	font-size: 20px;
 	font-weight: 500;
@@ -128,12 +138,28 @@ div {
 .input-box input:active {
 	border: 0.5px solid #0079d3;
 }
+.input-box .correct-check {
+	position: absolute;
+	z-index: 1;
+	right: 14px;
+	top: 50%;
+	height: 10px;
+	width: 12px;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.input-box .wrong-check {
+	position: absolute;
+	right: 19px;
+	top: 50%;
+	height: 11px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
+}
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
 }*/
 .button-class {
 	color: #ffffff;
-	/*background: linear-gradient(89.57deg, #ec0623, #ff8717);*/
 	background: var(--color-blue-2);
 	text-transform: uppercase;
 	cursor: pointer;
@@ -155,13 +181,6 @@ div {
 	font-size: 14px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
-
-	/*border-radius: 24px;
-	font-family: 'IBM Plex Sans', sans-serif;
-	font-size: 14px;
-	height: 40px;
-	line-height: 10px;
-	width: 100%;*/
 }
 .big-container {
 	background-color: white;
@@ -176,12 +195,15 @@ div {
 }
 .right-box {
 	width: 100%;
+	padding: 0px;
+	margin: 0;
 	/*padding: 36px;
 	min-width: 150px;
 	max-width: 440px;*/
 }
 .left-box {
 	width: 156px;
+	margin: 0;
 }
 .box {
 	padding: 24px;
@@ -225,17 +247,6 @@ p {
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
-.bottomText {
-	font-family: 'Noto Sans', sans-serif;
-	margin-top: 8px;
-	margin-bottom: 20px;
-	font-weight: 400;
-
-	font-size: 12px;
-	line-height: 18px;
-	margin-bottom: 14px;
-	margin-top: 14px;
-}
 
 .invalid {
 	font-size: 12px;
@@ -251,5 +262,21 @@ p {
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+}
+.end {
+	margin-top: 10px;
+}
+.check-box {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	display: block;
+	min-height: 20px;
+	padding-left: 5px;
+	margin-right: 0;
+	margin-bottom: 20px;
+	font-weight: 400;
+	cursor: pointer;
 }
 </style>

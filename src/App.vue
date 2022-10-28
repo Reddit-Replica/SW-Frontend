@@ -33,21 +33,26 @@ export default {
 
 	/* white colors */
 	--color-white-1: white;
+	--main-white-color: #ffffff;
 
 	/* light grey colors */
 	--color-grey-light-1: #faf9f9;
 	--color-grey-light-2: #f4f2f2;
 	--color-grey-light-3: #f0eeee;
 	--color-grey-light-4: #ccc;
+	--color-grey-light-5: #7c7c7c;
 
 	/* dark grey colors */
 	--color-grey-dark-1: #333;
 	--color-grey-dark-2: #777;
 	--color-grey-dark-3: #999;
 	--color-grey-dark-4: rgb(177, 176, 176);
+	--color-grey-dark-5: #edeff1;
 
 	/* black colors */
 	--color-dark-1: #000;
+	--color-dark-2: #222222;
+	--color-dark-3: #1c1c1c;
 
 	--color-orange: #ff2c00;
 
