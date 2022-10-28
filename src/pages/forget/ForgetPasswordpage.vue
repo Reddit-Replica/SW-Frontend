@@ -22,7 +22,7 @@
 						/>
 						<span class="span-input"> Username</span>
 						<!-- <span class="correct-check"></span> -->
-						<span class="wrong-check"></span>
+						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
 						Please enter a username to continue
@@ -35,6 +35,7 @@
 							v-model="emailAddress"
 						/>
 						<span class="span-input"> Email Address</span>
+						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
 						Please enter an email address to continue
@@ -77,6 +78,7 @@ export default {
 			userName: '',
 			emailAddress: '',
 			inputIsempty: true,
+			checked: true,
 		};
 	},
 	methods: {
