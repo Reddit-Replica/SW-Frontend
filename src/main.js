@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import router from './router.js';
 import store from './store/index';
 import App from './App.vue';
+/*import { VueRecaptcha } from 'vue-recaptcha';*/
+import vue3GoogleLogin from 'vue3-google-login';
 
 import BaseButton from './components/BaseComponents/BaseButton.vue';
 import SwitchButton from './components/BaseComponents/SwitchButton.vue';
@@ -28,10 +30,15 @@ const app = createApp(App);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.use(router);
 app.use(store);
+app.use(vue3GoogleLogin, {
+	clientId:
+		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
+});
 
 app.component('BaseButton', BaseButton);
 app.component('SwitchButton', SwitchButton);
 
 // app.config.globalProperties.$hostname = 'http://localhost:3000';
+// app.component('VueRecaptcha', VueRecaptcha);
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';

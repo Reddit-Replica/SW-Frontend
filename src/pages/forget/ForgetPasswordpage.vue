@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form>
+				<form @submit.prevent="handleSubmit">
 					<div class="snoo-icon"></div>
 					<h1>Reset your password</h1>
 					<p class="description">
@@ -14,15 +14,32 @@
 						password.
 					</p>
 					<div class="input-box">
-						<input type="text" required="required" />
+						<input
+							id="userName"
+							type="text"
+							required="required"
+							v-model="userName"
+						/>
 						<span class="span-input"> Username</span>
+						<!-- <span class="correct-check"></span> -->
+						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
 					</div>
-					<p class="invalid">Please enter a username to continue</p>
+					<p class="invalid" v-if="inputIsempty">
+						Please enter a username to continue
+					</p>
 					<div class="input-box">
-						<input type="email" required="required" />
+						<input
+							id="emailAddress"
+							type="email"
+							required="required"
+							v-model="emailAddress"
+						/>
 						<span class="span-input"> Email Address</span>
+						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
 					</div>
-					<p class="invalid">Please enter an email address to continue</p>
+					<p class="invalid" v-if="inputIsempty">
+						Please enter an email address to continue
+					</p>
 					<div>
 						<base-button
 							button-text="Reset password"
@@ -32,7 +49,9 @@
 						</base-button>
 					</div>
 					<div class="forgot-link">
-						<a class="link">forgot username?</a>
+						<router-link to="/forgetUsernamepage" class="link"
+							>forgot username?</router-link
+						>
 					</div>
 					<div class="bottomText">
 						<label>
@@ -42,9 +61,9 @@
 					</div>
 				</form>
 				<div class="">
-					<a class="link">Log in </a>
+					<router-link to="/login" class="link">Log in</router-link>
 					<span class="linkSeparator">•</span>
-					<a class="link">Sign Up </a>
+					<router-link to="/signup" class="link">Sign Up</router-link>
 				</div>
 			</div>
 		</div>
@@ -56,9 +75,22 @@ export default {
 	data() {
 		return {
 			buttonIsactive: false,
+			userName: '',
+			emailAddress: '',
+			inputIsempty: true,
+			checked: true,
 		};
 	},
-	methods: {},
+	methods: {
+		handleSubmit() {},
+		validateInputs() {
+			if (this.userName === '' || this.emailAddress === '')
+				this.inputIsempty = true;
+		},
+		mounted() {
+			this.validateInputs();
+		},
+	},
 	components: {},
 };
 </script>
@@ -91,6 +123,7 @@ div {
 .input-box {
 	position: relative;
 }
+
 .input-box input {
 	transform: translateZ(0);
 	outline: 0;
@@ -140,6 +173,23 @@ div {
 }
 .input-box input:active {
 	border: 0.5px solid #0079d3;
+}
+.input-box .correct-check {
+	position: absolute;
+	z-index: 1;
+	right: 14px;
+	top: 50%;
+	height: 10px;
+	width: 12px;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.input-box .wrong-check {
+	position: absolute;
+	right: 19px;
+	top: 50%;
+	height: 11px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);

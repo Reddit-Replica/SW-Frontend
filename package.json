@@ -23,7 +23,9 @@
     "fontawesome": "^5.6.3",
     "jquery": "^3.6.1",
     "vue": "^3.2.13",
+    "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.0.13",
+    "vue3-google-login": "^2.0.12",
     "vuex": "^4.0.2",
     "yarn": "^1.22.19"
   },
