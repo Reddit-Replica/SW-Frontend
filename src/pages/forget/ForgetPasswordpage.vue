@@ -24,7 +24,7 @@
 						<span class="span-input"> Username</span>
 						<span
 							v-if="showSignuser"
-							:class="checked ? 'correct-check' : 'wrong-check'"
+							:class="checkedUser ? 'correct-check' : 'wrong-check'"
 						></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
@@ -40,11 +40,18 @@
 							type="email"
 							required="required"
 							v-model="emailAddress"
+							:class="invalidEmail ? 'red-border' : ''"
 						/>
 						<span class="span-input"> Email Address</span>
-						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
+						<span
+							v-if="showSignemail"
+							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+						></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
+						Please enter an email address to continue
+					</p>
+					<p class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -88,7 +95,10 @@ export default {
 			invalidEmailtype: false,
 			inputIsempty: false,
 			showSignuser: false,
-			checked: true,
+			checkedUser: true,
+			showSignemail: false,
+			checkedEmail: false,
+			invalidEmail: false,
 		};
 	},
 	methods: {
@@ -97,21 +107,37 @@ export default {
 				//
 				this.invalidUsernamelength = true;
 				console.log('hello');
-				this.checked = false;
+				this.checkedUser = false;
 				this.showSignuser = true;
 			} else {
 				this.showSignuser = true;
-				this.checked = true;
+				this.checkedUser = true;
 				this.invalidUsernamelength = false;
 			}
 		},
-		// validatEmail(value) {},
+		validatEmail(value) {
+			//eslint - disable - next - line;
+			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
+				this.invalidEmail = true;
+				console.log('hello');
+				this.checkedEmail = false;
+				this.showSignemail = true;
+			} else {
+				this.showSignemail = true;
+				this.checkedEmail = true;
+				this.invalidEmail = false;
+			}
+		},
 	},
 
 	watch: {
 		userName(value) {
 			this.userName = value;
 			this.validateUser(value);
+		},
+		emailAddress(value) {
+			this.emailAddress = value;
+			this.validatEmail(value);
 		},
 	},
 };
