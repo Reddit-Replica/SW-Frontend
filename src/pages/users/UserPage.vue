@@ -19,15 +19,11 @@
 import ProfileCard from '../../components/UserComponents/ProfileCard.vue';
 import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
+// import SocialLinks from '../../components/UserComponents/SocialLinks.vue';
 // import createpostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 export default {
-	props: {
-		// userName: {
-		// 	type: String,
-		// 	default: 'Abdelhameed',
-		// },
-	},
+	props: {},
 	created() {
 		document.title = this.$store.state.userName + ' - Reddit';
 	},
@@ -35,8 +31,8 @@ export default {
 		ProfileCard,
 		BaseContainer,
 		profileNav,
-		// createpostBar,
 		SortpostsBar,
+		// SocialLinks,
 	},
 	computed: {
 		getUserName() {

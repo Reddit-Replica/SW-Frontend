@@ -4,7 +4,8 @@ import router from './router.js';
 import store from './store/index';
 import App from './App.vue';
 /*import { VueRecaptcha } from 'vue-recaptcha';*/
-import vue3GoogleLogin from 'vue3-google-login';
+// import vue3GoogleLogin from 'vue3-google-login';
+import GAuth from 'vue3-google-oauth2';
 
 import BaseButton from './components/BaseComponents/BaseButton.vue';
 import SwitchButton from './components/BaseComponents/SwitchButton.vue';
@@ -30,9 +31,15 @@ const app = createApp(App);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.use(router);
 app.use(store);
-app.use(vue3GoogleLogin, {
-	clientId:
-		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
+// app.use(vue3GoogleLogin, {
+// 	clientId:
+// 		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
+// });
+app.use(GAuth, {
+	clientId: `236245134261-u4nolh034o0p39kpvvv9596ol0eoha4o.apps.googleusercontent.com`,
+	scope: 'email',
+	prompt: 'consent',
+	plugin_name: `Web client 1  reddit`,
 });
 
 app.component('BaseButton', BaseButton);
