@@ -214,7 +214,7 @@ div {
 	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
 .input-box .red-border {
-	border: 0.5px solid red;
+	border: 0.5px solid #ea0027;
 }
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
@@ -238,7 +238,7 @@ div {
 	border-radius: 4px;
 	text-align: center;
 	position: relative;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	font-size: 14px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
@@ -331,6 +331,7 @@ p {
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
 	opacity: 1;
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
