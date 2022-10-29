@@ -12,13 +12,13 @@
 				</div>
 			</div>
 			<div>
-				<h2 class="profile-name">
+				<h2 class="profile-name" id="profile-name">
 					{{ userName || 'Agile_Relative7435' }}
 				</h2>
-				<p class="profile-desc">u/Agile_Relative7435 · 8d</p>
+				<p class="profile-desc" id="profile-desc">u/Agile_Relative7435 · 8d</p>
 			</div>
 			<div class="profile-button">
-				<button>
+				<button id="style-avatar">
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
 				</button>
 			</div>
@@ -27,7 +27,7 @@
 					<h5>Karma</h5>
 					<span>
 						<i />
-						<p>
+						<p id="karma">
 							<span><i class="fa-solid fa-fan" /></span>1
 						</p>
 					</span>
@@ -35,17 +35,18 @@
 				<span class="i cake-day">
 					<h5>Cake day</h5>
 					<span>
-						<p>
+						<p id="birth-date">
 							<span><i class="fa-solid fa-cake-candles" /></span>october 2,2022
 						</p>
 					</span>
 				</span>
 			</div>
-			<ul class="social-link">
+			<ul class="social-link" id="social-media-links">
 				<li>
-					<button>
+					<button id="social-media-button">
 						<span class="social-link-image"
 							><img
+								id="social-media-image"
 								src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM"
 								alt="" /></span
 						>socail media
@@ -66,20 +67,21 @@
 					</button>
 				</li>
 				<li>
-					<button class="add-social-link">
+					<button class="add-social-link" @click="openSocialLinkDialog">
 						<span><i class="fa-solid fa-plus" /></span>Add social link
 					</button>
 				</li>
 			</ul>
 			<button class="new-post">New post</button>
 			<button
+				id="more-options-button"
 				class="more-options"
 				@click="toggleShowMoreOptions"
 				v-show="!showMoreOptions"
 			>
 				More options
 			</button>
-			<ul class="profile-options" v-show="showMoreOptions">
+			<ul id="profile-options" class="profile-options" v-show="showMoreOptions">
 				<li>
 					<a href="">Profile to Moderation</a>
 				</li>
@@ -91,6 +93,7 @@
 				</li>
 			</ul>
 			<button
+				id="fewer-options-button"
 				class="fewer-options"
 				v-show="showMoreOptions"
 				@click="toggleShowMoreOptions"
@@ -99,10 +102,18 @@
 			</button>
 		</div>
 	</div>
+	<social-links
+		:show="addSocialLinkDialog"
+		@close="closeSocialLinkDialog"
+	></social-links>
 </template>
 
 <script>
+import SocialLinks from './SocialLinks.vue';
 export default {
+	components: {
+		SocialLinks,
+	},
 	props: {
 		userName: {
 			type: String,
@@ -112,6 +123,14 @@ export default {
 	data() {
 		return {
 			showMoreOptions: false,
+			addSocialLinkDialog: false,
+			mySocialLinks: [
+				{
+					id: '',
+					imagesUrl: '',
+					Name: '',
+				},
+			],
 		};
 	},
 	methods: {
@@ -119,21 +138,17 @@ export default {
 			this.showMoreOptions = !this.showMoreOptions;
 			console.log(this.userName, this.$route.props.userName);
 		},
+		openSocialLinkDialog() {
+			this.addSocialLinkDialog = true;
+		},
+		closeSocialLinkDialog() {
+			this.addSocialLinkDialog = false;
+		},
 	},
 };
 </script>
 
 <style scoped>
-/* :root {
-  --back-color :#1A1A1B;
-  --main-blue-color: #277e98;
-  --main-black-color: #1f2021;
-  --main-grey-color: #353235;
-  --main-white-color: #ffffff;
-  --main-transparent-color: rgb(15 116 143 / 70%);
-  --gray-color: #777;
-  --main-duration: 0.5s;
-} */
 * {
 	--webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -141,16 +156,6 @@ export default {
 	padding: 0;
 	margin: 0;
 }
-
-/* html {
-  scroll-behavior: smooth;
-} */
-
-/* body {
-  font-family: "Open Sans", sans-serif;
-  background-color: var(--main-black-color);
-} */
-
 ul {
 	list-style: none;
 	border-bottom: none;
@@ -161,11 +166,6 @@ a {
 }
 
 .card-prof {
-	/* display: flex;
-  margin: auto;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh; */
 	margin-left: 24px;
 }
 
@@ -422,27 +422,6 @@ button.new-post:hover::before {
 	opacity: 0.08;
 }
 
-button.more-options {
-	position: relative;
-	/* right: -266px; */
-	/* transform: translateX(-50%); */
-	left: calc(286px - 121.89px);
-	background-color: transparent;
-	border-radius: 9999px;
-	width: fit-content;
-	color: var(--color-blue-2);
-	padding: 4px 16px;
-	border: 1px solid transparent;
-	min-height: 32px;
-	font-size: 14px;
-	font-weight: 700;
-	line-height: 17px;
-	margin-top: 12px;
-	cursor: pointer;
-	position: relative;
-	/* display: none; */
-}
-
 ul.profile-options {
 	margin-top: 12px;
 	font-size: 12px;
@@ -450,8 +429,6 @@ ul.profile-options {
 	line-height: 16px;
 	padding: 4px 8px;
 	cursor: pointer;
-	/* min-height: 26px; */
-	/* display: none; */
 }
 
 ul.profile-options li {
@@ -480,10 +457,9 @@ ul.profile-options li a {
 	color: var(--color-blue-2);
 }
 
+button.more-options,
 button.fewer-options {
 	position: relative;
-	/* right: -266px; */
-	/* transform: translateX(-50%); */
 	left: calc(286px - 121.89px);
 	background-color: transparent;
 	border-radius: 9999px;
@@ -498,7 +474,6 @@ button.fewer-options {
 	margin-top: 12px;
 	cursor: pointer;
 	position: relative;
-	/* display: none; */
 }
 
 button.more-options::before,

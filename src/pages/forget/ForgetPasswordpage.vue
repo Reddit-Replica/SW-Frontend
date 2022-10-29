@@ -19,25 +19,39 @@
 							type="text"
 							required="required"
 							v-model="userName"
+							:class="invalidUsernamelength ? 'red-border' : ''"
 						/>
 						<span class="span-input"> Username</span>
-						<!-- <span class="correct-check"></span> -->
-						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
+						<span
+							v-if="showSignuser"
+							:class="checkedUser ? 'correct-check' : 'wrong-check'"
+						></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
 						Please enter a username to continue
 					</p>
+					<p class="invalid" v-if="invalidUsernamelength">
+						Username must be between 3 and 20 characters
+					</p>
+					<div class="separate"></div>
 					<div class="input-box">
 						<input
 							id="emailAddress"
 							type="email"
 							required="required"
 							v-model="emailAddress"
+							:class="invalidEmail ? 'red-border' : ''"
 						/>
 						<span class="span-input"> Email Address</span>
-						<span :class="checked ? 'correct-check' : 'wrong-check'"></span>
+						<span
+							v-if="showSignemail"
+							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+						></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
+						Please enter an email address to continue
+					</p>
+					<p class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -77,21 +91,54 @@ export default {
 			buttonIsactive: false,
 			userName: '',
 			emailAddress: '',
-			inputIsempty: true,
-			checked: true,
+			invalidUsernamelength: false,
+			invalidEmailtype: false,
+			inputIsempty: false,
+			showSignuser: false,
+			checkedUser: true,
+			showSignemail: false,
+			checkedEmail: false,
+			invalidEmail: false,
 		};
 	},
 	methods: {
-		handleSubmit() {},
-		validateInputs() {
-			if (this.userName === '' || this.emailAddress === '')
-				this.inputIsempty = true;
+		validateUser(value) {
+			if (value.length < 3 || value.length > 20) {
+				//
+				this.invalidUsernamelength = true;
+				console.log('hello');
+				this.checkedUser = false;
+				this.showSignuser = true;
+			} else {
+				this.showSignuser = true;
+				this.checkedUser = true;
+				this.invalidUsernamelength = false;
+			}
 		},
-		mounted() {
-			this.validateInputs();
+		validatEmail(value) {
+			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
+				this.invalidEmail = true;
+				console.log('hello');
+				this.checkedEmail = false;
+				this.showSignemail = true;
+			} else {
+				this.showSignemail = true;
+				this.checkedEmail = true;
+				this.invalidEmail = false;
+			}
 		},
 	},
-	components: {},
+
+	watch: {
+		userName(value) {
+			this.userName = value;
+			this.validateUser(value);
+		},
+		emailAddress(value) {
+			this.emailAddress = value;
+			this.validatEmail(value);
+		},
+	},
 };
 </script>
 
@@ -137,7 +184,7 @@ div {
 	border-radius: 4px;
 	background-color: #fcfcfb;
 	font-size: 14px;
-	margin-top: 5px;
+	margin-top: 6px;
 }
 
 .input-box .span-input {
@@ -191,6 +238,9 @@ div {
 	width: 2px;
 	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
+.input-box .red-border {
+	border: 0.5px solid #ea0027;
+}
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
 }*/
@@ -213,10 +263,12 @@ div {
 	border-radius: 4px;
 	text-align: center;
 	position: relative;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	font-size: 14px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
+	max-height: 1000px;
+	margin-top: 2rem;
 }
 .big-container {
 	background-color: white;
@@ -278,10 +330,12 @@ h1 {
 }
 p {
 	display: block;
-	margin-block-start: 1em;
+	margin: 0;
+	padding: 0;
+	/*margin-block-start: 1em;
 	margin-block-end: 1em;
 	margin-inline-start: 0px;
-	margin-inline-end: 0px;
+	margin-inline-end: 0px;*/
 }
 .bottomText {
 	font-family: 'Noto Sans', sans-serif;
@@ -296,11 +350,13 @@ p {
 }
 
 .invalid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
-	margin-top: 4px;
-	max-height: 1000px;
+	font-family: 'IBM Plex Sans', sans-serif;
 	opacity: 1;
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
@@ -309,5 +365,8 @@ p {
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+}
+.separate {
+	margin-top: 2rem;
 }
 </style>
