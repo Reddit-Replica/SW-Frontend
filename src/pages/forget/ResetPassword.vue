@@ -12,17 +12,38 @@
 						Choose a new password here, then log in to your account.
 					</p>
 					<div class="input-box">
-						<input type="password" required="required" />
+						<input
+							type="password"
+							required="required"
+							v-model="password"
+							:class="invalidPassword ? 'red-border' : ''"
+						/>
 						<span class="span-input"> New password</span>
-						<!-- <span class="correct-check"></span> -->
-						<span class="wrong-check"></span>
+						<span
+							v-if="showSignpassword"
+							:class="checkedPassword ? 'correct-check' : 'wrong-check'"
+						></span>
 					</div>
-					<p class="invalid">Please enter a username to continue</p>
+					<p class="invalid" v-if="invalidPassword">
+						Password must be at least 8 characters long
+					</p>
+					<div class="separate"></div>
 					<div class="input-box">
-						<input type="password" required="required" />
+						<input
+							type="password"
+							required="required"
+							v-model="passwordVerify"
+							:class="invalidPasswordverify ? 'red-border' : ''"
+						/>
 						<span class="span-input"> verify password</span>
+						<span
+							v-if="showSignpasswordverify"
+							:class="checkedPasswordverify ? 'correct-check' : 'wrong-check'"
+						></span>
 					</div>
-					<p class="invalid">Please enter an email address to continue</p>
+					<p class="invalid" v-if="invalidPasswordverify">
+						Password must match
+					</p>
 
 					<label class="check-box">
 						<input type="checkbox" />
@@ -55,9 +76,56 @@ export default {
 	data() {
 		return {
 			buttonIsactive: false,
+			password: '',
+			passwordVerify: '',
+			showSignpassword: false,
+			showSignpasswordverify: false,
+			checkedPassword: false,
+			checkedPasswordverify: false,
+			invalidPassword: false,
+			invalidPasswordverify: false,
 		};
 	},
-	methods: {},
+	methods: {
+		validatePassword(value) {
+			if (value.length < 8) {
+				//
+				this.invalidPassword = true;
+				console.log('hello');
+				this.checkedPassword = false;
+				this.showSignpassword = true;
+			} else {
+				this.showSignpassword = true;
+				this.checkedPassword = true;
+				this.invalidPassword = false;
+			}
+		},
+		validatepasswordVerify(value) {
+			if (value != this.password) {
+				//
+				this.invalidPasswordverify = true;
+				console.log('hello');
+				this.checkedPasswordverify = false;
+				this.showSignpasswordverify = true;
+			} else {
+				this.showSignpasswordverify = true;
+				this.checkedPasswordverify = true;
+				this.invalidPasswordverify = false;
+			}
+		},
+	},
+
+	watch: {
+		password(value) {
+			this.password = value;
+			this.validatePassword(value);
+		},
+		passwordVerify(value) {
+			this.passwordVerify = value;
+			this.validatepasswordVerify(value);
+		},
+	},
+
 	components: {},
 };
 </script>
@@ -249,11 +317,13 @@ p {
 }
 
 .invalid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
-	margin-top: 4px;
-	max-height: 1000px;
+	font-family: 'IBM Plex Sans', sans-serif;
 	opacity: 1;
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
@@ -274,9 +344,16 @@ p {
 	display: block;
 	min-height: 20px;
 	padding-left: 5px;
+	margin-top: 2rem;
 	margin-right: 0;
 	margin-bottom: 20px;
 	font-weight: 400;
 	cursor: pointer;
+}
+.separate {
+	margin-top: 2rem;
+}
+.input-box .red-border {
+	border: 0.5px solid #ea0027;
 }
 </style>

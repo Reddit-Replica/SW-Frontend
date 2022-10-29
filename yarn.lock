@@ -6929,6 +6929,11 @@
   "resolved" "https://registry.npmjs.org/vue3-google-login/-/vue3-google-login-2.0.12.tgz"
   "version" "2.0.12"
 
+"vue3-google-oauth2@^1.0.6":
+  "integrity" "sha512-ebUW3V1jejImw2z9nggjczPj4jUnZArNq+kgTdLdGuf6k/zQDDCeGTLmTUiy5gSXMbzVz9PQWiVEj8eX6y/I0Q=="
+  "resolved" "https://registry.npmjs.org/vue3-google-oauth2/-/vue3-google-oauth2-1.0.6.tgz"
+  "version" "1.0.6"
+
 "vuex@^4.0.2":
   "integrity" "sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q=="
   "resolved" "https://registry.npmjs.org/vuex/-/vuex-4.0.2.tgz"

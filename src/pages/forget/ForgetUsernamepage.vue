@@ -13,10 +13,22 @@
 						we’ll send you an email with your username.
 					</p>
 					<div class="input-box">
-						<input type="email" required="required" />
+						<input
+							id="emailAddress"
+							type="email"
+							required="required"
+							v-model="emailAddress"
+							:class="invalidEmail ? 'red-border' : ''"
+						/>
 						<span class="span-input"> Email Address</span>
+						<span
+							v-if="showSignemail"
+							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+						></span>
 					</div>
-					<p class="invalid">Please enter an email address to continue</p>
+					<p class="invalid" v-if="invalidEmail">
+						Please enter an email address to continue
+					</p>
 					<div>
 						<base-button
 							button-text="Reset password"
@@ -47,9 +59,32 @@ export default {
 	data() {
 		return {
 			buttonIsactive: false,
+			emailAddress: '',
+			showSignemail: false,
+			checkedEmail: false,
+			invalidEmail: false,
 		};
 	},
-	methods: {},
+	methods: {
+		validatEmail(value) {
+			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
+				this.invalidEmail = true;
+				console.log('hello');
+				this.checkedEmail = false;
+				this.showSignemail = true;
+			} else {
+				this.showSignemail = true;
+				this.checkedEmail = true;
+				this.invalidEmail = false;
+			}
+		},
+	},
+	watch: {
+		emailAddress(value) {
+			this.emailAddress = value;
+			this.validatEmail(value);
+		},
+	},
 	components: {},
 };
 </script>
@@ -128,6 +163,27 @@ div {
 .input-box input:active {
 	border: 0.5px solid #0079d3;
 }
+
+.input-box .correct-check {
+	position: absolute;
+	z-index: 1;
+	right: 14px;
+	top: 50%;
+	height: 10px;
+	width: 12px;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.input-box .wrong-check {
+	position: absolute;
+	right: 19px;
+	top: 50%;
+	height: 11px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
+}
+.input-box .red-border {
+	border: 0.5px solid #ea0027;
+}
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
 }*/
@@ -155,7 +211,7 @@ div {
 	font-size: 14px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
-
+	margin-top: 2rem;
 	/*border-radius: 24px;
 	font-family: 'IBM Plex Sans', sans-serif;
 	font-size: 14px;
@@ -238,11 +294,13 @@ p {
 }
 
 .invalid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
-	margin-top: 4px;
-	max-height: 1000px;
+	font-family: 'IBM Plex Sans', sans-serif;
 	opacity: 1;
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
