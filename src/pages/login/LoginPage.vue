@@ -30,10 +30,10 @@
 						<!-- <div id="apple-login" class="log-apple log-ag">
 							Continue with Apple
 						</div> -->
-						<a
+						<div
 							id="facebook-login"
 							class="log-facebook log-ag"
-							href="/auth/facebook"
+							@click="facebookLogin()"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@
 								/>
 							</svg>
 							<span>Continue with Facebook</span>
-						</a>
+						</div>
 
 						<div class="page-divider">
 							<span class="page-divider-line"></span>
@@ -119,6 +119,7 @@ export default {
 			});
 			this.test = 'AFTER SUBMIT';
 		},
+		facebookLogin() {},
 	},
 };
 </script>
