@@ -53,7 +53,7 @@
 			>
 				<div>
 					<img src="../../../img/user-image.jpg" alt="img" class="users-img" />
-					User Settings
+					<span>User Settings</span>
 				</div>
 			</div>
 
@@ -878,7 +878,8 @@ export default {
 	.header {
 		grid-template-columns: max-content 10% 40% max-content;
 	}
-	.header-home span {
+	.header-icon-home span,
+	.color-black span {
 		display: none;
 	}
 	.header-reddit {
