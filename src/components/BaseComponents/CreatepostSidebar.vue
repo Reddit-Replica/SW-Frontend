@@ -14,16 +14,34 @@
 			<base-button class="button create-post" @click="goToSubmit()"
 				>Create Post</base-button
 			>
-			<base-button class="button blue-button">Create Community</base-button>
+			<base-button class="button blue-button" @click="showCreateCommunity"
+				>Create Community</base-button
+			>
 		</div>
+		<create-community
+			v-if="createCommunityShown"
+			@exit="showCreateCommunity"
+		></create-community>
 	</div>
 </template>
 
 <script>
+import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 export default {
+	components: {
+		CreateCommunity,
+	},
+	data() {
+		return {
+			createCommunityShown: false,
+		};
+	},
 	methods: {
 		goToSubmit() {
 			this.$router.push('/submit');
+		},
+		showCreateCommunity() {
+			this.createCommunityShown = !this.createCommunityShown;
 		},
 	},
 };

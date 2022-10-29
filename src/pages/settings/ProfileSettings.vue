@@ -369,11 +369,11 @@
 </template>
 
 <script>
-import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
+// import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
 import SocialLink from './SocialLink.vue';
 export default {
 	components: {
-		BaseDialog,
+		// BaseDialog,
 		SocialLink,
 	},
 	props: {},

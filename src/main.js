@@ -9,6 +9,7 @@ import GAuth from 'vue3-google-oauth2';
 
 import BaseButton from './components/BaseComponents/BaseButton.vue';
 import SwitchButton from './components/BaseComponents/SwitchButton.vue';
+import BaseDialog from './components/BaseComponents/BaseDialog.vue';
 
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
@@ -44,6 +45,7 @@ app.use(GAuth, {
 
 app.component('BaseButton', BaseButton);
 app.component('SwitchButton', SwitchButton);
+app.component('BaseDialog', BaseDialog);
 
 // app.config.globalProperties.$hostname = 'http://localhost:3000';
 // app.component('VueRecaptcha', VueRecaptcha);
