@@ -63,10 +63,14 @@
 			crossorigin="anonymous"
 		></script>
 		<!-- <link rel="icon" href="<%= BASE_URL %>logo2.ico"> -->
-		
-    <!-- reCaptcha Scripts  -->
-		<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
-		</script>
+
+		<!-- reCaptcha Scripts  -->
+		<script
+			src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit"
+			async
+			defer
+		></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue-facebook-login-component/dist/vueFacebookLoginComponent.umd.min.js"></script>
 		<!-- Make sure you load the vue-demi first -->
 		<!-- <script src="https://unpkg.com/vue-demi@0.12.1/lib/index.iife.js"></script> -->
 		<!-- Then load vue-recaptcha -->
@@ -74,8 +78,8 @@
 		<!-- Minify -->
 		<!-- <script src="https://unpkg.com/vue-recaptcha@^2/dist/vue-recaptcha.min.js"></script> -->
 		<!-- End reCaptcha Scripts -->
-		
-    <title>Reddit</title>
+
+		<title>Reddit</title>
 	</head>
 
 	<body>
@@ -88,5 +92,82 @@
 		</noscript>
 		<div id="app"></div>
 		<!-- built files will be auto injected -->
+		<script>
+			window.fbAsyncInit = function () {
+				FB.init({
+					appId: '651769123026203',
+					appSecret: '014783112436e458abe57e4d4bb3ce29',
+					cookie: true,
+					xfbml: true,
+					version: 'v2.8',
+				});
+
+				FB.getLoginStatus(function (response) {
+					statusChangeCallback(response);
+				});
+			};
+
+			(function (d, s, id) {
+				var js,
+					fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				js = d.createElement(s);
+				js.id = id;
+				js.src = '//connect.facebook.net/en_US/sdk.js';
+				fjs.parentNode.insertBefore(js, fjs);
+			})(document, 'script', 'facebook-jssdk');
+
+			function statusChangeCallback(response) {
+				if (response.status === 'connected') {
+					console.log('Logged in and authenticated');
+					testAPI();
+					setElements(true);
+				} else {
+					console.log('Not authenticated');
+					setElements(false);
+				}
+			}
+
+			function checkLoginState() {
+				FB.getLoginStatus(function (response) {
+					statusChangeCallback(response);
+				});
+			}
+
+			function testAPI() {
+				// FB.api('/me?fields=name,email', function (response) {
+				// 	if (response && !response.error) {
+				// 		console.log(response);
+				// 		buildProfile(response);
+				// 	}
+
+				// 	FB.api('/me/feed', function (response) {
+				// 		if (response && !response.error) {
+				// 			buildFeed(response);
+				// 		}
+				// 	});
+				// });
+				console.log('Welcome!  Fetching your information.... ');
+				FB.api('/me', function (response) {
+					console.log('Successful login for: ' + response.name);
+				});
+			}
+
+			function setElements(isLoggedIn) {
+				if (isLoggedIn) {
+					console.log('is logged in!!!!!!!!!!!!!!!!!!!!');
+				} else {
+					console.log('not logged in!!!!!!!!!!!!!!!!!!!!');
+				}
+			}
+
+			function logout() {
+				FB.logout(function (response) {
+					setElements(false);
+				});
+			}
+		</script>
 	</body>
 </html>

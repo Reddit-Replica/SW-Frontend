@@ -30,7 +30,7 @@
 						<!-- <div id="apple-login" class="log-apple log-ag">
 							Continue with Apple
 						</div> -->
-						<div
+						<!-- <div
 							id="facebook-login"
 							class="log-facebook log-ag"
 							@click="facebookLogin()"
@@ -48,7 +48,25 @@
 								/>
 							</svg>
 							<span>Continue with Facebook</span>
-						</div>
+						</div> -->
+						<!-- <v-facebook-login
+							id="facebook-login"
+							class="log-facebook log-ag"
+							app-id="651769123026203"
+							v-model="model"
+							@sdk-init="handleSdkInit"
+						></v-facebook-login> -->
+
+						<!-- <button
+							v-facebook-signin-button="appId"
+							class="facebook-signin-button"
+						>
+							Continue with Facebook
+						</button> -->
+						<fb:login-button
+							scope="public_profile,email"
+							onlogin="checkLoginState();"
+						></fb:login-button>
 
 						<div class="page-divider">
 							<span class="page-divider-line"></span>
@@ -97,11 +115,9 @@
 </template>
 
 <script>
+// import VFacebookLogin from 'vue-facebook-login-component-next';
 export default {
 	name: 'LogIn',
-	// components: {
-	// 	facebookLogin,
-	// },
 	data() {
 		return {
 			user: {
@@ -109,6 +125,11 @@ export default {
 				password: '',
 			},
 			test: 'BEFORE SUBMIT',
+
+			// FB: {},
+			// model: {},
+			// scope: {},
+			// appId: '651769123026203',
 		};
 	},
 	method: {
@@ -119,12 +140,32 @@ export default {
 			});
 			this.test = 'AFTER SUBMIT';
 		},
-		facebookLogin() {},
+		// async facebookLogin() {},
+		// handleSdkInit({ FB, scope }) {
+		// 	this.FB = FB;
+		// 	this.scope = scope;
+		// 	console.log('saaf');
+		// },
+		// OnFacebookAuthSuccess(idToken) {
+		// 	console.log(idToken);
+		// },
+		// OnFacebookAuthFail(error) {
+		// 	console.log(error);
+		// },
 	},
 };
 </script>
 
 <style scoped>
+.facebook-signin-button {
+	color: white;
+	background-color: #3b5998;
+	height: 50px;
+	font-size: 16px;
+	border-radius: 10px;
+	padding: 10px 20px 25px 20px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 * {
 	margin: 0;
 	padding: 0;
