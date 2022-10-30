@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form @submit.prevent="handleSubmit">
+				<form @submit.prevent="test">
 					<div class="snoo-icon"></div>
 					<h1>Reset your password</h1>
 					<p class="description">
@@ -79,6 +79,7 @@
 					<router-link to="/login" class="link">Log in</router-link>
 					<span class="linkSeparator">•</span>
 					<router-link to="/signup" class="link">Sign Up</router-link>
+					<button @click="test">test</button>
 				</div>
 			</div>
 		</div>
@@ -129,12 +130,13 @@ export default {
 			}
 		},
 		handleSubmit() {
-			fetch('http://localhost:8081/login', {
+			fetch('http://localhost:3000/users', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
+					type: 'password',
 					name: this.userName,
 					email: this.emailAddress,
 				}),
@@ -152,6 +154,20 @@ export default {
 				// 	}
 				// 	this.results = res;
 				// })
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		test() {
+			fetch('http://localhost:3000/users')
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+				})
+				.then((data) => {
+					console.log(data);
+				})
 				.catch((error) => {
 					console.log(error);
 				});

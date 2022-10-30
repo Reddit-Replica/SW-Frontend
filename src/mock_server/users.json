@@ -1,4 +1,18 @@
+
 {
-	"users": [{ "id": 1, "title": "json-server", "author": "typicode" }],
-	"comments": [{ "id": 1, "title": "json-server", "author": "typicode" }]
+	"users": [
+		{
+			"id": 1,
+			"name": "Norhan Reda",
+			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
+			"password": "12345"
+		},
+		{
+			"id": 2,
+			"name": "nora",
+			"email": "nora@gmail.com",
+			"password": "123456789"
+		}
+	]
 }
+>>>>>>> 2b1728a90e1a88a1f1d43bfee05e8a4ca244084f
