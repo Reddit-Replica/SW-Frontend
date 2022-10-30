@@ -1,3 +1,16 @@
 {
-	"users": [{ "id": 1, "title": "json-server", "author": "typicode" }]
+	"users": [
+		{
+			"id": 1,
+			"name": "Norhan Reda",
+			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
+			"password": "12345"
+		},
+		{
+			"id": 2,
+			"name": "nora",
+			"email": "nora@gmail.com",
+			"password": "123456789"
+		}
+	]
 }

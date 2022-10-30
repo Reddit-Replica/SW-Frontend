@@ -76,14 +76,16 @@ export default {
 	data() {
 		return {
 			buttonIsactive: false,
-			password: '',
-			passwordVerify: '',
 			showSignpassword: false,
 			showSignpasswordverify: false,
 			checkedPassword: false,
 			checkedPasswordverify: false,
 			invalidPassword: false,
 			invalidPasswordverify: false,
+			password: '',
+			passwordVerify: '',
+			token:this.$route.params.token,
+
 		};
 	},
 	methods: {
