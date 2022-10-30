@@ -68,6 +68,7 @@ export default {
 			},
 		};
 	},
+	methods: {},
 };
 </script>
 
@@ -92,18 +93,22 @@ export default {
 	height: 100%;
 	display: flex;
 }
+
 .component {
 	margin-bottom: 1.3rem;
 }
+
 @media only screen and (max-width: 75em) {
 	.right-col {
 		margin-left: 12rem;
 	}
 }
+
 @media only screen and (max-width: 991px) {
 	.container {
 		max-width: 100%;
 	}
+
 	.right-col {
 		display: none;
 	}

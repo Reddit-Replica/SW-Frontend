@@ -517,7 +517,7 @@ export default {
   justify-content: left;
   align-items: center; */
 	display: grid;
-	grid-template-columns: max-content 20% 26% max-content;
+	grid-template-columns: max-content 20% 25% max-content;
 	grid-template-rows: max-content;
 	grid-column-gap: 0rem;
 	align-items: center;
