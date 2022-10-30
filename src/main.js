@@ -37,10 +37,10 @@ app.use(store);
 // 		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
 // });
 app.use(GAuth, {
-	clientId: `236245134261-u4nolh034o0p39kpvvv9596ol0eoha4o.apps.googleusercontent.com`,
+	clientId: `515357456544-sukpj5pufir279criuff4tird0jd0b0n.apps.googleusercontent.com`,
 	scope: 'email',
 	prompt: 'consent',
-	plugin_name: `Web client 1  reddit`,
+	plugin_name: `Web client 1  Readit`,
 });
 
 app.component('BaseButton', BaseButton);

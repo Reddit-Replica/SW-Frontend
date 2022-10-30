@@ -84,8 +84,7 @@ export default {
 			invalidPasswordverify: false,
 			password: '',
 			passwordVerify: '',
-			token:this.$route.params.token,
-
+			token: this.$route.params.token,
 		};
 	},
 	methods: {

@@ -129,34 +129,35 @@ export default {
 				this.invalidEmail = false;
 			}
 		},
-		// handleSubmit() {
-		// 	fetch('http://localhost:3000/users', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 		body: JSON.stringify({
-		// 			name: this.userName,
-		// 			email: this.emailAddress,
-		// 		}),
-		// 	})
-		// 		.then((response) => {
-		// 			if (response.ok) {
-		// 				return response.json();
-		// 			}
-		// 		})
-		// 		// .then((data) => {
-		// 		// 	console.log(data);
-		// 		// 	const res = [];
-		// 		// 	for (const id in data) {
-		// 		// 		res.push({ id: id, name: data[id].name, rating: data[id].rating });
-		// 		// 	}
-		// 		// 	this.results = res;
-		// 		// })
-		// 		.catch((error) => {
-		// 			console.log(error);
-		// 		});
-		// },
+		handleSubmit() {
+			fetch('http://localhost:3000/users', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					type: 'password',
+					name: this.userName,
+					email: this.emailAddress,
+				}),
+			})
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+				})
+				// .then((data) => {
+				// 	console.log(data);
+				// 	const res = [];
+				// 	for (const id in data) {
+				// 		res.push({ id: id, name: data[id].name, rating: data[id].rating });
+				// 	}
+				// 	this.results = res;
+				// })
+				.catch((error) => {
+					console.log(error);
+				});
+		},
 		test() {
 			fetch('http://localhost:3000/users')
 				.then((response) => {
@@ -189,7 +190,7 @@ export default {
 <style scoped>
 * {
 	box-sizing: border-box;
-	margin: 0;    
+	margin: 0;
 	padding: 0;
 }
 
