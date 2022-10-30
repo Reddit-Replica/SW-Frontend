@@ -8,11 +8,15 @@ const store = createStore({
 	},
 	state() {
 		return {
-			userName: 'Abdelhameed_Emad',
+			userName: '',
+			accessToken: '',
 		};
 	},
 	getters: {
 		getUserName(state) {
+			return state.userName;
+		},
+		getAccessToken(state) {
 			return state.userName;
 		},
 	},
