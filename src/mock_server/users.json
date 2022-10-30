@@ -12,5 +12,12 @@
 			"email": "nora@gmail.com",
 			"password": "123456789"
 		}
+	],
+	"subreddits": [
+		{
+			"subredditName": "FrontEnd",
+			"type": "Private",
+			"nsfw": false
+		}
 	]
 }
