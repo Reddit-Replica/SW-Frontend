@@ -59,6 +59,7 @@
 							button-text="Reset password"
 							:disable-button="buttonIsactive"
 							class="button-class"
+							type="submit"
 						>
 						</base-button>
 					</div>
@@ -126,6 +127,34 @@ export default {
 				this.checkedEmail = true;
 				this.invalidEmail = false;
 			}
+		},
+		handleSubmit() {
+			fetch('http://localhost:8081/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					name: this.userName,
+					email: this.emailAddress,
+				}),
+			})
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+				})
+				// .then((data) => {
+				// 	console.log(data);
+				// 	const res = [];
+				// 	for (const id in data) {
+				// 		res.push({ id: id, name: data[id].name, rating: data[id].rating });
+				// 	}
+				// 	this.results = res;
+				// })
+				.catch((error) => {
+					console.log(error);
+				});
 		},
 	},
 
