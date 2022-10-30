@@ -31,7 +31,7 @@ const router = createRouter({
 		{ path: '/forgetUsername', component: ForgetUsername },
 		{ path: '/forgetPasswordpage', component: ForgetPasswordpage },
 		{ path: '/forgetUsernamepage', component: ForgetUsernamepage },
-		{ path: '/resetPassword', component: ResetPassword },
+		{ path: '/resetPassword/:token', component: ResetPassword },
 		{ path: '/login', component: LoginPage },
 		{ path: '/signup', component: SignupPage },
 
