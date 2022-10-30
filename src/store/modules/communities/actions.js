@@ -6,7 +6,7 @@ export default {
 			nsfw: payload.nsfw,
 		};
 
-		const response = await fetch(`http://localhost:8081/main`, {
+		const response = await fetch(`http://localhost:3000/subreddits`, {
 			method: 'POST',
 			body: JSON.stringify(newSubreddit),
 		});
