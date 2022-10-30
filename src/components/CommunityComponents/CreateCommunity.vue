@@ -265,7 +265,9 @@
 				<base-button @click="hidecreateCommunity" class="button-white"
 					>Cancel</base-button
 				>
-				<base-button class="button-blue">Create Community</base-button>
+				<base-button @click="submitCommunity" class="button-blue"
+					>Create Community</base-button
+				>
 			</div>
 		</div>
 	</base-dialog>
@@ -282,7 +284,7 @@ export default {
 			typeChosen0: true,
 			typeChosen1: false,
 			typeChosen2: false,
-			communityType: 'public',
+			communityType: 'Public',
 			nsfwChosen: false,
 			communityName: '',
 			communityNameValidity: true,
@@ -303,17 +305,17 @@ export default {
 				this.typeChosen2 = true;
 				this.typeChosen1 = false;
 				this.typeChosen0 = false;
-				this.communityType = 'private';
+				this.communityType = 'Private';
 			} else if (index == 1) {
 				this.typeChosen1 = true;
 				this.typeChosen2 = false;
 				this.typeChosen0 = false;
-				this.communityType = 'restricted';
+				this.communityType = 'Restricted';
 			} else {
 				this.typeChosen0 = true;
 				this.typeChosen1 = false;
 				this.typeChosen2 = false;
-				this.communityType = 'public';
+				this.communityType = 'Public';
 			}
 		},
 		chooseNSFW() {
@@ -332,12 +334,28 @@ export default {
 				this.communityNameValidity = false;
 				this.communityNameRequiredError = false;
 				this.communityNameCharError = true;
+			} else {
+				this.communityNameValidity = true;
+				this.communityNameRequiredError = false;
+				this.communityNameCharError = false;
 			}
 		},
 		charCount() {
 			this.charRemaining = 21 - this.communityName.length;
 			this.communityNameRequiredError = false;
 			this.communityNameCharError = false;
+		},
+		submitCommunity() {
+			this.validateCommunityName();
+
+			if (!this.communityNameValidity) {
+				return;
+			}
+			this.$store.dispatch('community/createSubreddit', {
+				subredditName: this.communityName,
+				type: this.communityType,
+				nsfw: this.nsfwChosen,
+			});
 		},
 	},
 };
