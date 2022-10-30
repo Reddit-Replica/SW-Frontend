@@ -11,9 +11,6 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "all": "npm-run-all --parallel serve json"
-
-
-
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
@@ -26,10 +23,10 @@
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
     "core-js": "^3.8.3",
-    "faker": "^6.6.6",
+    "faker": "^5.5.3",
     "fontawesome": "^5.6.3",
     "jquery": "^3.6.1",
-    "json-server": "^0.17.0",
+    "json-server": "^0.4.2",
     "lodash": "^4.17.21",
     "vue": "^3.2.13",
     "vue-recaptcha": "^2.0.3",
