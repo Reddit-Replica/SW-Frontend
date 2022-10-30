@@ -4,7 +4,6 @@
 		<p>the page you requested does not exist</p>
 	</section>
 	<the-recaptcha @verify="verifyMethod"></the-recaptcha>
-	<button @click="handlesign">hh</button>
 </template>
 
 <script>
@@ -15,16 +14,6 @@ export default {
 		verifyMethod() {
 			console.log('verified1');
 		},
-		async handlesign() {
-			try {
-				const gg = await this.$gAuth.signIn();
-				console.log(gg);
-			} catch (e) {
-				console.log(e);
-			}
-		},
 	},
 };
 </script>
-
-<style></style>
