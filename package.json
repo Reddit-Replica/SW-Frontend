@@ -4,11 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "npm run prettier && npm run lint && vue-cli-service serve",
+    "json": "json-server ./src/mock_server/users.json",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "prettier": "prettier --config .prettierrc src/**/*.js --write && prettier --config .prettierrc src/**/*.vue --write",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "all": "npm-run-all --parallel serve json"
+
+
+
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
@@ -21,8 +26,11 @@
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
     "core-js": "^3.8.3",
+    "faker": "^6.6.6",
     "fontawesome": "^5.6.3",
     "jquery": "^3.6.1",
+    "json-server": "^0.17.0",
+    "lodash": "^4.17.21",
     "vue": "^3.2.13",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "^4.0.13",
