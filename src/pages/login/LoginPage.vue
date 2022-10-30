@@ -24,13 +24,8 @@
 					<!--LogIn with google and apple accounts -->
 
 					<div class="login-google-apple">
-						<div id="google-login" class="log-google log-ag">
-							Continue with Google
-						</div>
-						<!-- <div id="apple-login" class="log-apple log-ag">
-							Continue with Apple
-						</div> -->
-						<!-- <div
+						<GoogleSigninButton id="google-login" class="log-google log-ag" />
+						<div
 							id="facebook-login"
 							class="log-facebook log-ag"
 							@click="facebookLogin()"
@@ -115,7 +110,7 @@
 </template>
 
 <script>
-// import VFacebookLogin from 'vue-facebook-login-component-next';
+import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
 export default {
 	name: 'LogIn',
 	data() {
@@ -153,6 +148,7 @@ export default {
 		// 	console.log(error);
 		// },
 	},
+	components: { GoogleSigninButton },
 };
 </script>
 
@@ -248,8 +244,7 @@ button {
 	color: #0079d3;
 	display: block;
 	margin: 8px 0;
-	padding: 12px 28px;
-	width: 60%;
+	/* width: 60%; */
 }
 .page-divider {
 	align-items: center;
@@ -349,12 +344,14 @@ button {
 	width: 60%;
 	min-width: 155px;
 }
-.log-facebook {
+.log-facebook,
+.log-google {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-.log-facebook:hover {
+.log-facebook:hover,
+.log-google:hover {
 	background-color: var(--color-blue-2);
 	color: var(--color-white-1);
 }
