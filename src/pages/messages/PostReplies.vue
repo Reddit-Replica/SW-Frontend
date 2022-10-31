@@ -1,15 +1,9 @@
 <template>
-  <div>
-    Post replies
-  </div>
+	<div>Post replies</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
