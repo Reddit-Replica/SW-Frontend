@@ -3,7 +3,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+	created() {
+		document.title = 'message: selfreply';
+	},
+};
 </script>
 
 <style></style>
