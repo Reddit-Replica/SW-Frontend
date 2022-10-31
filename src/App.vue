@@ -1,7 +1,4 @@
 <template>
-	<!-- header component -->
-	<the-header />
-
 	<!-- router view for display pages -->
 	<router-view v-slot="slotProps">
 		<transition name="route" mode="out-in">
@@ -11,12 +8,8 @@
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
 export default {
 	name: 'App',
-	components: {
-		TheHeader,
-	},
 };
 </script>
 

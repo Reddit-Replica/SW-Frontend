@@ -1,4 +1,6 @@
 <template>
+	<!-- header component -->
+	<the-header :headerTitle="'User Settings'"></the-header>
 	<div class="settings">
 		<div class="container">
 			<div class="row">
