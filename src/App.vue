@@ -49,6 +49,8 @@ export default {
 
 	--color-orange: #ff2c00;
 
+	--color-red-dark-1: #ea0027;
+
 	/* blue colors */
 	--color-blue: #6094fe;
 	--color-blue-2: #0079d3;
@@ -72,6 +74,7 @@ export default {
 	--line-7: 1px solid var(--color-grey-dark-3);
 	--line-8: 1px solid var(--color-grey-light-3);
 	--line-dashed: 1px dashed var(--color-grey-light-2);
+	--line-dashed-2: 1px dashed var(--color-grey-dark-2);
 
 	/* screen sizes variables */
 	/* 2000px */
