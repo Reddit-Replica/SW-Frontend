@@ -1,11 +1,11 @@
 <template>
 	<!-- header component -->
-	<the-header :headerTitle="'Messages'"></the-header>
+	<the-header :header-title="'Messages'"></the-header>
 	<message-bar></message-bar>
 	<inbox-bar v-if="showSecondBar"></inbox-bar>
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-7">
+		<div class="row justify-content-center">
+			<div class="col-lg-10 content-col">
 				<router-view v-slot="slotProps">
 					<transition name="route" mode="out-in">
 						<component :is="slotProps.Component"></component>
@@ -35,4 +35,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.content-col {
+	margin: 2rem;
+}
+</style>

@@ -5,7 +5,7 @@
 <script>
 export default {
 	created() {
-		document.title = 'message: unread';
+		document.title = 'messages: unread';
 	},
 };
 </script>

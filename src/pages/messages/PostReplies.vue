@@ -5,7 +5,7 @@
 <script>
 export default {
 	created() {
-		document.title = 'message: selfreply';
+		document.title = 'messages: selfreply';
 	},
 };
 </script>

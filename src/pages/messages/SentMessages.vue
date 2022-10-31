@@ -5,7 +5,7 @@
 <script>
 export default {
 	created() {
-		document.title = 'message: sent';
+		document.title = 'messages: sent';
 	},
 };
 </script>

@@ -5,7 +5,7 @@
 <script>
 export default {
 	created() {
-		document.title = 'message: inbox';
+		document.title = 'messages: inbox';
 	},
 };
 </script>
