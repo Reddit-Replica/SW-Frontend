@@ -1,4 +1,6 @@
 <template>
+	<!-- header component -->
+	<the-header :headerTitle="'Create Post'"></the-header>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-8">

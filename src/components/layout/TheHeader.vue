@@ -5,7 +5,7 @@
 			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
 		<div class="header-home" @click="showHomeSubMenu()" id="home-header">
-			<div class="header-icon-home" v-if="$route.path == '/main'">
+			<div class="header-icon-home">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -13,14 +13,12 @@
 					fill="currentColor"
 					class="bi bi-house-door-fill header-user-nav-icon"
 					viewBox="0 0 16 16"
+					v-if="headerTitle == 'Home'"
 				>
 					<path
 						d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"
 					/>
 				</svg>
-				<span>Home</span>
-			</div>
-			<div class="header-icon-home" v-else-if="$route.path == '/submit'">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -28,33 +26,20 @@
 					fill="currentColor"
 					class="bi bi-plus-lg"
 					viewBox="0 0 16 16"
+					v-else-if="headerTitle == 'Create Post'"
 				>
 					<path
 						fill-rule="evenodd"
 						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 					/>
 				</svg>
-				<span>Create Post</span>
-			</div>
-			<div
-				class="header-icon-home"
-				v-else-if="$route.path == '/user/abdelhamed'"
-			>
 				<img
 					src="../../../img/user-image.jpg"
 					alt="img"
 					class="header-user-nav-user-photo"
+					v-else
 				/>
-				<span>u/asmaaadel0</span>
-			</div>
-			<div
-				class="color-black"
-				v-else-if="$route.path == '/settings' || '/settings/'"
-			>
-				<div>
-					<img src="../../../img/user-image.jpg" alt="img" class="users-img" />
-					<span>User Settings</span>
-				</div>
+				<span>{{ headerTitle }}</span>
 			</div>
 
 			<svg class="header-user-nav-icon header-down-arrow">
@@ -476,6 +461,12 @@
 
 <script>
 export default {
+	props: {
+		headerTitle: {
+			type: String,
+			default: 'Home',
+		},
+	},
 	data() {
 		return {
 			settingsSubMenuDisplay: false,
@@ -525,17 +516,21 @@ export default {
 	border: var(--line-3);
 	border-radius: 5px;
 }
+
 .header img {
 	cursor: pointer;
 }
+
 .header-logo {
 	margin-left: 0.4rem;
 	display: flex;
 	flex-direction: row;
 }
+
 .header-logo img {
 	height: 4rem;
 }
+
 .header-icon-home {
 	display: grid;
 	grid-template-columns: min-content max-content min-content;
@@ -546,6 +541,7 @@ export default {
 	border-radius: 5px;
 	color: var(--color-dark-1);
 }
+
 .header-home {
 	padding: 0.5rem;
 	margin-left: 1rem;
@@ -555,6 +551,7 @@ export default {
 	position: relative;
 	cursor: pointer;
 }
+
 .header-down-arrow {
 	position: absolute;
 	top: 0.6rem;
@@ -564,6 +561,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 }
+
 .header-home:hover,
 .header-home:focus {
 	border: var(--line);
@@ -591,6 +589,7 @@ export default {
 	margin-right: -3.75rem;
 	border: var(--line-3);
 }
+
 .header-search-input:focus,
 .header-search-input:hover {
 	outline: navajowhite;
@@ -602,10 +601,12 @@ export default {
 	font-weight: 50;
 	color: var(--color-grey-dark-2);
 }
+
 .header-search-input:focus + .header-search-button,
 .header-search-input:hover + .header-search-button {
 	background-color: var(--color-white-1);
 }
+
 .header-search-button {
 	border: none;
 	/* background-color: var(--color-grey-light-3); */
@@ -618,6 +619,7 @@ export default {
 .header-search-button:active {
 	transform: translateY(2px);
 }
+
 .header-search-icon {
 	height: 2rem;
 	width: 2rem;
@@ -645,9 +647,11 @@ export default {
 	border-radius: 10rem;
 	background-color: var(--color-grey-light-2);
 }
+
 .header-button-advertise:hover {
 	background-color: var(--color-grey-light-4);
 }
+
 .header-user-nav > * {
 	padding: 0 1.3rem;
 	cursor: pointer;
@@ -656,12 +660,15 @@ export default {
 	align-items: center;
 	border-radius: 0.3rem;
 }
+
 .header-user-nav > *:hover {
 	background-color: var(--color-grey-light-2);
 }
+
 .header-user-nav-icon-box {
 	position: relative;
 }
+
 .header-user-nav-icon {
 	height: 1.9rem;
 	width: 1.9rem;
@@ -672,6 +679,7 @@ export default {
 	height: 3.3rem;
 	width: 3.3rem;
 }
+
 .header-user-nav-notification {
 	font-size: 1rem;
 	height: 1.9rem;
@@ -698,6 +706,7 @@ export default {
 	height: 4.5rem;
 	position: relative;
 }
+
 .header-user-nav-online {
 	font-size: 1rem;
 	height: 0.9rem;
@@ -714,14 +723,17 @@ export default {
 	justify-content: center;
 	align-items: center;
 }
+
 .header-user-nav-box:hover,
 .header-user-nav-box:focus {
 	background-color: var(--color-white-1);
 	border: var(--line);
 }
+
 .header-box:hover {
 	border: var(--line-3);
 }
+
 .header-user-nav-user {
 	display: grid;
 	grid-template-columns: max-content;
@@ -732,6 +744,7 @@ export default {
 	border-radius: 5px;
 	width: 16rem;
 }
+
 .header-user-nav-user-photo {
 	width: 2.5rem;
 	height: 2.5rem;
@@ -740,25 +753,31 @@ export default {
 	margin-right: 0.3rem;
 	margin-left: 0.9rem;
 }
+
 .header-user-nav-user-name {
 	color: var(--color-dark-1);
 	font-size: 1.1rem;
 }
+
 .header-user-nav-karma {
 	color: var(--color-grey-dark-4);
 	font-size: 1rem;
 	font-weight: 600;
 }
+
 .header-star {
 	fill: var(--color-primary);
 }
+
 .header-icon-user {
 	position: absolute;
 	right: 1rem;
 }
+
 .header-user {
 	position: relative;
 }
+
 .line {
 	border-bottom: var(--line);
 }
@@ -777,6 +796,7 @@ export default {
 	width: 25rem;
 	z-index: 90;
 }
+
 .sub-menu-2 {
 	top: 3rem;
 	left: 0rem;
@@ -793,15 +813,18 @@ export default {
 	padding: 1rem;
 	margin: 1rem 0;
 }
+
 .sub-menu li svg {
 	fill: var(--color-grey-dark-2);
 	width: 20px;
 	height: 20px;
 	margin-right: 10px;
 }
+
 .sub-menu li {
 	padding: 0px 10px;
 }
+
 .setting-choice {
 	color: var(--color-dark-1);
 	padding: 1rem 2rem !important;
@@ -809,125 +832,152 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 }
+
 .setting-choice:hover,
 .setting-choice-with-icon:hover {
 	background-color: var(--color-grey-light-2);
 }
+
 .setting-choice-with-icon {
 	color: var(--color-dark-1);
 	padding: 1rem !important;
 }
+
 .users-img {
 	width: 2rem;
 	height: 2rem;
 	border-radius: 50%;
 	margin-right: 1rem;
 }
+
 .input-filter {
 	width: 100%;
 	border: var(--line-3);
 	padding: 0.3rem;
 	background-color: var(--color-grey-light-1);
 }
+
 .input-filter:hover,
 .input-filter:focus {
 	outline: navajowhite;
 	border: var(--line-2);
 	background-color: var(--color-white-1);
 }
+
 .heading-4 {
 	text-transform: uppercase;
 	margin: 1rem;
 	font-size: 1rem;
 	font-weight: bold;
 }
+
 .sub-menu-2 div {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	font-size: 1.2rem;
 }
+
 .color-black {
 	color: black;
 }
+
 .home {
 	fill: var(--color-dark-1) !important;
 }
+
 /* 1200px */
 @media only screen and (max-width: 75em) {
 	.header {
 		grid-template-columns: max-content 20% 23% max-content;
 	}
+
 	.header-user-nav-user-name {
 		display: none;
 	}
+
 	.header-user-nav-karma,
 	.header-user-nav-user-name,
 	.header-star {
 		display: none;
 	}
+
 	.header-icon-user {
 		left: 5rem;
 	}
+
 	.header-user-nav-user {
 		width: 2rem;
 	}
 }
+
 /* 1100px */
 @media only screen and (max-width: 68.75em) {
 	.header {
 		grid-template-columns: max-content 10% 40% max-content;
 	}
+
 	.header-icon-home span,
 	.color-black span {
 		display: none;
 	}
+
 	.header-reddit {
 		display: none;
 	}
 }
+
 /* 900px */
 @media only screen and (max-width: 56.25em) {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
 }
+
 /* 788px */
 @media only screen and (max-width: 49.25em) {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
+
 	.header-user-nav > * {
 		padding: 0 0.7rem;
 	}
+
 	.header-user-nav-icon {
 		height: 1.7rem;
 		width: 1.7rem;
 	}
+
 	.header-popular {
 		display: none;
 	}
 }
+
 /* 635px */
 @media only screen and (max-width: 40em) {
 	.header-down-arrow {
 		display: none;
 	}
 }
+
 /* 520px */
 @media only screen and (max-width: 32.5em) {
 	.header-user {
 		display: none;
 	}
 }
+
 /* 400px */
 @media only screen and (max-width: 25em) {
 	.header {
 		grid-template-columns: 10% 10% 30% auto;
 	}
+
 	.header-box {
 		display: none;
 	}
+
 	.header-user-nav > * {
 		padding: 0 0.9rem;
 	}

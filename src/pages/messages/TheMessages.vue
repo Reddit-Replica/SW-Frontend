@@ -1,5 +1,6 @@
 <template>
-	<div>The messages</div>
+	<!-- header component -->
+	<the-header :headerTitle="'Messages'"></the-header>
 </template>
 
 <script>

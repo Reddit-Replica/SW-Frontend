@@ -1,4 +1,6 @@
 <template>
+	<!-- header component -->
+	<the-header :headerTitle="'u/asmaaadel0'"></the-header>
 	<profile-nav :user-name="getUserName" />
 	<base-container>
 		<div class="profilebox">
