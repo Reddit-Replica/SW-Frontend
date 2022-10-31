@@ -3,7 +3,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+	created() {
+		document.title = 'message: compose';
+	},
+};
 </script>
 
 <style></style>
