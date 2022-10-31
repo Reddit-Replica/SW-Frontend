@@ -1,6 +1,6 @@
 <template>
 	<!-- header component -->
-	<the-header :headerTitle="'User Settings'"></the-header>
+	<the-header :header-title="'User Settings'"></the-header>
 	<div class="settings">
 		<div class="container">
 			<div class="row">
