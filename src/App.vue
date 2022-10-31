@@ -34,6 +34,8 @@ export default {
 	--color-grey-light-3: #f0eeee;
 	--color-grey-light-4: #ccc;
 	--color-grey-light-5: #7c7c7c;
+	--color-grey-light-6: #808486;
+	--color-grey-light-7: #cacdcf;
 
 	/* dark grey colors */
 	--color-grey-dark-1: #333;
@@ -41,6 +43,7 @@ export default {
 	--color-grey-dark-3: #999;
 	--color-grey-dark-4: rgb(177, 176, 176);
 	--color-grey-dark-5: #edeff1;
+	--color-grey-dark-6: #343536;
 
 	/* black colors */
 	--color-dark-1: #000;

@@ -31,6 +31,8 @@ import UsernameMentions from './pages/messages/UsernameMentions.vue';
 import SentMessages from './pages/messages/SentMessages.vue';
 
 import NotFound from './pages/NotFound.vue';
+
+import postComments from './pages/PostComments.vue';
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
@@ -97,6 +99,7 @@ const router = createRouter({
 		},
 
 		{ path: '/:notFound(.*)', component: NotFound },
+		{ path: '/comments', component: postComments },
 	],
 });
 
