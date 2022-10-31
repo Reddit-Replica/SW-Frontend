@@ -105,6 +105,7 @@
 	<social-links
 		:show="addSocialLinkDialog"
 		@close="closeSocialLinkDialog"
+		@open="openSocialLinkDialog"
 	></social-links>
 </template>
 
@@ -113,6 +114,7 @@ import SocialLinks from './SocialLinks.vue';
 export default {
 	components: {
 		SocialLinks,
+		// SociallinksConfig,
 	},
 	props: {
 		userName: {

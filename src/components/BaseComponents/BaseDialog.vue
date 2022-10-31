@@ -1,7 +1,7 @@
 <template>
 	<teleport to="body">
 		<div v-if="show" class="backdrop">
-			<dialog open v-if="show">
+			<dialog open v-if="show" :class="dialogClass">
 				<header>
 					<slot name="header">
 						<h2 :class="{ 'header-center': center }">{{ title }}</h2>
@@ -44,6 +44,11 @@ export default {
 			type: Boolean,
 			required: false,
 			default: false,
+		},
+		dialogClass: {
+			type: String,
+			required: false,
+			default: '',
 		},
 	},
 	emits: ['close'],
