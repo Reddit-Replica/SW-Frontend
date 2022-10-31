@@ -1,15 +1,9 @@
 <template>
-  <div>
-    unread inbox
-  </div>
+	<div>unread inbox</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

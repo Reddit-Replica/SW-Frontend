@@ -1,15 +1,9 @@
 <template>
-  <div>
-    The messages
-  </div>
+	<div>The messages</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
