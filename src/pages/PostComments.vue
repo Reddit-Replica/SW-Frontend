@@ -1,8 +1,8 @@
 <template>
 	<div class="comments">
 		<div class="container">
-			<div class="row title align-items-center">
-				<div class="col-9 d-flex">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-7 d-flex">
 					<div class="vote-box">
 						<div class="upvote" @click="upvote">
 							<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
@@ -74,6 +74,40 @@
 			</div>
 		</div>
 	</div>
+	<div class="post">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-7">
+					<!-- section to display post information -->
+					<div class="post-content">
+						<div class="subreddit-info">
+							<span class="subreddit-image"
+								><img src="../../img/user-image.jpg" alt=""
+							/></span>
+							<span class="subreddit-name">
+								<router-link
+									:to="{
+										name: 'subreddit',
+										params: { subredditName: subredditName },
+									}"
+									>{{ subredditName }}
+								</router-link>
+							</span>
+							<span>
+								. Posted by .
+								<router-link
+									:to="{ name: 'user', params: { userName: userName } }"
+								>
+									{{ userName }} </router-link
+								>&nbsp;{{ duration }} ago
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-3"></div>
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 export default {
@@ -84,6 +118,9 @@ export default {
 			counter: 22,
 			postName:
 				'Can you guys help me finish my code or at least help me find the solution, I really tried to google it but I just can not find it and as I said I am still new.',
+			subredditName: 'r/learnprogramming',
+			userName: 'u/VolodymyrDev',
+			duration: '1 day',
 		};
 	},
 	methods: {
@@ -119,10 +156,10 @@ export default {
 <style scoped>
 .comments {
 	background-color: black;
-	margin: 0px 249px;
 }
-.title {
-	margin: 0px 152px;
+.post {
+	background-color: var(--color-grey-light-8);
+	padding-top: 22px;
 }
 .vote-box {
 	text-align: center;
@@ -168,7 +205,7 @@ export default {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	vertical-align: middle;
-	line-height: 27.5px;
+	line-height: 29px;
 }
 .post-title svg {
 	width: 16.67px;
@@ -177,6 +214,7 @@ export default {
 	margin: 0px 5px;
 }
 .post-title h4 {
+	font-weight: 600;
 	display: inline;
 	color: var(--color-grey-light-7);
 }
@@ -204,5 +242,26 @@ export default {
 }
 .close span {
 	margin-left: -5px;
+}
+.post-content {
+	background-color: white;
+	padding: 8px 8px 3px 5px;
+	width: 100%;
+	border-radius: 5px;
+}
+.subreddit-info .subreddit-image img {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+}
+.subreddit-info .subreddit-image {
+	padding-right: 5px;
+}
+.subreddit-info a {
+	color: black;
+	font-weight: bold;
+}
+.subreddit-info a:hover {
+	text-decoration: underline;
 }
 </style>
