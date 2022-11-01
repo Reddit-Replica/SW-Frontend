@@ -130,7 +130,7 @@ export default {
 			}
 		},
 		handleSubmit() {
-			fetch('http://localhost:3000/users', {
+			fetch(this.$hostname + '/users', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ export default {
 				});
 		},
 		test() {
-			fetch('http://localhost:3000/users')
+			fetch(this.$hostname + '/users')
 				.then((response) => {
 					if (response.ok) {
 						return response.json();

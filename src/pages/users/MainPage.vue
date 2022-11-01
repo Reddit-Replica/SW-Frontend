@@ -26,7 +26,7 @@
 					<div class="component">
 						<rightside-footer></rightside-footer>
 					</div>
-					<backtotop-button></backtotop-button>
+					<backtotop-button @click="test()"></backtotop-button>
 				</div>
 			</div>
 		</div>
@@ -70,7 +70,22 @@ export default {
 			},
 		};
 	},
-	methods: {},
+	methods: {
+		test() {
+			fetch(this.$hostname + '/users')
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+				})
+				.then((data) => {
+					console.log(data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+	},
 };
 </script>
 
