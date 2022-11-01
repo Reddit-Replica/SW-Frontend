@@ -62,7 +62,7 @@
 							Community names must be between 3–21 characters, and can only
 							contain letters, numbers, or underscores.
 						</p>
-						<span class="more-text">More</span>
+						<span class="more-text" @click="showMore">More</span>
 					</div>
 				</div>
 			</div>
@@ -291,6 +291,7 @@ export default {
 			communityNameRequiredError: false,
 			communityNameCharError: false,
 			charRemaining: '21',
+			moreIsShown: false,
 		};
 	},
 	methods: {
@@ -357,6 +358,9 @@ export default {
 				nsfw: this.nsfwChosen,
 			});
 		},
+	},
+	showMore() {
+		this.moreIsShown = !this.moreIsShown;
 	},
 };
 </script>
