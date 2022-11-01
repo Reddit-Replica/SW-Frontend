@@ -356,6 +356,7 @@ export default {
 				subredditName: this.communityName,
 				type: this.communityType,
 				nsfw: this.nsfwChosen,
+				baseurl: this.$baseurl,
 			});
 		},
 	},
