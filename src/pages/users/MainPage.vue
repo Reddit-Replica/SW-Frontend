@@ -1,4 +1,6 @@
 <template>
+	<!-- header component -->
+	<the-header :header-title="'Home'"></the-header>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
@@ -24,7 +26,7 @@
 					<div class="component">
 						<rightside-footer></rightside-footer>
 					</div>
-					<backtotop-button></backtotop-button>
+					<backtotop-button @click="test()"></backtotop-button>
 				</div>
 			</div>
 		</div>
@@ -68,6 +70,22 @@ export default {
 			},
 		};
 	},
+	methods: {
+		test() {
+			fetch(this.$baseurl + '/users')
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+				})
+				.then((data) => {
+					console.log(data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+	},
 };
 </script>
 
@@ -92,18 +110,22 @@ export default {
 	height: 100%;
 	display: flex;
 }
+
 .component {
 	margin-bottom: 1.3rem;
 }
+
 @media only screen and (max-width: 75em) {
 	.right-col {
 		margin-left: 12rem;
 	}
 }
+
 @media only screen and (max-width: 991px) {
 	.container {
 		max-width: 100%;
 	}
+
 	.right-col {
 		display: none;
 	}

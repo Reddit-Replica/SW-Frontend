@@ -1,7 +1,4 @@
 <template>
-	<!-- header component -->
-	<the-header />
-
 	<!-- router view for display pages -->
 	<router-view v-slot="slotProps">
 		<transition name="route" mode="out-in">
@@ -11,12 +8,8 @@
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
 export default {
 	name: 'App',
-	components: {
-		TheHeader,
-	},
 };
 </script>
 
@@ -41,6 +34,8 @@ export default {
 	--color-grey-light-3: #f0eeee;
 	--color-grey-light-4: #ccc;
 	--color-grey-light-5: #7c7c7c;
+	--color-grey-light-6: #808486;
+	--color-grey-light-7: #cacdcf;
 
 	/* dark grey colors */
 	--color-grey-dark-1: #333;
@@ -48,17 +43,22 @@ export default {
 	--color-grey-dark-3: #999;
 	--color-grey-dark-4: rgb(177, 176, 176);
 	--color-grey-dark-5: #edeff1;
+	--color-grey-dark-6: #343536;
 
 	/* black colors */
 	--color-dark-1: #000;
 	--color-dark-2: #222222;
 	--color-dark-3: #1c1c1c;
+	--color-dark-4: #1a1a1b;
 
 	--color-orange: #ff2c00;
+
+	--color-red-dark-1: #ea0027;
 
 	/* blue colors */
 	--color-blue: #6094fe;
 	--color-blue-2: #0079d3;
+	--color-blue-3: #3293db;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
 
@@ -79,6 +79,7 @@ export default {
 	--line-7: 1px solid var(--color-grey-dark-3);
 	--line-8: 1px solid var(--color-grey-light-3);
 	--line-dashed: 1px dashed var(--color-grey-light-2);
+	--line-dashed-2: 1px dashed var(--color-grey-dark-2);
 
 	/* screen sizes variables */
 	/* 2000px */

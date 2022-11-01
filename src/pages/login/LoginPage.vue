@@ -25,9 +25,9 @@
 
 					<div class="login-google-apple">
 						<GoogleSigninButton id="google-login" class="log-google log-ag" />
-						<div
+						<!-- <div
 							id="facebook-login"
-							class="log-facebook log-ag"
+							class="log-google log-ag"
 							@click="facebookLogin()"
 						>
 							<svg
@@ -59,10 +59,10 @@
 						>
 							Continue with Facebook
 						</button> -->
-						<fb:login-button
+						<!-- <fb:login-button
 							scope="public_profile,email"
 							onlogin="checkLoginState();"
-						></fb:login-button>
+						></fb:login-button> -->
 
 						<div class="page-divider">
 							<span class="page-divider-line"></span>
@@ -359,6 +359,6 @@ button {
 .logo-img {
 	height: 2rem;
 	width: 2rem;
-	margin: 0.5rem 0;
+	margin: 1rem;
 }
 </style>

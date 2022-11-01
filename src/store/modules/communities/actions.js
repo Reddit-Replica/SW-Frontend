@@ -1,21 +1,15 @@
 export default {
 	async createSubreddit(context, payload) {
-		console.log(
-			'hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'
-		);
 		const newSubreddit = {
 			subredditName: payload.subredditName,
 			type: payload.type,
 			nsfw: payload.nsfw,
 		};
 
-		const response = await fetch(
-			`https://reddit-project-bc91b-default-rtdb.firebaseio.com/communities.json`,
-			{
-				method: 'POST',
-				body: JSON.stringify(newSubreddit),
-			}
-		);
+		const response = await fetch(`http://localhost:3000/subreddits`, {
+			method: 'POST',
+			body: JSON.stringify(newSubreddit),
+		});
 
 		const responseData = await response.json();
 
