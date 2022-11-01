@@ -1,16 +1,24 @@
 {
-	"users": [
-		{
-			"id": 1,
-			"name": "Norhan Reda",
-			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
-			"password": "12345"
-		},
-		{
-			"id": 2,
-			"name": "nora",
-			"email": "nora@gmail.com",
-			"password": "123456789"
-		}
-	]
+  "users": [
+    {
+      "id": 1,
+      "name": "Norhan Reda",
+      "email": "norhan.ahmed01@eng-st.cu.edu.eg",
+      "password": "12345"
+    },
+    {
+      "id": 2,
+      "name": "nora",
+      "email": "nora@gmail.com",
+      "password": "123456789"
+    }
+  ],
+  "subreddits": [
+    {
+      "id":1,
+      "subredditName": "FrontEnd",
+      "type": "Private",
+      "nsfw": false
+    }
+  ]
 }
