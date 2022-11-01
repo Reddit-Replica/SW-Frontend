@@ -51,7 +51,7 @@ app.component('BaseDialog', BaseDialog);
 
 app.component('TheHeader', TheHeader);
 
-// app.config.globalProperties.$hostname = 'http://localhost:3000';
+app.config.globalProperties.$hostname = 'http://localhost:3000';
 // app.component('VueRecaptcha', VueRecaptcha);
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';
