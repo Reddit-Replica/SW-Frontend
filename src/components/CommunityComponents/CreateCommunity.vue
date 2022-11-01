@@ -54,6 +54,9 @@
 					<div v-if="communityNameRequiredError" class="title-grey title-red">
 						A community name is required
 					</div>
+					<div v-if="communityNameTakenError" class="title-grey title-red">
+						Sorry, r/{{ communityName }} is taken. Try another.
+					</div>
 					<div
 						v-if="communityNameCharError"
 						class="title-grey name-error title-red"
@@ -292,6 +295,7 @@ export default {
 			communityNameCharError: false,
 			charRemaining: '21',
 			moreIsShown: false,
+			communityNameTakenError: false,
 		};
 	},
 	methods: {
@@ -339,6 +343,21 @@ export default {
 				this.communityNameValidity = true;
 				this.communityNameRequiredError = false;
 				this.communityNameCharError = false;
+			}
+			this.$store.dispatch('community/checkSubredditName', {
+				subredditName: this.communityName,
+				baseurl: this.$baseurl,
+			});
+			this.communityNameTakenError =
+				this.$store.getters['community/subredditNameTaken'];
+			console.log(
+				'---------------------------->',
+				this.communityNameTakenError
+			);
+			if (this.communityNameTakenError) {
+				this.communityNameRequiredError = false;
+				this.communityNameCharError = false;
+				this.communityNameValidity = false;
 			}
 		},
 		charCount() {
@@ -424,7 +443,7 @@ export default {
 	width: 150px;
 	background-color: var(--color-dark-1);
 	color: var(--color-white-1);
-	font-size: 8px;
+	font-size: 9px;
 	padding: 10px;
 	position: absolute;
 	border-radius: 4px;

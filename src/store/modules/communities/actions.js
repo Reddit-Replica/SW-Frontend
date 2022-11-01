@@ -21,11 +21,32 @@ export default {
 			);
 			throw error;
 		}
+	},
 
-		// newSubreddit.subredditName = responseData.communityName;
-		// newSubreddit.type = payload.communityType;
-		// newSubreddit.nsfw = payload.communityNSFW;
+	async checkSubredditName(context, payload) {
+		const baseurl = payload.baseurl;
 
-		// context.commit('addSubreddit', newSubreddit);
+		const response = await fetch(
+			baseurl + '/subreddits?subredditName=' + payload.subredditName
+		);
+
+		const responseData = await response.json();
+
+		let isTaken = false;
+		if (response.status == 409) {
+			// if (payload.subredditName == 'web') {
+			isTaken = true;
+			console.log(isTaken);
+		}
+		console.log(isTaken);
+		console.log(response.status);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+
+		context.commit('checkSubredditName', isTaken);
 	},
 };
