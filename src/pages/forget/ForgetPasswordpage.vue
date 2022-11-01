@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form @submit.prevent="test">
+				<form @submit.prevent="handleSubmit">
 					<div class="snoo-icon"></div>
 					<h1>Reset your password</h1>
 					<p class="description">
@@ -129,6 +129,7 @@ export default {
 				this.invalidEmail = false;
 			}
 		},
+		//http://localhost:8082/api/Authentication/SecureForgotPassword?
 		handleSubmit() {
 			fetch('http://localhost:3000/users', {
 				method: 'POST',
@@ -136,8 +137,8 @@ export default {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					type: 'password',
-					name: this.userName,
+					// type: 'password',
+					// name: this.userName,
 					email: this.emailAddress,
 				}),
 			})

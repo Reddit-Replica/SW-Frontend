@@ -43,7 +43,8 @@
 								/>
 							</svg>
 							<span>Continue with Facebook</span>
-						</div> -->
+						</div>
+						-->
 						<!-- <v-facebook-login
 							id="facebook-login"
 							class="log-facebook log-ag"
