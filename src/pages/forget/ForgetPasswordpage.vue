@@ -130,7 +130,7 @@ export default {
 			}
 		},
 		handleSubmit() {
-			fetch(this.$hostname + '/users', {
+			fetch(this.$baseurl + '/users', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ export default {
 				});
 		},
 		test() {
-			fetch(this.$hostname + '/users')
+			fetch(this.$baseurl + '/users')
 				.then((response) => {
 					if (response.ok) {
 						return response.json();
