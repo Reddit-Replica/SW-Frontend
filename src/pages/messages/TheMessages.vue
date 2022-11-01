@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import MessageBar from '../../components/bars/MessageBar.vue';
-import InboxBar from '../../components/bars/InboxBar.vue';
-import MessagesFooter from '../../components/BaseComponents/MessagesFooter.vue';
+import MessageBar from '../../components/MessageComponents/MessageBar.vue';
+import InboxBar from '../../components/MessageComponents/InboxBar.vue';
+import MessagesFooter from '../../components/MessageComponents/MessagesFooter.vue';
 export default {
 	components: {
 		MessageBar,
