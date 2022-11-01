@@ -1,5 +1,5 @@
 export default {
-	addSubreddit(state, payload) {
-		state.communities.push(payload);
-	},
+	// addSubreddit(state, payload) {
+	// 	state.communities.push(payload);
+	// },
 };
