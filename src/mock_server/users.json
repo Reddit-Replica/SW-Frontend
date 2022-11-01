@@ -15,10 +15,28 @@
   ],
   "subreddits": [
     {
-      "id":1,
+      "id": 1,
       "subredditName": "FrontEnd",
       "type": "Private",
       "nsfw": false
+    },
+    {
+      "id": 2,
+      "subredditName": "BackEnd",
+      "type": "Private",
+      "nsfw": false
+    },
+    {
+      "subredditName": "please",
+      "type": "Public",
+      "nsfw": false,
+      "id": 3
+    },
+    {
+      "subredditName": "web",
+      "type": "Private",
+      "nsfw": true,
+      "id": 4
     }
   ]
 }
