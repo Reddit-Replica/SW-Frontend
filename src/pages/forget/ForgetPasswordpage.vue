@@ -131,7 +131,7 @@ export default {
 		},
 		//http://localhost:8082/api/Authentication/SecureForgotPassword?
 		handleSubmit() {
-			fetch('http://localhost:3000/users', {
+			fetch(this.$baseurl + '/users', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ export default {
 				});
 		},
 		test() {
-			fetch('http://localhost:3000/users')
+			fetch(this.$baseurl + '/users')
 				.then((response) => {
 					if (response.ok) {
 						return response.json();
