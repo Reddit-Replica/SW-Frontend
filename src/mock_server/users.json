@@ -44,5 +44,31 @@
       "nsfw": false,
       "id": 5
     }
-  ]
+  ],
+  "allMessages": [
+		{
+			"text": "hello world",
+			"type": "type",
+			"senderUsername": "/u/norhan_reda",
+			"receiverUsername": "",
+			"subredditName": "subredditName",
+			"postTitle": "postTitle",
+			"subject": "hiiii",
+			"sendAt": "6 days ago",
+			"isReply": true,
+			"isRead": false
+		},
+		{
+			"text": "hello asmaa",
+			"type": "type",
+			"subredditName": "subredditName",
+			"postTitle": "postTitle",
+			"senderUsername": "/u/hoda_gamal",
+			"receiverUsername": "",
+			"subject": "hi",
+			"sendAt": "5 days ago",
+			"isReply": true,
+			"isRead": false
+		}
+	]
 }
