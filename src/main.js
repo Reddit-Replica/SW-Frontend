@@ -51,7 +51,11 @@ app.component('BaseDialog', BaseDialog);
 
 app.component('TheHeader', TheHeader);
 
-app.config.globalProperties.$hostname = 'http://localhost:3000';
+const isProduction = process.env.NODE_ENV === 'production';
+
+app.config.globalProperties.$baseurl = isProduction
+	? '/api'
+	: 'http://localhost:3000';
 // app.component('VueRecaptcha', VueRecaptcha);
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';

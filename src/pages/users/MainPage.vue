@@ -72,7 +72,7 @@ export default {
 	},
 	methods: {
 		test() {
-			fetch(this.$hostname + '/users')
+			fetch(this.$baseurl + '/users')
 				.then((response) => {
 					if (response.ok) {
 						return response.json();
