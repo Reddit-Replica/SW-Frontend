@@ -14,15 +14,18 @@
 			</div>
 		</div>
 	</div>
+	<messages-footer></messages-footer>
 </template>
 
 <script>
 import MessageBar from '../../components/bars/MessageBar.vue';
 import InboxBar from '../../components/bars/InboxBar.vue';
+import MessagesFooter from '../../components/BaseComponents/MessagesFooter.vue';
 export default {
 	components: {
 		MessageBar,
 		InboxBar,
+		MessagesFooter,
 	},
 	computed: {
 		showSecondBar() {
