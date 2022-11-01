@@ -5,10 +5,9 @@ export default {
 			type: payload.type,
 			nsfw: payload.nsfw,
 		};
+		const baseurl = payload.baseurl;
 
-		console.log(newSubreddit);
-		console.log(this.$baseurl);
-		const response = await fetch(this.$baseurl + '/subreddits', {
+		const response = await fetch(baseurl + '/subreddits', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newSubreddit),

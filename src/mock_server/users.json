@@ -37,6 +37,12 @@
       "type": "Private",
       "nsfw": true,
       "id": 4
+    },
+    {
+      "subredditName": "hiiiii",
+      "type": "Public",
+      "nsfw": false,
+      "id": 5
     }
   ]
 }
