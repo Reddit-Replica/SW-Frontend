@@ -10,6 +10,7 @@ import ForgetUsernamepage from './pages/forget/ForgetUsernamepage.vue';
 import ResetPassword from './pages/forget/ResetPassword.vue';
 import LoginPage from './pages/login/LoginPage.vue';
 import SignupPage from './pages/signup/SignupPage.vue';
+import LoginComp from './pages/login/loginComp.vue';
 
 import TheSettings from './pages/settings/TheSettings.vue';
 import ProfileSettings from './pages/settings/ProfileSettings.vue';
@@ -46,6 +47,7 @@ const router = createRouter({
 		{ path: '/resetPassword/:token', component: ResetPassword },
 		{ path: '/login', component: LoginPage },
 		{ path: '/signup', component: SignupPage },
+		{ path: '/logincomp', component: LoginComp },
 
 		{
 			path: '/user/:userName',
