@@ -1,51 +1,51 @@
 {
-	"users": [
-		{
-			"id": 1,
-			"name": "Norhan Reda",
-			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
-			"password": "12345"
-		},
-		{
-			"id": 2,
-			"name": "nora",
-			"email": "nora@gmail.com",
-			"password": "123456789"
-		}
-	],
-	"subreddits": [
-		{
-			"id": 1,
-			"subredditName": "FrontEnd",
-			"type": "Private",
-			"nsfw": false
-		},
-		{
-			"id": 2,
-			"subredditName": "BackEnd",
-			"type": "Private",
-			"nsfw": false
-		},
-		{
-			"subredditName": "please",
-			"type": "Public",
-			"nsfw": false,
-			"id": 3
-		},
-		{
-			"subredditName": "web",
-			"type": "Private",
-			"nsfw": true,
-			"id": 4
-		},
-		{
-			"subredditName": "hiiiii",
-			"type": "Public",
-			"nsfw": false,
-			"id": 5
-		}
-	],
-	"allMessages": [
+  "users": [
+    {
+      "id": 1,
+      "name": "Norhan Reda",
+      "email": "norhan.ahmed01@eng-st.cu.edu.eg",
+      "password": "12345"
+    },
+    {
+      "id": 2,
+      "name": "nora",
+      "email": "nora@gmail.com",
+      "password": "123456789"
+    }
+  ],
+  "subreddits": [
+    {
+      "id": 1,
+      "subredditName": "FrontEnd",
+      "type": "Private",
+      "nsfw": false
+    },
+    {
+      "id": 2,
+      "subredditName": "BackEnd",
+      "type": "Private",
+      "nsfw": false
+    },
+    {
+      "subredditName": "please",
+      "type": "Public",
+      "nsfw": false,
+      "id": 3
+    },
+    {
+      "subredditName": "web",
+      "type": "Private",
+      "nsfw": true,
+      "id": 4
+    },
+    {
+      "subredditName": "hiiiii",
+      "type": "Public",
+      "nsfw": false,
+      "id": 5
+    }
+  ],
+  "allMessages": [
 		{
 			"before": "before",
 			"after": "after",
