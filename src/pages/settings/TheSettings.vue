@@ -1,22 +1,24 @@
 <template>
 	<!-- header component -->
-	<the-header :header-title="'User Settings'"></the-header>
-	<div class="settings">
-		<div class="container">
-			<div class="row">
-				<div class="settings-bar">
-					<h3 class="heading-3">User Settings</h3>
-					<user-settings></user-settings>
+	<div>
+		<the-header :header-title="'User Settings'"></the-header>
+		<div class="settings">
+			<div class="container">
+				<div class="row">
+					<div class="settings-bar">
+						<h3 class="heading-3">User Settings</h3>
+						<user-settings></user-settings>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-7">
-					<!-- <router-view></router-view> -->
-					<router-view v-slot="slotProps">
-						<transition name="route" mode="out-in">
-							<component :is="slotProps.Component"></component>
-						</transition>
-					</router-view>
+				<div class="row">
+					<div class="col-lg-7">
+						<!-- <router-view></router-view> -->
+						<router-view v-slot="slotProps">
+							<transition name="route" mode="out-in">
+								<component :is="slotProps.Component"></component>
+							</transition>
+						</router-view>
+					</div>
 				</div>
 			</div>
 		</div>

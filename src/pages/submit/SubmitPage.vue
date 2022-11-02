@@ -1,50 +1,52 @@
 <template>
 	<!-- header component -->
-	<the-header :header-title="'Create Post'"></the-header>
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-8">
-				<div class="left-col">
-					<!-- <h3 class="heading-3">Create a post</h3> -->
-					<submit-bar></submit-bar>
-					<div class="submit-container">
-						<nav id="submit-nav" class="submit-nav">
-							<ul class="submit-list" @click="selectPostType">
-								<li class="li-active">
-									<div id="0" class="clicked-button"></div>
-									<i class="fa-regular fa-bookmark icon"></i>Post
-								</li>
-								<li>
-									<div id="1" class="clicked-button"></div>
-									<i class="fa-regular fa-image icon"></i>Images & Video
-								</li>
-								<li>
-									<div id="2" class="clicked-button"></div>
-									<i class="fa-solid fa-link icon"></i>Link
-								</li>
-								<li>
-									<div id="3" class="clicked-button"></div>
-									<i class="fa-solid fa-list-check icon"></i>Poll
-								</li>
-								<li>
-									<div id="4" class="clicked-button"></div>
-									<i class="fa-solid fa-microphone icon"></i>Talk
-								</li>
-							</ul>
-						</nav>
-						<!-- todo here add the components 0->post 1->image 2->...... -->
-						<title-input></title-input>
-						<post-submit v-if="submitTypesActive[0]"></post-submit>
-						<image-submit v-if="submitTypesActive[1]"></image-submit>
-						<link-submit v-if="submitTypesActive[2]"></link-submit>
-						<footer-buttons></footer-buttons>
-						<div class="border-bottom"></div>
-						<div>post button</div>
-						<submit-footer></submit-footer>
+	<div>
+		<the-header :header-title="'Create Post'"></the-header>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8">
+					<div class="left-col">
+						<!-- <h3 class="heading-3">Create a post</h3> -->
+						<submit-bar></submit-bar>
+						<div class="submit-container">
+							<nav id="submit-nav" class="submit-nav">
+								<ul class="submit-list" @click="selectPostType">
+									<li class="li-active">
+										<div id="0" class="clicked-button"></div>
+										<i class="fa-regular fa-bookmark icon"></i>Post
+									</li>
+									<li>
+										<div id="1" class="clicked-button"></div>
+										<i class="fa-regular fa-image icon"></i>Images & Video
+									</li>
+									<li>
+										<div id="2" class="clicked-button"></div>
+										<i class="fa-solid fa-link icon"></i>Link
+									</li>
+									<li>
+										<div id="3" class="clicked-button"></div>
+										<i class="fa-solid fa-list-check icon"></i>Poll
+									</li>
+									<li>
+										<div id="4" class="clicked-button"></div>
+										<i class="fa-solid fa-microphone icon"></i>Talk
+									</li>
+								</ul>
+							</nav>
+							<!-- todo here add the components 0->post 1->image 2->...... -->
+							<title-input></title-input>
+							<post-submit v-if="submitTypesActive[0]"></post-submit>
+							<image-submit v-if="submitTypesActive[1]"></image-submit>
+							<link-submit v-if="submitTypesActive[2]"></link-submit>
+							<footer-buttons></footer-buttons>
+							<div class="border-bottom"></div>
+							<div>post button</div>
+							<submit-footer></submit-footer>
+						</div>
 					</div>
 				</div>
+				<div class="col-lg-4">right</div>
 			</div>
-			<div class="col-lg-4">right</div>
 		</div>
 	</div>
 </template>
