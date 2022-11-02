@@ -1,12 +1,12 @@
 <template>
 	<div class="follow-chat-div">
 		<base-button
-			buttonText="Follow"
+			button-text="Follow"
 			link="false"
 			class="chat-follow-button"
 		></base-button>
 		<base-button
-			buttonText="Chat"
+			button-text="Chat"
 			link="false"
 			class="chat-follow-button"
 		></base-button>
