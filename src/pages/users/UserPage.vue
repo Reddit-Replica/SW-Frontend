@@ -1,20 +1,22 @@
 <template>
 	<!-- header component -->
-	<the-header :header-title="'u/asmaaadel0'"></the-header>
-	<profile-nav :user-name="getUserName" />
-	<base-container>
-		<div class="profilebox">
-			<!-- <main>
+	<div>
+		<the-header :header-title="'u/asmaaadel0'"></the-header>
+		<profile-nav :user-name="getUserName" />
+		<base-container>
+			<div class="profilebox">
+				<!-- <main>
 				<createpost-bar />
 			</main> -->
-			<main>
-				<sortposts-bar></sortposts-bar>
-			</main>
-			<aside>
-				<profile-card :user-name="getUserName" />
-			</aside>
-		</div>
-	</base-container>
+				<main>
+					<sortposts-bar></sortposts-bar>
+				</main>
+				<aside>
+					<profile-card :user-name="getUserName" />
+				</aside>
+			</div>
+		</base-container>
+	</div>
 </template>
 
 <script>

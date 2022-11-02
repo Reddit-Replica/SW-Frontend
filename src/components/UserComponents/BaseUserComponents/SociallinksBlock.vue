@@ -2,12 +2,12 @@
 	<ul class="social-link" id="social-media-links">
 		<a href="">
 			<sociallink-item
-				imgSrc="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
+				img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
 				text="Custom URL"
 			></sociallink-item>
 		</a>
 		<sociallink-item
-			imgSrc="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
+			img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
 			text="Custom URL"
 		></sociallink-item>
 		<li>
