@@ -35,13 +35,16 @@
 					<fieldset class="email-field">
 						<input v-model="email" type="text" required="required" />
 						<span class="animation-email">Email</span>
+						<div class="error-email-msg" v-if="error_email">
+							{{ error_email_message }}
+						</div>
 					</fieldset>
 
 					<fieldset class="submit-signup-field">
 						<button
 							class="submit-signup continue-button"
 							type="submit"
-							@click="togglepages"
+							@click.prevent="handleSubmit"
 						>
 							Continue
 						</button>
@@ -117,9 +120,22 @@ export default {
 			page1: true,
 			page2: false,
 			bottom_div: false,
+			error_email: false,
+			error_email_message: '',
 		};
 	},
 	methods: {
+		handleSubmit() {
+			if (!this.email) {
+				this.error_email = true;
+				this.error_email_message = 'invalid email';
+			} else {
+				this.page1 = !this.page1;
+				this.page2 = !this.page2;
+				this.bottom_div = !this.bottom_div;
+				this.error_email = false;
+			}
+		},
 		togglepages() {
 			this.page1 = !this.page1;
 			this.page2 = !this.page2;
@@ -245,6 +261,7 @@ button {
 	background-color: #fcfcfb;
 	font-size: 14px;
 	margin-top: 5px;
+	outline: none;
 }
 .animation-email {
 	width: 55%;
@@ -262,6 +279,7 @@ button {
 	line-height: 20px;
 	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
+	outline: none;
 	/* justify-content: space-between; */
 }
 .email-field input:focus ~ .animation-email,
@@ -284,7 +302,17 @@ button {
 	position: absolute;
 	display: block;
 	transition: all 0.2s ease-in-out;
-	display: none;
+	/* display: none; */
+}
+.error-email-msg {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	margin-top: 4px;
+	max-height: 1000px;
+	opacity: 1;
+	color: #ea0027;
+	transition: all 0.2s ease-in-out;
 }
 .register-bottom {
 	font-family: Noto Sans, sans-serif;
