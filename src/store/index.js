@@ -10,7 +10,7 @@ const store = createStore({
 	},
 	state() {
 		return {
-			userName: '',
+			userName: 'mena',
 			accessToken: '',
 		};
 	},

@@ -56,6 +56,8 @@ export default {
 
 	--color-red-dark-1: #ea0027;
 
+	--color-pink: #ff64ae;
+
 	/* blue colors */
 	--color-blue: #6094fe;
 	--color-blue-2: #0079d3;
