@@ -65,6 +65,8 @@
 					</span>
 				</span>
 			</div>
+			<!-- follow chat for other users -->
+			<follow-chat-component v-if="0"></follow-chat-component>
 			<sociallinks-block></sociallinks-block>
 			<!-- <ul class="social-link" id="social-media-links">
 				<a href="">
@@ -143,22 +145,19 @@
 			</button>
 		</div>
 	</div>
-	<social-links
-		:show="addSocialLinkDialog"
-		@close="closeSocialLinkDialog"
-		@open="openSocialLinkDialog"
-	></social-links>
 </template>
 
 <script>
-import SocialLinks from './SocialLinks.vue';
+// import SocialLinks from './SocialLinks.vue';
 // import SociallinkItem from './BaseUserComponents/SociallinkItem.vue';
 import SociallinksBlock from './BaseUserComponents/SociallinksBlock.vue';
+import FollowChatComponent from './BaseUserComponents/FollowChatComponent.vue';
 export default {
 	components: {
-		SocialLinks,
+		// SocialLinks,
 		// SociallinkItem,
 		SociallinksBlock,
+		FollowChatComponent,
 	},
 	props: {
 		userName: {
@@ -200,12 +199,12 @@ export default {
 			this.showMoreOptions = !this.showMoreOptions;
 			console.log(this.userName, this.$route.props.userName);
 		},
-		openSocialLinkDialog() {
-			this.addSocialLinkDialog = true;
-		},
-		closeSocialLinkDialog() {
-			this.addSocialLinkDialog = false;
-		},
+		// openSocialLinkDialog() {
+		// 	this.addSocialLinkDialog = true;
+		// },
+		// closeSocialLinkDialog() {
+		// 	this.addSocialLinkDialog = false;
+		// },
 		addProfileImage() {
 			document.querySelector('#add-profile-button').click();
 		},
