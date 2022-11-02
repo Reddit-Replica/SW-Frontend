@@ -1,32 +1,34 @@
 <template>
 	<!-- header component -->
-	<the-header :header-title="'Home'"></the-header>
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-6">
-				<div class="left-col">
-					<createpost-bar></createpost-bar>
-					<sortposts-bar></sortposts-bar>
-					<base-post :post="post"></base-post>
-					<base-post :post="post"></base-post>
-					<base-post :post="post"></base-post>
-					<base-post :post="post"></base-post>
-					<base-post :post="post"></base-post>
-					<base-post :post="post"></base-post>
+	<div>
+		<the-header :header-title="'Home'"></the-header>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6">
+					<div class="left-col">
+						<createpost-bar></createpost-bar>
+						<sortposts-bar></sortposts-bar>
+						<base-post :post="post"></base-post>
+						<base-post :post="post"></base-post>
+						<base-post :post="post"></base-post>
+						<base-post :post="post"></base-post>
+						<base-post :post="post"></base-post>
+						<base-post :post="post"></base-post>
+					</div>
 				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="right-col">
-					<div class="component">
-						<top-communities-bar></top-communities-bar>
+				<div class="col-lg-3">
+					<div class="right-col">
+						<div class="component">
+							<top-communities-bar></top-communities-bar>
+						</div>
+						<div class="component">
+							<createpost-sidebar></createpost-sidebar>
+						</div>
+						<div class="component">
+							<rightside-footer></rightside-footer>
+						</div>
+						<backtotop-button @click="test()"></backtotop-button>
 					</div>
-					<div class="component">
-						<createpost-sidebar></createpost-sidebar>
-					</div>
-					<div class="component">
-						<rightside-footer></rightside-footer>
-					</div>
-					<backtotop-button @click="test()"></backtotop-button>
 				</div>
 			</div>
 		</div>
