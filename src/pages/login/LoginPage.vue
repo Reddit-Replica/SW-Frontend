@@ -20,7 +20,7 @@
 					>.
 				</p>
 
-				<form class="logining-in">
+				<form class="logining-in" @submit.prevent="handleSubmit">
 					<!--LogIn with google and apple accounts -->
 
 					<div class="login-google-apple">
@@ -71,33 +71,56 @@
 						</div>
 					</div>
 
-					<fieldset class="username-field field-pass-usr">
+					<fieldset class="username-field field-pass-usr input-box">
 						<!--Group of UserName Element -->
 
-						<input type="text" required="required" />
+						<input
+							id="user-name"
+							type="text"
+							required="required"
+							v-model="username"
+							:class="messageErrorShowUser ? 'red-border' : ''"
+						/>
 						<span class="animation-usr-pass">UserName</span>
+						<span
+							v-if="showSignuser"
+							:class="checkedUser ? 'correct-check' : 'wrong-check'"
+						></span>
 
-						<div class="username-error-message" v-if="error_show">
+						<div class="username-error-message" v-if="messageErrorShowUser">
 							{{ error_message }}
 						</div>
 						<!--Error Message Shown here -->
 					</fieldset>
 
-					<fieldset class="password-field field-pass-usr">
+					<fieldset class="password-field field-pass-usr input-box">
 						<!--Group of Password Element -->
 
-						<input type="password" required="required" />
+						<input
+							id="password"
+							type="password"
+							required="required"
+							v-model="password"
+							:class="messageErrorShowPass ? 'red-border' : ''"
+						/>
 						<span class="animation-usr-pass">Password</span>
+						<span
+							v-if="showSignPass"
+							:class="checkedPass ? 'correct-check' : 'wrong-check'"
+						></span>
 
-						<div class="username-error-message"></div>
+						<!-- <div class="username-error-message" v-if="messageErrorShowPass">
+							{{ error_message }}
+						</div> -->
 						<!--Error Message Shown here -->
 					</fieldset>
 
 					<button class="submit-login" type="submit">Log In</button>
 
 					<div class="forgot-usr-pass">
-						<span>Forgot your</span> <a href="/username">username</a>
-						<span> or </span> <a href="/password">password</a><span>?</span>
+						<span>Forgot your</span> <a href="/forgetUsernamepage">username</a>
+						<span> or </span> <a href="/forgetPasswordpage">password</a
+						><span>?</span>
 					</div>
 					<div class="register-bottom">
 						New to Reddit?
@@ -112,29 +135,92 @@
 
 <script>
 import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
+const baseURL = 'http://localhost:3000/users';
 export default {
 	name: 'LogIn',
 	data() {
 		return {
-			user: {
-				username: '',
-				password: '',
-			},
-			test: 'BEFORE SUBMIT',
-
+			username: '',
+			password: '',
+			showSignuser: false,
+			checkedUser: true,
+			error_message: '',
+			messageErrorShowUser: false,
+			messageErrorShowPass: false,
+			showSignPass: false,
+			Check: false,
+			users: {},
+			checkedPass: true,
 			// FB: {},
 			// model: {},
 			// scope: {},
 			// appId: '651769123026203',
 		};
 	},
-	method: {
+	methods: {
+		validateUser(value) {
+			this.showSignuser = false;
+			this.messageErrorShowUser = false;
+			this.showSignPass = false;
+			this.messageErrorShowPass = false;
+			if (value.length < 3 || value.length > 20) {
+				this.showSignuser = true;
+				this.checkedUser = false;
+				this.messageErrorShowUser = true;
+				this.error_message = 'Username must be between 3 and 20 characters';
+			} else {
+				fetch(baseURL)
+					.then((response) => {
+						if (response.ok) {
+							return response.json();
+						}
+					})
+					.then((data) => {
+						data.forEach((element) => {
+							if (element.username == this.username) {
+								this.showSignuser = true;
+								this.checkedUser = true;
+							}
+						});
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			}
+		},
 		handleSubmit() {
-			let user = new user({
-				username: this.username,
-				password: this.password,
-			});
-			this.test = 'AFTER SUBMIT';
+			fetch(baseURL)
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+				})
+				.then((data) => {
+					data.forEach((element) => {
+						if (element.username == this.username) {
+							if (element.password == this.password) {
+								console.log('done');
+								// this.showSignuser = false;
+								this.messageErrorShowUser = false;
+								this.checkedUser = true;
+								this.showSignPass = false;
+								this.messageErrorShowPass = false;
+							} else {
+								console.log('pass failed');
+								this.showSignuser = true;
+								this.checkedUser = false;
+								this.messageErrorShowUser = true;
+								this.showSignPass = true;
+								this.checkedPass = false;
+								this.messageErrorShowPass = true;
+								this.error_message = 'Incorrect username or password';
+							}
+						}
+					});
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		},
 		// async facebookLogin() {},
 		// handleSdkInit({ FB, scope }) {
@@ -148,6 +234,12 @@ export default {
 		// OnFacebookAuthFail(error) {
 		// 	console.log(error);
 		// },
+	},
+	watch: {
+		username(value) {
+			this.username = value;
+			this.validateUser(value);
+		},
 	},
 	components: { GoogleSigninButton },
 };
@@ -268,7 +360,7 @@ button {
 .field-pass-usr input {
 	position: relative;
 	transform: translateZ(0);
-	width: 60%;
+	width: 28rem;
 	transition: all 0.2s ease-in-out;
 	height: 48px;
 	padding: 22px 12px 10px;
@@ -277,6 +369,7 @@ button {
 	background-color: #fcfcfb;
 	font-size: 14px;
 	margin-top: 5px;
+	outline: none;
 }
 .field-pass-usr .animation-usr-pass {
 	font-size: 10px;
@@ -292,6 +385,16 @@ button {
 	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
 }
+.username-error-message {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	margin-top: 4px;
+	max-height: 1000px;
+	opacity: 1;
+	color: #ea0027;
+	transition: all 0.2s ease-in-out;
+}
 .animation-usr-pass::after {
 	content: '\2022';
 	color: #24a0ed;
@@ -301,7 +404,30 @@ button {
 	display: inline-block;
 	margin-left: 5px;
 }
-
+.input-box .red-border {
+	border: 0.5px solid #ea0027;
+}
+.input-box .correct-check {
+	position: absolute;
+	z-index: 1;
+	right: 27rem;
+	top: 40%;
+	height: 10px;
+	width: 12px;
+	background-color: #878a8c;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.input-box .wrong-check {
+	position: absolute;
+	right: 27rem;
+	top: 28%;
+	height: 12px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
+}
+.password-field .wrong-check {
+	top: 40%;
+}
 .field-pass-usr input:focus ~ .animation-usr-pass,
 .field-pass-usr input:hover ~ .animation-usr-pass,
 .field-pass-usr input:valid ~ .animation-usr-pass,
@@ -342,7 +468,7 @@ button {
 	cursor: pointer;
 	min-height: 35px;
 	max-width: 392px;
-	width: 60%;
+	width: 28rem;
 	min-width: 155px;
 }
 .log-facebook,

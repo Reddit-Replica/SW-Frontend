@@ -4,13 +4,15 @@
       "id": 1,
       "name": "Norhan Reda",
       "email": "norhan.ahmed01@eng-st.cu.edu.eg",
-      "password": "12345"
+      "password": "12345",
+      "username": "norhan12"
     },
     {
       "id": 2,
       "name": "nora",
       "email": "nora@gmail.com",
-      "password": "123456789"
+      "password": "123456789",
+      "username": "nora12"
     }
   ],
   "subreddits": [
