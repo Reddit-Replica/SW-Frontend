@@ -1,28 +1,30 @@
 <template>
-	<base-dialog
-		:show="show"
-		center="true"
-		title="Adding Social link"
-		@close="tryClose"
-	>
-		<template #default>
-			<div class="links-container">
-				<sociallink-item
-					v-for="sociallinkItem in sociallinkItems"
-					:key="sociallinkItem.id"
-					:text="sociallinkItem.text"
-					:img-src="sociallinkItem.imgSrc"
-					:alt="sociallinkItem.alt"
-					@click="openSocialLinkConfig(sociallinkItem.id)"
-				></sociallink-item>
-			</div>
-		</template>
-	</base-dialog>
-	<sociallinks-config
-		v-if="showSocialLinkConfig"
-		:data="socialLinkData"
-		@back="backToSociallinkDialog"
-	></sociallinks-config>
+	<div>
+		<base-dialog
+			:show="show"
+			center="true"
+			title="Adding Social link"
+			@close="tryClose"
+		>
+			<template #default>
+				<div class="links-container">
+					<sociallink-item
+						v-for="sociallinkItem in sociallinkItems"
+						:key="sociallinkItem.id"
+						:text="sociallinkItem.text"
+						:img-src="sociallinkItem.imgSrc"
+						:alt="sociallinkItem.alt"
+						@click="openSocialLinkConfig(sociallinkItem.id)"
+					></sociallink-item>
+				</div>
+			</template>
+		</base-dialog>
+		<sociallinks-config
+			v-if="showSocialLinkConfig"
+			:data="socialLinkData"
+			@back="backToSociallinkDialog"
+		></sociallinks-config>
+	</div>
 </template>
 
 <script>
