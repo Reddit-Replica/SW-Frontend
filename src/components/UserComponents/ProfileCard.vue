@@ -1,26 +1,38 @@
 <template>
 	<div class="card-prof">
 		<div class="profile-card">
-			<div class="cover-pic" :class="[isAvatar ? 'avatar-margin' : '']">
+			<!-- cover picture has two margins default is for picture profile and other for avatar profile -->
+			<div
+				class="cover-pic"
+				:class="[isAvatar ? 'avatar-margin' : '']"
+				id="cover-picture"
+			>
+				<!-- add image icon at click it trigger input file which is hidden -->
 				<span @click="addCoverImage" class="add-image">
 					<input
 						type="file"
 						id="add-cover-button"
+						ref="coverFile"
 						hidden
 						@change="loadCoverPic"
 					/>
+					<!-- add image icon (+) -->
 					<i class="fa-regular fa-square-plus add-image-icon" />
 				</span>
-				<a href="" class="profile-settings"><i class="fa-solid fa-gear" /></a>
-				<div class="profile-avatar" v-if="isAvatar">
-					<img src="../../assets/avatar.png" alt="" />
-				</div>
-				<div class="profile-picture" v-else>
-					<img src="../../assets/R.png" alt="" />
+				<!-- ///////////////////////////////////////////////////////////// -->
+				<!-- profile settings icon -->
+				<router-link to="" class="profile-settings"
+					><i class="fa-solid fa-gear"
+				/></router-link>
+				<!-- ///////////////////// -->
+				<!-- incase of  profile picture preview -->
+				<div class="profile-picture" v-if="!isAvatar">
+					<img src="../../assets/R.png" alt="" id="profile-picture" />
 					<input
 						type="file"
 						hidden
 						id="add-profile-button"
+						ref="profileFile"
 						@change="loadProfilePic"
 					/>
 					<span
@@ -31,26 +43,42 @@
 						<i class="fa-regular fa-square-plus add-image-icon" />
 					</span>
 				</div>
+				<!-- //////////////////////////////////// -->
+				<!-- incase of avatar pic preview -->
+				<div class="profile-avatar" v-else>
+					<img src="../../assets/avatar.png" alt="" />
+				</div>
+				<!-- //////////////////////////// -->
+				<!-- incase of profile picture display name , user name style -->
 			</div>
-			<h4 v-if="!isAvatar" class="profile-displayedname">Abdelhameed_Emad</h4>
-			<a v-if="!isAvatar" href="" class="profile-username">u/jhvhhygy</a>
-			<div v-if="isAvatar">
+			<div style="margin-bottom: 8px" v-if="!isAvatar">
+				<h4 class="profile-displayedname">Abdelhameed_Emad</h4>
+				<a href="" class="profile-username">u/jhvhhygy</a>
+			</div>
+			<!-- /////////////////////////////// -->
+			<!-- incase of Avatar display name , user name style -->
+			<div v-else>
 				<h2 class="profile-name" id="profile-name">
 					{{ userName || 'Agile_Relative7435' }}
 				</h2>
 				<p class="profile-desc" id="profile-desc">u/Agile_Relative7435 · 8d</p>
 			</div>
+			<!-- ////////////////////////////////////////////// -->
+			<!-- avatar styling button -->
 			<div class="profile-button">
 				<button id="style-avatar">
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
 				</button>
 			</div>
-			<div class="profile-about">hi how are you</div>
+			<!-- //////////////////// -->
+			<!-- about profile box -->
+			<div class="profile-about" v-if="about != ''">hi how are you</div>
+			<!-- ///////////////// -->
+			<!-- profile items karma and cake day has two alignment for pic , avatar -->
 			<div class="profile-items" :class="[isAvatar ? 'align-center' : '']">
 				<span class="i karma">
 					<h5>Karma</h5>
 					<span>
-						<i />
 						<p id="karma">
 							<span><i class="fa-solid fa-fan" /></span>1
 						</p>
@@ -65,50 +93,17 @@
 					</span>
 				</span>
 			</div>
+			<!-- //////////////////////////////////////////// -->
+			<!-- follow chat for other users -->
+			<follow-chat-component v-if="0"></follow-chat-component>
+			<!-- /////////////////////////// -->
+			<!-- Social link block  -->
 			<sociallinks-block></sociallinks-block>
-			<!-- <ul class="social-link" id="social-media-links">
-				<a href="">
-					<sociallink-item
-						imgSrc="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
-						text="Custom URL"
-					></sociallink-item>
-				</a>
-				<sociallink-item
-					imgSrc="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
-					text="Custom URL"
-				></sociallink-item>
-				<li>
-					<button id="social-media-button">
-						<span class="social-link-image"
-							><img
-								id="social-media-image"
-								src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM"
-								alt="" /></span
-						>socail media
-					</button>
-				</li>
-				<li>
-					<button>
-						<span class="social-link-image"
-							><img
-								src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=z3ESiuXOiGuxXM"
-								alt="" /></span
-						>hhh
-					</button>
-				</li>
-				<li>
-					<button>
-						<span class="social-link-image"><img src="" alt="" /></span>hhh
-					</button>
-				</li>
-				<li>
-					<button class="add-social-link" @click="openSocialLinkDialog">
-						<span><i class="fa-solid fa-plus" /></span>Add social link
-					</button>
-				</li>
-			</ul>
-			 -->
+			<!-- ///////////////// -->
+			<!-- New post button -->
 			<button class="new-post">New post</button>
+			<!-- ////////////// -->
+			<!-- more options button -->
 			<button
 				id="more-options-button"
 				class="more-options"
@@ -117,22 +112,17 @@
 			>
 				More options
 			</button>
+			<!-- /////////////////// -->
+			<!-- profile options -->
 			<ul id="profile-options" class="profile-options" v-show="showMoreOptions">
 				<li v-for="profileOption in profileOptions" :key="profileOption.name">
 					<router-link :to="profileOption.toLink">{{
 						profileOption.name
 					}}</router-link>
 				</li>
-				<!-- <li>
-					<router-link to="">Profile to Moderation</router-link>
-				</li>
-				<li>
-					<router-link to="">Add to Custom Feed</router-link>
-				</li>
-				<li>
-					<router-link to="">Invite someone to chat</router-link>
-				</li> -->
 			</ul>
+			<!-- /////////////// -->
+			<!-- more options button -->
 			<button
 				id="fewer-options-button"
 				class="fewer-options"
@@ -141,24 +131,18 @@
 			>
 				Fewer options
 			</button>
+			<!-- ////////////////// -->
 		</div>
 	</div>
-	<social-links
-		:show="addSocialLinkDialog"
-		@close="closeSocialLinkDialog"
-		@open="openSocialLinkDialog"
-	></social-links>
 </template>
 
 <script>
-import SocialLinks from './SocialLinks.vue';
-// import SociallinkItem from './BaseUserComponents/SociallinkItem.vue';
 import SociallinksBlock from './BaseUserComponents/SociallinksBlock.vue';
+import FollowChatComponent from './BaseUserComponents/FollowChatComponent.vue';
 export default {
 	components: {
-		SocialLinks,
-		// SociallinkItem,
 		SociallinksBlock,
+		FollowChatComponent,
 	},
 	props: {
 		userName: {
@@ -200,12 +184,6 @@ export default {
 			this.showMoreOptions = !this.showMoreOptions;
 			console.log(this.userName, this.$route.props.userName);
 		},
-		openSocialLinkDialog() {
-			this.addSocialLinkDialog = true;
-		},
-		closeSocialLinkDialog() {
-			this.addSocialLinkDialog = false;
-		},
 		addProfileImage() {
 			document.querySelector('#add-profile-button').click();
 		},
@@ -213,10 +191,27 @@ export default {
 			document.querySelector('#add-cover-button').click();
 		},
 		loadProfilePic() {
+			const file = this.$refs.profileFile.files[0];
 			console.log('loadprofilepic');
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result;
+				document.querySelector('#profile-picture').src = result;
+			};
+			reader.readAsDataURL(file);
 		},
 		loadCoverPic() {
 			console.log('loadCoverpic');
+			const file = this.$refs.coverFile.files[0];
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result;
+				document.querySelector(
+					'#cover-picture'
+				).style.backgroundImage = `url(${result})`;
+				console.log('loadCoverpic hhh');
+			};
+			reader.readAsDataURL(file);
 		},
 	},
 };
@@ -242,11 +237,13 @@ a {
 	align-items: center;
 }
 .card-prof {
-	margin-left: 24px;
+	/* margin-left: 24px; */
+	width: 100%;
 }
 
 .profile-card {
-	width: 312px;
+	/* width: 312px; */
+	width: 100%;
 	background-color: var(--main-white-color);
 	display: flex;
 	flex-direction: column;
@@ -258,11 +255,13 @@ a {
 
 .cover-pic {
 	height: 94px;
-	width: calc(100% + 23px);
+	width: calc(100% + 22px);
 	background-color: #2d97d8; /* cover picture default color */
+	/* background-image: url(../../assets/R.png); */
+	background-size: cover;
 	border-radius: 4px 4px 0 0;
 	position: relative;
-	left: -12px;
+	left: -11px;
 	top: -12px;
 	/* margin-bottom: calc(160px + 12px + 0px - 94px);  */ /* this for avatar */
 	/* 160 pic hieght 12px -> top Avatar , 0 for margin bottom , -94 cover height*/

@@ -43,13 +43,9 @@
 						<span class="link" v-else @click="blockAction()">Block User</span>
 					</li>
 					<li>
-						<a href="">Mark Unread</a>
-						<span class="sure-block" v-if="markUnread"
-							>are you sure? <a href="">Yes</a> /
-							<a href="" @click="deleteAction()">No</a></span
-						>
+						<span class="link">Mark Unread</span>
 					</li>
-					<li><a href="">Reply</a></li>
+					<li><span class="link">Reply</span></li>
 				</ul>
 			</div>
 		</li>
