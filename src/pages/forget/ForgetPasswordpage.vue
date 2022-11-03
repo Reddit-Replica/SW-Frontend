@@ -131,30 +131,26 @@ export default {
 		},
 		//http://localhost:8082/api/Authentication/SecureForgotPassword?
 		handleSubmit() {
-			fetch(this.$baseurl + '/users', {
+			fetch('http://localhost:3000/api/auth/forget', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
 					// type: 'password',
-					// name: this.userName,
+					name: this.userName,
 					email: this.emailAddress,
 				}),
 			})
 				.then((response) => {
 					if (response.ok) {
+						console.log(response);
 						return response.json();
 					}
 				})
-				// .then((data) => {
-				// 	console.log(data);
-				// 	const res = [];
-				// 	for (const id in data) {
-				// 		res.push({ id: id, name: data[id].name, rating: data[id].rating });
-				// 	}
-				// 	this.results = res;
-				// })
+				.then((data) => {
+					console.log(data.access_token);
+				})
 				.catch((error) => {
 					console.log(error);
 				});
