@@ -8,4 +8,7 @@ export default {
 	userMentions(state) {
 		return state.userMentions;
 	},
+	userMessages(state) {
+		return state.userMessages;
+	},
 };

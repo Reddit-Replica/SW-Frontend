@@ -8,4 +8,7 @@ export default {
 	setUserMentions(state, payload) {
 		state.userMentions = payload;
 	},
+	setUserMessages(state, payload) {
+		state.userMessages = payload;
+	},
 };

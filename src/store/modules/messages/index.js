@@ -9,6 +9,7 @@ export default {
 			composeMessages: [],
 			unreadMessages: [],
 			userMentions: [],
+			userMessages: [],
 		};
 	},
 	mutations,
