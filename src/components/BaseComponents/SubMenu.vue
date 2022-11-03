@@ -74,8 +74,12 @@ export default {
 }
 .sub-menu li {
 	padding: 0px 10px;
+	height: 34px;
 }
 .sub-menu li.clicked {
 	color: var(--color-blue-2);
+}
+.sub-menu li:last-of-type {
+	border-radius: 0 0 5px 5px;
 }
 </style>

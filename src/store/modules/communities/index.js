@@ -7,6 +7,7 @@ export default {
 	state() {
 		return {
 			subredditNameTaken: false,
+			categories: [],
 		};
 	},
 	mutations,

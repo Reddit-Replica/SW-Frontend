@@ -4,6 +4,7 @@ export default {
 			subredditName: payload.subredditName,
 			type: payload.type,
 			nsfw: payload.nsfw,
+			category: payload.category,
 		};
 		const baseurl = payload.baseurl;
 
@@ -36,10 +37,7 @@ export default {
 		if (response.status == 409) {
 			// if (payload.subredditName == 'web') {
 			isTaken = true;
-			console.log(isTaken);
 		}
-		console.log(isTaken);
-		console.log(response.status);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -48,5 +46,21 @@ export default {
 		}
 
 		context.commit('checkSubredditName', isTaken);
+	},
+	async getSavedCategories(context, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/saved-categories');
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+
+		context.commit('setSavedCategories', responseData);
 	},
 };
