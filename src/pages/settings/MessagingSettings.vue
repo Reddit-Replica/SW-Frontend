@@ -7,7 +7,11 @@
 				<div>
 					<h3 class="h3-title">Who can send you chat requests</h3>
 				</div>
-				<div class="choice" @click="showFirstMenuFunction">
+				<div
+					class="choice"
+					@click="showFirstMenuFunction"
+					id="how-send-chat-request"
+				>
 					<span class="title">{{ titleFirst }}</span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +42,11 @@
 						can message you even if they’re not approved.
 					</p>
 				</div>
-				<div class="choice" @click="showSecondMenuFunction">
+				<div
+					class="choice"
+					@click="showSecondMenuFunction"
+					id="who-send-private-message"
+				>
 					<span class="title">{{ titleSecond }}</span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +77,11 @@
 					</p>
 				</div>
 				<div>
-					<base-button class="blue-button" button-text="Copy link" />
+					<base-button
+						class="blue-button"
+						button-text="Copy link"
+						id="copy-link"
+					/>
 				</div>
 			</div>
 
@@ -81,7 +93,11 @@
 					</p>
 				</div>
 				<div>
-					<base-button class="blue-button" button-text="Mark as Read" />
+					<base-button
+						class="blue-button"
+						button-text="Mark as Read"
+						id="mark-as-read"
+					/>
 				</div>
 			</div>
 		</div>

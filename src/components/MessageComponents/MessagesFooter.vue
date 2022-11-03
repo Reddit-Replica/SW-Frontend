@@ -4,31 +4,58 @@
 			<div class="about">
 				<ul class="list">
 					<li class="title">about</li>
-					<li><a href="https://www.redditinc.com/blog">blog</a></li>
-					<li><a href="https://www.redditinc.com/">about</a></li>
-					<li><a href="https://www.redditforbusiness.com/">advertising</a></li>
-					<li><a href="https://www.redditinc.com/careers">careers</a></li>
+					<li>
+						<a href="https://www.redditinc.com/blog" id="blog-link">blog</a>
+					</li>
+					<li>
+						<a href="https://www.redditinc.com/" id="about-link">about</a>
+					</li>
+					<li>
+						<a href="https://www.redditforbusiness.com/" id="advertising-link"
+							>advertising</a
+						>
+					</li>
+					<li>
+						<a href="https://www.redditinc.com/careers" id="careers-link"
+							>careers</a
+						>
+					</li>
 				</ul>
 			</div>
 			<div class="about">
 				<ul class="list">
 					<li class="title">help</li>
 					<li>
-						<a href="https://www.redditinc.com/policies/content-policy"
+						<a
+							href="https://www.redditinc.com/policies/content-policy"
+							id="site-rules-link"
 							>site rules</a
 						>
 					</li>
-					<li><a href="https://www.reddithelp.com/">Reddit help center</a></li>
 					<li>
-						<a href="https://www.reddit.com/wiki/reddiquette/">reddiquette</a>
+						<a href="https://www.reddithelp.com/" id="reddit-help-center-link"
+							>Reddit help center</a
+						>
+					</li>
+					<li>
+						<a
+							href="https://www.reddit.com/wiki/reddiquette/"
+							id="reddiquette-link"
+							>reddiquette</a
+						>
 					</li>
 					<li>
 						<a
 							href="https://www.redditinc.com/policies/moderator-code-of-conduct"
+							id="mod-guidelines-link"
 							>mod guidelines</a
 						>
 					</li>
-					<li><a href="https://www.reddit.com/contact/">contact us</a></li>
+					<li>
+						<a href="https://www.reddit.com/contact/" id="contact-us-link"
+							>contact us</a
+						>
+					</li>
 				</ul>
 			</div>
 			<div class="about">
@@ -37,28 +64,38 @@
 					<li>
 						<a
 							href="https://apps.apple.com/us/app/reddit-the-official-app/id1064216828"
-							>Reddit for iPhone</a
+							id="reddit-for-iphone"
+							>reddit for iphone</a
 						>
 					</li>
 					<li>
 						<a
 							href="https://play.google.com/store/apps/details?id=com.reddit.frontpage"
+							id="reddit-for-android"
 							>Reddit for Android</a
 						>
 					</li>
 					<li>
-						<a href="https://www.reddit.com/message/compose/">mobile website</a>
+						<a
+							href="https://www.reddit.com/message/compose/"
+							id="mobile-website-link"
+							>mobile website</a
+						>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<p>
 			Use of this site constitutes acceptance of our
-			<a href="https://www.redditinc.com/policies/user-agreement"
+			<a
+				href="https://www.redditinc.com/policies/user-agreement"
+				id="user-greement-link"
 				>User Agreement</a
 			>
 			and
-			<a href="https://www.reddit.com/policies/privacy-policy"
+			<a
+				href="https://www.reddit.com/policies/privacy-policy"
+				id="privacy-policy-link"
 				>Privacy Policy</a
 			>
 			. © 2022 reddit inc. All rights reserved.

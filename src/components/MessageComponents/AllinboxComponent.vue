@@ -22,30 +22,39 @@
 							<input
 								type="hidden"
 								name="deleted"
-								id="deleted"
+								id="delete-message"
 								value="deleted"
 							/>
 						</form>
 						<span class="sure-block" v-if="deleteUSer"
-							>are you sure? <span class="link">Yes</span> /
-							<span class="link" @click="deleteAction()">No</span></span
+							>are you sure?
+							<span class="link" id="yes-delete-message">Yes</span> /
+							<span class="link" @click="deleteAction()" id="no-delete-message"
+								>No</span
+							></span
 						>
 						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="deleteAction()">Delete</span>
+						<span class="link" v-else @click="deleteAction()" id="click-delete"
+							>Delete</span
+						>
 					</li>
-					<li><a href="">Report</a></li>
+					<li><a href="" id="report">Report</a></li>
 					<li>
 						<span class="sure-block" v-if="blockUSer"
-							>are you sure? <span class="link">Yes</span> /
-							<span class="link" @click="blockAction()">No</span></span
+							>are you sure? <span class="link" id="yes-block-user">Yes</span> /
+							<span class="link" @click="blockAction()" id="no-block-user"
+								>No</span
+							></span
 						>
 						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="blockAction()">Block User</span>
+						<span class="link" v-else @click="blockAction()" id="block-user"
+							>Block User</span
+						>
 					</li>
 					<li>
-						<span class="link">Mark Unread</span>
+						<span class="link" id="mark-as-read">Mark Unread</span>
 					</li>
-					<li><span class="link">Reply</span></li>
+					<li><span class="link" id="reply">Reply</span></li>
 				</ul>
 			</div>
 		</li>

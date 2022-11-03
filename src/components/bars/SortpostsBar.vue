@@ -1,7 +1,11 @@
 <template>
 	<div class="sort-post-content">
 		<div class="sort-post-box-1-1">
-			<div class="sort-post-icon-box clicked" @click="showSubMenu()">
+			<div
+				class="sort-post-icon-box clicked"
+				@click="showSubMenu()"
+				id="show-sub-menu"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -16,7 +20,7 @@
 				</svg>
 				<!-- <i class="fa-brands fa-space-awesome icon"></i> -->
 				<span>{{ clicked }}</span>
-				<svg class="sort-post-arrow-icon sort-post-icon">
+				<svg class="sort-post-arrow-icon sort-post-icon" id="arrow-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</div>
@@ -26,6 +30,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Best' }"
 				@click="selectSort('Best')"
+				id="best-sort"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -46,6 +51,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Hot' }"
 				@click="selectSort('Hot')"
+				id="hot-sort"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +72,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'New' }"
 				@click="selectSort('New')"
+				id="new-sort"
 			>
 				<!-- <i class="fa-regular fa-sun icon"></i> -->
 				<svg
@@ -86,6 +93,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Top' }"
 				@click="selectSort('Top')"
+				id="top-sort"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -148,6 +156,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Best' }"
 				@click="selectSort('Best')"
+				id="best-sort-sub-menu"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -168,6 +177,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Hot' }"
 				@click="selectSort('Hot')"
+				id="hot-sort-sub-menu"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -188,6 +198,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'New' }"
 				@click="selectSort('New')"
+				id="new-sort-sub-menu"
 			>
 				<!-- <i class="fa-regular fa-sun icon"></i> -->
 				<svg
@@ -208,6 +219,7 @@
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'Top' }"
 				@click="selectSort('Top')"
+				id="top-sort-sub-menu"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

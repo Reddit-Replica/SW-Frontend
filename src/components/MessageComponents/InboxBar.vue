@@ -1,10 +1,30 @@
 <template>
 	<ul>
-		<li>ِ<router-link to="/message/inbox">All</router-link></li>
-		<li><router-link to="/message/unread">Unread</router-link></li>
-		<li><router-link to="/message/messages">Messages</router-link></li>
-		<li><router-link to="/message/selfreply">Post Replies</router-link></li>
-		<li><router-link to="/message/mentions">Username Mentions</router-link></li>
+		<li>
+			ِ<router-link to="/message/inbox" id="go-to-all-messages"
+				>All</router-link
+			>
+		</li>
+		<li>
+			<router-link to="/message/unread" id="go-to-unread-messages"
+				>Unread</router-link
+			>
+		</li>
+		<li>
+			<router-link to="/message/messages" id="go-to-messages-messages"
+				>Messages</router-link
+			>
+		</li>
+		<li>
+			<router-link to="/message/selfreply" id="go-to-post-replies-messages"
+				>Post Replies</router-link
+			>
+		</li>
+		<li>
+			<router-link to="/message/mentions" id="go-to-username-mentions"
+				>Username Mentions</router-link
+			>
+		</li>
 	</ul>
 </template>
 <style scoped>
