@@ -125,5 +125,30 @@
 				}
 			]
 		}
-	]
+	],
+	"user": {
+		"displayName": "Abdalhameed_Emad",
+		"about": "hallow iam abdelhameed emad",
+		"banner": "string",
+		"picture": "string",
+		"karma": 1,
+		"cakeDate": "2019-08-24",
+		"socialLinks": [
+			{
+				"type": "link",
+				"displayText": "string",
+				"link": "string"
+			}
+		],
+		"nsfw": true,
+		"followed": true,
+		"blocked": true,
+		"moderatorOf": [
+			{
+				"subredditName": "string",
+				"numOfMembers": 0,
+				"nsfw": true
+			}
+		]
+	}
 }

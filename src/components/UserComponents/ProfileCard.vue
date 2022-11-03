@@ -52,7 +52,9 @@
 				<!-- incase of profile picture display name , user name style -->
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
-				<h4 class="profile-displayedname">Abdelhameed_Emad</h4>
+				<h4 class="profile-displayedname">
+					{{ userName || 'Abdelhameed_Emad' }}
+				</h4>
 				<a href="" class="profile-username">u/jhvhhygy</a>
 			</div>
 			<!-- /////////////////////////////// -->
