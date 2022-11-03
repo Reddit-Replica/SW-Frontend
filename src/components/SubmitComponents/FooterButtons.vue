@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div class="buttons-section">
-			<base-button class="grey-button" button-text="OC">
+			<base-button class="grey-button" button-text="OC" id="footer-button-oc">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -15,7 +15,11 @@
 					/>
 				</svg>
 			</base-button>
-			<base-button class="grey-button" button-text="Spoiler">
+			<base-button
+				class="grey-button"
+				button-text="Spoiler"
+				id="footer-button-spoiler"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -29,7 +33,11 @@
 					/>
 				</svg>
 			</base-button>
-			<base-button class="grey-button" button-text="NSFW">
+			<base-button
+				class="grey-button"
+				button-text="NSFW"
+				id="footer-button-nsfw"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -43,7 +51,7 @@
 					/>
 				</svg>
 			</base-button>
-			<base-button class="grey-button not-allowed">
+			<base-button class="grey-button not-allowed" id="footer-button-flair">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"

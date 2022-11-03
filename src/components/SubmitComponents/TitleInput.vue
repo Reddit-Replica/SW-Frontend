@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<form action="#" class="title-input-box">
+		<form action="#" class="title-input-box" id="title-input">
 			<textarea
 				maxlength="300"
 				class="title-input"

@@ -1,7 +1,9 @@
 <template>
 	<div class="content">
 		<li class="message-button">
-			<router-link to="/message/compose">Send A Private Message</router-link>
+			<router-link to="/message/compose" id="go-to-send-message"
+				>Send A Private Message</router-link
+			>
 		</li>
 		<li
 			class="message-button"
@@ -13,10 +15,12 @@
 					mentionsCom == true,
 			}"
 		>
-			<router-link to="/message/inbox">Inbox</router-link>
+			<router-link to="/message/inbox" id="go-to-inbox-message"
+				>Inbox</router-link
+			>
 		</li>
 		<li class="message-button">
-			<router-link to="/message/sent">Sent</router-link>
+			<router-link to="/message/sent" id="go-to-sent-message">Sent</router-link>
 		</li>
 	</div>
 </template>

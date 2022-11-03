@@ -1,8 +1,8 @@
 <template>
 	<div class="content">
 		<h3 class="heading-3">Drag and drop images or</h3>
-		<input type="file" class="blue-button" id="actual-btn" hidden />
-		<label class="blue-button" for="actual-btn">Upload</label>
+		<input type="file" class="blue-button" id="image-input" hidden />
+		<label class="blue-button" for="image-input">Upload</label>
 	</div>
 </template>
 

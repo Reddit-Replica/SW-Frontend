@@ -49,21 +49,30 @@
 					<a
 						href="https://www.redditinc.com/policies/content-policy"
 						target="__blank"
+						id="content-policy-link"
 						>content policy</a
 					>
-					<button class="link" href="" @click="changeTitle()">
+					<button
+						class="link"
+						href=""
+						@click="changeTitle()"
+						id="formatting-button"
+					>
 						{{ formatting }} help
 					</button>
 				</div>
 				<div class="formatting-help" v-if="formatting == 'hide'">
 					<p>
 						reddit uses a slightly-customized version of
-						<a href="https://daringfireball.net/projects/markdown/syntax"
+						<a
+							href="https://daringfireball.net/projects/markdown/syntax"
+							id="markdown-link"
 							>Markdown</a
 						>
 						for formatting. See below for some basics, or check
 						<a
 							href="https://www.reddit.com/wiki/commenting/?utm_source=reddit&utm_medium=usertext&utm_name=frontpage&utm_content="
+							id="the-commenting-wiki-page-link"
 							>the commenting wiki page</a
 						>
 						for more detailed help and solutions to common issues.
@@ -125,7 +134,7 @@
 						</tr>
 					</table>
 				</div>
-				<button class="submit-form">Send</button>
+				<button class="submit-form" id="submit-form">Send</button>
 			</form>
 		</div>
 	</div>

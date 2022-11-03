@@ -7,16 +7,17 @@
 				class="search-post"
 				placeholder="Create Post"
 				@click="changeRouter"
+				id="create-post"
 			/>
 			<button class="post-button" />
 		</form>
 		<div class="box">
-			<div class="post-icon-box">
+			<div class="post-icon-box" id="image-icon">
 				<svg class="post-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-image-inverted" />
 				</svg>
 			</div>
-			<div class="post-icon-box">
+			<div class="post-icon-box" id="link-icon">
 				<svg class="post-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-link" />
 				</svg>
