@@ -40,8 +40,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .content-col {
 	margin: 2rem;
+}
+.no-messages {
+	background-color: var(--color-white-1);
+	padding: 2rem;
+	margin-right: auto;
+	color: var(--color-grey-dark-2);
+	font-size: small;
 }
 </style>

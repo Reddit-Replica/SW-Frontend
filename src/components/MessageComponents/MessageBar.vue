@@ -3,7 +3,16 @@
 		<li class="message-button">
 			<router-link to="/message/compose">Send A Private Message</router-link>
 		</li>
-		<li class="message-button">
+		<li
+			class="message-button"
+			:class="{
+				inbox:
+					unreadCom == true ||
+					messagesCom == true ||
+					selfreplyCom == true ||
+					mentionsCom == true,
+			}"
+		>
 			<router-link to="/message/inbox">Inbox</router-link>
 		</li>
 		<li class="message-button">
@@ -15,9 +24,25 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			// inboxCom: false,
+		};
 	},
 	methods: {},
+	computed: {
+		unreadCom() {
+			return this.$route.path === '/message/unread';
+		},
+		messagesCom() {
+			return this.$route.path === '/message/messages';
+		},
+		selfreplyCom() {
+			return this.$route.path === '/message/selfreply';
+		},
+		mentionsCom() {
+			return this.$route.path === '/message/mentions';
+		},
+	},
 };
 </script>
 
@@ -56,7 +81,8 @@ a {
 	color: var(--color-grey-light-3);
 	font-family: 'IBM Plex Sans', Arial, sans-serif;
 }
-a.router-link-active {
+a.router-link-active,
+.inbox {
 	/* color: var(--color-grey-light-4); */
 	opacity: 0.6;
 }

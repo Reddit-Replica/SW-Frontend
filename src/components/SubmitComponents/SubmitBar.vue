@@ -1,82 +1,84 @@
 <template>
-	<div class="create-post-header">
-		<div class="submit-title">Create a post</div>
-		<base-button class="drafts-button"
-			>DRAFTS
-			<span class="drafts-count">5</span>
-		</base-button>
-	</div>
-	<div class="choose-post-community-1">
-		<div class="choose-post-community-2">
-			<div class="choose-post-community-3">
-				<span v-if="!inputFocused" class="dashed-circle"></span>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="bi bi-search"
-					viewBox="0 0 16 16"
-					v-else
-				>
-					<path
-						d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-					/>
-				</svg>
-				<div class="input-box">
-					<input
-						class="choose-community-input"
-						placeholder="Choose a community"
-						@click="setFocused"
-					/>
+	<div>
+		<div class="create-post-header">
+			<div class="submit-title">Create a post</div>
+			<base-button class="drafts-button"
+				>DRAFTS
+				<span class="drafts-count">5</span>
+			</base-button>
+		</div>
+		<div class="choose-post-community-1">
+			<div class="choose-post-community-2">
+				<div class="choose-post-community-3">
+					<span v-if="!inputFocused" class="dashed-circle"></span>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-search"
+						viewBox="0 0 16 16"
+						v-else
+					>
+						<path
+							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+						/>
+					</svg>
+					<div class="input-box">
+						<input
+							class="choose-community-input"
+							placeholder="Choose a community"
+							@click="setFocused"
+						/>
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-chevron-down"
+						viewBox="0 0 16 16"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+						/>
+					</svg>
 				</div>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="bi bi-chevron-down"
-					viewBox="0 0 16 16"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-					/>
-				</svg>
-			</div>
-			<div class="input-drop-down-box-1" v-if="inputFocused">
-				<div class="input-drop-down-box-2">
-					<div class="title title-profile">YOUR PROFILE</div>
-					<div class="section-box">
-						<div class="image-box">
-							<img
-								src="https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030"
-								alt="image"
-								class="img-profile"
-							/>
-						</div>
-						<div class="name-box">
-							<span class="name">u/HodaGamal</span>
+				<div class="input-drop-down-box-1" v-if="inputFocused">
+					<div class="input-drop-down-box-2">
+						<div class="title title-profile">YOUR PROFILE</div>
+						<div class="section-box">
+							<div class="image-box">
+								<img
+									src="https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030"
+									alt="image"
+									class="img-profile"
+								/>
+							</div>
+							<div class="name-box">
+								<span class="name">u/HodaGamal</span>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="input-drop-down-box-2">
-					<div class="title-community-header">
-						<span class="title-community title">YOUR COMMUNITIES</span>
-						<base-button class="create-button">Create New</base-button>
-					</div>
-					<div class="section-box">
-						<div class="image-box">
-							<img
-								src="https://styles.redditmedia.com/t5_2r0ij/styles/communityIcon_yor9myhxz5x11.png
-"
-								alt="image"
-								class="img-community"
-							/>
+					<div class="input-drop-down-box-2">
+						<div class="title-community-header">
+							<span class="title-community title">YOUR COMMUNITIES</span>
+							<base-button class="create-button">Create New</base-button>
 						</div>
-						<div class="comm-box">
-							<span class="name">r/announcement</span>
-							<span class="name members-count">179,356,569 members</span>
+						<div class="section-box">
+							<div class="image-box">
+								<img
+									src="https://styles.redditmedia.com/t5_2r0ij/styles/communityIcon_yor9myhxz5x11.png
+	"
+									alt="image"
+									class="img-community"
+								/>
+							</div>
+							<div class="comm-box">
+								<span class="name">r/announcement</span>
+								<span class="name members-count">179,356,569 members</span>
+							</div>
 						</div>
 					</div>
 				</div>
