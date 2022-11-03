@@ -54,6 +54,7 @@ export default {
 					imgSrc:
 						'https://www.redditstatic.com/desktop2x/img/social-links/custom.png',
 					alt: 'custom url',
+					type: 'link' /* link or username */,
 				},
 				{
 					id: '2',
@@ -61,6 +62,7 @@ export default {
 					imgSrc:
 						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
 					alt: 'Reddit',
+					type: 'username',
 				},
 				{
 					id: '3',
@@ -68,6 +70,7 @@ export default {
 					imgSrc:
 						'https://www.redditstatic.com/desktop2x/img/social-links/instagram.png',
 					alt: '',
+					type: 'username',
 				},
 				{
 					id: '4',
@@ -75,6 +78,7 @@ export default {
 					imgSrc:
 						'https://www.redditstatic.com/desktop2x/img/social-links/twitter.png',
 					alt: '',
+					type: 'username',
 				},
 			],
 			showSocialLinkConfig: false,

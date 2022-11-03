@@ -6,23 +6,18 @@ export default {
 	namespaced: true,
 	state() {
 		return {
-			userInformation: {
-				displayedUserName: 'Abdelhameed_Emad',
+			userData: {
+				displayName: '',
 				about: '',
+				banner: '',
 				picture: '',
 				karma: 0,
-				cakeDay: {
-					month: '',
-					day: '',
-					year: '',
-				},
-				socialLinK: [
-					/* Data related to Social link section in profile  */
+				cakeDate: '2019-08-24',
+				socialLinks: [
 					{
-						DisplayText: '' /* Displayed text of social link */,
-						imgSrc: '' /* source of displayed image  */,
-						toLink: '' /* redirect link */,
 						type: '',
+						displayText: '',
+						link: '',
 					},
 				],
 				nsfw: true,
@@ -35,8 +30,6 @@ export default {
 						nsfw: true,
 					},
 				],
-				UserProfileImage: '',
-				UserProfileCover: ' ',
 			},
 		};
 	},

@@ -2,14 +2,15 @@
 	<!-- header component -->
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
-		<profile-nav :user-name="getUserName" />
+		<profile-nav :user-name="getUserName" :state="state" />
 		<base-container>
 			<div class="profilebox">
 				<main>
 					<sortposts-bar></sortposts-bar>
 				</main>
 				<aside>
-					<profile-card :user-name="getUserName" />
+					<profile-card :user-name="getUserName" :state="state" />
+					<user-moderators-card></user-moderators-card>
 				</aside>
 			</div>
 		</base-container>
@@ -21,22 +22,59 @@ import ProfileCard from '../../components/UserComponents/ProfileCard.vue';
 import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
+import UserModeratorsCard from '../../components/UserComponents/UserModeratorsCard.vue';
 export default {
 	props: {},
-	created() {
-		document.title = this.$store.state.userName + ' - Reddit';
-	},
 	components: {
 		ProfileCard,
 		BaseContainer,
 		profileNav,
 		SortpostsBar,
+		UserModeratorsCard,
+	},
+	data() {
+		return {
+			state: '' /* profile or user */,
+		};
 	},
 	computed: {
 		getUserName() {
 			console.log(this.$store.state.userName);
 			return this.$store.getters.getUserName;
 		},
+		getUserData() {
+			console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserData'];
+		},
+	},
+	methods: {
+		async RequestUserData() {
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.$store.state.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+	},
+	async created() {
+		if (this.$route.params.userName) {
+			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+			if (this.$route.params.userName == this.$store.getters.getUserName)
+				this.state = 'profile'; /* means same authenticated user */
+			else this.state = 'user'; /* means other user */
+			// console.log(this.state);
+			/* after that we fetch data fetch user data */
+			document.title = this.$store.state.userName + ' - Reddit';
+			const requestStatus = await this.RequestUserData();
+			if (requestStatus == 200) console.log('Sucessfully fetched data');
+			else if (requestStatus == 404) console.log('not found');
+			else if (requestStatus == 500) console.log(' internal server error');
+			console.log(this.$store.getters['user/getUserData']);
+			console.log(this.$route.params.userName);
+		}
 	},
 };
 </script>

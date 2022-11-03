@@ -22,8 +22,13 @@
 					:img-src="data.imgSrc"
 					:alt="data.alt"
 				></sociallink-item>
-				<input type="text" placeholder="Display text" />
-				<input type="text" placeholder="https://website.com" />
+				<input type="text" :placeholder="socialPlaceholder" />
+				<input
+					v-if="data.type == 'link'"
+					type="text"
+					placeholder="https://website.com"
+					v-model="socialLinkUrl"
+				/>
 			</div>
 		</template>
 	</base-dialog>
@@ -47,12 +52,32 @@ export default {
 	data() {
 		return {
 			// showSocialLinkConfigDialog: true,
+			socialLinkUrl: 'j',
 		};
 	},
 	emits: ['back'],
 	methods: {
 		back() {
 			this.$emit('back');
+		},
+	},
+	computed: {
+		socialPlaceholder() {
+			if (this.data.text == 'Reddit') return 'r/community, u/user';
+			if (this.data.type == 'link') return 'Display text';
+			else if (this.data.type == 'username') return '@username';
+			else return 'Display text';
+		},
+		socialLinkModeration() {
+			console.log(this.socialLinkUrl);
+
+			// if (this.socialLinkUrl[0] != 'h') {
+			// 	console.log('ff');
+			// 	// eslint-disable-next-line
+			// 	this.socialLinkUrl = 'http://';
+			// 	return 0;
+			// }
+			return 0;
 		},
 	},
 };
