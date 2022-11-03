@@ -5,9 +5,6 @@
 		<profile-nav :user-name="getUserName" />
 		<base-container>
 			<div class="profilebox">
-				<!-- <main>
-				<createpost-bar />
-			</main> -->
 				<main>
 					<sortposts-bar></sortposts-bar>
 				</main>
@@ -23,8 +20,6 @@
 import ProfileCard from '../../components/UserComponents/ProfileCard.vue';
 import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
-// import SocialLinks from '../../components/UserComponents/SocialLinks.vue';
-// import createpostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 export default {
 	props: {},
@@ -36,7 +31,6 @@ export default {
 		BaseContainer,
 		profileNav,
 		SortpostsBar,
-		// SocialLinks,
 	},
 	computed: {
 		getUserName() {
@@ -54,7 +48,9 @@ export default {
 	margin: 0 auto;
 	box-sizing: border-box;
 }
-
+.sort-post-content {
+	margin-top: 1px;
+}
 .content {
 	width: 640px;
 	margin: 0px 0px 0px 15px;
@@ -67,8 +63,21 @@ export default {
 	.profilebox {
 		display: block;
 	}
+	main {
+		width: 100%;
+	}
 }
 body {
 	min-width: 100%;
+}
+@media (min-width: 960px) {
+	main {
+		width: 640px;
+	}
+}
+aside {
+	width: 312px;
+	margin-left: 24px;
+	min-height: 2000px;
 }
 </style>

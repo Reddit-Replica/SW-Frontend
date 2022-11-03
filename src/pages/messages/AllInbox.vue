@@ -15,22 +15,6 @@ export default {
 	data() {
 		return {
 			// messages: [],
-			// messages: [
-			// 	{
-			// 		text: 'hello world',
-			// 		senderUsername: '/u/norhan_reda',
-			// 		receiverUsername: '',
-			// 		sendAt: '6 days ago',
-			// 		subject: 'hi',
-			// 	},
-			// 	{
-			// 		text: 'hello asmaa',
-			// 		senderUsername: '/u/hoda_gamal',
-			// 		receiverUsername: '',
-			// 		sendAt: '5 days ago',
-			// 		subject: 'hiiiii',
-			// 	},
-			// ],
 		};
 	},
 	created() {
@@ -57,9 +41,9 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		load() {
-			this.messages = this.$store.getters['messages/allMessages'];
-		},
+		// load() {
+		// 	this.messages = this.$store.getters['messages/allMessages'];
+		// },
 	},
 };
 </script>
