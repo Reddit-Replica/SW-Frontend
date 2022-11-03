@@ -1,26 +1,28 @@
 <template>
-	<ul class="social-link" id="social-media-links">
-		<a href="">
+	<div>
+		<ul class="social-link" id="social-media-links">
+			<a href="">
+				<sociallink-item
+					img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
+					text="Custom URL"
+				></sociallink-item>
+			</a>
 			<sociallink-item
 				img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
 				text="Custom URL"
 			></sociallink-item>
-		</a>
-		<sociallink-item
-			img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
-			text="Custom URL"
-		></sociallink-item>
-		<li>
-			<button class="add-social-link" @click="openSocialLinkDialog">
-				<span><i class="fa-solid fa-plus" /></span>Add social link
-			</button>
-		</li>
-	</ul>
-	<social-links
-		:show="addSocialLinkDialog"
-		@close="closeSocialLinkDialog"
-		@open="openSocialLinkDialog"
-	></social-links>
+			<li>
+				<button class="add-social-link" @click="openSocialLinkDialog">
+					<span><i class="fa-solid fa-plus" /></span>Add social link
+				</button>
+			</li>
+		</ul>
+		<social-links
+			:show="addSocialLinkDialog"
+			@close="closeSocialLinkDialog"
+			@open="openSocialLinkDialog"
+		></social-links>
+	</div>
 </template>
 
 <script>

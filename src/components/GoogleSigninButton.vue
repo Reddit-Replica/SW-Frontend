@@ -1,8 +1,10 @@
 <template>
-	<button @click="handlesign">
-		<div><img src="../../img/Google__G__Logo.svg.png" alt="" /></div>
-		<div>continue with Google</div>
-	</button>
+	<div>
+		<button @click="handlesign">
+			<div><img src="../../img/Google__G__Logo.svg.png" alt="" /></div>
+			<div>continue with Google</div>
+		</button>
+	</div>
 </template>
 <script>
 export default {
