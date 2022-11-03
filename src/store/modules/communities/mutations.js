@@ -1,5 +1,5 @@
 export default {
-	// addSubreddit(state, payload) {
-	// 	state.communities.push(payload);
-	// },
+	checkSubredditName(state, payload) {
+		state.subredditNameTaken = payload;
+	},
 };

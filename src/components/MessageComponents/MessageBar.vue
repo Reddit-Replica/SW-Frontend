@@ -57,7 +57,8 @@ a {
 	font-family: 'IBM Plex Sans', Arial, sans-serif;
 }
 a.router-link-active {
-	color: var(--color-grey-light-4);
+	/* color: var(--color-grey-light-4); */
+	opacity: 0.6;
 }
 .message-button:first-of-type {
 	margin-left: 12rem;
