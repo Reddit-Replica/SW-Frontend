@@ -1,32 +1,84 @@
 <template>
 	<div class="card-prof">
 		<div class="profile-card">
-			<div class="cover-pic">
-				<a href="" class="add-image">
-					<input type="file" class="insert-cover-image" id="5" />
+			<!-- cover picture has two margins default is for picture profile and other for avatar profile -->
+			<div
+				class="cover-pic"
+				:class="[isAvatar ? 'avatar-margin' : '']"
+				id="cover-picture"
+			>
+				<!-- add image icon at click it trigger input file which is hidden -->
+				<span @click="addCoverImage" class="add-image">
+					<input
+						type="file"
+						id="add-cover-button"
+						ref="coverFile"
+						hidden
+						@change="loadCoverPic"
+					/>
+					<!-- add image icon (+) -->
 					<i class="fa-regular fa-square-plus add-image-icon" />
-				</a>
-				<a href="" class="profile-settings"><i class="fa-solid fa-gear" /></a>
-				<div class="profile-avatar">
+				</span>
+				<!-- ///////////////////////////////////////////////////////////// -->
+				<!-- profile settings icon -->
+				<router-link to="" class="profile-settings"
+					><i class="fa-solid fa-gear"
+				/></router-link>
+				<!-- ///////////////////// -->
+				<!-- incase of  profile picture preview -->
+				<div class="profile-picture" v-if="!isAvatar">
+					<img src="../../assets/R.png" alt="" id="profile-picture" />
+					<input
+						type="file"
+						hidden
+						id="add-profile-button"
+						ref="profileFile"
+						@change="loadProfilePic"
+					/>
+					<span
+						@click="addProfileImage"
+						class="add-image"
+						style="bottom: 0px; right: 0px"
+					>
+						<i class="fa-regular fa-square-plus add-image-icon" />
+					</span>
+				</div>
+				<!-- //////////////////////////////////// -->
+				<!-- incase of avatar pic preview -->
+				<div class="profile-avatar" v-else>
 					<img src="../../assets/avatar.png" alt="" />
 				</div>
+				<!-- //////////////////////////// -->
+				<!-- incase of profile picture display name , user name style -->
 			</div>
-			<div>
+			<div style="margin-bottom: 8px" v-if="!isAvatar">
+				<h4 class="profile-displayedname">Abdelhameed_Emad</h4>
+				<a href="" class="profile-username">u/jhvhhygy</a>
+			</div>
+			<!-- /////////////////////////////// -->
+			<!-- incase of Avatar display name , user name style -->
+			<div v-else>
 				<h2 class="profile-name" id="profile-name">
 					{{ userName || 'Agile_Relative7435' }}
 				</h2>
 				<p class="profile-desc" id="profile-desc">u/Agile_Relative7435 · 8d</p>
 			</div>
+			<!-- ////////////////////////////////////////////// -->
+			<!-- avatar styling button -->
 			<div class="profile-button">
 				<button id="style-avatar">
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
 				</button>
 			</div>
-			<div class="profile-items">
+			<!-- //////////////////// -->
+			<!-- about profile box -->
+			<div class="profile-about" v-if="about != ''">hi how are you</div>
+			<!-- ///////////////// -->
+			<!-- profile items karma and cake day has two alignment for pic , avatar -->
+			<div class="profile-items" :class="[isAvatar ? 'align-center' : '']">
 				<span class="i karma">
 					<h5>Karma</h5>
 					<span>
-						<i />
 						<p id="karma">
 							<span><i class="fa-solid fa-fan" /></span>1
 						</p>
@@ -41,38 +93,17 @@
 					</span>
 				</span>
 			</div>
-			<ul class="social-link" id="social-media-links">
-				<li>
-					<button id="social-media-button">
-						<span class="social-link-image"
-							><img
-								id="social-media-image"
-								src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=IoO0WgvsFBSIIM"
-								alt="" /></span
-						>socail media
-					</button>
-				</li>
-				<li>
-					<button>
-						<span class="social-link-image"
-							><img
-								src="https://www.google.com.eg/search?q=instagram+icon&sxsrf=ALiCzsbUQL3AUT9Mw2XMxdeRynTtcYzi1w:1665686772149&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiymvHi7t36AhUQhf0HHV6vCqUQ_AUoAXoECAMQAw&biw=1536&bih=722&dpr=1.25#imgrc=z3ESiuXOiGuxXM"
-								alt="" /></span
-						>hhh
-					</button>
-				</li>
-				<li>
-					<button>
-						<span class="social-link-image"><img src="" alt="" /></span>hhh
-					</button>
-				</li>
-				<li>
-					<button class="add-social-link" @click="openSocialLinkDialog">
-						<span><i class="fa-solid fa-plus" /></span>Add social link
-					</button>
-				</li>
-			</ul>
+			<!-- //////////////////////////////////////////// -->
+			<!-- follow chat for other users -->
+			<follow-chat-component v-if="0"></follow-chat-component>
+			<!-- /////////////////////////// -->
+			<!-- Social link block  -->
+			<sociallinks-block></sociallinks-block>
+			<!-- ///////////////// -->
+			<!-- New post button -->
 			<button class="new-post">New post</button>
+			<!-- ////////////// -->
+			<!-- more options button -->
 			<button
 				id="more-options-button"
 				class="more-options"
@@ -81,17 +112,17 @@
 			>
 				More options
 			</button>
+			<!-- /////////////////// -->
+			<!-- profile options -->
 			<ul id="profile-options" class="profile-options" v-show="showMoreOptions">
-				<li>
-					<a href="">Profile to Moderation</a>
-				</li>
-				<li>
-					<a href="">Add to Custom Feed</a>
-				</li>
-				<li>
-					<a href="">Invite someone to chat</a>
+				<li v-for="profileOption in profileOptions" :key="profileOption.name">
+					<router-link :to="profileOption.toLink">{{
+						profileOption.name
+					}}</router-link>
 				</li>
 			</ul>
+			<!-- /////////////// -->
+			<!-- more options button -->
 			<button
 				id="fewer-options-button"
 				class="fewer-options"
@@ -100,21 +131,18 @@
 			>
 				Fewer options
 			</button>
+			<!-- ////////////////// -->
 		</div>
 	</div>
-	<social-links
-		:show="addSocialLinkDialog"
-		@close="closeSocialLinkDialog"
-		@open="openSocialLinkDialog"
-	></social-links>
 </template>
 
 <script>
-import SocialLinks from './SocialLinks.vue';
+import SociallinksBlock from './BaseUserComponents/SociallinksBlock.vue';
+import FollowChatComponent from './BaseUserComponents/FollowChatComponent.vue';
 export default {
 	components: {
-		SocialLinks,
-		// SociallinksConfig,
+		SociallinksBlock,
+		FollowChatComponent,
 	},
 	props: {
 		userName: {
@@ -130,9 +158,25 @@ export default {
 				{
 					id: '',
 					imagesUrl: '',
-					Name: '',
+					name: '',
+					type: '' /* there are three types username  */,
 				},
 			],
+			profileOptions: [
+				{
+					name: 'Profile to Moderation',
+					toLink: '/user/Creative-Dentist1095/about/edit/moderation',
+				},
+				{
+					name: 'Add to Custom Feed',
+					toLink: '/user/Creative-Dentist1095/about/edit/moderation',
+				},
+				{
+					name: 'Invite someone to chat',
+					toLink: '/user/Creative-Dentist1095/about/edit/moderation',
+				},
+			],
+			isAvatar: false,
 		};
 	},
 	methods: {
@@ -140,11 +184,34 @@ export default {
 			this.showMoreOptions = !this.showMoreOptions;
 			console.log(this.userName, this.$route.props.userName);
 		},
-		openSocialLinkDialog() {
-			this.addSocialLinkDialog = true;
+		addProfileImage() {
+			document.querySelector('#add-profile-button').click();
 		},
-		closeSocialLinkDialog() {
-			this.addSocialLinkDialog = false;
+		addCoverImage() {
+			document.querySelector('#add-cover-button').click();
+		},
+		loadProfilePic() {
+			const file = this.$refs.profileFile.files[0];
+			console.log('loadprofilepic');
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result;
+				document.querySelector('#profile-picture').src = result;
+			};
+			reader.readAsDataURL(file);
+		},
+		loadCoverPic() {
+			console.log('loadCoverpic');
+			const file = this.$refs.coverFile.files[0];
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result;
+				document.querySelector(
+					'#cover-picture'
+				).style.backgroundImage = `url(${result})`;
+				console.log('loadCoverpic hhh');
+			};
+			reader.readAsDataURL(file);
 		},
 	},
 };
@@ -166,13 +233,17 @@ ul {
 a {
 	text-decoration: none;
 }
-
+.align-center {
+	align-items: center;
+}
 .card-prof {
-	margin-left: 24px;
+	/* margin-left: 24px; */
+	width: 100%;
 }
 
 .profile-card {
-	width: 312px;
+	/* width: 312px; */
+	width: 100%;
 	background-color: var(--main-white-color);
 	display: flex;
 	flex-direction: column;
@@ -184,14 +255,20 @@ a {
 
 .cover-pic {
 	height: 94px;
-	width: calc(100% + 23px);
+	width: calc(100% + 22px);
 	background-color: #2d97d8; /* cover picture default color */
+	/* background-image: url(../../assets/R.png); */
+	background-size: cover;
 	border-radius: 4px 4px 0 0;
 	position: relative;
-	left: -12px;
+	left: -11px;
 	top: -12px;
-	margin-bottom: calc(160px + 12px + 0px - 94px);
+	/* margin-bottom: calc(160px + 12px + 0px - 94px);  */ /* this for avatar */
 	/* 160 pic hieght 12px -> top Avatar , 0 for margin bottom , -94 cover height*/
+	margin-bottom: 15px; /* this for picture */
+}
+.avatar-margin {
+	margin-bottom: calc(160px + 12px + 0px - 94px);
 }
 
 .cover-pic .add-image {
@@ -203,12 +280,13 @@ a {
 	color: var(--color-blue-2);
 }
 
-a.add-image {
+span.add-image {
 	position: relative;
 	z-index: 50;
 	color: var(--main-white-color);
+	cursor: pointer;
 }
-a.add-image i {
+span.add-image i {
 	z-index: 50;
 	color: var(--main-white-color);
 }
@@ -236,6 +314,9 @@ a.add-image i {
 	/* color: var(--main-white-color); */
 	/* border: 1px solid var(--color-blue-2); */
 }
+a.profile-settings:hover {
+	color: #0d6efd;
+}
 .profile-avatar img {
 	height: 160px;
 	/* max-width: 120px; */
@@ -244,6 +325,43 @@ a.add-image i {
 	top: 18px;
 	left: 50%;
 	transform: translateX(-50%);
+}
+.profile-displayedname {
+	font-size: 16px;
+	line-height: 20px;
+	margin: 4px 0;
+	font-weight: 500;
+	color: #222222;
+}
+.profile-username {
+	font-size: 12px;
+	line-height: 16px;
+	/* margin-top: 4px; */
+	margin-bottom: 8px;
+	font-weight: 500;
+	color: #222222;
+}
+.profile-picture {
+	position: absolute;
+	width: 86px;
+	height: 86px;
+	padding: 3px;
+	/* margin-left: -3px; */
+	/* margin-top: 16px; */
+	top: calc(16px + 15px);
+	left: 12px;
+	background-color: #ffffff;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+.profile-picture img {
+	width: 100%;
+	height: 100%;
+	/* background-color: #ec0623; */
+	border-radius: 4px;
+	object-fit: cover;
+	object-position: top;
+	border: 1px solid #edeff1;
 }
 
 .profile-name {
@@ -282,6 +400,15 @@ a.add-image i {
 	border: none;
 }
 
+.profile-about {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+	color: #1c1c1c;
+	/* margin-bottom: 8px; */
+	margin-top: 8px;
+}
+
 .avatar-style {
 	position: absolute;
 	left: 15px;
@@ -313,7 +440,7 @@ a.add-image i {
 .profile-items {
 	display: flex;
 	/* justify-content: space-between; */
-	align-items: center;
+	/* align-items: center; */ /* in case if no abut un commet this  */
 	color: var(--color-dark-2);
 	flex-wrap: wrap;
 	/* margin-bottom: 13px; */

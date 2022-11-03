@@ -1,62 +1,52 @@
 export default {
-	// async createSubreddit(_, payload) {
-	// 	const newSubreddit = {
-	// 		subredditName: payload.subredditName,
-	// 		type: payload.type,
-	// 		nsfw: payload.nsfw,
-	// 	};
+	async createSubreddit(_, payload) {
+		const newSubreddit = {
+			subredditName: payload.subredditName,
+			type: payload.type,
+			nsfw: payload.nsfw,
+		};
+		const baseurl = payload.baseurl;
 
-	// 	console.log(newSubreddit);
-	// 	console.log(this.$baseurl);
-	// 	const response = await fetch('http://localhost:3000/subreddits', {
-	// 		method: 'POST',
-	// 		headers: { 'Content-Type': 'application/json' },
-	// 		body: JSON.stringify(newSubreddit),
-	// 	});
-
-	// 	const responseData = await response.json();
-
-	// 	if (!response.ok) {
-	// 		const error = new Error(
-	// 			responseData.message || 'Failed to send request.'
-	// 		);
-	// 		throw error;
-	// 	}
-
-	// 	// newSubreddit.subredditName = responseData.communityName;
-	// 	// newSubreddit.type = payload.communityType;
-	// 	// newSubreddit.nsfw = payload.communityNSFW;
-
-	// 	// context.commit('addSubreddit', newSubreddit);
-	// },
-	createSubreddit(_, payload) {
-		console.log(payload);
-		fetch('http://localhost:3000/subreddits', {
+		const response = await fetch(baseurl + '/subreddits', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				subredditName: payload.subredditName,
-				type: payload.type,
-				nsfw: payload.nsfw,
-			}),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				}
-			})
-			// .then((data) => {
-			// 	console.log(data);
-			// 	const res = [];
-			// 	for (const id in data) {
-			// 		res.push({ id: id, name: data[id].name, rating: data[id].rating });
-			// 	}
-			// 	this.results = res;
-			// })
-			.catch((error) => {
-				console.log(error);
-			});
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(newSubreddit),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+
+	async checkSubredditName(context, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + '/subreddits?subredditName=' + payload.subredditName
+		);
+
+		const responseData = await response.json();
+
+		let isTaken = false;
+		if (response.status == 409) {
+			// if (payload.subredditName == 'web') {
+			isTaken = true;
+			console.log(isTaken);
+		}
+		console.log(isTaken);
+		console.log(response.status);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+
+		context.commit('checkSubredditName', isTaken);
 	},
 };

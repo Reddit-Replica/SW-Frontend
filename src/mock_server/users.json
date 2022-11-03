@@ -1,24 +1,68 @@
 {
-  "users": [
-    {
-      "id": 1,
-      "name": "Norhan Reda",
-      "email": "norhan.ahmed01@eng-st.cu.edu.eg",
-      "password": "12345"
-    },
-    {
-      "id": 2,
-      "name": "nora",
-      "email": "nora@gmail.com",
-      "password": "123456789"
-    }
-  ],
-  "subreddits": [
-    {
-      "id":1,
-      "subredditName": "FrontEnd",
-      "type": "Private",
-      "nsfw": false
-    }
-  ]
+	"users": [
+		{
+			"id": 1,
+			"name": "Norhan Reda",
+			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
+			"password": "12345"
+		},
+		{
+			"id": 2,
+			"name": "nora",
+			"email": "nora@gmail.com",
+			"password": "123456789"
+		}
+	],
+	"subreddits": [
+		{
+			"id": 1,
+			"subredditName": "FrontEnd",
+			"type": "Private",
+			"nsfw": false
+		},
+		{
+			"id": 2,
+			"subredditName": "BackEnd",
+			"type": "Private",
+			"nsfw": false
+		}
+	],
+	"allMessages": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "type",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "type",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "",
+					"subject": "hi",
+					"sendAt": "5 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		}
+	]
 }

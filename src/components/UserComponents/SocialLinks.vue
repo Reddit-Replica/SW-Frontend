@@ -42,7 +42,7 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['close'],
+	emits: ['close', 'open'],
 	data() {
 		return {
 			sociallinkItems: [
