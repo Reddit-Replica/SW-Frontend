@@ -45,7 +45,7 @@
 			"id": 5
 		}
 	],
-	"messages": [
+	"compose": [
 		{
 			"before": "before",
 			"after": "after",
@@ -82,5 +82,7 @@
 				}
 			]
 		}
-	]
+	],
+	"unread": [],
+	"mentions": []
 }
