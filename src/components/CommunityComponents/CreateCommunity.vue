@@ -72,6 +72,51 @@
 							<span class="more-text" @click="showMore">More</span>
 						</div>
 					</div>
+					<base-dialog
+						:show="moreIsShown"
+						title="Error"
+						@close="showMore"
+						transparent-background
+					>
+						<div class="error-dialog">
+							<div class="error-text">
+								Community names must be between 3–21 characters, and can only
+								contain letters, numbers, or underscores.
+							</div>
+							<div class="box-buttons box-ok">
+								<base-button @click="showMore" class="button-blue"
+									>OK</base-button
+								>
+							</div>
+						</div>
+					</base-dialog>
+				</div>
+			</div>
+			<div class="community-box flex-column">
+				<div class="community-box-title">
+					<h3 class="title-black">Community category</h3>
+				</div>
+				<div class="community-box-input flex-column">
+					<select
+						class="input-name"
+						v-model.trim="communityCategory"
+						@blur="validateCommunityCategory"
+						@click="validateCommunityCategory"
+					>
+						<option
+							v-for="category of categories"
+							:key="category.name"
+							:value="category.name"
+						>
+							{{ category.name }}
+						</option>
+					</select>
+					<div
+						v-if="communityCategoryRequiredError"
+						class="title-grey title-red"
+					>
+						A community category is required
+					</div>
 				</div>
 				<div class="community-box flex-column">
 					<div class="community-box-title">
@@ -280,6 +325,7 @@
 		</base-dialog>
 	</div>
 </template>
+
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
@@ -301,9 +347,25 @@ export default {
 			charRemaining: '21',
 			moreIsShown: false,
 			communityNameTakenError: false,
+			categories: [],
+			communityCategory: '',
+			communityCategoryRequiredError: false,
 		};
 	},
+	created() {
+		this.loadCategories();
+	},
 	methods: {
+		async loadCategories() {
+			try {
+				await this.$store.dispatch('community/getSavedCategories', {
+					baseurl: this.$baseurl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something failed!';
+			}
+			this.categories = this.$store.getters['community/categories'];
+		},
 		hidecreateCommunity() {
 			this.$emit('exit');
 		},
@@ -331,6 +393,13 @@ export default {
 		chooseNSFW() {
 			this.nsfwChosen = !this.nsfwChosen;
 		},
+		validateCommunityCategory() {
+			if (this.communityCategory === '') {
+				this.communityCategoryRequiredError = true;
+			} else {
+				this.communityCategoryRequiredError = false;
+			}
+		},
 		validateCommunityName() {
 			if (this.communityName === '') {
 				this.communityNameValidity = false;
@@ -355,10 +424,6 @@ export default {
 			});
 			this.communityNameTakenError =
 				this.$store.getters['community/subredditNameTaken'];
-			console.log(
-				'---------------------------->',
-				this.communityNameTakenError
-			);
 			if (this.communityNameTakenError) {
 				this.communityNameRequiredError = false;
 				this.communityNameCharError = false;
@@ -375,17 +440,20 @@ export default {
 
 			if (!this.communityNameValidity) {
 				return;
+			} else if (this.communityCategoryRequiredError) {
+				return;
 			}
 			this.$store.dispatch('community/createSubreddit', {
 				subredditName: this.communityName,
 				type: this.communityType,
 				nsfw: this.nsfwChosen,
+				category: this.communityCategory,
 				baseurl: this.$baseurl,
 			});
 		},
-	},
-	showMore() {
-		this.moreIsShown = !this.moreIsShown;
+		showMore() {
+			this.moreIsShown = !this.moreIsShown;
+		},
 	},
 };
 </script>
@@ -555,5 +623,20 @@ button:hover {
 	border: none;
 	color: var(--color-white-1);
 	padding: 4px 16px;
+}
+.error-text {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 21px;
+	max-height: 50vh;
+	overflow-wrap: break-word;
+	overflow: auto;
+}
+.error-dialog {
+	width: 318px;
+}
+.box-ok {
+	padding: 8px 5px;
 }
 </style>

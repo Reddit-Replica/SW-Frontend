@@ -27,65 +27,68 @@
 			"nsfw": false
 		},
 		{
-			"subredditName": "please",
-			"type": "Public",
+			"subredditName": "hello",
+			"type": "Private",
 			"nsfw": false,
+			"category": "Programming",
 			"id": 3
 		},
 		{
-			"subredditName": "web",
+			"subredditName": "hello",
 			"type": "Private",
-			"nsfw": true,
+			"nsfw": false,
+			"category": "leave",
 			"id": 4
 		},
 		{
-			"subredditName": "hiiiii",
+			"subredditName": "hhh",
 			"type": "Public",
 			"nsfw": false,
+			"category": "Sports",
 			"id": 5
-		}
-	],
-	"compose": [
-		{
-			"before": "before",
-			"after": "after",
-			"children": [
-				{
-					"text": "hello world",
-					"type": "type",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": true,
-					"isRead": false
-				}
-			]
 		},
 		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"text": "hello asmaa",
-					"type": "type",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
-					"subject": "hi",
-					"sendAt": "5 days ago",
-					"isReply": true,
-					"isRead": false
-				}
-			]
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 6
+		},
+		{
+			"subredditName": "dfgh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 7
 		}
 	],
-	"unread": [],
-	"mentions": [],
-	"messages": [
+	"saved-categories": [
+		{
+			"id": 1,
+			"name": "Sports"
+		},
+		{
+			"id": 2,
+			"name": "Gaming"
+		},
+		{
+			"id": 3,
+			"name": "Programming"
+		},
+		{
+			"id": 4,
+			"name": "News"
+		},
+		{
+			"id": 5,
+			"name": "Learning"
+		},
+		{
+			"id": 6,
+			"name": "Films"
+		}
+	],
+	"allMessages": [
 		{
 			"before": "before",
 			"after": "after",
