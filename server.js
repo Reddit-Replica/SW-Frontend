@@ -27,7 +27,7 @@ function createToken(payload) {
 // }
 
 // Check if the user exists in database
-function isAuthenticated({ name, email }) {
+function forgetPasswordauthenticated({ name, email }) {
 	return (
 		userdb.users.findIndex(
 			(user) => user.email === email && user.name === name
@@ -37,7 +37,7 @@ function isAuthenticated({ name, email }) {
 
 server.post('/api/auth/forget', (req, res) => {
 	const { name, email } = req.body;
-	if (isAuthenticated({ name, email }) === false) {
+	if (forgetPasswordauthenticated({ name, email }) === false) {
 		const status = 401;
 		const message = 'Incorrect name or email';
 		res.status(status).json({ status, message });
