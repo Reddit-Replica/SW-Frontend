@@ -1,279 +1,284 @@
 <template>
-	<base-dialog
-		:show="createCommunityShown"
-		@close="hidecreateCommunity"
-		title="Create a community"
-	>
-		<div class="community-dialog flex-column">
-			<div class="community-box flex-column">
-				<div class="community-box-title flex-column">
-					<h3 class="title-black">Name</h3>
-					<p class="title-grey">
-						<span
-							>Community names including capitalization cannot be changed.</span
-						>
+	<div>
+		<base-dialog
+			:show="createCommunityShown"
+			@close="hidecreateCommunity"
+			title="Create a community"
+		>
+			<div class="community-dialog flex-column">
+				<div class="community-box flex-column">
+					<div class="community-box-title flex-column">
+						<h3 class="title-black">Name</h3>
+						<p class="title-grey">
+							<span
+								>Community names including capitalization cannot be
+								changed.</span
+							>
 
-						<span class="span-info">
+							<span class="span-info">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-info-circle"
+									viewBox="0 0 16 16"
+									@mouseover="showInfoBox"
+									@mouseleave="showInfoBox"
+								>
+									<path
+										d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+									/>
+									<path
+										d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+									/>
+								</svg>
+								<div class="box arrow-top" v-if="InfoBoxShown">
+									Names cannot have spaces (e.g., "r/bookclub" not "r/book
+									club"), must be between 3-21 characters, and underscores ("_")
+									are the only special characters allowed. Avoid using solely
+									trademarked names (e.g., "r/FansOfAcme" not "r/Acme").
+								</div>
+							</span>
+						</p>
+					</div>
+					<div class="community-box-input flex-column">
+						<span class="r-span title-grey">r/</span>
+						<input
+							class="input-name"
+							maxlength="21"
+							type="text"
+							v-model.trim="communityName"
+							@blur="validateCommunityName"
+							@keyup="charCount()"
+						/>
+						<div class="title-grey">
+							{{ charRemaining }} Characters remaining
+						</div>
+						<div v-if="communityNameRequiredError" class="title-grey title-red">
+							A community name is required
+						</div>
+						<div v-if="communityNameTakenError" class="title-grey title-red">
+							Sorry, r/{{ communityName }} is taken. Try another.
+						</div>
+						<div
+							v-if="communityNameCharError"
+							class="title-grey name-error title-red"
+						>
+							<p class="title-red">
+								Community names must be between 3–21 characters, and can only
+								contain letters, numbers, or underscores.
+							</p>
+							<span class="more-text" @click="showMore">More</span>
+						</div>
+					</div>
+				</div>
+				<div class="community-box flex-column">
+					<div class="community-box-title">
+						<h3 class="title-black">Community type</h3>
+					</div>
+					<div class="community-box-input flex-column" role="radiogroup">
+						<input type="hidden" />
+						<div
+							class="type-item"
+							role="radio"
+							value="public"
+							@click="chooseType(0)"
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
+								width="20"
+								height="20"
 								fill="currentColor"
-								class="bi bi-info-circle"
+								class="bi bi-circle"
 								viewBox="0 0 16 16"
-								@mouseover="showInfoBox"
-								@mouseleave="showInfoBox"
+								v-if="!typeChosen0"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
 								/>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-record-circle-fill"
+								viewBox="0 0 16 16"
+								v-else
+							>
 								<path
-									d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
 								/>
 							</svg>
-							<div class="box arrow-top" v-if="InfoBoxShown">
-								Names cannot have spaces (e.g., "r/bookclub" not "r/book club"),
-								must be between 3-21 characters, and underscores ("_") are the
-								only special characters allowed. Avoid using solely trademarked
-								names (e.g., "r/FansOfAcme" not "r/Acme").
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-person-fill"
+								viewBox="0 0 16 16"
+							>
+								<path
+									d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+								/>
+							</svg>
+							<div class="title-black">Public</div>
+							<div class="title-grey">
+								Anyone can view, post, and comment to this community
 							</div>
-						</span>
-					</p>
-				</div>
-				<div class="community-box-input flex-column">
-					<span class="r-span title-grey">r/</span>
-					<input
-						class="input-name"
-						maxlength="21"
-						type="text"
-						v-model.trim="communityName"
-						@blur="validateCommunityName"
-						@keyup="charCount()"
-					/>
-					<div class="title-grey">{{ charRemaining }} Characters remaining</div>
-					<div v-if="communityNameRequiredError" class="title-grey title-red">
-						A community name is required
-					</div>
-					<div v-if="communityNameTakenError" class="title-grey title-red">
-						Sorry, r/{{ communityName }} is taken. Try another.
-					</div>
-					<div
-						v-if="communityNameCharError"
-						class="title-grey name-error title-red"
-					>
-						<p class="title-red">
-							Community names must be between 3–21 characters, and can only
-							contain letters, numbers, or underscores.
-						</p>
-						<span class="more-text" @click="showMore">More</span>
-					</div>
-				</div>
-			</div>
-			<div class="community-box flex-column">
-				<div class="community-box-title">
-					<h3 class="title-black">Community type</h3>
-				</div>
-				<div class="community-box-input flex-column" role="radiogroup">
-					<input type="hidden" />
-					<div
-						class="type-item"
-						role="radio"
-						value="public"
-						@click="chooseType(0)"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-circle"
-							viewBox="0 0 16 16"
-							v-if="!typeChosen0"
-						>
-							<path
-								d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-record-circle-fill"
-							viewBox="0 0 16 16"
-							v-else
-						>
-							<path
-								d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-person-fill"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-							/>
-						</svg>
-						<div class="title-black">Public</div>
-						<div class="title-grey">
-							Anyone can view, post, and comment to this community
 						</div>
-					</div>
-					<div
-						class="type-item"
-						role="radio"
-						value="restricted"
-						@click="chooseType(1)"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-circle"
-							viewBox="0 0 16 16"
-							v-if="!typeChosen1"
+						<div
+							class="type-item"
+							role="radio"
+							value="restricted"
+							@click="chooseType(1)"
 						>
-							<path
-								d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-record-circle-fill"
-							viewBox="0 0 16 16"
-							v-else
-						>
-							<path
-								d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-eye-fill"
-							viewBox="0 0 16 16"
-						>
-							<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-							<path
-								d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
-							/>
-						</svg>
-						<div class="title-black">Restricted</div>
-						<div class="title-grey">
-							Anyone can view this community, but only approved users can post
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-circle"
+								viewBox="0 0 16 16"
+								v-if="!typeChosen1"
+							>
+								<path
+									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+								/>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-record-circle-fill"
+								viewBox="0 0 16 16"
+								v-else
+							>
+								<path
+									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+								/>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-eye-fill"
+								viewBox="0 0 16 16"
+							>
+								<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+								<path
+									d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+								/>
+							</svg>
+							<div class="title-black">Restricted</div>
+							<div class="title-grey">
+								Anyone can view this community, but only approved users can post
+							</div>
 						</div>
-					</div>
-					<div
-						class="type-item"
-						role="radio"
-						value="private"
-						@click="chooseType(2)"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-circle"
-							viewBox="0 0 16 16"
-							v-if="!typeChosen2"
+						<div
+							class="type-item"
+							role="radio"
+							value="private"
+							@click="chooseType(2)"
 						>
-							<path
-								d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-record-circle-fill"
-							viewBox="0 0 16 16"
-							v-else
-						>
-							<path
-								d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-lock-fill"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
-							/>
-						</svg>
-						<div class="title-black">Private</div>
-						<div class="title-grey">
-							Only approved users can view and submit to this community
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-circle"
+								viewBox="0 0 16 16"
+								v-if="!typeChosen2"
+							>
+								<path
+									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+								/>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-record-circle-fill"
+								viewBox="0 0 16 16"
+								v-else
+							>
+								<path
+									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+								/>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-lock-fill"
+								viewBox="0 0 16 16"
+							>
+								<path
+									d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
+								/>
+							</svg>
+							<div class="title-black">Private</div>
+							<div class="title-grey">
+								Only approved users can view and submit to this community
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="community-box flex-column">
-				<div class="community-box-title">
-					<h3 class="title-black">Adult content</h3>
-					<div
-						class="community-box-input type-item pointer-cursor"
-						@click="chooseNSFW"
-					>
-						<input type="hidden" />
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-square"
-							viewBox="0 0 16 16"
-							v-if="!nsfwChosen"
+				<div class="community-box flex-column">
+					<div class="community-box-title">
+						<h3 class="title-black">Adult content</h3>
+						<div
+							class="community-box-input type-item pointer-cursor"
+							@click="chooseNSFW"
 						>
-							<path
-								d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-							/>
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							class="bi bi-check-square-fill"
-							viewBox="0 0 16 16"
-							v-else
-						>
-							<path
-								d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"
-							/>
-						</svg>
-						<div class="red-block">NSFW</div>
-						<div class="title-black">18+ year old community</div>
+							<input type="hidden" />
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-square"
+								viewBox="0 0 16 16"
+								v-if="!nsfwChosen"
+							>
+								<path
+									d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
+								/>
+							</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="20"
+								height="20"
+								fill="currentColor"
+								class="bi bi-check-square-fill"
+								viewBox="0 0 16 16"
+								v-else
+							>
+								<path
+									d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"
+								/>
+							</svg>
+							<div class="red-block">NSFW</div>
+							<div class="title-black">18+ year old community</div>
+						</div>
 					</div>
 				</div>
+				<div class="community-box box-buttons">
+					<base-button @click="hidecreateCommunity" class="button-white"
+						>Cancel</base-button
+					>
+					<base-button @click="submitCommunity" class="button-blue"
+						>Create Community</base-button
+					>
+				</div>
 			</div>
-			<div class="community-box box-buttons">
-				<base-button @click="hidecreateCommunity" class="button-white"
-					>Cancel</base-button
-				>
-				<base-button @click="submitCommunity" class="button-blue"
-					>Create Community</base-button
-				>
-			</div>
-		</div>
-	</base-dialog>
+		</base-dialog>
+	</div>
 </template>
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';

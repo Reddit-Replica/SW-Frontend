@@ -1,14 +1,16 @@
 <template>
-	<vue-recaptcha
-		ref="recaptcha"
-		@verify="verifyMethod"
-		@expired="expiredMethod"
-		@render="renderMethod"
-		@error="errorMethod"
-		sitekey="6Lfv_7oiAAAAAFBYyztH9f4OKtEzwBNil-YteGVN"
-		class="g-recaptcha"
-	>
-	</vue-recaptcha>
+	<div>
+		<vue-recaptcha
+			ref="recaptcha"
+			@verify="verifyMethod"
+			@expired="expiredMethod"
+			@render="renderMethod"
+			@error="errorMethod"
+			sitekey="6Lfv_7oiAAAAAFBYyztH9f4OKtEzwBNil-YteGVN"
+			class="g-recaptcha"
+		>
+		</vue-recaptcha>
+	</div>
 </template>
 
 <script>
