@@ -25,6 +25,67 @@
 			"subredditName": "BackEnd",
 			"type": "Private",
 			"nsfw": false
+		},
+		{
+			"subredditName": "hello",
+			"type": "Private",
+			"nsfw": false,
+			"category": "Programming",
+			"id": 3
+		},
+		{
+			"subredditName": "hello",
+			"type": "Private",
+			"nsfw": false,
+			"category": "leave",
+			"id": 4
+		},
+		{
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 5
+		},
+		{
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 6
+		},
+		{
+			"subredditName": "dfgh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 7
+		}
+	],
+	"saved-categories": [
+		{
+			"id": 1,
+			"name": "Sports"
+		},
+		{
+			"id": 2,
+			"name": "Gaming"
+		},
+		{
+			"id": 3,
+			"name": "Programming"
+		},
+		{
+			"id": 4,
+			"name": "News"
+		},
+		{
+			"id": 5,
+			"name": "Learning"
+		},
+		{
+			"id": 6,
+			"name": "Films"
 		}
 	],
 	"allMessages": [

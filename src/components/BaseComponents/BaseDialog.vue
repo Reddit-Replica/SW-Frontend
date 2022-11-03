@@ -1,6 +1,10 @@
 <template>
 	<teleport to="body">
-		<div v-if="show" class="backdrop">
+		<div
+			v-if="show"
+			class="backdrop"
+			:class="{ 'transparent-background': transparentBackground }"
+		>
 			<dialog open v-if="show" :class="dialogClass">
 				<header>
 					<slot name="header">
@@ -49,6 +53,11 @@ export default {
 			type: String,
 			required: false,
 			default: '',
+		},
+		transparentBackground: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 	emits: ['close'],
@@ -114,5 +123,8 @@ section {
 }
 .header-center {
 	text-align: center;
+}
+.transparent-background {
+	background-color: transparent;
 }
 </style>
