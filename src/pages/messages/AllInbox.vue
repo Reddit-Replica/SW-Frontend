@@ -1,9 +1,12 @@
 <template>
-	<allinbox-component
-		v-for="message in messages"
-		:key="message"
-		:message="message"
-	></allinbox-component>
+	<div>
+		<allinbox-component
+			v-for="message in messages"
+			:key="message"
+			:message="message"
+		></allinbox-component>
+		<!-- <button @click="load()"></button> -->
+	</div>
 </template>
 
 <script>

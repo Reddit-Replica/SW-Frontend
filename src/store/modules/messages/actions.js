@@ -1,7 +1,8 @@
 export default {
 	async loadAllMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/allMessages');
+		// const response = await fetch(baseurl + '/message/compose');
+		const response = await fetch(baseurl + '/messages');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
