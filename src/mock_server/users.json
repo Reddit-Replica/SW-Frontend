@@ -88,7 +88,47 @@
 			"name": "Films"
 		}
 	],
-	"allMessages": [
+	"compose": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "type",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "type",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "",
+					"subject": "hi",
+					"sendAt": "5 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		}
+	],
+	"unread": [],
+	"mentions": [],
+	"messages": [
 		{
 			"before": "before",
 			"after": "after",
