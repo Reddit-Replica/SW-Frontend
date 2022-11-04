@@ -743,7 +743,7 @@
 											>
 										</div>
 									</div>
-									<div class="big-box" v-else>
+									<div class="big-box big-box-markdown-mode" v-else>
 										<div>
 											<textarea
 												class="text-area text-area-in-markdown-mode"
@@ -1263,7 +1263,7 @@ textarea:focus {
 	display: flex;
 	line-height: 0;
 	outline: none;
-	padding: 4px;
+	padding: 3px;
 	position: relative;
 	flex-wrap: nowrap;
 }
@@ -1271,7 +1271,7 @@ textarea:focus {
 	color: black;
 	display: flex;
 	align-items: center;
-	width: 32px;
+	width: 30px;
 	height: 32px;
 	border-radius: 4px;
 	background-color: #f6f7f8;
@@ -1330,8 +1330,6 @@ textarea:focus {
 	opacity: 1;
 }
 .mark-down {
-	position: absolute;
-	left: 62%;
 	width: max-content;
 	font-family: 'Noto Sans', Arial, sans-serif;
 	font-size: 12px;
@@ -1340,13 +1338,13 @@ textarea:focus {
 	padding: 4px 8px;
 	color: var(--color-pink);
 	background-color: var(--color-grey-light-9);
+	display: block;
+	margin-left: auto;
 }
 .mark-down:hover {
 	background-color: #ccc;
 }
 .comment-button {
-	position: absolute;
-	left: 82%;
 	width: 100px;
 	font-family: 'Noto Sans', Arial, sans-serif;
 	font-size: 12px;
@@ -1355,9 +1353,17 @@ textarea:focus {
 	padding: 4px 8px;
 	color: white;
 	background-color: var(--color-pink);
+	display: block;
+	margin-left: auto;
 }
 .comment-submit {
-	margin: 24px 40px 24px 0px;
+	padding: 24px 0px;
+}
+.big-box-fancy-mode {
+	width: fit-content;
+}
+.big-box-markdown-mode {
+	margin-right: 40px;
 }
 .tool-tip:last-of-type {
 	position: relative;
@@ -1428,7 +1434,7 @@ textarea:focus {
 		display: flex;
 	}
 }
-@media (max-width: 1159px) {
+@media (max-width: 1192px) {
 	.icons-box .space-in {
 		display: none;
 	}
