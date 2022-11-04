@@ -1,5 +1,3 @@
 <template>
-  <div>
-    downvoted
-  </div>
+	<div>downvoted</div>
 </template>
