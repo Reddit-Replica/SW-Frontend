@@ -8,9 +8,12 @@
 				<p class="md-details">
 					from&nbsp;
 					<span class="sender"
-						><a href="">{{ message.senderUsername }}</a>
+						><a href="" id="message-sender">{{ message.senderUsername }}</a>
 						<span v-if="message.receiverUsername != ''"
-							>&nbsp;via&nbsp; <a href="">{{ message.receiverUsername }}</a>
+							>&nbsp;via&nbsp;
+							<a href="" id="message-receiver">{{
+								message.receiverUsername
+							}}</a>
 						</span></span
 					>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
 				</p>
