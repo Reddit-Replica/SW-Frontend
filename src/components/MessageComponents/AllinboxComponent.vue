@@ -67,6 +67,8 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//details of message
 		message: {
 			type: Object,
 			require: true,
@@ -91,9 +93,13 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//toggle delete action
 		deleteAction() {
 			this.deleteUSer = !this.deleteUSer;
 		},
+		// @vuese
+		//toggle block action
 		blockAction() {
 			this.blockUSer = !this.blockUSer;
 		},
