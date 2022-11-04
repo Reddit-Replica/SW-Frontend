@@ -11,4 +11,7 @@ export default {
 	setUserMessages(state, payload) {
 		state.userMessages = payload;
 	},
+	setPostReplies(state, payload) {
+		state.postReplies = payload;
+	},
 };
