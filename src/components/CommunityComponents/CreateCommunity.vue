@@ -350,6 +350,7 @@ export default {
 			categories: [],
 			communityCategory: '',
 			communityCategoryRequiredError: false,
+			selectIsShown: false,
 		};
 	},
 	created() {
@@ -394,6 +395,7 @@ export default {
 			this.nsfwChosen = !this.nsfwChosen;
 		},
 		validateCommunityCategory() {
+			this.showSelect();
 			if (this.communityCategory === '') {
 				this.communityCategoryRequiredError = true;
 			} else {
@@ -453,6 +455,9 @@ export default {
 		},
 		showMore() {
 			this.moreIsShown = !this.moreIsShown;
+		},
+		showSelect() {
+			this.selectIsShown = !this.selectIsShown;
 		},
 	},
 };
@@ -639,4 +644,25 @@ button:hover {
 .box-ok {
 	padding: 8px 5px;
 }
+/* select {
+	overflow: scroll;
+	height: auto;
+	width: 100%;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 21px;
+	padding-left: 10px;
+	padding-top: 2px;
+	border: 1px var(--color-grey-light-3);
+	border-radius: 4px;
+
+	position: absolute;
+	z-index: 55;
+}
+select:focus {
+	outline: none;
+}
+.box-category {
+	position: relative;
+} */
 </style>
