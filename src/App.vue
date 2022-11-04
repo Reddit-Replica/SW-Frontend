@@ -40,6 +40,7 @@ export default {
 	--color-grey-light-9: #f6f7f8;
 	--color-grey-light-10: #edeff1;
 	--color-grey-light-11: #ececf4;
+	--color-grey-light-12: #e7e7e7;
 
 	/* dark grey colors */
 	--color-grey-dark-1: #333;
@@ -67,6 +68,7 @@ export default {
 	--color-blue: #6094fe;
 	--color-blue-2: #0079d3;
 	--color-blue-3: #3293db;
+	--color-blue-4: #336699;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
 
@@ -87,8 +89,10 @@ export default {
 	--line-6: 1px solid var(--color-dark-1);
 	--line-7: 1px solid var(--color-grey-dark-3);
 	--line-8: 1px solid var(--color-grey-light-3);
+	--line-9: 1px solid var(--color-blue-4);
 	--line-dashed: 1px dashed var(--color-grey-light-2);
 	--line-dashed-2: 1px dashed var(--color-grey-dark-2);
+	--line-dashed-3: 2px dashed var(--color-grey-light-12);
 
 	/* screen sizes variables */
 	/* 2000px */
