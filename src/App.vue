@@ -1,10 +1,11 @@
 <template>
 	<!-- router view for display pages -->
-	<router-view v-slot="slotProps">
+	<!-- <router-view v-slot="slotProps" :key="$route.fullPath">
 		<transition name="route" mode="out-in">
 			<component :is="slotProps.Component"></component>
 		</transition>
-	</router-view>
+	</router-view> -->
+	<router-view></router-view>
 </template>
 
 <script>
