@@ -1,5 +1,3 @@
 <template>
-  <div>
-    Upvoted
-  </div>
+	<div>Upvoted</div>
 </template>
