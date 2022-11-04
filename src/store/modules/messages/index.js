@@ -10,6 +10,7 @@ export default {
 			unreadMessages: [],
 			userMentions: [],
 			userMessages: [],
+			postReplies: [],
 		};
 	},
 	mutations,

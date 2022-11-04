@@ -11,4 +11,7 @@ export default {
 	userMessages(state) {
 		return state.userMessages;
 	},
+	postReplies(state) {
+		return state.postReplies;
+	},
 };
