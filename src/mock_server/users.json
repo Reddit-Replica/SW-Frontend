@@ -159,3 +159,196 @@
     ]
   }
 }
+	"users": [
+		{
+			"id": 1,
+			"name": "Norhan Reda",
+			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
+			"password": "12345"
+		},
+		{
+			"id": 2,
+			"name": "nora",
+			"email": "nora@gmail.com",
+			"password": "123456789"
+		}
+	],
+	"subreddits": [
+		{
+			"id": 1,
+			"subredditName": "FrontEnd",
+			"type": "Private",
+			"nsfw": false
+		},
+		{
+			"id": 2,
+			"subredditName": "BackEnd",
+			"type": "Private",
+			"nsfw": false
+		},
+		{
+			"subredditName": "hello",
+			"type": "Private",
+			"nsfw": false,
+			"category": "Programming",
+			"id": 3
+		},
+		{
+			"subredditName": "hello",
+			"type": "Private",
+			"nsfw": false,
+			"category": "leave",
+			"id": 4
+		},
+		{
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 5
+		},
+		{
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 6
+		},
+		{
+			"subredditName": "dfgh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 7
+		}
+	],
+	"saved-categories": [
+		{
+			"id": 1,
+			"name": "Sports"
+		},
+		{
+			"id": 2,
+			"name": "Gaming"
+		},
+		{
+			"id": 3,
+			"name": "Programming"
+		},
+		{
+			"id": 4,
+			"name": "News"
+		},
+		{
+			"id": 5,
+			"name": "Learning"
+		},
+		{
+			"id": 6,
+			"name": "Films"
+		}
+	],
+	"compose": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "type",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "type",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "",
+					"subject": "hi",
+					"sendAt": "5 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		}
+	],
+	"unread": [],
+	"mentions": [],
+	"messages": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "type",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "type",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "",
+					"subject": "hi",
+					"sendAt": "5 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		}
+	],
+	"user": {
+		"displayName": "Abdalhameed_Emad",
+		"about": "hallow iam abdelhameed emad",
+		"banner": "string",
+		"picture": "string",
+		"karma": 1,
+		"cakeDate": "2019-08-24",
+		"socialLinks": [
+			{
+				"type": "link",
+				"displayText": "string",
+				"link": "string"
+			}
+		],
+		"nsfw": true,
+		"followed": true,
+		"blocked": true,
+		"moderatorOf": [
+			{
+				"subredditName": "string",
+				"numOfMembers": 0,
+				"nsfw": true
+			}
+		]
+	}
+}
