@@ -151,10 +151,11 @@ export default {
 	},
 	async sendMessage(_, payload) {
 		const newMessage = {
-			subredditName: payload.subredditName,
-			type: payload.type,
-			nsfw: payload.nsfw,
-			category: payload.category,
+			text: payload.text,
+			senderUsername: payload.senderUsername,
+			receiverUsername: payload.receiverUsername,
+			sendAt: payload.sendAt,
+			subject: payload.subject,
 		};
 		const baseurl = payload.baseurl;
 
