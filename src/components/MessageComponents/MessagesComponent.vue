@@ -74,7 +74,7 @@
 							>
 						</li>
 						<li>
-							<span class="link" id="mark-as-read">Mark Unread</span>
+							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li><span class="link" id="reply">Reply</span></li>
 					</ul>

@@ -2,63 +2,107 @@
 	<div class="message">
 		<li>
 			<p class="subject-text">
+				<span class="post-reply">post reply</span>
 				<span>{{ message.subject }}</span>
 			</p>
-			<div>
-				<p class="md-details">
-					from&nbsp;
-					<span class="sender"
-						><a href="" id="message-sender">{{ message.senderUsername }}</a>
-						<span v-if="message.receiverUsername != ''"
-							>&nbsp;via&nbsp;
-							<a href="" id="message-receiver">{{
-								message.receiverUsername
-							}}</a>
-						</span></span
-					>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
-				</p>
-				<p class="md">{{ message.text }}</p>
-				<ul class="flat-list">
-					<li><a href="">Permalink</a></li>
-					<li>
-						<form action="#">
-							<input
-								type="hidden"
-								name="deleted"
-								id="delete-message"
-								value="deleted"
-							/>
-						</form>
-						<span class="sure-block" v-if="deleteUSer"
-							>are you sure?
-							<span class="link" id="yes-delete-message">Yes</span> /
-							<span class="link" @click="deleteAction()" id="no-delete-message"
-								>No</span
-							></span
-						>
-						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="deleteAction()" id="click-delete"
-							>Delete</span
-						>
-					</li>
-					<li><a href="" id="report">Report</a></li>
-					<li>
-						<span class="sure-block" v-if="blockUSer"
-							>are you sure? <span class="link" id="yes-block-user">Yes</span> /
-							<span class="link" @click="blockAction()" id="no-block-user"
-								>No</span
-							></span
-						>
-						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="blockAction()" id="block-user"
-							>Block User</span
-						>
-					</li>
-					<li>
-						<span class="link" id="mark-as-read">Mark Unread</span>
-					</li>
-					<li><span class="link" id="reply">Reply</span></li>
-				</ul>
+			<div class="d-flex flex-row">
+				<div class="d-flex flex-column vote-box">
+					<div class="upvote" @click="upvote">
+						<svg class="icon p-1" :class="upClicked ? 'up-clicked' : ''">
+							<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
+						</svg>
+					</div>
+					<div class="downvote" @click="downvote">
+						<svg class="icon p-1" :class="downClicked ? 'down-clicked' : ''">
+							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
+						</svg>
+					</div>
+				</div>
+				<div>
+					<p class="md-details">
+						from&nbsp;
+						<span class="sender"
+							><a href="" id="message-sender">{{ message.senderUsername }}</a>
+							<span
+								>&nbsp;via&nbsp;
+								<a href="" id="message-receiver">{{
+									message.receiverUsername
+								}}</a>
+							</span></span
+						>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+					</p>
+					<p class="md">{{ message.text }}</p>
+					<ul class="flat-list">
+						<li><a href="">context</a></li>
+						<li><a href="">Full Comments(5)</a></li>
+						<li>
+							<form action="#">
+								<input
+									type="hidden"
+									name="spam"
+									id="spam-message"
+									value="spam"
+								/>
+							</form>
+							<span class="sure-block" v-if="spamUser"
+								>are you sure?
+								<span class="link" id="yes-spam-message">Yes</span> /
+								<span class="link" @click="spamAction()" id="no-spam-message"
+									>No</span
+								></span
+							>
+							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
+							<span class="link" v-else @click="spamAction()" id="click-spam"
+								>Spam</span
+							>
+						</li>
+						<li>
+							<form action="#">
+								<input
+									type="hidden"
+									name="deleted"
+									id="delete-message"
+									value="deleted"
+								/>
+							</form>
+							<span class="sure-block" v-if="removeUser"
+								>are you sure?
+								<span class="link" id="yes-remove-message">Yes</span> /
+								<span
+									class="link"
+									@click="removeAction()"
+									id="no-remove-message"
+									>No</span
+								></span
+							>
+							<span
+								class="link"
+								v-else
+								@click="removeAction()"
+								id="click-remove"
+								>Remove</span
+							>
+						</li>
+						<li><a href="" id="report">Report</a></li>
+						<li>
+							<span class="sure-block" v-if="blockUser"
+								>are you sure?
+								<span class="link" id="yes-block-user">Yes</span> /
+								<span class="link" @click="blockAction()" id="no-block-user"
+									>No</span
+								></span
+							>
+							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
+							<span class="link" v-else @click="blockAction()" id="block-user"
+								>Block User</span
+							>
+						</li>
+						<li>
+							<span class="link" id="mark-un-read">Mark Unread</span>
+						</li>
+						<li><span class="link" id="reply">Reply</span></li>
+					</ul>
+				</div>
 			</div>
 		</li>
 	</div>
@@ -88,18 +132,54 @@ export default {
 	},
 	data() {
 		return {
-			deleteUSer: false,
-			blockUSer: false,
+			removeUser: false,
+			blockUser: false,
+			spamUser: false,
+			upClicked: false,
+			downClicked: false,
 		};
 	},
 	methods: {
 		// @vuese
-		//toggle block action
-		deleteAction() {
-			this.deleteUSer = !this.deleteUSer;
+		//toggle remove action
+		removeAction() {
+			this.removeUser = !this.removeUser;
 		},
+		// @vuese
+		//toggle block action
 		blockAction() {
-			this.blockUSer = !this.blockUSer;
+			this.blockUser = !this.blockUser;
+		},
+		// @vuese
+		//toggle spam action
+		spamAction() {
+			this.spamUser = !this.spamUser;
+		},
+		upvote() {
+			if (this.upClicked == false) {
+				this.upClicked = true;
+				this.counter++;
+			} else {
+				this.upClicked = false;
+				this.counter--;
+			}
+			if (this.downClicked) {
+				this.downClicked = false;
+				this.counter++;
+			}
+		},
+		downvote() {
+			if (this.downClicked == false) {
+				this.downClicked = true;
+				this.counter--;
+			} else {
+				this.downClicked = false;
+				this.counter++;
+			}
+			if (this.upClicked) {
+				this.upClicked = false;
+				this.counter--;
+			}
 		},
 	},
 };
@@ -108,6 +188,8 @@ export default {
 <style scoped>
 ul {
 	list-style: none;
+	display: flex;
+	flex-flow: row wrap;
 }
 .message {
 	margin: 0;
@@ -125,7 +207,12 @@ ul {
 	font-weight: bold;
 	font-size: 1.3rem;
 }
-.subject-text:after {
+.post-reply {
+	margin: 1rem;
+	font-weight: bold;
+	font-size: larger;
+}
+.post-reply:after {
 	content: ':';
 }
 .md-details {
@@ -159,5 +246,27 @@ a:hover,
 }
 .sure-block {
 	color: var(--color-red-dark-1);
+}
+div.vote-box {
+	text-align: center;
+	border-radius: 0.5rem 0 0 0.5rem;
+	cursor: pointer;
+}
+
+.vote-box .downvote svg,
+.vote-box .upvote svg {
+	width: 2rem;
+	height: 2rem;
+	fill: var(--color-grey-dark-4);
+}
+.downvote .icon-shift {
+	transform: rotate(180deg);
+}
+.vote-box svg.up-clicked {
+	fill: var(--color-Primary-light-2);
+}
+
+.vote-box svg.down-clicked {
+	fill: var(--color-blue-5);
 }
 </style>
