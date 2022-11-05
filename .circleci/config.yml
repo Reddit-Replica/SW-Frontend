@@ -1,0 +1,92 @@
+version: 2.1
+
+commands:
+  install_nodejs:
+    description: Install Node.js 13.8.0
+    steps:
+      - run:
+          name: Install Node.js 13.8.0
+          command: |
+            # Install Node.js LTS version as our base Node.js version
+            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+            sudo apt install -y nodejs
+            # Use n version manager to use Node.js v13.8.0
+            sudo npm install --global n
+            sudo n 13.8.
+  
+  configure_docker:
+    description: login with my dockerhub
+    steps:
+      - run:
+          name: Install Node.js 13.8.0
+          command: |
+            docker login -u $DOCKERNAME -p $DOCKERPASS
+
+  install_docker:
+    description: Install docker
+    steps:
+      - setup_remote_docker
+      - configure_docker
+      - run:
+          name: install docker
+          command: |
+            apk add --no-cache \
+            py-pip=9.0.0-r1
+            pip install \
+            docker-compose==1.12.0 \
+
+
+jobs:
+  unit-testing:
+    docker:
+      - image: circleci/node:lts
+    steps:
+    - checkout
+    - run:
+        name: Install npm dependencies
+        command: |
+          npm install
+    - run:
+        name: Run Unit Tests
+        command: |
+          npm run test
+
+
+
+  integration-testing:
+    docker:
+      - image: circleci/node:12
+    steps:
+    - checkout
+    - run:
+        name: Install npm dependencies
+        command: |
+          npm i
+    - run:
+        name: Run integration Tests
+        command: |
+          ls
+
+  build-frontend:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - install_docker
+      - run:
+          name: Build , tag , push front-end
+          command: |
+            docker build -t frontend:v1 .
+            docker tag frontend:v1  waer/frontend
+            docker push  waer/frontend
+
+workflows:
+  main:
+    jobs:
+      - unit-testing
+      - integration-testing:
+          requires: 
+            - unit-testing
+      - build-frontend:
+          requires: 
+            - integration-testing
