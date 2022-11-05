@@ -138,7 +138,6 @@ export default {
 		// @vuese
 		//check if user is reciever or sender
 		ifMessageRecieved() {
-			console.log(this.receiverUsername);
 			return this.getUserName == this.message.receiverUsername;
 		},
 	},
