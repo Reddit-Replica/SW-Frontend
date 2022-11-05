@@ -1,46 +1,250 @@
 <template>
 	<header class="header">
-		<div class="logo">
-			<img src="../../../img/logo.png" alt="reddit" class="logo" />
-			<img src="../../../img/reddit.png" alt="reddit" class="reddit" />
+		<div class="header-logo" @click="goToHome()" id="reddit-logo">
+			<img src="../../../img/logo.png" alt="reddit" class="header-logo" />
+			<img src="../../../img/reddit.png" alt="reddit" class="header-reddit" />
 		</div>
-		<div class="home">
-			<div class="icon-home">
+		<div class="header-home" @click="showHomeSubMenu()" id="home-header">
+			<div class="header-icon-home">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-house-door-fill user-nav-icon"
+					class="bi bi-house-door-fill header-user-nav-icon"
 					viewBox="0 0 16 16"
+					v-if="headerTitle == 'Home'"
 				>
 					<path
 						d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"
 					/>
 				</svg>
-				<span>Home</span>
-			</div>
-			<svg class="user-nav-icon down-arrow">
-				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
-			</svg>
-		</div>
-		<form action="#" class="search">
-			<input type="text" class="search-input" placeholder="Search Reddit" />
-			<button class="search-button">
-				<svg class="search-icon">
-					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
-				</svg>
-			</button>
-		</form>
-		<nav class="user-nav">
-			<div class="user-nav-icon-box popular">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-arrow-up-right-circle user-nav-icon"
+					class="bi bi-plus-lg"
 					viewBox="0 0 16 16"
+					v-else-if="headerTitle == 'Create Post'"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+					/>
+				</svg>
+				<img
+					src="../../../img/user-image.jpg"
+					alt="img"
+					class="header-user-nav-user-photo"
+					v-else
+				/>
+				<span>{{ headerTitle }}</span>
+			</div>
+
+			<svg class="header-user-nav-icon header-down-arrow">
+				<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
+			</svg>
+			<ul
+				class="sub-menu sub-menu-2"
+				v-if="homeSubMenuDisplay"
+				id="home-sub-menu"
+			>
+				<li>
+					<input
+						type="text"
+						class="input-filter"
+						placeholder="Filter"
+						id="input-filter"
+					/>
+				</li>
+				<h4 class="heading-4">Your Communities</h4>
+				<li class="setting-choice">
+					<div class="settings-box" id="create-community">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-plus-lg"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+							/>
+						</svg>
+						Create Community
+					</div>
+				</li>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						r/announcements
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+						id="star-community"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						r/Makeup
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+						id="star-community"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<h4 class="heading-4">Following</h4>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						u/Lamiaa
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+						id="star-user"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<li class="setting-choice">
+					<div class="settings-box">
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						u/sama
+					</div>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-star"
+						viewBox="0 0 16 16"
+						id="star-user"
+					>
+						<path
+							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
+						/>
+					</svg>
+				</li>
+				<h4 class="heading-4">Feeds</h4>
+				<li class="setting-choice" @click="goToHome()" id="go-to-home-page">
+					<div>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-house-door-fill home"
+							viewBox="0 0 16 16"
+						>
+							<path
+								d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"
+							/>
+						</svg>
+						Home
+					</div>
+				</li>
+				<li
+					class="setting-choice"
+					@click="goToSettings()"
+					id="go-to-user-settings"
+				>
+					<div>
+						<img
+							src="../../../img/user-image.jpg"
+							alt="img"
+							class="users-img"
+						/>
+						User Settings
+					</div>
+				</li>
+				<li class="setting-choice" @click="goToSubmit()" id="go-to-submit-page">
+					<div>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-plus-lg"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+							/>
+						</svg>
+						Create Post
+					</div>
+				</li>
+			</ul>
+		</div>
+		<form action="#" class="search">
+			<input
+				type="text"
+				class="header-search-input"
+				placeholder="Search Reddit"
+				id="header-search"
+			/>
+			<button class="header-search-button">
+				<svg class="header-search-icon" id="search-button">
+					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
+				</svg>
+			</button>
+		</form>
+		<nav class="header-user-nav">
+			<div class="header-user-nav-icon-box header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-arrow-up-right-circle header-user-nav-icon"
+					viewBox="0 0 16 16"
+					id="popular"
 				>
 					<title>Popular</title>
 					<path
@@ -61,14 +265,15 @@
 
       | -->
 
-			<div class="user-nav-icon-box">
+			<div class="header-user-nav-icon-box">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-chat-dots user-nav-icon"
+					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="chat"
 				>
 					<title>Chat</title>
 					<path
@@ -78,34 +283,36 @@
 						d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
 					/>
 				</svg>
-				<span class="user-nav-notification">2</span>
+				<span class="header-user-nav-notification">2</span>
 			</div>
 
-			<div class="user-nav-icon-box">
+			<div class="header-user-nav-icon-box">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-bell user-nav-icon"
+					class="bi bi-bell header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="notifications"
 				>
 					<title>Notifications</title>
 					<path
 						d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
 					/>
 				</svg>
-				<span class="user-nav-notification">2</span>
+				<span class="header-user-nav-notification">2</span>
 			</div>
 
-			<div class="user-nav-icon-box">
+			<div class="header-user-nav-icon-box" @click="goToSubmit()">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-plus user-nav-icon plus"
+					class="bi bi-plus header-user-nav-icon header-plus"
 					viewBox="0 0 16 16"
+					id="create-post"
 				>
 					<title>Create Post</title>
 					<path
@@ -113,8 +320,8 @@
 					/>
 				</svg>
 			</div>
-			<div class="user-nav-box box">
-				<button class="button-advertise">
+			<div class="header-user-nav-box header-box">
+				<button class="header-button-advertise">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -131,27 +338,31 @@
 				</button>
 			</div>
 
-			<div class="user-nav-box user">
+			<div
+				class="header-user-nav-box header-user"
+				@click="showSettingsSubMenu()"
+				id="show-settings-submenu"
+			>
 				<img
 					src="../../../img/user-image.jpg"
 					alt="user photo"
-					class="user-nav-user-photo"
+					class="header-user-nav-user-photo"
 				/>
-				<span class="user-nav-online" />
+				<span class="header-user-nav-online" />
 
-				<div class="user-nav-user">
-					<span class="user-nav-user-name">asmaaadel0</span>
-					<svg class="user-nav-icon icon-user">
+				<div class="header-user-nav-user">
+					<span class="header-user-nav-user-name">asmaaadel0</span>
+					<svg class="header-user-nav-icon header-icon-user">
 						<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 					</svg>
 
-					<span class="user-nav-karma">
+					<span class="header-user-nav-karma">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
 							height="16"
 							fill="currentColor"
-							class="bi bi-stars star"
+							class="bi bi-stars header-star"
 							viewBox="0 0 16 16"
 						>
 							<path
@@ -161,13 +372,142 @@
 						2 karma</span
 					>
 				</div>
+				<ul class="sub-menu" v-if="settingsSubMenuDisplay">
+					<li>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-person-circle"
+							viewBox="0 0 16 16"
+						>
+							<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+							<path
+								fill-rule="evenodd"
+								d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+							/>
+						</svg>
+						My Stuff
+					</li>
+					<li
+						class="setting-choice"
+						@click="showSettingsSubMenu()"
+						id="online-status"
+					>
+						Online Status
+						<switch-button />
+					</li>
+					<li class="setting-choice" @click="goToUserPage()">Profile</li>
+					<li
+						class="setting-choice"
+						@click="goToSettings()"
+						id="go-to-settings"
+					>
+						User Settings
+					</li>
+					<div class="line"></div>
+					<li>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-eye"
+							viewBox="0 0 16 16"
+						>
+							<path
+								d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+							/>
+							<path
+								d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+							/>
+						</svg>
+						View Options
+					</li>
+					<li
+						class="setting-choice"
+						@click="showSettingsSubMenu()"
+						id="dark-mode"
+					>
+						Dark Mode
+						<switch-button />
+					</li>
+					<li class="setting-choice-with-icon" id="logout">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-box-arrow-in-right"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"
+							/>
+							<path
+								fill-rule="evenodd"
+								d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+							/>
+						</svg>
+						Logout
+					</li>
+				</ul>
 			</div>
 		</nav>
 	</header>
 </template>
 
 <script>
-export default {};
+export default {
+	props: {
+		// @vuese
+		//header title ex: Home, User Settings, u/username...
+		headerTitle: {
+			type: String,
+			default: 'Home',
+		},
+	},
+	data() {
+		return {
+			settingsSubMenuDisplay: false,
+			homeSubMenuDisplay: false,
+		};
+	},
+	methods: {
+		// @vuese
+		// Used to show or hide settings menu
+		showSettingsSubMenu() {
+			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
+		},
+		// @vuese
+		// Used to show or hide home menu
+		showHomeSubMenu() {
+			this.homeSubMenuDisplay = !this.homeSubMenuDisplay;
+		},
+		// @vuese
+		// Used to go to settings page
+		goToSettings() {
+			this.$router.push('/settings');
+		},
+		// @vuese
+		// Used to go to Home page
+		goToHome() {
+			this.$router.push('/');
+		},
+		// @vuese
+		// Used to go to submit page
+		goToSubmit() {
+			this.$router.push('/submit');
+		},
+		// @vuese
+		// Used to go to user page
+		goToUserPage() {
+			this.$router.push('/user/abdelhamed');
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -182,7 +522,7 @@ export default {};
   justify-content: left;
   align-items: center; */
 	display: grid;
-	grid-template-columns: max-content 20% 26% max-content;
+	grid-template-columns: max-content 20% 25% max-content;
 	grid-template-rows: max-content;
 	grid-column-gap: 0rem;
 	align-items: center;
@@ -190,35 +530,43 @@ export default {};
 	border: var(--line-3);
 	border-radius: 5px;
 }
-img {
+
+.header img {
 	cursor: pointer;
 }
-.logo {
-	margin-left: 0.5rem;
+
+.header-logo {
+	margin-left: 0.4rem;
 	display: flex;
 	flex-direction: row;
 }
-.logo img {
+
+.header-logo img {
 	height: 4rem;
 }
-.icon-home {
+
+.header-icon-home {
 	display: grid;
-	grid-template-columns: min-content min-content min-content;
+	grid-template-columns: min-content max-content min-content;
 	/* width: 40rem; */
 	grid-column-gap: 1rem;
 	align-items: center;
 	border: var(--line-3);
 	border-radius: 5px;
+	color: var(--color-dark-1);
 }
-.home {
+
+.header-home {
 	padding: 0.5rem;
-	margin-left: 1.2rem;
+	margin-left: 1rem;
 	align-items: center;
 	border: var(--line-3);
 	border-radius: 5px;
 	position: relative;
+	cursor: pointer;
 }
-.down-arrow {
+
+.header-down-arrow {
 	position: absolute;
 	top: 0.6rem;
 	right: 0.5rem;
@@ -227,12 +575,13 @@ img {
 	justify-content: center;
 	align-items: center;
 }
-.home:hover,
-.home:focus {
+
+.header-home:hover,
+.header-home:focus {
 	border: var(--line);
 }
 
-.search {
+.header-search {
 	flex: 0 0 23%;
 	/* width: 35rem; */
 
@@ -241,7 +590,7 @@ img {
 	justify-content: center;
 }
 
-.search-input {
+.header-search-input {
 	font-family: inherit;
 	font-size: inherit;
 	background-color: var(--color-grey-light-2);
@@ -252,44 +601,49 @@ img {
 	width: 100%;
 	/* transition: all 0.2s; */
 	margin-right: -3.75rem;
+	border: var(--line-3);
 }
-.search-input:focus,
-.search-input:hover {
+
+.header-search-input:focus,
+.header-search-input:hover {
 	outline: navajowhite;
 	border: var(--line-2);
 	background-color: var(--color-white-1);
 }
 
-.search-input::-webkit-input-placeholder {
+.header-search-input::-webkit-input-placeholder {
 	font-weight: 50;
 	color: var(--color-grey-dark-2);
 }
-.search-input:focus + .search-button,
-.search-input:hover + .search-button {
+
+.header-search-input:focus + .header-search-button,
+.header-search-input:hover + .header-search-button {
 	background-color: var(--color-white-1);
 }
-.search-button {
+
+.header-search-button {
 	border: none;
 	/* background-color: var(--color-grey-light-3); */
 }
 
-.search-button:focus {
+.header-search-button:focus {
 	outline: none;
 }
 
-.search-button:active {
+.header-search-button:active {
 	transform: translateY(2px);
 }
-.search-icon {
+
+.header-search-icon {
 	height: 2rem;
 	width: 2rem;
 	fill: var(--color-grey-dark-2);
 }
 
-.user-nav {
+.header-user-nav {
 	/* align-self: stretch; */
 	width: 1rem;
-	margin-left: 4rem;
+	margin-left: 2rem;
 
 	/* display: flex;
   align-items: center; */
@@ -300,17 +654,19 @@ img {
 	align-items: center;
 }
 
-.button-advertise {
+.header-button-advertise {
 	width: 11rem;
 	height: 3rem;
 	border: none;
 	border-radius: 10rem;
 	background-color: var(--color-grey-light-2);
 }
-.button-advertise:hover {
+
+.header-button-advertise:hover {
 	background-color: var(--color-grey-light-4);
 }
-.user-nav > * {
+
+.header-user-nav > * {
 	padding: 0 1.3rem;
 	cursor: pointer;
 	height: 80%;
@@ -318,23 +674,27 @@ img {
 	align-items: center;
 	border-radius: 0.3rem;
 }
-.user-nav > *:hover {
+
+.header-user-nav > *:hover {
 	background-color: var(--color-grey-light-2);
 }
-.user-nav-icon-box {
+
+.header-user-nav-icon-box {
 	position: relative;
 }
-.user-nav-icon {
+
+.header-user-nav-icon {
 	height: 1.9rem;
 	width: 1.9rem;
 	fill: var(--color-grey-dark-1);
 }
 
-.plus {
+.header-plus {
 	height: 3.3rem;
 	width: 3.3rem;
 }
-.user-nav-notification {
+
+.header-user-nav-notification {
 	font-size: 1rem;
 	height: 1.9rem;
 	width: 1.9rem;
@@ -353,14 +713,15 @@ img {
 	align-items: center;
 }
 
-.user-nav-box {
+.header-user-nav-box {
 	margin-left: -1rem;
 	border: var(--line-3);
 	border-radius: 5px;
 	height: 4.5rem;
 	position: relative;
 }
-.user-nav-online {
+
+.header-user-nav-online {
 	font-size: 1rem;
 	height: 0.9rem;
 	width: 0.9rem;
@@ -376,15 +737,18 @@ img {
 	justify-content: center;
 	align-items: center;
 }
-.user-nav-box:hover,
-.user-nav-box:focus {
+
+.header-user-nav-box:hover,
+.header-user-nav-box:focus {
 	background-color: var(--color-white-1);
 	border: var(--line);
 }
-.box:hover {
+
+.header-box:hover {
 	border: var(--line-3);
 }
-.user-nav-user {
+
+.header-user-nav-user {
 	display: grid;
 	grid-template-columns: max-content;
 	grid-template-rows: max-content;
@@ -394,7 +758,8 @@ img {
 	border-radius: 5px;
 	width: 16rem;
 }
-.user-nav-user-photo {
+
+.header-user-nav-user-photo {
 	width: 2.5rem;
 	height: 2.5rem;
 	/* border-radius: 50%; */
@@ -402,97 +767,232 @@ img {
 	margin-right: 0.3rem;
 	margin-left: 0.9rem;
 }
-.user-nav-user-name {
+
+.header-user-nav-user-name {
 	color: var(--color-dark-1);
 	font-size: 1.1rem;
 }
-.user-nav-karma {
+
+.header-user-nav-karma {
 	color: var(--color-grey-dark-4);
 	font-size: 1rem;
 	font-weight: 600;
 }
-.star {
+
+.header-star {
 	fill: var(--color-primary);
 }
-.icon-user {
+
+.header-icon-user {
 	position: absolute;
 	right: 1rem;
 }
+
+.header-user {
+	position: relative;
+}
+
+.line {
+	border-bottom: var(--line);
+}
+
+.sub-menu {
+	position: absolute;
+	background-color: white;
+	padding: 0px;
+	right: 1rem;
+	top: 5rem;
+	border-radius: 5px;
+	max-height: 40rem;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: var(--line);
+	width: 25rem;
+	z-index: 90;
+}
+
+.sub-menu-2 {
+	top: 3rem;
+	left: 0rem;
+	width: 26rem;
+}
+
+.sub-menu li {
+	font-size: 15px;
+	font-weight: lighter;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+
+.sub-menu li svg {
+	fill: var(--color-grey-dark-2);
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+
+.sub-menu li {
+	padding: 0px 10px;
+}
+
+.setting-choice {
+	color: var(--color-dark-1);
+	padding: 1rem 2rem !important;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.setting-choice:hover,
+.setting-choice-with-icon:hover {
+	background-color: var(--color-grey-light-2);
+}
+
+.setting-choice-with-icon {
+	color: var(--color-dark-1);
+	padding: 1rem !important;
+}
+
+.users-img {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	margin-right: 1rem;
+}
+
+.input-filter {
+	width: 100%;
+	border: var(--line-3);
+	padding: 0.3rem;
+	background-color: var(--color-grey-light-1);
+}
+
+.input-filter:hover,
+.input-filter:focus {
+	outline: navajowhite;
+	border: var(--line-2);
+	background-color: var(--color-white-1);
+}
+
+.heading-4 {
+	text-transform: uppercase;
+	margin: 1rem;
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.sub-menu-2 div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 1.2rem;
+}
+
+.color-black {
+	color: black;
+}
+
+.home {
+	fill: var(--color-dark-1) !important;
+}
+
 /* 1200px */
 @media only screen and (max-width: 75em) {
 	.header {
 		grid-template-columns: max-content 20% 23% max-content;
 	}
-	.user-nav-user-name {
+
+	.header-user-nav-user-name {
 		display: none;
 	}
-	.user-nav-karma,
-	.user-nav-user-name,
-	.star {
+
+	.header-user-nav-karma,
+	.header-user-nav-user-name,
+	.header-star {
 		display: none;
 	}
-	.icon-user {
+
+	.header-icon-user {
 		left: 5rem;
 	}
-	.user-nav-user {
+
+	.header-user-nav-user {
 		width: 2rem;
 	}
 }
+
 /* 1100px */
 @media only screen and (max-width: 68.75em) {
 	.header {
 		grid-template-columns: max-content 10% 40% max-content;
 	}
-	.home span {
+
+	.header-icon-home span,
+	.color-black span {
 		display: none;
 	}
-	.reddit {
+
+	.header-reddit {
 		display: none;
 	}
 }
+
 /* 900px */
 @media only screen and (max-width: 56.25em) {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
 }
+
 /* 788px */
 @media only screen and (max-width: 49.25em) {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
-	.user-nav > * {
+
+	.header-user-nav > * {
 		padding: 0 0.7rem;
 	}
-	.user-nav-icon {
+
+	.header-user-nav-icon {
 		height: 1.7rem;
 		width: 1.7rem;
 	}
-	.popular {
+
+	.header-popular {
 		display: none;
 	}
 }
+
 /* 635px */
 @media only screen and (max-width: 40em) {
-	.down-arrow {
+	.header-down-arrow {
 		display: none;
 	}
 }
+
 /* 520px */
 @media only screen and (max-width: 32.5em) {
-	.user {
+	.header-user {
 		display: none;
 	}
 }
+
 /* 400px */
 @media only screen and (max-width: 25em) {
 	.header {
 		grid-template-columns: 10% 10% 30% auto;
 	}
-	.box {
+
+	.header-box {
 		display: none;
 	}
-	.user-nav > * {
+
+	.header-user-nav > * {
 		padding: 0 0.9rem;
 	}
 }

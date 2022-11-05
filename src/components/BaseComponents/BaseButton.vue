@@ -1,5 +1,7 @@
 <template>
-	<button v-if="!link" :disabled="disableButton">{{ buttonText }}</button>
+	<button v-if="!link" :disabled="disableButton">
+		<slot></slot>{{ buttonText }}
+	</button>
 	<router-link v-else :to="to">
 		{{ buttonText }}
 	</router-link>

@@ -2,16 +2,22 @@
 	<div class="content">
 		<img src="../../../img/reddit-white-grey.png" alt="reddit" />
 		<form action="#" class="post">
-			<input type="text" class="search-post" placeholder="Create Post" />
-			<button class="post__button" />
+			<input
+				type="text"
+				class="search-post"
+				placeholder="Create Post"
+				@click="changeRouter"
+				id="create-post"
+			/>
+			<button class="post-button" />
 		</form>
 		<div class="box">
-			<div class="post-icon-box">
+			<div class="post-icon-box" id="image-icon">
 				<svg class="post-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-image-inverted" />
 				</svg>
 			</div>
-			<div class="post-icon-box">
+			<div class="post-icon-box" id="link-icon">
 				<svg class="post-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-link" />
 				</svg>
@@ -21,7 +27,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+	methods: {
+		// @vuese
+		// Used to change router to submit page
+		changeRouter() {
+			this.$router.push('/submit');
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -81,8 +95,9 @@ button {
 	padding: 0.7rem 2rem;
 	border-radius: 5px;
 	width: 98%;
-	transition: all 0.2s;
+	/* transition: all 0.2s; */
 	margin-right: -3.25rem;
+	border: var(--line-3);
 }
 .search-post:focus {
 	outline: navajowhite;
