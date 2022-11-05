@@ -32,10 +32,19 @@
 						</div>
 					</div>
 
-					<fieldset class="email-field">
-						<input v-model="email" type="text" required="required" />
+					<fieldset class="email-field input-box">
+						<input
+							id="email-input"
+							v-model="email"
+							type="text"
+							:class="messageErrorShowEmail ? 'red-border' : ''"
+						/>
 						<span class="animation-email">Email</span>
-						<div class="error-email-msg" v-if="error_email">
+						<span
+							v-if="showSignemail"
+							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+						></span>
+						<div class="error-email-msg" v-if="messageErrorShowEmail">
 							{{ error_email_message }}
 						</div>
 					</fieldset>
@@ -71,16 +80,22 @@
 
 			<div class="div-2">
 				<form>
-					<fieldset class="register-username-field">
+					<fieldset class="register-username-field input-box">
 						<input
 							id="regUsername"
-							class="username-textInput"
+							:class="messageErrorShowUser ? 'red-border' : ''"
 							type="text"
-							name="username"
-							placeholder="Choose a Username"
 							v-model="username"
 						/>
-						<div class="username-errorMessage" data-for="username"></div>
+						<span class="animation-usr-pass">UserName</span>
+						<span
+							v-if="showSignuser"
+							:class="checkedUser ? 'correct-check' : 'wrong-check'"
+						></span>
+
+						<div class="username-error-message" v-if="messageErrorShowUser">
+							{{ error_message_user }}
+						</div>
 					</fieldset>
 
 					<fieldset id="register-password-field">
@@ -88,11 +103,17 @@
 							id="reg-password"
 							class="password-textInput"
 							type="password"
-							name="password"
-							placeholder="Password"
 							v-model="password"
+							:class="messageErrorShowPass ? 'red-border' : ''"
 						/>
-						<div class="password-errorMessage" data-for="password"></div>
+						<span
+							v-if="showSignPass"
+							:class="checkedPass ? 'correct-check' : 'wrong-check'"
+						></span>
+
+						<div class="username-error-message" v-if="messageErrorShowPass">
+							{{ error_message_pass }}
+						</div>
 					</fieldset>
 				</form>
 			</div>
@@ -122,18 +143,34 @@ export default {
 			bottom_div: false,
 			error_email: false,
 			error_email_message: '',
+			showSignemail: false,
+			messageErrorShowEmail: false,
+			checkedEmail: true,
+			error_message_user: '',
+			error_message_pass: '',
+			messageErrorShowPass: false,
 		};
 	},
 	methods: {
-		handleSubmit() {
-			if (!this.email) {
+		validatEmail(value) {
+			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.error_email = true;
-				this.error_email_message = 'invalid email';
+				this.error_email_message = 'Please fix your email to continue';
+				this.showSignemail = true;
+				this.checkedEmail = false;
+				this.messageErrorShowEmail = true;
+				document.querySelector('#email-input').style.border =
+					'0.5px solid #ea0027';
 			} else {
-				this.page1 = !this.page1;
-				this.page2 = !this.page2;
-				this.bottom_div = !this.bottom_div;
 				this.error_email = false;
+				this.checkedEmail = true;
+				document.querySelector('#email-input').style.border =
+					'0.5px solid #0079d3';
+			}
+		},
+		handleSubmit() {
+			if (this.checkedEmail) {
+				this.togglepages();
 			}
 		},
 		togglepages() {
@@ -143,6 +180,12 @@ export default {
 		},
 	},
 	components: {},
+	watch: {
+		email(value) {
+			this.email = value;
+			this.validatEmail(value);
+		},
+	},
 };
 </script>
 
@@ -161,6 +204,9 @@ export default {
 	line-height: 18px;
 	color: #1a1a1b;
 	background-color: #fff;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
 }
 h1 {
 	display: block;
@@ -201,16 +247,19 @@ button {
 	background-size: cover;
 }
 .sec-largest-div {
-	/* align-self: center; */
+	align-self: center;
 	padding: 24px;
 	overflow: hidden;
+	padding-top: 5rem;
+	width: 55rem;
 }
 .user-agreement {
-	margin-bottom: 48px;
-	font-family: Noto Sans, sans-serif;
+	font-family: 'Noto Sans', sans-serif;
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 18px;
+	margin-top: 8px;
+	margin-bottom: 48px;
 }
 
 /* class of log in with google and log in with apple */
@@ -293,7 +342,7 @@ button {
 	border-radius: 4px;
 	border-color: #24a0ed;
 }
-.animation-email::after {
+/*.animation-email::after {
 	content: '\2713';
 	display: inline-block;
 	color: #24a0ed;
@@ -302,8 +351,8 @@ button {
 	position: absolute;
 	display: block;
 	transition: all 0.2s ease-in-out;
-	/* display: none; */
-}
+	 display: none; 
+}*/
 .error-email-msg {
 	font-size: 12px;
 	font-weight: 500;
@@ -313,6 +362,27 @@ button {
 	opacity: 1;
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
+}
+.input-box .red-border {
+	border: 0.5px solid #ea0027;
+}
+.input-box .correct-check {
+	position: absolute;
+	z-index: 1;
+	right: 22rem;
+	top: 40%;
+	height: 10px;
+	width: 12px;
+	background-color: #878a8c;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.input-box .wrong-check {
+	position: absolute;
+	right: 22rem;
+	top: 28%;
+	height: 12px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
 .register-bottom {
 	font-family: Noto Sans, sans-serif;

@@ -1,5 +1,8 @@
 <template>
-	<div class="message">
+	<div
+		class="message"
+		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+	>
 		<li>
 			<p class="subject-text">
 				<span>{{ message.subject }}</span>
@@ -55,7 +58,7 @@
 						>
 					</li>
 					<li>
-						<span class="link" id="mark-as-read">Mark Unread</span>
+						<span class="link" id="mark-un-read">Mark Unread</span>
 					</li>
 					<li><span class="link" id="reply">Reply</span></li>
 				</ul>
@@ -85,12 +88,25 @@ export default {
 				isRead: '',
 			}),
 		},
+		// @vuese
+		//counter to handel background color
+		count: {
+			type: Number,
+			require: true,
+			default: 1,
+		},
 	},
 	data() {
 		return {
 			deleteUSer: false,
 			blockUSer: false,
+			backcolor: 'grey',
 		};
+	},
+	beforeMount() {
+		if (this.count % 2 == 0) {
+			this.backcolor = 'white';
+		} else this.backcolor = 'grey';
 	},
 	methods: {
 		// @vuese
@@ -117,10 +133,10 @@ ul {
 	color: #373c3f;
 	list-style: none;
 }
-.message:nth-child(odd) {
+.message-grey {
 	background-color: var(--color-grey-light-2);
 }
-.message:nth-child(even) {
+.message-white {
 	background-color: var(--color-white-1);
 }
 .subject-text {
