@@ -19,6 +19,8 @@ export default {
 	components: {
 		AllinboxComponent,
 	},
+	// @vuese
+	//change title name and load messages
 	beforeMount() {
 		document.title = 'messages: inbox';
 		this.loadComposeMessages();
@@ -29,16 +31,22 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		//return compose messages
 		composeMessages() {
 			return this.$store.getters['messages/composeMessages'];
 		},
 	},
 	watch: {
+		// @vuese
+		//watch compose messages if it's empty
 		composeMessages() {
 			if (this.composeMessages.length == 0) this.noMessages = true;
 		},
 	},
 	methods: {
+		// @vuese
+		//load compose messages from the store
 		async loadComposeMessages() {
 			try {
 				await this.$store.dispatch('messages/loadComposeMessages', {
@@ -48,9 +56,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		// load() {
-		// 	this.messages = this.$store.getters['messages/allMessages'];
-		// },
 	},
 };
 </script>

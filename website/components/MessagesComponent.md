@@ -10,3 +10,15 @@
 <!-- @vuese:MessagesComponent:props:end -->
 
 
+## Methods
+
+<!-- @vuese:MessagesComponent:methods:start -->
+|Method|Description|Parameters|
+|---|---|---|
+|deleteAction|toggle delete action|-|
+|blockAction|toggle block action|-|
+|expand|expand or collapse message details|-|
+
+<!-- @vuese:MessagesComponent:methods:end -->
+
+

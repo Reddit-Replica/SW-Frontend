@@ -19,6 +19,8 @@ export default {
 	components: {
 		PostreplyComponent,
 	},
+	// @vuese
+	//change title name and load replies
 	beforeMount() {
 		document.title = 'messages: selfreply';
 		this.loadPostReplies();
@@ -29,16 +31,22 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		//return post replies
 		postReplies() {
 			return this.$store.getters['messages/postReplies'];
 		},
 	},
 	watch: {
+		// @vuese
+		//watch post replies if it's empty
 		postReplies() {
 			if (this.postReplies.length == 0) this.noMessages = true;
 		},
 	},
 	methods: {
+		// @vuese
+		//load post replies from the store
 		async loadPostReplies() {
 			try {
 				await this.$store.dispatch('messages/loadPostReplies', {

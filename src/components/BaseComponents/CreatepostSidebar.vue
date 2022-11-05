@@ -37,9 +37,13 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// Used to change router to submit page
 		goToSubmit() {
 			this.$router.push('/submit');
 		},
+		// @vuese
+		// Used to show create community popup
 		showCreateCommunity() {
 			this.createCommunityShown = !this.createCommunityShown;
 		},
