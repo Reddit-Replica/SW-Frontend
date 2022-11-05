@@ -119,8 +119,8 @@
 					"senderUsername": "/u/hoda_gamal",
 					"receiverUsername": "",
 					"subject": "hi",
-					"sendAt": "5 days ago",
-					"isReply": true,
+					"sendAt": "2019-08-24T14:15:22Z",
+					"isReply": false,
 					"isRead": false
 				}
 			]
@@ -136,10 +136,10 @@
 				{
 					"text": "hello world",
 					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "",
+					"receiverUsername": "/u/asmaaadel0",
 					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hiiii",
-					"isReply": true,
+					"isReply": false,
 					"isRead": false
 				}
 			]
@@ -150,8 +150,8 @@
 			"children": [
 				{
 					"text": "hello asmaa",
-					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
+					"senderUsername": "/u/asmaaadel0",
+					"receiverUsername": "/u/hoda_gamal",
 					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hi",
 					"isReply": false,
@@ -171,10 +171,10 @@
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "/user/asmaaadel0",
+					"receiverUsername": "/u/asmaaadel0",
 					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hiiii",
-					"isReply": true
+					"isReply": false
 				}
 			]
 		},

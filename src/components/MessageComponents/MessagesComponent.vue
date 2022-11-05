@@ -2,8 +2,15 @@
 	<div class="message">
 		<li>
 			<p class="subject-text">
-				<a href="" id="message-sender" class="sender-box">{{
-					message.senderUsername
+				<a
+					href=""
+					id="message-sender"
+					class="sender-box"
+					v-if="ifMessageRecieved"
+					>{{ message.senderUsername }}</a
+				>
+				<a href="" id="message-reciever" class="reciever-box" v-else>{{
+					message.receiverUsername
 				}}</a>
 				<span>{{ message.subject }}</span>
 			</p>
@@ -20,18 +27,27 @@
 					<span class="sign" id="sign" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
 					>
-					from&nbsp;
-					<span class="sender"
-						><a href="" id="message-sender">{{
-							message.senderUsername
-						}}</a> </span
-					>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+					<span v-if="ifMessageRecieved">
+						<span>from&nbsp;</span>
+						<span class="sender"
+							><a href="" id="message-sender">{{ message.senderUsername }}</a>
+						</span>
+					</span>
+					<span v-else>
+						<span>to&nbsp;</span>
+						<span class="reciever"
+							><a href="" id="message-reciever">{{
+								message.receiverUsername
+							}}</a>
+						</span>
+					</span>
+					&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
 				</p>
 				<div v-if="expandAll">
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list">
 						<li><a href="">Permalink</a></li>
-						<li>
+						<li v-if="ifMessageRecieved">
 							<form action="#">
 								<input
 									type="hidden"
@@ -59,8 +75,8 @@
 								>Delete</span
 							>
 						</li>
-						<li><a href="" id="report">Report</a></li>
-						<li>
+						<li v-if="ifMessageRecieved"><a href="" id="report">Report</a></li>
+						<li v-if="ifMessageRecieved">
 							<span class="sure-block" v-if="blockUSer"
 								>are you sure?
 								<span class="link" id="yes-block-user">Yes</span> /
@@ -73,10 +89,12 @@
 								>Block User</span
 							>
 						</li>
-						<li>
+						<li v-if="ifMessageRecieved">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
-						<li><span class="link" id="reply">Reply</span></li>
+						<li v-if="ifMessageRecieved">
+							<span class="link" id="reply">Reply</span>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -110,6 +128,19 @@ export default {
 			blockUSer: false,
 			expandAll: true,
 		};
+	},
+	computed: {
+		// @vuese
+		//get username from store
+		getUserName() {
+			return this.$store.getters.getUserName;
+		},
+		// @vuese
+		//check if user is reciever or sender
+		ifMessageRecieved() {
+			console.log(this.receiverUsername);
+			return this.getUserName == this.message.receiverUsername;
+		},
 	},
 	methods: {
 		// @vuese
@@ -159,7 +190,8 @@ ul {
 	margin: 0;
 	border-left: var(--line-dashed-3);
 }
-.sender-box {
+.sender-box,
+.reciever-box {
 	color: var(--color-blue);
 	border: var(--line-9);
 	text-decoration: none;
@@ -167,7 +199,8 @@ ul {
 	padding: 0.4rem;
 	margin: 0.5rem;
 }
-.sender-box:hover {
+.sender-box:hover,
+.reciever-box:hover {
 	text-decoration: none;
 }
 .subject-text {
@@ -225,7 +258,8 @@ a:hover,
 .sure-block {
 	color: var(--color-red-dark-1);
 }
-.sender a {
+.sender a,
+.reciever a {
 	color: var(--color-blue);
 	font-size: 1.1rem;
 	font-weight: bold;
