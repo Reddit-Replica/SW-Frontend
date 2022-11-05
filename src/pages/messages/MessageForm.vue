@@ -153,10 +153,14 @@ export default {
 			formatting: 'formatting',
 		};
 	},
+	// @vuese
+	//change title name
 	created() {
 		document.title = 'messages: compose';
 	},
 	methods: {
+		// @vuese
+		//make form validation
 		formValidation() {
 			if (this.messageTo == '') {
 				this.error = 'messageTo';
@@ -166,12 +170,16 @@ export default {
 				this.error = 'message';
 			} else this.error = '';
 		},
+		// @vuese
+		//handle submit form
 		handleSubmit() {
 			this.formValidation();
 			console.log(this.usernames[0]);
 			if (this.error != '') return;
 			//post request
 		},
+		// @vuese
+		//change title to formatting or hide
 		changeTitle() {
 			if (this.formatting == 'formatting') this.formatting = 'hide';
 			else this.formatting = 'formatting';
