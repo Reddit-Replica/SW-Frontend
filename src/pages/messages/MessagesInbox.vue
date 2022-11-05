@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<messages-component
-				v-for="message in messages"
+				v-for="message in userMessages"
 				:key="message"
 				:message="message"
 			></messages-component>
@@ -23,7 +23,7 @@ export default {
 	//change title name and load messages
 	beforeMount() {
 		document.title = 'messages: messages';
-		this.loadInboxMessages();
+		this.loadUserMessages();
 	},
 	data() {
 		return {
@@ -33,23 +33,23 @@ export default {
 	computed: {
 		// @vuese
 		//return all messages sent or recieved
-		messages() {
+		userMessages() {
 			return this.$store.getters['messages/userMessages'];
 		},
 	},
 	watch: {
 		// @vuese
 		//watch messages if it's empty
-		messages() {
-			if (this.messages.length == 0) this.noMessages = true;
+		userMessages() {
+			if (this.userMessages.length == 0) this.noMessages = true;
 		},
 	},
 	methods: {
 		// @vuese
 		//load messages from the store
-		async loadInboxMessages() {
+		async loadUserMessages() {
 			try {
-				await this.$store.dispatch('messages/loadInboxMessages', {
+				await this.$store.dispatch('messages/loadUserMessages', {
 					baseurl: this.$baseurl,
 				});
 			} catch (error) {

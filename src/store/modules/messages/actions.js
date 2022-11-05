@@ -1,8 +1,8 @@
 export default {
-	async loadComposeMessages(context, payload) {
+	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/compose');
+		const response = await fetch(baseurl + '/inbox');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -28,7 +28,7 @@ export default {
 			};
 			messages.push(message);
 		}
-		context.commit('setAllMessages', messages);
+		context.commit('setInboxMessages', messages);
 	},
 
 	async loadUnreadMessages(context, payload) {
@@ -92,7 +92,7 @@ export default {
 		}
 		context.commit('setUserMentions', mentions);
 	},
-	async loadInboxMessages(context, payload) {
+	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/messages');
 		const responseData = await response.json();
