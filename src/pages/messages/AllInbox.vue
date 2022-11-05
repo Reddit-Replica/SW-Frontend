@@ -2,10 +2,15 @@
 	<div>
 		<div v-for="message in inboxMessages" :key="message" :message="message">
 			<allinbox-component
-				v-if="!message.isReply"
+				v-if="message.type == 'Messages'"
+				:count="++count"
 				:message="message"
 			></allinbox-component>
-			<PostreplyComponent v-else :message="message"></PostreplyComponent>
+			<PostreplyComponent
+				v-if="message.type == 'Post replies'"
+				:count="++count"
+				:message="message"
+			></PostreplyComponent>
 		</div>
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
@@ -30,6 +35,7 @@ export default {
 	data() {
 		return {
 			noMessages: false,
+			count: 1,
 		};
 	},
 	computed: {
