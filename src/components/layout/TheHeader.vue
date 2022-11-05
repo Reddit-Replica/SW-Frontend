@@ -479,8 +479,6 @@ export default {
 		// @vuese
 		// Used to show or hide settings menu
 		showSettingsSubMenu() {
-			// Fire when the form is cleared
-			// @arg The argument is a boolean value representing xxx
 			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
 		},
 		// @vuese

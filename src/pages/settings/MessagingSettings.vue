@@ -119,15 +119,23 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//show menu of Who can send you chat requests menu
 		showFirstMenuFunction() {
 			this.showFirstMenu = !this.showFirstMenu;
 		},
+		// @vuese
+		//show menu of Who can send you private messages
 		showSecondMenuFunction() {
 			this.showSecondMenu = !this.showSecondMenu;
 		},
+		// @vuese
+		//change title of Who can send you chat requests menu
 		changeFirstTitle(title) {
 			this.titleFirst = title;
 		},
+		// @vuese
+		//change title of Who can send you private messages
 		changeSecondTitle(title) {
 			this.titleSecond = title;
 		},

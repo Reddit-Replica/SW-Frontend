@@ -1,6 +1,6 @@
 export default {
-	setAllMessages(state, payload) {
-		state.allMessages = payload;
+	setInboxMessages(state, payload) {
+		state.inboxMessages = payload;
 	},
 	setUnreadMessages(state, payload) {
 		state.unreadMessages = payload;

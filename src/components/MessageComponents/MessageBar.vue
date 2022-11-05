@@ -34,15 +34,23 @@ export default {
 	},
 	methods: {},
 	computed: {
+		// @vuese
+		// return unread messages bath
 		unreadCom() {
 			return this.$route.path === '/message/unread';
 		},
+		// @vuese
+		// return all messages that sent or received bath
 		messagesCom() {
 			return this.$route.path === '/message/messages';
 		},
+		// @vuese
+		// return post replies bath
 		selfreplyCom() {
 			return this.$route.path === '/message/selfreply';
 		},
+		// @vuese
+		// return mentions bath
 		mentionsCom() {
 			return this.$route.path === '/message/mentions';
 		},
