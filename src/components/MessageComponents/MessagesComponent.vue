@@ -86,6 +86,8 @@
 
 <script>
 export default {
+	// @vuese
+	//details of message
 	props: {
 		message: {
 			type: Object,
@@ -112,12 +114,18 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//toggle delete action
 		deleteAction() {
 			this.deleteUSer = !this.deleteUSer;
 		},
+		// @vuese
+		//toggle block action
 		blockAction() {
 			this.blockUSer = !this.blockUSer;
 		},
+		// @vuese
+		//expand or collapse message details
 		expand(action) {
 			if (action == 'expand') {
 				this.expandAll = true;

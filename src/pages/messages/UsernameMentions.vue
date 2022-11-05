@@ -19,6 +19,8 @@ export default {
 	components: {
 		AllinboxComponent,
 	},
+	// @vuese
+	//change title name and load mentions
 	beforeMount() {
 		document.title = 'messages: mentions';
 		this.loadUserMentions();
@@ -29,16 +31,22 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		//return user mentions
 		userMentions() {
 			return this.$store.getters['messages/userMentions'];
 		},
 	},
 	watch: {
+		// @vuese
+		//watchmentions if it's empty
 		userMentions() {
 			if (this.userMentions.length == 0) this.noMessages = true;
 		},
 	},
 	methods: {
+		// @vuese
+		//load user mentions from the store
 		async loadUserMentions() {
 			try {
 				await this.$store.dispatch('messages/loadUserMentions', {
