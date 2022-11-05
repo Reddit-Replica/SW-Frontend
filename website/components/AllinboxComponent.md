@@ -6,6 +6,7 @@
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |message|details of message|`Object`|`false`|{"text":"","type":"","senderUsername":"","receiverUsername":"","subredditName":"","postTitle":"","subject":"","sendAt":"","isReply":"","isRead":""}|
+|count|counter to handel background color|`Number`|`false`|1|
 
 <!-- @vuese:AllinboxComponent:props:end -->
 
