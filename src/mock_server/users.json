@@ -135,13 +135,10 @@
 			"children": [
 				{
 					"text": "hello world",
-					"type": "type",
 					"senderUsername": "/u/norhan_reda",
 					"receiverUsername": "",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hiiii",
-					"sendAt": "6 days ago",
 					"isReply": true,
 					"isRead": false
 				}
@@ -153,15 +150,12 @@
 			"children": [
 				{
 					"text": "hello asmaa",
-					"type": "type",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",
 					"receiverUsername": "",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hi",
-					"sendAt": "5 days ago",
-					"isReply": true,
-					"isRead": false
+					"isReply": false,
+					"isRead": true
 				}
 			]
 		}
@@ -174,14 +168,13 @@
 				{
 					"text": "hello world",
 					"type": "type",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "/user/asmaaadel0",
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/user/asmaaadel0",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": true,
-					"isRead": false
+					"isReply": true
 				}
 			]
 		},
