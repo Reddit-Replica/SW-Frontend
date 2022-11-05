@@ -44,7 +44,7 @@
 							v-if="showSignemail"
 							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
 						></span>
-						<div class="error-email-msg" v-if="error_email">
+						<div class="error-email-msg" v-if="messageErrorShowEmail">
 							{{ error_email_message }}
 						</div>
 					</fieldset>
@@ -106,7 +106,14 @@
 							v-model="password"
 							:class="messageErrorShowPass ? 'red-border' : ''"
 						/>
-						<div class="password-errorMessage" data-for="password"></div>
+						<span
+							v-if="showSignPass"
+							:class="checkedPass ? 'correct-check' : 'wrong-check'"
+						></span>
+
+						<div class="username-error-message" v-if="messageErrorShowPass">
+							{{ error_message_pass }}
+						</div>
 					</fieldset>
 				</form>
 			</div>
