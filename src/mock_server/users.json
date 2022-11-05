@@ -95,7 +95,7 @@
 			"children": [
 				{
 					"text": "hello world",
-					"type": "type",
+					"type": "Post replies",
 					"senderUsername": "/u/norhan_reda",
 					"receiverUsername": "",
 					"subredditName": "subredditName",
@@ -113,7 +113,25 @@
 			"children": [
 				{
 					"text": "hello asmaa",
-					"type": "type",
+					"type": "Messages",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "",
+					"subject": "hi",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "Mentions",
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",

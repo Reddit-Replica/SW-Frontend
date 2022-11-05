@@ -1,5 +1,8 @@
 <template>
-	<div class="message">
+	<div
+		class="message"
+		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+	>
 		<li>
 			<p class="subject-text">
 				<span class="post-reply">post reply</span>
@@ -129,6 +132,13 @@ export default {
 				isRead: '',
 			}),
 		},
+		// @vuese
+		//counter to handel background color
+		count: {
+			type: Number,
+			require: true,
+			default: 1,
+		},
 	},
 	data() {
 		return {
@@ -137,7 +147,13 @@ export default {
 			spamUser: false,
 			upClicked: false,
 			downClicked: false,
+			backcolor: 'grey',
 		};
+	},
+	beforeMount() {
+		if (this.count % 2 == 0) {
+			this.backcolor = 'white';
+		} else this.backcolor = 'grey';
 	},
 	methods: {
 		// @vuese
@@ -197,12 +213,18 @@ ul {
 	color: #373c3f;
 	list-style: none;
 }
-.message:nth-child(odd) {
+.message-grey {
+	background-color: var(--color-grey-light-2);
+}
+.message-white {
+	background-color: var(--color-white-1);
+}
+/* .message:nth-child(odd) {
 	background-color: var(--color-grey-light-2);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
-}
+} */
 .subject-text {
 	font-weight: bold;
 	font-size: 1.3rem;
