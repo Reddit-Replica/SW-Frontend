@@ -1,0 +1,65 @@
+<template>
+	<div>
+		<div v-for="message in inboxMessages" :key="message" :message="message">
+			<allinbox-component
+				v-if="!message.isReply"
+				:message="message"
+			></allinbox-component>
+			<PostreplyComponent v-else :message="message"></PostreplyComponent>
+		</div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
+	</div>
+</template>
+
+<script>
+import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
+import PostreplyComponent from '../../components/MessageComponents/PostreplyComponent.vue';
+export default {
+	components: {
+		AllinboxComponent,
+		PostreplyComponent,
+	},
+	// @vuese
+	//change title name and load messages
+	beforeMount() {
+		document.title = 'messages: inbox';
+		this.loadInboxMessages();
+	},
+	data() {
+		return {
+			noMessages: false,
+		};
+	},
+	computed: {
+		// @vuese
+		//return inbox messages
+		inboxMessages() {
+			return this.$store.getters['messages/inboxMessages'];
+		},
+	},
+	watch: {
+		// @vuese
+		//watch compose messages if it's empty
+		inboxMessages() {
+			if (this.inboxMessages.length == 0) this.noMessages = true;
+		},
+	},
+	methods: {
+		// @vuese
+		//load compose messages from the store
+		async loadInboxMessages() {
+			try {
+				await this.$store.dispatch('messages/loadInboxMessages', {
+					baseurl: this.$baseurl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+	},
+};
+</script>
+
+<style scoped></style>

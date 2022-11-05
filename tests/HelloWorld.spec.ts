@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 import HelloWorld from '../src/components/HelloWorld.vue';
 import { describe, it, expect } from 'vitest';
-
 describe('HelloWorld.vue', () => {
 	it('should renders if page content is correct', () => {
 		const message = 'Happy People';
@@ -9,7 +8,6 @@ describe('HelloWorld.vue', () => {
 		const wrapper = mount(HelloWorld, {
 			props: { message },
 		});
-
 		expect(wrapper.text()).toBe(testMessage);
 	});
 
@@ -19,7 +17,7 @@ describe('HelloWorld.vue', () => {
 		const wrapper = mount(HelloWorld, {
 			props: { message },
 		});
-
 		expect(wrapper.vm.message).toBe(testMessage);
 	});
 });
+
