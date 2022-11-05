@@ -23,6 +23,7 @@ export default {
 	/* orange color (primary) */
 	--color-primary: #ff2c00;
 	--color-Primary-light: #ff5213;
+	--color-Primary-light-2: #f79470;
 	--color-Primary-dark: rgb(217, 58, 0);
 
 	/* white colors */
@@ -72,6 +73,7 @@ export default {
 	--color-blue-2: #0079d3;
 	--color-blue-3: #3293db;
 	--color-blue-4: #336699;
+	--color-blue-5: #83afdc;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
 

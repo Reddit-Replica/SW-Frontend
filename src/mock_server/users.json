@@ -13,6 +13,20 @@
 			"password": "123456789"
 		}
 	],
+	"userTest": [
+		{
+			"name": "Karim",
+			"email": "karim@gmail.com",
+			"password": "123456789",
+			"username": "ksaqer8"
+		},
+		{
+			"name": "Abd",
+			"email": "Abd@gmail.com",
+			"password": "k123456789",
+			"username": "acmp2024"
+		}
+	],
 	"create-subreddit": [
 		{
 			"id": 1,
@@ -88,6 +102,7 @@
 			"name": "Films"
 		}
 	],
+	"compose": [],
 	"inbox": [
 		{
 			"before": "before",
@@ -95,14 +110,14 @@
 			"children": [
 				{
 					"text": "hello world",
-					"type": "type",
+					"type": "Post replies",
 					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "",
+					"receiverUsername": "/u/asmaaadel0",
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"subject": "hiiii",
 					"sendAt": "6 days ago",
-					"isReply": true,
+					"isReply": false,
 					"isRead": false
 				}
 			]
@@ -113,21 +128,58 @@
 			"children": [
 				{
 					"text": "hello asmaa",
-					"type": "type",
+					"type": "Messages",
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
+					"receiverUsername": "/u/asmaaadel0",
 					"subject": "hi",
-					"sendAt": "5 days ago",
-					"isReply": true,
+					"sendAt": "2019-08-24T14:15:22Z",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "Mentions",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "/u/asmaaadel0",
+					"subject": "hi",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"isReply": false,
 					"isRead": false
 				}
 			]
 		}
 	],
 	"unread": [],
-	"mentions": [],
+	"mentions": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "Post replies",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		}
+	],
 	"messages": [
 		{
 			"before": "before",
@@ -135,14 +187,11 @@
 			"children": [
 				{
 					"text": "hello world",
-					"type": "type",
 					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
+					"receiverUsername": "/u/asmaaadel0",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": true,
+					"isReply": false,
 					"isRead": false
 				}
 			]
@@ -153,15 +202,12 @@
 			"children": [
 				{
 					"text": "hello asmaa",
-					"type": "type",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
+					"senderUsername": "/u/asmaaadel0",
+					"receiverUsername": "/u/hoda_gamal",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hi",
-					"sendAt": "5 days ago",
-					"isReply": true,
-					"isRead": false
+					"isReply": false,
+					"isRead": true
 				}
 			]
 		}
@@ -174,14 +220,13 @@
 				{
 					"text": "hello world",
 					"type": "type",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "",
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": true,
-					"isRead": false
+					"isReply": false
 				}
 			]
 		},
@@ -195,7 +240,7 @@
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
+					"receiverUsername": "/user/asmaaadel0",
 					"subject": "hi",
 					"sendAt": "5 days ago",
 					"isReply": true,

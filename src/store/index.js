@@ -12,7 +12,8 @@ const store = createStore({
 	},
 	state() {
 		return {
-			userName: 'mena',
+			// userName: 'mena',
+			userName: '/u/asmaaadel0',
 			accessToken: '',
 		};
 	},
