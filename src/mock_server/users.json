@@ -88,7 +88,7 @@
 			"name": "Films"
 		}
 	],
-	"compose": [
+	"inbox": [
 		{
 			"before": "before",
 			"after": "after",

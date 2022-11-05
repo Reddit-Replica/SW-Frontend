@@ -1,6 +1,6 @@
 export default {
-	composeMessages(state) {
-		return state.allMessages;
+	inboxMessages(state) {
+		return state.inboxMessages;
 	},
 	unreadMessages(state) {
 		return state.unreadMessages;

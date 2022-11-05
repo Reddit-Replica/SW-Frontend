@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<allinbox-component
-				v-for="message in composeMessages"
+				v-for="message in inboxMessages"
 				:key="message"
 				:message="message"
 			></allinbox-component>
@@ -23,7 +23,7 @@ export default {
 	//change title name and load messages
 	beforeMount() {
 		document.title = 'messages: inbox';
-		this.loadComposeMessages();
+		this.loadInboxMessages();
 	},
 	data() {
 		return {
@@ -32,24 +32,24 @@ export default {
 	},
 	computed: {
 		// @vuese
-		//return compose messages
-		composeMessages() {
-			return this.$store.getters['messages/composeMessages'];
+		//return inbox messages
+		inboxMessages() {
+			return this.$store.getters['messages/inboxMessages'];
 		},
 	},
 	watch: {
 		// @vuese
 		//watch compose messages if it's empty
-		composeMessages() {
-			if (this.composeMessages.length == 0) this.noMessages = true;
+		inboxMessages() {
+			if (this.inboxMessages.length == 0) this.noMessages = true;
 		},
 	},
 	methods: {
 		// @vuese
 		//load compose messages from the store
-		async loadComposeMessages() {
+		async loadInboxMessages() {
 			try {
-				await this.$store.dispatch('messages/loadComposeMessages', {
+				await this.$store.dispatch('messages/loadInboxMessages', {
 					baseurl: this.$baseurl,
 				});
 			} catch (error) {
