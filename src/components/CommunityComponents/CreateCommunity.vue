@@ -93,7 +93,6 @@
 						</div>
 					</base-dialog>
 				</div>
-
 				<div class="community-box flex-column">
 					<div class="community-box-title">
 						<h3 class="title-black">Community category</h3>
