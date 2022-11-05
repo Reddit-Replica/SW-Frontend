@@ -1,5 +1,5 @@
 <template>
-	<teleport to="body">
+	<teleport to="body" :disabled="isMobile()">
 		<div
 			v-if="show"
 			class="backdrop"
@@ -65,6 +65,9 @@ export default {
 		tryClose() {
 			this.$emit('close');
 		},
+		isMobile() {
+			return screen.width <= 780;
+		},
 	},
 };
 </script>
@@ -77,7 +80,7 @@ export default {
 	height: 100%;
 	overflow: auto;
 	padding: 75px 30px 20px;
-	pointer-events: none;
+	/* pointer-events: none; */
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -126,5 +129,10 @@ section {
 }
 .transparent-background {
 	background-color: transparent;
+}
+@media only screen and (max-width: 780px) {
+	.backdrop {
+		padding: 0px;
+	}
 }
 </style>

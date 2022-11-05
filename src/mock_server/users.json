@@ -13,7 +13,7 @@
 			"password": "123456789"
 		}
 	],
-	"subreddits": [
+	"create-subreddit": [
 		{
 			"id": 1,
 			"subredditName": "FrontEnd",
