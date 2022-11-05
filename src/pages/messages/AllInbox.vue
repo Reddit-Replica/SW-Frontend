@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<div>
+		<div v-for="message in inboxMessages" :key="message" :message="message">
 			<allinbox-component
-				v-for="message in inboxMessages"
-				:key="message"
+				v-if="!message.isReply"
 				:message="message"
 			></allinbox-component>
+			<PostreplyComponent v-else :message="message"></PostreplyComponent>
 		</div>
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
@@ -15,9 +15,11 @@
 
 <script>
 import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
+import PostreplyComponent from '../../components/MessageComponents/PostreplyComponent.vue';
 export default {
 	components: {
 		AllinboxComponent,
+		PostreplyComponent,
 	},
 	// @vuese
 	//change title name and load messages
