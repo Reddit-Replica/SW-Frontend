@@ -13,6 +13,20 @@
 			"password": "123456789"
 		}
 	],
+  "userTest" : [
+    {
+      "name": "Karim",
+      "email": "karim@gmail.com",
+      "password": "123456789",
+      "username": "ksaqer8"
+    },
+    {
+      "name": "Abd",
+      "email": "Abd@gmail.com",
+      "password": "k123456789",
+      "username": "acmp2024"
+    }
+  ],
 	"create-subreddit": [
 		{
 			"id": 1,

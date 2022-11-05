@@ -26,12 +26,12 @@
 					</div>
 				</div>
 				<div class="input-box usr-pass-div">
-					<input type="text" required="required" />
+					<input type="text" required="required" v-model="username" />
 					<span class="span-input"> Username</span>
 				</div>
 				<!-- <p class="invalid">Please enter a username to continue</p> -->
 				<div class="input-box usr-pass-div">
-					<input type="password" required="required" />
+					<input type="password" required="required" v-model="password" />
 					<span class="span-input"> Password</span>
 				</div>
 				<!-- <p class="invalid">Please enter an email address to continue</p> -->
@@ -63,6 +63,8 @@ export default {
 	data() {
 		return {
 			buttonIsactive: true,
+			username: '',
+			password: '',
 		};
 	},
 	methods: {},
@@ -73,12 +75,6 @@ export default {
 <style scoped>
 * {
 	box-sizing: border-box;
-	/* font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    color: #1a1a1b;
-    font-family: IBMPlexSans,sans-serif;
-    position: relative;*/
 }
 div {
 	display: block;
