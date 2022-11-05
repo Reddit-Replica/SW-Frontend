@@ -13,20 +13,20 @@
 			"password": "123456789"
 		}
 	],
-  "userTest" : [
-    {
-      "name": "Karim",
-      "email": "karim@gmail.com",
-      "password": "123456789",
-      "username": "ksaqer8"
-    },
-    {
-      "name": "Abd",
-      "email": "Abd@gmail.com",
-      "password": "k123456789",
-      "username": "acmp2024"
-    }
-  ],
+	"userTest": [
+		{
+			"name": "Karim",
+			"email": "karim@gmail.com",
+			"password": "123456789",
+			"username": "ksaqer8"
+		},
+		{
+			"name": "Abd",
+			"email": "Abd@gmail.com",
+			"password": "k123456789",
+			"username": "acmp2024"
+		}
+	],
 	"create-subreddit": [
 		{
 			"id": 1,
@@ -102,6 +102,7 @@
 			"name": "Films"
 		}
 	],
+	"compose": [],
 	"inbox": [
 		{
 			"before": "before",
@@ -111,7 +112,7 @@
 					"text": "hello world",
 					"type": "Post replies",
 					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "",
+					"receiverUsername": "/u/asmaaadel0",
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"subject": "hiiii",
@@ -131,7 +132,7 @@
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
+					"receiverUsername": "/u/asmaaadel0",
 					"subject": "hi",
 					"sendAt": "2019-08-24T14:15:22Z",
 					"isReply": false,
@@ -149,7 +150,7 @@
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "",
+					"receiverUsername": "/u/asmaaadel0",
 					"subject": "hi",
 					"sendAt": "2019-08-24T14:15:22Z",
 					"isReply": false,
@@ -159,7 +160,26 @@
 		}
 	],
 	"unread": [],
-	"mentions": [],
+	"mentions": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "Post replies",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		}
+	],
 	"messages": [
 		{
 			"before": "before",
