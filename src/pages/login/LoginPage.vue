@@ -21,30 +21,14 @@
 				</p>
 
 				<form class="logining-in" @submit.prevent="handleSubmit">
-					<!--LogIn with google and apple accounts -->
+					<!--LogIn with google and facebook accounts -->
 
 					<div class="login-google-apple">
 						<GoogleSigninButton id="google-login" class="log-google log-ag" />
-						<!-- <div
+						<facebookSigninButton
 							id="facebook-login"
 							class="log-google log-ag"
-							@click="facebookLogin()"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								class="bi bi-facebook logo-img"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
-								/>
-							</svg>
-							<span>Continue with Facebook</span>
-						</div>
-						-->
+						/>
 						<!-- <v-facebook-login
 							id="facebook-login"
 							class="log-facebook log-ag"
@@ -135,28 +119,25 @@
 
 <script>
 import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
+import facebookSigninButton from '../../components/facebookSigninButton.vue';
 export default {
 	name: 'LogIn',
 	data() {
 		return {
-			username: '',
-			password: '',
-			showSignuser: false,
-			checkedUser: true,
-			error_message: '',
-			messageErrorShowUser: false,
-			messageErrorShowPass: false,
-			showSignPass: false,
-			Check: false,
-			users: {},
-			checkedPass: true,
-			// FB: {},
-			// model: {},
-			// scope: {},
-			// appId: '651769123026203',
+			username: '', // username
+			password: '', // password user
+			showSignuser: false, // true or error for user
+			checkedUser: true, // true or error for user
+			error_message: '', // error message shown
+			messageErrorShowUser: false, // showing err message
+			showSignPass: false, // true or error for pass
+			Check: false, // flag for validation
+			users: {}, //test array
+			checkedPass: true, //true or error for pass
 		};
 	},
 	methods: {
+		// Validation for UserName
 		validateUser(value) {
 			this.showSignuser = false;
 			this.messageErrorShowUser = false;
@@ -193,52 +174,30 @@ export default {
 					});
 			}
 		},
-		handleSubmit() {
-			fetch(this.$baseurl + '/userTest')
+		async handleSubmit() {
+			fetch(this.$baseurl + '/userTest', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					username: this.username,
+					password: this.password,
+				}),
+			})
 				.then((response) => {
 					if (response.ok) {
+						console.log(response);
 						return response.json();
 					}
 				})
 				.then((data) => {
-					data.forEach((element) => {
-						if (
-							element.username == this.username &&
-							element.password == this.password
-						) {
-							console.log('done');
-							this.Check = true;
-							this.$router.push('/main');
-						} else if (!this.Check) {
-							console.log('pass failed');
-							this.showSignuser = true;
-							this.checkedUser = false;
-							this.messageErrorShowUser = true;
-							this.showSignPass = true;
-							this.checkedPass = false;
-							this.messageErrorShowPass = true;
-							this.error_message = 'Incorrect username or password';
-							document.querySelector('#user-name').style.border =
-								'0.5px solid #ea0027';
-						}
-					});
+					console.log(data.access_token);
 				})
 				.catch((error) => {
 					console.log(error);
 				});
 		},
-		// async facebookLogin() {},
-		// handleSdkInit({ FB, scope }) {
-		// 	this.FB = FB;
-		// 	this.scope = scope;
-		// 	console.log('saaf');
-		// },
-		// OnFacebookAuthSuccess(idToken) {
-		// 	console.log(idToken);
-		// },
-		// OnFacebookAuthFail(error) {
-		// 	console.log(error);
-		// },
 	},
 	watch: {
 		username(value) {
@@ -246,7 +205,7 @@ export default {
 			this.validateUser(value);
 		},
 	},
-	components: { GoogleSigninButton },
+	components: { GoogleSigninButton, facebookSigninButton },
 };
 </script>
 
@@ -478,6 +437,7 @@ button {
 }
 .log-facebook,
 .log-google {
+	width: 280px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
