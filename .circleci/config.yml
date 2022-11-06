@@ -55,7 +55,7 @@ jobs:
 
   integration-testing:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:lts
     steps:
     - checkout
     - run:
@@ -79,6 +79,10 @@ jobs:
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer/frontend
             docker push  waer/frontend
+            # testing enviromet image 
+            docker build -t frontend_testing:v1 ./Docker_Test
+            docker tag frontend_testing:v1  waer/frontend_testing
+            docker push  waer/frontend_testing
 
 workflows:
   main:
