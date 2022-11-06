@@ -5,10 +5,10 @@
 	>
 		<li>
 			<p class="subject-text">
-				<span class="post-reply">post reply</span>
+				<span class="post-reply">username mention</span>
 				<span>{{ message.subject }}</span>
 			</p>
-			<div class="d-flex flex-row">
+			<div class="d-flex flex-row big-box">
 				<div class="d-flex flex-column vote-box">
 					<div class="upvote" @click="upvote">
 						<svg class="icon p-1" :class="upClicked ? 'up-clicked' : ''">
@@ -27,10 +27,8 @@
 						<span class="sender"
 							><a href="" id="message-sender">{{ message.senderUsername }}</a>
 							<span
-								>&nbsp;via&nbsp;
-								<a href="" id="message-receiver">{{
-									message.receiverUsername
-								}}</a>
+								><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
+								<a href="" id="message-receiver">{{ message.subredditName }}</a>
 							</span></span
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
@@ -158,6 +156,8 @@ export default {
 			isRead: this.message.isRead,
 		};
 	},
+	// @vuese
+	//handle grey and white backgrounds
 	beforeMount() {
 		if (this.count % 2 == 0) {
 			this.backcolor = 'white';
@@ -223,5 +223,8 @@ export default {
 a:hover,
 .link:hover {
 	text-decoration: underline;
+}
+.big-box {
+	width: 100%;
 }
 </style>

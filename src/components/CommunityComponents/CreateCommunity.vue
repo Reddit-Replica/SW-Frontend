@@ -71,7 +71,7 @@
 								Community names must be between 3–21 characters, and can only
 								contain letters, numbers, or underscores.
 							</p>
-							<span class="more-text" @click="showMore">More</span>
+							<span class="more-text" @click="showMore" id="more">More</span>
 						</div>
 					</div>
 					<base-dialog
@@ -86,14 +86,13 @@
 								contain letters, numbers, or underscores.
 							</div>
 							<div class="box-buttons box-ok">
-								<base-button @click="showMore" class="button-blue"
+								<base-button @click="showMore" class="button-blue" id="ok"
 									>OK</base-button
 								>
 							</div>
 						</div>
 					</base-dialog>
 				</div>
-
 				<div class="community-box flex-column">
 					<div class="community-box-title">
 						<h3 class="title-black">Community category</h3>
@@ -110,6 +109,7 @@
 								v-for="category of categories"
 								:key="category.name"
 								:value="category.name"
+								:id="category.name"
 							>
 								{{ category.name }}
 							</option>

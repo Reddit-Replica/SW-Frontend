@@ -7,21 +7,23 @@
 		</div>
 		<div class="mod-list">
 			<ul>
-				<li>
+				<li
+					v-for="userModerator in userModerators"
+					:key="userModerator.subredditName"
+				>
 					<i></i>
 					<span>
-						<a href="">r/mjjk</a>
-						<p>r member</p>
+						<router-link to="">r/{{ userModerator.subredditName }}</router-link>
+						<p>{{ userModerator.numOfMembers }} member</p>
 					</span>
-					<base-button button-text="join" class="join-button"></base-button>
-				</li>
-				<li>
-					<i></i>
-					<span>
-						<a href="">r/mjjk</a>
-						<p>r member</p>
-					</span>
-					<base-button button-text="join" class="join-button"></base-button>
+					<base-button
+						:button-text="userModerator.buttonText"
+						class="join-button"
+						:class="[userModerator.joined ? 'joined-button' : '']"
+						@mouseover="hoverButton(userModerator.subredditName)"
+						@mouseleave="unHoverButton"
+						@click="changeButtonState(userModerator.subredditName)"
+					></base-button>
 				</li>
 			</ul>
 		</div>
@@ -32,6 +34,67 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: {
 		BaseButton,
+	},
+	props: {},
+	async created() {
+		await this.RequestUserData();
+		this.userModerators = this.$store.getters['user/getUserData'].moderatorOf;
+		console.log(this.userModerators);
+		const newUserModerators = this.userModerators.map((el) => ({
+			...el,
+			buttonText: 'joined',
+		}));
+		this.userModerators = newUserModerators;
+		this.userModerators.forEach((element) => {
+			if (!element.joined) element.buttonText = 'join';
+		});
+		console.log(this.userModerators);
+	},
+	data() {
+		return {
+			userModerators: '',
+		};
+	},
+	computed: {},
+	methods: {
+		hoverButton(key) {
+			this.userModerators.forEach((element) => {
+				if (element.subredditName == key) {
+					if (element.joined) {
+						element.buttonText = 'leave';
+					}
+				}
+			});
+		},
+		unHoverButton() {
+			this.userModerators.forEach((element) => {
+				if (element.joined) {
+					element.buttonText = 'joined';
+				}
+			});
+		},
+		changeButtonState(key) {
+			this.userModerators.forEach((element) => {
+				if (element.subredditName == key) {
+					if (element.joined) {
+						element.buttonText = 'join';
+					} else {
+						element.buttonText = 'leave';
+					}
+					element.joined = !element.joined;
+				}
+			});
+		},
+		async RequestUserData() {
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.$store.state.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 	},
 };
 </script>
@@ -122,6 +185,7 @@ li span a:hover {
 }
 .join-button {
 	background-color: #0079d3;
+	border: 1px solid #0079d3;
 	border-radius: 9999px;
 	color: #ffffff;
 	font-size: 14px;
@@ -133,5 +197,25 @@ li span a:hover {
 	line-height: 16px;
 	border: none;
 	width: 104px;
+}
+.joined-button {
+	background-color: #ffffff;
+	border: 1px solid #0079d3;
+	color: #0079d3;
+	position: relative;
+}
+.joined-button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 9999px;
+	background: #0079d3;
+	opacity: 0;
+}
+.joined-button:hover::before {
+	opacity: 0.04;
 }
 </style>
