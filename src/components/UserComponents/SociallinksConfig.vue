@@ -8,10 +8,10 @@
 				<h3>Add Social Link</h3>
 				<base-button
 					button-text="save"
-					disable-button="true"
-					link="false"
 					class="save-button"
-					disabled="true"
+					:class="[activeSaveButton ? 'active-save-button' : 'save-button']"
+					id="save-button"
+					@click="SaveSocialLink"
 				></base-button>
 			</div>
 		</template>
@@ -22,12 +22,18 @@
 					:img-src="data.imgSrc"
 					:alt="data.alt"
 				></sociallink-item>
-				<input type="text" :placeholder="socialPlaceholder" />
+				<input
+					type="text"
+					:placeholder="socialPlaceholder"
+					v-model="displayedTextField"
+					@input="Validation"
+				/>
 				<input
 					v-if="data.type == 'link'"
 					type="text"
 					placeholder="https://website.com"
 					v-model="socialLinkUrl"
+					@input="socialLinkModeration"
 				/>
 			</div>
 		</template>
@@ -52,13 +58,58 @@ export default {
 	data() {
 		return {
 			// showSocialLinkConfigDialog: true,
-			socialLinkUrl: 'j',
+			socialLinkUrl: '',
+			displayedTextField: '',
+			activeSaveButton: false,
 		};
 	},
 	emits: ['back'],
 	methods: {
 		back() {
 			this.$emit('back');
+		},
+		socialLinkModeration() {
+			const paragraph = 'http://';
+			if (
+				(!this.socialLinkUrl.startsWith('http://') &&
+					paragraph.match(this.socialLinkUrl) == null) ||
+				(!this.socialLinkUrl.startsWith('http://') &&
+					!paragraph.startsWith(this.socialLinkUrl))
+			) {
+				this.socialLinkUrl = 'http://' + this.socialLinkUrl;
+			}
+			this.Validation();
+		},
+		Validation() {
+			if (this.data.type == 'link') {
+				if (this.socialLinkUrl != '' && this.displayedTextField != '')
+					this.activeSaveButton = true;
+				else this.activeSaveButton = false;
+			} else {
+				if (this.displayedTextField != '') this.activeSaveButton = true;
+				else this.activeSaveButton = false;
+			}
+		},
+		async SaveSocialLink() {
+			if (this.activeSaveButton) {
+				const newSocialLink = {
+					type: this.data.text,
+					displayText: this.displayedTextField,
+					link: this.socialLinkUrl,
+				};
+				/* request to back end */
+
+				/* */
+				this.$emit('save');
+				try {
+					await this.$store.dispatch('user/AddNewSocialLink', {
+						baseurl: this.$baseurl,
+						newSocialLink,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 	},
 	computed: {
@@ -68,22 +119,14 @@ export default {
 			else if (this.data.type == 'username') return '@username';
 			else return 'Display text';
 		},
-		socialLinkModeration() {
-			console.log(this.socialLinkUrl);
-
-			// if (this.socialLinkUrl[0] != 'h') {
-			// 	console.log('ff');
-			// 	// eslint-disable-next-line
-			// 	this.socialLinkUrl = 'http://';
-			// 	return 0;
-			// }
-			return 0;
-		},
 	},
 };
 </script>
-<!--!!!!! Not scoped !!!!!! -->
+<!--!!!!! Not scoped Don't touch :) , it will not affect others contains complex nested classes!!!!!! -->
 <style>
+button#save-button:disabled {
+	opacity: unset !important; /* override button component */
+}
 .dialog-class {
 	width: 500px;
 }
@@ -137,5 +180,17 @@ export default {
 }
 .social-link-config-header-body input:focus {
 	border-color: #0079d3;
+}
+/* .active-save-button {
+	background-color: #0079d3;
+	color: #ffffff;
+	filter: unset;
+	cursor: unset;
+} */
+.social-link-config-header .active-save-button {
+	background-color: #0079d3;
+	color: #ffffff;
+	filter: unset;
+	cursor: pointer;
 }
 </style>
