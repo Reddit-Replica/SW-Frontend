@@ -79,8 +79,11 @@ jobs:
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer/frontend
             docker push  waer/frontend
+
+            rm Dockerfile
+            cp ./Docker_Test/Dockerfile .
             # testing enviromet image 
-            docker build -t frontend_testing:v1 ./Docker_Test
+            docker build -t frontend_testing:v1 .
             docker tag frontend_testing:v1  waer/frontend_testing
             docker push  waer/frontend_testing
 
