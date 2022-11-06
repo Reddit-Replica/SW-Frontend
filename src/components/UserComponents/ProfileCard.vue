@@ -173,6 +173,8 @@ export default {
 		FollowChatComponent,
 	},
 	props: {
+		// @vuese
+		// user Name of the user
 		userName: {
 			type: String,
 			required: true,
@@ -182,24 +184,29 @@ export default {
 		// 	required: true,
 		// },
 	},
+	/**
+	 * @vuese
+	 * when the component was created  we get user data from user store
+	 * @arg no arg
+	 */
 	created() {
 		this.userData = this.$store.getters['user/getUserData'];
-		console.log(this.userData);
+		// console.log(this.userData);
 	},
 	data() {
 		return {
-			NSFW: 'true',
+			// NSFW: 'true',
 			userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
-			mySocialLinks: [
-				{
-					id: '',
-					imagesUrl: '',
-					name: '',
-					type: '' /* there are three types username  */,
-				},
-			],
+			// mySocialLinks: [
+			// 	{
+			// 		id: '',
+			// 		imagesUrl: '',
+			// 		name: '',
+			// 		type: '' /* there are three types username  */,
+			// 	},
+			// ],
 			profileOptions: [
 				{
 					name: 'Profile to Moderation',
@@ -218,6 +225,11 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * when the component was created  we get user data from user store
+		 * @arg no arg
+		 */
 		toggleShowMoreOptions() {
 			this.showMoreOptions = !this.showMoreOptions;
 			console.log(this.userName, this.$route.props.userName);
@@ -230,7 +242,7 @@ export default {
 		},
 		loadProfilePic() {
 			const file = this.$refs.profileFile.files[0];
-			console.log('loadprofilepic');
+			// console.log('loadprofilepic');
 			const reader = new FileReader();
 			reader.onload = () => {
 				const result = reader.result;
@@ -239,7 +251,7 @@ export default {
 			reader.readAsDataURL(file);
 		},
 		loadCoverPic() {
-			console.log('loadCoverpic');
+			// console.log('loadCoverpic');
 			const file = this.$refs.coverFile.files[0];
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -247,7 +259,7 @@ export default {
 				document.querySelector(
 					'#cover-picture'
 				).style.backgroundImage = `url(${result})`;
-				console.log('loadCoverpic hhh');
+				// console.log('loadCoverpic hhh');
 			};
 			reader.readAsDataURL(file);
 		},
@@ -596,9 +608,11 @@ ul.profile-options {
 	line-height: 16px;
 	padding: 4px 8px;
 	cursor: pointer;
+	display: block;
 }
 
 ul.profile-options a {
+	display: block;
 	height: 24px;
 	width: fit-content;
 	display: flex;
@@ -663,11 +677,11 @@ ul.profile-options a:hover::before {
 	opacity: 0.08;
 }
 
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
 	.profile-card {
 		display: none;
 	}
-}
+} */
 input.insert-cover-image {
 	position: absolute;
 	height: 35px;

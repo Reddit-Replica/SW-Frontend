@@ -117,9 +117,15 @@ body {
 		width: 640px;
 	}
 }
+
 aside {
 	width: 312px;
 	margin-left: 24px;
 	min-height: 2000px;
+}
+@media (max-width: 960px) {
+	aside {
+		display: none;
+	}
 }
 </style>
