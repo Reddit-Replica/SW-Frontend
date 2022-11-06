@@ -31,6 +31,17 @@ import PostReplies from './pages/messages/PostReplies.vue';
 import UsernameMentions from './pages/messages/UsernameMentions.vue';
 import SentMessages from './pages/messages/SentMessages.vue';
 
+import TheOverview from './pages/users/PagesComponents/TheOverview.vue';
+import AwardsGiven from './pages/users/PagesComponents/AwardsGive.vue';
+import AwardsReceived from './pages/users/PagesComponents/AwardsRecieved.vue';
+import TheComments from './pages/users/PagesComponents/TheComments.vue';
+import TheDownvoted from './pages/users/PagesComponents/TheDownvoted.vue';
+import TheUpvoted from './pages/users/PagesComponents/TheUpvoted.vue';
+import TheHidden from './pages/users/PagesComponents/TheHidden.vue';
+import TheHistory from './pages/users/PagesComponents/TheHistory.vue';
+import ThePosts from './pages/users/PagesComponents/ThePosts.vue';
+import TheSaved from './pages/users/PagesComponents/TheSaved.vue';
+
 import NotFound from './pages/NotFound.vue';
 
 import postComments from './pages/PostComments.vue';
@@ -53,7 +64,18 @@ const router = createRouter({
 			path: '/user/:userName',
 			name: 'user',
 			component: UserPage,
-			//children: [{ path: '/:jnj(.*)', component: UserPage }],
+			children: [
+				{ path: '/user/:userName/', component: TheOverview },
+				{ path: '/user/:userName/submitted', component: ThePosts },
+				{ path: '/user/:userName/comments', component: TheComments },
+				{ path: '/user/:userName/history', component: TheHistory },
+				{ path: '/user/:userName/saved', component: TheSaved },
+				{ path: '/user/:userName/hidden', component: TheHidden },
+				{ path: '/user/:userName/upvoted', component: TheUpvoted },
+				{ path: '/user/:userName/downvoted', component: TheDownvoted },
+				{ path: '/user/:userName/gilded', component: AwardsReceived },
+				{ path: '/user/:userName/gilded/given', component: AwardsGiven },
+			],
 			props: true,
 		}, //render user component
 		{
