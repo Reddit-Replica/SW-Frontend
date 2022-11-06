@@ -27,7 +27,7 @@
 				<!-- ///////////////////// -->
 				<!-- incase of  profile picture preview -->
 				<div class="profile-picture" v-if="!isAvatar">
-					<img src="../../assets/R.png" alt="" id="profile-picture" />
+					<img src="../../../../assets/R.png" alt="" id="profile-picture" />
 					<input
 						type="file"
 						hidden
@@ -46,7 +46,7 @@
 				<!-- //////////////////////////////////// -->
 				<!-- incase of avatar pic preview -->
 				<div class="profile-avatar" v-else>
-					<img src="../../assets/avatar.png" alt="" />
+					<img src="../../../../assets/avatar.png" alt="" />
 				</div>
 				<!-- //////////////////////////// -->
 				<!-- incase of profile picture display name , user name style -->
@@ -148,7 +148,6 @@
 					>{{ profileOption.name }}
 				</router-link>
 			</ul>
-
 			<!-- /////////////// -->
 			<!-- more options button -->
 			<button
@@ -165,8 +164,8 @@
 </template>
 
 <script>
-import SociallinksBlock from './BaseUserComponents/SociallinksBlock.vue';
-import FollowChatComponent from './BaseUserComponents/FollowChatComponent.vue';
+import SociallinksBlock from '../SocialLinksComponents/SociallinksBlock';
+import FollowChatComponent from './FollowChatComponent.vue';
 export default {
 	components: {
 		SociallinksBlock,
@@ -227,19 +226,37 @@ export default {
 	methods: {
 		/**
 		 * @vuese
-		 * when the component was created  we get user data from user store
+		 * it toggle to Show or Hide user Options
 		 * @arg no arg
 		 */
 		toggleShowMoreOptions() {
 			this.showMoreOptions = !this.showMoreOptions;
-			console.log(this.userName, this.$route.props.userName);
+			// console.log(this.userName, this.$route.props.userName);
 		},
+		/**
+		 * @vuese
+		 * this function act as a path when it get clicked to will reflect this click to input field
+		 * to open box for adding Profile Image
+		 * @arg no arg
+		 */
 		addProfileImage() {
 			document.querySelector('#add-profile-button').click();
 		},
+		/**
+		 * @vuese
+		 * this function act as a path when it get clicked to will reflect this click to input field
+		 * to open box for adding Profile Cover Image
+		 * @arg no arg
+		 */
 		addCoverImage() {
 			document.querySelector('#add-cover-button').click();
 		},
+		/**
+		 * @vuese
+		 * this function for upload an Profile Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
 		loadProfilePic() {
 			const file = this.$refs.profileFile.files[0];
 			// console.log('loadprofilepic');
@@ -250,8 +267,13 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
+		/**
+		 * @vuese
+		 * this function for upload an Cover Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
 		loadCoverPic() {
-			// console.log('loadCoverpic');
 			const file = this.$refs.coverFile.files[0];
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -259,7 +281,6 @@ export default {
 				document.querySelector(
 					'#cover-picture'
 				).style.backgroundImage = `url(${result})`;
-				// console.log('loadCoverpic hhh');
 			};
 			reader.readAsDataURL(file);
 		},
