@@ -153,6 +153,9 @@ export default {
 </script>
 
 <style scoped>
+ul {
+	flex-flow: unset;
+}
 a {
 	text-decoration: none;
 	text-decoration: none;
