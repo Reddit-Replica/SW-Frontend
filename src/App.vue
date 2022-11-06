@@ -1,63 +1,105 @@
 <template>
-	<the-header />
-	<router-view />
-	<!-- <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6">
-  <router-view></router-view>
-    </div>
-  </div>
-</div> -->
-	<!-- <router-view></router-view> -->
+	<!-- router view for display pages -->
+	<!-- <router-view v-slot="slotProps" :key="$route.fullPath">
+		<transition name="route" mode="out-in">
+			<component :is="slotProps.Component"></component>
+		</transition>
+	</router-view> -->
+	<router-view></router-view>
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
 export default {
 	name: 'App',
-	components: {
-		TheHeader,
-	},
 };
 </script>
 
 <style>
+/* import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Noto+Sans:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Work+Sans:ital,wght@0,200;0,500;0,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&family=Noto+Sans:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Work+Sans:ital,wght@0,200;0,500;0,700;1,800&display=swap');
 :root {
-	--color-primary: #ff4500;
+	/* orange color (primary) */
+	--color-primary: #ff2c00;
 	--color-Primary-light: #ff5213;
-	--color-Primary-dark: #f24303;
+	--color-Primary-light-2: #f79470;
+	--color-Primary-dark: rgb(217, 58, 0);
 
+	/* white colors */
 	--color-white-1: white;
+	--main-white-color: #ffffff;
 
+	/* light grey colors */
 	--color-grey-light-1: #faf9f9;
 	--color-grey-light-2: #f4f2f2;
 	--color-grey-light-3: #f0eeee;
 	--color-grey-light-4: #ccc;
+	--color-grey-light-5: #7c7c7c;
+	--color-grey-light-6: #808486;
+	--color-grey-light-7: #cacdcf;
+	--color-grey-light-8: #eceff1;
+	--color-grey-light-9: #f6f7f8;
+	--color-grey-light-10: #edeff1;
+	--color-grey-light-11: #ececf4;
+	--color-grey-light-12: #e8e8e8;
 
+	/* dark grey colors */
 	--color-grey-dark-1: #333;
 	--color-grey-dark-2: #777;
 	--color-grey-dark-3: #999;
 	--color-grey-dark-4: rgb(177, 176, 176);
+	--color-grey-dark-5: #edeff1;
+	--color-grey-dark-6: #343536;
+	--color-grey-dark-7: #9c9c9c;
+	--color-grey-dark-8: #878a8c;
+	--color-grey-dark-9: #909495;
 
+	/* black colors */
 	--color-dark-1: #000;
+	--color-dark-2: #222222;
+	--color-dark-3: #1c1c1c;
+	--color-dark-4: #1a1a1b;
 
 	--color-orange: #ff2c00;
+
+	--color-red-dark-1: #ea0027;
+	--color-red-dark-2: #cc3700;
+
+	--color-pink: #ff64ae;
+
+	/* blue colors */
 	--color-blue: #6094fe;
 	--color-blue-2: #0079d3;
+	--color-blue-3: #3293db;
+	--color-blue-4: #336699;
+	--color-blue-5: #83afdc;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
+
+	/* green colors */
 	--color-green: rgb(62, 231, 62);
 
+	/* shadow variables */
 	--shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 	--shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
+	--shadow-menu: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
 
+	/* border variables */
 	--line: 1px solid var(--color-grey-light-2);
 	--line-2: 1px solid rgb(2, 2, 206);
 	--line-3: 1px solid var(--color-white-1);
 	--line-4: 2px solid var(--color-white-1);
+	--line-5: 1px solid var(--color-blue-2);
+	--line-6: 1px solid var(--color-dark-1);
+	--line-7: 1px solid var(--color-grey-dark-3);
+	--line-8: 1px solid var(--color-grey-light-3);
+	--line-9: 1px solid var(--color-blue-4);
+	--line-dashed: 1px dashed var(--color-grey-light-2);
+	--line-dashed-2: 1px dashed var(--color-grey-dark-2);
+	--line-dashed-3: 2px dashed var(--color-grey-light-12);
+
+	/* screen sizes variables */
 	/* 2000px */
 	--bp-largest-1: 125em;
 	/* 1200px */
@@ -125,6 +167,7 @@ body {
 	min-height: 100vh;
 }
 
+/* router animation */
 .route-enter-from {
 	opacity: 0;
 	transform: translateY(-30px);
@@ -147,6 +190,8 @@ body {
 	opacity: 1;
 	transform: translateY(0);
 }
+
+/* media queries */
 @media (max-width: 68.75em) {
 	html {
 		font-size: 50%;

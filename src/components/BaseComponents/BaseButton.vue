@@ -1,5 +1,10 @@
 <template>
-	<button :disabled="disableButton">{{ buttonText }}</button>
+	<button v-if="!link" :disabled="disableButton">
+		<slot></slot>{{ buttonText }}
+	</button>
+	<router-link v-else :to="to">
+		{{ buttonText }}
+	</router-link>
 </template>
 
 <script>
@@ -15,12 +20,23 @@ export default {
 			required: false,
 			default: false,
 		},
+		link: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		to: {
+			type: String,
+			required: false,
+			default: '/',
+		},
 	},
 };
 </script>
 
 <style scoped>
-button {
+button,
+a {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;

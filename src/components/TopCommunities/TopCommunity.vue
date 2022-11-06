@@ -32,8 +32,8 @@
 export default {
 	props: {
 		index: {
-			type: String,
-			default: '',
+			type: Number,
+			default: 0,
 		},
 		image: {
 			type: String,
