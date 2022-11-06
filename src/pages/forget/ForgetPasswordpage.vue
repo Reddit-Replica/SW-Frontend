@@ -79,7 +79,7 @@
 					<router-link to="/login" class="link">Log in</router-link>
 					<span class="linkSeparator">•</span>
 					<router-link to="/signup" class="link">Sign Up</router-link>
-					<button @click="test">test</button>
+					<!-- <button @click="test">test</button> -->
 				</div>
 			</div>
 		</div>
