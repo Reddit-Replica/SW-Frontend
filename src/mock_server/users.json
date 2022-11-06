@@ -393,13 +393,18 @@
 		"about": "hallow iam abdelhameed emad",
 		"banner": "string",
 		"picture": "string",
-		"karma": 1,
+		"karma": 10,
 		"cakeDate": "2019-08-24",
 		"socialLinks": [
 			{
-				"type": "link",
-				"displayText": "string",
-				"link": "string"
+				"type": "Reddit",
+				"displayText": "medo",
+				"link": "http:/google.com"
+			},
+			{
+				"type": "Twitter",
+				"displayText": "abdo",
+				"link": "http:/google.com"
 			}
 		],
 		"nsfw": true,
@@ -408,8 +413,21 @@
 		"moderatorOf": [
 			{
 				"subredditName": "string",
-				"numOfMembers": 0,
-				"nsfw": true
+				"numOfMembers": 10,
+				"nsfw": true,
+				"joined": true
+			},
+			{
+				"subredditName": "stringff",
+				"numOfMembers": 110,
+				"nsfw": true,
+				"joined": false
+			},
+			{
+				"subredditName": "stringjj",
+				"numOfMembers": 10,
+				"nsfw": true,
+				"joined": true
 			}
 		]
 	}

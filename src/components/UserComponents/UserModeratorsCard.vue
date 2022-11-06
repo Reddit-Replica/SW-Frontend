@@ -35,35 +35,24 @@ export default {
 	components: {
 		BaseButton,
 	},
-	mounted() {
+	props: {},
+	async created() {
+		await this.RequestUserData();
+		this.userModerators = this.$store.getters['user/getUserData'].moderatorOf;
+		console.log(this.userModerators);
+		const newUserModerators = this.userModerators.map((el) => ({
+			...el,
+			buttonText: 'joined',
+		}));
+		this.userModerators = newUserModerators;
 		this.userModerators.forEach((element) => {
 			if (!element.joined) element.buttonText = 'join';
 		});
+		console.log(this.userModerators);
 	},
 	data() {
 		return {
-			// buttonText: 'join',
-			// joined: true,
-			userModerators: [
-				{
-					subredditName: 'Abc',
-					numOfMembers: 0,
-					joined: true,
-					buttonText: 'joined',
-				},
-				{
-					subredditName: 'Abcb',
-					numOfMembers: 5000,
-					joined: false,
-					buttonText: 'Abcbj',
-				},
-				{
-					subredditName: 'Abcio',
-					numOfMembers: 5,
-					joined: true,
-					buttonText: 'joined',
-				},
-			],
+			userModerators: '',
 		};
 	},
 	computed: {},
@@ -95,6 +84,16 @@ export default {
 					element.joined = !element.joined;
 				}
 			});
+		},
+		async RequestUserData() {
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.$store.state.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };
