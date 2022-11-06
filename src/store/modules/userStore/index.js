@@ -15,9 +15,9 @@ export default {
 				cakeDate: '2019-08-24',
 				socialLinks: [
 					{
-						type: '',
-						displayText: '',
-						link: '',
+						type: 'Reddit',
+						displayText: 'medo',
+						link: '11',
 					},
 				],
 				nsfw: true,

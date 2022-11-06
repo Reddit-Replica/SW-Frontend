@@ -36,6 +36,7 @@ export default {
 	data() {
 		return {
 			state: '' /* profile or user */,
+			// userData: Array,
 		};
 	},
 	computed: {
@@ -75,6 +76,8 @@ export default {
 			else if (requestStatus == 500) console.log(' internal server error');
 			console.log(this.$store.getters['user/getUserData']);
 			// console.log(this.$store.getters['user/getStaticSocialLinks']);
+			// this.userData = this.$store.getters['user/getUserData'];
+			// console.log(this.userData);
 		}
 	},
 };

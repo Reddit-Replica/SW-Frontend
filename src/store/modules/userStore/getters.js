@@ -5,4 +5,7 @@ export default {
 	getStaticSocialLinks(state) {
 		return state.socialLinkItems;
 	},
+	getSocialLinkIcon(state) {
+		return state.socialLinkItems;
+	},
 };

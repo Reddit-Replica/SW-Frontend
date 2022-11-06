@@ -1,16 +1,12 @@
 <template>
 	<div>
 		<ul class="social-link" id="social-media-links">
-			<a href="">
+			<a v-for="data in socialData" :key="data.type" :href="data.link">
 				<sociallink-item
-					img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
-					text="Custom URL"
+					:img-src="getImgSrc(data.type)"
+					:text="data.displayText"
 				></sociallink-item>
 			</a>
-			<sociallink-item
-				img-src="https://www.redditstatic.com/desktop2x/img/social-links/custom.png"
-				text="Custom URL"
-			></sociallink-item>
 			<li>
 				<button class="add-social-link" @click="openSocialLinkDialog">
 					<span><i class="fa-solid fa-plus" /></span>Add social link
@@ -33,6 +29,12 @@ export default {
 		SociallinkItem,
 		SocialLinks,
 	},
+	props: {
+		socialData: {
+			type: Array,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			addSocialLinkDialog: false,
@@ -44,6 +46,15 @@ export default {
 		},
 		closeSocialLinkDialog() {
 			this.addSocialLinkDialog = false;
+		},
+		getImgSrc(id) {
+			let url = '';
+			this.$store.getters['user/getStaticSocialLinks'].forEach((element) => {
+				if (element.text == id) {
+					url = element.imgSrc;
+				}
+			});
+			return url;
 		},
 	},
 };
