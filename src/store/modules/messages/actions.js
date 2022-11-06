@@ -196,4 +196,26 @@ export default {
 			throw error;
 		}
 	},
+	async blockUser(_, payload) {
+		const block = {
+			block: true,
+			username: payload.username,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/block-user', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(block),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };

@@ -56,7 +56,7 @@
 									value="deleted"
 								/>
 							</form>
-							<span class="sure-block" v-if="deleteUSer"
+							<span class="sure-block" v-if="deleteUser"
 								>are you sure?
 								<span class="link" id="yes-delete-message">Yes</span> /
 								<span
@@ -77,9 +77,15 @@
 						</li>
 						<li v-if="ifMessageRecieved"><a href="" id="report">Report</a></li>
 						<li v-if="ifMessageRecieved">
-							<span class="sure-block" v-if="blockUSer"
+							<span class="sure-block" v-if="blockUser"
 								>are you sure?
-								<span class="link" id="yes-block-user">Yes</span> /
+								<span
+									class="link"
+									id="yes-block-user"
+									@click="blockAction('yes')"
+									>Yes</span
+								>
+								/
 								<span class="link" @click="blockAction()" id="no-block-user"
 									>No</span
 								></span
@@ -124,8 +130,8 @@ export default {
 	},
 	data() {
 		return {
-			deleteUSer: false,
-			blockUSer: false,
+			deleteUser: false,
+			blockUser: false,
 			expandAll: true,
 		};
 	},
@@ -145,12 +151,19 @@ export default {
 		// @vuese
 		//toggle delete action
 		deleteAction() {
-			this.deleteUSer = !this.deleteUSer;
+			this.deleteUser = !this.deleteUser;
 		},
 		// @vuese
-		//toggle block action
-		blockAction() {
-			this.blockUSer = !this.blockUSer;
+		//handle block action
+		blockAction(action) {
+			this.blockUser = !this.blockUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/blockUser', {
+					block: true,
+					username: this.message.senderUsername,
+					baseurl: this.$baseurl,
+				});
+			}
 		},
 		// @vuese
 		//handle unread action
