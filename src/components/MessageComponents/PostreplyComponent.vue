@@ -100,7 +100,7 @@
 								>Block User</span
 							>
 						</li>
-						<li>
+						<li @click="unreadAction('unread')">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li><span class="link" id="reply">Reply</span></li>
@@ -171,30 +171,38 @@ export default {
 		spamAction() {
 			this.spamUser = !this.spamUser;
 		},
+		// @vuese
+		//handle upvote action
 		upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
-				this.counter++;
 			} else {
 				this.upClicked = false;
-				this.counter--;
 			}
 			if (this.downClicked) {
 				this.downClicked = false;
-				this.counter++;
 			}
 		},
+		// @vuese
+		//handle downvote action
 		downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
-				this.counter--;
 			} else {
 				this.downClicked = false;
-				this.counter++;
 			}
 			if (this.upClicked) {
 				this.upClicked = false;
-				this.counter--;
+			}
+		},
+		// @vuese
+		//handle unread action
+		unreadAction(state) {
+			if (state == 'unread') {
+				this.$store.dispatch('messages/unreadMessage', {
+					id: this.message.text,
+					baseurl: this.$baseurl,
+				});
 			}
 		},
 	},

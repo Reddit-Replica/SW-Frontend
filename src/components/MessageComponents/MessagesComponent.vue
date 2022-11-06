@@ -22,7 +22,7 @@
 					>collapse all</span
 				>
 			</p>
-			<div class="box">
+			<div class="box" :class="!message.isRead ? 'box-unread' : ''">
 				<p class="md-details">
 					<span class="sign" id="sign" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
@@ -89,7 +89,7 @@
 								>Block User</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved">
+						<li v-if="ifMessageRecieved" @click="unreadAction('unread')">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li v-if="ifMessageRecieved">
@@ -153,6 +153,16 @@ export default {
 			this.blockUSer = !this.blockUSer;
 		},
 		// @vuese
+		//handle unread action
+		unreadAction(state) {
+			if (state == 'unread') {
+				this.$store.dispatch('messages/unreadMessage', {
+					id: this.message.text,
+					baseurl: this.$baseurl,
+				});
+			}
+		},
+		// @vuese
 		//expand or collapse message details
 		expand(action) {
 			if (action == 'expand') {
@@ -178,7 +188,7 @@ ul {
 	list-style: none;
 }
 .message:nth-child(odd) {
-	background-color: var(--color-grey-light-2);
+	background-color: var(--color-grey-light-9);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
@@ -188,6 +198,11 @@ ul {
 	flex-direction: column;
 	margin: 0;
 	border-left: var(--line-dashed-3);
+}
+.box-unread {
+	margin: 1rem;
+	background-color: var(--color-grey-light-10);
+	border-color: var(--color-grey-light-10);
 }
 .sender-box,
 .reciever-box {
