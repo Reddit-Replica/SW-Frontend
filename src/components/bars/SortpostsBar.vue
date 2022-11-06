@@ -254,10 +254,14 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// Used to know which sort type is clicked
 		selectSort(title) {
 			this.clicked = title;
 			if (this.showMenu) this.showSubMenu();
 		},
+		// @vuese
+		// Used to show submenu for responsive design
 		showSubMenu() {
 			this.showMenu = !this.showMenu;
 		},

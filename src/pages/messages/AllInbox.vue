@@ -1,11 +1,21 @@
 <template>
 	<div>
-		<div>
+		<div v-for="message in inboxMessages" :key="message" :message="message">
 			<allinbox-component
-				v-for="message in composeMessages"
-				:key="message"
+				v-if="message.type == 'Messages'"
+				:count="++count"
 				:message="message"
 			></allinbox-component>
+			<PostreplyComponent
+				v-if="message.type == 'Post replies'"
+				:count="++count"
+				:message="message"
+			></PostreplyComponent>
+			<user-mentions
+				v-if="message.type == 'Mentions'"
+				:count="++count"
+				:message="message"
+			></user-mentions>
 		</div>
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
@@ -15,42 +25,52 @@
 
 <script>
 import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
+import PostreplyComponent from '../../components/MessageComponents/PostreplyComponent.vue';
+import UserMentions from '../../components/MessageComponents/UserMentions.vue';
 export default {
 	components: {
 		AllinboxComponent,
+		PostreplyComponent,
+		UserMentions,
 	},
+	// @vuese
+	//change title name and load messages
 	beforeMount() {
 		document.title = 'messages: inbox';
-		this.loadComposeMessages();
+		this.loadInboxMessages();
 	},
 	data() {
 		return {
 			noMessages: false,
+			count: 1,
 		};
 	},
 	computed: {
-		composeMessages() {
-			return this.$store.getters['messages/composeMessages'];
+		// @vuese
+		//return inbox messages
+		inboxMessages() {
+			return this.$store.getters['messages/inboxMessages'];
 		},
 	},
 	watch: {
-		composeMessages() {
-			if (this.composeMessages.length == 0) this.noMessages = true;
+		// @vuese
+		//watch compose messages if it's empty
+		inboxMessages() {
+			if (this.inboxMessages.length == 0) this.noMessages = true;
 		},
 	},
 	methods: {
-		async loadComposeMessages() {
+		// @vuese
+		//load compose messages from the store
+		async loadInboxMessages() {
 			try {
-				await this.$store.dispatch('messages/loadComposeMessages', {
+				await this.$store.dispatch('messages/loadInboxMessages', {
 					baseurl: this.$baseurl,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		// load() {
-		// 	this.messages = this.$store.getters['messages/allMessages'];
-		// },
 	},
 };
 </script>

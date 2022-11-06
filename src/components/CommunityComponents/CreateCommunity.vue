@@ -25,6 +25,7 @@
 									viewBox="0 0 16 16"
 									@mouseover="showInfoBox"
 									@mouseleave="showInfoBox"
+									id="info-icon"
 								>
 									<path
 										d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -51,6 +52,7 @@
 							v-model.trim="communityName"
 							@blur="validateCommunityName"
 							@keyup="charCount()"
+							id="name-input"
 						/>
 						<div class="title-grey">
 							{{ charRemaining }} Characters remaining
@@ -69,7 +71,7 @@
 								Community names must be between 3–21 characters, and can only
 								contain letters, numbers, or underscores.
 							</p>
-							<span class="more-text" @click="showMore">More</span>
+							<span class="more-text" @click="showMore" id="more">More</span>
 						</div>
 					</div>
 					<base-dialog
@@ -84,38 +86,40 @@
 								contain letters, numbers, or underscores.
 							</div>
 							<div class="box-buttons box-ok">
-								<base-button @click="showMore" class="button-blue"
+								<base-button @click="showMore" class="button-blue" id="ok"
 									>OK</base-button
 								>
 							</div>
 						</div>
 					</base-dialog>
 				</div>
-			</div>
-			<div class="community-box flex-column">
-				<div class="community-box-title">
-					<h3 class="title-black">Community category</h3>
-				</div>
-				<div class="community-box-input flex-column">
-					<select
-						class="input-name"
-						v-model.trim="communityCategory"
-						@blur="validateCommunityCategory"
-						@click="validateCommunityCategory"
-					>
-						<option
-							v-for="category of categories"
-							:key="category.name"
-							:value="category.name"
+				<div class="community-box flex-column">
+					<div class="community-box-title">
+						<h3 class="title-black">Community category</h3>
+					</div>
+					<div class="community-box-input flex-column">
+						<select
+							class="input-name"
+							v-model.trim="communityCategory"
+							@blur="validateCommunityCategory"
+							@click="validateCommunityCategory"
+							id="category-input"
 						>
-							{{ category.name }}
-						</option>
-					</select>
-					<div
-						v-if="communityCategoryRequiredError"
-						class="title-grey title-red"
-					>
-						A community category is required
+							<option
+								v-for="category of categories"
+								:key="category.name"
+								:value="category.name"
+								:id="category.name"
+							>
+								{{ category.name }}
+							</option>
+						</select>
+						<div
+							v-if="communityCategoryRequiredError"
+							class="title-grey title-red"
+						>
+							A community category is required
+						</div>
 					</div>
 				</div>
 				<div class="community-box flex-column">
@@ -129,6 +133,7 @@
 							role="radio"
 							value="public"
 							@click="chooseType(0)"
+							id="type-public"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -178,6 +183,7 @@
 							role="radio"
 							value="restricted"
 							@click="chooseType(1)"
+							id="type-restricted"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -228,6 +234,7 @@
 							role="radio"
 							value="private"
 							@click="chooseType(2)"
+							id="type-private"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -280,6 +287,7 @@
 						<div
 							class="community-box-input type-item pointer-cursor"
 							@click="chooseNSFW"
+							id="nsfw-input"
 						>
 							<input type="hidden" />
 							<svg
@@ -314,10 +322,16 @@
 					</div>
 				</div>
 				<div class="community-box box-buttons">
-					<base-button @click="hidecreateCommunity" class="button-white"
+					<base-button
+						@click="hidecreateCommunity"
+						class="button-white"
+						id="cancel-button"
 						>Cancel</base-button
 					>
-					<base-button @click="submitCommunity" class="button-blue"
+					<base-button
+						@click="submitCommunity"
+						class="button-blue"
+						id="create-button"
 						>Create Community</base-button
 					>
 				</div>
@@ -330,6 +344,8 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
+	//@vuese
+	//Exit emit to close create community form
 	emits: ['exit'],
 	data() {
 		return {
@@ -350,12 +366,15 @@ export default {
 			categories: [],
 			communityCategory: '',
 			communityCategoryRequiredError: false,
+			selectIsShown: false,
 		};
 	},
 	created() {
 		this.loadCategories();
 	},
 	methods: {
+		// @vuese
+		//Get subreddits categories
 		async loadCategories() {
 			try {
 				await this.$store.dispatch('community/getSavedCategories', {
@@ -394,12 +413,15 @@ export default {
 			this.nsfwChosen = !this.nsfwChosen;
 		},
 		validateCommunityCategory() {
+			this.showSelect();
 			if (this.communityCategory === '') {
 				this.communityCategoryRequiredError = true;
 			} else {
 				this.communityCategoryRequiredError = false;
 			}
 		},
+		// @vuese
+		//Validate Subreddits Name (Name should be between 3:20 characters and include only letters, numbers and underscores).
 		validateCommunityName() {
 			if (this.communityName === '') {
 				this.communityNameValidity = false;
@@ -435,6 +457,8 @@ export default {
 			this.communityNameRequiredError = false;
 			this.communityNameCharError = false;
 		},
+		// @vuese
+		//Validate create community form and submit it.
 		submitCommunity() {
 			this.validateCommunityName();
 
@@ -454,6 +478,9 @@ export default {
 		showMore() {
 			this.moreIsShown = !this.moreIsShown;
 		},
+		showSelect() {
+			this.selectIsShown = !this.selectIsShown;
+		},
 	},
 };
 </script>
@@ -468,7 +495,7 @@ export default {
 	max-width: 492px;
 }
 .community-box {
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 .community-box-title {
 	max-width: 100%;

@@ -5,7 +5,11 @@
 			<form @submit.prevent="handleSubmit()">
 				<div>
 					<label class="heading-3" for="message-from">from</label>
-					<select name="message-from" id="message-from" v-model="messageFrom">
+					<select
+						name="message-from"
+						id="message-from"
+						v-model="senderUsername"
+					>
 						<option
 							v-for="username in usernames"
 							:key="username"
@@ -24,7 +28,7 @@
 						type="text"
 						name="message-to"
 						id="message-to"
-						v-model="messageTo"
+						v-model="receiverUsername"
 					/>
 					<p class="error" v-if="error == 'messageTo'">
 						please enter a username
@@ -41,7 +45,7 @@
 						name="message"
 						id="message"
 						rows="5"
-						v-model="message"
+						v-model="text"
 					></textarea>
 					<p class="error" v-if="error === 'message'">we need something here</p>
 				</div>
@@ -135,6 +139,9 @@
 					</table>
 				</div>
 				<button class="submit-form" id="submit-form">Send</button>
+				<span class="delivered" v-if="delivered"
+					>your message has been delivered</span
+				>
 			</form>
 		</div>
 	</div>
@@ -144,20 +151,27 @@
 export default {
 	data() {
 		return {
+			text: '',
 			usernames: ['/u/asmaaadel0', 'r/firstcommunity', 'r/secondcommunity'],
-			messageFrom: '/u/asmaaadel0',
-			messageTo: '',
+			senderUsername: '/u/asmaaadel0',
+			receiverUsername: '',
+			sendAt: '',
 			subject: '',
-			message: '',
 			error: '',
 			formatting: 'formatting',
+			delivered: false,
 		};
 	},
+	// @vuese
+	//change title name
 	created() {
 		document.title = 'messages: compose';
 	},
 	methods: {
+		// @vuese
+		//make form validation
 		formValidation() {
+			this.delivered = false;
 			if (this.messageTo == '') {
 				this.error = 'messageTo';
 			} else if (this.subject == '') {
@@ -166,12 +180,28 @@ export default {
 				this.error = 'message';
 			} else this.error = '';
 		},
+		// @vuese
+		//handle submit form and send post request
 		handleSubmit() {
 			this.formValidation();
-			console.log(this.usernames[0]);
 			if (this.error != '') return;
-			//post request
+			this.delivered = false;
+			this.$store.dispatch('messages/sendMessage', {
+				text: this.text,
+				senderUsername: this.senderUsername,
+				receiverUsername: this.receiverUsername,
+				sendAt: this.sendAt,
+				subject: this.subject,
+				baseurl: this.$baseurl,
+			});
+			this.receiverUsername = '';
+			this.sendAt = '';
+			this.subject = '';
+			this.text = '';
+			this.delivered = true;
 		},
+		// @vuese
+		//change title to formatting or hide
 		changeTitle() {
 			if (this.formatting == 'formatting') this.formatting = 'hide';
 			else this.formatting = 'formatting';
@@ -280,5 +310,11 @@ th {
 .block-quote {
 	margin-left: 5px;
 	border-left: 2px solid #c5c1ad;
+}
+.delivered {
+	margin: 0.5rem 0 0 0.5rem;
+	font-size: 1.5rem;
+	display: inline;
+	color: var(--color-dark-2);
 }
 </style>

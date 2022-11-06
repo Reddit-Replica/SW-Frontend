@@ -30,6 +30,8 @@ export default {
 		MessagesFooter,
 	},
 	computed: {
+		// @vuese
+		//return if bath not sent bath or compose
 		showSecondBar() {
 			return (
 				this.$route.path !== '/message/compose' &&

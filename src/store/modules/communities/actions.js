@@ -8,7 +8,7 @@ export default {
 		};
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/subreddits', {
+		const response = await fetch(baseurl + '/create-subreddit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newSubreddit),
@@ -28,14 +28,15 @@ export default {
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
-			baseurl + '/subreddits?subredditName=' + payload.subredditName
+			baseurl +
+				'/subreddit-name-available?subredditName=' +
+				payload.subredditName
 		);
 
 		const responseData = await response.json();
 
 		let isTaken = false;
 		if (response.status == 409) {
-			// if (payload.subredditName == 'web') {
 			isTaken = true;
 		}
 		if (!response.ok) {
