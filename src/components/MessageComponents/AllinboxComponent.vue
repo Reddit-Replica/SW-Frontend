@@ -145,60 +145,8 @@ export default {
 </script>
 
 <style scoped>
-ul {
-	list-style: none;
-	display: flex;
-	flex-flow: row wrap;
-}
-.message {
-	margin: 0;
-	padding: 1rem 1.5rem;
-	color: #373c3f;
-	list-style: none;
-}
-.message-grey {
-	background-color: var(--color-grey-light-2);
-}
-.message-white {
-	background-color: var(--color-white-1);
-}
-.subject-text {
-	font-weight: bold;
-	font-size: 1.3rem;
-}
-.subject-text:after {
-	content: ':';
-}
-.md-details {
-	margin-left: 2.6rem;
-	color: var(--color-grey-dark-2);
-}
-.md {
-	margin-left: 2.6rem;
-	font-size: 1.5rem;
-}
-.flat-list {
-	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	display: flex;
-}
-.flat-list li {
-	margin: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-}
-.flat-list li a,
-.link {
-	color: var(--color-grey-dark-2);
-	cursor: pointer;
-}
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.sure-block {
-	color: var(--color-red-dark-1);
 }
 </style>
