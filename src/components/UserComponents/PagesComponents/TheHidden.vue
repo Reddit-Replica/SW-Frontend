@@ -1,5 +1,3 @@
 <template>
-  <div>
-    hidden
-  </div>
+	<div>hidden</div>
 </template>

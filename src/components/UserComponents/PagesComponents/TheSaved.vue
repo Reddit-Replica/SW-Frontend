@@ -1,5 +1,3 @@
 <template>
-  <div>
-    saved
-  </div>
+	<div>saved</div>
 </template>
