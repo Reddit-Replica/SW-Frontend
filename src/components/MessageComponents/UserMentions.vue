@@ -88,7 +88,13 @@
 						<li>
 							<span class="sure-block" v-if="blockUser"
 								>are you sure?
-								<span class="link" id="yes-block-user">Yes</span> /
+								<span
+									class="link"
+									id="yes-block-user"
+									@click="blockAction('yes')"
+									>Yes</span
+								>
+								/
 								<span class="link" @click="blockAction()" id="no-block-user"
 									>No</span
 								></span
@@ -162,9 +168,16 @@ export default {
 			this.removeUser = !this.removeUser;
 		},
 		// @vuese
-		//toggle block action
-		blockAction() {
+		//handle block action
+		blockAction(action) {
 			this.blockUser = !this.blockUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/blockUser', {
+					block: true,
+					username: this.message.senderUsername,
+					baseurl: this.$baseurl,
+				});
+			}
 		},
 		// @vuese
 		//toggle spam action
