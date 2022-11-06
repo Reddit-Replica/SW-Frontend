@@ -2,7 +2,7 @@ export default {
 	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/inbox');
+		const response = await fetch(baseurl + '/message/inbox');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -34,7 +34,7 @@ export default {
 	async loadUnreadMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/unread');
+		const response = await fetch(baseurl + '/message/unread');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -64,7 +64,7 @@ export default {
 	},
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/mentions');
+		const response = await fetch(baseurl + '/message/mentions');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -94,7 +94,7 @@ export default {
 	},
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/messages');
+		const response = await fetch(baseurl + '/message/messages');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -121,7 +121,7 @@ export default {
 	},
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/post-reply');
+		const response = await fetch(baseurl + '/message/post-reply');
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -148,5 +148,98 @@ export default {
 			messages.push(message);
 		}
 		context.commit('setPostReplies', messages);
+	},
+	async loadSentMessages(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/message/sent');
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+
+		const messages = [];
+
+		for (const key in responseData) {
+			const message = {
+				before: responseData[key].before,
+				after: responseData[key].after,
+				text: responseData[key].children[0].text,
+				receiverUsername: responseData[key].children[0].receiverUsername,
+				subject: responseData[key].children[0].subject,
+				sendAt: responseData[key].children[0].sendAt,
+			};
+			messages.push(message);
+		}
+		context.commit('setSentMessages', messages);
+	},
+	async sendMessage(_, payload) {
+		const newMessage = {
+			text: payload.text,
+			senderUsername: payload.senderUsername,
+			receiverUsername: payload.receiverUsername,
+			sendAt: payload.sendAt,
+			subject: payload.subject,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/message/compose', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(newMessage),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	//error
+	async unreadMessage(_, payload) {
+		const message = {
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/unread-message', {
+			method: 'patch',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(message),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async blockUser(_, payload) {
+		const block = {
+			block: true,
+			username: payload.username,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/block-user', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(block),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
 	},
 };

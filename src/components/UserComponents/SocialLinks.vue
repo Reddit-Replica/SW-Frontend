@@ -10,11 +10,11 @@
 				<div class="links-container">
 					<sociallink-item
 						v-for="sociallinkItem in sociallinkItems"
-						:key="sociallinkItem.id"
+						:key="sociallinkItem.text"
 						:text="sociallinkItem.text"
 						:img-src="sociallinkItem.imgSrc"
 						:alt="sociallinkItem.alt"
-						@click="openSocialLinkConfig(sociallinkItem.id)"
+						@click="openSocialLinkConfig(sociallinkItem.text)"
 					></sociallink-item>
 				</div>
 			</template>
@@ -23,6 +23,7 @@
 			v-if="showSocialLinkConfig"
 			:data="socialLinkData"
 			@back="backToSociallinkDialog"
+			@save="saveSocialLink"
 		></sociallinks-config>
 	</div>
 </template>
@@ -44,43 +45,15 @@ export default {
 			required: true,
 		},
 	},
+	created() {
+		// console.log('in social link');
+		// console.log(this.$store.getters['user/getStaticSocialLinks']);
+		this.sociallinkItems = this.$store.getters['user/getStaticSocialLinks'];
+	},
 	emits: ['close', 'open'],
 	data() {
 		return {
-			sociallinkItems: [
-				{
-					id: '1',
-					text: 'Custom URL',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/custom.png',
-					alt: 'custom url',
-					type: 'link' /* link or username */,
-				},
-				{
-					id: '2',
-					text: 'Reddit',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
-					alt: 'Reddit',
-					type: 'username',
-				},
-				{
-					id: '3',
-					text: 'Instagram',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/instagram.png',
-					alt: '',
-					type: 'username',
-				},
-				{
-					id: '4',
-					text: 'Twitter',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/twitter.png',
-					alt: '',
-					type: 'username',
-				},
-			],
+			sociallinkItems: [],
 			showSocialLinkConfig: false,
 			socialLinkData: {},
 		};
@@ -92,9 +65,9 @@ export default {
 		tryOpen() {
 			this.$emit('open');
 		},
-		openSocialLinkConfig(id) {
+		openSocialLinkConfig(text) {
 			this.socialLinkData = this.sociallinkItems.find(
-				(socialLink) => socialLink.id == id
+				(socialLink) => socialLink.text == text
 			);
 			console.log(this.socialLinkData);
 			this.tryClose();
@@ -103,6 +76,10 @@ export default {
 		backToSociallinkDialog() {
 			this.showSocialLinkConfig = false;
 			this.tryOpen();
+		},
+		saveSocialLink() {
+			this.showSocialLinkConfig = false;
+			this.tryClose();
 		},
 	},
 };

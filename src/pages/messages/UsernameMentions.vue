@@ -1,11 +1,12 @@
 <template>
 	<div>
 		<div>
-			<allinbox-component
+			<user-mentions
 				v-for="message in userMentions"
+				:count="++count"
 				:key="message"
 				:message="message"
-			></allinbox-component>
+			></user-mentions>
 		</div>
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
@@ -14,10 +15,10 @@
 </template>
 
 <script>
-import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
+import UserMentions from '../../components/MessageComponents/UserMentions.vue';
 export default {
 	components: {
-		AllinboxComponent,
+		UserMentions,
 	},
 	// @vuese
 	//change title name and load mentions
@@ -28,6 +29,7 @@ export default {
 	data() {
 		return {
 			noMessages: false,
+			count: 0,
 		};
 	},
 	computed: {

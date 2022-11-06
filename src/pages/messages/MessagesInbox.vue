@@ -3,6 +3,7 @@
 		<div>
 			<messages-component
 				v-for="message in userMessages"
+				:count="++count"
 				:key="message"
 				:message="message"
 			></messages-component>
@@ -28,6 +29,7 @@ export default {
 	data() {
 		return {
 			noMessages: false,
+			count: 0,
 		};
 	},
 	computed: {

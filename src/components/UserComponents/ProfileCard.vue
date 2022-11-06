@@ -21,7 +21,7 @@
 				</span>
 				<!-- ///////////////////////////////////////////////////////////// -->
 				<!-- profile settings icon -->
-				<router-link to="" class="profile-settings"
+				<router-link to="/settings/profile" class="profile-settings"
 					><i class="fa-solid fa-gear"
 				/></router-link>
 				<!-- ///////////////////// -->
@@ -53,9 +53,29 @@
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
 				<h4 class="profile-displayedname">
-					{{ userName || 'Abdelhameed_Emad' }}
+					{{ this.userData.displayName || 'Abdelhameed_Emad' }}
+					<svg
+						v-if="this.userData.nsfw"
+						class="Wb4wBt474lETdwG0YpWID"
+						viewBox="0 0 40 40"
+						version="1.1"
+						xmlns="http://www.w3.org/2000/svg"
+						width="20px"
+						fill="#ff4500"
+						margin-left="4px"
+						vertical-align="middle"
+						height="20px"
+					>
+						<title>NSFW - Adult Content</title>
+						<g>
+							<path
+								fill="inherit"
+								d="M38.5,16.5l-15-15c-2-2-5.1-2-7.1,0l-15,15c-2,2-2,5.1,0,7.1l15,15c2,2,5.1,2,7.1,0l15-15 C40.5,21.6,40.5,18.4,38.5,16.5z M17.7,8.3C17.7,7,18.7,6,20,6s2.3,1,2.3,2.3v14.3c0,1.3-1,2.3-2.3,2.3s-2.3-1-2.3-2.3V8.3z M20,33.7c-1.7,0-3.1-1.4-3.1-3.1c0-1.7,1.4-3.1,3.1-3.1s3.1,1.4,3.1,3.1C23.1,32.4,21.7,33.7,20,33.7z"
+							></path>
+						</g>
+					</svg>
 				</h4>
-				<a href="" class="profile-username">u/jhvhhygy</a>
+				<a href="" class="profile-username">{{ userName }}</a>
 			</div>
 			<!-- /////////////////////////////// -->
 			<!-- incase of Avatar display name , user name style -->
@@ -74,7 +94,9 @@
 			</div>
 			<!-- //////////////////// -->
 			<!-- about profile box -->
-			<div class="profile-about" v-if="about != ''">hi how are you</div>
+			<div class="profile-about" v-if="this.userData.about != ''">
+				{{ this.userData.about }}
+			</div>
 			<!-- ///////////////// -->
 			<!-- profile items karma and cake day has two alignment for pic , avatar -->
 			<div class="profile-items" :class="[isAvatar ? 'align-center' : '']">
@@ -82,7 +104,7 @@
 					<h5>Karma</h5>
 					<span>
 						<p id="karma">
-							<span><i class="fa-solid fa-fan" /></span>1
+							<span><i class="fa-solid fa-fan" /></span>{{ userData.karma }}
 						</p>
 					</span>
 				</span>
@@ -100,7 +122,9 @@
 			<follow-chat-component v-if="0"></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
-			<sociallinks-block></sociallinks-block>
+			<sociallinks-block
+				:social-data="userData.socialLinks"
+			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button class="new-post">New post</button>
@@ -117,12 +141,14 @@
 			<!-- /////////////////// -->
 			<!-- profile options -->
 			<ul id="profile-options" class="profile-options" v-show="showMoreOptions">
-				<li v-for="profileOption in profileOptions" :key="profileOption.name">
-					<router-link :to="profileOption.toLink">{{
-						profileOption.name
-					}}</router-link>
-				</li>
+				<router-link
+					v-for="profileOption in profileOptions"
+					:key="profileOption.name"
+					:to="profileOption.toLink"
+					>{{ profileOption.name }}
+				</router-link>
 			</ul>
+
 			<!-- /////////////// -->
 			<!-- more options button -->
 			<button
@@ -151,9 +177,19 @@ export default {
 			type: String,
 			required: true,
 		},
+		// userData: {
+		// 	type: Array,
+		// 	required: true,
+		// },
+	},
+	created() {
+		this.userData = this.$store.getters['user/getUserData'];
+		console.log(this.userData);
 	},
 	data() {
 		return {
+			NSFW: 'true',
+			userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
 			mySocialLinks: [
@@ -562,7 +598,7 @@ ul.profile-options {
 	cursor: pointer;
 }
 
-ul.profile-options li {
+ul.profile-options a {
 	height: 24px;
 	width: fit-content;
 	display: flex;
@@ -572,7 +608,7 @@ ul.profile-options li {
 	position: relative;
 	padding: 4px 8px;
 }
-ul.profile-options li::before {
+ul.profile-options a::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -584,7 +620,7 @@ ul.profile-options li::before {
 	z-index: 55;
 	opacity: 0;
 }
-ul.profile-options li a {
+ul.profile-options a {
 	color: var(--color-blue-2);
 }
 
@@ -623,7 +659,7 @@ button.fewer-options::before {
 
 button.more-options:hover::before,
 button.fewer-options:hover::before,
-ul.profile-options li:hover::before {
+ul.profile-options a:hover::before {
 	opacity: 0.08;
 }
 

@@ -135,7 +135,6 @@
 
 <script>
 import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
-const baseURL = 'http://localhost:3000/users';
 export default {
 	name: 'LogIn',
 	data() {
@@ -163,13 +162,17 @@ export default {
 			this.messageErrorShowUser = false;
 			this.showSignPass = false;
 			this.messageErrorShowPass = false;
+			document.querySelector('#user-name').style.border =
+				'1px solid rgba(0, 0, 0, 0.1)';
 			if (value.length < 3 || value.length > 20) {
 				this.showSignuser = true;
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
 				this.error_message = 'Username must be between 3 and 20 characters';
+				document.querySelector('#user-name').style.border =
+					'0.5px solid #ea0027';
 			} else {
-				fetch(baseURL)
+				fetch(this.$baseurl + '/userTest')
 					.then((response) => {
 						if (response.ok) {
 							return response.json();
@@ -180,6 +183,8 @@ export default {
 							if (element.username == this.username) {
 								this.showSignuser = true;
 								this.checkedUser = true;
+								document.querySelector('#user-name').style.border =
+									'0.5px solid #0079d3';
 							}
 						});
 					})
@@ -189,7 +194,7 @@ export default {
 			}
 		},
 		handleSubmit() {
-			fetch(baseURL)
+			fetch(this.$baseurl + '/userTest')
 				.then((response) => {
 					if (response.ok) {
 						return response.json();
@@ -197,24 +202,24 @@ export default {
 				})
 				.then((data) => {
 					data.forEach((element) => {
-						if (element.username == this.username) {
-							if (element.password == this.password) {
-								console.log('done');
-								// this.showSignuser = false;
-								this.messageErrorShowUser = false;
-								this.checkedUser = true;
-								this.showSignPass = false;
-								this.messageErrorShowPass = false;
-							} else {
-								console.log('pass failed');
-								this.showSignuser = true;
-								this.checkedUser = false;
-								this.messageErrorShowUser = true;
-								this.showSignPass = true;
-								this.checkedPass = false;
-								this.messageErrorShowPass = true;
-								this.error_message = 'Incorrect username or password';
-							}
+						if (
+							element.username == this.username &&
+							element.password == this.password
+						) {
+							console.log('done');
+							this.Check = true;
+							this.$router.push('/main');
+						} else if (!this.Check) {
+							console.log('pass failed');
+							this.showSignuser = true;
+							this.checkedUser = false;
+							this.messageErrorShowUser = true;
+							this.showSignPass = true;
+							this.checkedPass = false;
+							this.messageErrorShowPass = true;
+							this.error_message = 'Incorrect username or password';
+							document.querySelector('#user-name').style.border =
+								'0.5px solid #ea0027';
 						}
 					});
 				})
