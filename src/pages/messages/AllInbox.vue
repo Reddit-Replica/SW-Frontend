@@ -11,6 +11,11 @@
 				:count="++count"
 				:message="message"
 			></PostreplyComponent>
+			<user-mentions
+				v-if="message.type == 'Mentions'"
+				:count="++count"
+				:message="message"
+			></user-mentions>
 		</div>
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
@@ -21,10 +26,12 @@
 <script>
 import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
 import PostreplyComponent from '../../components/MessageComponents/PostreplyComponent.vue';
+import UserMentions from '../../components/MessageComponents/UserMentions.vue';
 export default {
 	components: {
 		AllinboxComponent,
 		PostreplyComponent,
+		UserMentions,
 	},
 	// @vuese
 	//change title name and load messages
