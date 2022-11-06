@@ -31,6 +31,8 @@ import PostReplies from './pages/messages/PostReplies.vue';
 import UsernameMentions from './pages/messages/UsernameMentions.vue';
 import SentMessages from './pages/messages/SentMessages.vue';
 
+import SubredditPage from './pages/subreddits/SubredditPage.vue';
+
 import NotFound from './pages/NotFound.vue';
 
 import postComments from './pages/PostComments.vue';
@@ -57,9 +59,10 @@ const router = createRouter({
 			props: true,
 		}, //render user component
 		{
-			path: '/subreddit/:subredditName',
+			// path: '/subreddit/:subredditName',
+			path: '/subreddit', //to be changed
 			name: 'subreddit',
-			component: MainPage,
+			component: SubredditPage,
 		}, //render subreddit component
 		{
 			path: '/post/:postName',
