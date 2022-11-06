@@ -268,7 +268,6 @@ ul {
 }
 .flat-list {
 	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 	display: flex;
