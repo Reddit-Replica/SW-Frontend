@@ -50,6 +50,8 @@
 
 <script>
 export default {
+	// @vuese
+	// user Name of the user for routing
 	props: {
 		userName: {
 			type: String,
@@ -126,6 +128,11 @@ export default {
 			windowWidths: window.innerWidth,
 		};
 	},
+	/**
+	 * @vuese
+	 * at mounting page we first assign viewedLinks to all profile links , add event on resize page width
+	 * @arg no arg
+	 */
 	mounted() {
 		this.viewedLinks = this.profileLinks;
 		this.onResize();
@@ -133,10 +140,22 @@ export default {
 			window.addEventListener('resize', this.onResize);
 		});
 	},
+	/**
+	 * @vuese
+	 * at unmounting removed the resize event
+	 * @arg no arg
+	 */
 	unmounted() {
 		window.removeEventListener('resize', this.onResize);
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * this function calling  at resizing event , first calculate window width check if the window size
+		 * less than 1000 px will calculate the count of viewed = width / 10000 and rest will be in hidden box
+		 * if window width greater than 1000 px will add all to viewed links
+		 * @arg no arg
+		 */
 		onResize() {
 			this.windowWidths = window.innerWidth;
 			const x = ++this.windowWidths / 100;
@@ -148,7 +167,6 @@ export default {
 			}
 		},
 	},
-	computed: {},
 };
 </script>
 

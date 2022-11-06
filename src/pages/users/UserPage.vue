@@ -19,18 +19,16 @@
 </template>
 
 <script>
-import ProfileCard from '../../components/UserComponents/ProfileCard.vue';
+import ProfileCard from '../../components/UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
-// import SortpostsBar from '../../components/bars/SortpostsBar.vue';
-import UserModeratorsCard from '../../components/UserComponents/UserModeratorsCard.vue';
+import UserModeratorsCard from '../../components/UserComponents/BaseUserComponents/Cards/UserModeratorsCard.vue';
 export default {
 	props: {},
 	components: {
 		ProfileCard,
 		BaseContainer,
 		profileNav,
-		// SortpostsBar,
 		UserModeratorsCard,
 	},
 	data() {
