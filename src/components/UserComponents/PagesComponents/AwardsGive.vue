@@ -1,5 +1,3 @@
 <template>
-  <div>
-    awards given
-  </div>
+	<div>awards given</div>
 </template>
