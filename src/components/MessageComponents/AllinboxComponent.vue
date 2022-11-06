@@ -147,6 +147,8 @@ export default {
 <style scoped>
 ul {
 	list-style: none;
+	display: flex;
+	flex-flow: row wrap;
 }
 .message {
 	margin: 0;
