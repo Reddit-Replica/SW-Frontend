@@ -57,7 +57,7 @@
 							>Block User</span
 						>
 					</li>
-					<li>
+					<li @click="unreadAction('unread')">
 						<span class="link" id="mark-un-read">Mark Unread</span>
 					</li>
 					<li><span class="link" id="reply">Reply</span></li>
@@ -118,6 +118,16 @@ export default {
 		//toggle block action
 		blockAction() {
 			this.blockUSer = !this.blockUSer;
+		},
+		// @vuese
+		//handle unread action
+		unreadAction(state) {
+			if (state == 'unread') {
+				this.$store.dispatch('messages/unreadMessage', {
+					id: this.message.text,
+					baseurl: this.$baseurl,
+				});
+			}
 		},
 	},
 };

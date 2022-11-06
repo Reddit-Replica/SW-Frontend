@@ -1,334 +1,336 @@
 {
-  "users": [
-    {
-      "id": 1,
-      "name": "Norhan Reda",
-      "email": "norhan.ahmed01@eng-st.cu.edu.eg",
-      "password": "12345"
-    },
-    {
-      "id": 2,
-      "name": "nora",
-      "email": "nora@gmail.com",
-      "password": "123456789"
-    }
-  ],
-  "userTest": [
-    {
-      "name": "Karim",
-      "email": "karim@gmail.com",
-      "password": "123456789",
-      "username": "ksaqer8"
-    },
-    {
-      "name": "Abd",
-      "email": "Abd@gmail.com",
-      "password": "k123456789",
-      "username": "acmp2024"
-    }
-  ],
-  "create-subreddit": [
-    {
-      "id": 1,
-      "subredditName": "FrontEnd",
-      "type": "Private",
-      "nsfw": false
-    },
-    {
-      "id": 2,
-      "subredditName": "BackEnd",
-      "type": "Private",
-      "nsfw": false
-    },
-    {
-      "subredditName": "hello",
-      "type": "Private",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 3
-    },
-    {
-      "subredditName": "hello",
-      "type": "Private",
-      "nsfw": false,
-      "category": "leave",
-      "id": 4
-    },
-    {
-      "subredditName": "hhh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 5
-    },
-    {
-      "subredditName": "hhh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 6
-    },
-    {
-      "subredditName": "dfgh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 7
-    }
-  ],
-  "saved-categories": [
-    {
-      "id": 1,
-      "name": "Sports"
-    },
-    {
-      "id": 2,
-      "name": "Gaming"
-    },
-    {
-      "id": 3,
-      "name": "Programming"
-    },
-    {
-      "id": 4,
-      "name": "News"
-    },
-    {
-      "id": 5,
-      "name": "Learning"
-    },
-    {
-      "id": 6,
-      "name": "Films"
-    }
-  ],
-  "compose": [
-    {
-      "text": "xcvghjkl",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "adelasmaa333@gmail.com",
-      "sendAt": "",
-      "subject": "ghjkl",
-      "id": 1
-    },
-    {
-      "text": "",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "dfghjkl;'",
-      "sendAt": "",
-      "subject": "rftgyhjukilo;'",
-      "id": 2
-    },
-    {
-      "text": "rtyuiop['\n",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "dfghjkl;'",
-      "sendAt": "",
-      "subject": "rftgyhjukilo;'",
-      "id": 3
-    },
-    {
-      "text": "dfghjk",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "asmaa.kawashty04@eng-st.cu.edu.eg",
-      "sendAt": "",
-      "subject": "nm,.",
-      "id": 4
-    },
-    {
-      "text": "fghjuikolp;",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "bnjkl;",
-      "sendAt": "",
-      "subject": "rtyui",
-      "id": 5
-    },
-    {
-      "text": "ertyuio",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "sdfghjkl",
-      "sendAt": "",
-      "subject": "sdfghjkl",
-      "id": 6
-    },
-    {
-      "text": "fghjk",
-      "senderUsername": "/u/asmaaadel0",
-      "receiverUsername": "tgyuiol;",
-      "sendAt": "",
-      "subject": "kl;'",
-      "id": 7
-    }
-  ],
-  "inbox": [
-    {
-      "before": "before",
-      "after": "after",
-      "children": [
-        {
-          "text": "hello world",
-          "type": "Post replies",
-          "senderUsername": "/u/norhan_reda",
-          "receiverUsername": "/u/asmaaadel0",
-          "subredditName": "subredditName",
-          "postTitle": "postTitle",
-          "subject": "hiiii",
-          "sendAt": "6 days ago",
-          "isReply": false,
-          "isRead": false
-        }
-      ]
-    },
-    {
-      "before": "string",
-      "after": "string",
-      "children": [
-        {
-          "text": "hello asmaa",
-          "type": "Messages",
-          "subredditName": "subredditName",
-          "postTitle": "postTitle",
-          "senderUsername": "/u/hoda_gamal",
-          "receiverUsername": "/u/asmaaadel0",
-          "subject": "hi",
-          "sendAt": "2019-08-24T14:15:22Z",
-          "isReply": false,
-          "isRead": false
-        }
-      ]
-    },
-    {
-      "before": "string",
-      "after": "string",
-      "children": [
-        {
-          "text": "hello asmaa",
-          "type": "Mentions",
-          "subredditName": "subredditName",
-          "postTitle": "postTitle",
-          "senderUsername": "/u/hoda_gamal",
-          "receiverUsername": "/u/asmaaadel0",
-          "subject": "hi",
-          "sendAt": "2019-08-24T14:15:22Z",
-          "isReply": false,
-          "isRead": false
-        }
-      ]
-    }
-  ],
-  "unread": [],
-  "mentions": [
-    {
-      "before": "before",
-      "after": "after",
-      "children": [
-        {
-          "text": "hello world",
-          "type": "Post replies",
-          "senderUsername": "/u/norhan_reda",
-          "receiverUsername": "/u/asmaaadel0",
-          "subredditName": "subredditName",
-          "postTitle": "postTitle",
-          "subject": "hiiii",
-          "sendAt": "6 days ago",
-          "isReply": false,
-          "isRead": false
-        }
-      ]
-    }
-  ],
-  "messages": [
-    {
-      "before": "before",
-      "after": "after",
-      "children": [
-        {
-          "text": "hello world",
-          "senderUsername": "/u/norhan_reda",
-          "receiverUsername": "/u/asmaaadel0",
-          "sendAt": "2019-08-24T14:15:22Z",
-          "subject": "hiiii",
-          "isReply": false,
-          "isRead": false
-        }
-      ]
-    },
-    {
-      "before": "string",
-      "after": "string",
-      "children": [
-        {
-          "text": "hello asmaa",
-          "senderUsername": "/u/asmaaadel0",
-          "receiverUsername": "/u/hoda_gamal",
-          "sendAt": "2019-08-24T14:15:22Z",
-          "subject": "hi",
-          "isReply": false,
-          "isRead": true
-        }
-      ]
-    }
-  ],
-  "post-reply": [
-    {
-      "before": "before",
-      "after": "after",
-      "children": [
-        {
-          "text": "hello world",
-          "type": "type",
-          "subredditName": "subredditName",
-          "postTitle": "postTitle",
-          "senderUsername": "/u/norhan_reda",
-          "receiverUsername": "/u/asmaaadel0",
-          "sendAt": "2019-08-24T14:15:22Z",
-          "subject": "hiiii",
-          "isReply": false
-        }
-      ]
-    },
-    {
-      "before": "string",
-      "after": "string",
-      "children": [
-        {
-          "text": "hello asmaa",
-          "type": "type",
-          "subredditName": "subredditName",
-          "postTitle": "postTitle",
-          "senderUsername": "/u/hoda_gamal",
-          "receiverUsername": "/user/asmaaadel0",
-          "subject": "hi",
-          "sendAt": "5 days ago",
-          "isReply": true,
-          "isRead": false
-        }
-      ]
-    }
-  ],
-  "user": {
-    "displayName": "Abdalhameed_Emad",
-    "about": "hallow iam abdelhameed emad",
-    "banner": "string",
-    "picture": "string",
-    "karma": 1,
-    "cakeDate": "2019-08-24",
-    "socialLinks": [
-      {
-        "type": "link",
-        "displayText": "string",
-        "link": "string"
-      }
-    ],
-    "nsfw": true,
-    "followed": true,
-    "blocked": true,
-    "moderatorOf": [
-      {
-        "subredditName": "string",
-        "numOfMembers": 0,
-        "nsfw": true
-      }
-    ]
-  }
+	"users": [
+		{
+			"id": 1,
+			"name": "Norhan Reda",
+			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
+			"password": "12345"
+		},
+		{
+			"id": 2,
+			"name": "nora",
+			"email": "nora@gmail.com",
+			"password": "123456789"
+		}
+	],
+	"userTest": [
+		{
+			"name": "Karim",
+			"email": "karim@gmail.com",
+			"password": "123456789",
+			"username": "ksaqer8"
+		},
+		{
+			"name": "Abd",
+			"email": "Abd@gmail.com",
+			"password": "k123456789",
+			"username": "acmp2024"
+		}
+	],
+	"create-subreddit": [
+		{
+			"id": 1,
+			"subredditName": "FrontEnd",
+			"type": "Private",
+			"nsfw": false
+		},
+		{
+			"id": 2,
+			"subredditName": "BackEnd",
+			"type": "Private",
+			"nsfw": false
+		},
+		{
+			"subredditName": "hello",
+			"type": "Private",
+			"nsfw": false,
+			"category": "Programming",
+			"id": 3
+		},
+		{
+			"subredditName": "hello",
+			"type": "Private",
+			"nsfw": false,
+			"category": "leave",
+			"id": 4
+		},
+		{
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 5
+		},
+		{
+			"subredditName": "hhh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 6
+		},
+		{
+			"subredditName": "dfgh",
+			"type": "Public",
+			"nsfw": false,
+			"category": "Sports",
+			"id": 7
+		}
+	],
+	"saved-categories": [
+		{
+			"id": 1,
+			"name": "Sports"
+		},
+		{
+			"id": 2,
+			"name": "Gaming"
+		},
+		{
+			"id": 3,
+			"name": "Programming"
+		},
+		{
+			"id": 4,
+			"name": "News"
+		},
+		{
+			"id": 5,
+			"name": "Learning"
+		},
+		{
+			"id": 6,
+			"name": "Films"
+		}
+	],
+	"compose": [
+		{
+			"text": "xcvghjkl",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "adelasmaa333@gmail.com",
+			"sendAt": "",
+			"subject": "ghjkl",
+			"id": 1
+		},
+		{
+			"text": "",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "dfghjkl;'",
+			"sendAt": "",
+			"subject": "rftgyhjukilo;'",
+			"id": 2
+		},
+		{
+			"text": "rtyuiop['\n",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "dfghjkl;'",
+			"sendAt": "",
+			"subject": "rftgyhjukilo;'",
+			"id": 3
+		},
+		{
+			"text": "dfghjk",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "asmaa.kawashty04@eng-st.cu.edu.eg",
+			"sendAt": "",
+			"subject": "nm,.",
+			"id": 4
+		},
+		{
+			"text": "fghjuikolp;",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "bnjkl;",
+			"sendAt": "",
+			"subject": "rtyui",
+			"id": 5
+		},
+		{
+			"text": "ertyuio",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "sdfghjkl",
+			"sendAt": "",
+			"subject": "sdfghjkl",
+			"id": 6
+		},
+		{
+			"text": "fghjk",
+			"senderUsername": "/u/asmaaadel0",
+			"receiverUsername": "tgyuiol;",
+			"sendAt": "",
+			"subject": "kl;'",
+			"id": 7
+		}
+	],
+	"inbox": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "Post replies",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "Messages",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "/u/asmaaadel0",
+					"subject": "hi",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "Mentions",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "/u/asmaaadel0",
+					"subject": "hi",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		}
+	],
+	"unread": [],
+	"mentions": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "Post replies",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"subject": "hiiii",
+					"sendAt": "6 days ago",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		}
+	],
+	"messages": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"subject": "hiiii",
+					"isReply": false,
+					"isRead": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"senderUsername": "/u/asmaaadel0",
+					"receiverUsername": "/u/hoda_gamal",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"subject": "hi",
+					"isReply": false,
+					"isRead": true
+				}
+			]
+		}
+	],
+	"post-reply": [
+		{
+			"before": "before",
+			"after": "after",
+			"children": [
+				{
+					"text": "hello world",
+					"type": "type",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/norhan_reda",
+					"receiverUsername": "/u/asmaaadel0",
+					"sendAt": "2019-08-24T14:15:22Z",
+					"subject": "hiiii",
+					"isReply": false
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello asmaa",
+					"type": "type",
+					"subredditName": "subredditName",
+					"postTitle": "postTitle",
+					"senderUsername": "/u/hoda_gamal",
+					"receiverUsername": "/user/asmaaadel0",
+					"subject": "hi",
+					"sendAt": "5 days ago",
+					"isReply": true,
+					"isRead": false
+				}
+			]
+		}
+	],
+	"unread-message": [],
+	"block-user": [],
+	"user": {
+		"displayName": "Abdalhameed_Emad",
+		"about": "hallow iam abdelhameed emad",
+		"banner": "string",
+		"picture": "string",
+		"karma": 1,
+		"cakeDate": "2019-08-24",
+		"socialLinks": [
+			{
+				"type": "link",
+				"displayText": "string",
+				"link": "string"
+			}
+		],
+		"nsfw": true,
+		"followed": true,
+		"blocked": true,
+		"moderatorOf": [
+			{
+				"subredditName": "string",
+				"numOfMembers": 0,
+				"nsfw": true
+			}
+		]
+	}
 }
