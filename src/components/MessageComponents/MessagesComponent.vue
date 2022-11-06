@@ -2,60 +2,107 @@
 	<div class="message">
 		<li>
 			<p class="subject-text">
+				<a
+					href=""
+					id="message-sender"
+					class="sender-box"
+					v-if="ifMessageRecieved"
+					>{{ message.senderUsername }}</a
+				>
+				<a href="" id="message-reciever" class="reciever-box" v-else>{{
+					message.receiverUsername
+				}}</a>
 				<span>{{ message.subject }}</span>
 			</p>
-			<div>
+			<p class="expand-p">
+				<span class="expand" id="expand-all" @click="expand('expand')"
+					>expand all</span
+				>
+				<span class="expand" id="collapse-all" @click="expand('collapse')"
+					>collapse all</span
+				>
+			</p>
+			<div class="box" :class="!message.isRead ? 'box-unread' : ''">
 				<p class="md-details">
-					from&nbsp;
-					<span class="sender"
-						><a href="">{{ message.senderUsername }}</a>
-						<span v-if="message.receiverUsername != ''"
-							>&nbsp;via&nbsp; <a href="">{{ message.receiverUsername }}</a>
-						</span></span
-					>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+					<span class="sign" id="sign" @click="expand('')"
+						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
+					>
+					<span v-if="ifMessageRecieved">
+						<span>from&nbsp;</span>
+						<span class="sender"
+							><a href="" id="message-sender">{{ message.senderUsername }}</a>
+						</span>
+					</span>
+					<span v-else>
+						<span>to&nbsp;</span>
+						<span class="reciever"
+							><a href="" id="message-reciever">{{
+								message.receiverUsername
+							}}</a>
+						</span>
+					</span>
+					&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
 				</p>
-				<p class="md">{{ message.text }}</p>
-				<ul class="flat-list">
-					<li><a href="">Permalink</a></li>
-					<li>
-						<form action="#">
-							<input
-								type="hidden"
-								name="deleted"
-								id="delete-message"
-								value="deleted"
-							/>
-						</form>
-						<span class="sure-block" v-if="deleteUSer"
-							>are you sure?
-							<span class="link" id="yes-delete-message">Yes</span> /
-							<span class="link" @click="deleteAction()" id="no-delete-message"
-								>No</span
-							></span
-						>
-						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="deleteAction()" id="click-delete"
-							>Delete</span
-						>
-					</li>
-					<li><a href="" id="report">Report</a></li>
-					<li>
-						<span class="sure-block" v-if="blockUSer"
-							>are you sure? <span class="link" id="yes-block-user">Yes</span> /
-							<span class="link" @click="blockAction()" id="no-block-user"
-								>No</span
-							></span
-						>
-						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="blockAction()" id="block-user"
-							>Block User</span
-						>
-					</li>
-					<li>
-						<span class="link" id="mark-as-read">Mark Unread</span>
-					</li>
-					<li><span class="link" id="reply">Reply</span></li>
-				</ul>
+				<div v-if="expandAll">
+					<p class="md">{{ message.text }}</p>
+					<ul class="flat-list">
+						<li><a href="">Permalink</a></li>
+						<li v-if="ifMessageRecieved">
+							<form action="#">
+								<input
+									type="hidden"
+									name="deleted"
+									id="delete-message"
+									value="deleted"
+								/>
+							</form>
+							<span class="sure-block" v-if="deleteUser"
+								>are you sure?
+								<span class="link" id="yes-delete-message">Yes</span> /
+								<span
+									class="link"
+									@click="deleteAction()"
+									id="no-delete-message"
+									>No</span
+								></span
+							>
+							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
+							<span
+								class="link"
+								v-else
+								@click="deleteAction()"
+								id="click-delete"
+								>Delete</span
+							>
+						</li>
+						<li v-if="ifMessageRecieved"><a href="" id="report">Report</a></li>
+						<li v-if="ifMessageRecieved">
+							<span class="sure-block" v-if="blockUser"
+								>are you sure?
+								<span
+									class="link"
+									id="yes-block-user"
+									@click="blockAction('yes')"
+									>Yes</span
+								>
+								/
+								<span class="link" @click="blockAction()" id="no-block-user"
+									>No</span
+								></span
+							>
+							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
+							<span class="link" v-else @click="blockAction()" id="block-user"
+								>Block User</span
+							>
+						</li>
+						<li v-if="ifMessageRecieved" @click="unreadAction('unread')">
+							<span class="link" id="mark-un-read">Mark Unread</span>
+						</li>
+						<li v-if="ifMessageRecieved">
+							<span class="link" id="reply">Reply</span>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</li>
 	</div>
@@ -63,6 +110,8 @@
 
 <script>
 export default {
+	// @vuese
+	//details of message
 	props: {
 		message: {
 			type: Object,
@@ -72,10 +121,8 @@ export default {
 				type: '',
 				senderUsername: '',
 				receiverUsername: '',
-				subredditName: '',
-				postTitle: '',
-				subject: '',
 				sendAt: '',
+				subject: '',
 				isReply: '',
 				isRead: '',
 			}),
@@ -83,16 +130,61 @@ export default {
 	},
 	data() {
 		return {
-			deleteUSer: false,
-			blockUSer: false,
+			deleteUser: false,
+			blockUser: false,
+			expandAll: true,
 		};
 	},
-	methods: {
-		deleteAction() {
-			this.deleteUSer = !this.deleteUSer;
+	computed: {
+		// @vuese
+		//get username from store
+		getUserName() {
+			return this.$store.getters.getUserName;
 		},
-		blockAction() {
-			this.blockUSer = !this.blockUSer;
+		// @vuese
+		//check if user is reciever or sender
+		ifMessageRecieved() {
+			return this.getUserName == this.message.receiverUsername;
+		},
+	},
+	methods: {
+		// @vuese
+		//toggle delete action
+		deleteAction() {
+			this.deleteUser = !this.deleteUser;
+		},
+		// @vuese
+		//handle block action
+		blockAction(action) {
+			this.blockUser = !this.blockUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/blockUser', {
+					block: true,
+					username: this.message.senderUsername,
+					baseurl: this.$baseurl,
+				});
+			}
+		},
+		// @vuese
+		//handle unread action
+		unreadAction(state) {
+			if (state == 'unread') {
+				this.$store.dispatch('messages/unreadMessage', {
+					id: this.message.text,
+					baseurl: this.$baseurl,
+				});
+			}
+		},
+		// @vuese
+		//expand or collapse message details
+		expand(action) {
+			if (action == 'expand') {
+				this.expandAll = true;
+			} else if (action == 'collapse') {
+				this.expandAll = false;
+			} else {
+				this.expandAll = !this.expandAll;
+			}
 		},
 	},
 };
@@ -109,14 +201,54 @@ ul {
 	list-style: none;
 }
 .message:nth-child(odd) {
-	background-color: var(--color-grey-light-2);
+	background-color: var(--color-grey-light-9);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
 }
+.box {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	border-left: var(--line-dashed-3);
+}
+.box-unread {
+	margin: 1rem;
+	background-color: var(--color-grey-light-10);
+	border-color: var(--color-grey-light-10);
+}
+.sender-box,
+.reciever-box {
+	color: var(--color-blue);
+	border: var(--line-9);
+	text-decoration: none;
+	border-radius: 0.5rem;
+	padding: 0.4rem;
+	margin: 0.5rem;
+}
+.sender-box:hover,
+.reciever-box:hover {
+	text-decoration: none;
+}
 .subject-text {
 	font-weight: bold;
 	font-size: 1.3rem;
+}
+.expand-p {
+	margin: 1rem;
+	color: var(--color-blue-2);
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+.expand {
+	margin-right: 1rem;
+	cursor: pointer;
+}
+.sign {
+	color: var(--color-blue);
+	margin-right: 0.3rem;
+	font-size: 1.4rem;
+	cursor: pointer;
 }
 .subject-text:after {
 	content: ':';
@@ -152,5 +284,11 @@ a:hover,
 }
 .sure-block {
 	color: var(--color-red-dark-1);
+}
+.sender a,
+.reciever a {
+	color: var(--color-blue);
+	font-size: 1.1rem;
+	font-weight: bold;
 }
 </style>

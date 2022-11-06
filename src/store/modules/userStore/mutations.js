@@ -5,4 +5,8 @@ export default {
 
 		return payload.responseStatus;
 	},
+	addUserSocialLink(state, payload) {
+		state.userData.socialLinks.push(payload.newSocialLink);
+		console.log(state.userData);
+	},
 };

@@ -1,10 +1,11 @@
 <template>
 	<!-- router view for display pages -->
-	<router-view v-slot="slotProps">
+	<!-- <router-view v-slot="slotProps" :key="$route.fullPath">
 		<transition name="route" mode="out-in">
 			<component :is="slotProps.Component"></component>
 		</transition>
-	</router-view>
+	</router-view> -->
+	<router-view></router-view>
 </template>
 
 <script>
@@ -22,6 +23,7 @@ export default {
 	/* orange color (primary) */
 	--color-primary: #ff2c00;
 	--color-Primary-light: #ff5213;
+	--color-Primary-light-2: #f79470;
 	--color-Primary-dark: rgb(217, 58, 0);
 
 	/* white colors */
@@ -40,6 +42,7 @@ export default {
 	--color-grey-light-9: #f6f7f8;
 	--color-grey-light-10: #edeff1;
 	--color-grey-light-11: #ececf4;
+	--color-grey-light-12: #e8e8e8;
 
 	/* dark grey colors */
 	--color-grey-dark-1: #333;
@@ -50,6 +53,7 @@ export default {
 	--color-grey-dark-6: #343536;
 	--color-grey-dark-7: #9c9c9c;
 	--color-grey-dark-8: #878a8c;
+	--color-grey-dark-9: #909495;
 
 	/* black colors */
 	--color-dark-1: #000;
@@ -60,6 +64,7 @@ export default {
 	--color-orange: #ff2c00;
 
 	--color-red-dark-1: #ea0027;
+	--color-red-dark-2: #cc3700;
 
 	--color-pink: #ff64ae;
 
@@ -67,6 +72,8 @@ export default {
 	--color-blue: #6094fe;
 	--color-blue-2: #0079d3;
 	--color-blue-3: #3293db;
+	--color-blue-4: #336699;
+	--color-blue-5: #83afdc;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
 
@@ -87,8 +94,10 @@ export default {
 	--line-6: 1px solid var(--color-dark-1);
 	--line-7: 1px solid var(--color-grey-dark-3);
 	--line-8: 1px solid var(--color-grey-light-3);
+	--line-9: 1px solid var(--color-blue-4);
 	--line-dashed: 1px dashed var(--color-grey-light-2);
 	--line-dashed-2: 1px dashed var(--color-grey-dark-2);
+	--line-dashed-3: 2px dashed var(--color-grey-light-12);
 
 	/* screen sizes variables */
 	/* 2000px */

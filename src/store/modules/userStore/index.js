@@ -31,6 +31,41 @@ export default {
 					},
 				],
 			},
+			socialLinkItems: [
+				{
+					text: 'Custom URL' /* will be type from back end */,
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/custom.png',
+					alt: 'custom url',
+					type: 'link' /* link or username */,
+					baseurl: '',
+				},
+				{
+					text: 'Reddit',
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
+					alt: 'Reddit',
+					type: 'username',
+					baseUrl: 'https://www.reddit.com/',
+				},
+				{
+					text: 'Instagram',
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/instagram.png',
+					alt: '',
+					type: 'username',
+					baseUrl: 'https://www.instagram.com/',
+				},
+				{
+					id: '4',
+					text: 'Twitter',
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/twitter.png',
+					alt: '',
+					type: 'username',
+					baseUrl: 'https://twitter.com/',
+				},
+			],
 		};
 	},
 	mutations,

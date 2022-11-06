@@ -1,5 +1,8 @@
 <template>
-	<div class="message">
+	<div
+		class="message"
+		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+	>
 		<li>
 			<p class="subject-text">
 				<span>{{ message.subject }}</span>
@@ -8,9 +11,12 @@
 				<p class="md-details">
 					from&nbsp;
 					<span class="sender"
-						><a href="">{{ message.senderUsername }}</a>
+						><a href="" id="message-sender">{{ message.senderUsername }}</a>
 						<span v-if="message.receiverUsername != ''"
-							>&nbsp;via&nbsp; <a href="">{{ message.receiverUsername }}</a>
+							>&nbsp;via&nbsp;
+							<a href="" id="message-receiver">{{
+								message.receiverUsername
+							}}</a>
 						</span></span
 					>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
 				</p>
@@ -26,7 +32,7 @@
 								value="deleted"
 							/>
 						</form>
-						<span class="sure-block" v-if="deleteUSer"
+						<span class="sure-block" v-if="deleteUser"
 							>are you sure?
 							<span class="link" id="yes-delete-message">Yes</span> /
 							<span class="link" @click="deleteAction()" id="no-delete-message"
@@ -40,8 +46,12 @@
 					</li>
 					<li><a href="" id="report">Report</a></li>
 					<li>
-						<span class="sure-block" v-if="blockUSer"
-							>are you sure? <span class="link" id="yes-block-user">Yes</span> /
+						<span class="sure-block" v-if="blockUser"
+							>are you sure?
+							<span class="link" id="yes-block-user" @click="blockAction('yes')"
+								>Yes</span
+							>
+							/
 							<span class="link" @click="blockAction()" id="no-block-user"
 								>No</span
 							></span
@@ -51,8 +61,8 @@
 							>Block User</span
 						>
 					</li>
-					<li>
-						<span class="link" id="mark-as-read">Mark Unread</span>
+					<li @click="unreadAction('unread')">
+						<span class="link" id="mark-un-read">Mark Unread</span>
 					</li>
 					<li><span class="link" id="reply">Reply</span></li>
 				</ul>
@@ -64,6 +74,8 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//details of message
 		message: {
 			type: Object,
 			require: true,
@@ -80,19 +92,53 @@ export default {
 				isRead: '',
 			}),
 		},
+		// @vuese
+		//counter to handel background color
+		count: {
+			type: Number,
+			require: true,
+			default: 1,
+		},
 	},
 	data() {
 		return {
-			deleteUSer: false,
-			blockUSer: false,
+			deleteUser: false,
+			blockUser: false,
+			backcolor: 'grey',
 		};
 	},
+	beforeMount() {
+		if (this.count % 2 == 0) {
+			this.backcolor = 'white';
+		} else this.backcolor = 'grey';
+	},
 	methods: {
+		// @vuese
+		//toggle delete action
 		deleteAction() {
-			this.deleteUSer = !this.deleteUSer;
+			this.deleteUser = !this.deleteUser;
 		},
-		blockAction() {
-			this.blockUSer = !this.blockUSer;
+		// @vuese
+		//handle block action
+		blockAction(action) {
+			this.blockUser = !this.blockUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/blockUser', {
+					block: true,
+					username: this.message.senderUsername,
+					baseurl: this.$baseurl,
+				});
+			}
+		},
+		// @vuese
+		//handle unread action
+		unreadAction(state) {
+			if (state == 'unread') {
+				this.$store.dispatch('messages/unreadMessage', {
+					id: this.message.text,
+					baseurl: this.$baseurl,
+				});
+			}
 		},
 	},
 };
@@ -108,10 +154,10 @@ ul {
 	color: #373c3f;
 	list-style: none;
 }
-.message:nth-child(odd) {
+.message-grey {
 	background-color: var(--color-grey-light-2);
 }
-.message:nth-child(even) {
+.message-white {
 	background-color: var(--color-white-1);
 }
 .subject-text {

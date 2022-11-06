@@ -462,6 +462,8 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//header title ex: Home, User Settings, u/username...
 		headerTitle: {
 			type: String,
 			default: 'Home',
@@ -474,21 +476,33 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// Used to show or hide settings menu
 		showSettingsSubMenu() {
 			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
 		},
+		// @vuese
+		// Used to show or hide home menu
 		showHomeSubMenu() {
 			this.homeSubMenuDisplay = !this.homeSubMenuDisplay;
 		},
+		// @vuese
+		// Used to go to settings page
 		goToSettings() {
 			this.$router.push('/settings');
 		},
+		// @vuese
+		// Used to go to Home page
 		goToHome() {
 			this.$router.push('/');
 		},
+		// @vuese
+		// Used to go to submit page
 		goToSubmit() {
 			this.$router.push('/submit');
 		},
+		// @vuese
+		// Used to go to user page
 		goToUserPage() {
 			this.$router.push('/user/abdelhamed');
 		},

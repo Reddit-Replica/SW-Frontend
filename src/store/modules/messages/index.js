@@ -6,10 +6,11 @@ export default {
 	namespaced: true,
 	state() {
 		return {
-			composeMessages: [],
+			inboxMessages: [],
 			unreadMessages: [],
 			userMentions: [],
 			userMessages: [],
+			postReplies: [],
 		};
 	},
 	mutations,

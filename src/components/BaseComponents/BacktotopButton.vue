@@ -9,6 +9,8 @@
 <script>
 export default {
 	methods: {
+		// @vuese
+		// Used to make page go up
 		scrollUp() {
 			window.scrollTo(0, 0);
 		},

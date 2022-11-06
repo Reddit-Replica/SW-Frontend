@@ -1,6 +1,6 @@
 export default {
-	composeMessages(state) {
-		return state.allMessages;
+	inboxMessages(state) {
+		return state.inboxMessages;
 	},
 	unreadMessages(state) {
 		return state.unreadMessages;
@@ -10,5 +10,8 @@ export default {
 	},
 	userMessages(state) {
 		return state.userMessages;
+	},
+	postReplies(state) {
+		return state.postReplies;
 	},
 };
