@@ -21,9 +21,9 @@
 						</svg>
 					</div>
 				</div>
-				<div>
+				<div :class="!isRead ? 'box-unread' : ''">
 					<p class="md-details">
-						from&nbsp;
+						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
 							><a href="" id="message-sender">{{ message.senderUsername }}</a>
 							<span
@@ -32,7 +32,8 @@
 									message.receiverUsername
 								}}</a>
 							</span></span
-						>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
+						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 					</p>
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list">
@@ -106,7 +107,7 @@
 								>Block User</span
 							>
 						</li>
-						<li @click="unreadAction('unread')">
+						<li @click="unreadAction()" v-if="isRead">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li><span class="link" id="reply">Reply</span></li>
@@ -154,6 +155,7 @@ export default {
 			upClicked: false,
 			downClicked: false,
 			backcolor: 'grey',
+			isRead: this.message.isRead,
 		};
 	},
 	beforeMount() {
@@ -210,13 +212,8 @@ export default {
 		},
 		// @vuese
 		//handle unread action
-		unreadAction(state) {
-			if (state == 'unread') {
-				this.$store.dispatch('messages/unreadMessage', {
-					id: this.message.text,
-					baseurl: this.$baseurl,
-				});
-			}
+		unreadAction() {
+			this.isRead = false;
 		},
 	},
 };

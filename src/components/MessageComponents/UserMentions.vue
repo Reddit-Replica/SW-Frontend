@@ -8,7 +8,7 @@
 				<span class="post-reply">username mention</span>
 				<span>{{ message.subject }}</span>
 			</p>
-			<div class="d-flex flex-row">
+			<div class="d-flex flex-row big-box">
 				<div class="d-flex flex-column vote-box">
 					<div class="upvote" @click="upvote">
 						<svg class="icon p-1" :class="upClicked ? 'up-clicked' : ''">
@@ -21,16 +21,17 @@
 						</svg>
 					</div>
 				</div>
-				<div>
+				<div :class="!isRead ? 'box-unread' : ''">
 					<p class="md-details">
-						from&nbsp;
+						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
 							><a href="" id="message-sender">{{ message.senderUsername }}</a>
 							<span
-								>&nbsp;via&nbsp;
+								><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
 								<a href="" id="message-receiver">{{ message.subredditName }}</a>
 							</span></span
-						>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
+						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 					</p>
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list">
@@ -104,7 +105,7 @@
 								>Block User</span
 							>
 						</li>
-						<li @click="unreadAction('unread')">
+						<li @click="unreadAction()" v-if="isRead">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li><span class="link" id="reply">Reply</span></li>
@@ -152,6 +153,7 @@ export default {
 			upClicked: false,
 			downClicked: false,
 			backcolor: 'grey',
+			isRead: this.message.isRead,
 		};
 	},
 	// @vuese
@@ -210,13 +212,8 @@ export default {
 		},
 		// @vuese
 		//handle unread action
-		unreadAction(state) {
-			if (state == 'unread') {
-				this.$store.dispatch('messages/unreadMessage', {
-					id: this.message.text,
-					baseurl: this.$baseurl,
-				});
-			}
+		unreadAction() {
+			this.isRead = false;
 		},
 	},
 };
@@ -226,5 +223,8 @@ export default {
 a:hover,
 .link:hover {
 	text-decoration: underline;
+}
+.big-box {
+	width: 100%;
 }
 </style>

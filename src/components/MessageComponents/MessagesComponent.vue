@@ -22,7 +22,7 @@
 					>collapse all</span
 				>
 			</p>
-			<div class="box" :class="!message.isRead ? 'box-unread' : ''">
+			<div class="box" :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
 					<span class="sign" id="sign" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
@@ -95,7 +95,7 @@
 								>Block User</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved" @click="unreadAction('unread')">
+						<li v-if="ifMessageRecieved && isRead" @click="unreadAction()">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li v-if="ifMessageRecieved">
@@ -133,6 +133,7 @@ export default {
 			deleteUser: false,
 			blockUser: false,
 			expandAll: true,
+			isRead: this.message.isRead,
 		};
 	},
 	computed: {
@@ -167,13 +168,8 @@ export default {
 		},
 		// @vuese
 		//handle unread action
-		unreadAction(state) {
-			if (state == 'unread') {
-				this.$store.dispatch('messages/unreadMessage', {
-					id: this.message.text,
-					baseurl: this.$baseurl,
-				});
-			}
+		unreadAction() {
+			this.isRead = false;
 		},
 		// @vuese
 		//expand or collapse message details
