@@ -232,10 +232,6 @@ ul {
 .reciever-box:hover {
 	text-decoration: none;
 }
-.subject-text {
-	font-weight: bold;
-	font-size: 1.3rem;
-}
 .expand-p {
 	margin: 1rem;
 	color: var(--color-blue-2);
@@ -252,40 +248,9 @@ ul {
 	font-size: 1.4rem;
 	cursor: pointer;
 }
-.subject-text:after {
-	content: ':';
-}
-.md-details {
-	margin-left: 2.6rem;
-	color: var(--color-grey-dark-2);
-}
-.md {
-	margin-left: 2.6rem;
-	font-size: 1.5rem;
-}
-.flat-list {
-	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	display: flex;
-}
-.flat-list li {
-	margin: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-}
-.flat-list li a,
-.link {
-	color: var(--color-grey-dark-2);
-	cursor: pointer;
-}
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.sure-block {
-	color: var(--color-red-dark-1);
 }
 .sender a,
 .reciever a {
