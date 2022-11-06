@@ -57,6 +57,7 @@ ul {
 	list-style: none;
 	display: flex;
 	flex-flow: row wrap;
+	width: 100%;
 }
 .message {
 	margin: 0;
@@ -65,13 +66,13 @@ ul {
 	list-style: none;
 }
 .message-grey {
-	background-color: var(--color-grey-light-2);
+	background-color: var(--color-grey-light-9);
 }
 .message-white {
 	background-color: var(--color-white-1);
 }
 /* .message:nth-child(odd) {
-	background-color: var(--color-grey-light-2);
+	background-color: var(--color-grey-light-9);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
@@ -136,5 +137,13 @@ div.vote-box {
 
 .vote-box svg.down-clicked {
 	fill: var(--color-blue-5);
+}
+.box-unread {
+	margin: 1rem;
+	background-color: var(--color-grey-light-10);
+	border-color: var(--color-grey-light-10);
+}
+.unread {
+	color: var(--color-red-dark-1);
 }
 </style>
