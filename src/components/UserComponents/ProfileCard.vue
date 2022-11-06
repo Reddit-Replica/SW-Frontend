@@ -53,9 +53,9 @@
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
 				<h4 class="profile-displayedname">
-					{{ userName || 'Abdelhameed_Emad' }}
+					{{ this.userData.displayName || 'Abdelhameed_Emad' }}
 					<svg
-						v-if="NSFW"
+						v-if="this.userData.nsfw"
 						class="Wb4wBt474lETdwG0YpWID"
 						viewBox="0 0 40 40"
 						version="1.1"
@@ -75,7 +75,7 @@
 						</g>
 					</svg>
 				</h4>
-				<a href="" class="profile-username">u/jhvhhygy</a>
+				<a href="" class="profile-username">{{ userName }}</a>
 			</div>
 			<!-- /////////////////////////////// -->
 			<!-- incase of Avatar display name , user name style -->
@@ -94,7 +94,9 @@
 			</div>
 			<!-- //////////////////// -->
 			<!-- about profile box -->
-			<div class="profile-about" v-if="about != ''">hi how are you</div>
+			<div class="profile-about" v-if="this.userData.about != ''">
+				{{ this.userData.about }}
+			</div>
 			<!-- ///////////////// -->
 			<!-- profile items karma and cake day has two alignment for pic , avatar -->
 			<div class="profile-items" :class="[isAvatar ? 'align-center' : '']">
@@ -102,7 +104,7 @@
 					<h5>Karma</h5>
 					<span>
 						<p id="karma">
-							<span><i class="fa-solid fa-fan" /></span>1
+							<span><i class="fa-solid fa-fan" /></span>{{ userData.karma }}
 						</p>
 					</span>
 				</span>
@@ -120,7 +122,9 @@
 			<follow-chat-component v-if="0"></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
-			<sociallinks-block></sociallinks-block>
+			<sociallinks-block
+				:social-data="userData.socialLinks"
+			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button class="new-post">New post</button>
@@ -173,10 +177,19 @@ export default {
 			type: String,
 			required: true,
 		},
+		// userData: {
+		// 	type: Array,
+		// 	required: true,
+		// },
+	},
+	created() {
+		this.userData = this.$store.getters['user/getUserData'];
+		console.log(this.userData);
 	},
 	data() {
 		return {
 			NSFW: 'true',
+			userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
 			mySocialLinks: [

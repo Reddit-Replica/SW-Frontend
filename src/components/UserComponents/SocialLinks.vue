@@ -14,7 +14,7 @@
 						:text="sociallinkItem.text"
 						:img-src="sociallinkItem.imgSrc"
 						:alt="sociallinkItem.alt"
-						@click="openSocialLinkConfig(sociallinkItem.id)"
+						@click="openSocialLinkConfig(sociallinkItem.text)"
 					></sociallink-item>
 				</div>
 			</template>
@@ -65,9 +65,9 @@ export default {
 		tryOpen() {
 			this.$emit('open');
 		},
-		openSocialLinkConfig(id) {
+		openSocialLinkConfig(text) {
 			this.socialLinkData = this.sociallinkItems.find(
-				(socialLink) => socialLink.id == id
+				(socialLink) => socialLink.text == text
 			);
 			console.log(this.socialLinkData);
 			this.tryClose();

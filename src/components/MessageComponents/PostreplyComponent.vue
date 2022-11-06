@@ -21,9 +21,9 @@
 						</svg>
 					</div>
 				</div>
-				<div>
+				<div :class="!isRead ? 'box-unread' : ''">
 					<p class="md-details">
-						from&nbsp;
+						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
 							><a href="" id="message-sender">{{ message.senderUsername }}</a>
 							<span
@@ -32,7 +32,8 @@
 									message.receiverUsername
 								}}</a>
 							</span></span
-						>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
+						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 					</p>
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list">
@@ -106,7 +107,7 @@
 								>Block User</span
 							>
 						</li>
-						<li @click="unreadAction('unread')">
+						<li @click="unreadAction()" v-if="isRead">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li><span class="link" id="reply">Reply</span></li>
@@ -154,6 +155,7 @@ export default {
 			upClicked: false,
 			downClicked: false,
 			backcolor: 'grey',
+			isRead: this.message.isRead,
 		};
 	},
 	beforeMount() {
@@ -210,106 +212,16 @@ export default {
 		},
 		// @vuese
 		//handle unread action
-		unreadAction(state) {
-			if (state == 'unread') {
-				this.$store.dispatch('messages/unreadMessage', {
-					id: this.message.text,
-					baseurl: this.$baseurl,
-				});
-			}
+		unreadAction() {
+			this.isRead = false;
 		},
 	},
 };
 </script>
 
 <style scoped>
-ul {
-	list-style: none;
-	display: flex;
-	flex-flow: row wrap;
-}
-.message {
-	margin: 0;
-	padding: 1rem 1.5rem;
-	color: #373c3f;
-	list-style: none;
-}
-.message-grey {
-	background-color: var(--color-grey-light-2);
-}
-.message-white {
-	background-color: var(--color-white-1);
-}
-/* .message:nth-child(odd) {
-	background-color: var(--color-grey-light-2);
-}
-.message:nth-child(even) {
-	background-color: var(--color-white-1);
-} */
-.subject-text {
-	font-weight: bold;
-	font-size: 1.3rem;
-}
-.post-reply {
-	margin: 1rem;
-	font-weight: bold;
-	font-size: larger;
-}
-.post-reply:after {
-	content: ':';
-}
-.md-details {
-	margin-left: 2.6rem;
-	color: var(--color-grey-dark-2);
-}
-.md {
-	margin-left: 2.6rem;
-	font-size: 1.5rem;
-}
-.flat-list {
-	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	display: flex;
-}
-.flat-list li {
-	margin: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-}
-.flat-list li a,
-.link {
-	color: var(--color-grey-dark-2);
-	cursor: pointer;
-}
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.sure-block {
-	color: var(--color-red-dark-1);
-}
-div.vote-box {
-	text-align: center;
-	border-radius: 0.5rem 0 0 0.5rem;
-	cursor: pointer;
-}
-
-.vote-box .downvote svg,
-.vote-box .upvote svg {
-	width: 2rem;
-	height: 2rem;
-	fill: var(--color-grey-dark-4);
-}
-.downvote .icon-shift {
-	transform: rotate(180deg);
-}
-.vote-box svg.up-clicked {
-	fill: var(--color-Primary-light-2);
-}
-
-.vote-box svg.down-clicked {
-	fill: var(--color-blue-5);
 }
 </style>

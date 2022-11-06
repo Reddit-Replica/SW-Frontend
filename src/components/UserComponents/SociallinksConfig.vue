@@ -63,7 +63,7 @@ export default {
 			activeSaveButton: false,
 		};
 	},
-	emits: ['back'],
+	emits: ['back', 'save'],
 	methods: {
 		back() {
 			this.$emit('back');
