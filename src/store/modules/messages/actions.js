@@ -149,6 +149,30 @@ export default {
 		}
 		context.commit('setPostReplies', messages);
 	},
+	async loadSentMessages(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/message/sent');
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+
+		const messages = [];
+
+		for (const key in responseData) {
+			const message = {
+				before: responseData[key].before,
+				after: responseData[key].after,
+				text: responseData[key].children[0].text,
+				receiverUsername: responseData[key].children[0].receiverUsername,
+				subject: responseData[key].children[0].subject,
+				sendAt: responseData[key].children[0].sendAt,
+			};
+			messages.push(message);
+		}
+		context.commit('setSentMessages', messages);
+	},
 	async sendMessage(_, payload) {
 		const newMessage = {
 			text: payload.text,

@@ -316,9 +316,9 @@
 					"subredditName": "subredditName",
 					"postTitle": "postTitle",
 					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "/user/asmaaadel0",
+					"receiverUsername": "/u/asmaaadel0",
 					"subject": "hi",
-					"sendAt": "5 days ago",
+					"sendAt": "2019-08-24T14:15:22Z",
 					"isReply": true,
 					"isRead": true
 				}
@@ -326,6 +326,32 @@
 		}
 	],
 	"unread-message": [],
+	"sent": [
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello hoda",
+					"receiverUsername": "/u/hoda_gamal",
+					"subject": "hi",
+					"sendAt": "2019-08-24T14:15:22Z"
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"text": "hello mena",
+					"receiverUsername": "/u/menahosam",
+					"subject": "hi",
+					"sendAt": "2019-08-24T14:15:22Z"
+				}
+			]
+		}
+	],
 	"block-user": [
 		{
 			"block": true,

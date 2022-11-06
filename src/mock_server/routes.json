@@ -4,5 +4,6 @@
   "/message/unread": "/unread",
   "/message/mentions": "/mentions",
   "/message/messages": "/messages",
-  "/message/post-reply": "/post-reply"
+  "/message/post-reply": "/post-reply",
+  "/message/sent": "/sent"
 }
