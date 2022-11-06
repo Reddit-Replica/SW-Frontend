@@ -1,6 +1,6 @@
 <template>
 	<div class="big-box">
-		<div class="icons-box">
+		<div class="icons-box" v-if="!markdownMode">
 			<div class="tool-tip">
 				<span class="tool-tip-text">Bold</span>
 				<button class="icons">
@@ -139,7 +139,23 @@
 					</div>
 				</button>
 			</div>
-			<button class="mark-down">Markdown Mode</button>
+			<button class="mark-down" @click="switchMode">Markdown Mode</button>
+		</div>
+		<div class="mark-down-box" v-if="markdownMode">
+			<span>Markdown </span>
+			<svg
+				class="question-mark"
+				viewBox="0 0 16 16"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					fill="inherit"
+					d="M8.622 10.616c.078.08.14.175.183.28.044.105.07.218.07.332 0 .237-.087.456-.253.62-.167.168-.385.255-.622.255-.236 0-.455-.087-.62-.254-.167-.166-.255-.385-.255-.622 0-.114.027-.227.07-.332.044-.105.105-.2.184-.28.087-.088.174-.15.288-.193.324-.13.71-.052.954.193zm-.205-6.242c1.595 0 2.466.807 2.466 1.92 0 .976-.556 1.448-1.238 1.816-.615.317-.83.518-.904.898 0 .004-.034.207-.036.21-.034.126-.087.244-.18.336-.14.14-.323.21-.524.21-.097 0-.192-.017-.29-.052-.087-.035-.165-.088-.235-.158-.14-.14-.22-.333-.22-.533 0-.11.02-.188.074-.348.16-.472.55-.896 1.056-1.17.577-.327.84-.558.84-1.07 0-.42-.357-.715-.987-.715-.496 0-.996.218-1.39.52-.26.2-.62.202-.858-.02l-.05-.05c-.313-.29-.27-.787.075-1.04.603-.444 1.394-.753 2.4-.753zM8 13.25c-2.895 0-5.25-2.355-5.25-5.25S5.105 2.75 8 2.75 13.25 5.105 13.25 8 10.895 13.25 8 13.25M8 1C4.14 1 1 4.14 1 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7"
+				></path>
+			</svg>
+			<button class="fancy" @click="switchMode">
+				Switch to Fancy Pants Editor
+			</button>
 		</div>
 		<div>
 			<textarea
@@ -153,7 +169,16 @@
 
 <script>
 export default {
-	methods: {},
+	data() {
+		return {
+			markdownMode: false,
+		};
+	},
+	methods: {
+		switchMode() {
+			this.markdownMode = !this.markdownMode;
+		},
+	},
 	mounted() {},
 };
 </script>
@@ -322,7 +347,7 @@ textarea:focus {
 	color: #0079d3;
 }
 .mark-down:hover {
-	background-color: #ccc;
+	background-color: #dae0e6;
 }
 
 button {
@@ -333,5 +358,53 @@ button {
 	height: 32px;
 	border-radius: 4px;
 	background-color: #f6f7f8;
+}
+.mark-down-box {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	box-sizing: border-box;
+	height: 40px;
+	padding: 8px 16px;
+	background-color: #f6f7f8;
+	/*display: -ms-flexbox;*/
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+.mark-down-box span {
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	color: #1c1c1c;
+}
+.question-mark {
+	fill: #878a8c;
+	height: 12px;
+	width: 12px;
+	position: absolute;
+	left: 11%;
+	cursor: pointer;
+}
+.fancy {
+	border-radius: 9999px;
+	position: absolute;
+	left: 75%;
+	width: 189px;
+	height: 3px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 16px;
+	text-transform: unset;
+	min-height: 24px;
+	min-width: 24px;
+	padding: 4px 8px;
+	color: #0079d3;
+}
+.fancy:hover {
+	background-color: #dae0e6;
 }
 </style>
