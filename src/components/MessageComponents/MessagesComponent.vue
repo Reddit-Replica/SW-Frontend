@@ -22,7 +22,7 @@
 					>collapse all</span
 				>
 			</p>
-			<div class="box" :class="!message.isRead ? 'box-unread' : ''">
+			<div class="box" :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
 					<span class="sign" id="sign" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
@@ -95,7 +95,7 @@
 								>Block User</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved" @click="unreadAction('unread')">
+						<li v-if="ifMessageRecieved && isRead" @click="unreadAction()">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li v-if="ifMessageRecieved">
@@ -133,6 +133,7 @@ export default {
 			deleteUser: false,
 			blockUser: false,
 			expandAll: true,
+			isRead: this.message.isRead,
 		};
 	},
 	computed: {
@@ -167,13 +168,8 @@ export default {
 		},
 		// @vuese
 		//handle unread action
-		unreadAction(state) {
-			if (state == 'unread') {
-				this.$store.dispatch('messages/unreadMessage', {
-					id: this.message.text,
-					baseurl: this.$baseurl,
-				});
-			}
+		unreadAction() {
+			this.isRead = false;
 		},
 		// @vuese
 		//expand or collapse message details
@@ -193,6 +189,8 @@ export default {
 <style scoped>
 ul {
 	list-style: none;
+	display: flex;
+	flex-flow: row wrap;
 }
 .message {
 	margin: 0;
@@ -230,10 +228,6 @@ ul {
 .reciever-box:hover {
 	text-decoration: none;
 }
-.subject-text {
-	font-weight: bold;
-	font-size: 1.3rem;
-}
 .expand-p {
 	margin: 1rem;
 	color: var(--color-blue-2);
@@ -250,40 +244,9 @@ ul {
 	font-size: 1.4rem;
 	cursor: pointer;
 }
-.subject-text:after {
-	content: ':';
-}
-.md-details {
-	margin-left: 2.6rem;
-	color: var(--color-grey-dark-2);
-}
-.md {
-	margin-left: 2.6rem;
-	font-size: 1.5rem;
-}
-.flat-list {
-	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	display: flex;
-}
-.flat-list li {
-	margin: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-}
-.flat-list li a,
-.link {
-	color: var(--color-grey-dark-2);
-	cursor: pointer;
-}
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.sure-block {
-	color: var(--color-red-dark-1);
 }
 .sender a,
 .reciever a {

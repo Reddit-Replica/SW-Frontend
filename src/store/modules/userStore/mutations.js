@@ -9,4 +9,14 @@ export default {
 		state.userData.socialLinks.push(payload.newSocialLink);
 		console.log(state.userData);
 	},
+	getSocialLinkIcon(state, payload) {
+		console.log('gfght');
+		console.log(11, payload.id);
+		state.socialLinkItems.forEach((element) => {
+			if (element.text === payload.id) {
+				return element.imgSrc;
+			}
+		});
+		return -1;
+	},
 };
