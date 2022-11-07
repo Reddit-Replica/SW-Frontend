@@ -36,7 +36,7 @@ export default {
 		//details of message
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
 				id: '',
 				text: '',
@@ -46,17 +46,10 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handle background color
-		count: {
-			type: Number,
-			require: true,
-			default: 1,
-		},
-		// @vuese
 		//index to handle unique ids
 		index: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 0,
 		},
 	},
@@ -64,11 +57,6 @@ export default {
 		return {
 			backcolor: 'grey',
 		};
-	},
-	beforeMount() {
-		if (this.count % 2 == 0) {
-			this.backcolor = 'white';
-		} else this.backcolor = 'grey';
 	},
 	methods: {},
 };
