@@ -11,10 +11,16 @@
 		</h3>
 		<div class="line"></div>
 		<div class="buttons">
-			<base-button class="button create-post" @click="goToSubmit()"
+			<base-button
+				class="button create-post"
+				@click="goToSubmit()"
+				id="create-post-sidebar"
 				>Create Post</base-button
 			>
-			<base-button class="button blue-button" @click="showCreateCommunity"
+			<base-button
+				class="button blue-button"
+				@click="showCreateCommunity"
+				id="create-community-sidebar"
 				>Create Community</base-button
 			>
 		</div>
