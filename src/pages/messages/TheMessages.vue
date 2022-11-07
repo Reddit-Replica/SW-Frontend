@@ -71,12 +71,12 @@ export default {
 .message-white {
 	background-color: var(--color-white-1);
 }
-/* .message:nth-child(odd) {
+.message:nth-child(odd) {
 	background-color: var(--color-grey-light-9);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
-} */
+}
 .subject-text {
 	font-weight: bold;
 	font-size: 1.3rem;
