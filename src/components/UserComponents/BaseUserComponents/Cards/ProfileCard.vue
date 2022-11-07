@@ -127,7 +127,9 @@
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
-			<button class="new-post">New post</button>
+			<button class="new-post" @click="$router.push('/submit')">
+				New post
+			</button>
 			<!-- ////////////// -->
 			<!-- more options button -->
 			<button
