@@ -62,7 +62,11 @@
 							/>
 							Custom URL
 						</div> -->
-						<div class="box-icon-social-links" @click="socialLinksClick">
+						<div
+							class="box-icon-social-links"
+							@click="socialLinksClick"
+							id="links-profile-settings"
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -133,7 +137,11 @@
 				</div>
 				<div class="box-2">
 					<div class="box-images">
-						<div class="box-image-1" @click="$refs.image1.click()">
+						<div
+							class="box-image-1"
+							@click="$refs.image1.click()"
+							id="image-1-profile-settings"
+						>
 							<label
 								:class="{ 'box-image-label-noimage': !images[0].imageUrl }"
 								class="box-image-label-both"
@@ -190,7 +198,11 @@
 								</div>
 							</label>
 						</div>
-						<div class="box-image-2" @click="$refs.image2.click()">
+						<div
+							class="box-image-2"
+							@click="$refs.image2.click()"
+							id="image-2-profile-settings"
+						>
 							<label
 								:class="{ 'box-image-label-noimage': !images[1].imageUrl }"
 								class="box-image-label-both"
@@ -266,7 +278,10 @@
 				</div>
 				<div class="box-switch-button">
 					<div>
-						<switch-button @click="nsfwClick"></switch-button>
+						<switch-button
+							@click="nsfwClick"
+							id="nsfw-profile-settings"
+						></switch-button>
 						<base-dialog
 							:show="nsfwClicked"
 							title="SWITCH ACCOUNT TO SFW"
@@ -284,13 +299,14 @@
 										button-text="CANCEL"
 										class="dialog-button dialog-button-white"
 										@click="nsfwSetCancel"
+										id="nsfw-cancel"
 									></base-button>
 									<base-button
 										button-text="I UNDERSTAND"
 										class="dialog-button dialog-button-blue"
 										@click="nsfwSetUnderstand"
+										id="nsfw-understand"
 									></base-button>
-									<base-button></base-button>
 								</div>
 							</div>
 						</base-dialog>
@@ -314,7 +330,7 @@
 				</div>
 				<div class="box-switch-button">
 					<div>
-						<switch-button></switch-button>
+						<switch-button id="allow-profile-settings"></switch-button>
 					</div>
 				</div>
 			</div>
@@ -333,7 +349,7 @@
 				</div>
 				<div class="box-switch-button">
 					<div>
-						<switch-button></switch-button>
+						<switch-button id="visibility-profile-settings"></switch-button>
 					</div>
 				</div>
 			</div>
@@ -351,7 +367,7 @@
 				</div>
 				<div class="box-switch-button">
 					<div>
-						<switch-button></switch-button>
+						<switch-button id="active-profile-settings"></switch-button>
 					</div>
 				</div>
 			</div>
@@ -361,7 +377,9 @@
 			<div>
 				<p class="moderation-link">
 					For moderation tools please visit our
-					<a href="">Profile Moderation page</a>
+					<a href="" id="moderation-profile-settings"
+						>Profile Moderation page</a
+					>
 				</p>
 			</div>
 		</div>
