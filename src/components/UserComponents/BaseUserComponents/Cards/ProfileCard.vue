@@ -142,13 +142,13 @@
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
-<<<<<<< Updated upstream
-			<button class="new-post" @click="$router.push('/submit')">
+			<button
+				class="new-post"
+				@click="$router.push('/submit')"
+				id="profile-new-post"
+			>
 				New post
 			</button>
-=======
-			<button class="new-post" id="profile-new-post">New post</button>
->>>>>>> Stashed changes
 			<!-- ////////////// -->
 			<!-- more options button -->
 			<button
