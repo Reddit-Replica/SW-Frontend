@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="blue-top" id="top-1">
+		<div class="blue-top">
 			<router-link to="/subreddit"
-				><div class="link" id="link-1"></div
+				><div class="link" id="link-top-subreddit-page"></div
 			></router-link>
 		</div>
 		<div class="white-top">
@@ -16,14 +16,14 @@
 						</div>
 						<div>
 							<base-button
-								class="button blue-button join-button"
+								class="button blue-button"
 								@click="toogleJoin"
 								v-if="!isJoined"
 								id="join-button"
 								>Join</base-button
 							>
 							<base-button
-								class="button white-button join-button"
+								class="button white-button"
 								@click="toogleJoin"
 								@mouseover="hoverJoin('Leave')"
 								@mouseleave="hoverJoin('Joined')"
@@ -145,9 +145,9 @@ img {
 	font-size: 1.4rem;
 	font-weight: 700;
 	line-height: 1.7rem;
-	min-height: 3.2rem;
-	min-width: 3.2rem;
 	padding: 0.4rem 1.6rem;
+	width: 9.6rem;
+	height: 3.2rem;
 }
 .blue-button {
 	background-color: var(--color-blue-2);
@@ -162,12 +162,16 @@ img {
 .white-button:hover {
 	opacity: 0.92;
 }
-.join-button {
-	width: 9.6rem;
-}
-@media screen and (max-width: 80rem) {
+
+@media screen and (max-width: 60rem) {
 	.top {
 		margin-left: 0.8rem;
+	}
+	.button {
+		max-width: 9.6rem;
+		min-height: 3.2rem;
+		max-height: 3.2rem;
+		min-width: 3.2rem;
 	}
 }
 </style>
