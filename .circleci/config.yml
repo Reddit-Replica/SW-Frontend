@@ -85,7 +85,7 @@ jobs:
             # testing enviromet image 
             docker build -t frontend_testing:v1 .
             docker tag frontend_testing:v1  waer/frontend_testing
-            docker push  waer/frontend_testing
+            docker push  waer/frontend_testing:latest
 
 workflows:
   main:
