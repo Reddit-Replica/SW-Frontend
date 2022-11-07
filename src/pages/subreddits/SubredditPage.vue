@@ -11,7 +11,7 @@
 				<sortposts-bar></sortposts-bar>
 			</div>
 			<div class="subreddit-page-right">
-				<about-community-bar></about-community-bar>
+				<about-community-bar :topics="topics"></about-community-bar>
 			</div>
 		</div>
 	</div>
@@ -28,6 +28,20 @@ export default {
 		CreatepostBar,
 		SortpostsBar,
 		AboutCommunityBar,
+	},
+	data() {
+		return {
+			topics: [
+				{ id: 0, name: 'Art' },
+				{ id: 1, name: 'Anime' },
+				{ id: 2, name: 'Beauty' },
+				{ id: 3, name: 'Cars' },
+				{ id: 4, name: 'Fashion' },
+				{ id: 5, name: 'Music' },
+				{ id: 6, name: 'Sports' },
+				{ id: 7, name: 'Travel' },
+			],
+		};
 	},
 };
 </script>
