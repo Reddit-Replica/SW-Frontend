@@ -413,6 +413,9 @@ p {
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 }
 .separate {
 	margin-top: 2rem;
