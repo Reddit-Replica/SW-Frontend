@@ -33,9 +33,9 @@
 		<div class="topCommunitiesRecommendations">
 			<span
 				class="topRecommendations"
-				v-for="recommendation in topCommunitiesRecommendations"
+				v-for="(recommendation, index) in topCommunitiesRecommendations"
 				:key="recommendation.id"
-				:id="recommendation.name"
+				:id="'recommendation-top-comm-' + index"
 			>
 				<base-button
 					class="Recommendation"
