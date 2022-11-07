@@ -1,6 +1,6 @@
 <template>
 	<!-- this Component for item (Button) Social Link  -->
-	<div class="link-item">
+	<div :id="`link-item-${text}`" class="link-item">
 		<img :src="imgSrc" alt="" />
 		{{ text }}
 	</div>

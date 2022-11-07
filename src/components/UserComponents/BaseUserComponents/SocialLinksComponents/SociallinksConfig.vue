@@ -1,7 +1,7 @@
 <template>
 	<base-dialog show="true" dialog-class="dialog-class">
 		<template #header>
-			<div class="social-link-config-header">
+			<div class="social-link-config-header" id="social-link-config-header">
 				<div @click="back">
 					<i class="fa-solid fa-arrow-left icons"></i>
 				</div>
@@ -27,6 +27,7 @@
 					:placeholder="socialPlaceholder"
 					v-model="displayedTextField"
 					@input="displayedModeration"
+					id="social-link-config-input-displayedtext"
 				/>
 				<input
 					v-if="data.type == 'link'"
@@ -34,6 +35,7 @@
 					placeholder="https://website.com"
 					v-model="socialLinkUrl"
 					@input="socialLinkModeration"
+					id="social-link-config-input-sociallink"
 				/>
 			</div>
 		</template>

@@ -31,7 +31,8 @@
 					</p>
 					<div>
 						<base-button
-							button-text="Reset password"
+							id="emailme"
+							button-text="Email Me"
 							:disable-button="buttonIsactive"
 							class="button-class"
 						>
@@ -40,14 +41,16 @@
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
-							<a class="link">Get Help </a></label
+							<a class="link" id="help">Get Help </a></label
 						>
 					</div>
 				</form>
 				<div class="">
-					<router-link to="/login" class="link">Log in</router-link>
+					<router-link to="/login" class="link" id="login">Log in</router-link>
 					<span class="linkSeparator">•</span>
-					<router-link to="/signup" class="link">Sign Up</router-link>
+					<router-link to="/signup" class="link" id="signup"
+						>Sign Up</router-link
+					>
 				</div>
 			</div>
 		</div>
@@ -309,5 +312,8 @@ p {
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 }
 </style>
