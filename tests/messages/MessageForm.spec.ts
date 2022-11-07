@@ -90,7 +90,7 @@ describe('MessageForm.vue', () => {
 				console.log('Promise Rejected');
 			});
 	});
-		//--------------------------------------------------------
+	//--------------------------------------------------------
 	//        Check clicking on hide button
 	//--------------------------------------------------------
 	it('test clicking on hide button', async () => {
