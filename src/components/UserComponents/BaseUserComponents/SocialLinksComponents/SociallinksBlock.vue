@@ -6,6 +6,7 @@
 				v-for="data in socialData"
 				:key="data.type"
 				:href="data.link"
+				target="_blank"
 				:id="`social-link-${data.displayText}`"
 			>
 				<sociallink-item

@@ -555,7 +555,7 @@ export default {
 		// @vuese
 		// Used to go to user page
 		goToUserPage() {
-			this.$router.push('/user/abdelhamed');
+			this.$router.push(`/user/${this.$store.getters.getUserName}`);
 		},
 	},
 };

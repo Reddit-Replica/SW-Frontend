@@ -432,9 +432,9 @@
 	],
 	"user": {
 		"displayName": "Abdalhameed_Emad",
-		"about": "hallow iam abdelhameed emad",
+		"about": "",
 		"banner": "string",
-		"picture": "string",
+		"picture": "../../../../assets/R.png",
 		"karma": 10,
 		"cakeDate": "2019-01-24",
 		"socialLinks": [
@@ -469,6 +469,49 @@
 				"subredditName": "stringjj",
 				"numOfMembers": 10,
 				"nsfw": true,
+				"joined": true
+			}
+		]
+	},
+	"user1": {
+		"displayName": "Abdalhameed_Emad",
+		"about": "",
+		"banner": "string",
+		"picture": "../../../../assets/R.png",
+		"karma": 100,
+		"cakeDate": "2020-12-24",
+		"socialLinks": [
+			{
+				"type": "Reddit",
+				"displayText": "medo",
+				"link": "https://www.google.com.eg"
+			},
+			{
+				"type": "Twitter",
+				"displayText": "abdok",
+				"link": "https://www.google.com.eg"
+			}
+		],
+		"nsfw": false,
+		"followed": true,
+		"blocked": true,
+		"moderatorOf": [
+			{
+				"subredditName": "string",
+				"numOfMembers": 10,
+				"nsfw": true,
+				"joined": true
+			},
+			{
+				"subredditName": "stringff",
+				"numOfMembers": 110,
+				"nsfw": true,
+				"joined": false
+			},
+			{
+				"subredditName": "stringjj",
+				"numOfMembers": 10,
+				"nsfw": false,
 				"joined": true
 			}
 		]
