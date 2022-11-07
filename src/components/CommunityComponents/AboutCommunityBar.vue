@@ -3,7 +3,7 @@
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">About Community</h2></div>
 			<div class="about-options">
-				<router-link to="/subreddit" class="mod-tools">
+				<router-link to="/subreddit" class="mod-tools" id="mod-tools">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -20,29 +20,44 @@
 				</router-link>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
+					width="20"
+					height="20"
 					fill="currentColor"
 					class="bi bi-three-dots"
 					viewBox="0 0 16 16"
 					@click="dotsClick"
+					id="three-dots"
 				>
 					<path
 						d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
 					/>
 				</svg>
 				<div class="box-options" v-if="dotsClicked">
-					<button class="button-option" @click="addToCustomFeed">
+					<button
+						class="button-option"
+						@click="addToCustomFeed"
+						id="add-to-custom-feed"
+					>
 						Add To Custom Feed
 					</button>
-					<button class="button-option" @click="addToFavourite">
+					<button
+						class="button-option"
+						@click="addToFavourite"
+						id="add-to-favourite"
+					>
 						Add To Favourites
 					</button>
 				</div>
 			</div>
 		</div>
+
 		<div class="about-body">
-			<div class="description-1" @click="showTextarea" v-if="!textareaShown">
+			<div
+				class="description-1"
+				@click="showTextarea"
+				v-if="!textareaShown"
+				id="add-description-before"
+			>
 				<div class="description-1-text">Add description</div>
 			</div>
 
@@ -54,21 +69,28 @@
 					class="description-textarea"
 					@keyup="charCount()"
 					v-model.trim="description"
+					id="add-description-after"
 				></textarea>
 				<div class="flex">
 					<span class="span-char"
 						>{{ charRemaining }} Characters remaining</span
 					>
-					<span class="span-cancel-save span-cancel" @click="hideTextarea"
+					<span
+						class="span-cancel-save span-cancel"
+						@click="hideTextarea"
+						id="cancel-description"
 						>Cancel</span
 					>
-					<span class="span-cancel-save span-save" @click="saveDescription"
+					<span
+						class="span-cancel-save span-save"
+						@click="saveDescription"
+						id="save-description"
 						>Save</span
 					>
 				</div>
 			</div>
 
-			<div class="box-body">
+			<div class="box-body" id="created-date">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -81,10 +103,10 @@
 						d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"
 					/>
 				</svg>
-				<span class="text-grey text space">Created Oct 28, 2022</span>
+				<span class="text-grey text space">Created {{ communityDate }}</span>
 			</div>
 
-			<div class="box-body">
+			<div class="box-body" id="created-type">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -103,17 +125,17 @@
 						d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
 					/>
 				</svg>
-				<span class="text space">Private</span>
+				<span class="text space">{{ communityType }}</span>
 			</div>
 
 			<div class="line"></div>
 
 			<div class="flex-between">
-				<div>
-					<div class="text-bold">0</div>
+				<div id="members-num">
+					<div class="text-bold">{{ membersCount }}</div>
 					<div class="text-grey">Members</div>
 				</div>
-				<div>
+				<div id="online-members-num">
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +147,7 @@
 						>
 							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
 						</svg>
-						<span class="text-bold">1</span>
+						<span class="text-bold">{{ onlineMembersCount }}</span>
 					</div>
 					<div class="text-grey">Online</div>
 				</div>
@@ -138,7 +160,7 @@
 			<div class="box-body">
 				<span class="span-new">NEW</span>
 				<span class="text-bold">Community topics</span>
-				<span class="info-span">
+				<span class="info-span" id="info-community-topics">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -162,12 +184,14 @@
 					class="text-bold span-save"
 					@click="toogleTopicsList"
 					v-if="!topicChosen"
+					id="add-topic"
 					>Add a Primary Topic</span
 				>
 				<span
 					class="text-bold span-save"
 					@click="toogleTopicsList"
 					v-if="topicChosen"
+					id="topic-added"
 					>{{ communityTopic.name }}</span
 				>
 				<svg
@@ -177,24 +201,31 @@
 					fill="currentColor"
 					class="bi bi-chevron-down"
 					viewBox="0 0 16 16"
+					id="add-topic-icon"
 				>
 					<path
 						fill-rule="evenodd"
 						d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
 					/>
 				</svg>
-				<div class="topics-list" v-if="topicsShown">
+				<div class="topics-list" v-if="topicsShown" id="topics-list">
 					<button
-						v-for="topic in topics"
+						v-for="(topic, index) in topics"
 						:key="topic.id"
 						class="button-topic text"
 						@click="setTopic(topic)"
+						:id="'topic-' + index"
 					>
 						{{ topic.name }}
 					</button>
 				</div>
-				<div class="sub-topic" v-if="!subtopicsShown && topicChosen">
-					<base-button class="button-subtopic">
+
+				<div
+					class="sub-topic"
+					v-if="!subtopicsShown && topicChosen"
+					id="subtopic-box-1"
+				>
+					<base-button class="button-subtopic" id="subtopic-box-2">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -213,14 +244,20 @@
 						>
 					</base-button>
 				</div>
-				<div class="blue-border description-1 box-topic" v-if="subtopicsShown">
-					<input v-if="!subtopicChosen" />
+
+				<div
+					class="blue-border description-1 box-topic"
+					v-if="subtopicsShown"
+					id="subtopic-box-3"
+				>
+					<input v-if="!subtopicChosen" id="subtopic-box-4" />
 					<div v-if="subtopicChosen">
 						<base-button
-							v-for="subtopic in communitySubtopics"
+							v-for="(subtopic, index) in communitySubtopics"
 							:key="subtopic.id"
 							class="subtopic text"
 							@click="deleteSubtopic(subtopic)"
+							:id="'chosen-subtopic-' + index"
 							>{{ subtopic.name }}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -237,43 +274,59 @@
 						</base-button>
 					</div>
 					<div class="flex">
-						<span class="span-char">{{ subtopicsCount }}/25</span>
+						<span class="span-char" id="subtopic-box-count"
+							>{{ subtopicsCount }}/25</span
+						>
 						<span
 							class="span-cancel-save span-cancel"
 							@click="toogleSubtopicsCancel"
+							id="subtopic-box-cancel"
 							>Cancel</span
 						>
-						<span class="span-cancel-save span-save" @click="saveSubtopics"
+						<span
+							class="span-cancel-save span-save"
+							@click="saveSubtopics"
+							id="subtopic-box-save"
 							>Save</span
 						>
 					</div>
 				</div>
-				<div class="topics-list" v-if="subtopicsShown">
+
+				<div class="topics-list" v-if="subtopicsShown" id="subtopics-list">
 					<div class="text-grey sug-subtopic">SUGGESTED TOPICS</div>
 					<button
-						v-for="subtopic in topics"
+						v-for="(subtopic, index) in topics"
 						:key="subtopic.id"
 						class="button-topic text"
 						@click="setSubtopic(subtopic)"
+						:id="'subtopic-' + index"
 					>
 						{{ subtopic.name }}
 					</button>
 				</div>
+
 				<base-dialog
 					:show="saveDialogShown"
 					title="Save changes before leaving?"
 					@close="toogleSaveDialog"
 					transparent-background
+					id="dialog-to-save"
 				>
 					<div class="text">
 						You have made some changes to your community, do you wish to leave
 						this menu without saving?
 					</div>
 					<div class="box-buttons">
-						<base-button class="button-white-2 text" @click="toogleSaveDialog"
+						<base-button
+							class="button-white-2 text"
+							@click="toogleSaveDialog"
+							id="dialog-discard"
 							>Discard</base-button
 						>
-						<base-button class="button-blue-2 text" @click="saveSubtopics"
+						<base-button
+							class="button-blue-2 text"
+							@click="saveSubtopics"
+							id="dialog-save"
 							>Save</base-button
 						>
 					</div>
@@ -288,6 +341,7 @@
 					link
 					to="/submit"
 					button-text="Create Post"
+					id="create-post-subreddit-bar"
 				></base-button>
 			</div>
 		</div>
@@ -302,6 +356,22 @@ export default {
 		topics: {
 			type: Array,
 			default: () => [],
+		},
+		membersCount: {
+			type: Number,
+			default: 1,
+		},
+		onlineMembersCount: {
+			type: Number,
+			default: 1,
+		},
+		communityDate: {
+			type: String,
+			default: '',
+		},
+		communityType: {
+			type: String,
+			default: '',
 		},
 	},
 	data() {
@@ -451,12 +521,14 @@ a {
 }
 .bi-three-dots:hover {
 	background-color: rgba(0, 53, 132, 0.2);
-	border-radius: 2px;
 	cursor: pointer;
 }
+.bi-three-dots {
+	margin-left: 4px;
+	margin-right: 4px;
+	border-radius: 2px;
+}
 .box-options {
-	left: 788px;
-	top: 220px;
 	border: 1px solid var(--color-blue-light-2);
 	border-radius: 4px;
 	box-shadow: var(--shadow-menu);
@@ -465,6 +537,7 @@ a {
 	background-color: var(--color-white-1);
 	position: absolute;
 	z-index: 10;
+	margin-top: 5px;
 }
 .button-option {
 	color: var(--color-grey-light-5);
