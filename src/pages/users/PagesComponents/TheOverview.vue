@@ -4,7 +4,12 @@
 	<!-- <base-post :post="post"></base-post> -->
 	<base-post :post="post"></base-post>
 	<div class="base-profile-post">
-		<div class="box"></div>
+		<div class="box">
+			<div class="box-items">
+				<div class="voting-box"></div>
+				<div class="main-box"></div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -33,9 +38,36 @@ export default {
 };
 </script>
 <style scoped>
+.base-profile-post {
+	height: 40px;
+	display: none;
+}
 .base-profile-post .box {
 	border: thin solid #ccc;
+	border-radius: 5px;
 	margin-bottom: -1px;
 	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: #ffffff;
+	transition: color 0.5s, fill 0.5s, box-shadow 0.5s;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-width: 1px;
+	padding-bottom: 0;
+}
+.box-items {
+	display: flex;
+	flex-direction: flex-start;
+}
+.voting-box {
+	width: 40px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 8px 4px 8px 0;
+	position: absolute;
+	background-color: aqua;
 }
 </style>
