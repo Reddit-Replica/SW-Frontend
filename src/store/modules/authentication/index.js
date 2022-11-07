@@ -8,6 +8,7 @@ export default {
 		return {
 			userName: '',
 			accessToken: '',
+			response: '',
 		};
 	},
 	mutations,

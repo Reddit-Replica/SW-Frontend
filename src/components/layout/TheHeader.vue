@@ -560,7 +560,7 @@ export default {
 	},
 	computed: {
 		userName() {
-			return this.$store.getters['auth/getUserName'];
+			return this.$store.getters.getUserName;
 		},
 	},
 };
