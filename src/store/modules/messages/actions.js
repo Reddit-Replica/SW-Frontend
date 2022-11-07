@@ -186,6 +186,7 @@ export default {
 		const response = await fetch(baseurl + '/message/compose', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
+			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
 

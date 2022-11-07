@@ -10,13 +10,25 @@
 			</p>
 			<div class="d-flex flex-row">
 				<div class="d-flex flex-column vote-box">
-					<div class="upvote" @click="upvote">
-						<svg class="icon p-1" :class="upClicked ? 'up-clicked' : ''">
+					<div class="upvote" @click="upvote" :id="'up-vote-box-' + message.id">
+						<svg
+							class="icon p-1"
+							:class="upClicked ? 'up-clicked' : ''"
+							:id="'up-vote-' + message.id"
+						>
 							<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 						</svg>
 					</div>
-					<div class="downvote" @click="downvote">
-						<svg class="icon p-1" :class="downClicked ? 'down-clicked' : ''">
+					<div
+						class="downvote"
+						@click="downvote"
+						:id="'down-vote-box-' + message.id"
+					>
+						<svg
+							class="icon p-1"
+							:class="downClicked ? 'down-clicked' : ''"
+							:id="'down-vote-' + message.id"
+						>
 							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
 						</svg>
 					</div>
@@ -25,10 +37,12 @@
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
-							><a href="" id="message-sender">{{ message.senderUsername }}</a>
+							><a href="" :id="'message-sender-' + message.id">{{
+								message.senderUsername
+							}}</a>
 							<span
 								>&nbsp;via&nbsp;
-								<a href="" id="message-receiver">{{
+								<a href="" :id="'message-receiver-' + message.id">{{
 									message.receiverUsername
 								}}</a>
 							</span></span
@@ -36,27 +50,46 @@
 						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 					</p>
 					<p class="md">{{ message.text }}</p>
-					<ul class="flat-list">
-						<li><a href="">context</a></li>
-						<li><a href="">Full Comments(5)</a></li>
+					<ul class="ul-messages flat-list">
+						<li :id="'context-link-' + message.id">
+							<a href="" :id="'context-a-' + message.id">context</a>
+						</li>
+						<li :id="'full-comment-link-' + message.id">
+							<a href="" :id="'full-comment-a-' + message.id"
+								>Full Comments(5)</a
+							>
+						</li>
 						<li>
 							<form action="#">
 								<input
 									type="hidden"
 									name="spam"
-									id="spam-message"
+									:id="'spam-message-' + message.id"
 									value="spam"
 								/>
 							</form>
-							<span class="sure-block" v-if="spamUser"
+							<span
+								class="sure-block"
+								v-if="spamUser"
+								:id="'spam-message-span-' + message.id"
 								>are you sure?
-								<span class="link" id="yes-spam-message">Yes</span> /
-								<span class="link" @click="spamAction()" id="no-spam-message"
+								<span class="link" :id="'yes-spam-message-' + message.id"
+									>Yes</span
+								>
+								/
+								<span
+									class="link"
+									@click="spamAction()"
+									:id="'no-spam-message-' + message.id"
 									>No</span
 								></span
 							>
 							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-							<span class="link" v-else @click="spamAction()" id="click-spam"
+							<span
+								class="link"
+								v-else
+								@click="spamAction()"
+								:id="'click-spam-' + message.id"
 								>Spam</span
 							>
 						</li>
@@ -64,18 +97,24 @@
 							<form action="#">
 								<input
 									type="hidden"
-									name="deleted"
-									id="delete-message"
+									name="remove"
+									:id="'remove-message-' + message.id"
 									value="deleted"
 								/>
 							</form>
-							<span class="sure-block" v-if="removeUser"
+							<span
+								class="sure-block"
+								v-if="removeUser"
+								:id="'remove-message-span-' + message.id"
 								>are you sure?
-								<span class="link" id="yes-remove-message">Yes</span> /
+								<span class="link" :id="'yes-remove-message-' + message.id"
+									>Yes</span
+								>
+								/
 								<span
 									class="link"
 									@click="removeAction()"
-									id="no-remove-message"
+									:id="'no-remove-message-' + message.id"
 									>No</span
 								></span
 							>
@@ -83,34 +122,54 @@
 								class="link"
 								v-else
 								@click="removeAction()"
-								id="click-remove"
+								:id="'click-remove-' + message.id"
 								>Remove</span
 							>
 						</li>
-						<li><a href="" id="report">Report</a></li>
-						<li>
-							<span class="sure-block" v-if="blockUser"
+						<li :id="'report-box-' + message.id">
+							<a href="" :id="'report-' + message.id">Report</a>
+						</li>
+						<li :id="'block-' + message.id">
+							<span
+								class="sure-block"
+								v-if="blockUser"
+								:id="'block-user-span-' + message.id"
 								>are you sure?
 								<span
 									class="link"
-									id="yes-block-user"
+									:id="'yes-block-user-' + message.id"
 									@click="blockAction('yes')"
 									>Yes</span
 								>
 								/
-								<span class="link" @click="blockAction()" id="no-block-user"
+								<span
+									class="link"
+									@click="blockAction()"
+									:id="'no-block-user-' + message.id"
 									>No</span
 								></span
 							>
 							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-							<span class="link" v-else @click="blockAction()" id="block-user"
+							<span
+								class="link"
+								v-else
+								@click="blockAction()"
+								:id="'block-user-' + message.id"
 								>Block User</span
 							>
 						</li>
-						<li @click="unreadAction()" v-if="isRead">
-							<span class="link" id="mark-un-read">Mark Unread</span>
+						<li
+							@click="unreadAction()"
+							v-if="isRead"
+							:id="'unread-' + message.id"
+						>
+							<span class="link" :id="'mark-un-read-' + message.id"
+								>Mark Unread</span
+							>
 						</li>
-						<li><span class="link" id="reply">Reply</span></li>
+						<li :id="'reply-box-' + message.id">
+							<span class="link" :id="'reply-' + message.id">Reply</span>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -127,6 +186,7 @@ export default {
 			type: Object,
 			require: true,
 			default: () => ({
+				id: '',
 				text: '',
 				type: '',
 				senderUsername: '',

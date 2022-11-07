@@ -53,7 +53,7 @@ export default {
 	color: var(--color-grey-dark-2);
 	font-size: small;
 }
-ul {
+.ul-messages {
 	list-style: none;
 	display: flex;
 	flex-flow: row wrap;
@@ -101,12 +101,16 @@ ul {
 	font: normal x-small verdana, arial, helvetica, sans-serif;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	list-style: none;
 	display: flex;
+	flex-flow: row wrap;
+	width: 100%;
 }
 .flat-list li {
 	margin: 1rem;
 	font-size: 1rem;
 	font-weight: bold;
+	list-style: none;
 }
 .flat-list li a,
 .link {

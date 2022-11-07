@@ -1,17 +1,25 @@
 <template>
 	<ul>
-		<li>
+		<li id="account-settings">
 			ِ<router-link
 				to="/settings/account"
 				:class="$route.path == '/settings' ? 'router-link-active' : ''"
 				>Account</router-link
 			>
 		</li>
-		<li><router-link to="/settings/profile">Profile</router-link></li>
-		<li><router-link to="/settings/privacy">Safety & Privacy</router-link></li>
-		<li><router-link to="/settings/feed">Feed Settings</router-link></li>
-		<li><router-link to="/settings/emails">Emails</router-link></li>
-		<li>
+		<li id="profile-settings">
+			<router-link to="/settings/profile">Profile</router-link>
+		</li>
+		<li id="privacy-settings">
+			<router-link to="/settings/privacy">Safety & Privacy</router-link>
+		</li>
+		<li id="feed-settings">
+			<router-link to="/settings/feed">Feed Settings</router-link>
+		</li>
+		<li id="emails-settings">
+			<router-link to="/settings/emails">Emails</router-link>
+		</li>
+		<li id="messaging-settings">
 			<router-link to="/settings/messaging">Chat & Messaging</router-link>
 		</li>
 	</ul>

@@ -56,6 +56,7 @@
 					</p>
 					<div>
 						<base-button
+							id="reset-btn"
 							button-text="Reset password"
 							:disable-button="buttonIsactive"
 							class="button-class"
@@ -64,21 +65,26 @@
 						</base-button>
 					</div>
 					<div class="forgot-link">
-						<router-link to="/forgetUsernamepage" class="link"
+						<router-link
+							to="/forgetUsernamepage"
+							class="link"
+							id="forget-username"
 							>forgot username?</router-link
 						>
 					</div>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
-							<a class="link">Get Help </a></label
+							<a class="link" id="help">Get Help </a></label
 						>
 					</div>
 				</form>
 				<div class="">
-					<router-link to="/login" class="link">Log in</router-link>
+					<router-link to="/login" class="link" id="login">Log in</router-link>
 					<span class="linkSeparator">•</span>
-					<router-link to="/signup" class="link">Sign Up</router-link>
+					<router-link to="/signup" class="link" id="signup"
+						>Sign Up</router-link
+					>
 					<!-- <button @click="test">test</button> -->
 				</div>
 			</div>
@@ -101,6 +107,7 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
+			error: '',
 		};
 	},
 	methods: {
@@ -130,30 +137,44 @@ export default {
 			}
 		},
 		//http://localhost:8082/api/Authentication/SecureForgotPassword?
-		handleSubmit() {
-			fetch('http://localhost:3000/api/auth/forget', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					// type: 'password',
-					name: this.userName,
-					email: this.emailAddress,
-				}),
-			})
-				.then((response) => {
-					if (response.ok) {
-						console.log(response);
-						return response.json();
-					}
-				})
-				.then((data) => {
-					console.log(data.access_token);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+		async handleSubmit() {
+			const actionPayload = {
+				username: this.userName,
+				email: this.emailAddress,
+			};
+
+			try {
+				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
+
+				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+				// this.$router.replace(redirectUrl);
+			} catch (err) {
+				this.error = err.message || 'Failed to authenticate, try later.';
+			}
+
+			// fetch('http://localhost:3000/api/auth/forget', {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify({
+			// 		// type: 'password',
+			// 		name: this.userName,
+			// 		email: this.emailAddress,
+			// 	}),
+			// })
+			// 	.then((response) => {
+			// 		if (response.ok) {
+			// 			console.log(response);
+			// 			return response.json();
+			// 		}
+			// 	})
+			// 	.then((data) => {
+			// 		console.log(data.access_token);
+			// 	})
+			// 	.catch((error) => {
+			// 		console.log(error);
+			// 	});
 		},
 		test() {
 			fetch(this.$baseurl + '/users')
@@ -407,6 +428,9 @@ p {
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 }
 .separate {
 	margin-top: 2rem;
