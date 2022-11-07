@@ -14,4 +14,7 @@ export default {
 	setPostReplies(state, payload) {
 		state.postReplies = payload;
 	},
+	setSentMessages(state, payload) {
+		state.sentMessages = payload;
+	},
 };

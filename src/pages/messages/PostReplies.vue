@@ -3,6 +3,7 @@
 		<div>
 			<postreply-component
 				v-for="message in postReplies"
+				:count="++count"
 				:key="message"
 				:message="message"
 			></postreply-component>
@@ -28,6 +29,7 @@ export default {
 	data() {
 		return {
 			noMessages: false,
+			count: 0,
 		};
 	},
 	computed: {
