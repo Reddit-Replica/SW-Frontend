@@ -4,12 +4,12 @@
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<profile-nav :user-name="getUserName" :state="state" />
 		<base-container>
-			<div class="profilebox">
+			<div id="main-profile-box" class="profilebox">
 				<main>
 					<!-- <sortposts-bar></sortposts-bar> -->
 					<router-view></router-view>
 				</main>
-				<aside>
+				<aside id="profile-aside">
 					<profile-card :user-name="getUserName" :state="state" />
 					<user-moderators-card></user-moderators-card>
 				</aside>
