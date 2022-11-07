@@ -107,6 +107,7 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
+			error: '',
 		};
 	},
 	methods: {
@@ -136,30 +137,44 @@ export default {
 			}
 		},
 		//http://localhost:8082/api/Authentication/SecureForgotPassword?
-		handleSubmit() {
-			fetch('http://localhost:3000/api/auth/forget', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					// type: 'password',
-					name: this.userName,
-					email: this.emailAddress,
-				}),
-			})
-				.then((response) => {
-					if (response.ok) {
-						console.log(response);
-						return response.json();
-					}
-				})
-				.then((data) => {
-					console.log(data.access_token);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+		async handleSubmit() {
+			const actionPayload = {
+				username: this.userName,
+				email: this.emailAddress,
+			};
+
+			try {
+				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
+
+				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+				// this.$router.replace(redirectUrl);
+			} catch (err) {
+				this.error = err.message || 'Failed to authenticate, try later.';
+			}
+
+			// fetch('http://localhost:3000/api/auth/forget', {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify({
+			// 		// type: 'password',
+			// 		name: this.userName,
+			// 		email: this.emailAddress,
+			// 	}),
+			// })
+			// 	.then((response) => {
+			// 		if (response.ok) {
+			// 			console.log(response);
+			// 			return response.json();
+			// 		}
+			// 	})
+			// 	.then((data) => {
+			// 		console.log(data.access_token);
+			// 	})
+			// 	.catch((error) => {
+			// 		console.log(error);
+			// 	});
 		},
 		test() {
 			fetch(this.$baseurl + '/users')
