@@ -1,22 +1,30 @@
 <template>
-	<div class="mod-card">
-		<div class="mod-header">
+	<div class="mod-card" id="user-moderator-card">
+		<div class="mod-header" id="user-moderator-header">
 			<div style="padding: 12px 0 0">
 				<h2>You're a moderator of these communities</h2>
 			</div>
 		</div>
-		<div class="mod-list">
+		<div class="mod-list" id="user-moderator-list">
 			<ul>
 				<li
 					v-for="userModerator in userModerators"
 					:key="userModerator.subredditName"
+					:id="`user-mod-item-${userModerator.subredditName}`"
 				>
 					<i></i>
 					<span>
-						<router-link to="">r/{{ userModerator.subredditName }}</router-link>
-						<p>{{ userModerator.numOfMembers }} member</p>
+						<router-link
+							to=""
+							:id="`moderator-name-${userModerator.subredditName}`"
+							>r/{{ userModerator.subredditName }}</router-link
+						>
+						<p :id="`moderator-member-number-${userModerator.subredditName}`">
+							{{ userModerator.numOfMembers }} member
+						</p>
 					</span>
 					<base-button
+						:id="`moderator-join-button-${userModerator.subredditName}`"
 						:button-text="userModerator.buttonText"
 						class="join-button"
 						:class="[userModerator.joined ? 'joined-button' : '']"

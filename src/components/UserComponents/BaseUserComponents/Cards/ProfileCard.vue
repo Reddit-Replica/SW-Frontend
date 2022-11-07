@@ -21,12 +21,15 @@
 				</span>
 				<!-- ///////////////////////////////////////////////////////////// -->
 				<!-- profile settings icon -->
-				<router-link to="/settings/profile" class="profile-settings"
+				<router-link
+					id="profile-settings-icon-card"
+					to="/settings/profile"
+					class="profile-settings"
 					><i class="fa-solid fa-gear"
 				/></router-link>
 				<!-- ///////////////////// -->
 				<!-- incase of  profile picture preview -->
-				<div class="profile-picture" v-if="!isAvatar">
+				<div id="profile-picture-box" class="profile-picture" v-if="!isAvatar">
 					<img src="../../../../assets/R.png" alt="" id="profile-picture" />
 					<input
 						type="file"
@@ -39,6 +42,7 @@
 						@click="addProfileImage"
 						class="add-image"
 						style="bottom: 0px; right: 0px"
+						id="add-profile-image-button"
 					>
 						<i class="fa-regular fa-square-plus add-image-icon" />
 					</span>
@@ -56,6 +60,7 @@
 					{{ this.userData.displayName || 'Abdelhameed_Emad' }}
 					<svg
 						v-if="this.userData.nsfw"
+						id="profile-nsfw"
 						class="Wb4wBt474lETdwG0YpWID"
 						viewBox="0 0 40 40"
 						version="1.1"
@@ -75,7 +80,9 @@
 						</g>
 					</svg>
 				</h4>
-				<a href="" class="profile-username">{{ userName }}</a>
+				<a href="" id="profile-pic-user-name" class="profile-username">{{
+					userName
+				}}</a>
 			</div>
 			<!-- /////////////////////////////// -->
 			<!-- incase of Avatar display name , user name style -->
@@ -94,7 +101,11 @@
 			</div>
 			<!-- //////////////////// -->
 			<!-- about profile box -->
-			<div class="profile-about" v-if="this.userData.about != ''">
+			<div
+				class="profile-about"
+				id="user-profile-about-box"
+				v-if="this.userData.about != ''"
+			>
 				{{ this.userData.about }}
 			</div>
 			<!-- ///////////////// -->
@@ -112,7 +123,11 @@
 					<h5>Cake day</h5>
 					<span>
 						<p id="birth-date">
-							<span><i class="fa-solid fa-cake-candles" /></span>october 2,2022
+							<span><i class="fa-solid fa-cake-candles" /></span
+							>{{ getMonthName(userData.cakeDate.slice(5, 7)) }}
+							{{ userData.cakeDate.slice(8, 10) }},{{
+								userData.cakeDate.slice(0, 4)
+							}}
 						</p>
 					</span>
 				</span>
@@ -127,7 +142,13 @@
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
-			<button class="new-post">New post</button>
+			<button
+				class="new-post"
+				@click="$router.push('/submit')"
+				id="profile-new-post"
+			>
+				New post
+			</button>
 			<!-- ////////////// -->
 			<!-- more options button -->
 			<button
@@ -145,6 +166,7 @@
 					v-for="profileOption in profileOptions"
 					:key="profileOption.name"
 					:to="profileOption.toLink"
+					:id="`profile-option-${profileOption.name}`"
 					>{{ profileOption.name }}
 				</router-link>
 			</ul>
@@ -283,6 +305,12 @@ export default {
 				).style.backgroundImage = `url(${result})`;
 			};
 			reader.readAsDataURL(file);
+		},
+		getMonthName(monthNumber) {
+			const monthNumberI = Number(monthNumber);
+			const date = new Date();
+			date.setMonth(monthNumberI - 1);
+			return date.toLocaleString('en-US', { month: 'long' });
 		},
 	},
 };
