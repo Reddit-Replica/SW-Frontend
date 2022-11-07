@@ -5,8 +5,9 @@
 <!-- @vuese:UserMentions:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|message|details of message|`Object`|`false`|{"text":"","type":"","senderUsername":"","receiverUsername":"","subredditName":"","postTitle":"","subject":"","sendAt":"","isReply":"","isRead":""}|
-|count|counter to handel background color|`Number`|`false`|1|
+|message|details of message|`Object`|`true`|{"id":"","text":"","type":"","senderUsername":"","receiverUsername":"","subredditName":"","postTitle":"","subject":"","sendAt":"","isReply":"","isRead":""}|
+|count|counter to handle background color|`Number`|`true`|1|
+|index|index to handle unique ids|`Number`|`true`|0|
 
 <!-- @vuese:UserMentions:props:end -->
 
