@@ -1,4 +1,5 @@
 <template>
+	<!-- Social Link Block (social link block in profile Card) -->
 	<div>
 		<ul class="social-link" id="social-media-links">
 			<a v-for="data in socialData" :key="data.type" :href="data.link">
@@ -23,12 +24,14 @@
 
 <script>
 import SociallinkItem from './SociallinkItem.vue';
-import SocialLinks from '../SocialLinks.vue';
+import SocialLinks from './SocialLinks.vue';
 export default {
 	components: {
 		SociallinkItem,
 		SocialLinks,
 	},
+	// @vuese
+	// social user data contains array of user social link item contains (type,displayedText,reference link )
 	props: {
 		socialData: {
 			type: Array,
@@ -41,12 +44,29 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * this function triggered when clicking on the Add social link  button in profile card  to open
+		 * social link dialog
+		 * @arg no arg
+		 */
 		openSocialLinkDialog() {
 			this.addSocialLinkDialog = true;
 		},
+		/**
+		 * @vuese
+		 * this function triggered when clicking on the close x button in social link dialog
+		 * @arg no arg
+		 */
 		closeSocialLinkDialog() {
 			this.addSocialLinkDialog = false;
 		},
+		/**
+		 * @vuese
+		 * this function take the type of social link and return its image link
+		 * social link dialog
+		 * @arg id unique id of the social link item (image text)
+		 */
 		getImgSrc(id) {
 			let url = '';
 			this.$store.getters['user/getStaticSocialLinks'].forEach((element) => {
