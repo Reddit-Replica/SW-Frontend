@@ -153,7 +153,7 @@ export default {
 	props: {
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
 				id: '',
 				text: '',
@@ -170,7 +170,7 @@ export default {
 		//index to handle unique ids
 		index: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 0,
 		},
 	},
