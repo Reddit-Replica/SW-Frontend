@@ -1,7 +1,7 @@
 <template>
 	<div class="content">
 		<li class="message-button">
-			<router-link to="/message/compose" id="go-to-send-message"
+			<router-link to="/message/compose" id="go-to-send-private-message"
 				>Send A Private Message</router-link
 			>
 		</li>
