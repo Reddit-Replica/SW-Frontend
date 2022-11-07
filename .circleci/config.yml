@@ -68,6 +68,7 @@ jobs:
           ls
 
   build-frontend:
+
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -97,3 +98,6 @@ workflows:
       - build-frontend:
           requires: 
             - integration-testing
+          filters:
+            branches:
+              only: master
