@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<div class="blue-top">
-			<router-link to="/subreddit"><div class="link"></div></router-link>
+		<div class="blue-top" id="top-1">
+			<router-link to="/subreddit"
+				><div class="link" id="link-1"></div
+			></router-link>
 		</div>
 		<div class="white-top">
 			<div class="flex-start">
@@ -17,6 +19,7 @@
 								class="button blue-button join-button"
 								@click="toogleJoin"
 								v-if="!isJoined"
+								id="join-button"
 								>Join</base-button
 							>
 							<base-button
@@ -25,6 +28,7 @@
 								@mouseover="hoverJoin('Leave')"
 								@mouseleave="hoverJoin('Joined')"
 								v-if="isJoined"
+								id="leave-button"
 								>{{ hoverButtonText }}</base-button
 							>
 						</div>
@@ -38,10 +42,14 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Subreddit name
 		subredditName: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit Image URL
 		subredditImageUrl: {
 			type: String,
 			default: '',
@@ -54,9 +62,13 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Toogle Joining and leaving a subreddit
 		toogleJoin() {
 			this.isJoined = !this.isJoined;
 		},
+		//@vuese
+		//Change button text from Joined to Lreave when hovering on button
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
@@ -67,8 +79,8 @@ export default {
 <style scoped>
 .blue-top {
 	background: var(--color-blue-light-3);
-	/* height: 10rem; */
-	height: 64px;
+	height: 8rem;
+	width: 100%;
 }
 .link {
 	height: 100%;
@@ -77,13 +89,13 @@ export default {
 }
 .white-top {
 	background: var(--color-white-1);
-	height: 80px;
-	/* height: 10rem; */
+	width: 100%;
+	height: 8rem;
 }
 .top {
-	margin-bottom: 12px;
-	margin-top: -14px;
-	padding-left: 24px;
+	margin-bottom: 1.2rem;
+	margin-top: -1.4rem;
+	margin-left: 25rem;
 }
 .flex-start {
 	display: flex;
@@ -91,10 +103,10 @@ export default {
 }
 img {
 	border-radius: 100%;
-	border: 4px solid var(--color-white-1);
+	border: 0.4rem solid var(--color-white-1);
 	display: inline-block;
-	height: 72px;
-	width: 72px;
+	height: 7.2rem;
+	width: 7.2rem;
 	background: var(--color-white-1);
 	box-sizing: border-box;
 }
@@ -103,39 +115,39 @@ img {
 	align-items: flex-start;
 	display: inline-flex;
 	flex: 1;
-	padding-left: 16px;
-	margin-top: 24px;
+	padding-left: 1.6rem;
+	margin-top: 2.4rem;
 	justify-content: space-between;
-	width: calc(100% - 80px);
+	/* width: calc(100% - 80px); */
 }
 .top-title {
 	display: inline-block;
-	max-width: calc(100% - 96px);
-	padding-right: 24px;
+	/* max-width: calc(100% - 96px); */
+	padding-right: 2.4rem;
 }
 .title-1 {
 	color: var(--color-dark-3);
 	display: inline-block;
 	flex: 1;
-	font-size: 28px;
+	font-size: 2.8rem;
 	font-weight: 700;
-	line-height: 32px;
-	padding: 0 2px 4px 0;
+	line-height: 3.2rem;
+	padding: 0 0.2rem 0.4rem 0;
 	width: 100%;
 }
 .title-2 {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
-	line-height: 18px;
+	line-height: 1.8rem;
 	color: var(--color-grey-light-5);
 }
 .button {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 700;
-	line-height: 17px;
-	min-height: 32px;
-	min-width: 32px;
-	padding: 4px 16px;
+	line-height: 1.7rem;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
 }
 .blue-button {
 	background-color: var(--color-blue-2);
@@ -144,13 +156,18 @@ img {
 }
 .white-button {
 	background-color: var(--color-white-1);
-	border: 1px solid var(--color-blue-2);
+	border: var(--line-5);
 	color: var(--color-blue-2);
 }
 .white-button:hover {
 	opacity: 0.92;
 }
 .join-button {
-	width: 96px;
+	width: 9.6rem;
+}
+@media screen and (max-width: 80rem) {
+	.top {
+		margin-left: 0.8rem;
+	}
 }
 </style>
