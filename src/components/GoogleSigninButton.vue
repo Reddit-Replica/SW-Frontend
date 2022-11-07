@@ -29,7 +29,7 @@ export default {
 	justify-content: space-between;
 	display: flex;
 	height: 50px;
-	width: 280px;
+	width: 300px;
 	margin: 8px 8px;
 	padding: 4.2px;
 	cursor: pointer;
@@ -42,5 +42,6 @@ export default {
 img {
 	width: 22px;
 	height: 22px;
+	background-color: white;
 }
 </style>
