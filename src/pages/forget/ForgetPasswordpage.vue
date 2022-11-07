@@ -104,9 +104,9 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha';
+// import TheRecaptcha from '../../components/TheRecaptcha';
 export default {
-	components: { TheRecaptcha },
+	// components: { TheRecaptcha },
 	data() {
 		return {
 			buttonIsactive: false,
