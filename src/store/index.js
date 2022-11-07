@@ -10,21 +10,21 @@ const store = createStore({
 		messages: messageModule,
 		user: userModule,
 	},
-	state() {
-		return {
-			// userName: 'mena',
-			userName: '/u/asmaaadel0',
-			accessToken: '',
-		};
-	},
-	getters: {
-		getUserName(state) {
-			return state.userName;
-		},
-		getAccessToken(state) {
-			return state.userName;
-		},
-	},
+	// state() {
+	// 	return {
+	// 		// userName: 'mena',
+	// 		// userName: '/u/asmaaadel0',
+	// 		// accessToken: '',
+	// 	};
+	// },
+	// getters: {
+	// 	getUserName(state) {
+	// 		return state.userName;
+	// 	},
+	// 	getAccessToken(state) {
+	// 		return state.userName;
+	// 	},
+	// },
 });
 
 export default store;

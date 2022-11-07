@@ -308,6 +308,8 @@ export default {
 
 			try {
 				await this.$store.dispatch('signuphandle', actionPayload);
+
+				this.$router.replace('/main');
 				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
 				// this.$router.replace(redirectUrl);
 			} catch (err) {
