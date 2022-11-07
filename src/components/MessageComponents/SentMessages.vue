@@ -12,7 +12,7 @@
 					<span class="sender">
 						<span
 							><span>to&nbsp;</span>
-							<a href="" :id="'message-receiver-' + message.id">{{
+							<a href="" :id="'message-receiver-' + index">{{
 								message.receiverUsername
 							}}</a>
 						</span></span
@@ -20,8 +20,8 @@
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list ul-messages">
-					<li :id="'permalink-link-' + message.id">
-						<a href="" :id="'permalink-a-' + message.id">Permalink</a>
+					<li :id="'permalink-link-' + index">
+						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li>
 				</ul>
 			</div>
@@ -36,7 +36,7 @@ export default {
 		//details of message
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
 				id: '',
 				text: '',
@@ -46,22 +46,17 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handel background color
-		count: {
+		//index to handle unique ids
+		index: {
 			type: Number,
-			require: true,
-			default: 1,
+			required: true,
+			default: 0,
 		},
 	},
 	data() {
 		return {
 			backcolor: 'grey',
 		};
-	},
-	beforeMount() {
-		if (this.count % 2 == 0) {
-			this.backcolor = 'white';
-		} else this.backcolor = 'grey';
 	},
 	methods: {},
 };

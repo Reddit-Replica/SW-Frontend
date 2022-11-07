@@ -137,69 +137,65 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
 		// Validation for UserName
-		validateUser(value) {
-			this.showSignuser = false;
-			this.messageErrorShowUser = false;
-			this.showSignPass = false;
-			this.messageErrorShowPass = false;
-			document.querySelector('#user-name').style.border =
-				'1px solid rgba(0, 0, 0, 0.1)';
-			if (value.length < 3 || value.length > 20) {
-				this.showSignuser = true;
-				this.checkedUser = false;
-				this.messageErrorShowUser = true;
-				this.error_message = 'Username must be between 3 and 20 characters';
-				document.querySelector('#user-name').style.border =
-					'0.5px solid #ea0027';
-			} else {
-				fetch(this.$baseurl + '/userTest')
-					.then((response) => {
-						if (response.ok) {
-							return response.json();
-						}
-					})
-					.then((data) => {
-						data.forEach((element) => {
-							if (element.username == this.username) {
-								this.showSignuser = true;
-								this.checkedUser = true;
-								document.querySelector('#user-name').style.border =
-									'0.5px solid #0079d3';
-							}
-						});
-					})
-					.catch((error) => {
-						console.log(error);
-					});
-			}
-		},
+		// validateUser(value) {
+		// 	this.showSignuser = false;
+		// 	this.messageErrorShowUser = false;
+		// 	this.showSignPass = false;
+		// 	this.messageErrorShowPass = false;
+		// 	document.querySelector('#user-name').style.border =
+		// 		'1px solid rgba(0, 0, 0, 0.1)';
+		// 	if (value.length < 3 || value.length > 20) {
+		// 		this.showSignuser = true;
+		// 		this.checkedUser = false;
+		// 		this.messageErrorShowUser = true;
+		// 		this.error_message = 'Username must be between 3 and 20 characters';
+		// 		document.querySelector('#user-name').style.border =
+		// 			'0.5px solid #ea0027';
+		// 	} else {
+		// 		fetch(this.$baseurl + '/userTest')
+		// 			.then((response) => {
+		// 				if (response.ok) {
+		// 					return response.json();
+		// 				}
+		// 			})
+		// 			.then((data) => {
+		// 				data.forEach((element) => {
+		// 					if (element.username == this.username) {
+		// 						this.showSignuser = true;
+		// 						this.checkedUser = true;
+		// 						document.querySelector('#user-name').style.border =
+		// 							'0.5px solid #0079d3';
+		// 					}
+		// 				});
+		// 			})
+		// 			.catch((error) => {
+		// 				console.log(error);
+		// 			});
+		// 	}
+		// },
+		// @vuese
+		// posting username and password and wait for token
 		async handleSubmit() {
-			fetch(this.$baseurl + '/userTest', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					username: this.username,
-					password: this.password,
-				}),
-			})
-				.then((response) => {
-					if (response.ok) {
-						console.log(response);
-						return response.json();
-					}
-				})
-				.then((data) => {
-					console.log(data.access_token);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+			const actionPayload = {
+				username: this.username,
+				password: this.password,
+			};
+
+			try {
+				await this.$store.dispatch('loginhandle', actionPayload);
+
+				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+				// this.$router.replace(redirectUrl);
+			} catch (err) {
+				this.error = err;
+			}
 		},
 	},
 	watch: {
+		// @vuese
+		//watch username if it's not empty
 		username(value) {
 			this.username = value;
 			this.validateUser(value);

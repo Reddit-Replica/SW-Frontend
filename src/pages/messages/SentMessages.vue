@@ -2,10 +2,10 @@
 	<div>
 		<div>
 			<sent-messages
-				v-for="message in sentMessages"
-				:count="++count"
+				v-for="(message, index) in sentMessages"
 				:key="message"
 				:message="message"
+				:index="index"
 			></sent-messages>
 		</div>
 		<div class="no-messages" v-if="noMessages">
