@@ -1,25 +1,28 @@
-# AllinboxComponent
+# UserMentions
 
 ## Props
 
-<!-- @vuese:AllinboxComponent:props:start -->
+<!-- @vuese:UserMentions:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |message|details of message|`Object`|`false`|{"text":"","type":"","senderUsername":"","receiverUsername":"","subredditName":"","postTitle":"","subject":"","sendAt":"","isReply":"","isRead":""}|
 |count|counter to handel background color|`Number`|`false`|1|
 
-<!-- @vuese:AllinboxComponent:props:end -->
+<!-- @vuese:UserMentions:props:end -->
 
 
 ## Methods
 
-<!-- @vuese:AllinboxComponent:methods:start -->
+<!-- @vuese:UserMentions:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|deleteAction|toggle delete action|-|
+|removeAction|toggle remove action|-|
 |blockAction|handle block action|-|
+|spamAction|toggle spam action|-|
+|upvote|handle upvote action|-|
+|downvote|handle downvote action|-|
 |unreadAction|handle unread action|-|
 
-<!-- @vuese:AllinboxComponent:methods:end -->
+<!-- @vuese:UserMentions:methods:end -->
 
 

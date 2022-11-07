@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<button @click="handlesign">
+		<div id="google-login" @click="handlesign" class="log-google log-ag">
 			<div><img src="../../img/Google__G__Logo.svg.png" alt="" /></div>
 			<div>continue with Google</div>
-		</button>
+		</div>
 	</div>
 </template>
 <script>
@@ -24,22 +24,23 @@ export default {
 };
 </script>
 <style scoped>
-button {
-	padding: 2.2px;
+.log-google {
+	align-items: center;
+	justify-content: space-between;
+	display: flex;
+	height: 50px;
+	width: 280px;
+	margin: 8px 8px;
+	padding: 4.2px;
+	cursor: pointer;
+	font-weight: 600;
+}
+.log-google:hover {
+	background-color: var(--color-blue-2);
+	color: var(--color-white-1);
 }
 img {
 	width: 22px;
 	height: 22px;
-}
-div:first-of-type {
-	background-color: white;
-	border-radius: 5px;
-	width: 50px;
-	height: 50px;
-	text-align: center;
-	line-height: 50px;
-}
-div:last-of-type {
-	margin: 0px 20px 0px 20px;
 }
 </style>

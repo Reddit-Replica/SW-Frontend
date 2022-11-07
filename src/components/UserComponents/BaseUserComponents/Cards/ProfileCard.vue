@@ -27,7 +27,7 @@
 				<!-- ///////////////////// -->
 				<!-- incase of  profile picture preview -->
 				<div class="profile-picture" v-if="!isAvatar">
-					<img src="../../assets/R.png" alt="" id="profile-picture" />
+					<img src="../../../../assets/R.png" alt="" id="profile-picture" />
 					<input
 						type="file"
 						hidden
@@ -46,7 +46,7 @@
 				<!-- //////////////////////////////////// -->
 				<!-- incase of avatar pic preview -->
 				<div class="profile-avatar" v-else>
-					<img src="../../assets/avatar.png" alt="" />
+					<img src="../../../../assets/avatar.png" alt="" />
 				</div>
 				<!-- //////////////////////////// -->
 				<!-- incase of profile picture display name , user name style -->
@@ -148,7 +148,6 @@
 					>{{ profileOption.name }}
 				</router-link>
 			</ul>
-
 			<!-- /////////////// -->
 			<!-- more options button -->
 			<button
@@ -165,14 +164,16 @@
 </template>
 
 <script>
-import SociallinksBlock from './BaseUserComponents/SociallinksBlock.vue';
-import FollowChatComponent from './BaseUserComponents/FollowChatComponent.vue';
+import SociallinksBlock from '../SocialLinksComponents/SociallinksBlock';
+import FollowChatComponent from './FollowChatComponent.vue';
 export default {
 	components: {
 		SociallinksBlock,
 		FollowChatComponent,
 	},
 	props: {
+		// @vuese
+		// user Name of the user
 		userName: {
 			type: String,
 			required: true,
@@ -182,24 +183,29 @@ export default {
 		// 	required: true,
 		// },
 	},
+	/**
+	 * @vuese
+	 * when the component was created  we get user data from user store
+	 * @arg no arg
+	 */
 	created() {
 		this.userData = this.$store.getters['user/getUserData'];
-		console.log(this.userData);
+		// console.log(this.userData);
 	},
 	data() {
 		return {
-			NSFW: 'true',
+			// NSFW: 'true',
 			userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
-			mySocialLinks: [
-				{
-					id: '',
-					imagesUrl: '',
-					name: '',
-					type: '' /* there are three types username  */,
-				},
-			],
+			// mySocialLinks: [
+			// 	{
+			// 		id: '',
+			// 		imagesUrl: '',
+			// 		name: '',
+			// 		type: '' /* there are three types username  */,
+			// 	},
+			// ],
 			profileOptions: [
 				{
 					name: 'Profile to Moderation',
@@ -218,19 +224,42 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * it toggle to Show or Hide user Options
+		 * @arg no arg
+		 */
 		toggleShowMoreOptions() {
 			this.showMoreOptions = !this.showMoreOptions;
-			console.log(this.userName, this.$route.props.userName);
+			// console.log(this.userName, this.$route.props.userName);
 		},
+		/**
+		 * @vuese
+		 * this function act as a path when it get clicked to will reflect this click to input field
+		 * to open box for adding Profile Image
+		 * @arg no arg
+		 */
 		addProfileImage() {
 			document.querySelector('#add-profile-button').click();
 		},
+		/**
+		 * @vuese
+		 * this function act as a path when it get clicked to will reflect this click to input field
+		 * to open box for adding Profile Cover Image
+		 * @arg no arg
+		 */
 		addCoverImage() {
 			document.querySelector('#add-cover-button').click();
 		},
+		/**
+		 * @vuese
+		 * this function for upload an Profile Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
 		loadProfilePic() {
 			const file = this.$refs.profileFile.files[0];
-			console.log('loadprofilepic');
+			// console.log('loadprofilepic');
 			const reader = new FileReader();
 			reader.onload = () => {
 				const result = reader.result;
@@ -238,8 +267,13 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
+		/**
+		 * @vuese
+		 * this function for upload an Cover Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
 		loadCoverPic() {
-			console.log('loadCoverpic');
 			const file = this.$refs.coverFile.files[0];
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -247,7 +281,6 @@ export default {
 				document.querySelector(
 					'#cover-picture'
 				).style.backgroundImage = `url(${result})`;
-				console.log('loadCoverpic hhh');
 			};
 			reader.readAsDataURL(file);
 		},
@@ -596,9 +629,11 @@ ul.profile-options {
 	line-height: 16px;
 	padding: 4px 8px;
 	cursor: pointer;
+	display: block;
 }
 
 ul.profile-options a {
+	display: block;
 	height: 24px;
 	width: fit-content;
 	display: flex;
@@ -663,11 +698,11 @@ ul.profile-options a:hover::before {
 	opacity: 0.08;
 }
 
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
 	.profile-card {
 		display: none;
 	}
-}
+} */
 input.insert-cover-image {
 	position: absolute;
 	height: 35px;
