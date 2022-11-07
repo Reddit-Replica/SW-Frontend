@@ -121,6 +121,15 @@
 					</fieldset>
 					<TheRecaptcha id="repatcha" v-if="showRepatcha" />
 				</form>
+				<div class="username-generator" style="display: block">
+					<p>
+						Here are some username suggestions
+						<a href="#" class="Onboarding__usernameRefresh"></a>
+					</p>
+					<div class="suggestions">
+						<div class="usernames-data-gen"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="bottom-div" v-if="bottom_div">
@@ -304,10 +313,13 @@ export default {
 				username: this.username,
 				password: this.password,
 				email: this.email,
+				baseurl: this.$baseurl,
 			};
 
 			try {
 				await this.$store.dispatch('signuphandle', actionPayload);
+
+				this.$router.replace('/main');
 				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
 				// this.$router.replace(redirectUrl);
 			} catch (err) {
@@ -506,6 +518,7 @@ button {
 
 .input-box input:focus ~ .animation-email,
 .input-box input:hover ~ .animation-email,
+.input-box input:active ~ .animation-email,
 .input-box ~ .animation-email {
 	transform: translateX(0.8px) translateY(-10px);
 	font-size: 9px;
@@ -625,7 +638,14 @@ button {
 	padding: 24px;
 	/* display: none; */
 }
-
+.div-2 {
+	display: flex;
+	-webkit-box-flex: 1;
+	flex: 1;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	padding: 24px;
+}
 .bottom-div {
 	background-color: #fcfcfb;
 	border-top: 1px solid hsla(195, 2%, 65%, 0.36);
@@ -642,6 +662,18 @@ button {
 
 .div-1 {
 	border-bottom: 1px solid hsla(195, 2%, 65%, 0.36);
+}
+.Onboarding__usernameRefresh {
+	background: url(https://www.redditstatic.com/accountmanager/25f30c472d0243a2d874451a240fe08a.svg);
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	margin-left: 8px;
+	color: #24a0ed;
+	vertical-align: text-top;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .description {
