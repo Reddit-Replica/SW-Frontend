@@ -6,6 +6,7 @@ import App from './App.vue';
 /*import { VueRecaptcha } from 'vue-recaptcha';*/
 // import vue3GoogleLogin from 'vue3-google-login';
 import GAuth from 'vue3-google-oauth2';
+import vClickOutside from 'v-click-outside';
 
 import BaseButton from './components/BaseComponents/BaseButton.vue';
 import SwitchButton from './components/BaseComponents/SwitchButton.vue';
@@ -44,6 +45,7 @@ app.use(GAuth, {
 	prompt: 'consent',
 	plugin_name: `Web client 1  Readit`,
 });
+app.use(vClickOutside);
 
 app.component('BaseButton', BaseButton);
 app.component('SwitchButton', SwitchButton);

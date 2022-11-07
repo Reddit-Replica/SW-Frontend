@@ -11,7 +11,7 @@
 				<sortposts-bar></sortposts-bar>
 			</div>
 			<div class="subreddit-page-right">
-				<rightside-footer></rightside-footer>
+				<about-community-bar :topics="topics"></about-community-bar>
 			</div>
 		</div>
 	</div>
@@ -21,13 +21,27 @@
 import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue';
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
-import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
+import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 export default {
 	components: {
 		SubredditTop,
 		CreatepostBar,
 		SortpostsBar,
-		RightsideFooter,
+		AboutCommunityBar,
+	},
+	data() {
+		return {
+			topics: [
+				{ id: 0, name: 'Art' },
+				{ id: 1, name: 'Anime' },
+				{ id: 2, name: 'Beauty' },
+				{ id: 3, name: 'Cars' },
+				{ id: 4, name: 'Fashion' },
+				{ id: 5, name: 'Music' },
+				{ id: 6, name: 'Sports' },
+				{ id: 7, name: 'Travel' },
+			],
+		};
 	},
 };
 </script>
