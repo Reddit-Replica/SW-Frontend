@@ -58,12 +58,19 @@
 						<base-button
 							id="reset-btn"
 							button-text="Reset password"
-							:disable-button="buttonIsactive"
+							:disable-button="buttonDisabled"
 							class="button-class"
 							type="submit"
 						>
 						</base-button>
 					</div>
+					<p class="invalid" v-if="!success">
+						{{ error }}
+					</p>
+					<p class="valid" v-if="success">
+						Thanks! If your Reddit username and email address match, you'll get
+						an email with a link to reset your password shortly.
+					</p>
 					<div class="forgot-link">
 						<router-link
 							to="/forgetUsernamepage"
@@ -72,6 +79,10 @@
 							>forgot username?</router-link
 						>
 					</div>
+					<the-recaptcha
+						@verify="verifyRec"
+						v-if="showSignuser && showSignemail"
+					></the-recaptcha>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
@@ -93,7 +104,9 @@
 </template>
 
 <script>
+import TheRecaptcha from '../../components/TheRecaptcha';
 export default {
+	components: { TheRecaptcha },
 	data() {
 		return {
 			buttonIsactive: false,
@@ -108,6 +121,9 @@ export default {
 			checkedEmail: false,
 			invalidEmail: false,
 			error: '',
+			success: false,
+			//verify: false,
+			buttonDisabled: false,
 		};
 	},
 	methods: {
@@ -115,7 +131,6 @@ export default {
 			if (value.length < 3 || value.length > 20) {
 				//
 				this.invalidUsernamelength = true;
-				console.log('hello');
 				this.checkedUser = false;
 				this.showSignuser = true;
 			} else {
@@ -149,7 +164,7 @@ export default {
 				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
 				// this.$router.replace(redirectUrl);
 			} catch (err) {
-				this.error = err.message || 'Failed to authenticate, try later.';
+				this.error = err;
 			}
 
 			// fetch('http://localhost:3000/api/auth/forget', {
@@ -189,6 +204,10 @@ export default {
 				.catch((error) => {
 					console.log(error);
 				});
+		},
+		verifyRec() {
+			console.log('verified 2');
+			this.buttonDisabled = false;
 		},
 	},
 
@@ -422,6 +441,18 @@ p {
 	font-family: 'IBM Plex Sans', sans-serif;
 	opacity: 1;
 	color: #ea0027;
+	transition: all 0.2s ease-in-out;
+}
+.valid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	opacity: 1;
+	color: #0079d3;
 	transition: all 0.2s ease-in-out;
 }
 
