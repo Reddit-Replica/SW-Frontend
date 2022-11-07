@@ -17,8 +17,11 @@
 |Method|Description|Parameters|
 |---|---|---|
 |removeAction|toggle remove action|-|
-|blockAction|toggle block action|-|
+|blockAction|handle block action|-|
 |spamAction|toggle spam action|-|
+|upvote|handle upvote action|-|
+|downvote|handle downvote action|-|
+|unreadAction|handle unread action|-|
 
 <!-- @vuese:PostreplyComponent:methods:end -->
 

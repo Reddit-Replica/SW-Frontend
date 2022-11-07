@@ -76,6 +76,7 @@ export default {
 	--color-blue-5: #83afdc;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
+	--color-blue-light-3: rgb(51, 168, 255);
 
 	/* green colors */
 	--color-green: rgb(62, 231, 62);

@@ -1,6 +1,6 @@
 <template>
-	<li class="topCommunity">
-		<a href="link" class="topCommunityLink">
+	<li class="topCommunity" id="top-community">
+		<a href="link" class="topCommunityLink" id="top-community-link">
 			<div class="topCommunityBlock">
 				<span class="topCommunityIndex">{{ index + 1 }}</span>
 				<svg
@@ -23,7 +23,11 @@
 		</a>
 
 		<div class="joinBlock">
-			<base-button button-text="Join" class="join"></base-button>
+			<base-button
+				button-text="Join"
+				class="join"
+				id="join-top-community"
+			></base-button>
 		</div>
 	</li>
 </template>

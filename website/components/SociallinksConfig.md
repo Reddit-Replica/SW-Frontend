@@ -16,6 +16,7 @@
 |Event Name|Description|Parameters|
 |---|---|---|
 |back|-|-|
+|save|request to back end|-|
 
 <!-- @vuese:SociallinksConfig:events:end -->
 

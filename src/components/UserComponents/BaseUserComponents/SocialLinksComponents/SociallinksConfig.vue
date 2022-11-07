@@ -26,7 +26,7 @@
 					type="text"
 					:placeholder="socialPlaceholder"
 					v-model="displayedTextField"
-					@input="Validation"
+					@input="displayedModeration"
 				/>
 				<input
 					v-if="data.type == 'link'"
@@ -40,9 +40,9 @@
 	</base-dialog>
 </template>
 <script>
-import BaseDialog from '../BaseComponents/BaseDialog.vue';
-import BaseButton from '../BaseComponents/BaseButton.vue';
-import SociallinkItem from './BaseUserComponents/SociallinkItem.vue';
+import BaseDialog from '../../../BaseComponents/BaseDialog.vue';
+import BaseButton from '../../../BaseComponents/BaseButton.vue';
+import SociallinkItem from './SociallinkItem.vue';
 export default {
 	props: {
 		data: {
@@ -63,11 +63,23 @@ export default {
 			activeSaveButton: false,
 		};
 	},
+	// @vuese
+	// back event to back to social link dialog , save event for adding new social link to user
 	emits: ['back', 'save'],
 	methods: {
+		/**
+		 * @vuese
+		 * function emits back event to back to social link dialog
+		 * @arg no arg
+		 */
 		back() {
 			this.$emit('back');
 		},
+		/**
+		 * @vuese
+		 * function for completion on input field and validate it
+		 * @arg no arg
+		 */
 		socialLinkModeration() {
 			const paragraph = 'http://';
 			if (
@@ -78,8 +90,30 @@ export default {
 			) {
 				this.socialLinkUrl = 'http://' + this.socialLinkUrl;
 			}
+
 			this.Validation();
 		},
+		/**
+		 * @vuese
+		 * function for completion on input field and validate it
+		 * @arg no arg
+		 */
+		displayedModeration() {
+			if (
+				this.displayedTextField != '' &&
+				this.data.type == 'username' &&
+				this.data.text != 'Reddit' &&
+				this.displayedTextField[0] != '@'
+			) {
+				this.displayedTextField = '@' + this.displayedTextField;
+			}
+			this.Validation();
+		},
+		/**
+		 * @vuese
+		 * function Social link input validate it
+		 * @arg no arg
+		 */
 		Validation() {
 			if (this.data.type == 'link') {
 				if (this.socialLinkUrl != '' && this.displayedTextField != '')
@@ -90,6 +124,11 @@ export default {
 				else this.activeSaveButton = false;
 			}
 		},
+		/**
+		 * @vuese
+		 * function for saving the social link
+		 * @arg no arg
+		 */
 		async SaveSocialLink() {
 			if (this.activeSaveButton) {
 				const newSocialLink = {
@@ -113,6 +152,11 @@ export default {
 		},
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * function for determination of place holder for differnt social links
+		 * @arg no arg
+		 */
 		socialPlaceholder() {
 			if (this.data.text == 'Reddit') return 'r/community, u/user';
 			if (this.data.type == 'link') return 'Display text';

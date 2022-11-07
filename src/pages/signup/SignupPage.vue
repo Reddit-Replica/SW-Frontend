@@ -18,12 +18,11 @@
 
 				<form class="signing-up">
 					<div class="signup-google-apple">
-						<div id="google-signup" class="sign-google sign-ag">
-							Continue with Google
-						</div>
-						<div id="apple-signup" class="sign-apple sign-ag">
-							Continue with Apple
-						</div>
+						<GoogleSigninButton id="google-login" class="log-google log-ag" />
+						<facebookSigninButton
+							id="facebook-login"
+							class="log-google log-ag"
+						/>
 
 						<div class="page-divider">
 							<span class="page-divider-line"></span>
@@ -44,7 +43,7 @@
 							v-if="showSignemail"
 							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
 						></span>
-						<div class="error-email-msg" v-if="messageErrorShowEmail">
+						<div class="username-error-message" v-if="messageErrorShowEmail">
 							{{ error_email_message }}
 						</div>
 					</fieldset>
@@ -80,17 +79,17 @@
 
 			<div class="div-2">
 				<form>
-					<fieldset class="register-username-field input-box">
+					<fieldset class="user-pass-box input-box">
 						<input
 							id="regUsername"
 							:class="messageErrorShowUser ? 'red-border' : ''"
 							type="text"
 							v-model="username"
 						/>
-						<span class="animation-usr-pass">UserName</span>
+						<span class="animation-email">UserName</span>
 						<span
 							v-if="showSignuser"
-							:class="checkedUser ? 'correct-check' : 'wrong-check'"
+							:class="checkedUser ? 'correct-check-usr' : 'wrong-check-usr'"
 						></span>
 
 						<div class="username-error-message" v-if="messageErrorShowUser">
@@ -98,17 +97,17 @@
 						</div>
 					</fieldset>
 
-					<fieldset id="register-password-field">
+					<fieldset class="input-box user-pass-box">
 						<input
 							id="reg-password"
-							class="password-textInput"
 							type="password"
 							v-model="password"
 							:class="messageErrorShowPass ? 'red-border' : ''"
 						/>
+						<span class="animation-email">Password</span>
 						<span
 							v-if="showSignPass"
-							:class="checkedPass ? 'correct-check' : 'wrong-check'"
+							:class="checkedPass ? 'wrong-check-usr' : 'wrong-check-usr'"
 						></span>
 
 						<div class="username-error-message" v-if="messageErrorShowPass">
@@ -132,6 +131,8 @@
 </template>
 
 <script>
+import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
+import facebookSigninButton from '../../components/facebookSigninButton.vue';
 export default {
 	data() {
 		return {
@@ -146,9 +147,12 @@ export default {
 			showSignemail: false,
 			messageErrorShowEmail: false,
 			checkedEmail: true,
+			messageErrorShowUser: false,
+			checkedUser: true,
 			error_message_user: '',
 			error_message_pass: '',
 			messageErrorShowPass: false,
+			showSignuser: false,
 		};
 	},
 	methods: {
@@ -162,7 +166,7 @@ export default {
 				document.querySelector('#email-input').style.border =
 					'0.5px solid #ea0027';
 			} else {
-				this.error_email = false;
+				this.messageErrorShowEmail = false;
 				this.checkedEmail = true;
 				document.querySelector('#email-input').style.border =
 					'0.5px solid #0079d3';
@@ -178,12 +182,61 @@ export default {
 			this.page2 = !this.page2;
 			this.bottom_div = !this.bottom_div;
 		},
+		validateUser(value) {
+			this.showSignuser = false;
+			this.messageErrorShowUser = false;
+			this.showSignPass = false;
+			this.messageErrorShowPass = false;
+			document.querySelector('#regUsername').style.border =
+				'1px solid rgba(0, 0, 0, 0.1)';
+			if (value.length < 3 || value.length > 20) {
+				this.showSignuser = true;
+				this.checkedUser = false;
+				this.messageErrorShowUser = true;
+				this.error_message_user =
+					'Username must be between 3 and 20 characters';
+				document.querySelector('#regUsername').style.border =
+					'0.5px solid #ea0027';
+			} else {
+				fetch(this.$baseurl + '/userTest')
+					.then((response) => {
+						if (response.ok) {
+							return response.json();
+						}
+					})
+					.then((data) => {
+						data.forEach((element) => {
+							if (element.username == value) {
+								this.showSignuser = true;
+								this.checkedUser = false;
+								this.messageErrorShowUser = true;
+								this.error_message_user = 'That username is already taken';
+								document.querySelector('#regUsername').style.border =
+									'0.5px solid #ea0027';
+							} else {
+								this.showSignuser = true;
+								this.checkedUser = true;
+								this.messageErrorShowUser = false;
+								document.querySelector('#user-name').style.border =
+									'0.5px solid #0079d3';
+							}
+						});
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			}
+		},
 	},
-	components: {},
+	components: { GoogleSigninButton, facebookSigninButton },
 	watch: {
 		email(value) {
 			this.email = value;
 			this.validatEmail(value);
+		},
+		username(value) {
+			this.username = value;
+			this.validateUser(value);
 		},
 	},
 };
@@ -263,9 +316,9 @@ button {
 }
 
 /* class of log in with google and log in with apple */
-.sign-ag {
+.log-ag {
 	font-size: 14px;
-	font-family: IBMPlexSans, sans-serif;
+	font-family: 'IBMPlexSans', sans-serif;
 	letter-spacing: 0.5px;
 	border: 1px solid #0079d3;
 	border-radius: 4px;
@@ -277,8 +330,17 @@ button {
 	color: #0079d3;
 	display: block;
 	margin: 8px 0;
-	padding: 12px 28px;
-	width: 60%;
+	/* width: 60%; */
+}
+.log-google {
+	width: 280px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.log-google:hover {
+	background-color: var(--color-blue-2);
+	color: var(--color-white-1);
 }
 .page-divider {
 	align-items: center;
@@ -298,7 +360,7 @@ button {
 	color: #878a8c;
 	font-size: 14px;
 }
-.email-field input {
+.input-box input {
 	position: relative;
 	transform: translateZ(0);
 	width: 60%;
@@ -312,10 +374,13 @@ button {
 	margin-top: 5px;
 	outline: none;
 }
+.user-pass-box {
+	width: 540px;
+}
 .animation-email {
 	width: 55%;
 }
-.email-field .animation-email {
+.input-box .animation-email {
 	font-size: 10px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
@@ -331,10 +396,10 @@ button {
 	outline: none;
 	/* justify-content: space-between; */
 }
-.email-field input:focus ~ .animation-email,
-.email-field input:hover ~ .animation-email,
-.email-field input:active ~ .animation-email,
-.email-field ~ .animation-email {
+.input-box input:focus ~ .animation-email,
+.input-box input:hover ~ .animation-email,
+.input-box input:active ~ .animation-email,
+.input-box ~ .animation-email {
 	transform: translateX(0.8px) translateY(-10px);
 	font-size: 9px;
 	padding: 12px 0px;
@@ -353,7 +418,7 @@ button {
 	transition: all 0.2s ease-in-out;
 	 display: none; 
 }*/
-.error-email-msg {
+.username-error-message {
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
@@ -384,6 +449,14 @@ button {
 	width: 2px;
 	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
+.input-box .wrong-check-usr {
+	position: absolute;
+	right: 23rem;
+	top: 28%;
+	height: 12px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
+}
 .register-bottom {
 	font-family: Noto Sans, sans-serif;
 	font-size: 12px;
@@ -394,6 +467,7 @@ button {
 }
 
 .all-div {
+	width: 100%;
 	align-self: stretch;
 	/* display: flex; */
 	flex-direction: column;

@@ -2,10 +2,11 @@
 	<div>
 		<top-communities
 			:top-communities="topCommunities"
-			top-communities-image="	https://www.redditstatic.com/desktop2x/img/leaderboard/banner-background.png"
+			top-communities-image="https://www.redditstatic.com/desktop2x/img/leaderboard/banner-background.png"
 			top-communities-caption="Games"
 			top-communities-link="https://www.google.com/"
 			:top-communities-recommendations="topCommunitiesRecommendations"
+			id="top-comm-main-bar"
 		></top-communities>
 	</div>
 </template>
