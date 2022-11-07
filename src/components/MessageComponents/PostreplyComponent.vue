@@ -176,7 +176,7 @@ export default {
 		//details of message
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
 				id: '',
 				text: '',
@@ -195,14 +195,14 @@ export default {
 		//counter to handle background color
 		count: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 1,
 		},
 		// @vuese
 		//index to handle unique ids
 		index: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 0,
 		},
 	},

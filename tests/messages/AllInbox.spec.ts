@@ -1,11 +1,14 @@
 import { mount } from '@vue/test-utils';
-import AllInbox from '../../src/components/MessageComponents/AllinboxComponent.vue';
+import AllinboxComponent from '../../src/components/MessageComponents/AllinboxComponent.vue';
 import { describe, it, expect } from 'vitest';
-// import Vue from 'vue';
 
-describe('AllInbox.vue', () => {
+describe('AllinboxComponent.vue', () => {
+	
+	//--------------------------------------------------------
+	//                     Rendering
+	//--------------------------------------------------------
 	it('should render', () => {
-		const wrapper = mount(AllInbox);
+		const wrapper = mount(AllinboxComponent);
 	});
 
 	// it('displays items from the list', () => {

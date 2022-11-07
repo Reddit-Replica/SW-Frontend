@@ -85,22 +85,24 @@
 				</ul>
 			</div>
 		</div>
-		<p>
-			Use of this site constitutes acceptance of our
-			<a
-				href="https://www.redditinc.com/policies/user-agreement"
-				id="user-greement-link"
-				>User Agreement</a
-			>
-			and
-			<a
-				href="https://www.reddit.com/policies/privacy-policy"
-				id="privacy-policy-link"
-				>Privacy Policy</a
-			>
-			. © 2022 reddit inc. All rights reserved.
-		</p>
-		<p>REDDIT and the ALIEN Logo are registered trademarks of reddit inc.</p>
+		<div class="p-footer">
+			<p>
+				Use of this site constitutes acceptance of our
+				<a
+					href="https://www.redditinc.com/policies/user-agreement"
+					id="user-greement-link"
+					>User Agreement</a
+				>
+				and
+				<a
+					href="https://www.reddit.com/policies/privacy-policy"
+					id="privacy-policy-link"
+					>Privacy Policy</a
+				>
+				. © 2022 reddit inc. All rights reserved.
+			</p>
+			<p>REDDIT and the ALIEN Logo are registered trademarks of reddit inc.</p>
+		</div>
 	</div>
 </template>
 
@@ -111,6 +113,7 @@ export default {};
 <style scoped>
 .content {
 	text-align: center;
+	margin-top: 10rem;
 }
 .content p a {
 	color: var(--color-grey-dark-2);
@@ -154,5 +157,10 @@ export default {};
 }
 a:hover {
 	text-decoration: underline;
+}
+@media only screen and (max-width: 565px) {
+	.p-footer {
+		margin-top: 10rem;
+	}
 }
 </style>

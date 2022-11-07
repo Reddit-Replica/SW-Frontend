@@ -5,7 +5,8 @@
 <!-- @vuese:MessagesComponent:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|message|-|`Object`|`false`|{"text":"","type":"","senderUsername":"","receiverUsername":"","sendAt":"","subject":"","isReply":"","isRead":""}|
+|message|-|`Object`|`true`|{"id":"","text":"","type":"","senderUsername":"","receiverUsername":"","sendAt":"","subject":"","isReply":"","isRead":""}|
+|index|index to handle unique ids|`Number`|`true`|0|
 
 <!-- @vuese:MessagesComponent:props:end -->
 

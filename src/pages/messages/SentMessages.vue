@@ -3,7 +3,6 @@
 		<div>
 			<sent-messages
 				v-for="(message, index) in sentMessages"
-				:count="++count"
 				:key="message"
 				:message="message"
 				:index="index"
