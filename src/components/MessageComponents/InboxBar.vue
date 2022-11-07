@@ -1,5 +1,5 @@
 <template>
-	<ul>
+	<ul class="ul-messages">
 		<li>
 			ِ<router-link to="/message/inbox" id="go-to-all-messages"
 				>All</router-link

@@ -9,7 +9,7 @@
 				@click="changeRouter"
 				id="create-post"
 			/>
-			<button class="post-button" />
+			<button class="post-button" id="post-button" />
 		</form>
 		<div class="box">
 			<div class="post-icon-box" id="image-icon">

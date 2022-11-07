@@ -12,15 +12,17 @@
 					<span class="sender">
 						<span
 							><span>to&nbsp;</span>
-							<a href="" id="message-receiver">{{
+							<a href="" :id="'message-receiver-' + message.id">{{
 								message.receiverUsername
 							}}</a>
 						</span></span
 					><span>&nbsp;sent&nbsp;</span><time> {{ message.sendAt }}</time>
 				</p>
 				<p class="md">{{ message.text }}</p>
-				<ul class="flat-list">
-					<li><a href="">Permalink</a></li>
+				<ul class="flat-list ul-messages">
+					<li :id="'permalink-link-' + message.id">
+						<a href="" :id="'permalink-a-' + message.id">Permalink</a>
+					</li>
 				</ul>
 			</div>
 		</li>
@@ -36,6 +38,7 @@ export default {
 			type: Object,
 			require: true,
 			default: () => ({
+				id: '',
 				text: '',
 				receiverUsername: '',
 				sendAt: '',

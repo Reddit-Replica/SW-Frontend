@@ -11,10 +11,12 @@
 				<p class="md-details">
 					<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 					<span class="sender"
-						><a href="" id="message-sender">{{ message.senderUsername }}</a>
+						><a href="" :id="'message-sender-' + message.id">{{
+							message.senderUsername
+						}}</a>
 						<span v-if="message.receiverUsername != ''"
 							><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
-							<a href="" id="message-receiver">{{
+							<a href="" :id="'message-receiver-' + message.id">{{
 								message.receiverUsername
 							}}</a>
 						</span></span
@@ -22,50 +24,88 @@
 					><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 				</p>
 				<p class="md">{{ message.text }}</p>
-				<ul class="flat-list">
-					<li><a href="">Permalink</a></li>
-					<li>
+				<ul class="flat-list ul-messages">
+					<li :id="'permalink-link-' + message.id">
+						<a href="" :id="'permalink-a-' + message.id">Permalink</a>
+					</li>
+					<li :id="'delete-message-li-' + message.id">
 						<form action="#">
 							<input
 								type="hidden"
 								name="deleted"
-								id="delete-message"
+								:id="'delete-message-' + message.id"
 								value="deleted"
 							/>
 						</form>
-						<span class="sure-block" v-if="deleteUser"
+						<span
+							class="sure-block"
+							v-if="deleteUser"
+							:id="'delete-message-span-' + message.id"
 							>are you sure?
-							<span class="link" id="yes-delete-message">Yes</span> /
-							<span class="link" @click="deleteAction()" id="no-delete-message"
-								>No</span
-							></span
-						>
-						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="deleteAction()" id="click-delete"
-							>Delete</span
-						>
-					</li>
-					<li><a href="" id="report">Report</a></li>
-					<li>
-						<span class="sure-block" v-if="blockUser"
-							>are you sure?
-							<span class="link" id="yes-block-user" @click="blockAction('yes')"
+							<span class="link" :id="'yes-delete-message-' + message.id"
 								>Yes</span
 							>
 							/
-							<span class="link" @click="blockAction()" id="no-block-user"
+							<span
+								class="link"
+								@click="deleteAction()"
+								:id="'no-delete-message-' + message.id"
 								>No</span
 							></span
 						>
 						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-						<span class="link" v-else @click="blockAction()" id="block-user"
+						<span
+							class="link"
+							v-else
+							@click="deleteAction()"
+							:id="'click-delete-' + message.id"
+							>Delete</span
+						>
+					</li>
+					<li :id="'report-' + message.id">
+						<a href="" :id="'report-a-' + message.id">Report</a>
+					</li>
+					<li :id="'block-' + message.id">
+						<span
+							class="sure-block"
+							v-if="blockUser"
+							:id="'block-user-span-' + message.id"
+							>are you sure?
+							<span
+								class="link"
+								:id="'yes-block-user-' + message.id"
+								@click="blockAction('yes')"
+								>Yes</span
+							>
+							/
+							<span
+								class="link"
+								@click="blockAction()"
+								:id="'no-block-user-' + message.id"
+								>No</span
+							></span
+						>
+						<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
+						<span
+							class="link"
+							v-else
+							@click="blockAction()"
+							:id="'block-user-' + message.id"
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" v-if="isRead">
-						<span class="link" id="mark-un-read">Mark Unread</span>
+					<li
+						@click="unreadAction()"
+						v-if="isRead"
+						:id="'unread-' + message.id"
+					>
+						<span class="link" :id="'mark-un-read-' + message.id"
+							>Mark Unread</span
+						>
 					</li>
-					<li><span class="link" id="reply">Reply</span></li>
+					<li :id="'reply-box-' + message.id">
+						<span class="link" :id="'reply-' + message.id">Reply</span>
+					</li>
 				</ul>
 			</div>
 		</li>
@@ -81,6 +121,7 @@ export default {
 			type: Object,
 			require: true,
 			default: () => ({
+				id: '',
 				text: '',
 				type: '',
 				senderUsername: '',

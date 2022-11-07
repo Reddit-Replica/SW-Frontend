@@ -4,11 +4,13 @@
 			button-text="Follow"
 			link="false"
 			class="chat-follow-button"
+			id="profile-follow-button"
 		></base-button>
 		<base-button
 			button-text="Chat"
 			link="false"
 			class="chat-follow-button"
+			id="profile-chat-button"
 		></base-button>
 	</div>
 </template>

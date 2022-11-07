@@ -12,6 +12,7 @@
 					>
 						<option
 							v-for="username in usernames"
+							:id="'message-from-options-' + username"
 							:key="username"
 							:value="username"
 						>
