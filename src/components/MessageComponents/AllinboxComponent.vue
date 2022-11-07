@@ -11,12 +11,12 @@
 				<p class="md-details">
 					<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 					<span class="sender"
-						><a href="" :id="'message-sender-' + message.id">{{
+						><a href="" :id="'message-sender-' + index">{{
 							message.senderUsername
 						}}</a>
 						<span v-if="message.receiverUsername != ''"
 							><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
-							<a href="" :id="'message-receiver-' + message.id">{{
+							<a href="" :id="'message-receiver-' + index">{{
 								message.receiverUsername
 							}}</a>
 						</span></span
@@ -25,31 +25,29 @@
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list ul-messages">
-					<li :id="'permalink-link-' + message.id">
-						<a href="" :id="'permalink-a-' + message.id">Permalink</a>
+					<li :id="'permalink-link-' + index">
+						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li>
-					<li :id="'delete-message-li-' + message.id">
+					<li :id="'delete-message-li-' + index">
 						<form action="#">
 							<input
 								type="hidden"
 								name="deleted"
-								:id="'delete-message-' + message.id"
+								:id="'delete-message-' + index"
 								value="deleted"
 							/>
 						</form>
 						<span
 							class="sure-block"
 							v-if="deleteUser"
-							:id="'delete-message-span-' + message.id"
+							:id="'delete-message-span-' + index"
 							>are you sure?
-							<span class="link" :id="'yes-delete-message-' + message.id"
-								>Yes</span
-							>
+							<span class="link" :id="'yes-delete-message-' + index">Yes</span>
 							/
 							<span
 								class="link"
 								@click="deleteAction()"
-								:id="'no-delete-message-' + message.id"
+								:id="'no-delete-message-' + index"
 								>No</span
 							></span
 						>
@@ -58,22 +56,22 @@
 							class="link"
 							v-else
 							@click="deleteAction()"
-							:id="'click-delete-' + message.id"
+							:id="'click-delete-' + index"
 							>Delete</span
 						>
 					</li>
-					<li :id="'report-' + message.id">
-						<a href="" :id="'report-a-' + message.id">Report</a>
+					<li :id="'report-' + index">
+						<a href="" :id="'report-a-' + index">Report</a>
 					</li>
-					<li :id="'block-' + message.id">
+					<li :id="'block-' + index">
 						<span
 							class="sure-block"
 							v-if="blockUser"
-							:id="'block-user-span-' + message.id"
+							:id="'block-user-span-' + index"
 							>are you sure?
 							<span
 								class="link"
-								:id="'yes-block-user-' + message.id"
+								:id="'yes-block-user-' + index"
 								@click="blockAction('yes')"
 								>Yes</span
 							>
@@ -81,7 +79,7 @@
 							<span
 								class="link"
 								@click="blockAction()"
-								:id="'no-block-user-' + message.id"
+								:id="'no-block-user-' + index"
 								>No</span
 							></span
 						>
@@ -90,21 +88,15 @@
 							class="link"
 							v-else
 							@click="blockAction()"
-							:id="'block-user-' + message.id"
+							:id="'block-user-' + index"
 							>Block User</span
 						>
 					</li>
-					<li
-						@click="unreadAction()"
-						v-if="isRead"
-						:id="'unread-' + message.id"
-					>
-						<span class="link" :id="'mark-un-read-' + message.id"
-							>Mark Unread</span
-						>
+					<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
+						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 					</li>
-					<li :id="'reply-box-' + message.id">
-						<span class="link" :id="'reply-' + message.id">Reply</span>
+					<li :id="'reply-box-' + index">
+						<span class="link" :id="'reply-' + index">Reply</span>
 					</li>
 				</ul>
 			</div>
@@ -135,11 +127,18 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handel background color
+		//counter to handle background color
 		count: {
 			type: Number,
 			require: true,
 			default: 1,
+		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			require: true,
+			default: 0,
 		},
 	},
 	data() {

@@ -1,20 +1,27 @@
 <template>
 	<div>
-		<div v-for="message in inboxMessages" :key="message" :message="message">
+		<div
+			v-for="(message, index) in inboxMessages"
+			:key="message"
+			:message="message"
+		>
 			<allinbox-component
 				v-if="message.type == 'Messages'"
 				:count="++count"
 				:message="message"
+				:index="index"
 			></allinbox-component>
 			<PostreplyComponent
 				v-if="message.type == 'Post replies'"
 				:count="++count"
 				:message="message"
+				:index="index"
 			></PostreplyComponent>
 			<user-mentions
 				v-if="message.type == 'Mentions'"
 				:count="++count"
 				:message="message"
+				:index="index"
 			></user-mentions>
 		</div>
 		<div class="no-messages" v-if="noMessages">

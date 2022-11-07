@@ -4,14 +4,14 @@
 			<p class="subject-text">
 				<a
 					href=""
-					:id="'message-sender-' + message.id"
+					:id="'message-sender-' + index"
 					class="sender-box"
 					v-if="ifMessageRecieved"
 					>{{ message.senderUsername }}</a
 				>
 				<a
 					href=""
-					:id="'message-receiver-' + message.id"
+					:id="'message-receiver-' + index"
 					class="reciever-box"
 					v-else
 					>{{ message.receiverUsername }}</a
@@ -21,26 +21,26 @@
 			<p class="expand-p">
 				<span
 					class="expand"
-					:id="'expand-all-' + message.id"
+					:id="'expand-all-' + index"
 					@click="expand('expand')"
 					>expand all</span
 				>
 				<span
 					class="expand"
-					:id="'collapse-all-' + message.id"
+					:id="'collapse-all-' + index"
 					@click="expand('collapse')"
 					>collapse all</span
 				>
 			</p>
 			<div class="box" :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
-					<span class="sign" :id="'sign-' + message.id" @click="expand('')"
+					<span class="sign" :id="'sign-' + index" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
 					>
 					<span v-if="ifMessageRecieved">
 						<span>from&nbsp;</span>
 						<span class="sender"
-							><a href="" :id="'message-sender-2-' + message.id">{{
+							><a href="" :id="'message-sender-2-' + index">{{
 								message.senderUsername
 							}}</a>
 						</span>
@@ -48,7 +48,7 @@
 					<span v-else>
 						<span>to&nbsp;</span>
 						<span class="reciever"
-							><a href="" :id="'message-reciever-2-' + message.id">{{
+							><a href="" :id="'message-reciever-2-' + index">{{
 								message.receiverUsername
 							}}</a>
 						</span>
@@ -58,31 +58,31 @@
 				<div v-if="expandAll">
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list ul-messages">
-						<li :id="'permalink-' + message.id">
-							<a href="" :id="'permalink-linl-' + message.id">Permalink</a>
+						<li :id="'permalink-' + index">
+							<a href="" :id="'permalink-linl-' + index">Permalink</a>
 						</li>
 						<li v-if="ifMessageRecieved">
 							<form action="#">
 								<input
 									type="hidden"
 									name="deleted"
-									:id="'delete-message-' + message.id"
+									:id="'delete-message-' + index"
 									value="deleted"
 								/>
 							</form>
 							<span
 								class="sure-block"
 								v-if="deleteUser"
-								:id="'delete-message-span-' + message.id"
+								:id="'delete-message-span-' + index"
 								>are you sure?
-								<span class="link" :id="'yes-delete-message-' + message.id"
+								<span class="link" :id="'yes-delete-message-' + index"
 									>Yes</span
 								>
 								/
 								<span
 									class="link"
 									@click="deleteAction()"
-									:id="'no-delete-message-' + message.id"
+									:id="'no-delete-message-' + index"
 									>No</span
 								></span
 							>
@@ -91,22 +91,22 @@
 								class="link"
 								v-else
 								@click="deleteAction()"
-								:id="'click-delete-' + message.id"
+								:id="'click-delete-' + index"
 								>Delete</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved" :id="'report-' + message.id">
-							<a href="" :id="'report-a-' + message.id">Report</a>
+						<li v-if="ifMessageRecieved" :id="'report-' + index">
+							<a href="" :id="'report-a-' + index">Report</a>
 						</li>
 						<li v-if="ifMessageRecieved">
 							<span
 								class="sure-block"
 								v-if="blockUser"
-								:id="'block-user-span-' + message.id"
+								:id="'block-user-span-' + index"
 								>are you sure?
 								<span
 									class="link"
-									:id="'yes-block-user-' + message.id"
+									:id="'yes-block-user-' + index"
 									@click="blockAction('yes')"
 									>Yes</span
 								>
@@ -114,7 +114,7 @@
 								<span
 									class="link"
 									@click="blockAction()"
-									:id="'no-block-user-' + message.id"
+									:id="'no-block-user-' + index"
 									>No</span
 								></span
 							>
@@ -123,21 +123,21 @@
 								class="link"
 								v-else
 								@click="blockAction()"
-								:id="'no-block-user-' + message.id"
+								:id="'no-block-user-' + index"
 								>Block User</span
 							>
 						</li>
 						<li
 							v-if="ifMessageRecieved && isRead"
 							@click="unreadAction()"
-							:id="'unread-' + message.id"
+							:id="'unread-' + index"
 						>
-							<span class="link" :id="'mark-un-read-' + message.id"
+							<span class="link" :id="'mark-un-read-' + index"
 								>Mark Unread</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved" :id="'reply-box-' + message.id">
-							<span class="link" :id="'reply-' + message.id">Reply</span>
+						<li v-if="ifMessageRecieved" :id="'reply-box-' + index">
+							<span class="link" :id="'reply-' + index">Reply</span>
 						</li>
 					</ul>
 				</div>
@@ -165,6 +165,13 @@ export default {
 				isReply: '',
 				isRead: '',
 			}),
+		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			require: true,
+			default: 0,
 		},
 	},
 	data() {
