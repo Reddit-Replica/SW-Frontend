@@ -11,6 +11,7 @@ export default {
 			userMentions: [],
 			userMessages: [],
 			postReplies: [],
+			sentMessages: [],
 		};
 	},
 	mutations,

@@ -6,7 +6,8 @@
 		<base-container>
 			<div class="profilebox">
 				<main>
-					<sortposts-bar></sortposts-bar>
+					<!-- <sortposts-bar></sortposts-bar> -->
+					<router-view></router-view>
 				</main>
 				<aside>
 					<profile-card :user-name="getUserName" :state="state" />
@@ -18,23 +19,22 @@
 </template>
 
 <script>
-import ProfileCard from '../../components/UserComponents/ProfileCard.vue';
+import ProfileCard from '../../components/UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
-import SortpostsBar from '../../components/bars/SortpostsBar.vue';
-import UserModeratorsCard from '../../components/UserComponents/UserModeratorsCard.vue';
+import UserModeratorsCard from '../../components/UserComponents/BaseUserComponents/Cards/UserModeratorsCard.vue';
 export default {
 	props: {},
 	components: {
 		ProfileCard,
 		BaseContainer,
 		profileNav,
-		SortpostsBar,
 		UserModeratorsCard,
 	},
 	data() {
 		return {
 			state: '' /* profile or user */,
+			// userData: Array,
 		};
 	},
 	computed: {
@@ -73,7 +73,9 @@ export default {
 			else if (requestStatus == 404) console.log('not found');
 			else if (requestStatus == 500) console.log(' internal server error');
 			console.log(this.$store.getters['user/getUserData']);
-			console.log(this.$route.params.userName);
+			// console.log(this.$store.getters['user/getStaticSocialLinks']);
+			// this.userData = this.$store.getters['user/getUserData'];
+			// console.log(this.userData);
 		}
 	},
 };
@@ -113,9 +115,15 @@ body {
 		width: 640px;
 	}
 }
+
 aside {
 	width: 312px;
 	margin-left: 24px;
 	min-height: 2000px;
+}
+@media (max-width: 960px) {
+	aside {
+		display: none;
+	}
 }
 </style>

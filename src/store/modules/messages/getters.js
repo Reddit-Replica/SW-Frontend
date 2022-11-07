@@ -14,4 +14,7 @@ export default {
 	postReplies(state) {
 		return state.postReplies;
 	},
+	sentMessages(state) {
+		return state.sentMessages;
+	},
 };

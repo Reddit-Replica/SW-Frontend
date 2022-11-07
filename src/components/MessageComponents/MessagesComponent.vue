@@ -22,7 +22,7 @@
 					>collapse all</span
 				>
 			</p>
-			<div class="box">
+			<div class="box" :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
 					<span class="sign" id="sign" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
@@ -56,7 +56,7 @@
 									value="deleted"
 								/>
 							</form>
-							<span class="sure-block" v-if="deleteUSer"
+							<span class="sure-block" v-if="deleteUser"
 								>are you sure?
 								<span class="link" id="yes-delete-message">Yes</span> /
 								<span
@@ -77,9 +77,15 @@
 						</li>
 						<li v-if="ifMessageRecieved"><a href="" id="report">Report</a></li>
 						<li v-if="ifMessageRecieved">
-							<span class="sure-block" v-if="blockUSer"
+							<span class="sure-block" v-if="blockUser"
 								>are you sure?
-								<span class="link" id="yes-block-user">Yes</span> /
+								<span
+									class="link"
+									id="yes-block-user"
+									@click="blockAction('yes')"
+									>Yes</span
+								>
+								/
 								<span class="link" @click="blockAction()" id="no-block-user"
 									>No</span
 								></span
@@ -89,7 +95,7 @@
 								>Block User</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved">
+						<li v-if="ifMessageRecieved && isRead" @click="unreadAction()">
 							<span class="link" id="mark-un-read">Mark Unread</span>
 						</li>
 						<li v-if="ifMessageRecieved">
@@ -124,9 +130,10 @@ export default {
 	},
 	data() {
 		return {
-			deleteUSer: false,
-			blockUSer: false,
+			deleteUser: false,
+			blockUser: false,
 			expandAll: true,
+			isRead: this.message.isRead,
 		};
 	},
 	computed: {
@@ -138,7 +145,6 @@ export default {
 		// @vuese
 		//check if user is reciever or sender
 		ifMessageRecieved() {
-			console.log(this.receiverUsername);
 			return this.getUserName == this.message.receiverUsername;
 		},
 	},
@@ -146,12 +152,24 @@ export default {
 		// @vuese
 		//toggle delete action
 		deleteAction() {
-			this.deleteUSer = !this.deleteUSer;
+			this.deleteUser = !this.deleteUser;
 		},
 		// @vuese
-		//toggle block action
-		blockAction() {
-			this.blockUSer = !this.blockUSer;
+		//handle block action
+		blockAction(action) {
+			this.blockUser = !this.blockUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/blockUser', {
+					block: true,
+					username: this.message.senderUsername,
+					baseurl: this.$baseurl,
+				});
+			}
+		},
+		// @vuese
+		//handle unread action
+		unreadAction() {
+			this.isRead = false;
 		},
 		// @vuese
 		//expand or collapse message details
@@ -171,6 +189,8 @@ export default {
 <style scoped>
 ul {
 	list-style: none;
+	display: flex;
+	flex-flow: row wrap;
 }
 .message {
 	margin: 0;
@@ -179,7 +199,7 @@ ul {
 	list-style: none;
 }
 .message:nth-child(odd) {
-	background-color: var(--color-grey-light-2);
+	background-color: var(--color-grey-light-9);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
@@ -189,6 +209,11 @@ ul {
 	flex-direction: column;
 	margin: 0;
 	border-left: var(--line-dashed-3);
+}
+.box-unread {
+	margin: 1rem;
+	background-color: var(--color-grey-light-10);
+	border-color: var(--color-grey-light-10);
 }
 .sender-box,
 .reciever-box {
@@ -202,10 +227,6 @@ ul {
 .sender-box:hover,
 .reciever-box:hover {
 	text-decoration: none;
-}
-.subject-text {
-	font-weight: bold;
-	font-size: 1.3rem;
 }
 .expand-p {
 	margin: 1rem;
@@ -223,40 +244,9 @@ ul {
 	font-size: 1.4rem;
 	cursor: pointer;
 }
-.subject-text:after {
-	content: ':';
-}
-.md-details {
-	margin-left: 2.6rem;
-	color: var(--color-grey-dark-2);
-}
-.md {
-	margin-left: 2.6rem;
-	font-size: 1.5rem;
-}
-.flat-list {
-	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	display: flex;
-}
-.flat-list li {
-	margin: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-}
-.flat-list li a,
-.link {
-	color: var(--color-grey-dark-2);
-	cursor: pointer;
-}
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.sure-block {
-	color: var(--color-red-dark-1);
 }
 .sender a,
 .reciever a {

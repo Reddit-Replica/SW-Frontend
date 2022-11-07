@@ -21,13 +21,13 @@
 				</span>
 				<!-- ///////////////////////////////////////////////////////////// -->
 				<!-- profile settings icon -->
-				<router-link to="" class="profile-settings"
+				<router-link to="/settings/profile" class="profile-settings"
 					><i class="fa-solid fa-gear"
 				/></router-link>
 				<!-- ///////////////////// -->
 				<!-- incase of  profile picture preview -->
 				<div class="profile-picture" v-if="!isAvatar">
-					<img src="../../assets/R.png" alt="" id="profile-picture" />
+					<img src="../../../../assets/R.png" alt="" id="profile-picture" />
 					<input
 						type="file"
 						hidden
@@ -46,16 +46,36 @@
 				<!-- //////////////////////////////////// -->
 				<!-- incase of avatar pic preview -->
 				<div class="profile-avatar" v-else>
-					<img src="../../assets/avatar.png" alt="" />
+					<img src="../../../../assets/avatar.png" alt="" />
 				</div>
 				<!-- //////////////////////////// -->
 				<!-- incase of profile picture display name , user name style -->
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
 				<h4 class="profile-displayedname">
-					{{ userName || 'Abdelhameed_Emad' }}
+					{{ this.userData.displayName || 'Abdelhameed_Emad' }}
+					<svg
+						v-if="this.userData.nsfw"
+						class="Wb4wBt474lETdwG0YpWID"
+						viewBox="0 0 40 40"
+						version="1.1"
+						xmlns="http://www.w3.org/2000/svg"
+						width="20px"
+						fill="#ff4500"
+						margin-left="4px"
+						vertical-align="middle"
+						height="20px"
+					>
+						<title>NSFW - Adult Content</title>
+						<g>
+							<path
+								fill="inherit"
+								d="M38.5,16.5l-15-15c-2-2-5.1-2-7.1,0l-15,15c-2,2-2,5.1,0,7.1l15,15c2,2,5.1,2,7.1,0l15-15 C40.5,21.6,40.5,18.4,38.5,16.5z M17.7,8.3C17.7,7,18.7,6,20,6s2.3,1,2.3,2.3v14.3c0,1.3-1,2.3-2.3,2.3s-2.3-1-2.3-2.3V8.3z M20,33.7c-1.7,0-3.1-1.4-3.1-3.1c0-1.7,1.4-3.1,3.1-3.1s3.1,1.4,3.1,3.1C23.1,32.4,21.7,33.7,20,33.7z"
+							></path>
+						</g>
+					</svg>
 				</h4>
-				<a href="" class="profile-username">u/jhvhhygy</a>
+				<a href="" class="profile-username">{{ userName }}</a>
 			</div>
 			<!-- /////////////////////////////// -->
 			<!-- incase of Avatar display name , user name style -->
@@ -74,7 +94,9 @@
 			</div>
 			<!-- //////////////////// -->
 			<!-- about profile box -->
-			<div class="profile-about" v-if="about != ''">hi how are you</div>
+			<div class="profile-about" v-if="this.userData.about != ''">
+				{{ this.userData.about }}
+			</div>
 			<!-- ///////////////// -->
 			<!-- profile items karma and cake day has two alignment for pic , avatar -->
 			<div class="profile-items" :class="[isAvatar ? 'align-center' : '']">
@@ -82,7 +104,7 @@
 					<h5>Karma</h5>
 					<span>
 						<p id="karma">
-							<span><i class="fa-solid fa-fan" /></span>1
+							<span><i class="fa-solid fa-fan" /></span>{{ userData.karma }}
 						</p>
 					</span>
 				</span>
@@ -100,7 +122,9 @@
 			<follow-chat-component v-if="0"></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
-			<sociallinks-block></sociallinks-block>
+			<sociallinks-block
+				:social-data="userData.socialLinks"
+			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button class="new-post">New post</button>
@@ -117,11 +141,12 @@
 			<!-- /////////////////// -->
 			<!-- profile options -->
 			<ul id="profile-options" class="profile-options" v-show="showMoreOptions">
-				<li v-for="profileOption in profileOptions" :key="profileOption.name">
-					<router-link :to="profileOption.toLink">{{
-						profileOption.name
-					}}</router-link>
-				</li>
+				<router-link
+					v-for="profileOption in profileOptions"
+					:key="profileOption.name"
+					:to="profileOption.toLink"
+					>{{ profileOption.name }}
+				</router-link>
 			</ul>
 			<!-- /////////////// -->
 			<!-- more options button -->
@@ -139,31 +164,48 @@
 </template>
 
 <script>
-import SociallinksBlock from './BaseUserComponents/SociallinksBlock.vue';
-import FollowChatComponent from './BaseUserComponents/FollowChatComponent.vue';
+import SociallinksBlock from '../SocialLinksComponents/SociallinksBlock';
+import FollowChatComponent from './FollowChatComponent.vue';
 export default {
 	components: {
 		SociallinksBlock,
 		FollowChatComponent,
 	},
 	props: {
+		// @vuese
+		// user Name of the user
 		userName: {
 			type: String,
 			required: true,
 		},
+		// userData: {
+		// 	type: Array,
+		// 	required: true,
+		// },
+	},
+	/**
+	 * @vuese
+	 * when the component was created  we get user data from user store
+	 * @arg no arg
+	 */
+	created() {
+		this.userData = this.$store.getters['user/getUserData'];
+		// console.log(this.userData);
 	},
 	data() {
 		return {
+			// NSFW: 'true',
+			userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
-			mySocialLinks: [
-				{
-					id: '',
-					imagesUrl: '',
-					name: '',
-					type: '' /* there are three types username  */,
-				},
-			],
+			// mySocialLinks: [
+			// 	{
+			// 		id: '',
+			// 		imagesUrl: '',
+			// 		name: '',
+			// 		type: '' /* there are three types username  */,
+			// 	},
+			// ],
 			profileOptions: [
 				{
 					name: 'Profile to Moderation',
@@ -182,19 +224,42 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * it toggle to Show or Hide user Options
+		 * @arg no arg
+		 */
 		toggleShowMoreOptions() {
 			this.showMoreOptions = !this.showMoreOptions;
-			console.log(this.userName, this.$route.props.userName);
+			// console.log(this.userName, this.$route.props.userName);
 		},
+		/**
+		 * @vuese
+		 * this function act as a path when it get clicked to will reflect this click to input field
+		 * to open box for adding Profile Image
+		 * @arg no arg
+		 */
 		addProfileImage() {
 			document.querySelector('#add-profile-button').click();
 		},
+		/**
+		 * @vuese
+		 * this function act as a path when it get clicked to will reflect this click to input field
+		 * to open box for adding Profile Cover Image
+		 * @arg no arg
+		 */
 		addCoverImage() {
 			document.querySelector('#add-cover-button').click();
 		},
+		/**
+		 * @vuese
+		 * this function for upload an Profile Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
 		loadProfilePic() {
 			const file = this.$refs.profileFile.files[0];
-			console.log('loadprofilepic');
+			// console.log('loadprofilepic');
 			const reader = new FileReader();
 			reader.onload = () => {
 				const result = reader.result;
@@ -202,8 +267,13 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
+		/**
+		 * @vuese
+		 * this function for upload an Cover Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
 		loadCoverPic() {
-			console.log('loadCoverpic');
 			const file = this.$refs.coverFile.files[0];
 			const reader = new FileReader();
 			reader.onload = () => {
@@ -211,7 +281,6 @@ export default {
 				document.querySelector(
 					'#cover-picture'
 				).style.backgroundImage = `url(${result})`;
-				console.log('loadCoverpic hhh');
 			};
 			reader.readAsDataURL(file);
 		},
@@ -560,9 +629,11 @@ ul.profile-options {
 	line-height: 16px;
 	padding: 4px 8px;
 	cursor: pointer;
+	display: block;
 }
 
-ul.profile-options li {
+ul.profile-options a {
+	display: block;
 	height: 24px;
 	width: fit-content;
 	display: flex;
@@ -572,7 +643,7 @@ ul.profile-options li {
 	position: relative;
 	padding: 4px 8px;
 }
-ul.profile-options li::before {
+ul.profile-options a::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -584,7 +655,7 @@ ul.profile-options li::before {
 	z-index: 55;
 	opacity: 0;
 }
-ul.profile-options li a {
+ul.profile-options a {
 	color: var(--color-blue-2);
 }
 
@@ -623,15 +694,15 @@ button.fewer-options::before {
 
 button.more-options:hover::before,
 button.fewer-options:hover::before,
-ul.profile-options li:hover::before {
+ul.profile-options a:hover::before {
 	opacity: 0.08;
 }
 
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
 	.profile-card {
 		display: none;
 	}
-}
+} */
 input.insert-cover-image {
 	position: absolute;
 	height: 35px;

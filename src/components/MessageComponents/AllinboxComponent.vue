@@ -1,21 +1,25 @@
 <template>
-	<div class="message">
+	<div
+		class="message"
+		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+	>
 		<li>
 			<p class="subject-text">
 				<span>{{ message.subject }}</span>
 			</p>
-			<div>
+			<div :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
-					from&nbsp;
+					<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 					<span class="sender"
 						><a href="" id="message-sender">{{ message.senderUsername }}</a>
 						<span v-if="message.receiverUsername != ''"
-							>&nbsp;via&nbsp;
+							><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
 							<a href="" id="message-receiver">{{
 								message.receiverUsername
 							}}</a>
 						</span></span
-					>&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
+					><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list">
@@ -29,7 +33,7 @@
 								value="deleted"
 							/>
 						</form>
-						<span class="sure-block" v-if="deleteUSer"
+						<span class="sure-block" v-if="deleteUser"
 							>are you sure?
 							<span class="link" id="yes-delete-message">Yes</span> /
 							<span class="link" @click="deleteAction()" id="no-delete-message"
@@ -43,8 +47,12 @@
 					</li>
 					<li><a href="" id="report">Report</a></li>
 					<li>
-						<span class="sure-block" v-if="blockUSer"
-							>are you sure? <span class="link" id="yes-block-user">Yes</span> /
+						<span class="sure-block" v-if="blockUser"
+							>are you sure?
+							<span class="link" id="yes-block-user" @click="blockAction('yes')"
+								>Yes</span
+							>
+							/
 							<span class="link" @click="blockAction()" id="no-block-user"
 								>No</span
 							></span
@@ -54,7 +62,7 @@
 							>Block User</span
 						>
 					</li>
-					<li>
+					<li @click="unreadAction()" v-if="isRead">
 						<span class="link" id="mark-un-read">Mark Unread</span>
 					</li>
 					<li><span class="link" id="reply">Reply</span></li>
@@ -85,81 +93,57 @@ export default {
 				isRead: '',
 			}),
 		},
+		// @vuese
+		//counter to handel background color
+		count: {
+			type: Number,
+			require: true,
+			default: 1,
+		},
 	},
 	data() {
 		return {
-			deleteUSer: false,
-			blockUSer: false,
+			deleteUser: false,
+			blockUser: false,
+			backcolor: 'grey',
+			isRead: this.message.isRead,
 		};
+	},
+	beforeMount() {
+		if (this.count % 2 == 0) {
+			this.backcolor = 'white';
+		} else this.backcolor = 'grey';
 	},
 	methods: {
 		// @vuese
 		//toggle delete action
 		deleteAction() {
-			this.deleteUSer = !this.deleteUSer;
+			this.deleteUser = !this.deleteUser;
 		},
 		// @vuese
-		//toggle block action
-		blockAction() {
-			this.blockUSer = !this.blockUSer;
+		//handle block action
+		blockAction(action) {
+			this.blockUser = !this.blockUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/blockUser', {
+					block: true,
+					username: this.message.senderUsername,
+					baseurl: this.$baseurl,
+				});
+			}
+		},
+		// @vuese
+		//handle unread action
+		unreadAction() {
+			this.isRead = false;
 		},
 	},
 };
 </script>
 
 <style scoped>
-ul {
-	list-style: none;
-}
-.message {
-	margin: 0;
-	padding: 1rem 1.5rem;
-	color: #373c3f;
-	list-style: none;
-}
-.message:nth-child(odd) {
-	background-color: var(--color-grey-light-2);
-}
-.message:nth-child(even) {
-	background-color: var(--color-white-1);
-}
-.subject-text {
-	font-weight: bold;
-	font-size: 1.3rem;
-}
-.subject-text:after {
-	content: ':';
-}
-.md-details {
-	margin-left: 2.6rem;
-	color: var(--color-grey-dark-2);
-}
-.md {
-	margin-left: 2.6rem;
-	font-size: 1.5rem;
-}
-.flat-list {
-	font: normal x-small verdana, arial, helvetica, sans-serif;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	display: flex;
-}
-.flat-list li {
-	margin: 1rem;
-	font-size: 1rem;
-	font-weight: bold;
-}
-.flat-list li a,
-.link {
-	color: var(--color-grey-dark-2);
-	cursor: pointer;
-}
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.sure-block {
-	color: var(--color-red-dark-1);
 }
 </style>
