@@ -1,11 +1,12 @@
 <template>
 	<nav>
-		<div class="basecontainer">
-			<ul>
+		<div class="basecontainer" id="profile-nav-bar-container">
+			<ul id="profile-nave-bar">
 				<li
 					v-for="profileLink in viewedLinks"
 					:key="profileLink.id"
 					:class="{ active: profileLink.active }"
+					:id="`viewed-profile-link-${profileLink.linkName}`"
 				>
 					<router-link
 						:to="`/user/${userName}` + profileLink.path"
@@ -36,6 +37,7 @@
 				v-for="profileLink in hiddenLinks"
 				:key="profileLink.id"
 				:class="{ active: profileLink.active }"
+				:id="`hidden-profile-link-${profileLink.linkName}`"
 			>
 				<router-link
 					:to="$route.path + profileLink.path"
