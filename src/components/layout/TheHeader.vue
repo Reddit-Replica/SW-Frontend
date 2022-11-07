@@ -560,7 +560,8 @@ export default {
 	},
 	computed: {
 		userName() {
-			return this.$store.getters.getUserName;
+			// return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 	},
 };

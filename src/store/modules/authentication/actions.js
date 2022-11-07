@@ -67,12 +67,9 @@ export default {
 		const responseData = await response.json();
 
 		if (response.ok) {
-			console.log(response);
-			console.log(responseData);
-			console.log(responseData.token);
 			if (responseData.token && responseData.username) {
-				console.log(responseData.token);
-				console.log(responseData.username);
+				localStorage.setItem('accessToken', responseData.token);
+				localStorage.setItem('userName', responseData.username);
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
