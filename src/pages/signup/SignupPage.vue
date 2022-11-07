@@ -61,7 +61,9 @@
 					<div class="register-bottom">
 						Already a redditor?
 
-						<li><router-link to="/login">Log In </router-link></li>
+						<li>
+							<router-link to="/login">Log In </router-link>
+						</li>
 					</div>
 				</form>
 			</div>
@@ -86,7 +88,9 @@
 							type="text"
 							v-model="username"
 						/>
-						<span class="animation-email">UserName</span>
+						<span class="animation-email usr-pass-anmie"
+							>Choose A username</span
+						>
 						<span
 							v-if="showSignuser"
 							:class="checkedUser ? 'correct-check-usr' : 'wrong-check-usr'"
@@ -103,26 +107,32 @@
 							type="password"
 							v-model="password"
 							:class="messageErrorShowPass ? 'red-border' : ''"
+							@focusout="validatepass"
 						/>
-						<span class="animation-email">Password</span>
+						<span class="animation-email usr-pass-anmie">Password</span>
 						<span
 							v-if="showSignPass"
-							:class="checkedPass ? 'wrong-check-usr' : 'wrong-check-usr'"
+							:class="checkedPass ? 'correct-check-pass' : 'wrong-check-pass'"
 						></span>
 
 						<div class="username-error-message" v-if="messageErrorShowPass">
 							{{ error_message_pass }}
 						</div>
 					</fieldset>
+					<TheRecaptcha id="repatcha" v-if="showRepatcha" />
 				</form>
 			</div>
 		</div>
 		<div class="bottom-div" v-if="bottom_div">
-			<button class="back-bottom" @click="togglepages">Back</button>
+			<button id="back-button" class="back-bottom" @click="togglepages">
+				Back
+			</button>
 			<button
+				id="signup-button"
 				class="submit-signup signup-page2"
 				type="submit"
 				data-step="username-and-password"
+				@click.prevent="handleSignClick"
 			>
 				Sign Up
 			</button>
@@ -131,8 +141,12 @@
 </template>
 
 <script>
+// var check_email = false;
+// var check_user = false;
+// var check_pass = false;
 import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
 import facebookSigninButton from '../../components/facebookSigninButton.vue';
+import TheRecaptcha from '../../components/TheRecaptcha.vue';
 export default {
 	data() {
 		return {
@@ -152,10 +166,15 @@ export default {
 			error_message_user: '',
 			error_message_pass: '',
 			messageErrorShowPass: false,
+			showSignPass: false,
 			showSignuser: false,
+			checkedPass: true,
+			showRepatcha: false,
 		};
 	},
 	methods: {
+		// @vuese
+		//Validate Email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.error_email = true;
@@ -170,8 +189,30 @@ export default {
 				this.checkedEmail = true;
 				document.querySelector('#email-input').style.border =
 					'0.5px solid #0079d3';
+				// check_email = true;
 			}
 		},
+		// @vuese
+		//Validate new password to useres
+		validatepass() {
+			if (this.password.length < 8) {
+				this.messageErrorShowPass = true;
+				this.error_message_pass = 'Password must be at least 8 characters long';
+				this.showSignPass = true;
+				this.checkedPass = false;
+				document.querySelector('#reg-password').style.border =
+					'0.5px solid #ea0027';
+			} else {
+				this.messageErrorShowPass = false;
+				this.showSignPass = true;
+				this.checkedPass = true;
+				document.querySelector('#reg-password').style.border =
+					'0.5px solid #0079d3';
+				// check_pass = true;
+			}
+		},
+		// @vuese
+		//In SignUp page to show second Page
 		handleSubmit() {
 			if (this.checkedEmail) {
 				this.togglepages();
@@ -182,6 +223,8 @@ export default {
 			this.page2 = !this.page2;
 			this.bottom_div = !this.bottom_div;
 		},
+		// @vuese
+		//Validate User Input
 		validateUser(value) {
 			this.showSignuser = false;
 			this.messageErrorShowUser = false;
@@ -217,8 +260,9 @@ export default {
 								this.showSignuser = true;
 								this.checkedUser = true;
 								this.messageErrorShowUser = false;
-								document.querySelector('#user-name').style.border =
+								document.querySelector('#regUsername').style.border =
 									'0.5px solid #0079d3';
+								// check_user = true;
 							}
 						});
 					})
@@ -227,8 +271,52 @@ export default {
 					});
 			}
 		},
+		// @vuese
+		//post new user and email and password to server
+		async handleSignClick() {
+			// if (check_email && check_pass && check_user) {
+			// fetch(this.$baseurl + '/users', {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify({
+			// 		username: this.username,
+			// 		password: this.password,
+			// 		email: this.email,
+			// 	}),
+			// })
+			// 	.then((response) => {
+			// 		if (response.ok) {
+			// 			console.log(response);
+			// 			return response.json();
+			// 		}
+			// 	})
+			// 	.then((data) => {
+			// 		console.log(data.access_token);
+			// 	})
+			// 	.catch((error) => {
+			// 		console.log(error);
+			// 	});
+
+			// }
+			const actionPayload = {
+				username: this.username,
+				password: this.password,
+				email: this.email,
+			};
+
+			try {
+				await this.$store.dispatch('signuphandle', actionPayload);
+				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+				// this.$router.replace(redirectUrl);
+			} catch (err) {
+				this.error = err;
+			}
+			// }
+		},
 	},
-	components: { GoogleSigninButton, facebookSigninButton },
+	components: { GoogleSigninButton, facebookSigninButton, TheRecaptcha },
 	watch: {
 		email(value) {
 			this.email = value;
@@ -237,6 +325,10 @@ export default {
 		username(value) {
 			this.username = value;
 			this.validateUser(value);
+		},
+		password(value) {
+			this.password = value;
+			this.showRepatcha = true;
 		},
 	},
 };
@@ -248,6 +340,7 @@ export default {
 	padding: 0;
 	box-sizing: border-box;
 }
+
 .Abd {
 	margin: 0;
 	height: 100vh;
@@ -261,6 +354,7 @@ export default {
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: normal;
 }
+
 h1 {
 	display: block;
 	margin-block-start: 0.7em;
@@ -269,12 +363,14 @@ h1 {
 	font-weight: 500;
 	line-height: 22px;
 }
+
 fieldset {
 	border: none;
 	margin: 10px 0;
 	padding: 0;
 	position: relative;
 }
+
 button {
 	display: inline-flex;
 	align-items: center;
@@ -290,6 +386,7 @@ button {
 	height: 100%;
 	overflow: hidden;
 }
+
 .back-image {
 	background-image: url('../../../img/bck.png');
 	min-height: 100%;
@@ -299,6 +396,7 @@ button {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
 .sec-largest-div {
 	align-self: center;
 	padding: 24px;
@@ -306,6 +404,7 @@ button {
 	padding-top: 5rem;
 	width: 55rem;
 }
+
 .user-agreement {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 12px;
@@ -332,27 +431,32 @@ button {
 	margin: 8px 0;
 	/* width: 60%; */
 }
+
 .log-google {
 	width: 280px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
+
 .log-google:hover {
 	background-color: var(--color-blue-2);
 	color: var(--color-white-1);
 }
+
 .page-divider {
 	align-items: center;
 	display: flex;
 	margin: 28px 0;
 }
+
 .page-divider-line {
 	width: 20%;
 	border-top: 1px solid #edeff1;
 	margin-left: 10px;
 	margin-right: 10px;
 }
+
 .page-divider-text {
 	text-transform: uppercase;
 	font-weight: 500;
@@ -360,6 +464,7 @@ button {
 	color: #878a8c;
 	font-size: 14px;
 }
+
 .input-box input {
 	position: relative;
 	transform: translateZ(0);
@@ -374,12 +479,15 @@ button {
 	margin-top: 5px;
 	outline: none;
 }
+
 .user-pass-box {
 	width: 540px;
 }
+
 .animation-email {
 	width: 55%;
 }
+
 .input-box .animation-email {
 	font-size: 10px;
 	font-weight: 600;
@@ -393,12 +501,11 @@ button {
 	line-height: 20px;
 	transition: all 0.2s ease-in-out;
 	text-transform: uppercase;
-	outline: none;
 	/* justify-content: space-between; */
 }
+
 .input-box input:focus ~ .animation-email,
 .input-box input:hover ~ .animation-email,
-.input-box input:active ~ .animation-email,
 .input-box ~ .animation-email {
 	transform: translateX(0.8px) translateY(-10px);
 	font-size: 9px;
@@ -407,6 +514,23 @@ button {
 	border-radius: 4px;
 	border-color: #24a0ed;
 }
+
+.usr-pass-anmie::after {
+	content: '\2022';
+	color: #24a0ed;
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 25px;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.user-pass-box input:focus ~ .usr-pass-anmie::after,
+.user-pass-box input:hover ~ .usr-pass-anmie::after,
+.user-pass-box ~ .usr-pass-anmie::after {
+	display: none;
+}
+
 /*.animation-email::after {
 	content: '\2713';
 	display: inline-block;
@@ -428,9 +552,11 @@ button {
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
 }
+
 .input-box .red-border {
 	border: 0.5px solid #ea0027;
 }
+
 .input-box .correct-check {
 	position: absolute;
 	z-index: 1;
@@ -441,22 +567,45 @@ button {
 	background-color: #878a8c;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
 }
+
+.input-box .correct-check-usr {
+	position: absolute;
+	z-index: 1;
+	right: 43%;
+	top: 40%;
+	height: 10px;
+	width: 12px;
+	background-color: #878a8c;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+
 .input-box .wrong-check {
 	position: absolute;
-	right: 22rem;
+	right: 43%;
 	top: 28%;
 	height: 12px;
 	width: 2px;
 	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
+
 .input-box .wrong-check-usr {
 	position: absolute;
-	right: 23rem;
-	top: 28%;
+	right: 43%;
+	top: 34%;
 	height: 12px;
 	width: 2px;
 	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
 }
+
+.input-box .wrong-check-pass {
+	position: absolute;
+	right: 43%;
+	top: 34%;
+	height: 12px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
+}
+
 .register-bottom {
 	font-family: Noto Sans, sans-serif;
 	font-size: 12px;
@@ -490,18 +639,22 @@ button {
 	width: 100%;
 	/* display: none; */
 }
+
 .div-1 {
 	border-bottom: 1px solid hsla(195, 2%, 65%, 0.36);
 }
+
 .description {
 	margin-bottom: 20px;
 }
+
 .page-header {
 	margin: 0px;
 	font-size: 18px;
 	font-weight: 100;
 	line-height: 22px;
 }
+
 .password-textInput,
 .username-textInput {
 	width: 27%;
@@ -540,12 +693,15 @@ button {
 	width: auto;
 	min-width: 155px;
 }
+
 .back-bottom {
 	border: none;
 }
+
 .submit-signup {
 	width: 60%;
 }
+
 .signup-page2 {
 	width: 3rem;
 }

@@ -123,7 +123,7 @@ export default {
 			error: '',
 			success: false,
 			//verify: false,
-			buttonDisabled: true,
+			buttonDisabled: false,
 		};
 	},
 	methods: {
