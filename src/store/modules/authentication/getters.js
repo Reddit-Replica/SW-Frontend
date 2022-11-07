@@ -1,12 +1,11 @@
 export default {
-	userId(state) {
-		return state.userId;
+	getUserName(state) {
+		console.log(state.userName);
+		return state.userName;
 	},
-	token(state) {
-		return state.token;
-	},
-	isAuthenticated(state) {
-		return !!state.token;
+	getAccessToken(state) {
+		console.log(state.accessToken);
+		return state.accessToken;
 	},
 	// didAutoLogout(state) {
 	// 	return state.didAutoLogout;

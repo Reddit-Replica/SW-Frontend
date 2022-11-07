@@ -16,7 +16,10 @@ export default {
 		);
 
 		const responseData = await response.json();
-		console.log(responseData);
+		if (response.ok) {
+			console.log(responseData);
+			console.log(response.headers.accessToken);
+		}
 
 		if (!response.ok) {
 			const error = new Error(responseData.error);
@@ -67,15 +70,22 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
 
-		if (!response.ok) {
+		if (response.ok) {
+			console.log(response);
+			console.log(responseData);
+			console.log(responseData.token);
+			if (responseData.token && responseData.username) {
+				console.log(responseData.token);
+				console.log(responseData.username);
+				context.commit('setUser', {
+					userName: responseData.username,
+					accessToken: responseData.token,
+				});
+			}
+		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;
 		}
-		context.commit('setUser', {
-			userName: userInfo.username,
-			accessToken: responseData.split(' ')[1],
-		});
 	},
 };

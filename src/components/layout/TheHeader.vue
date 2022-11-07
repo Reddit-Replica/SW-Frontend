@@ -387,9 +387,9 @@
 				<span class="header-user-nav-online" />
 
 				<div class="header-user-nav-user">
-					<span class="header-user-nav-user-name" id="user-name"
-						>asmaaadel0</span
-					>
+					<span class="header-user-nav-user-name" id="user-name">{{
+						userName
+					}}</span>
 					<svg
 						class="header-user-nav-icon header-icon-user"
 						id="arrod-down-user-name"
@@ -556,6 +556,11 @@ export default {
 		// Used to go to user page
 		goToUserPage() {
 			this.$router.push('/user/abdelhamed');
+		},
+	},
+	computed: {
+		userName() {
+			return this.$store.getters['auth/getUserName'];
 		},
 	},
 };

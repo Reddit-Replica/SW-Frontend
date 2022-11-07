@@ -186,8 +186,7 @@ export default {
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
 
-				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-				// this.$router.replace(redirectUrl);
+				this.$router.replace('/main');
 			} catch (err) {
 				this.error = err;
 			}
