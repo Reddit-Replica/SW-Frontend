@@ -56,6 +56,7 @@
 					</p>
 					<div>
 						<base-button
+							id="reset-btn"
 							button-text="Reset password"
 							:disable-button="buttonIsactive"
 							class="button-class"
@@ -64,21 +65,26 @@
 						</base-button>
 					</div>
 					<div class="forgot-link">
-						<router-link to="/forgetUsernamepage" class="link"
+						<router-link
+							to="/forgetUsernamepage"
+							class="link"
+							id="forget-username"
 							>forgot username?</router-link
 						>
 					</div>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
-							<a class="link">Get Help </a></label
+							<a class="link" id="help">Get Help </a></label
 						>
 					</div>
 				</form>
 				<div class="">
-					<router-link to="/login" class="link">Log in</router-link>
+					<router-link to="/login" class="link" id="login">Log in</router-link>
 					<span class="linkSeparator">•</span>
-					<router-link to="/signup" class="link">Sign Up</router-link>
+					<router-link to="/signup" class="link" id="signup"
+						>Sign Up</router-link
+					>
 					<!-- <button @click="test">test</button> -->
 				</div>
 			</div>
