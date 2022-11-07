@@ -10,11 +10,11 @@
 			</p>
 			<div class="d-flex flex-row big-box">
 				<div class="d-flex flex-column vote-box">
-					<div class="upvote" @click="upvote" :id="'up-vote-box-' + message.id">
+					<div class="upvote" @click="upvote" :id="'up-vote-box-' + index">
 						<svg
 							class="icon p-1"
 							:class="upClicked ? 'up-clicked' : ''"
-							:id="'up-vote-' + message.id"
+							:id="'up-vote-' + index"
 						>
 							<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 						</svg>
@@ -22,12 +22,12 @@
 					<div
 						class="downvote"
 						@click="downvote"
-						:id="'down-vote-box-' + message.id"
+						:id="'down-vote-box-' + index"
 					>
 						<svg
 							class="icon p-1"
 							:class="downClicked ? 'down-clicked' : ''"
-							:id="'down-vote-' + message.id"
+							:id="'down-vote-' + index"
 						>
 							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
 						</svg>
@@ -37,12 +37,12 @@
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
-							><a href="" :id="'message-sender-' + message.id">{{
+							><a href="" :id="'message-sender-' + index">{{
 								message.senderUsername
 							}}</a>
 							<span
 								><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
-								<a href="" :id="'message-receiver-' + message.id">{{
+								<a href="" :id="'message-receiver-' + index">{{
 									message.subredditName
 								}}</a>
 							</span></span
@@ -51,26 +51,24 @@
 					</p>
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list ul-messages">
-						<li :id="'context-link-' + message.id">
-							<a href="" :id="'context-a-' + message.id">context</a>
+						<li :id="'context-link-' + index">
+							<a href="" :id="'context-a-' + index">context</a>
 						</li>
-						<li :id="'full-comment-link-' + message.id">
-							<a href="" :id="'full-comment-a-' + message.id"
-								>Full Comments(5)</a
-							>
+						<li :id="'full-comment-link-' + index">
+							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
 						</li>
-						<li :id="'report-box-' + message.id">
-							<a href="" :id="'report-' + message.id">Report</a>
+						<li :id="'report-box-' + index">
+							<a href="" :id="'report-' + index">Report</a>
 						</li>
-						<li :id="'block-' + message.id">
+						<li :id="'block-' + index">
 							<span
 								class="sure-block"
 								v-if="blockUser"
-								:id="'block-user-span-' + message.id"
+								:id="'block-user-span-' + index"
 								>are you sure?
 								<span
 									class="link"
-									:id="'yes-block-user-' + message.id"
+									:id="'yes-block-user-' + index"
 									@click="blockAction('yes')"
 									>Yes</span
 								>
@@ -78,7 +76,7 @@
 								<span
 									class="link"
 									@click="blockAction()"
-									:id="'no-block-user-' + message.id"
+									:id="'no-block-user-' + index"
 									>No</span
 								></span
 							>
@@ -87,21 +85,17 @@
 								class="link"
 								v-else
 								@click="blockAction()"
-								:id="'block-user-' + message.id"
+								:id="'block-user-' + index"
 								>Block User</span
 							>
 						</li>
-						<li
-							@click="unreadAction()"
-							v-if="isRead"
-							:id="'unread-' + message.id"
-						>
-							<span class="link" :id="'mark-un-read-' + message.id"
+						<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
+							<span class="link" :id="'mark-un-read-' + index"
 								>Mark Unread</span
 							>
 						</li>
-						<li :id="'reply-box-' + message.id">
-							<span class="link" :id="'reply-' + message.id">Reply</span>
+						<li :id="'reply-box-' + index">
+							<span class="link" :id="'reply-' + index">Reply</span>
 						</li>
 					</ul>
 				</div>
@@ -117,7 +111,7 @@ export default {
 		//details of message
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
 				id: '',
 				text: '',
@@ -133,11 +127,18 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handel background color
+		//counter to handle background color
 		count: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 1,
+		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			required: true,
+			default: 0,
 		},
 	},
 	data() {
