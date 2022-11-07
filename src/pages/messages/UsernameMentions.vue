@@ -2,10 +2,11 @@
 	<div>
 		<div>
 			<user-mentions
-				v-for="message in userMentions"
+				v-for="(message, index) in userMentions"
 				:count="++count"
 				:key="message"
 				:message="message"
+				:index="index"
 			></user-mentions>
 		</div>
 		<div class="no-messages" v-if="noMessages">

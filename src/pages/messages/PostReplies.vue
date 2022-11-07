@@ -2,10 +2,11 @@
 	<div>
 		<div>
 			<postreply-component
-				v-for="message in postReplies"
+				v-for="(message, index) in postReplies"
 				:count="++count"
 				:key="message"
 				:message="message"
+				:index="index"
 			></postreply-component>
 		</div>
 		<div class="no-messages" v-if="noMessages">

@@ -2,9 +2,10 @@
 	<div>
 		<div>
 			<allinbox-component
-				v-for="message in unreadMessages"
+				v-for="(message, index) in unreadMessages"
 				:key="message"
 				:message="message"
+				:index="index"
 			></allinbox-component>
 		</div>
 		<div class="no-messages" v-if="noMessages">
