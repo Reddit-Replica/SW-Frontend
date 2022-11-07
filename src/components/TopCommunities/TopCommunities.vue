@@ -2,7 +2,10 @@
 	<div class="topCommunities">
 		<div :style="style" class="topCommunitiesTitleBlock">
 			<h2 class="topCommunitiesTitle">
-				<a :href="topCommunitiesLink" class="topCommunitiesLink"
+				<a
+					:href="topCommunitiesLink"
+					class="topCommunitiesLink"
+					id="top-communities-link"
 					>Top <span>{{ topCommunitiesCaption }}</span> Communities</a
 				>
 			</h2>
@@ -24,6 +27,7 @@
 				to="/"
 				class="viewAll"
 				button-text="View All"
+				id="view-all-top-communities"
 			></base-button>
 		</div>
 		<div class="topCommunitiesRecommendations">
@@ -31,6 +35,7 @@
 				class="topRecommendations"
 				v-for="recommendation in topCommunitiesRecommendations"
 				:key="recommendation.id"
+				:id="recommendation.name"
 			>
 				<base-button
 					class="Recommendation"

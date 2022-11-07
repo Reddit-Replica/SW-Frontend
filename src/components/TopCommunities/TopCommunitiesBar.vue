@@ -6,6 +6,7 @@
 			top-communities-caption="Games"
 			top-communities-link="https://www.google.com/"
 			:top-communities-recommendations="topCommunitiesRecommendations"
+			id="top-comm-main-bar"
 		></top-communities>
 	</div>
 </template>
