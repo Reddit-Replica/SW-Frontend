@@ -15,6 +15,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -47,6 +48,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -77,6 +79,7 @@ export default {
 			const mention = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -107,6 +110,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				senderUsername: responseData[key].children[0].senderUsername,
 				receiverUsername: responseData[key].children[0].receiverUsername,
@@ -134,6 +138,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -164,6 +169,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				receiverUsername: responseData[key].children[0].receiverUsername,
 				subject: responseData[key].children[0].subject,
