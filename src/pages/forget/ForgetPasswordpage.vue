@@ -156,6 +156,7 @@ export default {
 			const actionPayload = {
 				username: this.userName,
 				email: this.emailAddress,
+				baseurl: this.$baseurl,
 			};
 
 			try {

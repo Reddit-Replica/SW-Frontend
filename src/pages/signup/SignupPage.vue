@@ -304,6 +304,7 @@ export default {
 				username: this.username,
 				password: this.password,
 				email: this.email,
+				baseurl: this.$baseurl,
 			};
 
 			try {
