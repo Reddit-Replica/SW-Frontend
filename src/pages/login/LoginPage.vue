@@ -181,13 +181,13 @@ export default {
 			const actionPayload = {
 				username: this.username,
 				password: this.password,
+				baseurl: this.$baseurl,
 			};
 
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
-
-				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-				// this.$router.replace(redirectUrl);
+				// const response =localStorage.getItem('response');
+				this.$router.replace('/main');
 			} catch (err) {
 				this.error = err;
 			}
