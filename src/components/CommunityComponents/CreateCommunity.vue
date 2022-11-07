@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="create-community-form">
 		<base-dialog
 			:show="createCommunityShown"
 			@close="hidecreateCommunity"
