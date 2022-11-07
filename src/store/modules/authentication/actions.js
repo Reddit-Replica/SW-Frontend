@@ -17,18 +17,13 @@ export default {
 
 		const responseData = await response.json();
 		if (response.ok) {
+			console.log(response);
 			console.log(responseData);
-			console.log(response.headers.accessToken);
-		}
-
-		if (!response.ok) {
+			console.log(responseData.token);
+		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;
 		}
-		context.commit('setUser', {
-			userName: userInfo.username,
-			accessToken: responseData.split(' ')[1],
-		});
 	},
 	async signuphandle(context, payload) {
 		const userInfo = {
@@ -81,6 +76,7 @@ export default {
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
+					response: response,
 				});
 			}
 		} else if (!response.ok) {
