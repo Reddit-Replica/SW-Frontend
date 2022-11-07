@@ -16,7 +16,8 @@
 |Method|Description|Parameters|
 |---|---|---|
 |deleteAction|toggle delete action|-|
-|blockAction|toggle block action|-|
+|blockAction|handle block action|-|
+|unreadAction|handle unread action|-|
 |expand|expand or collapse message details|-|
 
 <!-- @vuese:MessagesComponent:methods:end -->
