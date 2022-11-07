@@ -41,15 +41,26 @@ export default {
 
 		const responseData = await response.json();
 		console.log(responseData);
-
+		console.log(response.ok);
+		if (response.ok) {
+			if (responseData.token && responseData.username) {
+				localStorage.setItem('accessToken', responseData.token);
+				localStorage.setItem('userName', responseData.username);
+				context.commit('setUser', {
+					userName: responseData.username,
+					accessToken: responseData.token,
+					response: response,
+				});
+			}
+		}
 		if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;
 		}
-		context.commit('setUser', {
-			userName: userInfo.username,
-			accessToken: responseData.split(' ')[1],
-		});
+		// context.commit('setUser', {
+		// 	userName: userInfo.username,
+		// 	accessToken: responseData.split(' ')[1],
+		// });
 	},
 	async loginhandle(context, payload) {
 		const userInfo = {
