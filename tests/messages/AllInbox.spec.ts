@@ -1,8 +1,10 @@
 import { mount } from '@vue/test-utils';
 import AllInbox from '../../src/components/MessageComponents/AllinboxComponent.vue';
 import { describe, it, expect } from 'vitest';
-// import Vue from 'vue';
 
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
 describe('AllInbox.vue', () => {
 	it('should render', () => {
 		const wrapper = mount(AllInbox);
