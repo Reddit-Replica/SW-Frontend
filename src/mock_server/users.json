@@ -420,7 +420,7 @@
 		"banner": "string",
 		"picture": "string",
 		"karma": 10,
-		"cakeDate": "2019-08-24",
+		"cakeDate": "2019-01-24",
 		"socialLinks": [
 			{
 				"type": "Reddit",
@@ -429,11 +429,11 @@
 			},
 			{
 				"type": "Twitter",
-				"displayText": "abdo",
+				"displayText": "abdok",
 				"link": "http:/google.com"
 			}
 		],
-		"nsfw": true,
+		"nsfw": false,
 		"followed": true,
 		"blocked": true,
 		"moderatorOf": [
