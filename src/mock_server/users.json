@@ -567,6 +567,11 @@
       "block": true,
       "username": "/u/hoda_gamal",
       "id": 26
+    },
+    {
+      "block": true,
+      "username": "/u/hoda_gamal",
+      "id": 27
     }
   ],
   "delete": [],
@@ -651,9 +656,9 @@
     ]
   },
   "social-link": {
-    "type": "Facebook",
-    "displayText": "kjbjh",
-    "link": "http://hvjhvh.com"
+    "type": "Twitter",
+    "displayText": "hgfvct",
+    "link": "https://twitter.com/hgfvct"
   },
   "user1": {
     "displayName": "Abdalhameed_Emad",
