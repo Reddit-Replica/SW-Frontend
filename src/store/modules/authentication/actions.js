@@ -56,7 +56,7 @@ export default {
 			throw error;
 		}
 	},
-	async ressethandle(context, payload) {
+	async resethandle(context, payload) {
 		const userInfo = {
 			newPassword: payload.password,
 			verifyPassword: payload.passwordVerify,
@@ -66,7 +66,8 @@ export default {
 		const token = payload.token;
 		console.log(id);
 		console.log(token);
-
+		console.log(userInfo);
+		//console.log(useri)
 		const response = await fetch(
 			baseurl + '/reset-password/' + id + '/' + token,
 			{
@@ -77,6 +78,9 @@ export default {
 		);
 
 		const responseData = await response.json();
+		console.log(response);
+		console.log(responseData);
+		//console.log(responseData.token);
 		if (response.ok) {
 			console.log(response);
 			console.log(responseData);
