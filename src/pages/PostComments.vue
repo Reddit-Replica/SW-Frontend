@@ -402,7 +402,7 @@
 													params: { userName: this.$store.getters.getUserName },
 												}"
 												id="user-router"
-												>mena</router-link
+												>{{ userName }}</router-link
 											>
 										</div>
 										<div
@@ -649,6 +649,7 @@
 													class="comment-button"
 													:disable-button="noComment"
 													id="comment-in-mark-down-mode"
+													@click="writeNewComment"
 													>Comment</base-button
 												>
 											</div>
@@ -676,6 +677,7 @@
 													Switch to Fancy Pants Editor
 												</div>
 												<base-button
+													@click="writeNewComment"
 													class="comment-button"
 													:disable-button="noComment"
 													id="comment"
@@ -707,6 +709,11 @@
 								</div>
 							</div>
 							<div class="post-comments">
+								<my-comment
+									v-for="userComment in userComments"
+									:key="userComment"
+									:comment="userComment"
+								></my-comment>
 								<nested-reply
 									v-for="comment in comments"
 									:key="comment.userName + comment.duration"
@@ -727,11 +734,13 @@
 import SubMenu from '../components/BaseComponents/SubMenu.vue';
 import NestedReply from '../components/NestedReply.vue';
 import SubredditInfo from '../components/SubredditInfo.vue';
+import MyComment from '../components/MyComment.vue';
 export default {
 	components: {
 		SubMenu,
 		NestedReply,
 		SubredditInfo,
+		MyComment,
 	},
 	data() {
 		return {
@@ -741,7 +750,6 @@ export default {
 			postName:
 				'Can you guys help me finish my code or at least help me find the solution, I really tried to google it but I just can not find it and as I said I am still new.',
 			subredditName: 'r/learnprogramming',
-			userName: 'u/VolodymyrDev',
 			duration: '1 day',
 			postDescription:
 				'I suck at programming. Always feel like I am behind everyone in my classes but I absolutely love the material. I have dreams about solutions and think about how to fix problems all day long…but I suck at it.',
@@ -784,6 +792,7 @@ export default {
 						'Yoo! Congratulations deeply, I admire those who have the work ethic to do this self-taught, especially in such a short span of time. Do you mind if I ask what projects you had/have?',
 				},
 			],
+			userComments: [],
 		};
 	},
 	computed: {
@@ -791,8 +800,21 @@ export default {
 			if (this.newComment == '') return true;
 			return false;
 		},
+		userName() {
+			return this.$store.getters.getUserName;
+		},
 	},
 	methods: {
+		writeNewComment() {
+			let write = {
+				userName: this.$store.getters.getUserName,
+				duration: 'just now',
+				content: this.newComment,
+				replies: [],
+			};
+			this.userComments.unshift(write);
+			this.newComment = '';
+		},
 		changeSortByTitle(title) {
 			this.sortByTitle = title;
 			this.$router.push('/comments/' + title);
