@@ -89,6 +89,8 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// validate email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -101,6 +103,8 @@ export default {
 				this.invalidEmail = false;
 			}
 		},
+		// @vuese
+		// handle form submission
 		async handleSubmit() {
 			const actionPayload = {
 				email: this.emailAddress,
@@ -122,12 +126,16 @@ export default {
 				this.success = false;
 			}
 		},
+		// @vuese
+		// enable button after recaptcha is verified
 		verifyRec() {
 			console.log('verified 2');
 			this.buttonDisabled = false;
 		},
 	},
 	watch: {
+		// @vuese
+		// watch emailAddress
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);
