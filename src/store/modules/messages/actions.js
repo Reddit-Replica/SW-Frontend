@@ -1,8 +1,13 @@
 export default {
 	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/message/inbox');
+		const response = await fetch(baseurl + '/message/inbox', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -34,8 +39,13 @@ export default {
 
 	async loadUnreadMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/message/unread');
+		const response = await fetch(baseurl + '/message/unread', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -66,7 +76,13 @@ export default {
 	},
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/mentions');
+		const response = await fetch(baseurl + '/message/mentions', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -97,7 +113,13 @@ export default {
 	},
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/messages');
+		const response = await fetch(baseurl + '/message/messages', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -125,7 +147,13 @@ export default {
 	},
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/post-reply');
+		const response = await fetch(baseurl + '/message/post-reply', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -156,7 +184,13 @@ export default {
 	},
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/sent');
+		const response = await fetch(baseurl + '/message/sent', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -191,7 +225,10 @@ export default {
 
 		const response = await fetch(baseurl + '/message/compose', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
@@ -214,7 +251,10 @@ export default {
 
 		const response = await fetch(baseurl + '/unread-message', {
 			method: 'patch',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			body: JSON.stringify(message),
 		});
 
@@ -236,7 +276,10 @@ export default {
 
 		const response = await fetch(baseurl + '/block-user', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			body: JSON.stringify(block),
 		});
 
@@ -258,7 +301,10 @@ export default {
 
 		const response = await fetch(baseurl + '/delete', {
 			method: 'DELETE',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			body: JSON.stringify(del),
 		});
 
@@ -281,7 +327,10 @@ export default {
 
 		const response = await fetch(baseurl + '/mark-spam', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			body: JSON.stringify(spam),
 		});
 
