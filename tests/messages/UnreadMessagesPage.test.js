@@ -1,14 +1,15 @@
-import {mount} from '@vue/test-utils';
 import {shallowMount} from '@vue/test-utils';
-import MessagesInbox from '../../src/pages/messages/MessagesInbox.vue';
-import Vuex from 'vuex';
+import UnreadInbox from '../../src/pages/messages/UnreadInbox.vue';
 import store from '../../src/store/index.js';
 
 import {describe, it, expect} from 'vitest';
-describe ('MessagesInbox', () => {
+describe ('UnreadInbox', () => {
   const message = {
     id: 2,
     text: 'hello asmaa',
+    type: 'Messages',
+    subredditName: 'subredditName',
+    postTitle: 'postTitle',
     senderUsername: '/u/hoda_gamal',
     receiverUsername: '/u/asmaaadel0',
     subject: 'hi',
@@ -16,8 +17,8 @@ describe ('MessagesInbox', () => {
     isReply: false,
     isRead: true,
   };
-  it ('should renders if MessagesInbox content is correct', () => {
-    const wrapper = shallowMount (MessagesInbox, {
+  it ('should renders if UnreadInbox content is correct', () => {
+    const wrapper = shallowMount (UnreadInbox, {
       props: {
         message,
       },

@@ -1,23 +1,18 @@
-import {mount} from '@vue/test-utils';
 import {shallowMount} from '@vue/test-utils';
-import MessagesInbox from '../../src/pages/messages/MessagesInbox.vue';
-import Vuex from 'vuex';
+import SentMessages from '../../src/pages/messages/SentMessages.vue';
 import store from '../../src/store/index.js';
 
 import {describe, it, expect} from 'vitest';
-describe ('MessagesInbox', () => {
+describe ('SentMessages', () => {
   const message = {
     id: 2,
     text: 'hello asmaa',
-    senderUsername: '/u/hoda_gamal',
     receiverUsername: '/u/asmaaadel0',
     subject: 'hi',
     sendAt: '2019-08-24T14:15:22Z',
-    isReply: false,
-    isRead: true,
   };
-  it ('should renders if MessagesInbox content is correct', () => {
-    const wrapper = shallowMount (MessagesInbox, {
+  it ('should renders if SentMessages content is correct', () => {
+    const wrapper = shallowMount (SentMessages, {
       props: {
         message,
       },
