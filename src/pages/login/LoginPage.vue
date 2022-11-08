@@ -163,28 +163,6 @@ export default {
 					'0.5px solid #0079d3';
 			}
 		},
-		//else {
-		// 		fetch(this.$baseurl + '/userTest')
-		// 			.then((response) => {
-		// 				if (response.ok) {
-		// 					return response.json();
-		// 				}
-		// 			})
-		// 			.then((data) => {
-		// 				data.forEach((element) => {
-		// 					if (element.username == this.username) {
-		// 						this.showSignuser = true;
-		// 						this.checkedUser = true;
-		// 						document.querySelector('#user-name').style.border =
-		// 							'0.5px solid #0079d3';
-		// 					}
-		// 				});
-		// 			})
-		// 			.catch((error) => {
-		// 				console.log(error);
-		// 			});
-		// 	}
-		// },
 		// @vuese
 		// posting username and password and wait for token
 		async handleSubmit() {
@@ -196,10 +174,9 @@ export default {
 
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
-				//const response = localStorage.getItem('response');
-				const response = this.$cookies.get('response');
+				const response = localStorage.getItem('response');
+				// // console.log(response);
 				// console.log(response);
-				console.log(response);
 				if (response == 200) {
 					this.$router.replace('/main');
 				}

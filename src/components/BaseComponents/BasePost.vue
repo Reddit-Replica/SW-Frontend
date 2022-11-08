@@ -31,9 +31,16 @@
 		</div>
 
 		<!-- section to display post information -->
-		<div class="post-content">
+		<div class="post-content" @click="showPostComments">
 			<router-link
-				:to="{ name: 'post', params: { postName: post.postName } }"
+				:to="{
+					name: 'comments',
+					params: {
+						postName: post.postName,
+						subredditName: post.subredditName,
+						postId: id,
+					},
+				}"
 				id="post-router"
 			>
 				<div class="subreddit-info">
@@ -288,8 +295,10 @@
 </template>
 <script>
 export default {
+	emits: ['showComments'],
 	data() {
 		return {
+			id: 1,
 			counter: this.post.voteCount,
 			upClicked: false,
 			downClicked: false,
@@ -306,6 +315,9 @@ export default {
 		},
 	},
 	methods: {
+		showPostComments() {
+			this.$emit('showComments');
+		},
 		upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
