@@ -32,6 +32,30 @@
 
 		<!-- section to display post information -->
 		<div class="post-content" @click="showPostComments">
+			<div class="subreddit-info">
+				<span class="subreddit-image"
+					><img src="../../../img/user-image.jpg" alt=""
+				/></span>
+				<span class="subreddit-name">
+					<router-link
+						:to="{
+							name: 'subreddit',
+							params: { subredditName: post.subredditName },
+						}"
+						id="subreddit-router"
+						>{{ post.subredditName }}
+					</router-link>
+				</span>
+				<span>
+					. Posted by .
+					<router-link
+						:to="{ name: 'user', params: { userName: post.userName } }"
+						id="post-by-router"
+					>
+						{{ post.userName }} </router-link
+					>&nbsp;{{ post.duration }} ago
+				</span>
+			</div>
 			<router-link
 				:to="{
 					name: 'comments',
@@ -43,30 +67,6 @@
 				}"
 				id="post-router"
 			>
-				<div class="subreddit-info">
-					<span class="subreddit-image"
-						><img src="../../../img/user-image.jpg" alt=""
-					/></span>
-					<span class="subreddit-name">
-						<router-link
-							:to="{
-								name: 'subreddit',
-								params: { subredditName: post.subredditName },
-							}"
-							id="subreddit-router"
-							>{{ post.subredditName }}
-						</router-link>
-					</span>
-					<span>
-						. Posted by .
-						<router-link
-							:to="{ name: 'user', params: { userName: post.userName } }"
-							id="post-by-router"
-						>
-							{{ post.userName }} </router-link
-						>&nbsp;{{ post.duration }} ago
-					</span>
-				</div>
 				<div class="post-title">
 					<h3>{{ post.postName }}</h3>
 				</div>
@@ -77,38 +77,50 @@
 						}}
 					</p>
 				</div>
-				<div class="post-services">
-					<span class="vote-services vote-box">
-						<span class="upvote" @click="upvote" id="upvote-service">
-							<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
-								<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
-							</svg>
-							<svg class="icon icon-shift" v-else>
-								<use xlink:href="../../../img/shift.svg#icon-shift"></use>
-							</svg>
-						</span>
-						<span
-							class="p-2 vote-count"
-							:class="
-								upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''
-							"
-							>{{ counter }}</span
-						>
-						<span class="downvote" @click="downvote" id="downvote-service">
-							<svg
-								class="icon icon-arrow-down p-1"
-								:class="downClicked ? 'down-clicked' : ''"
-								v-if="downClicked"
-							>
-								<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
-							</svg>
-							<svg class="icon icon-shift" v-else>
-								<use xlink:href="../../../img/shift.svg#icon-shift"></use>
-							</svg>
-						</span>
+			</router-link>
+			<div class="post-services">
+				<span class="vote-services vote-box">
+					<span class="upvote" @click="upvote" id="upvote-service">
+						<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
+							<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
+						</svg>
+						<svg class="icon icon-shift" v-else>
+							<use xlink:href="../../../img/shift.svg#icon-shift"></use>
+						</svg>
 					</span>
-					<ul class="services">
-						<li>
+					<span
+						class="p-2 vote-count"
+						:class="
+							upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''
+						"
+						>{{ counter }}</span
+					>
+					<span class="downvote" @click="downvote" id="downvote-service">
+						<svg
+							class="icon icon-arrow-down p-1"
+							:class="downClicked ? 'down-clicked' : ''"
+							v-if="downClicked"
+						>
+							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
+						</svg>
+						<svg class="icon icon-shift" v-else>
+							<use xlink:href="../../../img/shift.svg#icon-shift"></use>
+						</svg>
+					</span>
+				</span>
+				<ul class="services">
+					<li>
+						<router-link
+							:to="{
+								name: 'comments',
+								params: {
+									postName: post.postName,
+									subredditName: post.subredditName,
+									postId: id,
+								},
+							}"
+							id="post-router-comment"
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -122,43 +134,98 @@
 								/>
 							</svg>
 							{{ post.commentsCount }} Comments
-						</li>
-						<li @click="showShareSubMenu" id="share">
+						</router-link>
+					</li>
+
+					<li @click="showShareSubMenu" id="share">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-arrow-90deg-right"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"
+							/>
+						</svg>
+						Share
+						<ul class="sub-menu" v-if="shareSubMenuDisplay">
+							<li>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-signpost-2"
+									viewBox="0 0 16 16"
+								>
+									<path
+										d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z"
+									/>
+								</svg>
+								Crosspost
+							</li>
+						</ul>
+					</li>
+
+					<li id="post-direct-save">
+						<div v-if="!saved" @click="savePost" id="save">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
 								height="16"
 								fill="currentColor"
-								class="bi bi-arrow-90deg-right"
+								class="bi bi-bookmark"
 								viewBox="0 0 16 16"
 							>
 								<path
-									fill-rule="evenodd"
-									d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"
+									d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
 								/>
 							</svg>
-							Share
-							<ul class="sub-menu" v-if="shareSubMenuDisplay">
-								<li>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-signpost-2"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z"
-										/>
-									</svg>
-									Crosspost
-								</li>
-							</ul>
-						</li>
-
-						<li id="post-direct-save">
-							<div v-if="!saved" @click="savePost" id="save">
+							Save
+						</div>
+						<div v-else @click="savePost" id="unsave">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								fill="currentColor"
+								class="bi bi-bookmarks"
+								viewBox="0 0 16 16"
+							>
+								<path
+									d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"
+								/>
+								<path
+									d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"
+								/>
+							</svg>
+							Unsave
+						</div>
+					</li>
+					<li @click="showSubMenu" id="submenu">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-three-dots"
+							viewBox="0 0 16 16"
+						>
+							<path
+								d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+							/>
+						</svg>
+						<ul class="sub-menu" v-if="subMenuDisplay">
+							<li
+								v-if="!saved"
+								@click="savePost"
+								class="post-sub-save"
+								id="sub-save"
+							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="16"
@@ -172,8 +239,13 @@
 									/>
 								</svg>
 								Save
-							</div>
-							<div v-else @click="savePost" id="unsave">
+							</li>
+							<li
+								v-else
+								@click="savePost"
+								class="post-sub-save"
+								id="sub-unsave"
+							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="16"
@@ -190,106 +262,47 @@
 									/>
 								</svg>
 								Unsave
-							</div>
-						</li>
-						<li @click="showSubMenu" id="submenu">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								class="bi bi-three-dots"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-								/>
-							</svg>
-							<ul class="sub-menu" v-if="subMenuDisplay">
-								<li
-									v-if="!saved"
-									@click="savePost"
-									class="post-sub-save"
-									id="sub-save"
+							</li>
+							<li @click="hidePost" id="hide">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-eye-slash"
+									viewBox="0 0 16 16"
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-bookmark"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
-										/>
-									</svg>
-									Save
-								</li>
-								<li
-									v-else
-									@click="savePost"
-									class="post-sub-save"
-									id="sub-unsave"
+									<path
+										d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"
+									/>
+									<path
+										d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"
+									/>
+									<path
+										d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
+									/>
+								</svg>
+								Hide
+							</li>
+							<li>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-flag"
+									viewBox="0 0 16 16"
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-bookmarks"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"
-										/>
-										<path
-											d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"
-										/>
-									</svg>
-									Unsave
-								</li>
-								<li @click="hidePost" id="hide">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-eye-slash"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"
-										/>
-										<path
-											d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"
-										/>
-										<path
-											d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
-										/>
-									</svg>
-									Hide
-								</li>
-								<li>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-flag"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"
-										/>
-									</svg>
-									Report
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</router-link>
+									<path
+										d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"
+									/>
+								</svg>
+								Report
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
@@ -298,7 +311,7 @@ export default {
 	emits: ['showComments'],
 	data() {
 		return {
-			id: 1,
+			id: '1',
 			counter: this.post.voteCount,
 			upClicked: false,
 			downClicked: false,
@@ -318,10 +331,20 @@ export default {
 		showPostComments() {
 			this.$emit('showComments');
 		},
-		upvote() {
+		async upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
 				this.upClicked = false;
 				this.counter--;
@@ -331,10 +354,20 @@ export default {
 				this.counter++;
 			}
 		},
-		downvote() {
+		async downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
 				this.downClicked = false;
 				this.counter++;
@@ -351,8 +384,29 @@ export default {
 		hidePost() {
 			this.postHidden = true;
 		},
-		savePost() {
+		async savePost() {
 			this.saved = !this.saved;
+			if (this.saved == true) {
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 		showShareSubMenu() {
 			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
@@ -617,5 +671,11 @@ a {
 	#awards {
 		display: none;
 	}
+}
+.services li {
+	cursor: pointer;
+}
+#post-router-comment {
+	color: var(--color-grey-dark-2);
 }
 </style>

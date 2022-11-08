@@ -5,5 +5,6 @@
   "/message/mentions": "/mentions",
   "/message/messages": "/messages",
   "/message/post-reply": "/post-reply",
-  "/message/sent": "/sent"
+  "/message/sent": "/sent",
+  "/r/subredditName": "/subredditName"
 }
