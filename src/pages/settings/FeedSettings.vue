@@ -14,7 +14,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-one"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -28,7 +28,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-two"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -41,7 +41,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-three"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -55,7 +55,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-four"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -68,7 +68,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-five"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -81,7 +81,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-six"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -95,7 +95,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-seven"></switch-button>
 				</div>
 			</div>
 			<div class="option-block">
@@ -143,10 +143,10 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-eight"></switch-button>
 				</div>
 			</div>
-			<div class="option-block">
+			<!-- <div class="option-block">
 				<div class="first-half">
 					<label>
 						<h3 class="h3-title">Global content view</h3>
@@ -193,7 +193,7 @@
 				<div class="second-half">
 					<switch-button></switch-button>
 				</div>
-			</div>
+			</div> -->
 			<div class="option-block">
 				<div class="first-half">
 					<label>
@@ -204,7 +204,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-nine"></switch-button>
 				</div>
 			</div>
 			<h3 class="h3-main-title">CONTENT PREFERENCES</h3>
@@ -219,7 +219,7 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button></switch-button>
+					<switch-button id="button-ten"></switch-button>
 				</div>
 			</div>
 		</div>
@@ -249,12 +249,12 @@ export default {
 		changeFirstChoiceItem(item) {
 			this.FirstitemChoice = item;
 		},
-		itemsMenuSecFunction() {
-			this.ShowSecitemChoice = !this.ShowSecitemChoice;
-		},
-		changeSecChoiceItem(item) {
-			this.SecitemChoice = item;
-		},
+		// itemsMenuSecFunction() {
+		// 	this.ShowSecitemChoice = !this.ShowSecitemChoice;
+		// },
+		// changeSecChoiceItem(item) {
+		// 	this.SecitemChoice = item;
+		// },
 	},
 };
 </script>
