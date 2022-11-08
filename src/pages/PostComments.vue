@@ -823,7 +823,7 @@
 						</div>
 					</div>
 					<div class="col-lg-3">
-						<div></div>
+						<subreddit-info></subreddit-info>
 					</div>
 				</div>
 			</div>
@@ -833,10 +833,12 @@
 <script>
 import SubMenu from '../components/BaseComponents/SubMenu.vue';
 import NestedReply from '../components/NestedReply.vue';
+import SubredditInfo from '../components/SubredditInfo.vue';
 export default {
 	components: {
 		SubMenu,
 		NestedReply,
+		SubredditInfo,
 	},
 	data() {
 		return {
@@ -893,7 +895,7 @@ export default {
 	},
 	computed: {
 		noComment() {
-			if (this.comment == '') return true;
+			if (this.newComment == '') return true;
 			return false;
 		},
 	},
