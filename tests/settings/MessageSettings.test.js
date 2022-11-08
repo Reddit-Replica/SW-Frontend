@@ -46,20 +46,4 @@ describe ('MessagingSettings.vue', () => {
         console.log ('Promise Rejected');
       });
   });
-
-  // it ('Testing text message is correct', () => {
-  //   const wrapper = mount (MessagingSettings, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
-  // });
 });
