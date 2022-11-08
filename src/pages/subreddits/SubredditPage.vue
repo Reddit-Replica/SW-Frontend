@@ -21,7 +21,7 @@
 					community-type="Private"
 				></about-community-bar>
 				<moderators-bar :moderators="moderators"></moderators-bar>
-				<backtotop-button></backtotop-button>
+				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
 		</div>
 	</div>
