@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="comment">
+		<div class="comment" v-if="!deleted">
 			<div class="left">
 				<div class="image">
 					<router-link
@@ -64,19 +64,24 @@
 							</svg>
 						</li>
 						<li><font-awesome-icon icon="fa-regular fa-message" /> Reply</li>
-						<li>Give Award</li>
 						<li>Share</li>
 						<li>Save</li>
 						<li @click="edit">Edit</li>
 						<li>Follow</li>
-						<li>
-							<subMenu
-								:titles="['Best', 'Top', 'New', 'Controversial', 'Old', 'Q&A']"
-								class="sort-by-sub-menu"
-								:display="showSortByMenu"
-								@change-title="changeSortByTitle"
-								clicked-prop="Best"
-							/>
+						<li @click="displaySubmenu">
+							<font-awesome-icon icon="fa-solid fa-ellipsis" />
+							<ul class="sub-menu" v-if="display">
+								<li
+									class="icon-box"
+									id="'sum-menu' + 'delete'"
+									@click="deleteComment"
+								>
+									<font-awesome-icon
+										icon="fa-regular fa-trash-can"
+										class="submenu-icon"
+									/>Delete Comment
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</div>
@@ -350,11 +355,9 @@
 </template>
 <script>
 import NestedReply from './NestedReply.vue';
-import SubMenu from './BaseComponents/SubMenu.vue';
 export default {
 	components: {
 		NestedReply,
-		SubMenu,
 	},
 	computed: {
 		noComment() {
@@ -379,9 +382,14 @@ export default {
 			newComment: this.comment.content,
 			edittedComment: '',
 			editing: false,
+			display: false,
+			deleted: false,
 		};
 	},
 	methods: {
+		displaySubmenu() {
+			this.display = !this.display;
+		},
 		upClick() {
 			if (this.downClicked) this.downClick();
 			this.upClicked = !this.upClicked;
@@ -404,6 +412,9 @@ export default {
 		saveEditing() {
 			this.editing = false;
 			this.newComment = this.edittedComment;
+		},
+		deleteComment() {
+			this.deleted = true;
 		},
 	},
 };
@@ -459,11 +470,11 @@ export default {
 	word-break: break-word;
 	color: black;
 }
-.services ul {
+.services > ul {
 	margin: 0;
 	padding: 0;
 }
-.services li {
+.services > ul > li {
 	list-style: none;
 	display: inline-block;
 	height: 24px;
@@ -475,38 +486,38 @@ export default {
 	margin: 0 4px;
 	line-height: 24px;
 }
-.services li svg.vote {
+.services > ul > li svg.vote {
 	font-weight: 400;
 	height: 20px;
 	line-height: 20px;
 	width: 20px;
 	fill: var(--color-grey-dark-9);
 }
-.services li:first-of-type:hover svg,
-.services li:first-of-type svg.icon-arrow-up {
+.services > ul > li:first-of-type:hover svg,
+.services > ul > li:first-of-type svg.icon-arrow-up {
 	fill: var(--color-red-dark-2);
 }
-.services li:nth-of-type(3):hover svg,
-.services li:nth-of-type(3) svg.icon-arrow-down {
+.services > ul > li:nth-of-type(3):hover svg,
+.services > ul > li:nth-of-type(3) svg.icon-arrow-down {
 	fill: var(--color-blue);
 }
-.services li:not(:nth-of-type(2)):hover,
-.services li.clicked {
+.services > ul > li:not(:nth-of-type(2)):hover,
+.services > ul > li.clicked {
 	background-color: #e8e8e8;
 }
-.services li:not(:nth-of-type(2)) {
+.services > ul li:not(:nth-of-type(2)) {
 	cursor: pointer;
 }
-.services li:nth-of-type(3) .icon-shift {
+.services > ul > li:nth-of-type(3) .icon-shift {
 	transform: rotate(180deg);
 }
-.services li:nth-of-type(2) {
+.services > ul > li:nth-of-type(2) {
 	color: black;
 }
-.services li:nth-of-type(2).up {
+.services > ul > li:nth-of-type(2).up {
 	color: var(--color-red-dark-2);
 }
-.services li:nth-of-type(2).down {
+.services > ul > li:nth-of-type(2).down {
 	color: var(--color-blue);
 }
 .big-box * {
@@ -919,5 +930,49 @@ textarea:focus {
 	margin-left: 8px;
 	width: auto;
 	cursor: pointer;
+}
+.sub-menu {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	background-color: white;
+	padding: 0px;
+	left: -0.5rem;
+	top: 2rem;
+	box-shadow: 0px 2px 4px var(--color-grey-dark-2);
+	border-radius: 5px;
+	z-index: 10;
+	width: max-content;
+}
+.sub-menu li {
+	color: var(--color-grey-dark-2);
+	font-size: 15px;
+	font-weight: lighter;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-bottom: var(--line);
+	width: 100%;
+}
+.sub-menu li:hover {
+	background-color: var(--color-blue-light-2);
+	color: var(--color-dark-1);
+}
+.sub-menu li {
+	padding: 0px 10px;
+	height: 34px;
+}
+.sub-menu li.clicked {
+	color: var(--color-blue-2);
+}
+.sub-menu li:last-of-type {
+	border-radius: 0 0 5px 5px;
+}
+.sub-menu li .submenu-icon {
+	margin-right: 5px;
+}
+.services > ul > li:last-of-type {
+	position: relative;
 }
 </style>
