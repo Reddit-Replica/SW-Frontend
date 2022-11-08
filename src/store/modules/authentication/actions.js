@@ -74,14 +74,15 @@ export default {
 		});
 
 		const responseData = await response.json();
-
+		localStorage.setItem('response', response.status);
+		// console.log(response.status);
 		if (response.ok) {
 			console.log(response);
 			console.log(response.status);
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				localStorage.setItem('response', response.status);
+				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
