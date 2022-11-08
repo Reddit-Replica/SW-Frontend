@@ -6,8 +6,9 @@
 			:key="title"
 			@click="clickedFunction(title)"
 			:class="{ clicked: clicked == title }"
+			:id="'sum-menu' + title"
 		>
-			<span>{{ title }}</span>
+			<span :id="'sum-menu-title' + title">{{ title }}</span>
 		</li>
 	</ul>
 </template>

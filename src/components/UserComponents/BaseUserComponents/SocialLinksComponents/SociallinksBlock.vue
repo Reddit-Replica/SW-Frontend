@@ -2,15 +2,36 @@
 	<!-- Social Link Block (social link block in profile Card) -->
 	<div>
 		<ul class="social-link" id="social-media-links">
-			<a v-for="data in socialData" :key="data.type" :href="data.link">
+			<a
+				v-for="data in socialData"
+				:key="data.type"
+				:href="data.link"
+				target="_blank"
+				:id="`social-link-${data.displayText}`"
+			>
 				<sociallink-item
 					:img-src="getImgSrc(data.type)"
 					:text="data.displayText"
 				></sociallink-item>
 			</a>
 			<li>
-				<button class="add-social-link" @click="openSocialLinkDialog">
+				<button
+					v-if="socialLinkCount < 4"
+					class="add-social-link"
+					id="add-social-link-button"
+					@click="openSocialLinkDialog"
+				>
 					<span><i class="fa-solid fa-plus" /></span>Add social link
+				</button>
+			</li>
+			<li>
+				<button
+					v-if="socialLinkCount >= 4"
+					class="add-social-link"
+					id="edit-social-link-button"
+					@click="$router.push('/settings/profile')"
+				>
+					Edit
 				</button>
 			</li>
 		</ul>
@@ -18,6 +39,7 @@
 			:show="addSocialLinkDialog"
 			@close="closeSocialLinkDialog"
 			@open="openSocialLinkDialog"
+			id="static-social-link-dialog"
 		></social-links>
 	</div>
 </template>
@@ -42,6 +64,11 @@ export default {
 		return {
 			addSocialLinkDialog: false,
 		};
+	},
+	computed: {
+		socialLinkCount() {
+			return this.socialData.length;
+		},
 	},
 	methods: {
 		/**

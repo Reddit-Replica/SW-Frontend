@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<base-button class="back-button" @click="scrollUp()"
+		<base-button class="back-button" @click="scrollUp()" id="back-to-top-button"
 			>Back to Top</base-button
 		>
 	</div>

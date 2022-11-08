@@ -12,6 +12,7 @@
 					>
 						<option
 							v-for="username in usernames"
+							:id="'message-from-options-' + username"
 							:key="username"
 							:value="username"
 						>
@@ -172,11 +173,14 @@ export default {
 		//make form validation
 		formValidation() {
 			this.delivered = false;
-			if (this.messageTo == '') {
+			console.log('to ', this.receiverUsername);
+			console.log('subject', this.subject);
+			console.log('message', this.text);
+			if (this.receiverUsername == '') {
 				this.error = 'messageTo';
 			} else if (this.subject == '') {
 				this.error = 'subject';
-			} else if (this.message == '') {
+			} else if (this.text == '') {
 				this.error = 'message';
 			} else this.error = '';
 		},

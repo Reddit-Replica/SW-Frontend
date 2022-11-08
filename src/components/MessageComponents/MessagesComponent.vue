@@ -1,42 +1,54 @@
 <template>
-	<div class="message">
+	<div class="message" :class="[disappear == true ? 'hide-message' : '']">
 		<li>
 			<p class="subject-text">
 				<a
 					href=""
-					id="message-sender"
+					:id="'message-sender-' + index"
 					class="sender-box"
 					v-if="ifMessageRecieved"
 					>{{ message.senderUsername }}</a
 				>
-				<a href="" id="message-reciever" class="reciever-box" v-else>{{
-					message.receiverUsername
-				}}</a>
+				<a
+					href=""
+					:id="'message-receiver-' + index"
+					class="reciever-box"
+					v-else
+					>{{ message.receiverUsername }}</a
+				>
 				<span>{{ message.subject }}</span>
 			</p>
 			<p class="expand-p">
-				<span class="expand" id="expand-all" @click="expand('expand')"
+				<span
+					class="expand"
+					:id="'expand-all-' + index"
+					@click="expand('expand')"
 					>expand all</span
 				>
-				<span class="expand" id="collapse-all" @click="expand('collapse')"
+				<span
+					class="expand"
+					:id="'collapse-all-' + index"
+					@click="expand('collapse')"
 					>collapse all</span
 				>
 			</p>
 			<div class="box" :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
-					<span class="sign" id="sign" @click="expand('')"
+					<span class="sign" :id="'sign-' + index" @click="expand('')"
 						>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
 					>
 					<span v-if="ifMessageRecieved">
 						<span>from&nbsp;</span>
 						<span class="sender"
-							><a href="" id="message-sender">{{ message.senderUsername }}</a>
+							><a href="" :id="'message-sender-2-' + index">{{
+								message.senderUsername
+							}}</a>
 						</span>
 					</span>
 					<span v-else>
 						<span>to&nbsp;</span>
 						<span class="reciever"
-							><a href="" id="message-reciever">{{
+							><a href="" :id="'message-reciever-2-' + index">{{
 								message.receiverUsername
 							}}</a>
 						</span>
@@ -45,24 +57,35 @@
 				</p>
 				<div v-if="expandAll">
 					<p class="md">{{ message.text }}</p>
-					<ul class="flat-list">
-						<li><a href="">Permalink</a></li>
+					<ul class="flat-list ul-messages">
+						<li :id="'permalink-' + index">
+							<a href="" :id="'permalink-linl-' + index">Permalink</a>
+						</li>
 						<li v-if="ifMessageRecieved">
 							<form action="#">
 								<input
 									type="hidden"
 									name="deleted"
-									id="delete-message"
+									:id="'delete-message-' + index"
 									value="deleted"
 								/>
 							</form>
-							<span class="sure-block" v-if="deleteUser"
+							<span
+								class="sure-block"
+								v-if="deleteUser"
+								:id="'delete-message-span-' + index"
 								>are you sure?
-								<span class="link" id="yes-delete-message">Yes</span> /
+								<span
+									class="link"
+									:id="'yes-delete-message-' + index"
+									@click="deleteAction('yes')"
+									>Yes</span
+								>
+								/
 								<span
 									class="link"
 									@click="deleteAction()"
-									id="no-delete-message"
+									:id="'no-delete-message-' + index"
 									>No</span
 								></span
 							>
@@ -71,35 +94,81 @@
 								class="link"
 								v-else
 								@click="deleteAction()"
-								id="click-delete"
+								:id="'click-delete-' + index"
 								>Delete</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved"><a href="" id="report">Report</a></li>
+						<li :id="'spam-box-' + index" v-if="ifMessageRecieved">
+							<div v-if="!spammed">
+								<span
+									class="sure-block"
+									v-if="spamUser"
+									:id="'spam-user-span-' + index"
+									>are you sure?
+									<span
+										class="link"
+										:id="'yes-spam-user-' + index"
+										@click="spamAction('yes')"
+										>Yes</span
+									>
+									/
+									<span
+										class="link"
+										@click="spamAction()"
+										:id="'no-spam-user-' + index"
+										>No</span
+									></span
+								>
+								<span
+									class="link"
+									v-else
+									@click="spamAction()"
+									:id="'click-spam-' + index"
+									>spam</span
+								>
+							</div>
+							<div v-if="spammed">spammed</div>
+						</li>
 						<li v-if="ifMessageRecieved">
-							<span class="sure-block" v-if="blockUser"
+							<span
+								class="sure-block"
+								v-if="blockUser"
+								:id="'block-user-span-' + index"
 								>are you sure?
 								<span
 									class="link"
-									id="yes-block-user"
+									:id="'yes-block-user-' + index"
 									@click="blockAction('yes')"
 									>Yes</span
 								>
 								/
-								<span class="link" @click="blockAction()" id="no-block-user"
+								<span
+									class="link"
+									@click="blockAction()"
+									:id="'no-block-user-' + index"
 									>No</span
 								></span
 							>
 							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-							<span class="link" v-else @click="blockAction()" id="block-user"
+							<span
+								class="link"
+								v-else
+								@click="blockAction()"
+								:id="'click-block-' + index"
 								>Block User</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved && isRead" @click="unreadAction()">
-							<span class="link" id="mark-un-read">Mark Unread</span>
+						<li
+							v-if="ifMessageRecieved && isRead"
+							@click="unreadAction()"
+							:id="'unread-' + index"
+						>
+							<span class="link" :id="'mark-un-read-' + index"
+								>Mark Unread</span
+							>
 						</li>
-						<li v-if="ifMessageRecieved">
-							<span class="link" id="reply">Reply</span>
+						<li v-if="ifMessageRecieved" :id="'reply-box-' + index">
+							<span class="link" :id="'reply-' + index">Reply</span>
 						</li>
 					</ul>
 				</div>
@@ -115,8 +184,9 @@ export default {
 	props: {
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
+				id: '',
 				text: '',
 				type: '',
 				senderUsername: '',
@@ -127,12 +197,22 @@ export default {
 				isRead: '',
 			}),
 		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
 	},
 	data() {
 		return {
 			deleteUser: false,
 			blockUser: false,
 			expandAll: true,
+			disappear: false,
+			spammed: false,
+			spamUser: false,
 			isRead: this.message.isRead,
 		};
 	},
@@ -140,7 +220,7 @@ export default {
 		// @vuese
 		//get username from store
 		getUserName() {
-			return this.$store.getters.getUserName;
+			return '/u/' + this.$store.getters.getUserName;
 		},
 		// @vuese
 		//check if user is reciever or sender
@@ -150,9 +230,17 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//toggle delete action
-		deleteAction() {
+		//handle delete action
+		deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/deleteMessage', {
+					id: this.message.id,
+					type: 'message',
+					baseurl: this.$baseurl,
+				});
+				this.disappear = true;
+			}
 		},
 		// @vuese
 		//handle block action
@@ -164,12 +252,27 @@ export default {
 					username: this.message.senderUsername,
 					baseurl: this.$baseurl,
 				});
+				this.disappear = true;
 			}
 		},
 		// @vuese
 		//handle unread action
 		unreadAction() {
 			this.isRead = false;
+		},
+		// @vuese
+		//handle spam action
+		spamAction(action) {
+			this.spamUser = !this.spamUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/spamMessage', {
+					id: this.message.id,
+					type: 'message',
+					reason: '',
+					baseurl: this.$baseurl,
+				});
+				this.spammed = true;
+			}
 		},
 		// @vuese
 		//expand or collapse message details

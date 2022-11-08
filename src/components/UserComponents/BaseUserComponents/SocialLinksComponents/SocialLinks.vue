@@ -1,6 +1,6 @@
 <template>
 	<!-- for showing Static Social links dialog -->
-	<div>
+	<div id="root-static-social-links">
 		<base-dialog
 			:show="show"
 			center="true"
@@ -8,7 +8,7 @@
 			@close="tryClose"
 		>
 			<template #default>
-				<div class="links-container">
+				<div class="links-container" id="static-social-links">
 					<!-- loop for showing all social links item -->
 					<sociallink-item
 						v-for="sociallinkItem in sociallinkItems"
@@ -129,5 +129,6 @@ export default {
 .links-container {
 	display: flex;
 	flex-wrap: wrap;
+	max-width: 538px;
 }
 </style>

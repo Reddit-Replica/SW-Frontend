@@ -53,7 +53,7 @@ export default {
 	color: var(--color-grey-dark-2);
 	font-size: small;
 }
-ul {
+.ul-messages {
 	list-style: none;
 	display: flex;
 	flex-flow: row wrap;
@@ -71,12 +71,12 @@ ul {
 .message-white {
 	background-color: var(--color-white-1);
 }
-/* .message:nth-child(odd) {
+.message:nth-child(odd) {
 	background-color: var(--color-grey-light-9);
 }
 .message:nth-child(even) {
 	background-color: var(--color-white-1);
-} */
+}
 .subject-text {
 	font-weight: bold;
 	font-size: 1.3rem;
@@ -101,12 +101,16 @@ ul {
 	font: normal x-small verdana, arial, helvetica, sans-serif;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	list-style: none;
 	display: flex;
+	flex-flow: row wrap;
+	width: 100%;
 }
 .flat-list li {
 	margin: 1rem;
 	font-size: 1rem;
 	font-weight: bold;
+	list-style: none;
 }
 .flat-list li a,
 .link {
@@ -145,5 +149,9 @@ div.vote-box {
 }
 .unread {
 	color: var(--color-red-dark-1);
+}
+
+.hide-message {
+	display: none;
 }
 </style>
