@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form>
+				<form @submit.prevent="handleSubmit">
 					<div class="snoo-icon"></div>
 					<h1>Recover your username</h1>
 					<p class="description">
@@ -31,23 +31,40 @@
 					</p>
 					<div>
 						<base-button
-							button-text="Reset password"
-							:disable-button="buttonIsactive"
-							class="button-class"
+							id="emailme"
+							button-text="Email Me"
+							:disable-button="buttonDisabled"
+							:class="!success ? 'button-class' : 'button-success'"
 						>
+							<span class="success" v-if="success"
+								><font-awesome-icon icon="fa-solid fa-check" />
+							</span>
 						</base-button>
 					</div>
+					<p class="invalid" v-if="!success">
+						{{ error }}
+					</p>
+					<p class="valid" v-if="success">
+						Thanks! If email address correct, you'll get an email with your
+						username.
+					</p>
+					<the-recaptcha
+						@verified="verifyRec"
+						v-if="showSignemail"
+					></the-recaptcha>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
-							<a class="link">Get Help </a></label
+							<a class="link" id="help">Get Help </a></label
 						>
 					</div>
 				</form>
 				<div class="">
-					<router-link to="/login" class="link">Log in</router-link>
+					<router-link to="/login" class="link" id="login">Log in</router-link>
 					<span class="linkSeparator">•</span>
-					<router-link to="/signup" class="link">Sign Up</router-link>
+					<router-link to="/signup" class="link" id="signup"
+						>Sign Up</router-link
+					>
 				</div>
 			</div>
 		</div>
@@ -55,14 +72,18 @@
 </template>
 
 <script>
+import TheRecaptcha from '../../components/TheRecaptcha';
 export default {
 	data() {
 		return {
-			buttonIsactive: false,
+			//buttonIsactive: false,
 			emailAddress: '',
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
+			error: '',
+			success: false,
+			buttonDisabled: true,
 		};
 	},
 	methods: {
@@ -78,6 +99,31 @@ export default {
 				this.invalidEmail = false;
 			}
 		},
+		async handleSubmit() {
+			const actionPayload = {
+				email: this.emailAddress,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('forgetuserdhandle', actionPayload);
+				const response = localStorage.getItem('response');
+				if (response == 200) {
+					console.log(response);
+					this.success = true;
+				}
+			} catch (err) {
+				//this.error = err;
+				console.log(err);
+				this.error = 'Invalid email ';
+				console.log(this.error);
+				this.success = false;
+			}
+		},
+		verifyRec() {
+			console.log('verified 2');
+			this.buttonDisabled = false;
+		},
 	},
 	watch: {
 		emailAddress(value) {
@@ -85,7 +131,7 @@ export default {
 			this.validatEmail(value);
 		},
 	},
-	components: {},
+	components: { TheRecaptcha },
 };
 </script>
 
@@ -172,6 +218,15 @@ div {
 	height: 10px;
 	width: 12px;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.success {
+	position: absolute;
+	left: 40%;
+
+	font-size: 2.5rem;
+	color: white;
+	z-index: 5;
+	opacity: 1;
 }
 .input-box .wrong-check {
 	position: absolute;
@@ -305,9 +360,48 @@ p {
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
 }
+.valid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	opacity: 1;
+	color: #0079d3;
+	transition: all 0.2s ease-in-out;
+}
 
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+}
+.button-success {
+	color: #ffffff;
+	background: var(--color-blue-2);
+	/*cursor: ;*/
+	pointer-events: none;
+	color: transparent;
+	position: relative;
+	overflow: hidden;
+	/*text-indent: -9999px;*/
+	border-radius: 4px;
+	text-align: center;
+	min-height: 35px;
+	max-width: 392px;
+	width: auto;
+	min-width: 155px;
+	padding: 5px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-height: 1000px;
+	margin-top: 2rem;
+	transition: color 0.01s ease-in, text-indent 0.25s ease-in,
+		opacity 0.25s ease-in;
 }
 </style>

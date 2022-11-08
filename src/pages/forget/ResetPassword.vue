@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form @submit.prevent="">
+				<form @submit.prevent="handleSubmit">
 					<div class="snoo-icon"></div>
 					<h1>Reset your password</h1>
 					<p class="description">
@@ -13,6 +13,7 @@
 					</p>
 					<div class="input-box">
 						<input
+							id="password"
 							type="password"
 							required="required"
 							v-model="password"
@@ -30,6 +31,7 @@
 					<div class="separate"></div>
 					<div class="input-box">
 						<input
+							id="password-verify"
 							type="password"
 							required="required"
 							v-model="passwordVerify"
@@ -46,7 +48,7 @@
 					</p>
 
 					<label class="check-box">
-						<input type="checkbox" />
+						<input type="checkbox" v-model="checked" />
 						Changing your password logs you out of all browsers on your
 						device(s). Checking this box also logs you out of all apps you have
 						authorized.
@@ -60,6 +62,8 @@
 						>
 						</base-button>
 					</div>
+					<p class="valid" v-if="success">password reset successfully</p>
+					<p class="invalid" v-if="!success">{{ error }}</p>
 				</form>
 				<div class="end">
 					<router-link to="/login" class="link">Log in</router-link>
@@ -84,7 +88,11 @@ export default {
 			invalidPasswordverify: false,
 			password: '',
 			passwordVerify: '',
+			id: this.$route.params.id,
 			token: this.$route.params.token,
+			checked: false,
+			success: null,
+			error: '',
 		};
 	},
 	methods: {
@@ -112,6 +120,28 @@ export default {
 				this.showSignpasswordverify = true;
 				this.checkedPasswordverify = true;
 				this.invalidPasswordverify = false;
+			}
+		},
+		async handleSubmit() {
+			if (this.checkedPasswordverify && this.checkedPassword) {
+				const actionPayload = {
+					password: this.password,
+					passwordVerify: this.passwordVerify,
+					id: this.id,
+					token: this.token,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('resethandle', actionPayload);
+					this.success = true;
+				} catch (err) {
+					this.error = err;
+					this.success = false;
+				}
+			} else {
+				this.error = 'make sure to fill al things';
+				this.success = false;
 			}
 		},
 	},
@@ -329,10 +359,25 @@ p {
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
 }
+.valid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	opacity: 1;
+	color: #0079d3;
+	transition: all 0.2s ease-in-out;
+}
 
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 }
 .end {
 	margin-top: 10px;

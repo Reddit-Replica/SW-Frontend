@@ -34,14 +34,15 @@ export default {
 img {
 	width: 22px;
 	height: 22px;
-	margin-left: 8px;
+	margin-left: 12px;
+	background-color: white;
 }
 .log-google {
 	align-items: center;
 	justify-content: space-between;
 	display: flex;
 	height: 50px;
-	width: 280px;
+	width: 300px;
 	margin: 8px 8px;
 	padding: 4.2px;
 	cursor: pointer;

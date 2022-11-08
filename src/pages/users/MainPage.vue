@@ -1,37 +1,44 @@
 <template>
 	<!-- header component -->
 	<div>
-		<the-header :header-title="'Home'"></the-header>
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6">
-					<div class="left-col">
-						<createpost-bar></createpost-bar>
-						<sortposts-bar></sortposts-bar>
-						<base-post :post="post"></base-post>
-						<base-post :post="post"></base-post>
-						<base-post :post="post"></base-post>
-						<base-post :post="post"></base-post>
-						<base-post :post="post"></base-post>
-						<base-post :post="post"></base-post>
+		<div :class="showPostComments ? 'back' : ''">
+			<the-header :header-title="'Home'"></the-header>
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-6">
+						<div class="left-col">
+							<createpost-bar></createpost-bar>
+							<sortposts-bar></sortposts-bar>
+							<base-post
+								:post="post"
+								@show-comments="showPostComments"
+							></base-post>
+							<base-post :post="post"></base-post>
+							<base-post :post="post"></base-post>
+							<base-post :post="post"></base-post>
+							<base-post :post="post"></base-post>
+							<base-post :post="post"></base-post>
+							<base-post :post="post"></base-post>
+						</div>
 					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="right-col">
-						<div class="component">
-							<top-communities-bar></top-communities-bar>
+					<div class="col-lg-3">
+						<div class="right-col">
+							<div class="component">
+								<top-communities-bar></top-communities-bar>
+							</div>
+							<div class="component">
+								<createpost-sidebar></createpost-sidebar>
+							</div>
+							<div class="component">
+								<rightside-footer></rightside-footer>
+							</div>
+							<backtotop-button @click="test()"></backtotop-button>
 						</div>
-						<div class="component">
-							<createpost-sidebar></createpost-sidebar>
-						</div>
-						<div class="component">
-							<rightside-footer></rightside-footer>
-						</div>
-						<backtotop-button @click="test()"></backtotop-button>
 					</div>
 				</div>
 			</div>
 		</div>
+		<router-view></router-view>
 	</div>
 </template>
 
@@ -43,7 +50,6 @@ import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar
 import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar.vue';
 import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
-
 export default {
 	components: {
 		CreatepostBar,
@@ -53,6 +59,12 @@ export default {
 		CreatepostSidebar,
 		RightsideFooter,
 		BacktotopButton,
+	},
+	computed: {
+		showPostComments() {
+			if (this.$route.path.split('/')[3] == 'comments') return true;
+			return false;
+		},
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
@@ -70,6 +82,7 @@ export default {
 					'post description Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
 				commentsCount: 22,
 			},
+			showComments: false,
 		};
 	},
 	methods: {
@@ -100,6 +113,12 @@ export default {
 /* .left-col {
 	margin-left: 5rem;
 } */
+.back {
+	position: fixed;
+	left: 0;
+	right: 0;
+	background-color: var(--color-grey-light-13);
+}
 .right-col {
 	margin: 1.2rem;
 	margin-top: 1.5rem;

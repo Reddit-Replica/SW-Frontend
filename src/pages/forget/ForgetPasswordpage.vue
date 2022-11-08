@@ -56,29 +56,49 @@
 					</p>
 					<div>
 						<base-button
+							id="reset-btn"
 							button-text="Reset password"
-							:disable-button="buttonIsactive"
-							class="button-class"
+							:disable-button="buttonDisabled"
+							:class="!success ? 'button-class' : 'button-success'"
 							type="submit"
 						>
+							<span class="success" v-if="success"
+								><font-awesome-icon icon="fa-solid fa-check" />
+							</span>
 						</base-button>
 					</div>
+					<p class="invalid" v-if="!success">
+						{{ error }}
+					</p>
+					<p class="valid" v-if="success">
+						Thanks! If your Reddit username and email address match, you'll get
+						an email with a link to reset your password shortly.
+					</p>
 					<div class="forgot-link">
-						<router-link to="/forgetUsernamepage" class="link"
+						<router-link
+							to="/forgetUsernamepage"
+							class="link"
+							id="forget-username"
 							>forgot username?</router-link
 						>
 					</div>
+					<the-recaptcha
+						@verified="verifyRec"
+						v-if="showSignuser && showSignemail"
+					></the-recaptcha>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
-							<a class="link">Get Help </a></label
+							<a class="link" id="help">Get Help </a></label
 						>
 					</div>
 				</form>
 				<div class="">
-					<router-link to="/login" class="link">Log in</router-link>
+					<router-link to="/login" class="link" id="login">Log in</router-link>
 					<span class="linkSeparator">•</span>
-					<router-link to="/signup" class="link">Sign Up</router-link>
+					<router-link to="/signup" class="link" id="signup"
+						>Sign Up</router-link
+					>
 					<!-- <button @click="test">test</button> -->
 				</div>
 			</div>
@@ -87,10 +107,12 @@
 </template>
 
 <script>
+import TheRecaptcha from '../../components/TheRecaptcha';
 export default {
+	components: { TheRecaptcha },
 	data() {
 		return {
-			buttonIsactive: false,
+			//buttonIsactive: false,
 			userName: '',
 			emailAddress: '',
 			invalidUsernamelength: false,
@@ -101,6 +123,10 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
+			error: '',
+			success: false,
+			//verify: false,
+			buttonDisabled: true,
 		};
 	},
 	methods: {
@@ -108,7 +134,6 @@ export default {
 			if (value.length < 3 || value.length > 20) {
 				//
 				this.invalidUsernamelength = true;
-				console.log('hello');
 				this.checkedUser = false;
 				this.showSignuser = true;
 			} else {
@@ -130,30 +155,27 @@ export default {
 			}
 		},
 		//http://localhost:8082/api/Authentication/SecureForgotPassword?
-		handleSubmit() {
-			fetch('http://localhost:3000/api/auth/forget', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					// type: 'password',
-					name: this.userName,
-					email: this.emailAddress,
-				}),
-			})
-				.then((response) => {
-					if (response.ok) {
-						console.log(response);
-						return response.json();
-					}
-				})
-				.then((data) => {
-					console.log(data.access_token);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+		async handleSubmit() {
+			const actionPayload = {
+				username: this.userName,
+				email: this.emailAddress,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
+				const response = localStorage.getItem('response');
+				//const response = this.$cookies.get('response');
+				//const response = this.$cookie.getCookie('response');
+				if (response == 200) {
+					console.log(response);
+					this.success = true;
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(this.error);
+				this.success = false;
+			}
 		},
 		test() {
 			fetch(this.$baseurl + '/users')
@@ -168,6 +190,10 @@ export default {
 				.catch((error) => {
 					console.log(error);
 				});
+		},
+		verifyRec() {
+			console.log('verified 2');
+			this.buttonDisabled = false;
 		},
 	},
 
@@ -271,6 +297,15 @@ div {
 	height: 10px;
 	width: 12px;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.success {
+	position: absolute;
+	left: 40%;
+
+	font-size: 2.5rem;
+	color: white;
+	z-index: 5;
+	opacity: 1;
 }
 .input-box .wrong-check {
 	position: absolute;
@@ -403,12 +438,51 @@ p {
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
 }
+.valid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	opacity: 1;
+	color: #0079d3;
+	transition: all 0.2s ease-in-out;
+}
 
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 }
 .separate {
 	margin-top: 2rem;
+}
+.button-success {
+	color: #ffffff;
+	background: var(--color-blue-2);
+	/*cursor: ;*/
+	pointer-events: none;
+	color: transparent;
+	position: relative;
+	overflow: hidden;
+	/*text-indent: -9999px;*/
+	border-radius: 4px;
+	text-align: center;
+	min-height: 35px;
+	max-width: 392px;
+	width: auto;
+	min-width: 155px;
+	padding: 5px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-height: 1000px;
+	margin-top: 2rem;
+	transition: color 0.01s ease-in, text-indent 0.25s ease-in,
+		opacity 0.25s ease-in;
 }
 </style>

@@ -2,12 +2,12 @@
 	<div class="content">
 		<div class="policy">
 			<div class="policy-section">
-				<a href="#">User Agreement</a>
-				<a href="#">Privacy policy</a>
+				<a href="#" id="user-agreement-link">User Agreement</a>
+				<a href="#" id="privacy-policy-link">Privacy policy</a>
 			</div>
 			<div class="policy-section">
-				<a href="#">Content policy</a>
-				<a href="#">Moderator Code of conduct</a>
+				<a href="#" id="content-policy-link">Content policy</a>
+				<a href="#" id="moderator-link">Moderator Code of conduct</a>
 			</div>
 		</div>
 		<div class="line"></div>

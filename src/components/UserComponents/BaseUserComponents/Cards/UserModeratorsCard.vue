@@ -1,22 +1,30 @@
 <template>
-	<div class="mod-card">
-		<div class="mod-header">
+	<div class="mod-card" id="user-moderator-card">
+		<div class="mod-header" id="user-moderator-header">
 			<div style="padding: 12px 0 0">
 				<h2>You're a moderator of these communities</h2>
 			</div>
 		</div>
-		<div class="mod-list">
+		<div class="mod-list" id="user-moderator-list">
 			<ul>
 				<li
 					v-for="userModerator in userModerators"
 					:key="userModerator.subredditName"
+					:id="`user-mod-item-${userModerator.subredditName}`"
 				>
 					<i></i>
 					<span>
-						<router-link to="">r/{{ userModerator.subredditName }}</router-link>
-						<p>{{ userModerator.numOfMembers }} member</p>
+						<router-link
+							:to="`/r/${userModerator.subredditName}/`"
+							:id="`moderator-name-${userModerator.subredditName}`"
+							>r/{{ userModerator.subredditName }}</router-link
+						>
+						<p :id="`moderator-member-number-${userModerator.subredditName}`">
+							{{ userModerator.numOfMembers }} member
+						</p>
 					</span>
 					<base-button
+						:id="`moderator-join-button-${userModerator.subredditName}`"
 						:button-text="userModerator.buttonText"
 						class="join-button"
 						:class="[userModerator.joined ? 'joined-button' : '']"
@@ -35,25 +43,34 @@ export default {
 	components: {
 		BaseButton,
 	},
-	props: {},
-	async created() {
-		await this.RequestUserData();
-		this.userModerators = this.$store.getters['user/getUserData'].moderatorOf;
+	props: {
+		userModerators: {
+			type: Array,
+			required: true,
+		},
+	},
+	mounted() {
 		console.log(this.userModerators);
-		const newUserModerators = this.userModerators.map((el) => ({
-			...el,
-			buttonText: 'joined',
-		}));
-		this.userModerators = newUserModerators;
 		this.userModerators.forEach((element) => {
+			element.buttonText = 'joined';
+		});
+		this.userModerators.forEach((element) => {
+			element.buttonText = 'joined';
 			if (!element.joined) element.buttonText = 'join';
 		});
-		console.log(this.userModerators);
 	},
 	data() {
 		return {
-			userModerators: '',
+			// userModerators: '',
 		};
+	},
+	watch: {
+		userModerators() {
+			this.userModerators.forEach((element) => {
+				element.buttonText = 'joined';
+				if (!element.joined) element.buttonText = 'join';
+			});
+		},
 	},
 	computed: {},
 	methods: {
@@ -85,16 +102,6 @@ export default {
 				}
 			});
 		},
-		async RequestUserData() {
-			try {
-				await this.$store.dispatch('user/getUserData', {
-					baseurl: this.$baseurl,
-					userName: this.$store.state.userName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-		},
 	},
 };
 </script>
@@ -106,6 +113,8 @@ ul {
 	margin-top: 16px;
 	background-color: #ffffff;
 	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
 .mod-header {
 	font-size: 10px;
@@ -115,7 +124,6 @@ ul {
 	border-radius: 3px 3px 0 0;
 	color: #1a1a1b;
 	display: flex;
-	fill: var(--newCommunityTheme-widgetColors-sidebarWidgetTitleColor);
 	padding: 0 12px 12px;
 }
 .mod-header h2 {
@@ -124,11 +132,6 @@ ul {
 	line-height: 18px;
 	font-weight: 700;
 }
-/* li::before {
-	content: '\f174';
-	width: 20px;
-	height: 20px;
-} */
 .mod-list {
 	padding: 12px;
 }

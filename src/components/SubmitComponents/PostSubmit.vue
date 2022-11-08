@@ -3,7 +3,7 @@
 		<div class="icons-box" v-if="!markdownMode">
 			<div class="tool-tip">
 				<span class="tool-tip-text">Bold</span>
-				<button class="icons">
+				<button class="icons" id="bold">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-bold " />
 					</div>
@@ -11,7 +11,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text">Italics</span>
-				<button class="icons">
+				<button class="icons" id="italic">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-italic" />
 					</div>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text">Link</span>
-				<button class="icons">
+				<button class="icons" id="link">
 					<div>
 						<svg
 							class="svg-inline--fa fa-link icon"
@@ -43,7 +43,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Strikethrough</span>
-				<button class="icons">
+				<button class="icons" id="strike">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-strikethrough" />
 					</div>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Inline Code</span>
-				<button class="icons">
+				<button class="icons" id="inline-code">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-code" />
 					</div>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Superscript</span>
-				<button class="icons">
+				<button class="icons" id="super-script">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-superscript" />
 					</div>
@@ -67,7 +67,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text">Spoiler</span>
-				<button class="icons">
+				<button class="icons" id="spoiler">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-exclamation" />
 					</div>
@@ -76,7 +76,7 @@
 			<div class="space-in"></div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Heading</span>
-				<button class="icons">
+				<button class="icons" id="heading">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-heading" />
 					</div>
@@ -84,7 +84,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Bulleted List</span>
-				<button class="icons">
+				<button class="icons" id="bulleted">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-list-ul" />
 					</div>
@@ -92,7 +92,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Numbered List</span>
-				<button class="icons">
+				<button class="icons" id="numbered">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-list-ol" />
 					</div>
@@ -100,7 +100,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Quote Block</span>
-				<button class="icons">
+				<button class="icons" id="quote">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-quote-right" />
 					</div>
@@ -108,7 +108,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Code Block</span>
-				<button class="icons">
+				<button class="icons" id="code-block">
 					<div class="icon">
 						<font-awesome-icon icon="fa-regular fa-file-code" />
 					</div>
@@ -117,7 +117,7 @@
 			<div class="space-in"></div>
 			<div class="tool-tip">
 				<span class="tool-tip-text">Table</span>
-				<button class="icons">
+				<button class="icons" id="table">
 					<div class="icon">
 						<font-awesome-icon icon="fa-solid fa-table" />
 					</div>
@@ -125,7 +125,7 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Add an image</span>
-				<button class="icons">
+				<button class="icons" id="image">
 					<div class="icon">
 						<font-awesome-icon icon="fa-regular fa-image" />
 					</div>
@@ -133,13 +133,15 @@
 			</div>
 			<div class="tool-tip">
 				<span class="tool-tip-text strike">Add a video</span>
-				<button class="icons">
+				<button class="icons" id="video">
 					<div class="icon">
 						<font-awesome-icon icon="fa-brands fa-youtube" />
 					</div>
 				</button>
 			</div>
-			<button class="mark-down" @click="switchMode">Markdown Mode</button>
+			<button class="mark-down" @click="switchMode" id="mark-down">
+				Markdown Mode
+			</button>
 		</div>
 		<div class="mark-down-box" v-if="markdownMode">
 			<span>Markdown </span>
@@ -153,15 +155,15 @@
 					d="M8.622 10.616c.078.08.14.175.183.28.044.105.07.218.07.332 0 .237-.087.456-.253.62-.167.168-.385.255-.622.255-.236 0-.455-.087-.62-.254-.167-.166-.255-.385-.255-.622 0-.114.027-.227.07-.332.044-.105.105-.2.184-.28.087-.088.174-.15.288-.193.324-.13.71-.052.954.193zm-.205-6.242c1.595 0 2.466.807 2.466 1.92 0 .976-.556 1.448-1.238 1.816-.615.317-.83.518-.904.898 0 .004-.034.207-.036.21-.034.126-.087.244-.18.336-.14.14-.323.21-.524.21-.097 0-.192-.017-.29-.052-.087-.035-.165-.088-.235-.158-.14-.14-.22-.333-.22-.533 0-.11.02-.188.074-.348.16-.472.55-.896 1.056-1.17.577-.327.84-.558.84-1.07 0-.42-.357-.715-.987-.715-.496 0-.996.218-1.39.52-.26.2-.62.202-.858-.02l-.05-.05c-.313-.29-.27-.787.075-1.04.603-.444 1.394-.753 2.4-.753zM8 13.25c-2.895 0-5.25-2.355-5.25-5.25S5.105 2.75 8 2.75 13.25 5.105 13.25 8 10.895 13.25 8 13.25M8 1C4.14 1 1 4.14 1 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7"
 				></path>
 			</svg>
-			<button class="fancy" @click="switchMode">
+			<button class="fancy" @click="switchMode" id="fancy">
 				Switch to Fancy Pants Editor
 			</button>
 		</div>
 		<div>
 			<textarea
+				id="text1"
 				class="text-area"
 				placeholder="Text (optional)"
-				id="text1"
 			></textarea>
 		</div>
 	</div>

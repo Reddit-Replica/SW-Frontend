@@ -6,30 +6,30 @@
 			<!--the div that include BackGround Image (Left side) -->
 			<div class="sec-largest-div">
 				<!--the div that include all right side  -->
+				<div class="right-side">
+					<h1>Log in</h1>
 
-				<h1>Log in</h1>
+					<p class="user-agreement">
+						By continuing, you agree to our
+						<a href="https://www.redditinc.com/policies/user-agreement"
+							>User Agreement</a
+						>
+						and
+						<a href="https://www.redditinc.com/policies/privacy-policy"
+							>Privacy Policy</a
+						>.
+					</p>
 
-				<p class="user-agreement">
-					By continuing, you agree to our
-					<a href="https://www.redditinc.com/policies/user-agreement"
-						>User Agreement</a
-					>
-					and
-					<a href="https://www.redditinc.com/policies/privacy-policy"
-						>Privacy Policy</a
-					>.
-				</p>
+					<form class="logining-in" @submit.prevent="handleSubmit">
+						<!--LogIn with google and facebook accounts -->
 
-				<form class="logining-in" @submit.prevent="handleSubmit">
-					<!--LogIn with google and facebook accounts -->
-
-					<div class="login-google-apple">
-						<GoogleSigninButton id="google-login" class="log-google log-ag" />
-						<facebookSigninButton
-							id="facebook-login"
-							class="log-google log-ag"
-						/>
-						<!-- <v-facebook-login
+						<div class="login-google-apple">
+							<GoogleSigninButton id="google-login" class="log-google log-ag" />
+							<facebookSigninButton
+								id="facebook-login"
+								class="log-google log-ag"
+							/>
+							<!-- <v-facebook-login
 							id="facebook-login"
 							class="log-facebook log-ag"
 							app-id="651769123026203"
@@ -37,81 +37,82 @@
 							@sdk-init="handleSdkInit"
 						></v-facebook-login> -->
 
-						<!-- <button
+							<!-- <button
 							v-facebook-signin-button="appId"
 							class="facebook-signin-button"
 						>
 							Continue with Facebook
 						</button> -->
-						<!-- <fb:login-button
+							<!-- <fb:login-button
 							scope="public_profile,email"
 							onlogin="checkLoginState();"
 						></fb:login-button> -->
 
-						<div class="page-divider">
-							<span class="page-divider-line"></span>
-							<span class="page-divider-text">or</span>
-							<span class="page-divider-line"></span>
+							<div class="page-divider">
+								<span class="page-divider-line"></span>
+								<span class="page-divider-text">or</span>
+								<span class="page-divider-line"></span>
+							</div>
 						</div>
-					</div>
 
-					<fieldset class="username-field field-pass-usr input-box">
-						<!--Group of UserName Element -->
+						<fieldset class="username-field field-pass-usr input-box">
+							<!--Group of UserName Element -->
 
-						<input
-							id="user-name"
-							type="text"
-							required="required"
-							v-model="username"
-							:class="messageErrorShowUser ? 'red-border' : ''"
-						/>
-						<span class="animation-usr-pass">UserName</span>
-						<span
-							v-if="showSignuser"
-							:class="checkedUser ? 'correct-check' : 'wrong-check'"
-						></span>
+							<input
+								id="user-name"
+								type="text"
+								required="required"
+								v-model="username"
+								:class="messageErrorShowUser ? 'red-border' : ''"
+							/>
+							<span class="animation-usr-pass">UserName</span>
+							<span
+								v-if="showSignuser"
+								:class="checkedUser ? 'correct-check' : 'wrong-check'"
+							></span>
 
-						<div class="username-error-message" v-if="messageErrorShowUser">
-							{{ error_message }}
-						</div>
-						<!--Error Message Shown here -->
-					</fieldset>
+							<div class="username-error-message" v-if="messageErrorShowUser">
+								{{ error_message }}
+							</div>
+							<!--Error Message Shown here -->
+						</fieldset>
 
-					<fieldset class="password-field field-pass-usr input-box">
-						<!--Group of Password Element -->
+						<fieldset class="password-field field-pass-usr input-box">
+							<!--Group of Password Element -->
 
-						<input
-							id="password"
-							type="password"
-							required="required"
-							v-model="password"
-							:class="messageErrorShowPass ? 'red-border' : ''"
-						/>
-						<span class="animation-usr-pass">Password</span>
-						<span
-							v-if="showSignPass"
-							:class="checkedPass ? 'correct-check' : 'wrong-check'"
-						></span>
+							<input
+								id="password"
+								type="password"
+								required="required"
+								v-model="password"
+								:class="messageErrorShowPass ? 'red-border' : ''"
+							/>
+							<span class="animation-usr-pass">Password</span>
+							<span
+								v-if="showSignPass"
+								:class="checkedPass ? 'correct-check' : 'wrong-check'"
+							></span>
 
-						<!-- <div class="username-error-message" v-if="messageErrorShowPass">
+							<!-- <div class="username-error-message" v-if="messageErrorShowPass">
 							{{ error_message }}
 						</div> -->
-						<!--Error Message Shown here -->
-					</fieldset>
+							<!--Error Message Shown here -->
+						</fieldset>
 
-					<button class="submit-login" type="submit">Log In</button>
+						<button class="submit-login" type="submit">Log In</button>
 
-					<div class="forgot-usr-pass">
-						<span>Forgot your</span> <a href="/forgetUsernamepage">username</a>
-						<span> or </span> <a href="/forgetPasswordpage">password</a
-						><span>?</span>
-					</div>
-					<div class="register-bottom">
-						New to Reddit?
+						<div class="forgot-usr-pass">
+							<span>Forgot your</span>
+							<a href="/forgetUsernamepage">username</a> <span> or </span>
+							<a href="/forgetPasswordpage">password</a><span>?</span>
+						</div>
+						<div class="register-bottom">
+							New to Reddit?
 
-						<li><router-link to="/signup">Sign Up </router-link></li>
-					</div>
-				</form>
+							<li><router-link to="/signup">Sign Up </router-link></li>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -130,6 +131,7 @@ export default {
 			checkedUser: true, // true or error for user
 			error_message: '', // error message shown
 			messageErrorShowUser: false, // showing err message
+			messageErrorShowPass: false,
 			showSignPass: false, // true or error for pass
 			Check: false, // flag for validation
 			users: {}, //test array
@@ -137,6 +139,7 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
 		// Validation for UserName
 		validateUser(value) {
 			this.showSignuser = false;
@@ -153,53 +156,47 @@ export default {
 				document.querySelector('#user-name').style.border =
 					'0.5px solid #ea0027';
 			} else {
-				fetch(this.$baseurl + '/userTest')
-					.then((response) => {
-						if (response.ok) {
-							return response.json();
-						}
-					})
-					.then((data) => {
-						data.forEach((element) => {
-							if (element.username == this.username) {
-								this.showSignuser = true;
-								this.checkedUser = true;
-								document.querySelector('#user-name').style.border =
-									'0.5px solid #0079d3';
-							}
-						});
-					})
-					.catch((error) => {
-						console.log(error);
-					});
+				this.showSignuser = true;
+				this.checkedUser = true;
+				this.messageErrorShowUser = false;
+				document.querySelector('#user-name').style.border =
+					'0.5px solid #0079d3';
 			}
 		},
+		// @vuese
+		// posting username and password and wait for token
 		async handleSubmit() {
-			fetch(this.$baseurl + '/userTest', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					username: this.username,
-					password: this.password,
-				}),
-			})
-				.then((response) => {
-					if (response.ok) {
-						console.log(response);
-						return response.json();
-					}
-				})
-				.then((data) => {
-					console.log(data.access_token);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+			const actionPayload = {
+				username: this.username,
+				password: this.password,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('loginhandle', actionPayload);
+				const response = localStorage.getItem('response');
+				// // console.log(response);
+				// console.log(response);
+				if (response == 200) {
+					this.$router.replace('/main');
+				}
+			} catch (err) {
+				this.showSignuser = true;
+				this.checkedUser = false;
+				this.messageErrorShowUser = true;
+				this.error_message = 'Incorrect username or password';
+				this.showSignPass = true;
+				this.checkedPass = false;
+				this.messageErrorShowPass = true;
+				// this.error = err;
+				document.querySelector('#user-name').style.border =
+					'0.5px solid #ea0027';
+			}
 		},
 	},
 	watch: {
+		// @vuese
+		//watch username if it's not empty
 		username(value) {
 			this.username = value;
 			this.validateUser(value);
@@ -258,26 +255,29 @@ button {
 	cursor: pointer;
 }
 .largest-div {
-	width: 70rem;
-	height: 100%;
-	overflow: hidden;
+	background-color: white;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	overflow-x: hidden;
+	min-height: 100vh;
+	position: relative;
+	width: 100%;
 }
 .back-image {
 	background-image: url('../../../img/bck.png');
-	background-color: #0079d3;
-	height: 100%;
+	height: 100vh;
+	min-height: 430px;
 	width: 12rem;
 	float: left;
-	/* background-position: center; */
 	background-repeat: no-repeat;
 	background-size: cover;
-	/* z-index: 1; */
 }
 .sec-largest-div {
-	/* align-self: center; */
-	padding: 24px;
-	overflow: hidden;
-	/* width: 50rem; */
+	width: 100%;
+	padding: 0px;
+	margin: 0;
 }
 .user-agreement {
 	margin-bottom: 48px;
@@ -320,6 +320,11 @@ button {
 	line-height: 18px;
 	color: #878a8c;
 	font-size: 14px;
+}
+.right-side {
+	padding: 24px;
+	min-width: 260px;
+	max-width: 440px;
 }
 .field-pass-usr input {
 	position: relative;
@@ -374,16 +379,15 @@ button {
 .input-box .correct-check {
 	position: absolute;
 	z-index: 1;
-	right: 27rem;
-	top: 40%;
+	right: 34%;
+	top: 50%;
 	height: 10px;
 	width: 12px;
-	background-color: #878a8c;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
 }
 .input-box .wrong-check {
 	position: absolute;
-	right: 27rem;
+	right: 34%;
 	top: 28%;
 	height: 12px;
 	width: 2px;

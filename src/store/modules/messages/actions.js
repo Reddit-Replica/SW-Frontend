@@ -1,8 +1,13 @@
 export default {
 	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/message/inbox');
+		const response = await fetch(baseurl + '/message/inbox', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -15,6 +20,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -33,8 +39,13 @@ export default {
 
 	async loadUnreadMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		// const response = await fetch(baseurl + '/message/compose');
-		const response = await fetch(baseurl + '/message/unread');
+		const response = await fetch(baseurl + '/message/unread', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -47,6 +58,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -64,7 +76,13 @@ export default {
 	},
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/mentions');
+		const response = await fetch(baseurl + '/message/mentions', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -77,6 +95,7 @@ export default {
 			const mention = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -94,7 +113,13 @@ export default {
 	},
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/messages');
+		const response = await fetch(baseurl + '/message/messages', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -107,6 +132,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				senderUsername: responseData[key].children[0].senderUsername,
 				receiverUsername: responseData[key].children[0].receiverUsername,
@@ -121,7 +147,13 @@ export default {
 	},
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/post-reply');
+		const response = await fetch(baseurl + '/message/post-reply', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -134,6 +166,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				type: responseData[key].children[0].type,
 				senderUsername: responseData[key].children[0].senderUsername,
@@ -151,7 +184,13 @@ export default {
 	},
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/sent');
+		const response = await fetch(baseurl + '/message/sent', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
@@ -164,6 +203,7 @@ export default {
 			const message = {
 				before: responseData[key].before,
 				after: responseData[key].after,
+				id: responseData[key].children[0].id,
 				text: responseData[key].children[0].text,
 				receiverUsername: responseData[key].children[0].receiverUsername,
 				subject: responseData[key].children[0].subject,
@@ -185,7 +225,11 @@ export default {
 
 		const response = await fetch(baseurl + '/message/compose', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
 
@@ -207,7 +251,10 @@ export default {
 
 		const response = await fetch(baseurl + '/unread-message', {
 			method: 'patch',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			body: JSON.stringify(message),
 		});
 
@@ -229,8 +276,62 @@ export default {
 
 		const response = await fetch(baseurl + '/block-user', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
 			body: JSON.stringify(block),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async deleteMessage(_, payload) {
+		const del = {
+			id: payload.id,
+			type: payload.type,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/delete', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+			body: JSON.stringify(del),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async spamMessage(_, payload) {
+		const spam = {
+			id: payload.id,
+			type: payload.type,
+			reason: payload.reason,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/mark-spam', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+			body: JSON.stringify(spam),
 		});
 
 		const responseData = await response.json();

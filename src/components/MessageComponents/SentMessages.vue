@@ -12,15 +12,17 @@
 					<span class="sender">
 						<span
 							><span>to&nbsp;</span>
-							<a href="" id="message-receiver">{{
+							<a href="" :id="'message-receiver-' + index">{{
 								message.receiverUsername
 							}}</a>
 						</span></span
 					><span>&nbsp;sent&nbsp;</span><time> {{ message.sendAt }}</time>
 				</p>
 				<p class="md">{{ message.text }}</p>
-				<ul class="flat-list">
-					<li><a href="">Permalink</a></li>
+				<ul class="flat-list ul-messages">
+					<li :id="'permalink-link-' + index">
+						<a href="" :id="'permalink-a-' + index">Permalink</a>
+					</li>
 				</ul>
 			</div>
 		</li>
@@ -34,8 +36,9 @@ export default {
 		//details of message
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
+				id: '',
 				text: '',
 				receiverUsername: '',
 				sendAt: '',
@@ -43,22 +46,17 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handel background color
-		count: {
+		//index to handle unique ids
+		index: {
 			type: Number,
-			require: true,
-			default: 1,
+			required: true,
+			default: 0,
 		},
 	},
 	data() {
 		return {
 			backcolor: 'grey',
 		};
-	},
-	beforeMount() {
-		if (this.count % 2 == 0) {
-			this.backcolor = 'white';
-		} else this.backcolor = 'grey';
 	},
 	methods: {},
 };

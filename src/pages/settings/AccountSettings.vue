@@ -9,7 +9,7 @@
 					<p class="p-title-description">menna.said00@eng-st.cu.edu.eg</p>
 				</div>
 				<div>
-					<base-button class="blue-button" button-text="Change" />
+					<base-button class="blue-button" button-text="Change" id="change" />
 				</div>
 			</div>
 			<div class="section">
@@ -20,7 +20,7 @@
 						what content you see.
 					</p>
 				</div>
-				<div @click="showGenderMenu">
+				<div @click="showGenderMenu" id="gender-menu">
 					<span class="span-blue">{{ gender }}</span>
 					<span>
 						<svg
@@ -61,7 +61,7 @@
 					</p>
 				</div>
 				<div>
-					<select>
+					<select id="language">
 						<option value="Deutsch">Deutsch</option>
 						<option value="English (US)">English (US)</option>
 						<option value="Español (ES)">Español (ES)</option>
@@ -90,13 +90,13 @@
 					<h3 class="h3-title">Country</h3>
 					<p class="p-title-description">
 						This is your primary location.
-						<router-link to="/hc/en-us/articles/360062429491"
+						<router-link to="/hc/en-us/articles/360062429491" id="learn-more"
 							>Learn more</router-link
 						>
 					</p>
 				</div>
 				<div>
-					<select>
+					<select id="country">
 						<option value="xx">No country identified</option>
 						<option value="Afghanistan">Afghanistan</option>
 						<option value="Åland Islands">Åland Islands</option>
@@ -418,7 +418,11 @@
 					</p>
 				</div>
 				<div>
-					<base-button class="blue-button" button-text="Connect to Twitter">
+					<base-button
+						class="blue-button"
+						button-text="Connect to Twitter"
+						id="twitter"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -442,7 +446,7 @@
 					</p>
 				</div>
 				<div>
-					<switch-button disabled />
+					<switch-button disabled id="sb-4" />
 				</div>
 			</div>
 			<div class="section">
@@ -451,7 +455,7 @@
 					<div>Connect account to log in to Reddit with Apple</div>
 				</div>
 				<div>
-					<base-button button-text="Connect to Apple">
+					<base-button button-text="Connect to Apple" id="apple">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -478,7 +482,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button button-text="(disconnect)" />
+					<base-button button-text="(disconnect)" id="google" />
 				</div>
 			</div>
 			<h3 class="h3-main-title">BETA TESTS</h3>
@@ -490,7 +494,7 @@
 					</p>
 				</div>
 				<div>
-					<switch-button />
+					<switch-button id="sb-2" />
 				</div>
 			</div>
 			<div class="section">
@@ -501,12 +505,12 @@
 					</p>
 				</div>
 				<div>
-					<switch-button />
+					<switch-button id="sb-1" />
 				</div>
 			</div>
 			<h3 class="h3-main-title">DELETE ACCOUNT</h3>
 			<div class="section">
-				<div>
+				<div id="delete-account">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -565,22 +569,6 @@ export default {
 .section div:first-of-type h3 span {
 	color: #ff2c00;
 }
-/* .section button {
-	border: 1px solid var(--color-blue);
-	color: var(--color-blue);
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 14px;
-	font-weight: 700;
-	height: 32px;
-	padding: 4px 16px;
-	background-color: white;
-} */
-/* .section button:hover {
-	background-color: #f5fafd;
-}
-.section button:active {
-	background-color: #d7eaf8;
-} */
 .section:nth-of-type(2) .span-blue {
 	font-size: 11.2px;
 	font-weight: 700;

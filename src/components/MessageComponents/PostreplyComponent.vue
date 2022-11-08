@@ -1,7 +1,10 @@
 <template>
 	<div
 		class="message"
-		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+		:class="[
+			backcolor == 'grey' ? 'message-grey' : 'message-white',
+			disappear == true ? 'hide-message' : '',
+		]"
 	>
 		<li>
 			<p class="subject-text">
@@ -10,13 +13,25 @@
 			</p>
 			<div class="d-flex flex-row">
 				<div class="d-flex flex-column vote-box">
-					<div class="upvote" @click="upvote">
-						<svg class="icon p-1" :class="upClicked ? 'up-clicked' : ''">
+					<div class="upvote" @click="upvote" :id="'up-vote-box-' + index">
+						<svg
+							class="icon p-1"
+							:class="upClicked ? 'up-clicked' : ''"
+							:id="'up-vote-' + index"
+						>
 							<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 						</svg>
 					</div>
-					<div class="downvote" @click="downvote">
-						<svg class="icon p-1" :class="downClicked ? 'down-clicked' : ''">
+					<div
+						class="downvote"
+						@click="downvote"
+						:id="'down-vote-box-' + index"
+					>
+						<svg
+							class="icon p-1"
+							:class="downClicked ? 'down-clicked' : ''"
+							:id="'down-vote-' + index"
+						>
 							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
 						</svg>
 					</div>
@@ -25,10 +40,12 @@
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
-							><a href="" id="message-sender">{{ message.senderUsername }}</a>
+							><a href="" :id="'message-sender-' + index">{{
+								message.senderUsername
+							}}</a>
 							<span
 								>&nbsp;via&nbsp;
-								<a href="" id="message-receiver">{{
+								<a href="" :id="'message-receiver-' + index">{{
 									message.receiverUsername
 								}}</a>
 							</span></span
@@ -36,46 +53,69 @@
 						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 					</p>
 					<p class="md">{{ message.text }}</p>
-					<ul class="flat-list">
-						<li><a href="">context</a></li>
-						<li><a href="">Full Comments(5)</a></li>
-						<li>
-							<form action="#">
-								<input
-									type="hidden"
-									name="spam"
-									id="spam-message"
-									value="spam"
-								/>
-							</form>
-							<span class="sure-block" v-if="spamUser"
-								>are you sure?
-								<span class="link" id="yes-spam-message">Yes</span> /
-								<span class="link" @click="spamAction()" id="no-spam-message"
-									>No</span
-								></span
-							>
-							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-							<span class="link" v-else @click="spamAction()" id="click-spam"
-								>Spam</span
-							>
+					<ul class="ul-messages flat-list">
+						<li :id="'context-link-' + index">
+							<a href="" :id="'context-a-' + index">context</a>
+						</li>
+						<li :id="'full-comment-link-' + index">
+							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
+						</li>
+						<li :id="'spam-box-' + index">
+							<div v-if="!spammed">
+								<span
+									class="sure-block"
+									v-if="spamUser"
+									:id="'spam-user-span-' + index"
+									>are you sure?
+									<span
+										class="link"
+										:id="'yes-spam-user-' + index"
+										@click="spamAction('yes')"
+										>Yes</span
+									>
+									/
+									<span
+										class="link"
+										@click="spamAction()"
+										:id="'no-spam-user-' + index"
+										>No</span
+									></span
+								>
+								<span
+									class="link"
+									v-else
+									@click="spamAction()"
+									:id="'click-spam-' + index"
+									>spam</span
+								>
+							</div>
+							<div v-if="spammed">spammed</div>
 						</li>
 						<li>
 							<form action="#">
 								<input
 									type="hidden"
-									name="deleted"
-									id="delete-message"
+									name="remove"
+									:id="'remove-message-' + index"
 									value="deleted"
 								/>
 							</form>
-							<span class="sure-block" v-if="removeUser"
+							<span
+								class="sure-block"
+								v-if="removeUser"
+								:id="'remove-message-span-' + index"
 								>are you sure?
-								<span class="link" id="yes-remove-message">Yes</span> /
+								<span
+									class="link"
+									:id="'yes-remove-message-' + index"
+									@click="removeAction('yes')"
+									>Yes</span
+								>
+								/
 								<span
 									class="link"
 									@click="removeAction()"
-									id="no-remove-message"
+									:id="'no-remove-message-' + index"
 									>No</span
 								></span
 							>
@@ -83,34 +123,47 @@
 								class="link"
 								v-else
 								@click="removeAction()"
-								id="click-remove"
+								:id="'click-remove-' + index"
 								>Remove</span
 							>
 						</li>
-						<li><a href="" id="report">Report</a></li>
-						<li>
-							<span class="sure-block" v-if="blockUser"
+						<li :id="'block-' + index">
+							<span
+								class="sure-block"
+								v-if="blockUser"
+								:id="'block-user-span-' + index"
 								>are you sure?
 								<span
 									class="link"
-									id="yes-block-user"
+									:id="'yes-block-user-' + index"
 									@click="blockAction('yes')"
 									>Yes</span
 								>
 								/
-								<span class="link" @click="blockAction()" id="no-block-user"
+								<span
+									class="link"
+									@click="blockAction()"
+									:id="'no-block-user-' + index"
 									>No</span
 								></span
 							>
 							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-							<span class="link" v-else @click="blockAction()" id="block-user"
+							<span
+								class="link"
+								v-else
+								@click="blockAction()"
+								:id="'block-user-' + index"
 								>Block User</span
 							>
 						</li>
-						<li @click="unreadAction()" v-if="isRead">
-							<span class="link" id="mark-un-read">Mark Unread</span>
+						<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
+							<span class="link" :id="'mark-un-read-' + index"
+								>Mark Unread</span
+							>
 						</li>
-						<li><span class="link" id="reply">Reply</span></li>
+						<li :id="'reply-box-' + index">
+							<span class="link" :id="'reply-' + index">Reply</span>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -125,8 +178,9 @@ export default {
 		//details of message
 		message: {
 			type: Object,
-			require: true,
+			required: true,
 			default: () => ({
+				id: '',
 				text: '',
 				type: '',
 				senderUsername: '',
@@ -140,11 +194,18 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handel background color
+		//counter to handle background color
 		count: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 1,
+		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			required: true,
+			default: 0,
 		},
 	},
 	data() {
@@ -155,6 +216,8 @@ export default {
 			upClicked: false,
 			downClicked: false,
 			backcolor: 'grey',
+			disappear: false,
+			spammed: false,
 			isRead: this.message.isRead,
 		};
 	},
@@ -166,8 +229,16 @@ export default {
 	methods: {
 		// @vuese
 		//toggle remove action
-		removeAction() {
+		removeAction(action) {
 			this.removeUser = !this.removeUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/deleteMessage', {
+					id: this.message.id,
+					type: 'comment',
+					baseurl: this.$baseurl,
+				});
+				this.disappear = true;
+			}
 		},
 		// @vuese
 		//handle block action
@@ -179,12 +250,22 @@ export default {
 					username: this.message.senderUsername,
 					baseurl: this.$baseurl,
 				});
+				this.disappear = true;
 			}
 		},
 		// @vuese
-		//toggle spam action
-		spamAction() {
+		//handle spam action
+		spamAction(action) {
 			this.spamUser = !this.spamUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/spamMessage', {
+					id: this.message.id,
+					type: 'message',
+					reason: '',
+					baseurl: this.$baseurl,
+				});
+				this.spammed = true;
+			}
 		},
 		// @vuese
 		//handle upvote action

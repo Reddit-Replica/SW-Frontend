@@ -4,14 +4,20 @@
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<profile-nav :user-name="getUserName" :state="state" />
 		<base-container>
-			<div class="profilebox">
+			<div id="main-profile-box" class="profilebox">
 				<main>
 					<!-- <sortposts-bar></sortposts-bar> -->
 					<router-view></router-view>
 				</main>
-				<aside>
-					<profile-card :user-name="getUserName" :state="state" />
-					<user-moderators-card></user-moderators-card>
+				<aside id="profile-aside">
+					<profile-card
+						:user-name="getUserName"
+						:state="state"
+						:user-data="getUserData"
+					/>
+					<user-moderators-card
+						:user-moderators="getUserData.moderatorOf"
+					></user-moderators-card>
 				</aside>
 			</div>
 		</base-container>
@@ -43,7 +49,7 @@ export default {
 			return this.$store.getters.getUserName;
 		},
 		getUserData() {
-			console.log(this.$store.getters['user/getUserData']);
+			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 	},
