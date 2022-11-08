@@ -1,4 +1,27 @@
 {
+	"mena": [
+		{
+			"nsfw": true,
+			"type": "private",
+			"isFavorite": true,
+			"title": "string",
+			"category": "string",
+			"members": 0,
+			"online": 0,
+			"description": "it is a programming subreddit",
+			"dateOfCreation": "string",
+			"flairs": [],
+			"rules": [],
+			"bans": [],
+			"moderators": [],
+			"isMember": true,
+			"banner": "string",
+			"picture": "string",
+			"communityTheme": true,
+			"views": 0,
+			"mainTopic": {}
+		}
+	],
 	"users": [
 		{
 			"id": 1,
@@ -517,3 +540,4 @@
 		]
 	}
 }
+
