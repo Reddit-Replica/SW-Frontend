@@ -1,8 +1,20 @@
 {
+  "save": [
+    {
+      "id": "1",
+      "type": "post"
+    }
+  ],
+  "unsave": [
+    {
+      "id": "1",
+      "type": "post"
+    }
+  ],
   "follow-post": [
     {}
   ],
-  "subreddit-name": [
+  "subredditName": [
     {
       "nsfw": true,
       "type": "private",
