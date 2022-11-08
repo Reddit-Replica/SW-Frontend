@@ -11,7 +11,7 @@
 		<svg
 			viewBox="0 0 100 100"
 			xmlns="http://www.w3.org/2000/svg"
-			class="tri-2 tri"
+			class="tri"
 			:style="styleFill"
 		>
 			<polygon points="0 0, 100 100, 0 100" />
@@ -101,9 +101,6 @@ export default {
 .tri-1 {
 	/* width: 67px; */
 	transform: rotate(90deg);
-}
-.tri-2 {
-	/* width: 46px; */
 }
 .tri {
 	border-bottom-left-radius: 4px;
