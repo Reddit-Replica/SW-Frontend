@@ -129,20 +129,36 @@ export default {
 		});
 
 		const responseData = await response.json();
-
+		localStorage.setItem('response', response.status);
+		// console.log(response.status);
 		if (response.ok) {
 			console.log(response);
 			console.log(response.status);
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				localStorage.setItem('response', response.status);
+				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
 					response: response.status,
 				});
 			}
+		} else if (!response.ok) {
+			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
+	async available_user(payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + 'username-available' + '?username=' + payload.username
+		);
+		const responseData = await response.json();
+
+		if (response.ok) {
+			console.log(response);
+			console.log(response.status);
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;

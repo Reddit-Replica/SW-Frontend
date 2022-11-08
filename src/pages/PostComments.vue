@@ -5,7 +5,7 @@
 				<div class="row justify-content-center align-items-center">
 					<div class="col-7 d-flex">
 						<div class="vote-box">
-							<div class="upvote" @click="upvote">
+							<div class="upvote" @click="upvote" id="upvote">
 								<svg
 									class="icon icon-arrow-down p-1 up-clicked"
 									v-if="upClicked"
@@ -24,7 +24,7 @@
 							>
 								{{ counter }}
 							</div>
-							<div class="downvote" @click="downvote">
+							<div class="downvote" @click="downvote" id="downvote">
 								<svg
 									class="icon icon-arrow-down p-1"
 									:class="downClicked ? 'down-clicked' : ''"
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 					<div class="col-3 close">
-						<button>
+						<button id="close">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -86,7 +86,7 @@
 						<div class="post-left">
 							<div class="post-content d-flex">
 								<div class="d-flex flex-column post-vote-box">
-									<div class="upvote" @click="upvote">
+									<div class="upvote" @click="upvote" id="post-upvote">
 										<svg
 											class="icon icon-arrow-down p-1 up-clicked"
 											v-if="upClicked"
@@ -109,7 +109,7 @@
 									>
 										{{ counter }}
 									</div>
-									<div class="downvote" @click="downvote">
+									<div class="downvote" @click="downvote" id="post-downvote">
 										<svg
 											class="icon icon-arrow-down p-1"
 											:class="downClicked ? 'down-clicked' : ''"
@@ -136,6 +136,7 @@
 														name: 'subreddit',
 														params: { subredditName: subredditName },
 													}"
+													id="subreddit-router"
 													>{{ subredditName }}
 												</router-link>
 											</span>
@@ -143,12 +144,13 @@
 												. Posted by .
 												<router-link
 													:to="{ name: 'user', params: { userName: userName } }"
+													id="poster-router"
 												>
 													{{ userName }} </router-link
 												>&nbsp;{{ duration }} ago
 											</span>
 										</div>
-										<div class="bell" @click="follow">
+										<div class="bell" @click="follow" id="follow">
 											<svg
 												v-if="!isFollowed"
 												xmlns="http://www.w3.org/2000/svg"
@@ -204,21 +206,6 @@
 												</svg>
 												{{ commentsCount }} Comments
 											</li>
-											<li id="awards">
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="16"
-													height="16"
-													fill="currentColor"
-													class="bi bi-gift"
-													viewBox="0 0 16 16"
-												>
-													<path
-														d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z"
-													/>
-												</svg>
-												Awards
-											</li>
 											<li @click="showShareSubMenu" id="share">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -241,24 +228,6 @@
 															width="16"
 															height="16"
 															fill="currentColor"
-															class="bi bi-link-45deg"
-															viewBox="0 0 16 16"
-														>
-															<path
-																d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"
-															/>
-															<path
-																d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"
-															/>
-														</svg>
-														Copy Link
-													</li>
-													<li>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="16"
-															fill="currentColor"
 															class="bi bi-signpost-2"
 															viewBox="0 0 16 16"
 														>
@@ -268,47 +237,11 @@
 														</svg>
 														Crosspost
 													</li>
-													<li>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="16"
-															fill="currentColor"
-															class="bi bi-code-square"
-															viewBox="0 0 16 16"
-														>
-															<path
-																d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-															/>
-															<path
-																d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z"
-															/>
-														</svg>
-														Embed
-													</li>
-													<li>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="16"
-															fill="currentColor"
-															class="bi bi-chat-dots"
-															viewBox="0 0 16 16"
-														>
-															<path
-																d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
-															/>
-															<path
-																d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
-															/>
-														</svg>
-														Share&nbsp;To&nbsp;Chat
-													</li>
 												</ul>
 											</li>
 
 											<li id="post-direct-save">
-												<div v-if="!saved" @click="savePost">
+												<div v-if="!saved" @click="savePost" id="save">
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"
@@ -323,7 +256,7 @@
 													</svg>
 													Save
 												</div>
-												<div v-else @click="savePost">
+												<div v-else @click="savePost" id="unsave">
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"
@@ -342,7 +275,7 @@
 													Unsave
 												</div>
 											</li>
-											<li @click="showSubMenu">
+											<li @click="showSubMenu" id="submenu">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													width="16"
@@ -356,61 +289,11 @@
 													/>
 												</svg>
 												<ul class="sub-menu" v-if="subMenuDisplay">
-													<li class="awards-item-in-sub-menu">
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="16"
-															fill="currentColor"
-															class="bi bi-gift"
-															viewBox="0 0 16 16"
-														>
-															<path
-																d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z"
-															/>
-														</svg>
-														Awards
-													</li>
-													<li class="share-items-in-sub-menu">
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="16"
-															fill="currentColor"
-															class="bi bi-link-45deg"
-															viewBox="0 0 16 16"
-														>
-															<path
-																d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"
-															/>
-															<path
-																d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"
-															/>
-														</svg>
-														Copy&nbsp;Link
-													</li>
-													<li class="share-items-in-sub-menu">
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="16"
-															fill="currentColor"
-															class="bi bi-code-square"
-															viewBox="0 0 16 16"
-														>
-															<path
-																d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-															/>
-															<path
-																d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z"
-															/>
-														</svg>
-														Embed
-													</li>
 													<li
 														v-if="!saved"
 														@click="savePost"
 														class="post-sub-save"
+														id="sub-save"
 													>
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
@@ -430,7 +313,7 @@
 														v-else
 														@click="savePost"
 														class="post-sub-save"
-														id="unsave"
+														id="sub-unsave"
 													>
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
@@ -449,7 +332,7 @@
 														</svg>
 														Unsave
 													</li>
-													<li @click="hidePost" v-if="!postHidden">
+													<li @click="hidePost" v-if="!postHidden" id="hide">
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
 															width="16"
@@ -518,6 +401,7 @@
 													name: 'user',
 													params: { userName: this.$store.getters.getUserName },
 												}"
+												id="user-router"
 												>mena</router-link
 											>
 										</div>
@@ -536,7 +420,7 @@
 											<div class="icons-box">
 												<div class="tool-tip">
 													<span class="tool-tip-text">Bold</span>
-													<button class="icons">
+													<button class="icons" id="bold">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-bold " />
 														</div>
@@ -544,7 +428,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text">Italics</span>
-													<button class="icons">
+													<button class="icons" id="italics">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-italic" />
 														</div>
@@ -552,7 +436,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text">Link</span>
-													<button class="icons">
+													<button class="icons" id="link">
 														<div>
 															<svg
 																class="svg-inline--fa fa-link icon"
@@ -578,7 +462,7 @@
 													<span class="tool-tip-text strike"
 														>Strikethrough</span
 													>
-													<button class="icons">
+													<button class="icons" id="strikethrough">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-strikethrough"
@@ -588,7 +472,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Inline Code</span>
-													<button class="icons">
+													<button class="icons" id="inline-code">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-code" />
 														</div>
@@ -596,7 +480,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Superscript</span>
-													<button class="icons">
+													<button class="icons" id="superscript">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-superscript"
@@ -606,7 +490,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text">Spoiler</span>
-													<button class="icons">
+													<button class="icons" id="spoiler">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-exclamation"
@@ -617,7 +501,7 @@
 												<div class="space-in"></div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Heading</span>
-													<button class="icons">
+													<button class="icons" id="heading">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-heading" />
 														</div>
@@ -627,7 +511,7 @@
 													<span class="tool-tip-text strike"
 														>Bulleted List</span
 													>
-													<button class="icons">
+													<button class="icons" id="list-ul">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-list-ul" />
 														</div>
@@ -637,7 +521,7 @@
 													<span class="tool-tip-text strike"
 														>Numbered List</span
 													>
-													<button class="icons">
+													<button class="icons" id="numbered-list">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-list-ol" />
 														</div>
@@ -645,7 +529,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Quote Block</span>
-													<button class="icons">
+													<button class="icons" id="quote-block">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-quote-right"
@@ -653,8 +537,8 @@
 														</div>
 													</button>
 												</div>
-												<div class="tool-tip" @click="displayMenu">
-													<button class="icons">
+												<div class="tool-tip" @click="displayMenu" id="menu">
+													<button class="icons" id="ellipsis">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-ellipsis" />
 														</div>
@@ -755,12 +639,16 @@
 														</li>
 													</ul>
 												</div>
-												<base-button class="mark-down" @click="switchMode"
+												<base-button
+													class="mark-down"
+													@click="switchMode"
+													id="markdown-mode"
 													>Markdown Mode</base-button
 												>
 												<base-button
 													class="comment-button"
 													:disable-button="noComment"
+													id="comment-in-mark-down-mode"
 													>Comment</base-button
 												>
 											</div>
@@ -770,7 +658,7 @@
 												<textarea
 													class="text-area text-area-in-markdown-mode"
 													placeholder="What are your thoughts?"
-													id="text1"
+													id="text2"
 													v-model="newComment"
 												></textarea>
 											</div>
@@ -780,18 +668,23 @@
 														icon="fa-regular fa-circle-question"
 													/>
 												</div>
-												<div class="text-in-markdown-mode" @click="switchMode">
+												<div
+													class="text-in-markdown-mode"
+													@click="switchMode"
+													id="switch-f-mode"
+												>
 													Switch to Fancy Pants Editor
 												</div>
 												<base-button
 													class="comment-button"
 													:disable-button="noComment"
+													id="comment"
 													>Comment</base-button
 												>
 											</div>
 										</div>
 									</div>
-									<div class="sort-by" @click="displaySortByMenu">
+									<div class="sort-by" @click="displaySortByMenu" id="sort">
 										<span class="title"
 											>Sort By:{{ sortByTitle }}
 											<font-awesome-icon icon="fa-solid fa-caret-down"
@@ -823,7 +716,7 @@
 						</div>
 					</div>
 					<div class="col-lg-3">
-						<div></div>
+						<subreddit-info></subreddit-info>
 					</div>
 				</div>
 			</div>
@@ -833,10 +726,12 @@
 <script>
 import SubMenu from '../components/BaseComponents/SubMenu.vue';
 import NestedReply from '../components/NestedReply.vue';
+import SubredditInfo from '../components/SubredditInfo.vue';
 export default {
 	components: {
 		SubMenu,
 		NestedReply,
+		SubredditInfo,
 	},
 	data() {
 		return {
@@ -893,7 +788,7 @@ export default {
 	},
 	computed: {
 		noComment() {
-			if (this.comment == '') return true;
+			if (this.newComment == '') return true;
 			return false;
 		},
 	},

@@ -150,4 +150,8 @@ div.vote-box {
 .unread {
 	color: var(--color-red-dark-1);
 }
+
+.hide-message {
+	display: none;
+}
 </style>
