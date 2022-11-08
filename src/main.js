@@ -3,13 +3,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import router from './router.js';
 import store from './store/index';
 import App from './App.vue';
-import Cookies from 'js-cookie';
 //import Vue from 'vue';
 //import { VueCookieNext } from 'vue-cookie-next';
 //import VueCookies from 'vue-cookies';
 /*import { VueRecaptcha } from 'vue-recaptcha';*/
 // import vue3GoogleLogin from 'vue3-google-login';
-import VueCookies from 'vue3-cookies';
+//import VueCookies from 'vue3-cookies';
 //import { useCookies } from "vue3-cookies";
 import GAuth from 'vue3-google-oauth2';
 
@@ -45,8 +44,8 @@ app.use(store);
 // 	expires: '7d',
 // });
 //app.use(VueCookieNext);
-app.use(VueCookies);
-app.use(Cookies);
+// app.use(VueCookies);
+// app.use(Cookies);
 
 // new Vue({
 // 	render: (h) => h(App),
