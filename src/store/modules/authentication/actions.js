@@ -94,4 +94,19 @@ export default {
 			throw error;
 		}
 	},
+	async available_user(payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + 'username-available' + '?username=' + payload.username
+		);
+		const responseData = await response.json();
+
+		if (response.ok) {
+			console.log(response);
+			console.log(response.status);
+		} else if (!response.ok) {
+			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
 };
