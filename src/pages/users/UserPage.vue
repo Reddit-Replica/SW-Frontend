@@ -10,8 +10,14 @@
 					<router-view></router-view>
 				</main>
 				<aside id="profile-aside">
-					<profile-card :user-name="getUserName" :state="state" />
-					<user-moderators-card></user-moderators-card>
+					<profile-card
+						:user-name="getUserName"
+						:state="state"
+						:user-data="getUserData"
+					/>
+					<user-moderators-card
+						:user-moderators="getUserData.moderatorOf"
+					></user-moderators-card>
 				</aside>
 			</div>
 		</base-container>
@@ -43,7 +49,7 @@ export default {
 			return this.$store.getters.getUserName;
 		},
 		getUserData() {
-			console.log(this.$store.getters['user/getUserData']);
+			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 	},

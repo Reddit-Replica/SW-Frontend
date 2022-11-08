@@ -1,9 +1,6 @@
 import { mount } from '@vue/test-utils';
 import SociallinksConfig from '../../src/components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksConfig.vue';
 import { describe, it, expect } from 'vitest';
-function onClick (){
-
-}
 describe('SocialLinkConfig.vue', () => {
 	it('check data prop', () => {
 		const data = {
@@ -93,23 +90,12 @@ describe('SocialLinkConfig.vue', () => {
 			},
 			data() {
 				return {
-					activeSaveButton: true,
+					activeSaveButton: false,
 				};
 			},
-      listeners: {
-        save: onClick
-      }
 		});
-		const byId = wrapper.find('#save-button');
-		// expect(byId.exists()).toBe(true);
+		const byId = wrapper.find('#back-button');
 		await byId.trigger('click');
-    // expect(onClick).toHaveBeenCalled()
-			// .trigger('click').then(() => {
-				// expect(wrapper.isVisible).toBe(false);
-        // expect(wrapper.emitted('save')).toBe(true);
-			// })
-			// .catch(function () {
-			// 	console.log('Promise Rejected');
-			// });
+    expect(wrapper.isVisible()).toBe(false)
 	});
 });

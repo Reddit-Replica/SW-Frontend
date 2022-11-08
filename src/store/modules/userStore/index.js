@@ -57,13 +57,46 @@ export default {
 					baseUrl: 'https://www.instagram.com/',
 				},
 				{
-					id: '4',
 					text: 'Twitter',
 					imgSrc:
 						'https://www.redditstatic.com/desktop2x/img/social-links/twitter.png',
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://twitter.com/',
+				},
+				{
+					text: 'TikTok',
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/tiktok.png',
+					alt: '',
+					type: 'username',
+					baseUrl: 'https://www.tiktok.com/@',
+				},
+				{
+					text: 'Twitch',
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/twitch.png',
+					alt: '',
+					type: 'username',
+					baseUrl: 'https://www.twitch.tv/',
+				},
+				{
+					text: 'Facebook',
+					imgSrc:
+						'https://www.redditstatic.com/desktop2x/img/social-links/facebook.png',
+					alt: '',
+					type: 'link',
+					placeholder: '',
+					baseUrl: '',
+				},
+				{
+					text: 'YouTube',
+					imgSrc:
+						'	https://www.redditstatic.com/desktop2x/img/social-links/youtube.png',
+					alt: '',
+					type: 'link',
+					placeholder: '',
+					baseUrl: '',
 				},
 			],
 		};
