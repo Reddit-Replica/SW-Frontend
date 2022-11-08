@@ -2,7 +2,7 @@ export default {
 	async getSubreddit(context, payload) {
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;
-		const response = await fetch(baseurl + '/' + subredditName);
+		const response = await fetch(baseurl + '/r/' + subredditName);
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
