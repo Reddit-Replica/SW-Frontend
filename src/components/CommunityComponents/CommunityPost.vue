@@ -487,8 +487,10 @@ export default {
 	display: flex;
 	flex-direction: column;
 
-	left: 500px;
-	top: 1150px;
+	/* left: 500px;
+	top: 1150px; */
+	left: 50%;
+	top: 160%;
 }
 .icon-dots {
 	position: relative;
