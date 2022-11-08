@@ -34,10 +34,20 @@
 							id="emailme"
 							button-text="Email Me"
 							:disable-button="buttonIsactive"
-							class="button-class"
+							:class="!success ? 'button-class' : 'button-success'"
 						>
+							<span class="success" v-if="success"
+								><font-awesome-icon icon="fa-solid fa-check" />
+							</span>
 						</base-button>
 					</div>
+					<p class="invalid" v-if="!success">
+						{{ error }}
+					</p>
+					<p class="valid" v-if="success">
+						Thanks! If email address correct, you'll get an email with your
+						username.
+					</p>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
@@ -66,6 +76,8 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
+			error: '',
+			success: false,
 		};
 	},
 	methods: {
@@ -88,12 +100,18 @@ export default {
 			};
 
 			try {
-				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
-
-				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-				// this.$router.replace(redirectUrl);
+				await this.$store.dispatch('forgetuserdhandle', actionPayload);
+				const response = localStorage.getItem('response');
+				if (response == 200) {
+					console.log(response);
+					this.success = true;
+				}
 			} catch (err) {
-				this.error = err;
+				//this.error = err;
+				console.log(err);
+				this.error = 'Invalid email ';
+				console.log(this.error);
+				this.success = false;
 			}
 		},
 	},
@@ -190,6 +208,15 @@ div {
 	height: 10px;
 	width: 12px;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.success {
+	position: absolute;
+	left: 40%;
+
+	font-size: 2.5rem;
+	color: white;
+	z-index: 5;
+	opacity: 1;
 }
 .input-box .wrong-check {
 	position: absolute;
@@ -323,6 +350,18 @@ p {
 	color: #ea0027;
 	transition: all 0.2s ease-in-out;
 }
+.valid {
+	margin: 0;
+	margin-bottom: 0.5rem;
+	padding: 0;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	opacity: 1;
+	color: #0079d3;
+	transition: all 0.2s ease-in-out;
+}
 
 .linkSeparator {
 	color: #0079d3;
@@ -330,5 +369,29 @@ p {
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 18px;
+}
+.button-success {
+	color: #ffffff;
+	background: var(--color-blue-2);
+	/*cursor: ;*/
+	pointer-events: none;
+	color: transparent;
+	position: relative;
+	overflow: hidden;
+	/*text-indent: -9999px;*/
+	border-radius: 4px;
+	text-align: center;
+	min-height: 35px;
+	max-width: 392px;
+	width: auto;
+	min-width: 155px;
+	padding: 5px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-height: 1000px;
+	margin-top: 2rem;
+	transition: color 0.01s ease-in, text-indent 0.25s ease-in,
+		opacity 0.25s ease-in;
 }
 </style>

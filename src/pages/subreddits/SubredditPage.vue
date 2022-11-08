@@ -9,6 +9,7 @@
 			<div class="subreddit-page-left">
 				<createpost-bar></createpost-bar>
 				<sortposts-bar></sortposts-bar>
+				<grow-community></grow-community>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
@@ -28,12 +29,14 @@ import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue'
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
+import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 export default {
 	components: {
 		SubredditTop,
 		CreatepostBar,
 		SortpostsBar,
 		AboutCommunityBar,
+		GrowCommunity,
 	},
 	data() {
 		return {

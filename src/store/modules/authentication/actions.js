@@ -43,11 +43,13 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 
-		const responseData = await response.json();
+		const responseData = response;
+		localStorage.setItem('response', response.status);
+		console.log(response);
+		console.log(responseData);
 		if (response.ok) {
 			console.log(response);
 			console.log(responseData);
-			console.log(responseData.token);
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			console.log(responseData.error);
