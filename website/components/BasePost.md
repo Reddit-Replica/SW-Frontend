@@ -10,3 +10,13 @@
 <!-- @vuese:BasePost:props:end -->
 
 
+## Events
+
+<!-- @vuese:BasePost:events:start -->
+|Event Name|Description|Parameters|
+|---|---|---|
+|showComments|-|-|
+
+<!-- @vuese:BasePost:events:end -->
+
+
