@@ -61,7 +61,7 @@
 					</p>
 				</div>
 				<div>
-					<select>
+					<select id="language">
 						<option value="Deutsch">Deutsch</option>
 						<option value="English (US)">English (US)</option>
 						<option value="Español (ES)">Español (ES)</option>
@@ -90,13 +90,13 @@
 					<h3 class="h3-title">Country</h3>
 					<p class="p-title-description">
 						This is your primary location.
-						<router-link to="/hc/en-us/articles/360062429491"
+						<router-link to="/hc/en-us/articles/360062429491" id="learn-more"
 							>Learn more</router-link
 						>
 					</p>
 				</div>
 				<div>
-					<select>
+					<select id="country">
 						<option value="xx">No country identified</option>
 						<option value="Afghanistan">Afghanistan</option>
 						<option value="Åland Islands">Åland Islands</option>
@@ -482,7 +482,7 @@
 					</p>
 				</div>
 				<div>
-					<base-button button-text="(disconnect)" id="sb-3" />
+					<base-button button-text="(disconnect)" id="google" />
 				</div>
 			</div>
 			<h3 class="h3-main-title">BETA TESTS</h3>
@@ -510,7 +510,7 @@
 			</div>
 			<h3 class="h3-main-title">DELETE ACCOUNT</h3>
 			<div class="section">
-				<div>
+				<div id="delete-account">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
