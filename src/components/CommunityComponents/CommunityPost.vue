@@ -1,5 +1,5 @@
 <template>
-	<div class="post-card">
+	<div class="post-card" id="initial-post">
 		<div class="votes-box">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -12,6 +12,7 @@
 				@mouseleave="setHover1(false)"
 				@click="voteUp"
 				:class="{ 'hover-fill-up': isHover1 }"
+				id="initial-post-up"
 			>
 				<path
 					d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
@@ -30,6 +31,7 @@
 				@mouseleave="setHover2(false)"
 				@click="voteDown"
 				:class="{ 'hover-fill-down': isHover2 }"
+				id="initial-post-down"
 			>
 				<path
 					d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
@@ -45,22 +47,29 @@
 					fill="currentColor"
 					class="bi bi-pin-angle-fill green-icon"
 					viewBox="0 0 16 16"
+					id="pin-icon"
 				>
 					<path
 						d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
 					/>
 				</svg>
-				<span class="text-bold">PINNED BY MODERATORS</span>
+				<span class="text-bold" id="pin-by">PINNED BY MODERATORS</span>
 			</div>
-			<div class="div-margin text-small">Posted by u/HodaGamal 11 days ago</div>
-			<div class="div-margin text-big">r/Vue</div>
+
+			<div class="div-margin text-small">
+				Posted by u/<span id="initial-post-by">HodaGamal</span>
+				<span id="initial-post-from">11 days</span> ago
+			</div>
+
+			<div class="div-margin text-big" id="initial-post-sub-name">r/Vue</div>
+
 			<div class="div-margin flex-center">
-				<span class="text-bold text-red">LIVE</span>
-				<span class="text-small">join now</span>
+				<span class="text-bold text-red" id="live">LIVE</span>
+				<span class="text-small" id="join-now">join now</span>
 			</div>
 
 			<div class="flex-icons text-bold">
-				<div class="icons">
+				<div class="icons" id="initial-post-icon-1">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -75,7 +84,7 @@
 					</svg>
 					<span class="icon-text">0</span>
 				</div>
-				<div class="icons">
+				<div class="icons" id="initial-post-icon-2">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -91,7 +100,7 @@
 					</svg>
 					<span class="icon-text">Share</span>
 				</div>
-				<div class="icons">
+				<div class="icons" id="initial-post-icon-3">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -109,7 +118,7 @@
 					</svg>
 					<span class="icon-text">Approve</span>
 				</div>
-				<div class="icons">
+				<div class="icons" id="initial-post-icon-4">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -127,7 +136,7 @@
 					</svg>
 					<span class="icon-text">Remove</span>
 				</div>
-				<div class="icons">
+				<div class="icons" id="initial-post-icon-5">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -141,7 +150,11 @@
 						/>
 					</svg>
 				</div>
-				<div class="icons icons-dots" @click="toggleIconsList">
+				<div
+					class="icons icons-dots"
+					@click="toggleIconsList"
+					id="initial-post-icon-15"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -155,8 +168,12 @@
 						/>
 					</svg>
 				</div>
-				<div class="icons-list" v-if="iconsListShown">
-					<button class="icon-button">
+				<div
+					class="icons-list"
+					v-if="iconsListShown"
+					id="initial-post-icon-list"
+				>
+					<button class="icon-button" id="initial-post-icon-6">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +190,7 @@
 							<span class="icon-text text-bold">Edit Post</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-7">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +207,7 @@
 							<span class="icon-text text-bold">Save</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-8">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +230,7 @@
 							<span class="icon-text text-bold">Hide</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-9">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -230,7 +247,7 @@
 							<span class="icon-text text-bold">Add Event Start Time</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-10">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +264,7 @@
 							<span class="icon-text text-bold">Add To Collection</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-11">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +281,7 @@
 							<span class="icon-text text-bold">Delete</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-12">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -281,7 +298,7 @@
 							<span class="icon-text text-bold">Mark As Spoiler</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-13">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -298,7 +315,7 @@
 							<span class="icon-text text-bold">Mark As NSFW</span>
 						</div>
 					</button>
-					<button class="icon-button">
+					<button class="icon-button" id="initial-post-icon-14">
 						<div class="icons icons-hover">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
