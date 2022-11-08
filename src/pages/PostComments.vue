@@ -5,7 +5,7 @@
 				<div class="row justify-content-center align-items-center">
 					<div class="col-7 d-flex">
 						<div class="vote-box">
-							<div class="upvote" @click="upvote">
+							<div class="upvote" @click="upvote" id="upvote">
 								<svg
 									class="icon icon-arrow-down p-1 up-clicked"
 									v-if="upClicked"
@@ -24,7 +24,7 @@
 							>
 								{{ counter }}
 							</div>
-							<div class="downvote" @click="downvote">
+							<div class="downvote" @click="downvote" id="downvote">
 								<svg
 									class="icon icon-arrow-down p-1"
 									:class="downClicked ? 'down-clicked' : ''"
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 					<div class="col-3 close">
-						<button>
+						<button id="close">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -86,7 +86,7 @@
 						<div class="post-left">
 							<div class="post-content d-flex">
 								<div class="d-flex flex-column post-vote-box">
-									<div class="upvote" @click="upvote">
+									<div class="upvote" @click="upvote" id="post-upvote">
 										<svg
 											class="icon icon-arrow-down p-1 up-clicked"
 											v-if="upClicked"
@@ -109,7 +109,7 @@
 									>
 										{{ counter }}
 									</div>
-									<div class="downvote" @click="downvote">
+									<div class="downvote" @click="downvote" id="post-downvote">
 										<svg
 											class="icon icon-arrow-down p-1"
 											:class="downClicked ? 'down-clicked' : ''"
@@ -136,6 +136,7 @@
 														name: 'subreddit',
 														params: { subredditName: subredditName },
 													}"
+													id="subreddit-router"
 													>{{ subredditName }}
 												</router-link>
 											</span>
@@ -143,12 +144,13 @@
 												. Posted by .
 												<router-link
 													:to="{ name: 'user', params: { userName: userName } }"
+													id="poster-router"
 												>
 													{{ userName }} </router-link
 												>&nbsp;{{ duration }} ago
 											</span>
 										</div>
-										<div class="bell" @click="follow">
+										<div class="bell" @click="follow" id="follow">
 											<svg
 												v-if="!isFollowed"
 												xmlns="http://www.w3.org/2000/svg"
@@ -308,7 +310,7 @@
 											</li>
 
 											<li id="post-direct-save">
-												<div v-if="!saved" @click="savePost">
+												<div v-if="!saved" @click="savePost" id="save">
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"
@@ -323,7 +325,7 @@
 													</svg>
 													Save
 												</div>
-												<div v-else @click="savePost">
+												<div v-else @click="savePost" id="unsave">
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"
@@ -342,7 +344,7 @@
 													Unsave
 												</div>
 											</li>
-											<li @click="showSubMenu">
+											<li @click="showSubMenu" id="submenu">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													width="16"
@@ -411,6 +413,7 @@
 														v-if="!saved"
 														@click="savePost"
 														class="post-sub-save"
+														id="sub-save"
 													>
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
@@ -430,7 +433,7 @@
 														v-else
 														@click="savePost"
 														class="post-sub-save"
-														id="unsave"
+														id="sub-unsave"
 													>
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
@@ -449,7 +452,7 @@
 														</svg>
 														Unsave
 													</li>
-													<li @click="hidePost" v-if="!postHidden">
+													<li @click="hidePost" v-if="!postHidden" id="hide">
 														<svg
 															xmlns="http://www.w3.org/2000/svg"
 															width="16"
@@ -518,6 +521,7 @@
 													name: 'user',
 													params: { userName: this.$store.getters.getUserName },
 												}"
+												id="user-router"
 												>mena</router-link
 											>
 										</div>
@@ -536,7 +540,7 @@
 											<div class="icons-box">
 												<div class="tool-tip">
 													<span class="tool-tip-text">Bold</span>
-													<button class="icons">
+													<button class="icons" id="bold">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-bold " />
 														</div>
@@ -544,7 +548,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text">Italics</span>
-													<button class="icons">
+													<button class="icons" id="italics">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-italic" />
 														</div>
@@ -552,7 +556,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text">Link</span>
-													<button class="icons">
+													<button class="icons" id="link">
 														<div>
 															<svg
 																class="svg-inline--fa fa-link icon"
@@ -578,7 +582,7 @@
 													<span class="tool-tip-text strike"
 														>Strikethrough</span
 													>
-													<button class="icons">
+													<button class="icons" id="strikethrough">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-strikethrough"
@@ -588,7 +592,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Inline Code</span>
-													<button class="icons">
+													<button class="icons" id="inline-code">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-code" />
 														</div>
@@ -596,7 +600,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Superscript</span>
-													<button class="icons">
+													<button class="icons" id="superscript">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-superscript"
@@ -606,7 +610,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text">Spoiler</span>
-													<button class="icons">
+													<button class="icons" id="spoiler">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-exclamation"
@@ -617,7 +621,7 @@
 												<div class="space-in"></div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Heading</span>
-													<button class="icons">
+													<button class="icons" id="heading">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-heading" />
 														</div>
@@ -627,7 +631,7 @@
 													<span class="tool-tip-text strike"
 														>Bulleted List</span
 													>
-													<button class="icons">
+													<button class="icons" id="list-ul">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-list-ul" />
 														</div>
@@ -637,7 +641,7 @@
 													<span class="tool-tip-text strike"
 														>Numbered List</span
 													>
-													<button class="icons">
+													<button class="icons" id="numbered-list">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-list-ol" />
 														</div>
@@ -645,7 +649,7 @@
 												</div>
 												<div class="tool-tip">
 													<span class="tool-tip-text strike">Quote Block</span>
-													<button class="icons">
+													<button class="icons" id="quote-block">
 														<div class="icon">
 															<font-awesome-icon
 																icon="fa-solid fa-quote-right"
@@ -653,8 +657,8 @@
 														</div>
 													</button>
 												</div>
-												<div class="tool-tip" @click="displayMenu">
-													<button class="icons">
+												<div class="tool-tip" @click="displayMenu" id="menu">
+													<button class="icons" id="ellipsis">
 														<div class="icon">
 															<font-awesome-icon icon="fa-solid fa-ellipsis" />
 														</div>
@@ -755,12 +759,16 @@
 														</li>
 													</ul>
 												</div>
-												<base-button class="mark-down" @click="switchMode"
+												<base-button
+													class="mark-down"
+													@click="switchMode"
+													id="markdown-mode"
 													>Markdown Mode</base-button
 												>
 												<base-button
 													class="comment-button"
 													:disable-button="noComment"
+													id="comment-in-mark-down-mode"
 													>Comment</base-button
 												>
 											</div>
@@ -770,7 +778,7 @@
 												<textarea
 													class="text-area text-area-in-markdown-mode"
 													placeholder="What are your thoughts?"
-													id="text1"
+													id="text2"
 													v-model="newComment"
 												></textarea>
 											</div>
@@ -780,18 +788,23 @@
 														icon="fa-regular fa-circle-question"
 													/>
 												</div>
-												<div class="text-in-markdown-mode" @click="switchMode">
+												<div
+													class="text-in-markdown-mode"
+													@click="switchMode"
+													id="switch-f-mode"
+												>
 													Switch to Fancy Pants Editor
 												</div>
 												<base-button
 													class="comment-button"
 													:disable-button="noComment"
+													id="comment"
 													>Comment</base-button
 												>
 											</div>
 										</div>
 									</div>
-									<div class="sort-by" @click="displaySortByMenu">
+									<div class="sort-by" @click="displaySortByMenu" id="sort">
 										<span class="title"
 											>Sort By:{{ sortByTitle }}
 											<font-awesome-icon icon="fa-solid fa-caret-down"
