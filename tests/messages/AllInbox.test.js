@@ -1,51 +1,101 @@
-import { mount } from '@vue/test-utils';
-import AllinboxComponent from '../../src/components/MessageComponents/AllinboxComponent.vue';
-import { describe, it, expect } from 'vitest';
+import {mount} from '@vue/test-utils';
+import AllinboxComponent
+  from '../../src/components/MessageComponents/AllinboxComponent.vue';
+import {describe, it, expect} from 'vitest';
+import Vuex from 'vuex';
+import store from '../../src/store/index.js';
 
-describe('AllinboxComponent.vue', () => {
-	
-	//--------------------------------------------------------
-	//                     Rendering
-	//--------------------------------------------------------
-	it('should render', () => {
-		const wrapper = mount(AllinboxComponent);
-	});
+describe ('AllinboxComponent.vue', () => {
+  const message = {
+    id: 2,
+    text: 'hello asmaa',
+    type: 'Messages',
+    subredditName: 'subredditName',
+    postTitle: 'postTitle',
+    senderUsername: '/u/hoda_gamal',
+    receiverUsername: '/u/asmaaadel0',
+    subject: 'hi',
+    sendAt: '2019-08-24T14:15:22Z',
+    isReply: false,
+    isRead: true,
+  };
+  const index = 0;
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
+  it ('should render', () => {
+    const wrapper = mount (AllinboxComponent);
+  });
 
-	// it('displays items from the list', () => {
-	// 	const Constructor = Vue.extend(AllInbox);
-	// 	const ListComponent = new Constructor().$mount();
+  //--------------------------------------------------------
+  //                     Testing content page
+  //--------------------------------------------------------
 
-	// 	expect(ListComponent.$el.textContent).to.contain('play games');
-	// });
+  it ('Testing the sender name is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+				index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#message-sender-0').text ()).contain (
+      '/u/hoda_gamal'
+    );
+  });
 
-	// it('adds a new item to list on click', () => {
-	// 	const Constructor = Vue.extend(List);
-	// 	const ListComponent = new Constructor().$mount();
+  it ('Testing the reciever name is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+				index
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#message-receiver-0').text ()).contain (
+      '/u/asmaaadel0'
+    );
+  });
 
-	// 	ListComponent.newItem = 'brush my teeth';
+  it ('Testing subject is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+				index
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('.subject-text').text ()).contain ('hi');
+  });
 
-	// 	// simulate click event
-	// 	const button = ListComponent.$el.querySelector('button');
-	// 	const clickEvent = new window.Event('click');
-	// 	button.dispatchEvent(clickEvent);
-	// 	ListComponent._watcher.run();
-
-	// 	// assert list contains new item
-	// 	expect(ListComponent.$el.textContent).to.contain('brush my teeth');
-	// 	expect(ListComponent.listItems).to.contain('brush my teeth');
-	// });
-
-	// it('adds new item to list on click with avoriaz', () => {
-	// 	const ListComponent = mount(List);
-
-	// 	ListComponent.setData({
-	// 		newItem: 'brush my teeth',
-	// 	});
-
-	// 	const button = ListComponent.find('button')[0];
-	// 	button.dispatch('click');
-
-	// 	expect(ListComponent.text()).to.contain('brush my teeth');
-	// 	expect(ListComponent.data().listItems).to.contain('brush my teeth');
-	// });
+  it ('Testing text message is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+				index
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  });
 });
