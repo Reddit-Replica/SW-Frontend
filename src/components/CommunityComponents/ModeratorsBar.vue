@@ -1,10 +1,10 @@
 <template>
-	<div class="about-bar">
+	<div class="about-bar" id="mods-community-form">
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">Moderators</h2></div>
 		</div>
 		<div class="about-body">
-			<div class="box-body">
+			<div class="box-body" id="message-mods">
 				<base-button link to="/message/sent" class="button-message text"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@
 					>u/{{ mod.name }}</router-link
 				>
 			</div>
-			<div class="box-body flex-end text text-view">
+			<div class="box-body flex-end text text-view" id="view-mods">
 				<router-link to="/message">VIEW ALL MODERATORS</router-link>
 			</div>
 		</div>
