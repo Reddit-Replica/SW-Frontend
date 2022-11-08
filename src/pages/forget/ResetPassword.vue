@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form @submit.prevent="">
+				<form @submit.prevent="handleSubmit">
 					<div class="snoo-icon"></div>
 					<h1>Reset your password</h1>
 					<p class="description">
@@ -68,6 +68,8 @@
 				</div>
 			</div>
 		</div>
+		{{ id }}
+		{{ token }}
 	</div>
 </template>
 
@@ -84,6 +86,7 @@ export default {
 			invalidPasswordverify: false,
 			password: '',
 			passwordVerify: '',
+			id: this.$route.params.id,
 			token: this.$route.params.token,
 		};
 	},
@@ -112,6 +115,24 @@ export default {
 				this.showSignpasswordverify = true;
 				this.checkedPasswordverify = true;
 				this.invalidPasswordverify = false;
+			}
+		},
+		async handleSubmit() {
+			const actionPayload = {
+				password: this.password,
+				passwordVerify: this.passwordVerify,
+				id: this.id,
+				token: this.token,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('ressethandle', actionPayload);
+
+				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+				// this.$router.replace(redirectUrl);
+			} catch (err) {
+				this.error = err;
 			}
 		},
 	},
@@ -333,6 +354,9 @@ p {
 .linkSeparator {
 	color: #0079d3;
 	margin: 0 4px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
 }
 .end {
 	margin-top: 10px;
