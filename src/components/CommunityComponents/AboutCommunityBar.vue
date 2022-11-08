@@ -537,11 +537,6 @@ export default {
 	word-wrap: break-word;
 }
 .about-header {
-	/* font-size: 10px;
-	font-weight: 700;
-	letter-spacing: 0.5px;
-	line-height: 12px;
-	text-transform: uppercase; */
 	background-color: var(--color-blue-2);
 	border-radius: 3px 3px 0 0;
 	color: var(--color-white-1);

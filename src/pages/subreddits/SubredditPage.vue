@@ -10,6 +10,7 @@
 				<createpost-bar></createpost-bar>
 				<sortposts-bar></sortposts-bar>
 				<grow-community></grow-community>
+				<community-post></community-post>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
@@ -19,6 +20,7 @@
 					community-date="OCT 28, 2022"
 					community-type="Private"
 				></about-community-bar>
+				<moderators-bar></moderators-bar>
 			</div>
 		</div>
 	</div>
@@ -30,6 +32,9 @@ import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
+import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
+import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
+
 export default {
 	components: {
 		SubredditTop,
@@ -37,6 +42,8 @@ export default {
 		SortpostsBar,
 		AboutCommunityBar,
 		GrowCommunity,
+		CommunityPost,
+		ModeratorsBar,
 	},
 	data() {
 		return {
@@ -50,6 +57,15 @@ export default {
 				{ id: 6, name: 'Sports' },
 				{ id: 7, name: 'Travel' },
 			],
+			post: {
+				userName: 'HodaGamal',
+				voteCount: 1,
+				subredditName: 'Subreddit',
+				duration: '10 days',
+				postName: 'Hello World',
+				postDescription: 'hello',
+				commentsCount: 22,
+			},
 		};
 	},
 };
