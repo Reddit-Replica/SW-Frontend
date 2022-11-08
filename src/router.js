@@ -50,7 +50,7 @@ import postComments from './pages/PostComments.vue';
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '/', redirect: '/main' },
+		{ path: '/', redirect: '/login' },
 		{ path: '/main', component: MainPage },
 
 		{ path: '/forgetPassword', component: ForgetPassword },
