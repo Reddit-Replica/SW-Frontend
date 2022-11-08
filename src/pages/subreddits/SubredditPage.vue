@@ -11,7 +11,13 @@
 				<sortposts-bar></sortposts-bar>
 			</div>
 			<div class="subreddit-page-right">
-				<about-community-bar :topics="topics"></about-community-bar>
+				<about-community-bar
+					:topics="topics"
+					:members-count="1"
+					:online-members-count="5"
+					community-date="OCT 28, 2022"
+					community-type="Private"
+				></about-community-bar>
 			</div>
 		</div>
 	</div>
@@ -61,7 +67,8 @@ export default {
 	height: 100%;
 }
 .subreddit-page-right {
-	width: 25%;
+	/* width: 25%; */
+	width: 312px;
 	height: 100%;
 	margin-left: 24px;
 	margin-top: 15px;

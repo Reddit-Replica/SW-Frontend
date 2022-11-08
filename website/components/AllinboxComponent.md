@@ -17,7 +17,8 @@
 <!-- @vuese:AllinboxComponent:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|deleteAction|toggle delete action|-|
+|deleteAction|handle delete action|-|
+|spamAction|handle spam action|-|
 |blockAction|handle block action|-|
 |unreadAction|handle unread action|-|
 

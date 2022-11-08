@@ -249,4 +249,49 @@ export default {
 			throw error;
 		}
 	},
+	async deleteMessage(_, payload) {
+		const del = {
+			id: payload.id,
+			type: payload.type,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/delete', {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(del),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async spamMessage(_, payload) {
+		const spam = {
+			id: payload.id,
+			type: payload.type,
+			reason: payload.reason,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/mark-spam', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(spam),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };

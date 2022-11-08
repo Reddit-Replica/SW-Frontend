@@ -1,7 +1,10 @@
 <template>
 	<div
 		class="message"
-		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+		:class="[
+			backcolor == 'grey' ? 'message-grey' : 'message-white',
+			disappear == true ? 'hide-message' : '',
+		]"
 	>
 		<li>
 			<p class="subject-text">
@@ -57,37 +60,36 @@
 						<li :id="'full-comment-link-' + index">
 							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
 						</li>
-						<li>
-							<form action="#">
-								<input
-									type="hidden"
-									name="spam"
-									:id="'spam-message-' + index"
-									value="spam"
-								/>
-							</form>
-							<span
-								class="sure-block"
-								v-if="spamUser"
-								:id="'spam-message-span-' + index"
-								>are you sure?
-								<span class="link" :id="'yes-spam-message-' + index">Yes</span>
-								/
+						<li :id="'spam-box-' + index">
+							<div v-if="!spammed">
+								<span
+									class="sure-block"
+									v-if="spamUser"
+									:id="'spam-user-span-' + index"
+									>are you sure?
+									<span
+										class="link"
+										:id="'yes-spam-user-' + index"
+										@click="spamAction('yes')"
+										>Yes</span
+									>
+									/
+									<span
+										class="link"
+										@click="spamAction()"
+										:id="'no-spam-user-' + index"
+										>No</span
+									></span
+								>
 								<span
 									class="link"
+									v-else
 									@click="spamAction()"
-									:id="'no-spam-message-' + index"
-									>No</span
-								></span
-							>
-							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
-							<span
-								class="link"
-								v-else
-								@click="spamAction()"
-								:id="'click-spam-' + index"
-								>Spam</span
-							>
+									:id="'click-spam-' + index"
+									>spam</span
+								>
+							</div>
+							<div v-if="spammed">spammed</div>
 						</li>
 						<li>
 							<form action="#">
@@ -103,7 +105,10 @@
 								v-if="removeUser"
 								:id="'remove-message-span-' + index"
 								>are you sure?
-								<span class="link" :id="'yes-remove-message-' + index"
+								<span
+									class="link"
+									:id="'yes-remove-message-' + index"
+									@click="removeAction('yes')"
 									>Yes</span
 								>
 								/
@@ -121,9 +126,6 @@
 								:id="'click-remove-' + index"
 								>Remove</span
 							>
-						</li>
-						<li :id="'report-box-' + index">
-							<a href="" :id="'report-' + index">Report</a>
 						</li>
 						<li :id="'block-' + index">
 							<span
@@ -214,6 +216,8 @@ export default {
 			upClicked: false,
 			downClicked: false,
 			backcolor: 'grey',
+			disappear: false,
+			spammed: false,
 			isRead: this.message.isRead,
 		};
 	},
@@ -225,8 +229,16 @@ export default {
 	methods: {
 		// @vuese
 		//toggle remove action
-		removeAction() {
+		removeAction(action) {
 			this.removeUser = !this.removeUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/deleteMessage', {
+					id: this.message.id,
+					type: 'comment',
+					baseurl: this.$baseurl,
+				});
+				this.disappear = true;
+			}
 		},
 		// @vuese
 		//handle block action
@@ -238,12 +250,22 @@ export default {
 					username: this.message.senderUsername,
 					baseurl: this.$baseurl,
 				});
+				this.disappear = true;
 			}
 		},
 		// @vuese
-		//toggle spam action
-		spamAction() {
+		//handle spam action
+		spamAction(action) {
 			this.spamUser = !this.spamUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/spamMessage', {
+					id: this.message.id,
+					type: 'message',
+					reason: '',
+					baseurl: this.$baseurl,
+				});
+				this.spammed = true;
+			}
 		},
 		// @vuese
 		//handle upvote action

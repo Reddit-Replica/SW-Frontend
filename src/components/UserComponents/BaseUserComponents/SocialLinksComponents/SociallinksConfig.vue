@@ -1,5 +1,5 @@
 <template>
-	<base-dialog show="true" dialog-class="dialog-class">
+	<base-dialog show="true" dialog-class="dialog-class" id="social-link-config">
 		<template #header>
 			<div class="social-link-config-header" id="social-link-config-header">
 				<div @click="back">
@@ -27,7 +27,7 @@
 					:placeholder="socialPlaceholder"
 					v-model="displayedTextField"
 					@input="displayedModeration"
-					id="social-link-config-input-displayedtext"
+					id="social-link-config-input-displayedText"
 				/>
 				<input
 					v-if="data.type == 'link'"

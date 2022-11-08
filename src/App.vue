@@ -81,6 +81,7 @@ export default {
 
 	/* green colors */
 	--color-green: rgb(62, 231, 62);
+	--color-green-2: #00a050;
 
 	/* shadow variables */
 	--shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
