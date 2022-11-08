@@ -16,11 +16,22 @@
 			</a>
 			<li>
 				<button
+					v-if="socialLinkCount < 4"
 					class="add-social-link"
 					id="add-social-link-button"
 					@click="openSocialLinkDialog"
 				>
 					<span><i class="fa-solid fa-plus" /></span>Add social link
+				</button>
+			</li>
+			<li>
+				<button
+					v-if="socialLinkCount >= 4"
+					class="add-social-link"
+					id="edit-social-link-button"
+					@click="$router.push('/settings/profile')"
+				>
+					Edit
 				</button>
 			</li>
 		</ul>
@@ -53,6 +64,11 @@ export default {
 		return {
 			addSocialLinkDialog: false,
 		};
+	},
+	computed: {
+		socialLinkCount() {
+			return this.socialData.length;
+		},
 	},
 	methods: {
 		/**

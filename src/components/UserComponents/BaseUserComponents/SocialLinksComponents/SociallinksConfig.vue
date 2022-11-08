@@ -2,7 +2,7 @@
 	<base-dialog show="true" dialog-class="dialog-class" id="social-link-config">
 		<template #header>
 			<div class="social-link-config-header" id="social-link-config-header">
-				<div @click="back">
+				<div @click="back" id="back-button">
 					<i class="fa-solid fa-arrow-left icons"></i>
 				</div>
 				<h3>Add Social Link</h3>
@@ -133,11 +133,20 @@ export default {
 		 */
 		async SaveSocialLink() {
 			if (this.activeSaveButton) {
-				const newSocialLink = {
-					type: this.data.text,
-					displayText: this.displayedTextField,
-					link: this.socialLinkUrl,
-				};
+				let newSocialLink = '';
+				if (this.data.type == 'link') {
+					newSocialLink = {
+						type: this.data.text,
+						displayText: this.displayedTextField,
+						link: this.socialLinkUrl,
+					};
+				} else {
+					newSocialLink = {
+						type: this.data.text,
+						displayText: this.displayedTextField.substring(1),
+						link: `${this.data.baseUrl}${this.displayedTextField.substring(1)}`,
+					};
+				}
 				/* request to back end */
 
 				/* */

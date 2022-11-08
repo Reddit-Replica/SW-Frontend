@@ -25,6 +25,24 @@ export default {
 		// 	);
 		// 	throw error;
 		// }
+
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/social-link', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(newSocialLink),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+
 		context.commit('addUserSocialLink', {
 			newSocialLink,
 		});

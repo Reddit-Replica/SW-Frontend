@@ -56,7 +56,7 @@
 				<!-- incase of profile picture display name , user name style -->
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
-				<h4 class="profile-displayedname">
+				<h4 class="profile-displayedname" id="profile-displayed-name">
 					{{ userData.displayName || 'Abdelhameed_Emad' }}
 					<svg
 						v-if="userData.nsfw"
@@ -203,10 +203,10 @@ export default {
 			type: String,
 			required: true,
 		},
-		// userData: {
-		// 	type: Array,
-		// 	required: true,
-		// },
+		userData: {
+			type: Object,
+			required: true,
+		},
 	},
 	/**
 	 * @vuese
@@ -214,13 +214,13 @@ export default {
 	 * @arg no arg
 	 */
 	created() {
-		this.userData = this.$store.getters['user/getUserData'];
+		// this.userData = this.$store.getters['user/getUserData'];
 		// console.log(this.userData);
 	},
 	data() {
 		return {
 			// NSFW: 'true',
-			userData: {},
+			// userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
 			// mySocialLinks: [
