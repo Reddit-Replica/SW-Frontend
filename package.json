@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"serve": "npm run prettier && npm run lint && vue-cli-service serve",
-		"json": "json-server ./src/mock_server/users.json --routes ./src/mock_server/routes.json --no-cors=false",
+		"json": "json-server ./src/mock_server/users.json --routes ./src/mock_server/routes.json --no-cors=false --host 0.0.0.0",
 		"start": "json-server --watch ./users.json",
 		"start-auth": "node server.js",
 		"build": "vue-cli-service build",
