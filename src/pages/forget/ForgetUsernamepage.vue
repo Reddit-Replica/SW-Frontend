@@ -41,6 +41,7 @@
 							</span>
 						</base-button>
 					</div>
+					<div class="separate"></div>
 					<p class="invalid" v-if="!success">
 						{{ error }}
 					</p>
@@ -48,6 +49,7 @@
 						Thanks! If email address correct, you'll get an email with your
 						username.
 					</p>
+					<div class="separate"></div>
 					<the-recaptcha
 						@verified="verifyRec"
 						v-if="showSignemail"
@@ -403,5 +405,9 @@ p {
 	margin-top: 2rem;
 	transition: color 0.01s ease-in, text-indent 0.25s ease-in,
 		opacity 0.25s ease-in;
+}
+
+.separate {
+	margin-top: 2rem;
 }
 </style>

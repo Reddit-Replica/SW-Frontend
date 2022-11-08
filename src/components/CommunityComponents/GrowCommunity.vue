@@ -161,6 +161,7 @@ export default {
 	margin-bottom: 12px;
 	margin-top: 12px;
 }
+
 .grow-header {
 	color: var(--color-dark-4);
 	cursor: pointer;
