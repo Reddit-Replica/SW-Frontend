@@ -19,7 +19,7 @@
 |---|---|---|
 |removeAction|toggle remove action|-|
 |blockAction|handle block action|-|
-|spamAction|toggle spam action|-|
+|spamAction|handle spam action|-|
 |upvote|handle upvote action|-|
 |downvote|handle downvote action|-|
 |unreadAction|handle unread action|-|

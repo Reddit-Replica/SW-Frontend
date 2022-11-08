@@ -1,5 +1,5 @@
 <template>
-	<div class="message">
+	<div class="message" :class="[disappear == true ? 'hide-message' : '']">
 		<li>
 			<p class="subject-text">
 				<a
@@ -75,7 +75,10 @@
 								v-if="deleteUser"
 								:id="'delete-message-span-' + index"
 								>are you sure?
-								<span class="link" :id="'yes-delete-message-' + index"
+								<span
+									class="link"
+									:id="'yes-delete-message-' + index"
+									@click="deleteAction('yes')"
 									>Yes</span
 								>
 								/
@@ -95,8 +98,36 @@
 								>Delete</span
 							>
 						</li>
-						<li v-if="ifMessageRecieved" :id="'report-' + index">
-							<a href="" :id="'report-a-' + index">Report</a>
+						<li :id="'spam-box-' + index" v-if="ifMessageRecieved">
+							<div v-if="!spammed">
+								<span
+									class="sure-block"
+									v-if="spamUser"
+									:id="'spam-user-span-' + index"
+									>are you sure?
+									<span
+										class="link"
+										:id="'yes-spam-user-' + index"
+										@click="spamAction('yes')"
+										>Yes</span
+									>
+									/
+									<span
+										class="link"
+										@click="spamAction()"
+										:id="'no-spam-user-' + index"
+										>No</span
+									></span
+								>
+								<span
+									class="link"
+									v-else
+									@click="spamAction()"
+									:id="'click-spam-' + index"
+									>spam</span
+								>
+							</div>
+							<div v-if="spammed">spammed</div>
 						</li>
 						<li v-if="ifMessageRecieved">
 							<span
@@ -123,7 +154,7 @@
 								class="link"
 								v-else
 								@click="blockAction()"
-								:id="'no-block-user-' + index"
+								:id="'click-block-' + index"
 								>Block User</span
 							>
 						</li>
@@ -179,6 +210,9 @@ export default {
 			deleteUser: false,
 			blockUser: false,
 			expandAll: true,
+			disappear: false,
+			spammed: false,
+			spamUser: false,
 			isRead: this.message.isRead,
 		};
 	},
@@ -186,7 +220,7 @@ export default {
 		// @vuese
 		//get username from store
 		getUserName() {
-			return this.$store.getters.getUserName;
+			return '/u/' + this.$store.getters.getUserName;
 		},
 		// @vuese
 		//check if user is reciever or sender
@@ -196,9 +230,17 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//toggle delete action
-		deleteAction() {
+		//handle delete action
+		deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/deleteMessage', {
+					id: this.message.id,
+					type: 'message',
+					baseurl: this.$baseurl,
+				});
+				this.disappear = true;
+			}
 		},
 		// @vuese
 		//handle block action
@@ -210,12 +252,27 @@ export default {
 					username: this.message.senderUsername,
 					baseurl: this.$baseurl,
 				});
+				this.disappear = true;
 			}
 		},
 		// @vuese
 		//handle unread action
 		unreadAction() {
 			this.isRead = false;
+		},
+		// @vuese
+		//handle spam action
+		spamAction(action) {
+			this.spamUser = !this.spamUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/spamMessage', {
+					id: this.message.id,
+					type: 'message',
+					reason: '',
+					baseurl: this.$baseurl,
+				});
+				this.spammed = true;
+			}
 		},
 		// @vuese
 		//expand or collapse message details

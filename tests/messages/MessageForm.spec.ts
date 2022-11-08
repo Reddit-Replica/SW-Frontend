@@ -56,15 +56,20 @@ describe('MessageForm.vue', () => {
 	});
 
 	//--------------------------------------------------------
-	//        Check text of button
+	//        Check text of button formatting help
 	//--------------------------------------------------------
 	it('Contains formatting button', () => {
 		const wrapper = mount(MessageForm);
 		const formattingBtn = wrapper.find('#formatting-button');
-		expect(
-			formattingBtn.text() == 'formatting help' ||
-				formattingBtn.text() == 'hide help'
-		).toBe(true);
+		expect(formattingBtn.text() == 'formatting help').toBe(true);
+		formattingBtn
+			.trigger('click')
+			.then(() => {
+				expect(formattingBtn.text() == 'hide help').toBe(true);
+			})
+			.catch(function () {
+				console.log('Promise Rejected');
+			});
 	});
 
 	it('Contains content policy link', () => {
