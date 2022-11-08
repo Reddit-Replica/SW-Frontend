@@ -12,17 +12,22 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 
-		const responseData = await response.json();
+		const responseData = response;
+		localStorage.setItem('response', response.status);
 		console.log(response.status);
-		console.log(responseData);
+		// console.log(responseData);
 		if (response.ok) {
-			console.log(response);
-			console.log(responseData);
+			// console.log(response);
+			// console.log(responseData);
 		} else if (!response.ok) {
 			console.log(response);
+			console.log(response.status);
 			console.log(responseData);
+			// var error = '';
+			// if (response.status == 400)
+			// 	error = new Error('Invalid email (User not found)!');
+			// else if (response.status == 500) error = new Error('server error');
 			const error = new Error(responseData.error);
-			console.log(responseData.error);
 			throw error;
 		}
 	},
@@ -52,11 +57,13 @@ export default {
 	async ressethandle(context, payload) {
 		const userInfo = {
 			newPassword: payload.password,
-			verifyPassword: payload.verifyPassword,
+			verifyPassword: payload.passwordVerify,
 		};
 		const baseurl = payload.baseurl;
 		const id = payload.id;
 		const token = payload.token;
+		console.log(id);
+		console.log(token);
 
 		const response = await fetch(
 			baseurl + '/reset-password/' + id + '/' + token,
@@ -72,6 +79,8 @@ export default {
 			console.log(response);
 			console.log(responseData);
 			console.log(responseData.token);
+			if (responseData.token)
+				localStorage.setItem('accessToken', responseData.token);
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			console.log(responseData.error);

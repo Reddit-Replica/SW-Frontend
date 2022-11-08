@@ -170,7 +170,9 @@ export default {
 					this.success = true;
 				}
 			} catch (err) {
-				this.error = err;
+				//this.error = err;
+
+				this.error = 'Invalid email (User not found)!';
 				console.log(this.error);
 				this.success = false;
 			}
