@@ -14,7 +14,6 @@
 							type="file"
 							id="add-cover-button"
 							ref="coverFile"
-							hidden
 							@change="loadCoverPic"
 						/>
 					</div>
@@ -99,7 +98,6 @@
 					<div style="display: none">
 						<input
 							type="file"
-							hidden
 							id="add-profile-button"
 							ref="profileFile"
 							@change="loadProfilePic"
