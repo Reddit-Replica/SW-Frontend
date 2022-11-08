@@ -483,7 +483,11 @@
 						Dark Mode
 						<switch-button id="dark-mode-button" />
 					</li>
-					<li class="setting-choice-with-icon" id="logout">
+					<li
+						class="setting-choice-with-icon"
+						id="logout"
+						@click="handlelogout"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -556,6 +560,15 @@ export default {
 		// Used to go to user page
 		goToUserPage() {
 			this.$router.push(`/user/${this.$store.getters.getUserName}`);
+		},
+		async handlelogout() {
+			try {
+				await this.$store.dispatch('logout_handle');
+				location.reload();
+			} catch (error) {
+				console.log('error');
+				// this.error = err;
+			}
 		},
 	},
 	computed: {
