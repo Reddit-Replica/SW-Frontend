@@ -67,6 +67,7 @@
 							</span>
 						</base-button>
 					</div>
+					<div class="separate"></div>
 					<p class="invalid" v-if="!success">
 						{{ error }}
 					</p>
@@ -82,6 +83,7 @@
 							>forgot username?</router-link
 						>
 					</div>
+					<div class="separate"></div>
 					<the-recaptcha
 						@verified="verifyRec"
 						v-if="showSignuser && showSignemail"
@@ -130,6 +132,8 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// validate username
 		validateUser(value) {
 			if (value.length < 3 || value.length > 20) {
 				//
@@ -142,6 +146,8 @@ export default {
 				this.invalidUsernamelength = false;
 			}
 		},
+		// @vuese
+		// validate email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -154,7 +160,8 @@ export default {
 				this.invalidEmail = false;
 			}
 		},
-		//http://localhost:8082/api/Authentication/SecureForgotPassword?
+		// @vuese
+		// handle form submission
 		async handleSubmit() {
 			const actionPayload = {
 				username: this.userName,
@@ -177,20 +184,8 @@ export default {
 				this.success = false;
 			}
 		},
-		test() {
-			fetch(this.$baseurl + '/users')
-				.then((response) => {
-					if (response.ok) {
-						return response.json();
-					}
-				})
-				.then((data) => {
-					console.log(data);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
+		// @vuese
+		// enable button after recaptcha is verified
 		verifyRec() {
 			console.log('verified 2');
 			this.buttonDisabled = false;
@@ -198,10 +193,14 @@ export default {
 	},
 
 	watch: {
+		// @vuese
+		// watch userName
 		userName(value) {
 			this.userName = value;
 			this.validateUser(value);
 		},
+		// @vuese
+		// watch emailAdderss
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);

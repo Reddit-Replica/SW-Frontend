@@ -9,6 +9,7 @@
 |validatepass|Validate new password to useres|-|
 |handleSubmit|In SignUp page to show second Page|-|
 |validateUser|Validate User Input|-|
+|usr_available|Validate User available|-|
 |handleSignClick|post new user and email and password to server|-|
 
 <!-- @vuese:SignupPage:methods:end -->
