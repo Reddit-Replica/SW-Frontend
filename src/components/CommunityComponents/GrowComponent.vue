@@ -162,6 +162,9 @@ p {
 	border: none;
 	margin-left: 50px;
 }
+.button:hover {
+	opacity: 0.92;
+}
 .circle {
 	fill: var(--color-white-1);
 	border-radius: 50%;
