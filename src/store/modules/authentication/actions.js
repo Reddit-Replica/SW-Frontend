@@ -15,9 +15,9 @@ export default {
 		const responseData = response;
 
 		if (response.status == 200) {
-			//localStorage.setItem('response', response.status);
+			localStorage.setItem('response', response.status);
 			//this.$cookies.set('response', response.status);
-			this.$cookies.set('response', response.status);
+			//this.$cookies.set('response', response.status);
 			//this.$cookie.setCookie('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {
@@ -43,8 +43,8 @@ export default {
 		const responseData = response;
 
 		if (response.status == 200) {
-			//localStorage.setItem('response', response.status);
-			this.$cookies.set('response', response.status);
+			localStorage.setItem('response', response.status);
+			//this.$cookies.set('response', response.status);
 			console.log(response);
 			console.log(responseData);
 		} else if (response.status == 400) {
@@ -82,8 +82,8 @@ export default {
 		console.log(responseData);
 		//console.log(responseData.token);
 		if (response.status == 200) {
-			//localStorage.setItem('response', response.status);
-			this.$cookies.set('response', response.status);
+			localStorage.setItem('response', response.status);
+			//this.$cookies.set('response', response.status);
 			if (responseData.token)
 				//localStorage.setItem('accessToken', responseData.token);
 				this.$cookies.set('accessToken', responseData.token);
@@ -150,8 +150,8 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 		const responseData = await response.json();
-		//localStorage.setItem('response', response.status);
-		this.$cookies.set('response', response.status);
+		localStorage.setItem('response', response.status);
+		//this.$cookies.set('response', response.status);
 		// console.log(response.status);
 		if (response.ok) {
 			console.log(response);

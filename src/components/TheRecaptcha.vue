@@ -17,11 +17,13 @@
 import { VueRecaptcha } from 'vue-recaptcha';
 export default {
 	components: { VueRecaptcha },
+	emits: ['verified'],
 	methods: {
 		verifyMethod() {
 			console.log(
 				'verified'
 			); /* this will called after robot verification success */
+			this.$emit('verified');
 		},
 		expiredMethod() {
 			console.log('expired'); /* will be called when verification Expired */
