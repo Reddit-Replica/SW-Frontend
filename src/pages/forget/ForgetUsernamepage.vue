@@ -33,7 +33,7 @@
 						<base-button
 							id="emailme"
 							button-text="Email Me"
-							:disable-button="buttonIsactive"
+							:disable-button="buttonDisabled"
 							:class="!success ? 'button-class' : 'button-success'"
 						>
 							<span class="success" v-if="success"
@@ -48,6 +48,10 @@
 						Thanks! If email address correct, you'll get an email with your
 						username.
 					</p>
+					<the-recaptcha
+						@verified="verifyRec"
+						v-if="showSignemail"
+					></the-recaptcha>
 					<div class="bottomText">
 						<label>
 							Don't have an email or need assistance logging in?
@@ -68,16 +72,18 @@
 </template>
 
 <script>
+import TheRecaptcha from '../../components/TheRecaptcha';
 export default {
 	data() {
 		return {
-			buttonIsactive: false,
+			//buttonIsactive: false,
 			emailAddress: '',
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
 			error: '',
 			success: false,
+			buttonDisabled: true,
 		};
 	},
 	methods: {
@@ -114,6 +120,10 @@ export default {
 				this.success = false;
 			}
 		},
+		verifyRec() {
+			console.log('verified 2');
+			this.buttonDisabled = false;
+		},
 	},
 	watch: {
 		emailAddress(value) {
@@ -121,7 +131,7 @@ export default {
 			this.validatEmail(value);
 		},
 	},
-	components: {},
+	components: { TheRecaptcha },
 };
 </script>
 
