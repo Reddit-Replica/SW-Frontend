@@ -59,9 +59,12 @@
 							id="reset-btn"
 							button-text="Reset password"
 							:disable-button="buttonDisabled"
-							class="button-class"
+							:class="!success ? 'button-class' : 'button-success'"
 							type="submit"
 						>
+							<span class="success" v-if="success"
+								><font-awesome-icon icon="fa-solid fa-check" />
+							</span>
 						</base-button>
 					</div>
 					<p class="invalid" v-if="!success">
@@ -104,9 +107,9 @@
 </template>
 
 <script>
-// import TheRecaptcha from '../../components/TheRecaptcha';
+import TheRecaptcha from '../../components/TheRecaptcha';
 export default {
-	// components: { TheRecaptcha },
+	components: { TheRecaptcha },
 	data() {
 		return {
 			buttonIsactive: false,
@@ -161,36 +164,16 @@ export default {
 
 			try {
 				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
-
-				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-				// this.$router.replace(redirectUrl);
+				const response = localStorage.getItem('response');
+				if (response == 200) {
+					console.log(response);
+					this.success = true;
+				}
 			} catch (err) {
 				this.error = err;
+				console.log(this.error);
+				this.success = false;
 			}
-
-			// fetch('http://localhost:3000/api/auth/forget', {
-			// 	method: 'POST',
-			// 	headers: {
-			// 		'Content-Type': 'application/json',
-			// 	},
-			// 	body: JSON.stringify({
-			// 		// type: 'password',
-			// 		name: this.userName,
-			// 		email: this.emailAddress,
-			// 	}),
-			// })
-			// 	.then((response) => {
-			// 		if (response.ok) {
-			// 			console.log(response);
-			// 			return response.json();
-			// 		}
-			// 	})
-			// 	.then((data) => {
-			// 		console.log(data.access_token);
-			// 	})
-			// 	.catch((error) => {
-			// 		console.log(error);
-			// 	});
 		},
 		test() {
 			fetch(this.$baseurl + '/users')
@@ -312,6 +295,15 @@ div {
 	height: 10px;
 	width: 12px;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.success {
+	position: absolute;
+	left: 40%;
+
+	font-size: 2.5rem;
+	color: white;
+	z-index: 5;
+	opacity: 1;
 }
 .input-box .wrong-check {
 	position: absolute;
@@ -466,5 +458,29 @@ p {
 }
 .separate {
 	margin-top: 2rem;
+}
+.button-success {
+	color: #ffffff;
+	background: var(--color-blue-2);
+	/*cursor: ;*/
+	pointer-events: none;
+	color: transparent;
+	position: relative;
+	overflow: hidden;
+	/*text-indent: -9999px;*/
+	border-radius: 4px;
+	text-align: center;
+	min-height: 35px;
+	max-width: 392px;
+	width: auto;
+	min-width: 155px;
+	padding: 5px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-height: 1000px;
+	margin-top: 2rem;
+	transition: color 0.01s ease-in, text-indent 0.25s ease-in,
+		opacity 0.25s ease-in;
 }
 </style>
