@@ -2,7 +2,7 @@
 	<div class="post-card d-flex flex-row" v-if="!postHidden">
 		<!-- section to display votes -->
 		<div class="d-flex flex-column vote-box">
-			<div class="upvote" @click="upvote">
+			<div class="upvote" @click="upvote" id="upvote">
 				<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 					<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 				</svg>
@@ -16,7 +16,7 @@
 			>
 				{{ counter }}
 			</div>
-			<div class="downvote" @click="downvote">
+			<div class="downvote" @click="downvote" id="downvote">
 				<svg
 					class="icon icon-arrow-down p-1"
 					:class="downClicked ? 'down-clicked' : ''"
@@ -32,7 +32,10 @@
 
 		<!-- section to display post information -->
 		<div class="post-content">
-			<router-link :to="{ name: 'post', params: { postName: post.postName } }">
+			<router-link
+				:to="{ name: 'post', params: { postName: post.postName } }"
+				id="post-router"
+			>
 				<div class="subreddit-info">
 					<span class="subreddit-image"
 						><img src="../../../img/user-image.jpg" alt=""
@@ -43,6 +46,7 @@
 								name: 'subreddit',
 								params: { subredditName: post.subredditName },
 							}"
+							id="subreddit-router"
 							>{{ post.subredditName }}
 						</router-link>
 					</span>
@@ -50,6 +54,7 @@
 						. Posted by .
 						<router-link
 							:to="{ name: 'user', params: { userName: post.userName } }"
+							id="post-by-router"
 						>
 							{{ post.userName }} </router-link
 						>&nbsp;{{ post.duration }} ago
@@ -67,7 +72,7 @@
 				</div>
 				<div class="post-services">
 					<span class="vote-services vote-box">
-						<span class="upvote" @click="upvote">
+						<span class="upvote" @click="upvote" id="upvote-service">
 							<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 								<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
@@ -82,7 +87,7 @@
 							"
 							>{{ counter }}</span
 						>
-						<span class="downvote" @click="downvote">
+						<span class="downvote" @click="downvote" id="downvote-service">
 							<svg
 								class="icon icon-arrow-down p-1"
 								:class="downClicked ? 'down-clicked' : ''"
@@ -215,7 +220,7 @@
 						</li>
 
 						<li id="post-direct-save">
-							<div v-if="!saved" @click="savePost">
+							<div v-if="!saved" @click="savePost" id="save">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="16"
@@ -230,7 +235,7 @@
 								</svg>
 								Save
 							</div>
-							<div v-else @click="savePost">
+							<div v-else @click="savePost" id="unsave">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="16"
@@ -249,7 +254,7 @@
 								Unsave
 							</div>
 						</li>
-						<li @click="showSubMenu">
+						<li @click="showSubMenu" id="submenu">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -314,7 +319,12 @@
 									</svg>
 									Embed
 								</li>
-								<li v-if="!saved" @click="savePost" class="post-sub-save">
+								<li
+									v-if="!saved"
+									@click="savePost"
+									class="post-sub-save"
+									id="sub-save"
+								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width="16"
@@ -329,7 +339,12 @@
 									</svg>
 									Save
 								</li>
-								<li v-else @click="savePost" class="post-sub-save" id="unsave">
+								<li
+									v-else
+									@click="savePost"
+									class="post-sub-save"
+									id="sub-unsave"
+								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width="16"
@@ -347,7 +362,7 @@
 									</svg>
 									Unsave
 								</li>
-								<li @click="hidePost">
+								<li @click="hidePost" id="hide">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width="16"
