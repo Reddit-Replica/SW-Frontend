@@ -126,7 +126,11 @@
 							{{ error_message_pass }}
 						</div>
 					</fieldset>
-					<TheRecaptcha id="repatcha" v-if="showRepatcha" />
+					<TheRecaptcha
+						@verified="verifyRec"
+						v-if="showSignuser && showSignPass && showRepatcha"
+						id="repatcha"
+					/>
 				</form>
 				<div class="username-generator" style="display: block">
 					<p>
@@ -143,15 +147,16 @@
 			<button id="back-button" class="back-bottom" @click="togglepages">
 				Back
 			</button>
-			<button
+			<base-button
 				id="signup-button"
-				class="submit-signup signup-page2"
+				:disable-button="buttonDisabled"
+				:class="!success ? 'button-class' : 'button-success'"
 				type="submit"
 				data-step="username-and-password"
 				@click.prevent="handleSignClick"
 			>
 				Sign Up
-			</button>
+			</base-button>
 		</div>
 	</div>
 </template>
@@ -186,7 +191,9 @@ export default {
 			showSignuser: false,
 			checkedPass: true,
 			showRepatcha: false,
-			checkused: true,
+			checkused: false,
+			success: false,
+			buttonDisabled: true,
 		};
 	},
 	methods: {
@@ -235,9 +242,9 @@ export default {
 		// @vuese
 		//In SignUp page to show second Page
 		handleSubmit() {
-			if (!this.checkedEmail) {
+			if (!this.checkedEmail || this.email == '') {
 				this.validatEmail(this.email);
-			} else if (!this.checkused) {
+			} else if (!this.checkused && this.email != '') {
 				this.email_available();
 			} else {
 				this.togglepages();
@@ -294,6 +301,10 @@ export default {
 					'0.5px solid #ea0027';
 				// this.error = err;
 			}
+		},
+		verifyRec() {
+			console.log('verified 2');
+			this.buttonDisabled = false;
 		},
 
 		async email_available() {
@@ -423,6 +434,56 @@ button {
 	min-height: 100vh;
 	position: relative;
 	width: 100%;
+}
+.button-class {
+	color: #ffffff;
+	background: var(--color-blue-2);
+	text-transform: uppercase;
+	cursor: pointer;
+	line-height: unset;
+	min-height: 35px;
+	max-width: 392px;
+	width: auto;
+	min-width: 155px;
+	padding: 5px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	border: none;
+	border-radius: 4px;
+	text-align: center;
+	position: relative;
+	font-family: 'IBMPlexSans', sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	max-height: 1000px;
+	margin-top: 2rem;
+}
+.button-success {
+	color: #ffffff;
+	background: var(--color-blue-2);
+	/*cursor: ;*/
+	pointer-events: none;
+	color: transparent;
+	position: relative;
+	overflow: hidden;
+	/*text-indent: -9999px;*/
+	border-radius: 4px;
+	text-align: center;
+	min-height: 35px;
+	max-width: 392px;
+	width: auto;
+	min-width: 155px;
+	padding: 5px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-height: 1000px;
+	margin-top: 2rem;
+	transition: color 0.01s ease-in, text-indent 0.25s ease-in,
+		opacity 0.25s ease-in;
 }
 
 .back-image {
