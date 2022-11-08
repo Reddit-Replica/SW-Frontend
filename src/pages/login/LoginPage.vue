@@ -186,7 +186,9 @@ export default {
 
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
-				// const response =localStorage.getItem('response');
+
+				// const response = localStorage.getItem('response');
+				// if (response == 200) console.log(response);
 				this.$router.replace('/main');
 			} catch (err) {
 				this.error = err;

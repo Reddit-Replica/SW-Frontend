@@ -5,7 +5,7 @@
 		</div>
 		<div class="right-box">
 			<div class="box">
-				<form>
+				<form @submit.prevent="handleSubmit">
 					<div class="snoo-icon"></div>
 					<h1>Recover your username</h1>
 					<p class="description">
@@ -79,6 +79,21 @@ export default {
 				this.showSignemail = true;
 				this.checkedEmail = true;
 				this.invalidEmail = false;
+			}
+		},
+		async handleSubmit() {
+			const actionPayload = {
+				email: this.emailAddress,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
+
+				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+				// this.$router.replace(redirectUrl);
+			} catch (err) {
+				this.error = err;
 			}
 		},
 	},
