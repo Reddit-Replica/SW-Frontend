@@ -129,5 +129,6 @@ export default {
 .links-container {
 	display: flex;
 	flex-wrap: wrap;
+	max-width: 538px;
 }
 </style>

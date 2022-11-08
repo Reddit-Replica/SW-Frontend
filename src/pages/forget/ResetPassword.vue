@@ -127,7 +127,7 @@ export default {
 			};
 
 			try {
-				await this.$store.dispatch('ressethandle', actionPayload);
+				await this.$store.dispatch('resethandle', actionPayload);
 
 				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
 				// this.$router.replace(redirectUrl);

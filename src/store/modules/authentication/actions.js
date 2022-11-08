@@ -56,7 +56,7 @@ export default {
 			throw error;
 		}
 	},
-	async ressethandle(context, payload) {
+	async resethandle(context, payload) {
 		const userInfo = {
 			newPassword: payload.password,
 			verifyPassword: payload.passwordVerify,
@@ -66,7 +66,8 @@ export default {
 		const token = payload.token;
 		console.log(id);
 		console.log(token);
-
+		console.log(userInfo);
+		//console.log(useri)
 		const response = await fetch(
 			baseurl + '/reset-password/' + id + '/' + token,
 			{
@@ -77,6 +78,9 @@ export default {
 		);
 
 		const responseData = await response.json();
+		console.log(response);
+		console.log(responseData);
+		//console.log(responseData.token);
 		if (response.ok) {
 			console.log(response);
 			console.log(responseData);
@@ -138,7 +142,6 @@ export default {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(userInfo),
 		});
-
 		const responseData = await response.json();
 		localStorage.setItem('response', response.status);
 		// console.log(response.status);
@@ -160,16 +163,45 @@ export default {
 			throw error;
 		}
 	},
-	async available_user(payload) {
+	async available_user(context, payload) {
 		const baseurl = payload.baseurl;
+		// console.log(payload.username);
+		// console.log(baseurl);
+		console.log(baseurl + '/username-available?username=' + payload.username);
 		const response = await fetch(
-			baseurl + 'username-available' + '?username=' + payload.username
+			baseurl + '/username-available' + '?username=' + payload.username
 		);
 		const responseData = await response.json();
-
+		localStorage.setItem('response', response.status);
+		console.log(response.status);
 		if (response.ok) {
-			console.log(response);
-			console.log(response.status);
+			if (!responseData.Error) {
+				context.commit('setUser', {
+					response: response.status,
+				});
+			}
+		} else if (!response.ok) {
+			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
+	async available_email(context, payload) {
+		const baseurl = payload.baseurl;
+		// console.log(payload.username);
+		// console.log(baseurl);
+		console.log(baseurl + '/email-available?email=' + payload.email);
+		const response = await fetch(
+			baseurl + '/email-available' + '?email=' + payload.email
+		);
+		const responseData = await response.json();
+		localStorage.setItem('response', response.status);
+		console.log(response.status);
+		if (response.ok) {
+			if (!responseData.Error) {
+				context.commit('setUser', {
+					response: response.status,
+				});
+			}
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;
