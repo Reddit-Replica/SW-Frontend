@@ -1,7 +1,10 @@
 <template>
 	<div
 		class="message"
-		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+		:class="[
+			backcolor == 'grey' ? 'message-grey' : 'message-white',
+			disappear == true ? 'hide-message' : '',
+		]"
 	>
 		<li>
 			<p class="subject-text">
@@ -42,7 +45,12 @@
 							v-if="deleteUser"
 							:id="'delete-message-span-' + index"
 							>are you sure?
-							<span class="link" :id="'yes-delete-message-' + index">Yes</span>
+							<span
+								class="link"
+								:id="'yes-delete-message-' + index"
+								@click="deleteAction('yes')"
+								>Yes</span
+							>
 							/
 							<span
 								class="link"
@@ -60,8 +68,36 @@
 							>Delete</span
 						>
 					</li>
-					<li :id="'report-' + index">
-						<a href="" :id="'report-a-' + index">Report</a>
+					<li :id="'spam-box-' + index">
+						<div v-if="!spammed">
+							<span
+								class="sure-block"
+								v-if="spamUser"
+								:id="'spam-user-span-' + index"
+								>are you sure?
+								<span
+									class="link"
+									:id="'yes-spam-user-' + index"
+									@click="spamAction('yes')"
+									>Yes</span
+								>
+								/
+								<span
+									class="link"
+									@click="spamAction()"
+									:id="'no-spam-user-' + index"
+									>No</span
+								></span
+							>
+							<span
+								class="link"
+								v-else
+								@click="spamAction()"
+								:id="'click-spam-' + index"
+								>spam</span
+							>
+						</div>
+						<div v-if="spammed">spammed</div>
 					</li>
 					<li :id="'block-' + index">
 						<span
@@ -144,8 +180,11 @@ export default {
 	data() {
 		return {
 			deleteUser: false,
+			spamUser: false,
 			blockUser: false,
 			backcolor: 'grey',
+			disappear: false,
+			spammed: false,
 			isRead: this.message.isRead,
 		};
 	},
@@ -156,9 +195,31 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//toggle delete action
-		deleteAction() {
+		//handle delete action
+		deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/deleteMessage', {
+					id: this.message.id,
+					type: 'message',
+					baseurl: this.$baseurl,
+				});
+				this.disappear = true;
+			}
+		},
+		// @vuese
+		//handle spam action
+		spamAction(action) {
+			this.spamUser = !this.spamUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/spamMessage', {
+					id: this.message.id,
+					type: 'message',
+					reason: '',
+					baseurl: this.$baseurl,
+				});
+				this.spammed = true;
+			}
 		},
 		// @vuese
 		//handle block action
@@ -170,6 +231,7 @@ export default {
 					username: this.message.senderUsername,
 					baseurl: this.$baseurl,
 				});
+				this.disappear = true;
 			}
 		},
 		// @vuese

@@ -57,9 +57,9 @@
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
 				<h4 class="profile-displayedname">
-					{{ this.userData.displayName || 'Abdelhameed_Emad' }}
+					{{ userData.displayName || 'Abdelhameed_Emad' }}
 					<svg
-						v-if="this.userData.nsfw"
+						v-if="userData.nsfw"
 						id="profile-nsfw"
 						class="Wb4wBt474lETdwG0YpWID"
 						viewBox="0 0 40 40"
@@ -80,9 +80,12 @@
 						</g>
 					</svg>
 				</h4>
-				<a href="" id="profile-pic-user-name" class="profile-username">{{
-					userName
-				}}</a>
+				<router-link
+					:to="`/user/${userName}`"
+					id="profile-pic-user-name"
+					class="profile-username"
+					>u/{{ userName }}</router-link
+				>
 			</div>
 			<!-- /////////////////////////////// -->
 			<!-- incase of Avatar display name , user name style -->
@@ -165,7 +168,7 @@
 				<router-link
 					v-for="profileOption in profileOptions"
 					:key="profileOption.name"
-					:to="profileOption.toLink"
+					:to="`/user/${userName}${profileOption.toLink}`"
 					:id="`profile-option-${profileOption.name}`"
 					>{{ profileOption.name }}
 				</router-link>
@@ -186,7 +189,7 @@
 </template>
 
 <script>
-import SociallinksBlock from '../SocialLinksComponents/SociallinksBlock';
+import SociallinksBlock from '../SocialLinksComponents/SociallinksBlock.vue';
 import FollowChatComponent from './FollowChatComponent.vue';
 export default {
 	components: {
@@ -231,15 +234,15 @@ export default {
 			profileOptions: [
 				{
 					name: 'Profile to Moderation',
-					toLink: '/user/Creative-Dentist1095/about/edit/moderation',
+					toLink: '/about/edit/moderation',
 				},
 				{
 					name: 'Add to Custom Feed',
-					toLink: '/user/Creative-Dentist1095/about/edit/moderation',
+					toLink: '/about/edit/moderation',
 				},
 				{
 					name: 'Invite someone to chat',
-					toLink: '/user/Creative-Dentist1095/about/edit/moderation',
+					toLink: '/about/edit/moderation',
 				},
 			],
 			isAvatar: false,

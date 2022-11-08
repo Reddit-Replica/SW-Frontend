@@ -114,6 +114,8 @@ ul {
 	margin-top: 16px;
 	background-color: #ffffff;
 	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
 .mod-header {
 	font-size: 10px;
