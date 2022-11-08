@@ -744,6 +744,7 @@ export default {
 	},
 	data() {
 		return {
+			id: 1,
 			upClicked: false,
 			downClicked: false,
 			counter: 22,
@@ -848,8 +849,17 @@ export default {
 				this.counter--;
 			}
 		},
-		follow() {
-			this.isFollowed = !this.isFollowed;
+		async followPost() {
+			try {
+				await this.$store.dispatch('comments/followPost', {
+					baseurl: this.$baseurl,
+					id: this.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			console.log(this.$store.getters['comments/getIfFollowed']);
+			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
 		},
 		showSubMenu() {
 			this.subMenuDisplay = !this.subMenuDisplay;
