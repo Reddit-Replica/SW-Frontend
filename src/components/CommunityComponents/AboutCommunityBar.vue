@@ -103,7 +103,15 @@
 						d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"
 					/>
 				</svg>
-				<span class="text-grey text space">Created {{ communityDate }}</span>
+				<span
+					class="text-grey text space"
+					@mouseover="toogleDateBox"
+					@mouseleave="toogleDateBox"
+					>Created {{ communityDate }}</span
+				>
+				<div class="box arrow-top box-arrow-1" v-if="dateBoxShown">
+					10 days ago.
+				</div>
 			</div>
 
 			<div class="box-body" id="created-type">
@@ -131,11 +139,20 @@
 			<div class="line"></div>
 
 			<div class="flex-between">
-				<div id="members-num">
-					<div class="text-bold">{{ membersCount }}</div>
+				<div id="members-num" class="relative-flex">
+					<div
+						class="text-bold"
+						@mouseover="toogleMembersCountBox"
+						@mouseleave="toogleMembersCountBox"
+					>
+						{{ membersCount }}
+					</div>
 					<div class="text-grey">Members</div>
+					<div class="box arrow-top box-arrow-2" v-if="MembersCountBoxShown">
+						{{ membersCount }} Members
+					</div>
 				</div>
-				<div id="online-members-num">
+				<div id="online-members-num" class="relative-flex">
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -147,9 +164,20 @@
 						>
 							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
 						</svg>
-						<span class="text-bold">{{ onlineMembersCount }}</span>
+						<span
+							class="text-bold"
+							@mouseover="toogleOnlineMembersCountBox"
+							@mouseleave="toogleOnlineMembersCountBox"
+							>{{ onlineMembersCount }}</span
+						>
 					</div>
 					<div class="text-grey">Online</div>
+					<div
+						class="box arrow-top box-arrow-3"
+						v-if="onlineMembersCountBoxShown"
+					>
+						{{ onlineMembersCount }} Online
+					</div>
 				</div>
 				<div></div>
 				<div></div>
@@ -158,8 +186,13 @@
 			<div class="line"></div>
 
 			<div class="box-body">
-				<span class="span-new">NEW</span>
-				<span class="text-bold">Community topics</span>
+				<span class="span-new" v-if="isNew">NEW</span>
+				<span
+					class="text-bold"
+					@mouseover="toogleTopicsArrrowBox"
+					@mouseleave="toogleTopicsArrrowBox"
+					>Community topics</span
+				>
 				<span class="info-span" id="info-community-topics">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -177,6 +210,10 @@
 						/>
 					</svg>
 				</span>
+				<div class="box arrow-top box-arrow-4" v-if="topicsArrrowBoxShown">
+					Adding community topics allow people to find your community. Add a
+					primary topic and sub topics to be discovered more easily.
+				</div>
 			</div>
 
 			<div class="box-body box-topic">
@@ -305,32 +342,33 @@
 					</button>
 				</div>
 
-				<base-dialog
-					:show="saveDialogShown"
-					title="Save changes before leaving?"
-					@close="toogleSaveDialog"
-					transparent-background
-					id="dialog-to-save"
-				>
-					<div class="text">
-						You have made some changes to your community, do you wish to leave
-						this menu without saving?
-					</div>
-					<div class="box-buttons">
-						<base-button
-							class="button-white-2 text"
-							@click="toogleSaveDialog"
-							id="dialog-discard"
-							>Discard</base-button
-						>
-						<base-button
-							class="button-blue-2 text"
-							@click="saveSubtopics"
-							id="dialog-save"
-							>Save</base-button
-						>
-					</div>
-				</base-dialog>
+				<div id="dialog-to-save">
+					<base-dialog
+						:show="saveDialogShown"
+						title="Save changes before leaving?"
+						@close="toogleSaveDialog"
+						transparent-background
+					>
+						<div class="text">
+							You have made some changes to your community, do you wish to leave
+							this menu without saving?
+						</div>
+						<div class="box-buttons">
+							<base-button
+								class="button-white-2 text"
+								@click="toogleSaveDialog"
+								id="dialog-discard"
+								>Discard</base-button
+							>
+							<base-button
+								class="button-blue-2 text"
+								@click="saveSubtopics"
+								id="dialog-save"
+								>Save</base-button
+							>
+						</div>
+					</base-dialog>
+				</div>
 			</div>
 
 			<div class="line"></div>
@@ -393,6 +431,13 @@ export default {
 			subtopicsCount: 0,
 			saveDialogShown: false,
 			isSubtopicsSaved: false,
+
+			isNew: true,
+
+			dateBoxShown: false,
+			MembersCountBoxShown: false,
+			onlineMembersCountBoxShown: false,
+			topicsArrrowBoxShown: false,
 		};
 	},
 	methods: {
@@ -459,6 +504,23 @@ export default {
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
+		},
+
+		toogleDateBox() {
+			this.dateBoxShown = !this.dateBoxShown;
+		},
+		toogleMembersCountBox() {
+			this.MembersCountBoxShown = !this.MembersCountBoxShown;
+		},
+		toogleOnlineMembersCountBox() {
+			this.onlineMembersCountBoxShown = !this.onlineMembersCountBoxShown;
+		},
+		toogleTopicsArrrowBox() {
+			this.topicsArrrowBoxShown = !this.topicsArrrowBoxShown;
+		},
+
+		toogleNew() {
+			this.isNew = !this.isNew;
 		},
 	},
 };
@@ -628,6 +690,7 @@ a {
 }
 .box-body {
 	margin-top: 12px;
+	position: relative;
 }
 .text-grey {
 	color: var(--color-grey-light-5);
@@ -775,5 +838,57 @@ input {
 	height: 32px;
 	width: 100%;
 	margin: 0;
+}
+.box {
+	/* width: 150px; */
+	background-color: var(--color-dark-1);
+	color: var(--color-white-1);
+	font-size: 9px;
+	padding: 5px;
+	position: absolute;
+	border-radius: 4px;
+	text-align: center;
+	pointer-events: none;
+	transform: translateX(-50%);
+	z-index: 100;
+	/* right: 20%; */
+}
+.box.arrow-top {
+	margin-top: 10px;
+}
+.box.arrow-top:after {
+	content: ' ';
+	position: absolute;
+	right: 25%;
+	top: -5px;
+	border-top: none;
+	border-right: 15px solid transparent;
+	border-left: 15px solid transparent;
+	border-bottom: 15px solid black;
+}
+.relative-flex {
+	position: relative;
+}
+.box-arrow-1 {
+	right: 20%;
+}
+.box-arrow-2 {
+	right: -150%;
+}
+.box-arrow-3 {
+	right: -200%;
+	padding: 10px;
+}
+.box-arrow-4 {
+	right: -100px;
+	width: 250px;
+	font-size: 14px;
+	padding: 10px;
+	text-align: left;
+	background-color: var(--color-blue-2);
+}
+.box-arrow-4:after {
+	right: 45% !important;
+	border-bottom: 15px solid var(--color-blue-2) !important;
 }
 </style>

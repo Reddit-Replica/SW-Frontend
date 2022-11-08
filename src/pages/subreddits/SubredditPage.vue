@@ -13,8 +13,8 @@
 			<div class="subreddit-page-right">
 				<about-community-bar
 					:topics="topics"
-					members-count="1"
-					online-members-count="5"
+					:members-count="1"
+					:online-members-count="5"
 					community-date="OCT 28, 2022"
 					community-type="Private"
 				></about-community-bar>
