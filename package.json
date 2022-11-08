@@ -12,7 +12,7 @@
 		"prettier": "prettier --config .prettierrc src/**/*.js --write && prettier --config .prettierrc src/**/*.vue --write",
 		"test": "vitest",
 		"coverage": "vitest run --coverage",
-		"all": "npm-run-all --parallel serve json "
+		"all": "npm-run-all --parallel serve json"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^6.2.0",
@@ -59,6 +59,7 @@
 		"jsdom": "^20.0.1",
 		"json-server": "^0.17.1",
 		"json-server-auth": "^2.1.0",
+		"npm-run-all": "^4.1.5",
 		"prettier": "^2.7.1",
 		"typescript": "^4.8.4",
 		"vite": "^3.1.8",
