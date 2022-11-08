@@ -37,6 +37,10 @@
 					@input="socialLinkModeration"
 					id="social-link-config-input-sociallink"
 				/>
+				<div v-if="!validUrl" class="invalid-url">Invalid URL</div>
+				<div v-else-if="!correctSpelling" class="invalid-url">
+					Looks like this isn’t a valid URL. Double-check your spelling.
+				</div>
 			</div>
 		</template>
 	</base-dialog>
@@ -63,12 +67,27 @@ export default {
 			socialLinkUrl: '',
 			displayedTextField: '',
 			activeSaveButton: false,
+			validUrl: true,
+			correctSpelling: true,
 		};
 	},
 	// @vuese
 	// back event to back to social link dialog , save event for adding new social link to user
 	emits: ['back', 'save'],
 	methods: {
+		validationOfUrl() {
+			let srt = this.socialLinkUrl;
+			let urlPattern = new RegExp(
+				'^(https?:\\/\\/)?' + // validate protocol
+					'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+					'((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+					'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+					'(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+					'(\\#[-a-z\\d_]*)?$',
+				'i'
+			); // validate fragment locator
+			return !!urlPattern.test(srt);
+		},
 		/**
 		 * @vuese
 		 * function emits back event to back to social link dialog
@@ -83,6 +102,8 @@ export default {
 		 * @arg no arg
 		 */
 		socialLinkModeration() {
+			this.validUrl = true;
+			this.correctSpelling = true;
 			const paragraph = 'http://';
 			if (
 				(!this.socialLinkUrl.startsWith('http://') &&
@@ -132,6 +153,21 @@ export default {
 		 * @arg no arg
 		 */
 		async SaveSocialLink() {
+			if (this.data.type == 'link') {
+				if (
+					this.socialLinkUrl.includes(',') ||
+					this.socialLinkUrl.includes(' ')
+				) {
+					this.correctSpelling = false;
+					return;
+				}
+				this.correctSpelling = true;
+				if (!this.validationOfUrl()) {
+					this.validUrl = false;
+					return;
+				}
+			}
+			this.validUrl = true;
 			if (this.activeSaveButton) {
 				let newSocialLink = '';
 				if (this.data.type == 'link') {
@@ -247,5 +283,12 @@ button#save-button:disabled {
 	color: #ffffff;
 	filter: unset;
 	cursor: pointer;
+}
+.invalid-url {
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	color: #ff0000;
+	margin: 6px 2px;
 }
 </style>

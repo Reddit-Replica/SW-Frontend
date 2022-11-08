@@ -207,6 +207,15 @@ export default {
 			throw error;
 		}
 	},
+	logout_handle(context) {
+		localStorage.removeItem('userName');
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('response');
+		context.commit('setUser', {
+			accessToken: null,
+			userName: null,
+		});
+	},
 };
 //get request example
 /*const response = await fetch('link');
