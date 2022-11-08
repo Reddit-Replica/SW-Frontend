@@ -1,10 +1,11 @@
+import {mount} from '@vue/test-utils';
 import {shallowMount} from '@vue/test-utils';
 import AllinboxPage from '../../src/pages/messages/AllInbox.vue';
+import Vuex from 'vuex';
 import store from '../../src/store/index.js';
 
 import {describe, it, expect} from 'vitest';
 describe ('AllinboxPage', () => {
-
   const message = {
     id: 2,
     text: 'hello asmaa',
@@ -18,10 +19,6 @@ describe ('AllinboxPage', () => {
     isReply: false,
     isRead: true,
   };
-
-  //--------------------------------------------------------
-  //                     Rendering
-  //--------------------------------------------------------
   it ('should renders if AllinboxPage content is correct', () => {
     const wrapper = shallowMount (AllinboxPage, {
       props: {
