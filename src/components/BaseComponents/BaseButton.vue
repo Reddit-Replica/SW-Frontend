@@ -48,6 +48,6 @@ a {
 }
 button:disabled {
 	cursor: not-allowed;
-	opacity: 0.2;
+	opacity: 1;
 }
 </style>

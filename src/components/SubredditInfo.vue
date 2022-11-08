@@ -30,7 +30,7 @@ export default {
 			try {
 				await this.$store.dispatch('comments/getSubreddit', {
 					baseurl: this.$baseurl,
-					subredditName: 'mena',
+					subredditName: 'subredditName',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
