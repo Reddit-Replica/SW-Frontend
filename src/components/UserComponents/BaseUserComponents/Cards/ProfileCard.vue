@@ -9,13 +9,14 @@
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span @click="addCoverImage" class="add-image">
-					<input
-						type="file"
-						id="add-cover-button"
-						ref="coverFile"
-						hidden
-						@change="loadCoverPic"
-					/>
+					<div style="display: none">
+						<input
+							type="file"
+							id="add-cover-button"
+							ref="coverFile"
+							@change="loadCoverPic"
+						/>
+					</div>
 					<!-- add image icon (+) -->
 					<i class="fa-regular fa-square-plus add-image-icon" />
 				</span>
@@ -94,13 +95,14 @@
 					<div style="position: relative; z-index: 2">
 						<img src="../../../../assets/R.png" alt="" id="profile-picture" />
 					</div>
-					<input
-						type="file"
-						hidden
-						id="add-profile-button"
-						ref="profileFile"
-						@change="loadProfilePic"
-					/>
+					<div style="display: none">
+						<input
+							type="file"
+							id="add-profile-button"
+							ref="profileFile"
+							@change="loadProfilePic"
+						/>
+					</div>
 					<span
 						@click="addProfileImage"
 						class="add-image"

@@ -6,6 +6,7 @@
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |userName|user Name of the user|`String`|`true`|-|
+|userData|-|`Object`|`true`|-|
 
 <!-- @vuese:ProfileCard:props:end -->
 

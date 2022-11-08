@@ -379,7 +379,7 @@ button {
 .input-box .correct-check {
 	position: absolute;
 	z-index: 1;
-	right: 34%;
+	right: 120px;
 	top: 50%;
 	height: 10px;
 	width: 12px;
@@ -387,7 +387,7 @@ button {
 }
 .input-box .wrong-check {
 	position: absolute;
-	right: 34%;
+	right: 120px;
 	top: 28%;
 	height: 12px;
 	width: 2px;

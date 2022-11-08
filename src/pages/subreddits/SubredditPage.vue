@@ -10,6 +10,7 @@
 				<createpost-bar></createpost-bar>
 				<sortposts-bar></sortposts-bar>
 				<grow-community></grow-community>
+				<community-post></community-post>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
@@ -19,6 +20,8 @@
 					community-date="OCT 28, 2022"
 					community-type="Private"
 				></about-community-bar>
+				<moderators-bar :moderators="moderators"></moderators-bar>
+				<backtotop-button></backtotop-button>
 			</div>
 		</div>
 	</div>
@@ -30,6 +33,10 @@ import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
+import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
+import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
+import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
+
 export default {
 	components: {
 		SubredditTop,
@@ -37,6 +44,9 @@ export default {
 		SortpostsBar,
 		AboutCommunityBar,
 		GrowCommunity,
+		CommunityPost,
+		ModeratorsBar,
+		BacktotopButton,
 	},
 	data() {
 		return {
@@ -49,6 +59,11 @@ export default {
 				{ id: 5, name: 'Music' },
 				{ id: 6, name: 'Sports' },
 				{ id: 7, name: 'Travel' },
+			],
+			moderators: [
+				{ id: 0, name: 'HodaGamal' },
+				{ id: 1, name: 'AsmaaAdel' },
+				{ id: 2, name: 'Abdalhameed' },
 			],
 		};
 	},
@@ -66,7 +81,8 @@ export default {
 	margin: 0 auto;
 }
 .subreddit-page-left {
-	width: 50%;
+	/* width: 50%; */
+	width: 640px;
 	height: 100%;
 }
 .subreddit-page-right {
@@ -75,5 +91,13 @@ export default {
 	height: 100%;
 	margin-left: 24px;
 	margin-top: 15px;
+}
+@media only screen and (max-width: 991px) {
+	.subreddit-page-left {
+		width: 100%;
+	}
+	.subreddit-page-right {
+		width: 0%;
+	}
 }
 </style>

@@ -2,9 +2,7 @@
 	<button v-if="!link" :disabled="disableButton">
 		<slot></slot>{{ buttonText }}
 	</button>
-	<router-link v-else :to="to">
-		{{ buttonText }}
-	</router-link>
+	<router-link v-else :to="to"> <slot></slot>{{ buttonText }} </router-link>
 </template>
 
 <script>
@@ -48,6 +46,6 @@ a {
 }
 button:disabled {
 	cursor: not-allowed;
-	opacity: 0.2;
+	opacity: 1;
 }
 </style>
