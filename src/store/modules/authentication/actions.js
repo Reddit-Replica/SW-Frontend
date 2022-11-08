@@ -13,21 +13,18 @@ export default {
 		});
 
 		const responseData = response;
-		localStorage.setItem('response', response.status);
-		console.log(response.status);
-		// console.log(responseData);
-		if (response.ok) {
-			// console.log(response);
-			// console.log(responseData);
-		} else if (!response.ok) {
+
+		if (response.status == 200) {
+			//localStorage.setItem('response', response.status);
+			//this.$cookies.set('response', response.status);
+			this.$cookies.set('response', response.status);
+			//this.$cookie.setCookie('response', response.status);
 			console.log(response);
-			console.log(response.status);
-			console.log(responseData);
-			// var error = '';
-			// if (response.status == 400)
-			// 	error = new Error('Invalid email (User not found)!');
-			// else if (response.status == 500) error = new Error('server error');
+		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
 			throw error;
 		}
 	},
@@ -44,15 +41,18 @@ export default {
 		});
 
 		const responseData = response;
-		localStorage.setItem('response', response.status);
-		console.log(response);
-		console.log(responseData);
-		if (response.ok) {
+
+		if (response.status == 200) {
+			//localStorage.setItem('response', response.status);
+			this.$cookies.set('response', response.status);
 			console.log(response);
 			console.log(responseData);
-		} else if (!response.ok) {
+		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			console.log(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
 			throw error;
 		}
 	},
@@ -67,7 +67,7 @@ export default {
 		console.log(id);
 		console.log(token);
 		console.log(userInfo);
-		//console.log(useri)
+
 		const response = await fetch(
 			baseurl + '/reset-password/' + id + '/' + token,
 			{
@@ -81,15 +81,22 @@ export default {
 		console.log(response);
 		console.log(responseData);
 		//console.log(responseData.token);
-		if (response.ok) {
-			console.log(response);
-			console.log(responseData);
-			console.log(responseData.token);
+		if (response.status == 200) {
+			//localStorage.setItem('response', response.status);
+			this.$cookies.set('response', response.status);
 			if (responseData.token)
-				localStorage.setItem('accessToken', responseData.token);
-		} else if (!response.ok) {
+				//localStorage.setItem('accessToken', responseData.token);
+				this.$cookies.set('accessToken', responseData.token);
+		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			console.log(responseData.error);
+			throw error;
+		} else if (response.status == 403) {
+			const error = new Error('invalid token');
+
+			throw error;
+		} else {
+			const error = new Error('server error');
 			throw error;
 		}
 	},
@@ -143,7 +150,8 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		//localStorage.setItem('response', response.status);
+		this.$cookies.set('response', response.status);
 		// console.log(response.status);
 		if (response.ok) {
 			console.log(response);

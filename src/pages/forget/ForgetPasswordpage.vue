@@ -164,15 +164,15 @@ export default {
 
 			try {
 				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
-				const response = localStorage.getItem('response');
+				//const response = localStorage.getItem('response');
+				const response = this.$cookies.get('response');
+				//const response = this.$cookie.getCookie('response');
 				if (response == 200) {
 					console.log(response);
 					this.success = true;
 				}
 			} catch (err) {
-				//this.error = err;
-
-				this.error = 'Invalid email (User not found)!';
+				this.error = err;
 				console.log(this.error);
 				this.success = false;
 			}

@@ -196,7 +196,8 @@ export default {
 
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
-				const response = localStorage.getItem('response');
+				//const response = localStorage.getItem('response');
+				const response = this.$cookies.get('response');
 				// console.log(response);
 				console.log(response);
 				if (response == 200) {
