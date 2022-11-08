@@ -96,6 +96,9 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// validate Password
+
 		validatePassword(value) {
 			if (value.length < 8) {
 				//
@@ -109,6 +112,8 @@ export default {
 				this.invalidPassword = false;
 			}
 		},
+		// @vuese
+		// validate Password Verify
 		validatepasswordVerify(value) {
 			if (value != this.password) {
 				//
@@ -122,6 +127,8 @@ export default {
 				this.invalidPasswordverify = false;
 			}
 		},
+		// @vuese
+		// validate form submission
 		async handleSubmit() {
 			if (this.checkedPasswordverify && this.checkedPassword) {
 				const actionPayload = {
@@ -147,10 +154,14 @@ export default {
 	},
 
 	watch: {
+		// @vuese
+		// watch password
 		password(value) {
 			this.password = value;
 			this.validatePassword(value);
 		},
+		// @vuese
+		// watch password verify
 		passwordVerify(value) {
 			this.passwordVerify = value;
 			this.validatepasswordVerify(value);
