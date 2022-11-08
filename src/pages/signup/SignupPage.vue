@@ -186,6 +186,7 @@ export default {
 			showSignuser: false,
 			checkedPass: true,
 			showRepatcha: false,
+			checkused: true,
 		};
 	},
 	methods: {
@@ -234,8 +235,11 @@ export default {
 		// @vuese
 		//In SignUp page to show second Page
 		handleSubmit() {
-			this.validatEmail(this.email);
-			if (this.checkedEmail) {
+			if (!this.checkedEmail) {
+				this.validatEmail(this.email);
+			} else if (!this.checkused) {
+				this.email_available();
+			} else {
 				this.togglepages();
 			}
 		},
@@ -303,6 +307,7 @@ export default {
 				console.log(response);
 				this.messageErrorShowEmail = false;
 				this.showSignemail = true;
+				this.checkused = true;
 				this.checkedEmail = true;
 				document.querySelector('#email-input').style.border =
 					'0.5px solid #0079d3';
@@ -314,6 +319,7 @@ export default {
 				this.showSignemail = true;
 				this.checkedEmail = false;
 				this.messageErrorShowEmail = true;
+				this.checkused = false;
 				document.querySelector('#email-input').style.border =
 					'0.5px solid #ea0027';
 				// this.error = err;
