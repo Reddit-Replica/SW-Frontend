@@ -1,7 +1,10 @@
 <template>
 	<div
 		class="message"
-		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
+		:class="[
+			backcolor == 'grey' ? 'message-grey' : 'message-white',
+			disappear == true ? 'hide-message' : '',
+		]"
 	>
 		<li>
 			<p class="subject-text">
@@ -57,8 +60,36 @@
 						<li :id="'full-comment-link-' + index">
 							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
 						</li>
-						<li :id="'report-box-' + index">
-							<a href="" :id="'report-' + index">Report</a>
+						<li :id="'spam-box-' + index">
+							<div v-if="!spammed">
+								<span
+									class="sure-block"
+									v-if="spamUser"
+									:id="'spam-user-span-' + index"
+									>are you sure?
+									<span
+										class="link"
+										:id="'yes-spam-user-' + index"
+										@click="spamAction('yes')"
+										>Yes</span
+									>
+									/
+									<span
+										class="link"
+										@click="spamAction()"
+										:id="'no-spam-user-' + index"
+										>No</span
+									></span
+								>
+								<span
+									class="link"
+									v-else
+									@click="spamAction()"
+									:id="'click-spam-' + index"
+									>spam</span
+								>
+							</div>
+							<div v-if="spammed">spammed</div>
 						</li>
 						<li :id="'block-' + index">
 							<span
@@ -143,12 +174,13 @@ export default {
 	},
 	data() {
 		return {
-			removeUser: false,
 			blockUser: false,
 			spamUser: false,
 			upClicked: false,
 			downClicked: false,
 			backcolor: 'grey',
+			spammed: false,
+			disappear: false,
 			isRead: this.message.isRead,
 		};
 	},
@@ -161,11 +193,6 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//toggle remove action
-		removeAction() {
-			this.removeUser = !this.removeUser;
-		},
-		// @vuese
 		//handle block action
 		blockAction(action) {
 			this.blockUser = !this.blockUser;
@@ -175,12 +202,22 @@ export default {
 					username: this.message.senderUsername,
 					baseurl: this.$baseurl,
 				});
+				this.disappear = true;
 			}
 		},
 		// @vuese
-		//toggle spam action
-		spamAction() {
+		//handle spam action
+		spamAction(action) {
 			this.spamUser = !this.spamUser;
+			if (action == 'yes') {
+				this.$store.dispatch('messages/spamMessage', {
+					id: this.message.id,
+					type: 'message',
+					reason: '',
+					baseurl: this.$baseurl,
+				});
+				this.spammed = true;
+			}
 		},
 		// @vuese
 		//handle upvote action
