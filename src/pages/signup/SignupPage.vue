@@ -87,6 +87,7 @@
 							:class="messageErrorShowUser ? 'red-border' : ''"
 							type="text"
 							v-model="username"
+							@focusout="usr_available"
 						/>
 						<span class="animation-email usr-pass-anmie"
 							>Choose A username</span
@@ -278,6 +279,23 @@ export default {
 					.catch((error) => {
 						console.log(error);
 					});
+			}
+		},
+		async usr_available() {
+			const actionPayload = {
+				username: this.username,
+				baseurl: this.$baseurl,
+			};
+			try {
+				await this.$store.dispatch('available_user', actionPayload);
+			} catch (err) {
+				this.showSignuser = true;
+				this.checkedUser = false;
+				this.messageErrorShowUser = true;
+				this.error_message_user = 'That username is already taken';
+				document.querySelector('#regUsername').style.border =
+					'0.5px solid #ea0027';
+				// this.error = err;
 			}
 		},
 		// @vuese
