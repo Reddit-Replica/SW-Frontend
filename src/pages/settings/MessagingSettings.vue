@@ -12,7 +12,9 @@
 					@click="showFirstMenuFunction"
 					id="how-send-chat-request"
 				>
-					<span class="title">{{ titleFirst }}</span>
+					<span class="title" :id="'title-' + titleFirst">{{
+						titleFirst
+					}}</span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -147,7 +149,7 @@ export default {
 
 <style scoped>
 .settings-page {
-	min-height: 45.7rem;
+	min-height: 100vh;
 }
 .choice {
 	position: relative;

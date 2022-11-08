@@ -1,4 +1,11 @@
 {
+  "vote": [
+    {
+      "id": "1",
+      "type": "post",
+      "direction": -1
+    }
+  ],
   "save": [
     {
       "id": "1",
