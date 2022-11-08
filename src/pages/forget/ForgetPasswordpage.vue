@@ -67,6 +67,7 @@
 							</span>
 						</base-button>
 					</div>
+					<div class="separate"></div>
 					<p class="invalid" v-if="!success">
 						{{ error }}
 					</p>
@@ -82,6 +83,7 @@
 							>forgot username?</router-link
 						>
 					</div>
+					<div class="separate"></div>
 					<the-recaptcha
 						@verified="verifyRec"
 						v-if="showSignuser && showSignemail"
