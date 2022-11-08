@@ -331,10 +331,20 @@ export default {
 		showPostComments() {
 			this.$emit('showComments');
 		},
-		upvote() {
+		async upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
 				this.upClicked = false;
 				this.counter--;
@@ -344,10 +354,20 @@ export default {
 				this.counter++;
 			}
 		},
-		downvote() {
+		async downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
 				this.downClicked = false;
 				this.counter++;

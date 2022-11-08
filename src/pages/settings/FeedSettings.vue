@@ -125,6 +125,7 @@
 						</svg>
 					</span>
 					<subMenu
+						id="sub-menu-one"
 						:titles="['Hot', 'New', 'Top', 'Rising']"
 						:display="ShowFirstitemChoice"
 						@change-title="changeFirstChoiceItem"
