@@ -5,7 +5,7 @@
 				<div class="image">
 					<router-link
 						:to="{ name: 'user', params: { userName: comment.userName } }"
-						><img src="../../img/user-image.jpg" alt=""
+						><img src="../../img/user-image.jpg" alt="" id="user"
 					/></router-link>
 				</div>
 				<div class="vertical-line"></div>
@@ -14,6 +14,7 @@
 				<div class="user-name">
 					<router-link
 						:to="{ name: 'user', params: { userName: comment.userName } }"
+						id="userName"
 						>{{ comment.userName }}</router-link
 					>
 					<span>. {{ comment.duration }} . ago</span>
@@ -28,10 +29,16 @@
 								class="icon icon-shift vote"
 								v-if="!upClicked"
 								@click="upClick"
+								id="upvote"
 							>
 								<use xlink:href="../../img/shift.svg#icon-shift"></use>
 							</svg>
-							<svg class="icon icon-arrow-up p-1 vote" v-else @click="upClick">
+							<svg
+								class="icon icon-arrow-up p-1 vote"
+								v-else
+								@click="upClick"
+								id="cancel-upvote"
+							>
 								<use xlink:href="../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
 						</li>
@@ -43,6 +50,7 @@
 								class="icon icon-shift vote"
 								v-if="!downClicked"
 								@click="downClick"
+								id="downvote"
 							>
 								<use xlink:href="../../img/shift.svg#icon-shift"></use>
 							</svg>
@@ -50,6 +58,7 @@
 								class="icon icon-arrow-down p-1 vote"
 								v-else
 								@click="downClick"
+								id="cancel-downvote"
 							>
 								<use xlink:href="../../img/vote.svg#icon-arrow-down"></use>
 							</svg>
