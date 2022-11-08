@@ -3,69 +3,73 @@
 		<div class="largest-div" v-if="page1">
 			<div class="back-image"></div>
 			<div class="sec-largest-div">
-				<h1>Sign Up</h1>
+				<div class="right-side">
+					<h1>Sign Up</h1>
 
-				<p class="user-agreement">
-					By continuing, you agree to our
-					<a href="https://www.redditinc.com/policies/user-agreement"
-						>User Agreement</a
-					>
-					and
-					<a href="https://www.redditinc.com/policies/privacy-policy"
-						>Privacy Policy</a
-					>.
-				</p>
-
-				<form class="signing-up">
-					<div class="signup-google-apple">
-						<GoogleSigninButton id="google-login" class="log-google log-ag" />
-						<facebookSigninButton
-							id="facebook-login"
-							class="log-google log-ag"
-						/>
-
-						<div class="page-divider">
-							<span class="page-divider-line"></span>
-							<span class="page-divider-text">or</span>
-							<span class="page-divider-line"></span>
-						</div>
-					</div>
-
-					<fieldset class="email-field input-box">
-						<input
-							id="email-input"
-							v-model="email"
-							type="text"
-							:class="messageErrorShowEmail ? 'red-border' : ''"
-						/>
-						<span class="animation-email">Email</span>
-						<span
-							v-if="showSignemail"
-							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
-						></span>
-						<div class="username-error-message" v-if="messageErrorShowEmail">
-							{{ error_email_message }}
-						</div>
-					</fieldset>
-
-					<fieldset class="submit-signup-field">
-						<button
-							class="submit-signup continue-button"
-							type="submit"
-							@click.prevent="handleSubmit"
+					<p class="user-agreement">
+						By continuing, you agree to our
+						<a href="https://www.redditinc.com/policies/user-agreement"
+							>User Agreement</a
 						>
-							Continue
-						</button>
-					</fieldset>
+						and
+						<a href="https://www.redditinc.com/policies/privacy-policy"
+							>Privacy Policy</a
+						>.
+					</p>
 
-					<div class="register-bottom">
-						Already a redditor?
+					<form class="signing-up">
+						<div class="signup-google-apple">
+							<GoogleSigninButton id="google-login" class="log-google log-ag" />
+							<facebookSigninButton
+								id="facebook-login"
+								class="log-google log-ag"
+							/>
 
-						<li>
-							<router-link to="/login">Log In </router-link>
-						</li>
-					</div>
-				</form>
+							<div class="page-divider">
+								<span class="page-divider-line"></span>
+								<span class="page-divider-text">or</span>
+								<span class="page-divider-line"></span>
+							</div>
+						</div>
+
+						<fieldset class="email-field input-box">
+							<input
+								id="email-input"
+								v-model="email"
+								type="text"
+								:class="messageErrorShowEmail ? 'red-border' : ''"
+								required="required"
+								@focusout="email_available"
+							/>
+							<span class="animation-email">Email</span>
+							<span
+								v-if="showSignemail"
+								:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+							></span>
+							<div class="username-error-message" v-if="messageErrorShowEmail">
+								{{ error_email_message }}
+							</div>
+						</fieldset>
+
+						<fieldset class="submit-signup-field">
+							<button
+								class="submit-signup continue-button"
+								type="submit"
+								@click.prevent="handleSubmit"
+							>
+								Continue
+							</button>
+						</fieldset>
+
+						<div class="register-bottom">
+							Already a redditor?
+
+							<li>
+								<router-link to="/login">Log In </router-link>
+							</li>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 
@@ -87,6 +91,7 @@
 							:class="messageErrorShowUser ? 'red-border' : ''"
 							type="text"
 							v-model="username"
+							required="required"
 							@focusout="usr_available"
 						/>
 						<span class="animation-email usr-pass-anmie"
@@ -106,6 +111,7 @@
 						<input
 							id="reg-password"
 							type="password"
+							required="required"
 							v-model="password"
 							:class="messageErrorShowPass ? 'red-border' : ''"
 							@focusout="validatepass"
@@ -186,7 +192,10 @@ export default {
 		// @vuese
 		//Validate Email
 		validatEmail(value) {
-			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
+			if (
+				/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value) ||
+				!value
+			) {
 				this.error_email = true;
 				this.error_email_message = 'Please fix your email to continue';
 				this.showSignemail = true;
@@ -196,6 +205,7 @@ export default {
 					'0.5px solid #ea0027';
 			} else {
 				this.messageErrorShowEmail = false;
+				this.showSignemail = true;
 				this.checkedEmail = true;
 				document.querySelector('#email-input').style.border =
 					'0.5px solid #0079d3';
@@ -224,6 +234,7 @@ export default {
 		// @vuese
 		//In SignUp page to show second Page
 		handleSubmit() {
+			this.validatEmail(this.email);
 			if (this.checkedEmail) {
 				this.togglepages();
 			}
@@ -250,37 +261,10 @@ export default {
 					'Username must be between 3 and 20 characters';
 				document.querySelector('#regUsername').style.border =
 					'0.5px solid #ea0027';
-			} else {
-				fetch(this.$baseurl + '/userTest')
-					.then((response) => {
-						if (response.ok) {
-							return response.json();
-						}
-					})
-					.then((data) => {
-						data.forEach((element) => {
-							if (element.username == value) {
-								this.showSignuser = true;
-								this.checkedUser = false;
-								this.messageErrorShowUser = true;
-								this.error_message_user = 'That username is already taken';
-								document.querySelector('#regUsername').style.border =
-									'0.5px solid #ea0027';
-							} else {
-								this.showSignuser = true;
-								this.checkedUser = true;
-								this.messageErrorShowUser = false;
-								document.querySelector('#regUsername').style.border =
-									'0.5px solid #0079d3';
-								// check_user = true;
-							}
-						});
-					})
-					.catch((error) => {
-						console.log(error);
-					});
 			}
 		},
+		//@vuese
+		//Validate User available
 		async usr_available() {
 			const actionPayload = {
 				username: this.username,
@@ -288,7 +272,16 @@ export default {
 			};
 			try {
 				await this.$store.dispatch('available_user', actionPayload);
+				const response = localStorage.getItem('response');
+				console.log(response);
+				this.messageErrorShowUser = false;
+				this.showSignuser = true;
+				this.checkedUser = true;
+				document.querySelector('#regUsername').style.border =
+					'0.5px solid #0079d3';
 			} catch (err) {
+				const response = localStorage.getItem('response');
+				console.log(response);
 				this.showSignuser = true;
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
@@ -298,51 +291,55 @@ export default {
 				// this.error = err;
 			}
 		},
-		// @vuese
-		//post new user and email and password to server
-		async handleSignClick() {
-			// if (check_email && check_pass && check_user) {
-			// fetch(this.$baseurl + '/users', {
-			// 	method: 'POST',
-			// 	headers: {
-			// 		'Content-Type': 'application/json',
-			// 	},
-			// 	body: JSON.stringify({
-			// 		username: this.username,
-			// 		password: this.password,
-			// 		email: this.email,
-			// 	}),
-			// })
-			// 	.then((response) => {
-			// 		if (response.ok) {
-			// 			console.log(response);
-			// 			return response.json();
-			// 		}
-			// 	})
-			// 	.then((data) => {
-			// 		console.log(data.access_token);
-			// 	})
-			// 	.catch((error) => {
-			// 		console.log(error);
-			// 	});
 
-			// }
+		async email_available() {
 			const actionPayload = {
-				username: this.username,
-				password: this.password,
 				email: this.email,
 				baseurl: this.$baseurl,
 			};
-
 			try {
-				await this.$store.dispatch('signuphandle', actionPayload);
-				this.$router.replace('/main');
-				// const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-				// this.$router.replace(redirectUrl);
+				await this.$store.dispatch('available_email', actionPayload);
+				const response = localStorage.getItem('response');
+				console.log(response);
+				this.messageErrorShowEmail = false;
+				this.showSignemail = true;
+				this.checkedEmail = true;
+				document.querySelector('#email-input').style.border =
+					'0.5px solid #0079d3';
 			} catch (err) {
-				this.error = err;
+				const response = localStorage.getItem('response');
+				console.log(response);
+				this.error_email = true;
+				this.error_email_message = 'Email is already taken';
+				this.showSignemail = true;
+				this.checkedEmail = false;
+				this.messageErrorShowEmail = true;
+				document.querySelector('#email-input').style.border =
+					'0.5px solid #ea0027';
+				// this.error = err;
 			}
-			// }
+		},
+		// @vuese
+		//post new user and email and password to server
+		async handleSignClick() {
+			if (this.username == '' || this.password == '') {
+				this.validateUser(this.username);
+				this.validatepass(this.password);
+			} else {
+				const actionPayload = {
+					username: this.username,
+					password: this.password,
+					email: this.email,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('signuphandle', actionPayload);
+					this.$router.replace('/main');
+				} catch (err) {
+					this.error = err;
+				}
+			}
 		},
 	},
 	components: { GoogleSigninButton, facebookSigninButton, TheRecaptcha },
@@ -411,27 +408,31 @@ button {
 }
 
 .largest-div {
-	width: 70rem;
-	height: 100%;
-	overflow: hidden;
+	background-color: white;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	overflow-x: hidden;
+	min-height: 100vh;
+	position: relative;
+	width: 100%;
 }
 
 .back-image {
 	background-image: url('../../../img/bck.png');
-	min-height: 100%;
+	height: 100vh;
+	min-height: 430px;
 	width: 12rem;
 	float: left;
-	/* background-position: center; */
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
 .sec-largest-div {
-	align-self: center;
-	padding: 24px;
-	overflow: hidden;
-	padding-top: 5rem;
-	width: 55rem;
+	width: 100%;
+	padding: 0px;
+	margin: 0;
 }
 
 .user-agreement {
@@ -493,7 +494,11 @@ button {
 	color: #878a8c;
 	font-size: 14px;
 }
-
+.right-side {
+	padding: 24px;
+	min-width: 260px;
+	max-width: 440px;
+}
 .input-box input {
 	position: relative;
 	transform: translateZ(0);
@@ -536,6 +541,7 @@ button {
 .input-box input:focus ~ .animation-email,
 .input-box input:hover ~ .animation-email,
 .input-box input:active ~ .animation-email,
+.input-box input:valid ~ .animation-email,
 .input-box ~ .animation-email {
 	transform: translateX(0.8px) translateY(-10px);
 	font-size: 9px;
@@ -557,6 +563,7 @@ button {
 
 .user-pass-box input:focus ~ .usr-pass-anmie::after,
 .user-pass-box input:hover ~ .usr-pass-anmie::after,
+.user-pass-box input:valid ~ .usr-pass-anmie::after,
 .user-pass-box ~ .usr-pass-anmie::after {
 	display: none;
 }
@@ -590,8 +597,8 @@ button {
 .input-box .correct-check {
 	position: absolute;
 	z-index: 1;
-	right: 22rem;
-	top: 40%;
+	right: 43%;
+	top: 50%;
 	height: 10px;
 	width: 12px;
 	background-color: #878a8c;
