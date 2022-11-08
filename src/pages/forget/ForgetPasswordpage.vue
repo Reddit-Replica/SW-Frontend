@@ -83,7 +83,7 @@
 						>
 					</div>
 					<the-recaptcha
-						@verify="verifyRec"
+						@verified="verifyRec"
 						v-if="showSignuser && showSignemail"
 					></the-recaptcha>
 					<div class="bottomText">
@@ -112,7 +112,7 @@ export default {
 	components: { TheRecaptcha },
 	data() {
 		return {
-			buttonIsactive: false,
+			//buttonIsactive: false,
 			userName: '',
 			emailAddress: '',
 			invalidUsernamelength: false,
@@ -126,7 +126,7 @@ export default {
 			error: '',
 			success: false,
 			//verify: false,
-			buttonDisabled: false,
+			buttonDisabled: true,
 		};
 	},
 	methods: {
@@ -165,14 +165,14 @@ export default {
 			try {
 				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
 				const response = localStorage.getItem('response');
+				//const response = this.$cookies.get('response');
+				//const response = this.$cookie.getCookie('response');
 				if (response == 200) {
 					console.log(response);
 					this.success = true;
 				}
 			} catch (err) {
-				//this.error = err;
-
-				this.error = 'Invalid email (User not found)!';
+				this.error = err;
 				console.log(this.error);
 				this.success = false;
 			}

@@ -46,12 +46,23 @@ import TheSaved from './pages/users/PagesComponents/TheSaved.vue';
 
 import NotFound from './pages/NotFound.vue';
 
-import postComments from './pages/PostComments.vue';
+import PostComments from './pages/PostComments.vue';
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
 		{ path: '/', redirect: '/login' },
-		{ path: '/main', component: MainPage },
+		{ path: '/', redirect: '/main' },
+		{
+			path: '/main',
+			component: MainPage,
+			children: [
+				{
+					name: 'comments',
+					path: '/r/:subredditName/comments/:postId/:postName/',
+					component: PostComments,
+				},
+			],
+		},
 
 		{ path: '/forgetPassword', component: ForgetPassword },
 		{ path: '/forgetUsername', component: ForgetUsername },
@@ -87,11 +98,6 @@ const router = createRouter({
 			component: SubredditPage,
 		}, //render subreddit component
 		{
-			path: '/post/:postName',
-			name: 'post',
-			component: MainPage,
-		}, //render post component
-		{
 			path: '/settings',
 			name: 'settings',
 			component: TheSettings,
@@ -126,7 +132,6 @@ const router = createRouter({
 		},
 
 		{ path: '/:notFound(.*)', component: NotFound },
-		{ path: '/comments', component: postComments },
 	],
 });
 
