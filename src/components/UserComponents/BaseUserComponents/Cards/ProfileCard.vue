@@ -9,7 +9,11 @@
 				:style="`background-image: url(${userData.banner}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
-				<span @click="addCoverImage" class="add-image">
+				<span
+					v-if="state == 'profile'"
+					@click="addCoverImage"
+					class="add-image"
+				>
 					<div style="display: none">
 						<input
 							type="file"
@@ -25,6 +29,7 @@
 				<!-- ///////////////////////////////////////////////////////////// -->
 				<!-- profile settings icon -->
 				<router-link
+					v-if="state == 'profile'"
 					id="profile-settings-icon-card"
 					to="/settings/profile"
 					class="profile-settings"
@@ -104,21 +109,23 @@
 							id="profile-picture"
 						/>
 					</div>
-					<div style="display: none">
-						<input
-							type="file"
-							id="add-profile-button"
-							ref="profileFile"
-							@change="loadProfilePic"
-							accept="image/x-png,image/jpeg"
-						/>
-					</div>
+
 					<span
 						@click="addProfileImage"
 						class="add-image"
 						style="bottom: 0px; right: 0px"
 						id="add-profile-image-button"
+						v-if="state == 'profile'"
 					>
+						<div style="display: none">
+							<input
+								type="file"
+								id="add-profile-button"
+								ref="profileFile"
+								@change="loadProfilePic"
+								accept="image/x-png,image/jpeg"
+							/>
+						</div>
 						<i class="fa-regular fa-square-plus add-image-icon" />
 					</span>
 				</div>
@@ -172,7 +179,7 @@
 			</div>
 			<!-- ////////////////////////////////////////////// -->
 			<!-- avatar styling button -->
-			<div class="profile-button">
+			<div v-if="state == 'profile'" class="profile-button">
 				<button id="style-avatar">
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
 				</button>
@@ -212,15 +219,17 @@
 			</div>
 			<!-- //////////////////////////////////////////// -->
 			<!-- follow chat for other users -->
-			<follow-chat-component v-if="0"></follow-chat-component>
+			<follow-chat-component v-if="state == 'user'"></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
 			<sociallinks-block
+				v-if="state == 'profile'"
 				:social-data="userData.socialLinks"
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button
+				v-if="state == 'profile'"
 				class="new-post"
 				@click="$router.push('/submit')"
 				id="profile-new-post"
@@ -283,6 +292,10 @@ export default {
 			required: true,
 			// default: []
 		},
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	/**
 	 * @vuese
@@ -309,7 +322,7 @@ export default {
 			// 		type: '' /* there are three types username  */,
 			// 	},
 			// ],
-			profileOptions: [
+			myProfileOptions: [
 				{
 					name: 'Profile to Moderation',
 					toLink: '/about/edit/moderation',
@@ -323,10 +336,37 @@ export default {
 					toLink: '/about/edit/moderation',
 				},
 			],
+			userProfileOptions: [
+				{
+					name: 'Send Message',
+					toLink: '/message/compose/?to=' /* add in html only user name */,
+				},
+				{
+					name: 'Block User',
+					toLink: '/about/edit/moderation',
+				},
+				{
+					name: 'Get Them Help and Support',
+					toLink: '/about/edit/moderation',
+				},
+				{
+					name: 'Report User',
+					toLink: '/about/edit/moderation',
+				},
+				{
+					name: 'Add to Cusrom Feed',
+					toLink: '/about/edit/moderation',
+				},
+			],
 			isAvatar: false,
 		};
 	},
-	computed: {},
+	computed: {
+		profileOptions() {
+			if (this.state == 'profile') return this.myProfileOptions;
+			return this.userProfileOptions;
+		},
+	},
 	methods: {
 		/**
 		 * @vuese

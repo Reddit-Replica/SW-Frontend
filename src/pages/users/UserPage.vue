@@ -1,11 +1,14 @@
 <template>
 	<!-- header component -->
-	<div>
+	<div v-if="loading">Loading</div>
+	<div v-else>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<profile-nav :user-name="getUserName" :state="state" />
 		<base-container>
 			<div id="main-profile-box" class="profilebox">
-				<main>
+				<main
+					:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
+				>
 					<!-- <sortposts-bar></sortposts-bar> -->
 					<router-view></router-view>
 				</main>
@@ -13,10 +16,10 @@
 					<profile-card
 						:user-name="getUserName"
 						:state="state"
-						:user-data="getUserData"
+						:user-data="getUserData.userData"
 					/>
 					<user-moderators-card
-						:user-moderators="getUserData.moderatorOf"
+						:user-moderators="getUserData.userModeratorData"
 					></user-moderators-card>
 				</aside>
 			</div>
@@ -41,6 +44,7 @@ export default {
 		return {
 			state: '' /* profile or user */,
 			// userData: Array,
+			loading: false,
 		};
 	},
 	computed: {
@@ -51,6 +55,11 @@ export default {
 		getUserData() {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
+		},
+		checkInOverviewPage() {
+			if (this.$route.path == `/user/${this.$route.params.userName}/`)
+				return true;
+			return false;
 		},
 	},
 	methods: {
@@ -67,6 +76,7 @@ export default {
 	},
 	async created() {
 		if (this.$route.params.userName) {
+			this.loading = true;
 			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
 			if (this.$route.params.userName == this.$store.getters.getUserName)
 				this.state = 'profile'; /* means same authenticated user */
@@ -75,6 +85,7 @@ export default {
 			/* after that we fetch data fetch user data */
 			document.title = this.$store.state.userName + ' - Reddit';
 			const requestStatus = await this.RequestUserData();
+			this.loading = false;
 			if (requestStatus == 200) console.log('Sucessfully fetched data');
 			else if (requestStatus == 404) console.log('not found');
 			else if (requestStatus == 500) console.log(' internal server error');
@@ -94,9 +105,7 @@ export default {
 	margin: 0 auto;
 	box-sizing: border-box;
 }
-.sort-post-content {
-	margin-top: 1px;
-}
+
 .content {
 	width: 640px;
 	margin: 0px 0px 0px 15px;
@@ -111,6 +120,9 @@ export default {
 	}
 	main {
 		width: 100%;
+	}
+	aside {
+		display: none;
 	}
 }
 body {
@@ -127,9 +139,14 @@ aside {
 	margin-left: 24px;
 	min-height: 2000px;
 }
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
 	aside {
 		display: none;
+	}
+} */
+@media (max-width: 640) {
+	.basecontainer {
+		padding: 0 0;
 	}
 }
 </style>
