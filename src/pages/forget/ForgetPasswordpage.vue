@@ -29,6 +29,7 @@
 						/>
 						<span class="span-input"> Username</span>
 						<span
+							id="showSignuser"
 							v-if="showSignuser"
 							:class="!checkedUser || error ? 'wrong-check' : 'correct-check'"
 						></span>
@@ -36,7 +37,11 @@
 					<p class="invalid" v-if="inputIsempty">
 						Please enter a username to continue
 					</p>
-					<p class="invalid" v-if="invalidUsernamelength">
+					<p
+						id="invalid"
+						class="invalidUsernamelength"
+						v-if="invalidUsernamelength"
+					>
 						Username must be between 3 and 20 characters
 					</p>
 					<div class="separate"></div>
@@ -121,7 +126,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha';
+import TheRecaptcha from '../../components/TheRecaptcha.vue';
 export default {
 	components: { TheRecaptcha },
 	data() {
