@@ -93,11 +93,8 @@ export default {
 	margin-top: 15px;
 }
 @media only screen and (max-width: 991px) {
-	.subreddit-page-left {
-		width: 100%;
-	}
 	.subreddit-page-right {
-		width: 0%;
+		display: none;
 	}
 }
 </style>
