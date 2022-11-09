@@ -36,6 +36,9 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//handle choosen title
+		// @arg The argument is a string value representing choosen value from user
 		clickedFunction(title) {
 			this.clicked = title;
 			this.$emit('change-title', title);
