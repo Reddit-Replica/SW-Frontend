@@ -171,6 +171,32 @@ export default {
 			throw error;
 		}
 	},
+	async googleSign(context, payload) {
+		const baseurl = payload.baseurl;
+		const userInfo = {
+			type: payload.type,
+			accessToken: payload.id_token,
+		};
+		const response = await fetch(baseurl + '/signin/' + payload.type, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(userInfo),
+		});
+		const responseData = await response.json();
+		localStorage.setItem('response', response.status);
+		if (response.status == 200 || response.status == 201) {
+			localStorage.setItem('accessToken', responseData.token);
+			localStorage.setItem('userName', responseData.username);
+			context.commit('setUser', {
+				userName: responseData.username,
+				accessToken: responseData.token,
+				response: response.status,
+			});
+		} else if (!response.ok) {
+			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
 	async available_user(context, payload) {
 		const baseurl = payload.baseurl;
 		// console.log(payload.username);
