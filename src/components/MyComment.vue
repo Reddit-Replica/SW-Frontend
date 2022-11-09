@@ -361,7 +361,7 @@ export default {
 	},
 	computed: {
 		//@vuese
-		//chceks if there is a written text in text area or not to edit the comment 
+		//chceks if there is a written text in text area or not to edit the comment
 		noComment() {
 			if (this.edittedComment == '') return true;
 			return false;
