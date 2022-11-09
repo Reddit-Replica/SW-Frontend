@@ -74,6 +74,7 @@ export default {
 .subreddit-page {
 	max-width: 100%;
 	height: 100%;
+	min-height: 2000px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
