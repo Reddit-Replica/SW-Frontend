@@ -159,7 +159,7 @@ export default {
 }
 .topCommunitiesRecommendations {
 	flex-flow: row wrap;
-	justify-content: start;
+	justify-content: flex-start;
 	padding: 0 8px 12px;
 	display: flex;
 }

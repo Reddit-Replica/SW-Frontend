@@ -74,6 +74,7 @@ export default {
 .subreddit-page {
 	max-width: 100%;
 	height: 100%;
+	min-height: 2000px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
@@ -93,11 +94,8 @@ export default {
 	margin-top: 15px;
 }
 @media only screen and (max-width: 991px) {
-	.subreddit-page-left {
-		width: 100%;
-	}
 	.subreddit-page-right {
-		width: 0%;
+		display: none;
 	}
 }
 </style>
