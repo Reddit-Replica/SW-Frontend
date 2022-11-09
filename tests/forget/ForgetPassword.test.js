@@ -13,7 +13,7 @@ describe('ForgetPasswordpage.vue', () => {
 			global: {
 				components: {
 					// 'the-recaptcha': TheRecaptcha,
-					'base-button': BaseButton,
+					//'base-button': BaseButton,
 				},
 				mocks: {},
 			},
@@ -34,22 +34,45 @@ describe('ForgetPasswordpage.vue', () => {
 		const wrapper = shallowMount(ForgetPasswordpage, {
 			global: {
 				components: {
-					// 'the-recaptcha': TheRecaptcha,
-					'base-button': BaseButton,
+					
 				},
 				mocks: {},
 				data() {
 					return {
-						showSignuser: true,
-						invalidUsernamelength: false,
-					};
+						
+					}
 				},
 			},
-		});
+		})
 
-		//showSignuser
-		/*expect(wrapper.get('#invalidUsernamelength').text()).toEqual(
-			'Username must be between 3 and 20 characters'
-		);*/
+		
+		
+		expect(wrapper.find('#invalidUsernamelength').exists()).toBe(false)
+		expect(wrapper.find('#invalidEmail').exists()).toBe(false)
+		expect(wrapper.find('#error').exists()).toBe(true)
+		expect(wrapper.find('#success').exists()).toBe(false)
+		
+	});
+
+	it('test v-if rendring', async () => {
+		//our component
+		const wrapper = shallowMount(ForgetPasswordpage, {
+			global: {
+				components: {
+					
+				},
+				mocks: {},
+				data() {
+					return {
+						
+					}
+				},
+			},
+		})
+
+		
+		
+		
+		
 	});
 });
