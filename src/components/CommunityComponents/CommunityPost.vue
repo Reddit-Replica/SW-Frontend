@@ -150,11 +150,7 @@
 						/>
 					</svg>
 				</div>
-				<div
-					class="icons icons-dots"
-					@click="toggleIconsList"
-					id="initial-post-icon-15"
-				>
+				<div class="icons" @click="toggleIconsList" id="initial-post-icon-15">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -493,9 +489,6 @@ export default {
 	top: 160%; */
 	left: 40%;
 	top: 100%;
-}
-.icon-dots {
-	/* position: relative; */
 }
 button {
 	border: none;
