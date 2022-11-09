@@ -32,9 +32,7 @@
 							:class="!checkedEmail || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
-					<p 
-					id="invalidEmail"
-					class="invalid" v-if="invalidEmail">
+					<p id="invalidEmail" class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -50,13 +48,10 @@
 						</base-button>
 					</div>
 					<div class="separate"></div>
-					<p 
-					id="error" class="invalid" v-if="!success">
+					<p id="error" class="invalid" v-if="!success">
 						{{ error }}
 					</p>
-					<p
-					id="success"
-					class="valid" v-if="success">
+					<p id="success" class="valid" v-if="success">
 						Thanks! If there are any Reddit accounts associated with that email
 						address, you'll get an email with your username(s) shortly.
 					</p>

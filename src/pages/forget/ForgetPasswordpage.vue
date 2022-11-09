@@ -151,7 +151,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate username
-		// @arg The argument is a string value representing username 
+		// @arg The argument is a string value representing username
 		validateUser(value) {
 			if (value.length < 3 || value.length > 20) {
 				//
