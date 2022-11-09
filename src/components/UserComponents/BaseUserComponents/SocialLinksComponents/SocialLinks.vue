@@ -16,6 +16,7 @@
 						:text="sociallinkItem.text"
 						:img-src="sociallinkItem.imgSrc"
 						:alt="sociallinkItem.alt"
+						:id="`static-${sociallinkItem.text}`"
 						@click="openSocialLinkConfig(sociallinkItem.text)"
 					></sociallink-item>
 				</div>
