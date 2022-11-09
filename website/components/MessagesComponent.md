@@ -16,10 +16,10 @@
 <!-- @vuese:MessagesComponent:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|deleteAction|handle delete action|-|
-|blockAction|handle block action|-|
+|deleteAction|handle delete action|The argument is a string value representing if user click ok|
+|blockAction|handle block action|The argument is a string value representing if user click ok|
 |unreadAction|handle unread action|-|
-|spamAction|handle spam action|-|
+|spamAction|handle spam action|The argument is a string value representing if user click ok|
 |expand|expand or collapse message details|-|
 
 <!-- @vuese:MessagesComponent:methods:end -->

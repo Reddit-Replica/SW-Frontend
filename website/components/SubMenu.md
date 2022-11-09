@@ -22,3 +22,13 @@
 <!-- @vuese:SubMenu:events:end -->
 
 
+## Methods
+
+<!-- @vuese:SubMenu:methods:start -->
+|Method|Description|Parameters|
+|---|---|---|
+|clickedFunction|handle choosen title|The argument is a string value representing choosen value from user|
+
+<!-- @vuese:SubMenu:methods:end -->
+
+
