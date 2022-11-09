@@ -47,6 +47,9 @@ export default {
 			loading: false,
 		};
 	},
+	mounted() {
+		this.checkInOverviewPage;
+	},
 	computed: {
 		getUserName() {
 			console.log(this.$store.state.userName);
