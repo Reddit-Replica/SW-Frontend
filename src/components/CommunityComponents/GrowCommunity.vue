@@ -163,13 +163,13 @@ export default {
 
 <style scoped>
 .grow-box {
-	padding: 16px;
+	padding: 1.6rem;
 	background-color: var(--color-white-1);
 	border: var(--line-10);
-	border-radius: 4px;
-	max-width: 640px;
-	margin-bottom: 12px;
-	margin-top: 12px;
+	border-radius: 0.4rem;
+	/* max-width: 64rem; */
+	margin-bottom: 1.2rem;
+	margin-top: 1.2rem;
 }
 
 .grow-header {
@@ -177,9 +177,8 @@ export default {
 	cursor: pointer;
 	display: flex;
 	font-weight: 500;
-	font-size: 22px;
-	line-height: 26px;
-	list-style: none;
+	font-size: 2.2rem;
+	line-height: 2.6rem;
 	outline: none;
 	position: relative;
 }
@@ -188,7 +187,7 @@ span {
 }
 svg {
 	flex: none;
-	height: 24px;
-	width: 24px;
+	height: 2.4rem;
+	width: 2.4rem;
 }
 </style>
