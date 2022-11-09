@@ -150,11 +150,7 @@
 						/>
 					</svg>
 				</div>
-				<div
-					class="icons icons-dots"
-					@click="toggleIconsList"
-					id="initial-post-icon-15"
-				>
+				<div class="icons" @click="toggleIconsList" id="initial-post-icon-15">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -406,7 +402,8 @@ export default {
 	background: var(--color-grey-light-3);
 }
 .post-box {
-	background: rgb(255, 255, 255);
+	background: var(--color-white-1);
+	position: relative;
 }
 .div-1 {
 	padding-top: 8px;
@@ -459,6 +456,7 @@ export default {
 	overflow: hidden;
 	padding: 0 8px 0 4px;
 	flex-grow: 1;
+	/* position: relative; */
 }
 .icons {
 	margin-right: 4px;
@@ -476,24 +474,21 @@ export default {
 	margin-left: 6px;
 }
 .icons-list {
-	border: 1px solid var(--newCommunityTheme-line);
+	border: var(--line-8);
 	border-radius: 4px;
-	box-shadow: 0 2px 4px 0 var(--newCommunityTheme-bodyTextAlpha20);
-	color: var(--newCommunityTheme-bodyText);
+	box-shadow: var(--shadow-menu);
+	color: var(--color-dark-4);
 	overflow: hidden;
-	background-color: var(--newCommunityTheme-body);
+	background-color: var(--color-white-1);
 	position: absolute;
 	z-index: 10;
 	display: flex;
 	flex-direction: column;
 
-	/* left: 500px;
-	top: 1150px; */
-	left: 50%;
-	top: 160%;
-}
-.icon-dots {
-	position: relative;
+	/* left: 50%;
+	top: 160%; */
+	left: 40%;
+	top: 100%;
 }
 button {
 	border: none;
