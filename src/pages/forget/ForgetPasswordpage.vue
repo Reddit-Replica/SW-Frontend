@@ -19,12 +19,18 @@
 							type="text"
 							required="required"
 							v-model="userName"
-							:class="invalidUsernamelength ? 'red-border' : ''"
+							:class="
+								!showSignuser
+									? ''
+									: !checkedUser || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> Username</span>
 						<span
 							v-if="showSignuser"
-							:class="checkedUser ? 'correct-check' : 'wrong-check'"
+							:class="!checkedUser || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
@@ -40,12 +46,18 @@
 							type="email"
 							required="required"
 							v-model="emailAddress"
-							:class="invalidEmail ? 'red-border' : ''"
+							:class="
+								!showSignemail
+									? ''
+									: !checkedEmail || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> Email Address</span>
 						<span
 							v-if="showSignemail"
-							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+							:class="!checkedEmail || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
 					<p class="invalid" v-if="inputIsempty">
@@ -125,7 +137,7 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
-			error: '',
+			error: null,
 			success: false,
 			//verify: false,
 			buttonDisabled: true,
@@ -163,6 +175,9 @@ export default {
 		// @vuese
 		// handle form submission
 		async handleSubmit() {
+			if (!this.checkedEmail || !this.checkedUser) {
+				return;
+			}
 			const actionPayload = {
 				username: this.userName,
 				email: this.emailAddress,
@@ -282,6 +297,18 @@ div {
 	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
 }
+.input-box input:hover ~ .span-input::after,
+.input-box input:focus ~ .span-input::after,
+.input-box input:valid ~ .span-input::after {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 7px;
+	content: '';
+	color: #24a0ed;
+}
 .input-box input:hover ~ .span-input::after {
 	display: none;
 }
@@ -317,6 +344,11 @@ div {
 .input-box .red-border {
 	border: 0.5px solid #ea0027;
 }
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
+	border-color: #24a0ed;
+}
+
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
 }*/
