@@ -66,7 +66,7 @@
 						<li><font-awesome-icon icon="fa-regular fa-message" /> Reply</li>
 						<li>Share</li>
 						<li>Save</li>
-						<li @click="edit">Edit</li>
+						<li @click="edit" id="edit">Edit</li>
 						<li>Follow</li>
 						<li @click="displaySubmenu">
 							<font-awesome-icon icon="fa-solid fa-ellipsis" />
