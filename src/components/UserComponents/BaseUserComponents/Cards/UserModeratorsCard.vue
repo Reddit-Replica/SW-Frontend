@@ -51,9 +51,9 @@ export default {
 	},
 	mounted() {
 		console.log(this.userModerators);
-		this.userModerators.forEach((element) => {
-			element.buttonText = 'joined';
-		});
+		// this.userModerators.forEach((element) => {
+		// 	element.buttonText = 'joined';
+		// });
 		this.userModerators.forEach((element) => {
 			element.buttonText = 'joined';
 			if (!element.joined) element.buttonText = 'join';
