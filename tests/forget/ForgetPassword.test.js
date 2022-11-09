@@ -75,18 +75,17 @@ describe('ForgetPasswordpage.vue', () => {
 
 	});
 
-	/*it('test router', async () => {
-		const router = new VueRouter({ routes })
-		const wrapper = mount(App, { 
-		  localVue,
-		  router
-		})
-	
-		router.push("/forgetPasswordpage")
-		await wrapper.vm.$nextTick()
-	
-		expect(wrapper.findComponent(ForgetPasswordpage).exists()).toBe(false)
-	})*/
+	it('Render component exist', async () => {
+		//our component
+		const wrapper = shallowMount(ForgetPasswordpage, {
+			global: {
+				components: {},
+				mocks: {},
+			},
+		});
+		expect(wrapper.exists()).toBe(true);
+	});
+
 });
 /*
 .trigger('click')
