@@ -19,6 +19,7 @@
 |Name|Description|Default Slot Content|
 |---|---|---|
 |default|-|-|
+|default|-|-|
 
 <!-- @vuese:BaseButton:slots:end -->
 
