@@ -17,12 +17,20 @@
 							type="password"
 							required="required"
 							v-model="password"
-							:class="invalidPassword ? 'red-border' : ''"
+							:class="
+								!showSignpassword
+									? ''
+									: !checkedPassword || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> New password</span>
 						<span
 							v-if="showSignpassword"
-							:class="checkedPassword ? 'correct-check' : 'wrong-check'"
+							:class="
+								!checkedPassword || error ? 'wrong-check' : 'correct-check'
+							"
 						></span>
 					</div>
 					<p class="invalid" v-if="invalidPassword">
@@ -35,12 +43,22 @@
 							type="password"
 							required="required"
 							v-model="passwordVerify"
-							:class="invalidPasswordverify ? 'red-border' : ''"
+							:class="
+								!showSignpasswordverify
+									? ''
+									: !checkedPasswordverify || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> verify password</span>
 						<span
 							v-if="showSignpasswordverify"
-							:class="checkedPasswordverify ? 'correct-check' : 'wrong-check'"
+							:class="
+								!checkedPasswordverify || error
+									? 'wrong-check'
+									: 'correct-check'
+							"
 						></span>
 					</div>
 					<p class="invalid" v-if="invalidPasswordverify">
@@ -92,7 +110,7 @@ export default {
 			token: this.$route.params.token,
 			checked: false,
 			success: null,
-			error: '',
+			error: null,
 		};
 	},
 	methods: {
@@ -241,6 +259,19 @@ div {
 .input-box input:hover ~ .span-input {
 	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
+}
+
+.input-box input:hover ~ .span-input::after,
+.input-box input:focus ~ .span-input::after,
+.input-box input:valid ~ .span-input::after {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 7px;
+	content: '';
+	color: #24a0ed;
 }
 .input-box input:hover ~ .span-input::after {
 	display: none;
@@ -412,5 +443,8 @@ p {
 }
 .input-box .red-border {
 	border: 0.5px solid #ea0027;
+}
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
 }
 </style>

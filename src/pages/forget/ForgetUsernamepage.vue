@@ -18,12 +18,18 @@
 							type="email"
 							required="required"
 							v-model="emailAddress"
-							:class="invalidEmail ? 'red-border' : ''"
+							:class="
+								!showSignemail
+									? ''
+									: !checkedEmail || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> Email Address</span>
 						<span
 							v-if="showSignemail"
-							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+							:class="!checkedEmail || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
 					<p class="invalid" v-if="invalidEmail">
@@ -46,8 +52,8 @@
 						{{ error }}
 					</p>
 					<p class="valid" v-if="success">
-						Thanks! If email address correct, you'll get an email with your
-						username.
+						Thanks! If there are any Reddit accounts associated with that email
+						address, you'll get an email with your username(s) shortly.
 					</p>
 					<div class="separate"></div>
 					<the-recaptcha
@@ -83,7 +89,7 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
-			error: '',
+			error: null,
 			success: false,
 			buttonDisabled: true,
 		};
@@ -106,6 +112,9 @@ export default {
 		// @vuese
 		// handle form submission
 		async handleSubmit() {
+			if (!this.checkedEmail) {
+				return;
+			}
 			const actionPayload = {
 				email: this.emailAddress,
 				baseurl: this.$baseurl,
@@ -213,6 +222,18 @@ div {
 	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
 }
+.input-box input:hover ~ .span-input::after,
+.input-box input:focus ~ .span-input::after,
+.input-box input:valid ~ .span-input::after {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 7px;
+	content: '';
+	color: #24a0ed;
+}
 .input-box input:hover ~ .span-input::after {
 	display: none;
 }
@@ -249,6 +270,17 @@ div {
 .input-box .red-border {
 	border: 0.5px solid #ea0027;
 }
+/*.input-box input {
+	
+	background: white;
+}*/
+/*input:-internal-autofill-selected {
+	background: white;
+}*/
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
+}
+
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
 }*/
