@@ -112,7 +112,7 @@
 						v-if="showSignuser && showSignemail"
 					></the-recaptcha>
 					<div class="bottomText">
-						<label>
+						<label id="bottom">
 							Don't have an email or need assistance logging in?
 							<a class="link" id="help">Get Help </a></label
 						>
