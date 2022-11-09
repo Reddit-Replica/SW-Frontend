@@ -821,14 +821,14 @@ export default {
 			return false;
 		},
 		//@vuese
-		//get userName 
+		//get userName
 		getuserName() {
 			return this.$store.getters.getUserName;
 		},
 	},
 	methods: {
 		//@vuese
-		//adds new comment 
+		//adds new comment
 		writeNewComment() {
 			let write = {
 				userName: this.$store.getters.getUserName,
@@ -851,7 +851,7 @@ export default {
 		displaySortByMenu() {
 			this.showSortByMenu = !this.showSortByMenu;
 		},
-		//@vuese 
+		//@vuese
 		//upvote on post
 		async upvote() {
 			if (this.upClicked == false) {
@@ -876,7 +876,7 @@ export default {
 				this.counter++;
 			}
 		},
-		//@vuese 
+		//@vuese
 		//downvote on post
 		async downvote() {
 			if (this.downClicked == false) {
@@ -901,7 +901,7 @@ export default {
 				this.counter--;
 			}
 		},
-		//@vuese 
+		//@vuese
 		//follow post
 		async followPost() {
 			try {
@@ -915,39 +915,39 @@ export default {
 			console.log(this.$store.getters['comments/getIfFollowed']);
 			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
 		},
-		//@vuese 
+		//@vuese
 		//show services submenu of post
 		showSubMenu() {
 			this.subMenuDisplay = !this.subMenuDisplay;
 			this.shareSubMenuDisplay = false;
 		},
-		//@vuese 
+		//@vuese
 		//hide post
 		hidePost() {
 			this.postHidden = !this.postHidden;
 		},
-		//@vuese 
+		//@vuese
 		//save post
 		savePost() {
 			this.saved = !this.saved;
 		},
-		//@vuese 
+		//@vuese
 		//show share submenu of post
 		showShareSubMenu() {
 			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
 			this.subMenuDisplay = false;
 		},
-		//@vuese 
+		//@vuese
 		//show menu of text area in fancy mode
 		displayMenu() {
 			this.menuIsDisplayed = !this.menuIsDisplayed;
 		},
-		//@vuese 
+		//@vuese
 		//swich mode of text area between mark down and fancy modes
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
-		//@vuese 
+		//@vuese
 		//close comments page
 		closeComments() {
 			this.$router.push('/main');

@@ -308,12 +308,10 @@
 </template>
 <script>
 export default {
-	
 	emits: [
-	
-	'showComments'
-	//@vuese
-	//show comments of emitting post
+		'showComments',
+		//@vuese
+		//show comments of emitting post
 	],
 	data() {
 		return {
