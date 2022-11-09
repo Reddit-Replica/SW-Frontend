@@ -57,7 +57,11 @@
 						<div class="title-grey">
 							{{ charRemaining }} Characters remaining
 						</div>
-						<div v-if="communityNameRequiredError" class="title-grey title-red">
+						<div
+							v-if="communityNameRequiredError"
+							class="title-grey title-red"
+							id="required-name"
+						>
 							A community name is required
 						</div>
 						<div v-if="communityNameTakenError" class="title-grey title-red">
