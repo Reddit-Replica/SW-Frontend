@@ -6,16 +6,19 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
+				:style="`background-image: url(${userData.banner}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span @click="addCoverImage" class="add-image">
-					<input
-						type="file"
-						id="add-cover-button"
-						ref="coverFile"
-						hidden
-						@change="loadCoverPic"
-					/>
+					<div style="display: none">
+						<input
+							type="file"
+							id="add-cover-button"
+							ref="coverFile"
+							@change="loadCoverPic"
+							accept="image/x-png,image/jpeg"
+						/>
+					</div>
 					<!-- add image icon (+) -->
 					<i class="fa-regular fa-square-plus add-image-icon" />
 				</span>
@@ -91,16 +94,25 @@
 							></path>
 						</g>
 					</svg>
-					<div style="position: relative; z-index: 2">
-						<img src="../../../../assets/R.png" alt="" id="profile-picture" />
+					<div
+						style="position: relative; z-index: 2; width: 100%; height: 100%"
+					>
+						<img
+							v-if="userData.picture != ''"
+							:src="userData.picture"
+							alt=""
+							id="profile-picture"
+						/>
 					</div>
-					<input
-						type="file"
-						hidden
-						id="add-profile-button"
-						ref="profileFile"
-						@change="loadProfilePic"
-					/>
+					<div style="display: none">
+						<input
+							type="file"
+							id="add-profile-button"
+							ref="profileFile"
+							@change="loadProfilePic"
+							accept="image/x-png,image/jpeg"
+						/>
+					</div>
 					<span
 						@click="addProfileImage"
 						class="add-image"
@@ -113,7 +125,7 @@
 				<!-- //////////////////////////////////// -->
 				<!-- incase of avatar pic preview -->
 				<div class="profile-avatar" v-else>
-					<img src="../../../../assets/avatar.png" alt="" />
+					<img :src="userData.picture" alt="" />
 				</div>
 				<!-- //////////////////////////// -->
 				<!-- incase of profile picture display name , user name style -->
@@ -269,6 +281,7 @@ export default {
 		userData: {
 			type: Object,
 			required: true,
+			// default: []
 		},
 	},
 	/**
@@ -276,9 +289,10 @@ export default {
 	 * when the component was created  we get user data from user store
 	 * @arg no arg
 	 */
-	created() {
+	mounted() {
 		// this.userData = this.$store.getters['user/getUserData'];
 		// console.log(this.userData);
+		// this.uploadBanner();
 	},
 	data() {
 		return {
@@ -286,6 +300,7 @@ export default {
 			// userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
+			banner: this.userData.banner,
 			// mySocialLinks: [
 			// 	{
 			// 		id: '',
@@ -311,6 +326,7 @@ export default {
 			isAvatar: false,
 		};
 	},
+	computed: {},
 	methods: {
 		/**
 		 * @vuese
@@ -351,7 +367,15 @@ export default {
 			const reader = new FileReader();
 			reader.onload = () => {
 				const result = reader.result;
-				document.querySelector('#profile-picture').src = result;
+				const img = new Image();
+				img.onload = () => {
+					console.log(img.width, img.height);
+					// if (img.width > 1280 && img.height > 384 && file.size < 500) {
+					document.querySelector('#profile-picture').src = result;
+					// }
+				};
+
+				img.src = result;
 			};
 			reader.readAsDataURL(file);
 		},

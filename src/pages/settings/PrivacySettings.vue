@@ -5,7 +5,11 @@
 			<p class="main-trans-p">
 				Manage how we use data to personalize your Reddit experience, and
 				control how other redditors interact with you. To learn more, visit our
-				<span><a href=""> Privacy & Security FAQs</a> </span>
+				<span
+					><a href="" id="privacy-security-faqs-link">
+						Privacy & Security FAQs</a
+					>
+				</span>
 				.
 			</p>
 			<h3 class="h3-main-title" text-transform="capitalize">safety</h3>
@@ -14,16 +18,26 @@
 				<p>Blocked people can’t send you chat requests or private messages.</p>
 				<div class="block-user-block">
 					<div class="input-area">
-						<input type="text" v-model="BlockedNewUserName" @blur="focusOut" />
+						<input
+							type="text"
+							v-model="BlockedNewUserName"
+							@blur="focusOut"
+							id="block-new-user-input"
+						/>
 						<label :class="focusInOut" for="">BLOCK NEW USER</label>
 						<button
+							id="Add-block-new-user-button"
 							:class="activeAddButton ? 'buttonActive' : 'buttonDisActive'"
 						>
 							ADD
 						</button>
 					</div>
 					<ul class="blocked-users">
-						<li v-for="blockedUser in blockedUsers" :key="blockedUser.id">
+						<li
+							v-for="blockedUser in blockedUsers"
+							:key="blockedUser.id"
+							:id="blockedUser.id"
+						>
 							<div class="blocked-container">
 								<a class="blocked-user-info">
 									<img :src="blockedUser.blockedPic" alt="" />
@@ -31,7 +45,7 @@
 								</a>
 								<span>{{ blockedUser.blockedDate }}</span>
 							</div>
-							<button>REMOVE</button>
+							<button :id="`remove-${blockedUser.id}`">REMOVE</button>
 						</li>
 					</ul>
 				</div>
@@ -49,7 +63,7 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button id="show-up-search-results"></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->
@@ -69,7 +83,7 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button id="Personalize-outbound-links"></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->
@@ -86,7 +100,7 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button id="Personalize-ads-information"></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->
@@ -103,7 +117,7 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button id="Personalize-ads-activity "></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->
@@ -120,7 +134,9 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button
+						id="Personalize-recommendations-general"
+					></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->
@@ -140,7 +156,9 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button
+						id="Personalize-recommendations-activity"
+					></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->
@@ -160,7 +178,7 @@
 					</p>
 				</div>
 				<div class="privacy-button">
-					<switch-button></switch-button>
+					<switch-button id="Use-two-factor-authentication"></switch-button>
 					<!-- <div class="switch-button">
 						<div class="switch-button-key"></div>
 					</div> -->

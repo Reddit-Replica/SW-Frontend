@@ -20,7 +20,8 @@
 					community-date="OCT 28, 2022"
 					community-type="Private"
 				></about-community-bar>
-				<moderators-bar></moderators-bar>
+				<moderators-bar :moderators="moderators"></moderators-bar>
+				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
 		</div>
 	</div>
@@ -34,6 +35,7 @@ import AboutCommunityBar from '../../components/CommunityComponents/AboutCommuni
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
+import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 
 export default {
 	components: {
@@ -44,6 +46,7 @@ export default {
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
+		BacktotopButton,
 	},
 	data() {
 		return {
@@ -57,15 +60,11 @@ export default {
 				{ id: 6, name: 'Sports' },
 				{ id: 7, name: 'Travel' },
 			],
-			post: {
-				userName: 'HodaGamal',
-				voteCount: 1,
-				subredditName: 'Subreddit',
-				duration: '10 days',
-				postName: 'Hello World',
-				postDescription: 'hello',
-				commentsCount: 22,
-			},
+			moderators: [
+				{ id: 0, name: 'HodaGamal' },
+				{ id: 1, name: 'AsmaaAdel' },
+				{ id: 2, name: 'Abdalhameed' },
+			],
 		};
 	},
 };
@@ -82,7 +81,8 @@ export default {
 	margin: 0 auto;
 }
 .subreddit-page-left {
-	width: 50%;
+	/* width: 50%; */
+	width: 640px;
 	height: 100%;
 }
 .subreddit-page-right {
@@ -91,5 +91,13 @@ export default {
 	height: 100%;
 	margin-left: 24px;
 	margin-top: 15px;
+}
+@media only screen and (max-width: 991px) {
+	.subreddit-page-left {
+		width: 100%;
+	}
+	.subreddit-page-right {
+		width: 0%;
+	}
 }
 </style>

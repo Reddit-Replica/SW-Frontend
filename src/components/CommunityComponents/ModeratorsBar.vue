@@ -1,11 +1,11 @@
 <template>
-	<div class="about-bar">
+	<div class="about-bar" id="mods-community-form">
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">Moderators</h2></div>
 		</div>
 		<div class="about-body">
-			<div class="box-body">
-				<base-button link to="message/sent"
+			<div class="box-body" id="message-mods">
+				<base-button link to="/message/sent" class="button-message text"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -21,9 +21,37 @@
 					<span>Message The Mods</span>
 				</base-button>
 			</div>
+			<div class="box-body flex-start">
+				<router-link
+					class="mod-link"
+					v-for="(mod, index) in moderators"
+					:key="mod.id"
+					to="/user/Abd"
+					:id="'mods-bar-' + index"
+					>u/{{ mod.name }}</router-link
+				>
+			</div>
+			<div class="box-body flex-end text text-view" id="view-mods">
+				<router-link to="/message">VIEW ALL MODERATORS</router-link>
+			</div>
 		</div>
 	</div>
 </template>
+
+<script>
+export default {
+	props: {
+		moderators: {
+			type: Array,
+			default: () => [],
+		},
+	},
+	data() {
+		return {};
+	},
+};
+</script>
+
 <style scoped>
 .about-bar {
 	margin-top: 12px;
@@ -58,5 +86,49 @@
 }
 .box-body {
 	margin-top: 12px;
+}
+.button-message {
+	align-items: center;
+	display: flex;
+	margin-bottom: 20px;
+	justify-content: center;
+	border: var(--line-5);
+	color: var(--color-blue-2);
+	fill: var(----color-blue-2);
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+}
+svg {
+	margin-right: 4px;
+}
+.flex-start {
+	display: flex;
+	flex-direction: column;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	margin-bottom: 16px;
+	width: 100%;
+}
+.flex-end {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.mod-link {
+	margin: 2px;
+}
+.text {
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 17px;
+}
+.text-view {
+	font-size: 12px;
+}
+a {
+	text-decoration: none;
+	color: var(--color-blue-2);
 }
 </style>
