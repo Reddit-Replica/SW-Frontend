@@ -68,7 +68,9 @@
 					<p class="invalid" v-if="inputIsempty">
 						Please enter an email address to continue
 					</p>
-					<p class="invalid" v-if="invalidEmail">
+					<p 
+					id="invalidEmail"
+					class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -85,10 +87,14 @@
 						</base-button>
 					</div>
 					<div class="separate"></div>
-					<p class="invalid" v-if="!success">
+					<p 
+					id="error"
+					class="invalid" v-if="!success">
 						{{ error }}
 					</p>
-					<p class="valid" v-if="success">
+					<p 
+					id="success"
+					class="valid" v-if="success">
 						Thanks! If your Reddit username and email address match, you'll get
 						an email with a link to reset your password shortly.
 					</p>
