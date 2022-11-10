@@ -3,7 +3,11 @@
 	<div v-if="loading">Loading</div>
 	<div v-else>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
-		<profile-nav :user-name="getUserName" :state="state" />
+		<profile-nav
+			:user-name="getUserName"
+			:state="state"
+			:check-in-overview-page="checkInOverviewPage"
+		/>
 		<base-container>
 			<div id="main-profile-box" class="profilebox">
 				<main
@@ -48,7 +52,13 @@ export default {
 		};
 	},
 	mounted() {
-		this.checkInOverviewPage;
+		// this.checkInOverviewPage;
+	},
+	watch: {
+		'$route.params.userName'() {
+			// if (this.$route.params.userName )
+			location.reload();
+		},
 	},
 	computed: {
 		getUserName() {
@@ -60,7 +70,10 @@ export default {
 			return this.$store.getters['user/getUserData'];
 		},
 		checkInOverviewPage() {
-			if (this.$route.path == `/user/${this.$route.params.userName}/`)
+			if (
+				this.$route.path == `/user/${this.$route.params.userName}/` ||
+				this.$route.path == `/user/${this.$route.params.userName}`
+			)
 				return true;
 			return false;
 		},
@@ -96,6 +109,7 @@ export default {
 			// console.log(this.$store.getters['user/getStaticSocialLinks']);
 			// this.userData = this.$store.getters['user/getUserData'];
 			// console.log(this.userData);
+			// this.checkInOverviewPage;
 		}
 	},
 };

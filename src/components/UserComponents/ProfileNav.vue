@@ -9,7 +9,7 @@
 					:id="`viewed-profile-link-${profileLink.linkName}`"
 				>
 					<router-link
-						:to="`/user/${userName}` + profileLink.path"
+						:to="`/user/${this.$route.params.userName}` + profileLink.path"
 						:class="{ linkactive: profileLink.active }"
 					>
 						{{ profileLink.linkName }}
