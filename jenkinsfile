@@ -11,6 +11,7 @@ pipeline {
           cd /
           ls
           pwd
+          docker ps
         """
 
       }
