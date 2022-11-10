@@ -33,9 +33,7 @@
 							"
 						></span>
 					</div>
-					<p 
-					id="invalidPassword"
-					class="invalid" v-if="invalidPassword">
+					<p id="invalidPassword" class="invalid" v-if="invalidPassword">
 						Password must be at least 8 characters long
 					</p>
 					<div class="separate"></div>
@@ -63,7 +61,11 @@
 							"
 						></span>
 					</div>
-					<p id="invalidPasswordverify" class="invalid" v-if="invalidPasswordverify">
+					<p
+						id="invalidPasswordverify"
+						class="invalid"
+						v-if="invalidPasswordverify"
+					>
 						Password must match
 					</p>
 
@@ -82,7 +84,9 @@
 						>
 						</base-button>
 					</div>
-					<p id="success" class="valid" v-if="success">password reset successfully</p>
+					<p id="success" class="valid" v-if="success">
+						password reset successfully
+					</p>
 					<p id="error" class="invalid" v-if="!success">{{ error }}</p>
 				</form>
 				<div class="end">
@@ -118,7 +122,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate Password
-// @arg The argument is a string value representing password 
+		// @arg The argument is a string value representing password
 		validatePassword(value) {
 			if (value.length < 8) {
 				//
