@@ -1,5 +1,5 @@
 <template>
-	<div class="grow-box">
+	<div class="grow-box" id="grow-comm">
 		<div class="grow-header" @click="toggleGrowBody">
 			<span>Grow your community</span>
 			<svg
@@ -10,6 +10,7 @@
 				class="bi bi-chevron-up"
 				viewBox="0 0 16 16"
 				v-if="growBodyShown"
+				id="show-up-grow"
 			>
 				<path
 					fill-rule="evenodd"
@@ -24,6 +25,7 @@
 				class="bi bi-chevron-down"
 				viewBox="0 0 16 16"
 				v-else
+				id="show-down-grow"
 			>
 				<path
 					fill-rule="evenodd"
@@ -33,6 +35,7 @@
 		</div>
 		<div class="grow-body" v-if="growBodyShown">
 			<grow-component
+				:index="0"
 				:color="blue"
 				title="Add 5 more posts today"
 				content="Make your community lively and welcoming, by adding posts for your
@@ -56,6 +59,7 @@
 			</grow-component>
 
 			<grow-component
+				:index="1"
 				:color="orange"
 				title="Share your community"
 				content="Spread the word about your community by sharing it on different social
@@ -79,6 +83,7 @@
 			</grow-component>
 
 			<grow-component
+				:index="2"
 				:color="red"
 				title="Crosspost your best posts"
 				content="Build your community and attract more visitors by crossposting posts to
@@ -105,6 +110,7 @@
 			</grow-component>
 
 			<grow-component
+				:index="3"
 				:color="green"
 				title="Recruit more members"
 				content="Learn how to use invitations to bring more members and moderators to
