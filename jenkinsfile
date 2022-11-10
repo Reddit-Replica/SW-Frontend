@@ -2,9 +2,17 @@ pipeline {
   agent any
   stages {
     stage ('Initialize') {
+      
       steps {
         echo 'Placeholder. test auto fetch'
+        sh "ls"
+        sh """ 
+          cd /
+          ls
+        """
+
       }
+
     }
   }
 }
