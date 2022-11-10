@@ -11,7 +11,7 @@ pipeline {
           cd /
           ls
           pwd
-          node --version
+          docker ps
         """
 
       }
