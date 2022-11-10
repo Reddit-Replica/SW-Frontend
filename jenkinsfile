@@ -7,9 +7,10 @@ pipeline {
         echo 'Placeholder. test auto fetch'
         sh "ls"
         sh """ 
-          cd /
-          ls
+          ls /Read-it
+          ls ~/
         """
+
 
       }
 
