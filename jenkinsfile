@@ -8,6 +8,9 @@ pipeline {
         sh "ls"
         sh """ 
           ls ~/
+          cd /
+          ls
+          pwd
         """
 
       }
