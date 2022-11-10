@@ -43,17 +43,18 @@ export default {
 	components: {
 		BaseButton,
 	},
+	// @vuese
+	// userModerators is an array of useModerators subreddit (name of subreddit , number of members , joined or not )
 	props: {
 		userModerators: {
 			type: Array,
 			required: true,
 		},
 	},
+	// @vuese
+	// at mounting we loop for each moderator to add button text if joined or not
 	mounted() {
-		console.log(this.userModerators);
-		// this.userModerators.forEach((element) => {
-		// 	element.buttonText = 'joined';
-		// });
+		// console.log(this.userModerators);
 		this.userModerators.forEach((element) => {
 			element.buttonText = 'joined';
 			if (!element.joined) element.buttonText = 'join';
@@ -65,6 +66,11 @@ export default {
 		};
 	},
 	watch: {
+		/**
+		 * @vuese
+		 * we watch changes of to set again if change happened button text
+		 * @arg no arg
+		 */
 		userModerators() {
 			this.userModerators.forEach((element) => {
 				element.buttonText = 'joined';
@@ -74,6 +80,11 @@ export default {
 	},
 	computed: {},
 	methods: {
+		/**
+		 * @vuese
+		 * at hover in button we chage button text if joined to leave
+		 * @arg no arg
+		 */
 		hoverButton(key) {
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
@@ -83,6 +94,11 @@ export default {
 				}
 			});
 		},
+		/**
+		 * @vuese
+		 * we reset button text we unhover
+		 * @arg no arg
+		 */
 		unHoverButton() {
 			this.userModerators.forEach((element) => {
 				if (element.joined) {
@@ -90,6 +106,11 @@ export default {
 				}
 			});
 		},
+		/**
+		 * @vuese
+		 * at clicking on the button we change it state  joined <-> join
+		 * @arg no arg
+		 */
 		changeButtonState(key) {
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
