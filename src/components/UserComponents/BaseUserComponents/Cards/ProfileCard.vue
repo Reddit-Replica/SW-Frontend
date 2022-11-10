@@ -287,21 +287,20 @@ export default {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// Data of user page ( name , photo url , birth date ,karma , .....)
 		userData: {
 			type: Object,
 			required: true,
 			// default: []
 		},
+		// @vuese
+		// state profile page  or other user page
 		state: {
 			type: String,
 			required: true,
 		},
 	},
-	/**
-	 * @vuese
-	 * when the component was created  we get user data from user store
-	 * @arg no arg
-	 */
 	mounted() {
 		// this.userData = this.$store.getters['user/getUserData'];
 		// console.log(this.userData);
@@ -362,6 +361,11 @@ export default {
 		};
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * change options from profile user options state to other user options state
+		 * @arg no arg
+		 */
 		profileOptions() {
 			if (this.state == 'profile') return this.myProfileOptions;
 			return this.userProfileOptions;
@@ -436,6 +440,11 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
+		/**
+		 * @vuese
+		 * change month date from number to its name
+		 * @arg no arg
+		 */
 		getMonthName(monthNumber) {
 			const monthNumberI = Number(monthNumber);
 			const date = new Date();
