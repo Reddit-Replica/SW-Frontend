@@ -166,6 +166,7 @@ export default {
 		},
 		// @vuese
 		// validate email
+		// @arg The argument is a string value representing email 
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -216,12 +217,14 @@ export default {
 	watch: {
 		// @vuese
 		// watch userName
+		// @arg The argument is a string value representing username 
 		userName(value) {
 			this.userName = value;
 			this.validateUser(value);
 		},
 		// @vuese
 		// watch emailAdderss
+		// @arg The argument is a string value representing username 
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);

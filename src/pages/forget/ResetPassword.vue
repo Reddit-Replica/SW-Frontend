@@ -118,7 +118,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate Password
-
+// @arg The argument is a string value representing password 
 		validatePassword(value) {
 			if (value.length < 8) {
 				//
@@ -134,6 +134,7 @@ export default {
 		},
 		// @vuese
 		// validate Password Verify
+		// @arg The argument is a string value representing password verify
 		validatepasswordVerify(value) {
 			if (value != this.password) {
 				//
