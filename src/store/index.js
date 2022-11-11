@@ -22,6 +22,7 @@ const store = createStore({
 			// userName: '/u/asmaaadel0',
 			userName: 'asmaaadel0',
 			accessToken: '',
+			subredditName: 'asmaaSubredditName',
 		};
 	},
 	getters: {
