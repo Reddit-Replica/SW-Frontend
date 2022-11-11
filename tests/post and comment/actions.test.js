@@ -84,3 +84,19 @@ it('Test hide post action', async () => {
     await wrapper.find('#hide').trigger('click')
     expect(wrapper.find('.post-card').exists()).toBe(false);
 })
+it('Test delete comment action', async () => {
+    const wrapper = mount(MyComment,{
+        props: {
+            comment
+        },
+        global: {
+            // OR:
+            mocks: {
+              $store: store,
+            },
+        },
+    });
+    await wrapper.find('#dots').trigger('click')
+    await wrapper.find('#sub-menu-delete').trigger('click')
+    expect(wrapper.find('.comment').exists()).toBe(false);
+})
