@@ -63,7 +63,13 @@
 								type="text"
 								required="required"
 								v-model="username"
-								:class="messageErrorShowUser ? 'red-border' : ''"
+								:class="
+									!showSignuser
+										? ''
+										: !checkedUser
+										? 'red-border'
+										: 'blue-border'
+								"
 							/>
 							<span class="animation-usr-pass">UserName</span>
 							<span
@@ -146,21 +152,21 @@ export default {
 			this.messageErrorShowUser = false;
 			this.showSignPass = false;
 			this.messageErrorShowPass = false;
-			document.querySelector('#user-name').style.border =
-				'1px solid rgba(0, 0, 0, 0.1)';
+			// document.querySelector('#user-name').style.border =
+			// 	'1px solid rgba(0, 0, 0, 0.1)';
 			if (value.length < 3 || value.length > 20) {
 				this.showSignuser = true;
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
 				this.error_message = 'Username must be between 3 and 20 characters';
-				document.querySelector('#user-name').style.border =
-					'0.5px solid #ea0027';
+				// document.querySelector('#user-name').style.border =
+				// 	'0.5px solid #ea0027';
 			} else {
 				this.showSignuser = true;
 				this.checkedUser = true;
 				this.messageErrorShowUser = false;
-				document.querySelector('#user-name').style.border =
-					'0.5px solid #0079d3';
+				// document.querySelector('#user-name').style.border =
+				// 	'0.5px solid #0079d3';
 			}
 		},
 		// @vuese
@@ -264,6 +270,10 @@ button {
 	min-height: 100vh;
 	position: relative;
 	width: 100%;
+}
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
+	border-color: #24a0ed;
 }
 .back-image {
 	background-image: url('../../../img/bck.png');
