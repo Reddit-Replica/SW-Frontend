@@ -34,6 +34,7 @@
 		"lodash": "^4.17.21",
 		"v-click-outside": "^3.2.0",
 		"vue": "^3.2.13",
+		"vue-facebook-login-component-next": "^1.0.4",
 		"vue-recaptcha": "^2.0.3",
 		"vue-router": "^4.0.13",
 		"vue3-google-login": "^2.0.12",
