@@ -2,8 +2,11 @@
 	<div id="facebook-login" class="log-google log-ag" @click="facebookLogin()">
 		<div><img src="../../img/Facebook_f_logo_(2021).svg.png" alt="" /></div>
 		<span>Continue with Facebook</span>
-		<v-facebook-login v-model="model" @sdk-init="handleSdkInit" />
 	</div>
+	<!-- <v-facebook-login
+		v-model="model"
+		@sdk-init="handleSdkInit"
+	></v-facebook-login> -->
 </template>
 <script>
 export default {

@@ -146,7 +146,7 @@ export default {
 	},
 	methods: {
 		// @vuese
-		// Validation for UserName
+		// Validation for UserName (Not a long or Short Input)
 		validateUser(value) {
 			this.showSignuser = false;
 			this.messageErrorShowUser = false;
@@ -170,7 +170,7 @@ export default {
 			}
 		},
 		// @vuese
-		// posting username and password and wait for token
+		// posting username and password and wait for token to get login
 		async handleSubmit() {
 			const actionPayload = {
 				username: this.username,
