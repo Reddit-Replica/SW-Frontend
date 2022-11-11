@@ -5,7 +5,7 @@
 <!-- @vuese:ForgetUsernamepage:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|validatEmail|validate email|-|
+|validatEmail|validate email|The argument is a string value representing email|
 |handleSubmit|handle form submission|-|
 |verifyRec|enable button after recaptcha is verified|-|
 
@@ -17,7 +17,7 @@
 <!-- @vuese:ForgetUsernamepage:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|emailAddress|watch emailAddress|-|
+|emailAddress|watch emailAddress|The argument is a string value representing username|
 
 <!-- @vuese:ForgetUsernamepage:watch:end -->
 

@@ -127,11 +127,13 @@ export default {
 		//show menu of Who can send you chat requests menu
 		showFirstMenuFunction() {
 			this.showFirstMenu = !this.showFirstMenu;
+			this.showSecondMenu = false;
 		},
 		// @vuese
 		//show menu of Who can send you private messages
 		showSecondMenuFunction() {
 			this.showSecondMenu = !this.showSecondMenu;
+			this.showFirstMenu = false;
 		},
 		// @vuese
 		//change title of Who can send you chat requests menu
@@ -153,6 +155,7 @@ export default {
 }
 .choice {
 	position: relative;
+	cursor: pointer;
 }
 .title {
 	font-size: 1.2rem;

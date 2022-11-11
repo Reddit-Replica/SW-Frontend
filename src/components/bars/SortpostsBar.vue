@@ -256,6 +256,7 @@ export default {
 	methods: {
 		// @vuese
 		// Used to know which sort type is clicked
+		// @arg The argument is a string value representing choosen value from user
 		selectSort(title) {
 			this.clicked = title;
 			if (this.showMenu) this.showSubMenu();
