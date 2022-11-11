@@ -27,6 +27,7 @@ describe('AboutCommunityBar.vue', () => {
 		});
 
 		expect(wrapper.find('#three-dots').exists()).toBe(true);
+		//show options list
 		await wrapper.find('#three-dots').trigger('click');
         expect(wrapper.find('.box-options').exists()).toBe(true);
 	});
@@ -39,8 +40,10 @@ describe('AboutCommunityBar.vue', () => {
 			},
 		});
 
+		//show add description text area
 		await wrapper.find('#add-description-before').trigger('click');
         expect(wrapper.find('#add-description-after').exists()).toBe(true);
+		//hide add description text area
         await wrapper.find('#cancel-description').trigger('click');
         expect(wrapper.find('#add-description-after').exists()).toBe(false);
 	});
@@ -54,6 +57,7 @@ describe('AboutCommunityBar.vue', () => {
 		});
 
 		expect(wrapper.find('#add-topic').exists()).toBe(true);
+		//show topics list
 		await wrapper.find('#add-topic').trigger('click');
         expect(wrapper.find('#topics-list').exists()).toBe(true);
 	});

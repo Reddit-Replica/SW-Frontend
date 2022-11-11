@@ -26,10 +26,10 @@ describe('SubredditTop.vue', () => {
 			},
 		});
 
-        //join
+        //click on join button
         await wrapper.find('#join-button').trigger('click');
 		expect(wrapper.find('#leave-button').exists()).toBe(true);
-        //leave
+        ///click on leave button
         await wrapper.find('#leave-button').trigger('click');
 		expect(wrapper.find('#join-button').exists()).toBe(true);
 	});
