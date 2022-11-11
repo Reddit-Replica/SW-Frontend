@@ -67,20 +67,6 @@ jobs:
         command: |
           ls
 
-  build-frontend:
-
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - checkout
-      - install_docker
-      - run:
-          name: Build , tag , push front-end
-          command: |
-            docker build -t frontend:v1 .
-            docker tag frontend:v1  waer/frontend
-            docker push  waer/frontend:latest
-
 workflows:
   main:
     jobs:
@@ -88,9 +74,3 @@ workflows:
       - integration-testing:
           requires: 
             - unit-testing
-      - build-frontend:
-          requires: 
-            - integration-testing
-          filters:
-            branches:
-              only: master
