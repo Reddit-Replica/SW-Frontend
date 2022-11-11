@@ -1,7 +1,6 @@
 export default {
 	async loadListOfModerators(context, payload) {
 		const baseurl = payload.baseurl;
-		console.log(payload.subredditName);
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/moderators`,
 			{
