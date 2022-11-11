@@ -1,8 +1,4 @@
 <template>
-	<sortposts-bar></sortposts-bar>
-	<!-- <base-post :post="post"></base-post> -->
-	<!-- <base-post :post="post"></base-post> -->
-	<base-post :post="post"></base-post>
 	<div class="base-profile-post">
 		<div class="box">
 			<div class="box-items">
@@ -364,35 +360,44 @@
 </template>
 
 <script>
-import SortpostsBar from '../../../components/bars/SortpostsBar.vue';
-import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
-	components: {
-		SortpostsBar,
-		BasePost,
-	},
+	emits: ['showComments'],
 	data() {
 		return {
-			post: {
-				userName: 'mena',
-				voteCount: 22,
-				subredditName: 'sub-com',
-				duration: '22 minutes',
-				postName: 'Hello World',
-				postDescription:
-					'post description Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-				commentsCount: 22,
-			},
-			counter: 0,
+			id: '1',
+			counter: this.post.voteCount,
 			upClicked: false,
 			downClicked: false,
+			subMenuDisplay: false,
+			shareSubMenuDisplay: false,
+			postHidden: false,
+			saved: false,
 		};
 	},
+	props: {
+		post: {
+			type: Object,
+			required: true,
+		},
+	},
 	methods: {
-		upvote() {
+		showPostComments() {
+			this.$emit('showComments');
+		},
+		async upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
 				this.upClicked = false;
 				this.counter--;
@@ -402,10 +407,20 @@ export default {
 				this.counter++;
 			}
 		},
-		downvote() {
+		async downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
 				this.downClicked = false;
 				this.counter++;
@@ -415,13 +430,48 @@ export default {
 				this.counter--;
 			}
 		},
+		showSubMenu() {
+			this.subMenuDisplay = !this.subMenuDisplay;
+			this.shareSubMenuDisplay = false;
+		},
+		hidePost() {
+			this.postHidden = true;
+		},
+		async savePost() {
+			this.saved = !this.saved;
+			if (this.saved == true) {
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
+		showShareSubMenu() {
+			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
+			this.subMenuDisplay = false;
+		},
 	},
 };
 </script>
 <style scoped>
-.sort-post-content {
+/* .sort-post-content {
 	margin-top: 2px !important;
-}
+} */
 .base-profile-post .box {
 	border: thin solid #ccc;
 	border-radius: 5px;

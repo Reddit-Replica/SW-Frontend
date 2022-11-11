@@ -5,8 +5,8 @@
 <!-- @vuese:ResetPassword:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|validatePassword|validate Password|-|
-|validatepasswordVerify|validate Password Verify|-|
+|validatePassword|validate Password|The argument is a string value representing password|
+|validatepasswordVerify|validate Password Verify|The argument is a string value representing password verify|
 |handleSubmit|validate form submission|-|
 
 <!-- @vuese:ResetPassword:methods:end -->

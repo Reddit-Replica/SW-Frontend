@@ -106,7 +106,7 @@
 						v-if="showSignuser && showSignemail"
 					></the-recaptcha>
 					<div class="bottomText">
-						<label>
+						<label id="bottom">
 							Don't have an email or need assistance logging in?
 							<a class="link" id="help">Get Help </a></label
 						>
@@ -151,6 +151,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate username
+		// @arg The argument is a string value representing username
 		validateUser(value) {
 			if (value.length < 3 || value.length > 20) {
 				//
@@ -165,6 +166,7 @@ export default {
 		},
 		// @vuese
 		// validate email
+		// @arg The argument is a string value representing email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -215,12 +217,14 @@ export default {
 	watch: {
 		// @vuese
 		// watch userName
+		// @arg The argument is a string value representing username
 		userName(value) {
 			this.userName = value;
 			this.validateUser(value);
 		},
 		// @vuese
 		// watch emailAdderss
+		// @arg The argument is a string value representing username
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);
