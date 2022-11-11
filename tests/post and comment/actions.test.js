@@ -68,3 +68,19 @@ it('Test post downvote action', async () => {
     await wrapper.find('#downvote-service').trigger('click')
     expect(wrapper.find('span.vote-count').text()).toEqual('21')
 })
+it('Test hide post action', async () => {
+    const wrapper = mount(BasePost,{
+        props: {
+            post
+        },
+        global: {
+            // OR:
+            mocks: {
+              $store: store,
+            },
+        },
+    });
+    await wrapper.find('#submenu').trigger('click')
+    await wrapper.find('#hide').trigger('click')
+    expect(wrapper.find('.post-card').exists()).toBe(false);
+})
