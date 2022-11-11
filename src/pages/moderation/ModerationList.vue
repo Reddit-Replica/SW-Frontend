@@ -27,6 +27,20 @@
 		</h3>
 		<div class="page-content">
 			<search-bar></search-bar>
+			<ul class="ul-items">
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+				<list-item></list-item>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -34,10 +48,12 @@
 <script>
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
 import SearchBar from '../../components/moderation/SearchBar.vue';
+import ListItem from '../../components/moderation/ListItem.vue';
 export default {
 	components: {
 		ListmoderationBar,
 		SearchBar,
+		ListItem,
 	},
 	created() {
 		document.title = this.$store.state.subredditName;
@@ -64,6 +80,11 @@ export default {
 .heading-3 {
 	margin-left: 1rem;
 	margin-top: 5rem;
+}
+.ul-items {
+	list-style: none;
+	background-color: var(--color-white-1);
+	padding-left: 0rem;
 }
 /* 635px */
 @media only screen and (max-width: 40em) {
