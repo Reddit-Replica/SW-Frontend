@@ -814,15 +814,21 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//check if a text is written in text area to be added as comment or not
 		noComment() {
 			if (this.newComment == '') return true;
 			return false;
 		},
+		//@vuese
+		//get userName
 		getuserName() {
 			return this.$store.getters.getUserName;
 		},
 	},
 	methods: {
+		//@vuese
+		//adds new comment
 		writeNewComment() {
 			let write = {
 				userName: this.$store.getters.getUserName,
@@ -833,13 +839,20 @@ export default {
 			this.userComments.unshift(write);
 			this.newComment = '';
 		},
+		//@vuese
+		//change the order of comments listing according to parameter passed to it
+		// @arg The argument is a string value representing sort type
 		changeSortByTitle(title) {
 			this.sortByTitle = title;
 			this.$router.push('/comments/' + title);
 		},
+		//@vuese
+		//opens the sorting menu of comments
 		displaySortByMenu() {
 			this.showSortByMenu = !this.showSortByMenu;
 		},
+		//@vuese
+		//upvote on post
 		async upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
@@ -863,6 +876,8 @@ export default {
 				this.counter++;
 			}
 		},
+		//@vuese
+		//downvote on post
 		async downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
@@ -886,6 +901,8 @@ export default {
 				this.counter--;
 			}
 		},
+		//@vuese
+		//follow post
 		async followPost() {
 			try {
 				await this.$store.dispatch('comments/followPost', {
@@ -898,26 +915,40 @@ export default {
 			console.log(this.$store.getters['comments/getIfFollowed']);
 			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
 		},
+		//@vuese
+		//show services submenu of post
 		showSubMenu() {
 			this.subMenuDisplay = !this.subMenuDisplay;
 			this.shareSubMenuDisplay = false;
 		},
+		//@vuese
+		//hide post
 		hidePost() {
 			this.postHidden = !this.postHidden;
 		},
+		//@vuese
+		//save post
 		savePost() {
 			this.saved = !this.saved;
 		},
+		//@vuese
+		//show share submenu of post
 		showShareSubMenu() {
 			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
 			this.subMenuDisplay = false;
 		},
+		//@vuese
+		//show menu of text area in fancy mode
 		displayMenu() {
 			this.menuIsDisplayed = !this.menuIsDisplayed;
 		},
+		//@vuese
+		//swich mode of text area between mark down and fancy modes
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
+		//@vuese
+		//close comments page
 		closeComments() {
 			this.$router.push('/main');
 		},

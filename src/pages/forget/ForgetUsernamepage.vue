@@ -32,7 +32,7 @@
 							:class="!checkedEmail || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
-					<p class="invalid" v-if="invalidEmail">
+					<p id="invalidEmail" class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -48,10 +48,10 @@
 						</base-button>
 					</div>
 					<div class="separate"></div>
-					<p class="invalid" v-if="!success">
+					<p id="error" class="invalid" v-if="!success">
 						{{ error }}
 					</p>
-					<p class="valid" v-if="success">
+					<p id="success" class="valid" v-if="success">
 						Thanks! If there are any Reddit accounts associated with that email
 						address, you'll get an email with your username(s) shortly.
 					</p>
@@ -61,7 +61,7 @@
 						v-if="showSignemail"
 					></the-recaptcha>
 					<div class="bottomText">
-						<label>
+						<label id="bottom">
 							Don't have an email or need assistance logging in?
 							<a class="link" id="help">Get Help </a></label
 						>
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha';
+import TheRecaptcha from '../../components/TheRecaptcha.vue';
 export default {
 	data() {
 		return {
@@ -97,6 +97,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate email
+		// @arg The argument is a string value representing email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -145,6 +146,7 @@ export default {
 	watch: {
 		// @vuese
 		// watch emailAddress
+		// @arg The argument is a string value representing username
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);

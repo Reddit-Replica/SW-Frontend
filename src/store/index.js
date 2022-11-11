@@ -5,6 +5,7 @@ import messageModule from './modules/messages/index.js';
 import userModule from './modules/userStore/index.js';
 import commentsModule from './modules/comments/index.js';
 import postCommentActionsModule from './modules/postCommentActions/index.js';
+import postsModule from './modules/posts/index.js';
 const store = createStore({
 	modules: {
 		auth: authModule,
@@ -13,6 +14,7 @@ const store = createStore({
 		user: userModule,
 		comments: commentsModule,
 		postCommentActions: postCommentActionsModule,
+		posts: postsModule,
 	},
 	state() {
 		return {

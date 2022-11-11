@@ -229,6 +229,7 @@ export default {
 	methods: {
 		// @vuese
 		//toggle remove action
+		// @arg The argument is a string value representing if user click ok
 		removeAction(action) {
 			this.removeUser = !this.removeUser;
 			if (action == 'yes') {
@@ -242,6 +243,7 @@ export default {
 		},
 		// @vuese
 		//handle block action
+		// @arg The argument is a string value representing if user click ok
 		blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
@@ -255,6 +257,7 @@ export default {
 		},
 		// @vuese
 		//handle spam action
+		// @arg The argument is a string value representing if user click ok
 		spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {

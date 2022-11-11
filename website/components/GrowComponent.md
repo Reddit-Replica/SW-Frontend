@@ -5,6 +5,7 @@
 <!-- @vuese:GrowComponent:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
+|index|-|`Number`|`false`|0|
 |color|-|`String`|`false`|-|
 |title|-|`String`|`false`|-|
 |content|-|`String`|`false`|-|

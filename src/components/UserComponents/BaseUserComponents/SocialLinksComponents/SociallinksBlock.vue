@@ -55,6 +55,8 @@ export default {
 	// @vuese
 	// social user data contains array of user social link item contains (type,displayedText,reference link )
 	props: {
+		// @vuese
+		// Array of user social link data (displayed name , toLink)
 		socialData: {
 			type: Array,
 			required: true,
@@ -66,6 +68,12 @@ export default {
 		};
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * return count of social link to check its maximum number of social links
+		 * social link dialog
+		 * @arg no arg
+		 */
 		socialLinkCount() {
 			return this.socialData.length;
 		},

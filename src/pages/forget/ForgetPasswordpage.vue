@@ -29,6 +29,7 @@
 						/>
 						<span class="span-input"> Username</span>
 						<span
+							id="showSignuser"
 							v-if="showSignuser"
 							:class="!checkedUser || error ? 'wrong-check' : 'correct-check'"
 						></span>
@@ -36,7 +37,11 @@
 					<p class="invalid" v-if="inputIsempty">
 						Please enter a username to continue
 					</p>
-					<p class="invalid" v-if="invalidUsernamelength">
+					<p
+						id="invalid"
+						class="invalidUsernamelength"
+						v-if="invalidUsernamelength"
+					>
 						Username must be between 3 and 20 characters
 					</p>
 					<div class="separate"></div>
@@ -63,7 +68,7 @@
 					<p class="invalid" v-if="inputIsempty">
 						Please enter an email address to continue
 					</p>
-					<p class="invalid" v-if="invalidEmail">
+					<p id="invalidEmail" class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -80,10 +85,10 @@
 						</base-button>
 					</div>
 					<div class="separate"></div>
-					<p class="invalid" v-if="!success">
+					<p id="error" class="invalid" v-if="!success">
 						{{ error }}
 					</p>
-					<p class="valid" v-if="success">
+					<p id="success" class="valid" v-if="success">
 						Thanks! If your Reddit username and email address match, you'll get
 						an email with a link to reset your password shortly.
 					</p>
@@ -101,7 +106,7 @@
 						v-if="showSignuser && showSignemail"
 					></the-recaptcha>
 					<div class="bottomText">
-						<label>
+						<label id="bottom">
 							Don't have an email or need assistance logging in?
 							<a class="link" id="help">Get Help </a></label
 						>
@@ -121,7 +126,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha';
+import TheRecaptcha from '../../components/TheRecaptcha.vue';
 export default {
 	components: { TheRecaptcha },
 	data() {
@@ -146,6 +151,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate username
+		// @arg The argument is a string value representing username
 		validateUser(value) {
 			if (value.length < 3 || value.length > 20) {
 				//
@@ -160,6 +166,7 @@ export default {
 		},
 		// @vuese
 		// validate email
+		// @arg The argument is a string value representing email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -210,12 +217,14 @@ export default {
 	watch: {
 		// @vuese
 		// watch userName
+		// @arg The argument is a string value representing username
 		userName(value) {
 			this.userName = value;
 			this.validateUser(value);
 		},
 		// @vuese
 		// watch emailAdderss
+		// @arg The argument is a string value representing username
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);
