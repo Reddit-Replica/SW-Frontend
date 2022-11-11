@@ -9,6 +9,8 @@
 <script>
 export default {
 	methods: {
+		//@vuese
+		//Login And SignUp with Google
 		async handlesign() {
 			try {
 				const googleUser = await this.$gAuth.signIn();
