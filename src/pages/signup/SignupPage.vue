@@ -216,7 +216,7 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//Validate Email
+		//Validate Email for having (@(gmail).(com) in their domain)
 		validatEmail(value) {
 			if (
 				/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value) ||
@@ -239,7 +239,7 @@ export default {
 			}
 		},
 		// @vuese
-		//Validate new password to useres
+		//Validate new password to users (not to short)
 		validatepass() {
 			if (this.password.length < 8) {
 				this.messageErrorShowPass = true;
@@ -274,7 +274,7 @@ export default {
 			this.bottom_div = !this.bottom_div;
 		},
 		// @vuese
-		//Validate User Input
+		//Validate User Input (Not too long or too Short)
 		validateUser(value) {
 			this.showSignuser = false;
 			this.messageErrorShowUser = false;
@@ -293,7 +293,7 @@ export default {
 			}
 		},
 		//@vuese
-		//Validate User available
+		//Check if User is available or not
 		async usr_available() {
 			const actionPayload = {
 				username: this.username,
@@ -324,7 +324,8 @@ export default {
 			console.log('verified 2');
 			this.buttonDisabled = false;
 		},
-
+		//@vuese
+		//Check if Email is available or not
 		async email_available() {
 			const actionPayload = {
 				email: this.email,
