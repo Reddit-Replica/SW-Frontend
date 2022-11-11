@@ -2,7 +2,12 @@
 	<div class="content">
 		<img src="../../../img/user-image.jpg" alt="img" class="subreddit-img" />
 		<h5 class="subreddit-title">
-			<span class="subreddit-link">r/{{ subredditName }}</span> / moderators
+			<a href="#">
+				<span class="subreddit-link" id="subreddit-link"
+					>r/{{ subredditName }}</span
+				></a
+			>
+			/ moderators
 		</h5>
 	</div>
 </template>
