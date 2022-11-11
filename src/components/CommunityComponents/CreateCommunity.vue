@@ -121,6 +121,7 @@
 						<div
 							v-if="communityCategoryRequiredError"
 							class="title-grey title-red"
+							id="required-category"
 						>
 							A community category is required
 						</div>
