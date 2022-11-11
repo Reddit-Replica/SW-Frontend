@@ -25,14 +25,19 @@
 				</svg>
 			</a>
 		</h3>
+		<div class="page-content">
+			<search-bar></search-bar>
+		</div>
 	</div>
 </template>
 
 <script>
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
+import SearchBar from '../../components/moderation/SearchBar.vue';
 export default {
 	components: {
 		ListmoderationBar,
+		SearchBar,
 	},
 	created() {
 		document.title = this.$store.state.subredditName;
@@ -46,6 +51,10 @@ export default {
 </script>
 
 <style scoped>
+.page-content {
+	width: 95%;
+	margin: auto;
+}
 .icon-info {
 	width: 2rem;
 	height: 2rem;
@@ -55,5 +64,11 @@ export default {
 .heading-3 {
 	margin-left: 1rem;
 	margin-top: 5rem;
+}
+/* 635px */
+@media only screen and (max-width: 40em) {
+	.content {
+		width: 100%;
+	}
 }
 </style>
