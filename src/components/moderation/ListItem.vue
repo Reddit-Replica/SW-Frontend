@@ -1,5 +1,5 @@
 <template>
-	<li class="item">
+	<li class="item" v-if="show">
 		<div class="image" id="moderator">
 			<img
 				src="../../../img/user-img-2.png"
@@ -34,6 +34,24 @@ export default {
 				dateOfModeration: '',
 				permissions: '',
 			}),
+		},
+		// @vuese
+		//seacrhing value
+		search: {
+			type: String,
+			default: '',
+		},
+	},
+	computed: {
+		// @vuese
+		//at searching check if it is the value of seacrhing or not
+		show() {
+			if (this.search != '') {
+				if (this.search == this.moderator.username) {
+					return true;
+				} else return false;
+			}
+			return true;
 		},
 	},
 };
