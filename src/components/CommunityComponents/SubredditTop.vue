@@ -63,7 +63,7 @@ export default {
 	},
 	methods: {
 		//@vuese
-		//Toogle Joining and leaving a subreddit
+		//Toogle Joining and leaving a subreddit button
 		toogleJoin() {
 			this.isJoined = !this.isJoined;
 		},
