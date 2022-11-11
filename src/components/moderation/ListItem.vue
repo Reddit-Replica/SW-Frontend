@@ -1,20 +1,42 @@
 <template>
 	<li class="item">
-		<div class="image">
-			<img src="../../../img/user-img-2.png" alt="img" class="img" />
-			<h5 class="heading-5">Not_Your_Cister</h5>
+		<div class="image" id="moderator">
+			<img
+				src="../../../img/user-img-2.png"
+				alt="img"
+				class="img"
+				id="moderator-img"
+			/>
+			<h5 class="heading-5" id="moderator-name">{{ moderator.username }}</h5>
 		</div>
 		<div class="time">
-			<span>3 years ago</span>
+			<span>{{ moderator.dateOfModeration }}</span>
 		</div>
 		<div class="permissions">
-			<span>Everything</span>
+			<span v-for="permission in moderator.permissions" :key="permission">{{
+				permission
+			}}</span>
 		</div>
 	</li>
 </template>
 
 <script>
-export default {};
+export default {
+	props: {
+		// @vuese
+		//details of moderator
+		moderator: {
+			type: Object,
+			required: true,
+			default: () => ({
+				username: '',
+				nickname: '',
+				dateOfModeration: '',
+				permissions: '',
+			}),
+		},
+	},
+};
 </script>
 
 <style scoped>

@@ -28,18 +28,11 @@
 		<div class="page-content">
 			<search-bar></search-bar>
 			<ul class="ul-items">
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
-				<list-item></list-item>
+				<list-item
+					v-for="moderator in listOfModerators"
+					:key="moderator"
+					:moderator="moderator"
+				></list-item>
 			</ul>
 		</div>
 	</div>
@@ -55,12 +48,32 @@ export default {
 		SearchBar,
 		ListItem,
 	},
-	created() {
+	beforeMount() {
 		document.title = this.$store.state.subredditName;
+		this.loadListOfModerators();
 	},
 	computed: {
 		subredditName() {
 			return this.$store.state.subredditName;
+		},
+		// @vuese
+		//return inbox messages
+		listOfModerators() {
+			return this.$store.getters['moderation/listOfModerators'];
+		},
+	},
+	methods: {
+		// @vuese
+		//load moderators list from the store
+		async loadListOfModerators() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfModerators', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };

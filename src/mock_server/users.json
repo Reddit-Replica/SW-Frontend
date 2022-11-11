@@ -121,11 +121,11 @@
 		}
 	],
 	"subreddit-name-available": [
-    {
+		{
 			"id": 1,
 			"subredditName": "FrontEnd"
 		}
-  ],
+	],
 	"saved-categories": [
 		{
 			"id": 1,
@@ -457,6 +457,48 @@
 					"receiverUsername": "/u/menahosam",
 					"subject": "hi",
 					"sendAt": "2019-08-24T14:15:22Z"
+				}
+			]
+		}
+	],
+	"moderator-list": [
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "asmaa",
+					"nickname": "asmaa",
+					"dateOfModeration": "9 years ago",
+					"permissions": ["Everything"]
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "hoda",
+					"nickname": "hoda",
+					"dateOfModeration": "3 years ago",
+					"permissions": [
+						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+					]
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "mena",
+					"nickname": "mena",
+					"dateOfModeration": "1 year ago",
+					"permissions": [
+						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+					]
 				}
 			]
 		}
