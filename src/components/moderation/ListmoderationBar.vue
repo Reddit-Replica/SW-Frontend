@@ -1,6 +1,11 @@
 <template>
 	<div class="content">
-		<img src="../../../img/user-image.jpg" alt="img" class="subreddit-img" />
+		<img
+			src="../../../img/user-image.jpg"
+			alt="img"
+			class="subreddit-img"
+			id="subreddit-img"
+		/>
 		<h5 class="subreddit-title">
 			<a href="#">
 				<span class="subreddit-link" id="subreddit-link"
