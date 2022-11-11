@@ -68,12 +68,12 @@
 						<li>Save</li>
 						<li @click="edit" id="edit">Edit</li>
 						<li>Follow</li>
-						<li @click="displaySubmenu">
+						<li @click="displaySubmenu" id="dots">
 							<font-awesome-icon icon="fa-solid fa-ellipsis" />
 							<ul class="sub-menu" v-if="display">
 								<li
 									class="icon-box"
-									id="'sum-menu' + 'delete'"
+									id="sub-menu-delete"
 									@click="deleteComment"
 								>
 									<font-awesome-icon
