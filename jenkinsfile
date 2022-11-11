@@ -1,21 +1,18 @@
 pipeline {
   agent any
   stages {
-    stage ('Initialize') {
-      
+    stage("unit test"){
+      agent {
+        docker {
+            image 'node:lts'
+            reuseNode true
+        }
       steps {
-        echo 'Placeholder. test auto fetch'
-        sh "ls"
-        sh """ 
-          ls ~/
-          cd /
-          ls
-          pwd
-          docker ps
-        """
-
+              sh 'npm run test'
       }
-
     }
+
   }
+
+}
 }
