@@ -1,5 +1,5 @@
 <template>
-	<div class="grow-link" v-if="shownAlone">
+	<div class="grow-link" v-if="shownAlone" :id="'grow-link-' + index">
 		<svg
 			viewBox="0 0 100 100"
 			xmlns="http://www.w3.org/2000/svg"
