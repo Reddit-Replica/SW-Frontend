@@ -343,6 +343,10 @@ export default {
 		//@vuese
 		//upvote on post
 		async upvote() {
+			if (this.downClicked) {
+				this.downClicked = false;
+				this.counter++;
+			}
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
@@ -360,14 +364,14 @@ export default {
 				this.upClicked = false;
 				this.counter--;
 			}
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
 		},
 		//@vuese
 		//down vote on post
 		async downvote() {
+			if (this.upClicked) {
+				this.upClicked = false;
+				this.counter--;
+			}
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
@@ -384,10 +388,6 @@ export default {
 			} else {
 				this.downClicked = false;
 				this.counter++;
-			}
-			if (this.upClicked) {
-				this.upClicked = false;
-				this.counter--;
 			}
 		},
 		//@vuese

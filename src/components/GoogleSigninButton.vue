@@ -9,13 +9,26 @@
 <script>
 export default {
 	methods: {
+		//@vuese
+		//Login And SignUp with Google
 		async handlesign() {
 			try {
 				const googleUser = await this.$gAuth.signIn();
 				this.$store.state.userName = googleUser.lv.Af;
-				this.$store.state.access_token = googleUser.Bc.access_token;
-				console.log(this.$store.state.access_token);
+				this.$store.state.id_token = googleUser.Bc.id_token;
+				console.log(this.$store.state.id_token);
 				console.log(this.$store.getters.getUserName);
+				const actionPayload = {
+					type: 'google',
+					id_token: googleUser.Bc.id_token,
+					baseurl: this.$baseurl,
+				};
+				try {
+					await this.$store.dispatch('googleSign', actionPayload);
+					this.$router.replace('/main');
+				} catch (err) {
+					this.error = err;
+				}
 			} catch (error) {
 				console.log(error);
 			}
