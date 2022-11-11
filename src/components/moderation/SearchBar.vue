@@ -94,6 +94,16 @@ export default {};
 	margin: 1rem;
 }
 .arrows {
-	margin: 1.5rem;
+	margin: 2rem;
+}
+@media only screen and (max-width: 49.25em) {
+	.input {
+		width: 50%;
+	}
+}
+@media only screen and (max-width: 25em) {
+	.input {
+		width: 80%;
+	}
 }
 </style>
