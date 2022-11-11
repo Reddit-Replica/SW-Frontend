@@ -41,6 +41,7 @@
 		"vue-router": "^4.0.13",
 		"vue3-google-login": "^2.0.12",
 		"vue3-google-oauth2": "^1.0.6",
+		"vuese": "^1.4.7",
 		"vuex": "^4.0.2",
 		"yarn": "^1.22.19"
 	},

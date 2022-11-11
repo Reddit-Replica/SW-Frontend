@@ -27,10 +27,10 @@ describe('GrowCommunity.vue', () => {
 		});
 
 		expect(wrapper.find('.grow-body').exists()).toBe(true);
-		//hide
+		//hide grow your community part
 		await wrapper.find('#show-up-grow').trigger('click');
 		expect(wrapper.find('.grow-body').exists()).toBe(false);
-		//show
+		//show  grow your community part
 		await wrapper.find('#show-down-grow').trigger('click');
 		expect(wrapper.find('.grow-body').exists()).toBe(true);
 	});

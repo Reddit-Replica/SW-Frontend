@@ -57,26 +57,38 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Index of grow your community element
 		index: {
 			type: Number,
 			default: 0,
 		},
+		//@vuese
+		//Color of grow your community element
 		color: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Main title of grow your community element
 		title: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Description of grow your community element
 		content: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Link to where of grow your community element should go
 		link: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Button text of grow your community element
 		button: {
 			type: String,
 			default: '',
@@ -89,17 +101,23 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//Set background color with chosen color
 		styleBack() {
 			return 'background-color:' + this.color;
 		},
+		//@vuese
+		//Set filling color with chosen color
 		styleFill() {
 			return 'fill:' + this.color;
 		},
 	},
 	methods: {
-		hide(index) {
-			this.shown[index] = !this.shown[index];
-		},
+		// hide(index) {
+		// 	this.shown[index] = !this.shown[index];
+		// },
+		//@vuese
+		//Hide element when clicking on exit icon
 		hideAlone() {
 			this.shownAlone = !this.shownAlone;
 		},

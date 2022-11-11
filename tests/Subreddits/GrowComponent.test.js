@@ -27,7 +27,7 @@ describe('GrowComponent.vue', () => {
 		});
 
 		expect(wrapper.find('#exit-grow-option-0').exists()).toBe(true);
-		//hide
+		//hide first grow your community element
 		await wrapper.find('#exit-grow-option-0').trigger('click');
 		expect(wrapper.find('#grow-link-0').exists()).toBe(false);
 	});

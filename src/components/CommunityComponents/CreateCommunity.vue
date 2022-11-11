@@ -350,7 +350,7 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
 	//@vuese
-	//Exit emit to close create community form
+	//Exit emit to close create community dialog
 	emits: ['exit'],
 	data() {
 		return {
@@ -374,12 +374,14 @@ export default {
 			selectIsShown: false,
 		};
 	},
+	//@vuese
+	//Load community suggested categories when creating 'Create Community' dialog
 	created() {
 		this.loadCategories();
 	},
 	methods: {
 		// @vuese
-		//Get subreddits categories
+		//Loading Community suggested categories
 		async loadCategories() {
 			try {
 				await this.$store.dispatch('community/getSavedCategories', {
@@ -390,12 +392,18 @@ export default {
 			}
 			this.categories = this.$store.getters['community/categories'];
 		},
+		//@vuese
+		//Hide dialog
 		hidecreateCommunity() {
 			this.$emit('exit');
 		},
+		//@vuese
+		//Show Info box when hovering on title
 		showInfoBox() {
 			this.InfoBoxShown = !this.InfoBoxShown;
 		},
+		//@vuese
+		//Set chosen community type (public, restricted, private)
 		chooseType(index) {
 			if (index == 2) {
 				this.typeChosen2 = true;
@@ -414,9 +422,13 @@ export default {
 				this.communityType = 'Public';
 			}
 		},
+		//@vuese
+		//Check if NSFW chosen or not
 		chooseNSFW() {
 			this.nsfwChosen = !this.nsfwChosen;
 		},
+		//@vuese
+		//Check on community category not to be empty
 		validateCommunityCategory() {
 			this.showSelect();
 			if (this.communityCategory === '') {
@@ -428,11 +440,14 @@ export default {
 		// @vuese
 		//Validate Subreddits Name (Name should be between 3:20 characters and include only letters, numbers and underscores).
 		validateCommunityName() {
+			//check if name is empty
 			if (this.communityName === '') {
 				this.communityNameValidity = false;
 				this.communityNameRequiredError = true;
 				this.communityNameCharError = false;
-			} else if (
+			}
+			//check if name between 3:20 and contain only letters, numbers and underscores
+			else if (
 				this.communityName.length < 3 ||
 				this.communityName.length > 21 ||
 				/[^a-zA-Z0-9_]/.test(this.communityName)
@@ -445,6 +460,7 @@ export default {
 				this.communityNameRequiredError = false;
 				this.communityNameCharError = false;
 			}
+			//check if name is taken by another subreddit
 			this.$store.dispatch('community/checkSubredditName', {
 				subredditName: this.communityName,
 				baseurl: this.$baseurl,
@@ -457,6 +473,8 @@ export default {
 				this.communityNameValidity = false;
 			}
 		},
+		//@vuese
+		//Decrease characters count while typing
 		charCount() {
 			this.charRemaining = 21 - this.communityName.length;
 			this.communityNameRequiredError = false;
@@ -480,9 +498,13 @@ export default {
 				baseurl: this.$baseurl,
 			});
 		},
+		//@vuese
+		//Show Error dialog when click on more when subreddit name contain symbols or not in range of 3:20 characters
 		showMore() {
 			this.moreIsShown = !this.moreIsShown;
 		},
+		//@vuese
+		//Show/Hide suggested categories list
 		showSelect() {
 			this.selectIsShown = !this.selectIsShown;
 		},

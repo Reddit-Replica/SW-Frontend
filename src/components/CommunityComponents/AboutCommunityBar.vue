@@ -391,22 +391,32 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
 	props: {
+		//@vuese
+		//Array of Subreddit suggested topics
 		topics: {
 			type: Array,
 			default: () => [],
 		},
+		//@vuese
+		//Number of members in subreddit
 		membersCount: {
 			type: Number,
 			default: 1,
 		},
+		//@vuese
+		//Number of online members in subreddit
 		onlineMembersCount: {
 			type: Number,
 			default: 1,
 		},
+		//@vuese
+		//Subreddit creation date
 		communityDate: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit type (public, restricted, private)
 		communityType: {
 			type: String,
 			default: '',
@@ -441,37 +451,57 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Toogle Show/hide options list in about community bar by clicking on dots icon.
 		dotsClick() {
 			this.dotsClicked = !this.dotsClicked;
 		},
+		//@vuese
+		//Mark subreddit added to custom feed
 		addToCustomFeed() {
 			this.addedToCustomFeed = true;
 		},
+		//@vuese
+		//Mark subreddit added to favourites
 		addToFavourite() {
 			this.addedToFavourite = true;
 		},
+		//@vuese
+		//Decrease characters count while typing
 		charCount() {
 			this.charRemaining--;
 		},
+		//@vuese
+		//Mark text area shown
 		showTextarea() {
 			this.textareaShown = true;
 		},
+		//@vuese
+		//Mark text area hidden
 		hideTextarea() {
 			this.textareaShown = false;
 		},
+		//@vuese
+		//Save subreddit added description
 		saveDescription() {
 			this.communityDescription = this.description;
 		},
+		//@vuese
+		//Save subreddit chosen topic and hide topic list
 		setTopic(topic) {
 			this.communityTopic = topic;
 			this.topicChosen = true;
 			this.toogleTopicsList();
 		},
+		//@vuese
+		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
 		setSubtopic(subtopic) {
+			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
 				const index = this.communitySubtopics.findIndex(
 					(topic) => topic.id === subtopic.id
 				);
+				//check if subreddit chosen before
 				if (index === -1) {
 					this.communitySubtopics.push(subtopic);
 					this.subtopicChosen = true;
@@ -479,12 +509,18 @@ export default {
 				}
 			}
 		},
+		//@vuese
+		//Show/Hide topics list
 		toogleTopicsList() {
 			this.topicsShown = !this.topicsShown;
 		},
+		//@vuese
+		//Show/Hide subtopics list
 		toogleSubtopics() {
 			this.subtopicsShown = !this.subtopicsShown;
 		},
+		//@vuese
+		//Delete subtopics from chosen subtopics list
 		deleteSubtopic(subtopic) {
 			const index = this.communitySubtopics.findIndex(
 				(topic) => topic.id === subtopic.id
@@ -492,33 +528,47 @@ export default {
 			this.communitySubtopics.splice(index, 1);
 			this.subtopicsCount--;
 		},
+		//@vuese
+		//save chosen subtopics list
 		saveSubtopics() {
 			this.isSubtopicsSaved = true;
 			this.savedCommunitySubtopics = this.communitySubtopics;
 		},
+		//@vuese
+		//Show/Hide Save or Discard dialog
 		toogleSaveDialog() {
 			this.saveDialogShown = !this.saveDialogShown;
 		},
+		//@vuese
+		//Cancel chosen subtopics list and show dialog save or discard
 		toogleSubtopicsCancel() {
 			this.toogleSubtopics();
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
 		},
-
+		//@vuese
+		//Show/Hide date box while hovering on subreddit creation date
 		toogleDateBox() {
 			this.dateBoxShown = !this.dateBoxShown;
 		},
+		//@vuese
+		//Show/Hide members count box while hovering on subreddit members count
 		toogleMembersCountBox() {
 			this.MembersCountBoxShown = !this.MembersCountBoxShown;
 		},
+		//@vuese
+		//Show/Hide online members count box while hovering on subreddit online members count
 		toogleOnlineMembersCountBox() {
 			this.onlineMembersCountBoxShown = !this.onlineMembersCountBoxShown;
 		},
+		//@vuese
+		//Show/Hide topics info box while hovering on subreddit topics title
 		toogleTopicsArrrowBox() {
 			this.topicsArrrowBoxShown = !this.topicsArrrowBoxShown;
 		},
-
+		//@vuese
+		//Show/Hide subreddit new mark
 		toogleNew() {
 			this.isNew = !this.isNew;
 		},

@@ -43,6 +43,8 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Subreddit moderators list
 		moderators: {
 			type: Array,
 			default: () => [],

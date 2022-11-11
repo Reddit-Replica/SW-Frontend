@@ -27,6 +27,7 @@ describe('CommunityPost.vue', () => {
 		});
 
 		expect(wrapper.find('#initial-post-icon-15').exists()).toBe(true);
+		//show icons list
 		await wrapper.find('#initial-post-icon-15').trigger('click');
         expect(wrapper.find('#initial-post-icon-list').exists()).toBe(true);
 	});

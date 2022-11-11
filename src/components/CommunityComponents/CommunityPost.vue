@@ -349,25 +349,37 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Check hovering on up vote icon
 		setHover1(shown) {
 			this.isHover1 = shown;
 		},
+		//@vuese
+		//Check hovering on down vote icon
 		setHover2(shown) {
 			this.isHover2 = shown;
 		},
+		//@vuese
+		//Show/Hide votes up count
 		toggleVotesUp(shown) {
 			this.votesUpShown = shown;
 		},
+		//@vuese
+		//Show/Hide icons list
 		toggleIconsList() {
 			this.iconsListShown = !this.iconsListShown;
 		},
 
+		//@vuese
+		//Increase votes up count
 		voteUp() {
 			this.setHover1(true);
 			this.setHover2(false);
 			this.votesUpCount++;
 			this.toggleVotesUp(true);
 		},
+		//@vuese
+		//Increase votes down count
 		voteDown() {
 			this.setHover2(true);
 			this.setHover1(false);
