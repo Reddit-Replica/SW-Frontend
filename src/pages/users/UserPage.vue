@@ -55,20 +55,39 @@ export default {
 		// this.checkInOverviewPage;
 	},
 	watch: {
+		/**
+		 * @vuese
+		 * we watch the changes of the route when the userName changes we reload the page
+		 * @arg no arg
+		 */
 		'$route.params.userName'() {
-			// if (this.$route.params.userName )
 			location.reload();
 		},
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * we get the userName from the getter store
+		 * @arg no arg
+		 */
 		getUserName() {
-			console.log(this.$store.state.userName);
+			// console.log(this.$store.state.userName);
 			return this.$store.getters.getUserName;
 		},
+		/**
+		 * @vuese
+		 * this function gets the user Data from the getter store
+		 * @arg no arg
+		 */
 		getUserData() {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
+		/**
+		 * @vuese
+		 * this function for the current route if it the Overview Page or not
+		 * @arg no arg
+		 */
 		checkInOverviewPage() {
 			if (
 				this.$route.path == `/user/${this.$route.params.userName}/` ||
@@ -79,6 +98,11 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * this function send  call an action function from the store to make a get request to get user data
+		 * @arg no arg
+		 */
 		async RequestUserData() {
 			try {
 				await this.$store.dispatch('user/getUserData', {
@@ -90,6 +114,14 @@ export default {
 			}
 		},
 	},
+	/**
+	 * @vuese
+	 * at creation of the page we check if the searched username is the the authenticated user or not
+	 * we make loading flag to true for future to make a loading spinner
+	 * then we make a get request to get user data
+	 * we check in the status code
+	 * @arg no arg
+	 */
 	async created() {
 		if (this.$route.params.userName) {
 			this.loading = true;
@@ -105,7 +137,7 @@ export default {
 			if (requestStatus == 200) console.log('Sucessfully fetched data');
 			else if (requestStatus == 404) console.log('not found');
 			else if (requestStatus == 500) console.log(' internal server error');
-			console.log(this.$store.getters['user/getUserData']);
+			// console.log(this.$store.getters['user/getUserData']);
 			// console.log(this.$store.getters['user/getStaticSocialLinks']);
 			// this.userData = this.$store.getters['user/getUserData'];
 			// console.log(this.userData);
