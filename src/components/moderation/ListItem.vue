@@ -1,8 +1,13 @@
 <template>
 	<li class="item">
-		<div class="image">
-			<img src="../../../img/user-img-2.png" alt="img" class="img" />
-			<h5 class="heading-5">{{ moderator.username }}</h5>
+		<div class="image" id="moderator">
+			<img
+				src="../../../img/user-img-2.png"
+				alt="img"
+				class="img"
+				id="moderator-img"
+			/>
+			<h5 class="heading-5" id="moderator-name">{{ moderator.username }}</h5>
 		</div>
 		<div class="time">
 			<span>{{ moderator.dateOfModeration }}</span>
