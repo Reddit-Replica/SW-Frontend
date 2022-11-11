@@ -16,7 +16,7 @@
 			</div>
 		</template>
 		<template #default>
-			<div class="social-link-config-header-body">
+			<div class="social-link-config-header-body" id="social-link-config-item">
 				<sociallink-item
 					:text="data.text"
 					:img-src="data.imgSrc"
@@ -37,8 +37,18 @@
 					@input="socialLinkModeration"
 					id="social-link-config-input-sociallink"
 				/>
-				<div v-if="!validUrl" class="invalid-url">Invalid URL</div>
-				<div v-else-if="!correctSpelling" class="invalid-url">
+				<div
+					v-if="!validUrl"
+					class="invalid-url"
+					id="social-link-config-invalid-url"
+				>
+					Invalid URL
+				</div>
+				<div
+					v-else-if="!correctSpelling"
+					class="invalid-url"
+					id="social-link-config-invalid-spelling"
+				>
 					Looks like this isn’t a valid URL. Double-check your spelling.
 				</div>
 			</div>
@@ -94,6 +104,7 @@ export default {
 		 * @arg no arg
 		 */
 		back() {
+			/* this event emitted to know the parent component that he clicked to to back button to close it and open social links dialog */
 			this.$emit('back');
 		},
 		/**
@@ -183,9 +194,7 @@ export default {
 						link: `${this.data.baseUrl}${this.displayedTextField.substring(1)}`,
 					};
 				}
-				/* request to back end */
-
-				/* */
+				/* this event emitted to know the parent component that he clicked to to save button to close it*/
 				this.$emit('save');
 				try {
 					await this.$store.dispatch('user/AddNewSocialLink', {

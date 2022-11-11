@@ -5,6 +5,7 @@
 			:show="show"
 			center="true"
 			title="Adding Social link"
+			id="close-social-link-dialog"
 			@close="tryClose"
 		>
 			<template #default>
