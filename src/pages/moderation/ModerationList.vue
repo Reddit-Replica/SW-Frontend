@@ -26,14 +26,40 @@
 			</a>
 		</h3>
 		<div class="page-content">
-			<search-bar></search-bar>
-			<ul class="ul-items">
+			<search-bar
+				@enterSearch="(search) => enterSearch(search)"
+				:empty-input="search"
+			></search-bar>
+			<ul class="ul-items" v-if="!noItems">
 				<list-item
 					v-for="moderator in listOfModerators"
 					:key="moderator"
 					:moderator="moderator"
+					:search="search"
 				></list-item>
 			</ul>
+			<div class="no-items" v-else>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-search icon-search"
+					viewBox="0 0 16 16"
+					id="search"
+				>
+					<path
+						d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+					/>
+				</svg>
+				<span>No results for u/v</span>
+				<base-button
+					class="see-all-button"
+					id="see-all-button"
+					@click="seeAll()"
+					>See all</base-button
+				>
+			</div>
 		</div>
 	</div>
 </template>
@@ -43,6 +69,13 @@ import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue
 import SearchBar from '../../components/moderation/SearchBar.vue';
 import ListItem from '../../components/moderation/ListItem.vue';
 export default {
+	data() {
+		return {
+			search: '',
+			count: 0,
+			noItems: false,
+		};
+	},
 	components: {
 		ListmoderationBar,
 		SearchBar,
@@ -53,11 +86,15 @@ export default {
 		this.loadListOfModerators();
 	},
 	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
 		subredditName() {
 			return this.$store.state.subredditName;
 		},
 		// @vuese
-		//return inbox messages
+		//return list of moderators
+		// @type object
 		listOfModerators() {
 			return this.$store.getters['moderation/listOfModerators'];
 		},
@@ -65,6 +102,7 @@ export default {
 	methods: {
 		// @vuese
 		//load moderators list from the store
+		// @arg no argument
 		async loadListOfModerators() {
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
@@ -74,6 +112,28 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		// @vuese
+		//access value of search
+		// @arg The argument is a string value representing search input
+		enterSearch(input) {
+			this.search = input;
+			for (let i = 0; i < this.listOfModerators.length; i++) {
+				if (this.listOfModerators[i].username != input && input != '') {
+					this.count = this.count + 1;
+				}
+			}
+			if (this.count == this.listOfModerators.length) {
+				this.noItems = true;
+			}
+			this.count = 0;
+		},
+		// @vuese
+		//show all list of moderators
+		// @arg no argument
+		seeAll() {
+			this.search = '';
+			this.noItems = false;
 		},
 	},
 };
@@ -98,6 +158,29 @@ export default {
 	list-style: none;
 	background-color: var(--color-white-1);
 	padding-left: 0rem;
+}
+.no-items {
+	background-color: var(--color-white-1);
+	height: 25rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	font-weight: bold;
+}
+.icon-search {
+	width: 3rem;
+	height: 3rem;
+}
+.see-all-button {
+	padding: 0 1.5rem;
+	color: var(--color-blue-2);
+	background-color: var(--color-white-1);
+	font-weight: bold;
+}
+.see-all-button:hover {
+	background-color: var(--color-grey-light-8);
 }
 /* 635px */
 @media only screen and (max-width: 40em) {

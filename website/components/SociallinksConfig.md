@@ -15,8 +15,8 @@
 <!-- @vuese:SociallinksConfig:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|back|-|-|
-|save|request to back end|-|
+|back|this event emitted to know the parent component that he clicked to to back button to close it and open social links dialog|-|
+|save|this event emitted to know the parent component that he clicked to to save button to close it|-|
 
 <!-- @vuese:SociallinksConfig:events:end -->
 

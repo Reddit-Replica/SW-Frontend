@@ -118,6 +118,7 @@ export default {
 		// },
 		//@vuese
 		//Hide element when clicking on exit icon
+		//@arg no argument
 		hideAlone() {
 			this.shownAlone = !this.shownAlone;
 		},

@@ -5,7 +5,7 @@
 <!-- @vuese:MessagesInbox:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadUserMessages|load messages from the store|-|
+|loadUserMessages|load messages from the store|no argument|
 
 <!-- @vuese:MessagesInbox:methods:end -->
 
@@ -15,7 +15,7 @@
 <!-- @vuese:MessagesInbox:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|userMessages|-|return all messages sent or recieved|Yes|
+|userMessages|`object`|return all messages sent or recieved|Yes|
 
 <!-- @vuese:MessagesInbox:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:MessagesInbox:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|userMessages|watch messages if it's empty|-|
+|userMessages|watch messages if it's empty|no argument|
 
 <!-- @vuese:MessagesInbox:watch:end -->
 

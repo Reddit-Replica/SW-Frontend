@@ -35,6 +35,7 @@ export default {
 	computed: {
 		// @vuese
 		//return all messages sent or recieved
+		// @type object
 		userMessages() {
 			return this.$store.getters['messages/userMessages'];
 		},
@@ -42,6 +43,7 @@ export default {
 	watch: {
 		// @vuese
 		//watch messages if it's empty
+		// @arg no argument
 		userMessages() {
 			if (this.userMessages.length == 0) this.noMessages = true;
 		},
@@ -49,6 +51,7 @@ export default {
 	methods: {
 		// @vuese
 		//load messages from the store
+		// @arg no argument
 		async loadUserMessages() {
 			try {
 				await this.$store.dispatch('messages/loadUserMessages', {
