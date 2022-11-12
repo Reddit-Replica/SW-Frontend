@@ -382,6 +382,7 @@ export default {
 	methods: {
 		// @vuese
 		//Loading Community suggested categories
+		//@arg no argument
 		async loadCategories() {
 			try {
 				await this.$store.dispatch('community/getSavedCategories', {
@@ -394,16 +395,19 @@ export default {
 		},
 		//@vuese
 		//Hide dialog
+		//@arg no argument
 		hidecreateCommunity() {
 			this.$emit('exit');
 		},
 		//@vuese
 		//Show Info box when hovering on title
+		//@arg no argument
 		showInfoBox() {
 			this.InfoBoxShown = !this.InfoBoxShown;
 		},
 		//@vuese
 		//Set chosen community type (public, restricted, private)
+		//@arg index to indicate chosen type
 		chooseType(index) {
 			if (index == 2) {
 				this.typeChosen2 = true;
@@ -424,11 +428,13 @@ export default {
 		},
 		//@vuese
 		//Check if NSFW chosen or not
+		//@arg no argument
 		chooseNSFW() {
 			this.nsfwChosen = !this.nsfwChosen;
 		},
 		//@vuese
 		//Check on community category not to be empty
+		//@arg no argument
 		validateCommunityCategory() {
 			this.showSelect();
 			if (this.communityCategory === '') {
@@ -439,6 +445,7 @@ export default {
 		},
 		// @vuese
 		//Validate Subreddits Name (Name should be between 3:20 characters and include only letters, numbers and underscores).
+		//@arg no argument
 		validateCommunityName() {
 			//check if name is empty
 			if (this.communityName === '') {
@@ -475,6 +482,7 @@ export default {
 		},
 		//@vuese
 		//Decrease characters count while typing
+		//@arg no argument
 		charCount() {
 			this.charRemaining = 21 - this.communityName.length;
 			this.communityNameRequiredError = false;
@@ -482,6 +490,7 @@ export default {
 		},
 		// @vuese
 		//Validate create community form and submit it.
+		//@arg no argument
 		submitCommunity() {
 			this.validateCommunityName();
 
@@ -500,11 +509,13 @@ export default {
 		},
 		//@vuese
 		//Show Error dialog when click on more when subreddit name contain symbols or not in range of 3:20 characters
+		//@arg no argument
 		showMore() {
 			this.moreIsShown = !this.moreIsShown;
 		},
 		//@vuese
 		//Show/Hide suggested categories list
+		//@arg no argument
 		showSelect() {
 			this.selectIsShown = !this.selectIsShown;
 		},
