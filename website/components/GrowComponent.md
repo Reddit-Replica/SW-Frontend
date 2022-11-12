@@ -30,7 +30,7 @@
 <!-- @vuese:GrowComponent:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|hideAlone|hide(index) { this.shown[index] = !this.shown[index]; }, Hide element when clicking on exit icon|-|
+|hideAlone|hide(index) { this.shown[index] = !this.shown[index]; }, Hide element when clicking on exit icon|no argument|
 
 <!-- @vuese:GrowComponent:methods:end -->
 
