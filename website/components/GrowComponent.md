@@ -5,12 +5,12 @@
 <!-- @vuese:GrowComponent:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|index|-|`Number`|`false`|0|
-|color|-|`String`|`false`|-|
-|title|-|`String`|`false`|-|
-|content|-|`String`|`false`|-|
-|link|-|`String`|`false`|-|
-|button|-|`String`|`false`|-|
+|index|Index of grow your community element|`Number`|`false`|0|
+|color|Color of grow your community element|`String`|`false`|-|
+|title|Main title of grow your community element|`String`|`false`|-|
+|content|Description of grow your community element|`String`|`false`|-|
+|link|Link to where of grow your community element should go|`String`|`false`|-|
+|button|Button text of grow your community element|`String`|`false`|-|
 
 <!-- @vuese:GrowComponent:props:end -->
 
@@ -23,5 +23,26 @@
 |default|-|-|
 
 <!-- @vuese:GrowComponent:slots:end -->
+
+
+## Methods
+
+<!-- @vuese:GrowComponent:methods:start -->
+|Method|Description|Parameters|
+|---|---|---|
+|hideAlone|hide(index) { this.shown[index] = !this.shown[index]; }, Hide element when clicking on exit icon|-|
+
+<!-- @vuese:GrowComponent:methods:end -->
+
+
+## Computed
+
+<!-- @vuese:GrowComponent:computed:start -->
+|Computed|Type|Description|From Store|
+|---|---|---|---|
+|styleBack|-|Set background color with chosen color|No|
+|styleFill|-|Set filling color with chosen color|No|
+
+<!-- @vuese:GrowComponent:computed:end -->
 
 

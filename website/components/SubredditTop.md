@@ -16,7 +16,7 @@
 <!-- @vuese:SubredditTop:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|toogleJoin|Toogle Joining and leaving a subreddit|-|
+|toogleJoin|Toogle Joining and leaving a subreddit button|-|
 |hoverJoin|Change button text from Joined to Lreave when hovering on button|-|
 
 <!-- @vuese:SubredditTop:methods:end -->
