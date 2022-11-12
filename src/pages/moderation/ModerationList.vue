@@ -28,7 +28,7 @@
 		<div class="page-content">
 			<search-bar
 				@enterSearch="(search) => enterSearch(search)"
-				:emptyInput="search"
+				:empty-input="search"
 			></search-bar>
 			<ul class="ul-items" v-if="!noItems">
 				<list-item
@@ -88,11 +88,13 @@ export default {
 	computed: {
 		// @vuese
 		//return subreddit name
+		// @type string
 		subredditName() {
 			return this.$store.state.subredditName;
 		},
 		// @vuese
 		//return list of moderators
+		// @type object
 		listOfModerators() {
 			return this.$store.getters['moderation/listOfModerators'];
 		},
@@ -100,6 +102,7 @@ export default {
 	methods: {
 		// @vuese
 		//load moderators list from the store
+		// @arg no argument
 		async loadListOfModerators() {
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
@@ -127,6 +130,7 @@ export default {
 		},
 		// @vuese
 		//show all list of moderators
+		// @arg no argument
 		seeAll() {
 			this.search = '';
 			this.noItems = false;

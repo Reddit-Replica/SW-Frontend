@@ -219,11 +219,13 @@ export default {
 	computed: {
 		// @vuese
 		//get username from store
+		// @type string
 		getUserName() {
 			return '/u/' + this.$store.getters.getUserName;
 		},
 		// @vuese
 		//check if user is reciever or sender
+		// @type boolean
 		ifMessageRecieved() {
 			return this.getUserName == this.message.receiverUsername;
 		},
@@ -259,6 +261,7 @@ export default {
 		},
 		// @vuese
 		//handle unread action
+		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
 		},
@@ -279,6 +282,7 @@ export default {
 		},
 		// @vuese
 		//expand or collapse message details
+		// @arg The argument is a string value representing if its expand or collapse
 		expand(action) {
 			if (action == 'expand') {
 				this.expandAll = true;

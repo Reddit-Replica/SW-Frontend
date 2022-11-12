@@ -45,6 +45,7 @@ export default {
 	computed: {
 		// @vuese
 		//at searching check if it is the value of seacrhing or not
+		// @type boolean
 		show() {
 			if (this.search != '') {
 				if (this.search == this.moderator.username) {

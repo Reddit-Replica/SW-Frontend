@@ -5,7 +5,7 @@
 <!-- @vuese:AllInbox:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadInboxMessages|load compose messages from the store|-|
+|loadInboxMessages|load compose messages from the store|no argument|
 
 <!-- @vuese:AllInbox:methods:end -->
 
@@ -15,7 +15,7 @@
 <!-- @vuese:AllInbox:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|inboxMessages|-|return inbox messages|Yes|
+|inboxMessages|`object`|return inbox messages|Yes|
 
 <!-- @vuese:AllInbox:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:AllInbox:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|inboxMessages|watch compose messages if it's empty|-|
+|inboxMessages|watch compose messages if it's empty|no argument|
 
 <!-- @vuese:AllInbox:watch:end -->
 

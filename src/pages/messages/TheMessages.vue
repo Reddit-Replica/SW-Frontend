@@ -32,6 +32,7 @@ export default {
 	computed: {
 		// @vuese
 		//return if bath not sent bath or compose
+		// @type boolean
 		showSecondBar() {
 			return (
 				this.$route.path !== '/message/compose' &&

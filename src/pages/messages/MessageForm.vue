@@ -171,6 +171,7 @@ export default {
 	methods: {
 		// @vuese
 		//make form validation
+		// @arg no argument
 		formValidation() {
 			this.delivered = false;
 			console.log('to ', this.receiverUsername);
@@ -186,6 +187,7 @@ export default {
 		},
 		// @vuese
 		//handle submit form and send post request
+		// @arg no argument
 		handleSubmit() {
 			this.formValidation();
 			if (this.error != '') return;
@@ -206,6 +208,7 @@ export default {
 		},
 		// @vuese
 		//change title to formatting or hide
+		// @arg no argument
 		changeTitle() {
 			if (this.formatting == 'formatting') this.formatting = 'hide';
 			else this.formatting = 'formatting';
