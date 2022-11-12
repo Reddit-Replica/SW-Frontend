@@ -427,25 +427,38 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Change images
+		//Index of image to change
 		onChange(e, index) {
 			const file = e.target.files[0];
 			this.images[index].image = file;
 			this.images[index].imageUrl = URL.createObjectURL(file);
 		},
+		//@vuese
+		//Toggle Choosing NSFW
 		nsfwClick() {
 			this.nsfwClicked = !this.nsfwClicked;
 		},
+		//@vuese
+		//Click on cancel button in NSFW dialog
 		nsfwSetCancel() {
 			this.nsfwCancel = !this.nsfwCancel;
 			this.nsfwClick();
 		},
+		//@vuese
+		//Click on I understand button in NSFW dialog
 		nsfwSetUnderstand() {
 			this.nsfwUnderstand = !this.nsfwUnderstand;
 			this.nsfwClick();
 		},
+		//@vuese
+		//Show/Hide social links dialog
 		socialLinksClick() {
 			this.socialLinksClicked = !this.socialLinksClicked;
 		},
+		//@vuese
+		//Show/Hide chosen social link dialog
 		chooseLink() {
 			this.isLinkChosen = !this.isLinkChosen;
 			this.socialLinksClicked = false;

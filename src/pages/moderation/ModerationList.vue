@@ -27,15 +27,16 @@
 		</h3>
 		<div class="page-content">
 			<search-bar
-				@enterSearch="(search) => enterSearch(search)"
+				@enter-search="(search) => enterSearch(search)"
 				:empty-input="search"
 			></search-bar>
 			<ul class="ul-items" v-if="!noItems">
 				<list-item
-					v-for="moderator in listOfModerators"
+					v-for="(moderator, index) in listOfModerators"
 					:key="moderator"
 					:moderator="moderator"
 					:search="search"
+					:index="index"
 				></list-item>
 			</ul>
 			<div class="no-items" v-else>
