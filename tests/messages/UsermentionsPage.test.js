@@ -17,6 +17,10 @@ describe ('UsernameMentions', () => {
     isReply: false,
     isRead: true,
   };
+
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
   it ('should renders if UsernameMentions content is correct', () => {
     const wrapper = shallowMount (UsernameMentions, {
       props: {
@@ -30,5 +34,23 @@ describe ('UsernameMentions', () => {
       },
     });
     expect (wrapper.exists ()).toBe (true);
+  });
+
+  //--------------------------------------------------------
+  //                     Testing no message
+  //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (UsernameMentions, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
   });
 });

@@ -11,6 +11,10 @@ describe ('SentMessages', () => {
     subject: 'hi',
     sendAt: '2019-08-24T14:15:22Z',
   };
+
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
   it ('should renders if SentMessages content is correct', () => {
     const wrapper = shallowMount (SentMessages, {
       props: {
@@ -24,5 +28,23 @@ describe ('SentMessages', () => {
       },
     });
     expect (wrapper.exists ()).toBe (true);
+  });
+
+  //--------------------------------------------------------
+  //                     Testing no message
+  //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (SentMessages, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
   });
 });
