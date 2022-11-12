@@ -132,7 +132,7 @@ ul {
 }
 .mod-card {
 	margin-top: 16px;
-	background-color: #ffffff;
+	background-color: var(--main-white-color);
 	width: 100%;
 	border: 1px solid #ccc;
 	border-radius: 4px;
@@ -143,7 +143,7 @@ ul {
 	letter-spacing: 0.5px;
 	line-height: 12px;
 	border-radius: 3px 3px 0 0;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 	display: flex;
 	padding: 0 12px 12px;
 }
@@ -169,13 +169,13 @@ p {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	background-color: #0079d3;
+	background-color: var(--color-blue-2);
 	margin-right: 9px;
 	position: relative;
 }
 .mod-list i::after {
 	content: 'r';
-	color: #ffffff;
+	color: var(--main-white-color);
 	background-color: transparent;
 	width: 30px;
 	height: 30px;
@@ -198,23 +198,23 @@ span {
 	flex-grow: 1;
 	justify-content: flex-start;
 	align-items: flex-start;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 }
 a,
 p {
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 }
 li span a:hover {
 	text-decoration: underline;
 }
 .join-button {
-	background-color: #0079d3;
-	border: 1px solid #0079d3;
+	background-color: var(--color-blue-2);
+	border: 1px solid var(--color-blue-2);
 	border-radius: 9999px;
-	color: #ffffff;
+	color: var(--main-white-color);
 	font-size: 14px;
 	font-weight: 700;
 	cursor: pointer;
@@ -226,9 +226,9 @@ li span a:hover {
 	width: 104px;
 }
 .joined-button {
-	background-color: #ffffff;
-	border: 1px solid #0079d3;
-	color: #0079d3;
+	background-color: var(--main-white-color);
+	border: 1px solid var(--color-blue-2);
+	color: var(--color-blue-2);
 	position: relative;
 }
 .joined-button::before {
@@ -239,7 +239,7 @@ li span a:hover {
 	width: 100%;
 	height: 100%;
 	border-radius: 9999px;
-	background: #0079d3;
+	background: var(--color-blue-2);
 	opacity: 0;
 }
 .joined-button:hover::before {

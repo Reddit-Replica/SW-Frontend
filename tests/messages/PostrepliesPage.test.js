@@ -17,6 +17,10 @@ describe ('PostReplies', () => {
     isReply: false,
     isRead: true,
   };
+
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
   it ('should renders if PostReplies content is correct', () => {
     const wrapper = shallowMount (PostReplies, {
       props: {
@@ -30,5 +34,23 @@ describe ('PostReplies', () => {
       },
     });
     expect (wrapper.exists ()).toBe (true);
+  });
+
+  //--------------------------------------------------------
+  //                     Testing no message
+  //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (PostReplies, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
   });
 });

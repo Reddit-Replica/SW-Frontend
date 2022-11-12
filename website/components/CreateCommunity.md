@@ -5,7 +5,7 @@
 <!-- @vuese:CreateCommunity:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|exit|-|-|
+|exit|Fire emit to close create community dialog|-|
 
 <!-- @vuese:CreateCommunity:events:end -->
 

@@ -65,6 +65,8 @@ export default {
 		//if clicked in see all then value of searching should be ''
 		emptyInput: {
 			type: String,
+			default: '',
+			required: true,
 		},
 	},
 	watch: {
