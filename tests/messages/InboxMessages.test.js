@@ -20,6 +20,7 @@ describe ('AllinboxComponent.vue', () => {
     isRead: true,
   };
   const index = 0;
+  let count = 2;
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -35,7 +36,7 @@ describe ('AllinboxComponent.vue', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
         message,
-				index,
+        index,
       },
       global: {
         // OR:
@@ -53,7 +54,7 @@ describe ('AllinboxComponent.vue', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -71,7 +72,7 @@ describe ('AllinboxComponent.vue', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -87,7 +88,7 @@ describe ('AllinboxComponent.vue', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -97,5 +98,30 @@ describe ('AllinboxComponent.vue', () => {
       },
     });
     expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  });
+
+  //--------------------------------------------------------
+  //                     Testing message color background page
+  //--------------------------------------------------------
+  it ('Testing block message background is white', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+      data () {
+        return {
+          backcolor: 'grey',
+        };
+      },
+    });
+    expect (this.backcolor == 'grey').toBe (false);
   });
 });
