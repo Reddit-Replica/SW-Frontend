@@ -11,7 +11,7 @@ describe('MessageForm.vue', () => {
 	//--------------------------------------------------------
 	//        Check the error in submitting empty fields
 	//--------------------------------------------------------
-	it('test error in empty fields', async () => {
+	it('test error in empty subject', async () => {
 		const wrapper = mount(MessageForm, {
 			data() {
 				return {
@@ -32,6 +32,18 @@ describe('MessageForm.vue', () => {
 			.catch(function () {
 				console.log('Promise Rejected');
 			});
+	});
+	it('test error in empty fields', async () => {
+		const wrapper = mount(MessageForm, {
+			data() {
+				return {
+					senderUsername: '/u/asmaaadel0',
+					receiverUsername: '',
+					subject: '',
+					text: '',
+				};
+			},
+		});
 
 		wrapper.setData({ receiverUsername: 'Lachlan' });
 		wrapper
@@ -43,12 +55,50 @@ describe('MessageForm.vue', () => {
 			.catch(function () {
 				console.log('Promise Rejected');
 			});
+	});
+
+	it('test error in empty text', async () => {
+		const wrapper = mount(MessageForm, {
+			data() {
+				return {
+					senderUsername: '/u/asmaaadel0',
+					receiverUsername: '',
+					subject: '',
+					text: '',
+				};
+			},
+		});
+		wrapper.setData({ receiverUsername: 'Lachlan' });
 		wrapper.setData({ subject: 'Lachlan' });
 		wrapper
 			.trigger('click')
 			.then(() => {
 				expect(wrapper.text()).contain('we need something here');
 				expect(wrapper.text()).not.contain('your message has been delivered');
+			})
+			.catch(function () {
+				console.log('Promise Rejected');
+			});
+	});
+	
+	it('test no error', async () => {
+		const wrapper = mount(MessageForm, {
+			data() {
+				return {
+					senderUsername: '/u/asmaaadel0',
+					receiverUsername: '',
+					subject: '',
+					text: '',
+				};
+			},
+		});
+		wrapper.setData({ receiverUsername: 'Lachlan' });
+		wrapper.setData({ subject: 'Lachlan' });
+		wrapper.setData({ text: 'Lachlan' });
+		wrapper
+			.trigger('click')
+			.then(() => {
+				expect(wrapper.text()).not.contain('we need something here');
 			})
 			.catch(function () {
 				console.log('Promise Rejected');
