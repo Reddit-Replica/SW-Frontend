@@ -19,6 +19,10 @@ describe ('AllinboxPage', () => {
     isReply: false,
     isRead: true,
   };
+
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
   it ('should renders if AllinboxPage content is correct', () => {
     const wrapper = shallowMount (AllinboxPage, {
       props: {
@@ -32,5 +36,23 @@ describe ('AllinboxPage', () => {
       },
     });
     expect (wrapper.exists ()).toBe (true);
+  });
+  
+  //--------------------------------------------------------
+  //                     Testing no message 
+  //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (AllinboxPage, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
   });
 });

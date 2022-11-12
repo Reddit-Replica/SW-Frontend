@@ -100,3 +100,35 @@ it('Test delete comment action', async () => {
     await wrapper.find('#sub-menu-delete').trigger('click')
     expect(wrapper.find('.comment').exists()).toBe(false);
 })
+it('Test upvote post then downvote post action', async () => {
+    const wrapper = mount(BasePost,{
+        props: {
+            post
+        },
+        global: {
+            // OR:
+            mocks: {
+              $store: store,
+            },
+        },
+    });
+    await wrapper.find('#upvote-service').trigger('click')
+    await wrapper.find('#downvote-service').trigger('click')
+    expect(wrapper.find('span.vote-count').text()).toEqual('21')
+})
+it('Test downvote post then upvote post action', async () => {
+    const wrapper = mount(BasePost,{
+        props: {
+            post
+        },
+        global: {
+            // OR:
+            mocks: {
+              $store: store,
+            },
+        },
+    });
+    await wrapper.find('#downvote-service').trigger('click')
+    await wrapper.find('#upvote-service').trigger('click')
+    expect(wrapper.find('span.vote-count').text()).toEqual('23')
+})
