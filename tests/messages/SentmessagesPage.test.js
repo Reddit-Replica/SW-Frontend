@@ -47,4 +47,22 @@ describe ('SentMessages', () => {
     });
     expect (wrapper.text ()).not.contain ('seem to be anything here');
   });
+
+  //--------------------------------------------------------
+  //                     Testing no message
+  //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (SentMessages, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
+  });
 });
