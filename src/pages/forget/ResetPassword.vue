@@ -84,6 +84,7 @@
 						>
 						</base-button>
 					</div>
+					<div class="separate"></div>
 					<p id="success" class="valid" v-if="success">
 						password reset successfully
 					</p>
@@ -100,7 +101,7 @@
 </template>
 
 <script>
-// @it is reset password component 
+// @it is reset password component
 export default {
 	data() {
 		return {

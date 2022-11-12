@@ -12,7 +12,7 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 
-		const responseData = response;
+		const responseData = await response.json();
 
 		if (response.status == 200) {
 			localStorage.setItem('response', response.status);
@@ -40,7 +40,7 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 
-		const responseData = response;
+		const responseData = await response.json();
 
 		if (response.status == 200) {
 			localStorage.setItem('response', response.status);
