@@ -5,9 +5,11 @@
 				src="../../../img/user-img-2.png"
 				alt="img"
 				class="img"
-				id="moderator-img"
+				:id="'moderator-img-' + index"
 			/>
-			<h5 class="heading-5" id="moderator-name">{{ moderator.username }}</h5>
+			<h5 class="heading-5" :id="'moderator-name-' + index">
+				{{ moderator.username }}
+			</h5>
 		</div>
 		<div class="time">
 			<span>{{ moderator.dateOfModeration }}</span>
@@ -32,7 +34,7 @@ export default {
 				username: '',
 				nickname: '',
 				dateOfModeration: '',
-				permissions: '',
+				permissions: [],
 			}),
 		},
 		// @vuese
@@ -40,6 +42,13 @@ export default {
 		search: {
 			type: String,
 			default: '',
+		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			required: true,
+			default: 0,
 		},
 	},
 	computed: {
