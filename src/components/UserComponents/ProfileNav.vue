@@ -180,27 +180,27 @@ a {
 	text-decoration: none;
 	text-decoration: none;
 	display: inline-block;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 	text-transform: uppercase;
 	white-space: nowrap;
 	/* word-wrap:initial; */
 }
 
 a.router-link-active {
-	color: #0079d3;
+	color: var(--color-blue-2);
 }
 
 li:has(> a.router-link-active) {
-	box-shadow: inset 0 -2px 0 0 #0079d3;
+	box-shadow: inset 0 -2px 0 0 var(--color-blue-2);
 }
 
 nav {
 	position: relative;
 	width: 100%;
-	background-color: #ffffff;
+	background-color: var(--main-white-color);
 	height: 39px;
-	border-bottom: 1px solid #edeff1;
-	border-top: 1px solid #edeff1;
+	border-bottom: 1px solid var(--color-grey-light-10);
+	border-top: 1px solid var(--color-grey-light-10);
 }
 
 nav ul:first-child {
@@ -228,17 +228,17 @@ nav ul:first-child li:not(:last-child) {
 }
 
 nav ul:first-child li:hover a {
-	color: #0079d3;
-	/* box-shadow: inset 0 -2px 0 0 #0079D3; */
+	color: var(--color-blue-2);
+	/* box-shadow: inset 0 -2px 0 0 var( --color-blue-2 ); */
 }
 
 li.active {
-	box-shadow: inset 0 -2px 0 0 #0079d3;
-	/* border-bottom: 2px solid #0079D3; */
+	box-shadow: inset 0 -2px 0 0 var(--color-blue-2);
+	/* border-bottom: 2px solid var( --color-blue-2 ); */
 }
 
 /* a.linkactive {
-  color: #0079D3;
+  color: var( --color-blue-2 );
 } */
 
 .basecontainer {
@@ -268,14 +268,14 @@ li.overflow {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 	margin: 0 5px;
 	padding: 0 8px;
 	/* font-size: 20px; */
 }
 
 li.overflow:hover {
-	color: #0079d3;
+	color: var(--color-blue-2);
 }
 
 li.overflow {
@@ -301,10 +301,10 @@ li.overflow {
 	z-index: 1000;
 	overflow: hidden;
 	border-radius: 4px;
-	border: 1px solid #edeff1;
+	border: 1px solid var(--color-grey-light-10);
 	box-shadow: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
-	color: #1c1c1c;
-	background-color: #ffffff;
+	color: var(--color-dark-3);
+	background-color: var(--main-white-color);
 	transform: translateY(1px);
 }
 
@@ -312,8 +312,8 @@ li.overflow {
 	cursor: pointer;
 	box-sizing: border-box;
 	display: block;
-	color: #1a1a1b;
-	fill: #1a1a1b;
+	color: var(--color-dark-4);
+	fill: var(--color-dark-4);
 	padding: 10px 16px;
 }
 
@@ -323,8 +323,8 @@ li.overflow {
 
 .linkbox li:hover {
 	background-color: #e5f1fa;
-	color: #1c1c1c;
-	fill: #1c1c1c;
+	color: var(--color-dark-3);
+	fill: var(--color-dark-3);
 }
 
 .linkbox {
