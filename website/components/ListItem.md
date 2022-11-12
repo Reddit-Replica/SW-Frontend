@@ -5,8 +5,9 @@
 <!-- @vuese:ListItem:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|moderator|details of moderator|`Object`|`true`|{"username":"","nickname":"","dateOfModeration":"","permissions":""}|
+|moderator|details of moderator|`Object`|`true`|{"username":"","nickname":"","dateOfModeration":"","permissions":[]}|
 |search|seacrhing value|`String`|`false`|-|
+|index|index to handle unique ids|`Number`|`true`|0|
 
 <!-- @vuese:ListItem:props:end -->
 
