@@ -588,7 +588,7 @@ a.profile-settings:hover {
 	/* margin-top: 16px; */
 	top: calc(16px + 15px);
 	left: 12px;
-	background-color: #ffffff;
+	background-color: var(--main-white-color);
 	border-radius: 6px;
 	box-sizing: border-box;
 }
@@ -599,7 +599,7 @@ a.profile-settings:hover {
 	border-radius: 4px;
 	object-fit: cover;
 	object-position: top;
-	border: 1px solid #edeff1;
+	border: 1px solid var(--color-grey-light-10);
 }
 
 .profile-name {
@@ -642,7 +642,7 @@ a.profile-settings:hover {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 18px;
-	color: #1c1c1c;
+	color: var(--color-dark-3);
 	/* margin-bottom: 8px; */
 	margin-top: 8px;
 }

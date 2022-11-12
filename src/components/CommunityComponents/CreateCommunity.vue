@@ -349,8 +349,6 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
-	//@vuese
-	//Exit emit to close create community dialog
 	emits: ['exit'],
 	data() {
 		return {
@@ -397,6 +395,8 @@ export default {
 		//Hide dialog
 		//@arg no argument
 		hidecreateCommunity() {
+			//@vuese
+			//Fire emit to close create community dialog
 			this.$emit('exit');
 		},
 		//@vuese

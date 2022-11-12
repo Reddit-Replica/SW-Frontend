@@ -60,6 +60,8 @@ import BaseDialog from '../../../BaseComponents/BaseDialog.vue';
 import BaseButton from '../../../BaseComponents/BaseButton.vue';
 import SociallinkItem from './SociallinkItem.vue';
 export default {
+	// @vuese
+	// data contain social link ( text ,imag-src, image alternate text )
 	props: {
 		data: {
 			type: Object,
@@ -270,26 +272,26 @@ button#save-button:disabled {
 	height: 36px;
 	padding: 0 8px;
 	box-sizing: border-box;
-	background-color: #ffffff;
-	color: #1c1c1c;
+	background-color: var(--main-white-color);
+	color: var(--color-dark-3);
 	width: 100%;
-	border: 1px solid #edeff1;
+	border: 1px solid var(--color-grey-light-10);
 	border-radius: 4px;
 	margin: 12px 2px;
 	outline: none;
 }
 .social-link-config-header-body input:focus {
-	border-color: #0079d3;
+	border-color: var(--color-blue-2);
 }
 /* .active-save-button {
-	background-color: #0079d3;
-	color: #ffffff;
+	background-color: var(--color-blue-2);
+	color: var(--main-white-color);
 	filter: unset;
 	cursor: unset;
 } */
 .social-link-config-header .active-save-button {
-	background-color: #0079d3;
-	color: #ffffff;
+	background-color: var(--color-blue-2);
+	color: var(--main-white-color);
 	filter: unset;
 	cursor: pointer;
 }

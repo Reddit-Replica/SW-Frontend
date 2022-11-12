@@ -5,7 +5,7 @@
 <!-- @vuese:SearchBar:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|emptyInput|if clicked in see all then value of searching should be ''|`String`|`false`|-|
+|emptyInput|if clicked in see all then value of searching should be ''|`String`|`true`|-|
 
 <!-- @vuese:SearchBar:props:end -->
 

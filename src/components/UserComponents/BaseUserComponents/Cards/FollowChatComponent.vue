@@ -53,8 +53,8 @@ export default {
 	/* border: 1px solid #ccc; */
 	overflow: visible;
 	word-wrap: break-word;
-	background-color: #0079d3;
-	color: #ffffff;
+	background-color: var(--color-blue-2);
+	color: var(--main-white-color);
 	padding: 12px;
 	font-size: 14px;
 	font-weight: 700;
@@ -96,8 +96,8 @@ export default {
 	width: 100%;
 	height: 32px;
 	background-color: #ff4500;
-	color: #ffffff;
-	fill: #ffffff;
+	color: var(--main-white-color);
+	fill: var(--main-white-color);
 	position: relative;
 	border-radius: 9999px;
 	font-size: 14px;
