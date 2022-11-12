@@ -60,6 +60,8 @@ import BaseDialog from '../../../BaseComponents/BaseDialog.vue';
 import BaseButton from '../../../BaseComponents/BaseButton.vue';
 import SociallinkItem from './SociallinkItem.vue';
 export default {
+	// @vuese
+	// data contain social link ( text ,imag-src, image alternate text )
 	props: {
 		data: {
 			type: Object,
