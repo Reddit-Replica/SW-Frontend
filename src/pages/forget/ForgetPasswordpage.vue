@@ -128,7 +128,7 @@
 <script>
 import TheRecaptcha from '../../components/TheRecaptcha.vue';
 // @vuese
-// @it is forget password component 
+// @it is forget password component
 export default {
 	components: { TheRecaptcha },
 	data() {
