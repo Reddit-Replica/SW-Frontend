@@ -26,3 +26,13 @@
 <!-- @vuese:TheHeader:methods:end -->
 
 
+## Computed
+
+<!-- @vuese:TheHeader:computed:start -->
+|Computed|Type|Description|From Store|
+|---|---|---|---|
+|userName|`string`|Get usename|No|
+
+<!-- @vuese:TheHeader:computed:end -->
+
+

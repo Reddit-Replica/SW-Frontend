@@ -55,6 +55,7 @@ export default {
 	computed: {
 		// @vuese
 		//return inbox messages
+		// @type object
 		inboxMessages() {
 			return this.$store.getters['messages/inboxMessages'];
 		},
@@ -62,6 +63,7 @@ export default {
 	watch: {
 		// @vuese
 		//watch compose messages if it's empty
+		// @arg no argument
 		inboxMessages() {
 			if (this.inboxMessages.length == 0) this.noMessages = true;
 		},

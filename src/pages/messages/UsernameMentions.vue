@@ -36,6 +36,7 @@ export default {
 	computed: {
 		// @vuese
 		//return user mentions
+		// @type object
 		userMentions() {
 			return this.$store.getters['messages/userMentions'];
 		},
@@ -43,6 +44,7 @@ export default {
 	watch: {
 		// @vuese
 		//watchmentions if it's empty
+		// @arg no argument
 		userMentions() {
 			if (this.userMentions.length == 0) this.noMessages = true;
 		},

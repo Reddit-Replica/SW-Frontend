@@ -36,21 +36,25 @@ export default {
 	computed: {
 		// @vuese
 		// return unread messages bath
+		// @type boolean
 		unreadCom() {
 			return this.$route.path === '/message/unread';
 		},
 		// @vuese
-		// return all messages that sent or received bath
+		// return if all messages that sent or received path == current path
+		// @type boolean
 		messagesCom() {
 			return this.$route.path === '/message/messages';
 		},
 		// @vuese
-		// return post replies bath
+		// return if post replies bath == current path
+		// @type boolean
 		selfreplyCom() {
 			return this.$route.path === '/message/selfreply';
 		},
 		// @vuese
-		// return mentions bath
+		// return if mentions bath == current path
+		// @type boolean
 		mentionsCom() {
 			return this.$route.path === '/message/mentions';
 		},

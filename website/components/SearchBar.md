@@ -35,7 +35,7 @@
 <!-- @vuese:SearchBar:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|emptyInput|watch if clicked in see all then value of searching should be ''|-|
+|emptyInput|watch if clicked in see all then value of searching should be ''|no parameters|
 
 <!-- @vuese:SearchBar:watch:end -->
 

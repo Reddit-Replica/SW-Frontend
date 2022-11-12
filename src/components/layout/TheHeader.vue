@@ -530,6 +530,15 @@ export default {
 			homeSubMenuDisplay: false,
 		};
 	},
+	computed: {
+		// @vuese
+		// Get usename
+		// @type string
+		userName() {
+			// return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
+		},
+	},
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
@@ -578,14 +587,6 @@ export default {
 				console.log('error');
 				// this.error = err;
 			}
-		},
-	},
-
-	computed: {
-		// Get usename
-		userName() {
-			// return this.$store.getters.getUserName;
-			return localStorage.getItem('userName');
 		},
 	},
 };
