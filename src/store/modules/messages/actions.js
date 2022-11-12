@@ -343,4 +343,29 @@ export default {
 			throw error;
 		}
 	},
+	async loadSuggestedSender(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/suggested-sender', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+			},
+		});
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+
+		const suggests = [];
+
+		for (const key in responseData) {
+			const suggest = {
+				text: responseData[key].children[0].text,
+			};
+			suggests.push(suggest);
+		}
+		context.commit('setSuggestedSender', suggests);
+	},
 };

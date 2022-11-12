@@ -258,6 +258,58 @@
       "sendAt": "",
       "subject": "rtyuiop",
       "id": 13
+    },
+    {
+      "text": "sdfg",
+      "senderUsername": {
+        "text": "asmaa first subbreddit"
+      },
+      "receiverUsername": "adelasmaa333@gmail.com",
+      "sendAt": "",
+      "subject": "wfgh",
+      "id": 14
+    },
+    {
+      "text": "hjk",
+      "senderUsername": "username-value",
+      "receiverUsername": "rtyui",
+      "sendAt": "",
+      "subject": "hj",
+      "id": 15
+    },
+    {
+      "text": "uio",
+      "senderUsername": {
+        "text": "asmaa first subbreddit"
+      },
+      "receiverUsername": "uio",
+      "sendAt": "",
+      "subject": "uio",
+      "id": 16
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "username-value",
+      "receiverUsername": "dfghjkl",
+      "sendAt": "",
+      "subject": "rtyui",
+      "id": 17
+    },
+    {
+      "text": "ghjkl",
+      "senderUsername": "asmaa second subbreddit",
+      "receiverUsername": "rtyuil",
+      "sendAt": "",
+      "subject": "tyuio;",
+      "id": 18
+    },
+    {
+      "text": "ghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "dfghjk",
+      "sendAt": "",
+      "subject": "g;",
+      "id": 19
     }
   ],
   "inbox": [
@@ -459,6 +511,22 @@
           "receiverUsername": "/u/menahosam",
           "subject": "hi",
           "sendAt": "2019-08-24T14:15:22Z"
+        }
+      ]
+    }
+  ],
+  "suggested-sender": [
+    {
+      "children": [
+        {
+          "text": "asmaa first subbreddit"
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "text": "asmaa second subbreddit"
         }
       ]
     }
