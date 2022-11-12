@@ -1,10 +1,11 @@
 {
-  "/message/compose": "/compose",
-  "/message/inbox": "/inbox",
-  "/message/unread": "/unread",
-  "/message/mentions": "/mentions",
-  "/message/messages": "/messages",
-  "/message/post-reply": "/post-reply",
-  "/message/sent": "/sent",
-  "/r/subredditName": "/subredditName"
+	"/message/compose": "/compose",
+	"/message/inbox": "/inbox",
+	"/message/unread": "/unread",
+	"/message/mentions": "/mentions",
+	"/message/messages": "/messages",
+	"/message/post-reply": "/post-reply",
+	"/message/sent": "/sent",
+	"/r/subredditName": "/subredditName",
+	"/r/asmaaSubredditName/about/moderators": "/moderator-list"
 }

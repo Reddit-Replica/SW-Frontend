@@ -153,6 +153,9 @@ export default {
 			green: '#0dd3bb',
 		};
 	},
+	//@vuese
+	//Show/Hide grow your community part
+	//@arg no argument
 	methods: {
 		toggleGrowBody() {
 			this.growBodyShown = !this.growBodyShown;

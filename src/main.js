@@ -55,7 +55,7 @@ app.use(store);
 // 		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
 // });
 app.use(GAuth, {
-	clientId: `515357456544-sukpj5pufir279criuff4tird0jd0b0n.apps.googleusercontent.com`,
+	clientId: `479140215540-o5bmre9kktfq6d8v54a8o031a3usff2m.apps.googleusercontent.com`,
 	scope: 'email',
 	prompt: 'consent',
 	plugin_name: `Web client 1  Readit`,

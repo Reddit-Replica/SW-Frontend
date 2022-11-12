@@ -84,6 +84,8 @@ export default {
 	--color-green: rgb(62, 231, 62);
 	--color-green-2: #00a050;
 
+	--color-background: #dae0e6;
+
 	/* shadow variables */
 	--shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
 	--shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
@@ -163,8 +165,8 @@ body {
 	color: var(--color-grey-dark-2);
 	background-image: linear-gradient(
 		to right bottom,
-		var(--color-grey-light-2),
-		var(--color-grey-light-4)
+		var(--color-background),
+		var(--color-background)
 	);
 	background-size: cover;
 	background-repeat: no-repeat;

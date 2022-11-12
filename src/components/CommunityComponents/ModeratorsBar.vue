@@ -32,7 +32,9 @@
 				>
 			</div>
 			<div class="box-body flex-end text text-view" id="view-mods">
-				<router-link to="/message">VIEW ALL MODERATORS</router-link>
+				<router-link to="/r/subredditName/about/moderators"
+					>VIEW ALL MODERATORS</router-link
+				>
 			</div>
 		</div>
 	</div>
@@ -41,6 +43,8 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Subreddit moderators list
 		moderators: {
 			type: Array,
 			default: () => [],

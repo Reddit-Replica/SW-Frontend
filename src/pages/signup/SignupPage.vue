@@ -31,13 +31,18 @@
 								<span class="page-divider-line"></span>
 							</div>
 						</div>
-
 						<fieldset class="email-field input-box">
 							<input
 								id="email-input"
 								v-model="email"
 								type="text"
-								:class="messageErrorShowEmail ? 'red-border' : ''"
+								:class="
+									!messageErrorShowEmail
+										? ''
+										: !checkedEmail
+										? 'red-border'
+										: 'blue-border'
+								"
 								required="required"
 								@focusout="email_available"
 							/>
@@ -55,6 +60,7 @@
 							<button
 								class="submit-signup continue-button"
 								type="submit"
+								id="button-Continue"
 								@click.prevent="handleSubmit"
 							>
 								Continue
@@ -83,12 +89,18 @@
 				</p>
 			</div>
 
-			<div class="div-2">
+			<div class="div-2" id="div-2">
 				<form>
 					<fieldset class="user-pass-box input-box">
 						<input
 							id="regUsername"
-							:class="messageErrorShowUser ? 'red-border' : ''"
+							:class="
+								messageErrorShowUser
+									? ''
+									: !checkedUser
+									? 'red-border'
+									: 'blue-border'
+							"
 							type="text"
 							v-model="username"
 							required="required"
@@ -113,7 +125,13 @@
 							type="password"
 							required="required"
 							v-model="password"
-							:class="messageErrorShowPass ? 'red-border' : ''"
+							:class="
+								!messageErrorShowPass
+									? ''
+									: !checkedPass
+									? 'red-border'
+									: 'blue-border'
+							"
 							@focusout="validatepass"
 						/>
 						<span class="animation-email usr-pass-anmie">Password</span>
@@ -143,7 +161,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="bottom-div" v-if="bottom_div">
+		<div class="bottom-div" v-if="bottom_div" id="bottom-div">
 			<button id="back-button" class="back-bottom" @click="togglepages">
 				Back
 			</button>
@@ -198,7 +216,7 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//Validate Email
+		//Validate Email for having (@(gmail).(com) in their domain)
 		validatEmail(value) {
 			if (
 				/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value) ||
@@ -209,33 +227,33 @@ export default {
 				this.showSignemail = true;
 				this.checkedEmail = false;
 				this.messageErrorShowEmail = true;
-				document.querySelector('#email-input').style.border =
-					'0.5px solid #ea0027';
+				// document.querySelector('#email-input').style.border =
+				// 	'0.5px solid #ea0027';
 			} else {
 				this.messageErrorShowEmail = false;
 				this.showSignemail = true;
 				this.checkedEmail = true;
-				document.querySelector('#email-input').style.border =
-					'0.5px solid #0079d3';
+				// document.querySelector('#email-input').style.border =
+				// 	'0.5px solid #0079d3';
 				// check_email = true;
 			}
 		},
 		// @vuese
-		//Validate new password to useres
+		//Validate new password to users (not to short)
 		validatepass() {
 			if (this.password.length < 8) {
 				this.messageErrorShowPass = true;
 				this.error_message_pass = 'Password must be at least 8 characters long';
 				this.showSignPass = true;
 				this.checkedPass = false;
-				document.querySelector('#reg-password').style.border =
-					'0.5px solid #ea0027';
+				// document.querySelector('#reg-password').style.border =
+				// 	'0.5px solid #ea0027';
 			} else {
 				this.messageErrorShowPass = false;
 				this.showSignPass = true;
 				this.checkedPass = true;
-				document.querySelector('#reg-password').style.border =
-					'0.5px solid #0079d3';
+				// document.querySelector('#reg-password').style.border =
+				// 	'0.5px solid #0079d3';
 				// check_pass = true;
 			}
 		},
@@ -256,26 +274,26 @@ export default {
 			this.bottom_div = !this.bottom_div;
 		},
 		// @vuese
-		//Validate User Input
+		//Validate User Input (Not too long or too Short)
 		validateUser(value) {
 			this.showSignuser = false;
 			this.messageErrorShowUser = false;
 			this.showSignPass = false;
 			this.messageErrorShowPass = false;
-			document.querySelector('#regUsername').style.border =
-				'1px solid rgba(0, 0, 0, 0.1)';
+			// document.querySelector('#regUsername').style.border =
+			// 	'1px solid rgba(0, 0, 0, 0.1)';
 			if (value.length < 3 || value.length > 20) {
 				this.showSignuser = true;
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
 				this.error_message_user =
 					'Username must be between 3 and 20 characters';
-				document.querySelector('#regUsername').style.border =
-					'0.5px solid #ea0027';
+				// document.querySelector('#regUsername').style.border =
+				// 	'0.5px solid #ea0027';
 			}
 		},
 		//@vuese
-		//Validate User available
+		//Check if User is available or not
 		async usr_available() {
 			const actionPayload = {
 				username: this.username,
@@ -288,8 +306,8 @@ export default {
 				this.messageErrorShowUser = false;
 				this.showSignuser = true;
 				this.checkedUser = true;
-				document.querySelector('#regUsername').style.border =
-					'0.5px solid #0079d3';
+				// document.querySelector('#regUsername').style.border =
+				// 	'0.5px solid #0079d3';
 			} catch (err) {
 				const response = localStorage.getItem('response');
 				console.log(response);
@@ -297,8 +315,8 @@ export default {
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
 				this.error_message_user = 'That username is already taken';
-				document.querySelector('#regUsername').style.border =
-					'0.5px solid #ea0027';
+				// document.querySelector('#regUsername').style.border =
+				// 	'0.5px solid #ea0027';
 				// this.error = err;
 			}
 		},
@@ -306,7 +324,8 @@ export default {
 			console.log('verified 2');
 			this.buttonDisabled = false;
 		},
-
+		//@vuese
+		//Check if Email is available or not
 		async email_available() {
 			const actionPayload = {
 				email: this.email,
@@ -320,8 +339,8 @@ export default {
 				this.showSignemail = true;
 				this.checkused = true;
 				this.checkedEmail = true;
-				document.querySelector('#email-input').style.border =
-					'0.5px solid #0079d3';
+				// document.querySelector('#email-input').style.border =
+				// 	'0.5px solid #0079d3';
 			} catch (err) {
 				const response = localStorage.getItem('response');
 				console.log(response);
@@ -331,8 +350,8 @@ export default {
 				this.checkedEmail = false;
 				this.messageErrorShowEmail = true;
 				this.checkused = false;
-				document.querySelector('#email-input').style.border =
-					'0.5px solid #ea0027';
+				// document.querySelector('#email-input').style.border =
+				// 	'0.5px solid #ea0027';
 				// this.error = err;
 			}
 		},
