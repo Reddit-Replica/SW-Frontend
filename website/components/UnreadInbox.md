@@ -5,7 +5,7 @@
 <!-- @vuese:UnreadInbox:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadUnreadMessages|load unread messages from the store|-|
+|loadUnreadMessages|load unread messages from the store|no argument|
 
 <!-- @vuese:UnreadInbox:methods:end -->
 

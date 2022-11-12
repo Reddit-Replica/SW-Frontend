@@ -259,6 +259,7 @@ export default {
 		},
 		// @vuese
 		//handle unread action
+		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
 		},
@@ -279,6 +280,7 @@ export default {
 		},
 		// @vuese
 		//expand or collapse message details
+		// @arg The argument is a string value representing if its expand or collapse
 		expand(action) {
 			if (action == 'expand') {
 				this.expandAll = true;

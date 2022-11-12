@@ -49,6 +49,7 @@ export default {
 	methods: {
 		// @vuese
 		//load messages from the store
+		// @arg no argument
 		async loadSentMessages() {
 			try {
 				await this.$store.dispatch('messages/loadSentMessages', {

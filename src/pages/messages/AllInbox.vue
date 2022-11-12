@@ -69,6 +69,7 @@ export default {
 	methods: {
 		// @vuese
 		//load compose messages from the store
+		// @arg no argument
 		async loadInboxMessages() {
 			try {
 				await this.$store.dispatch('messages/loadInboxMessages', {

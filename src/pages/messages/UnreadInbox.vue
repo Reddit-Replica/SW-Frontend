@@ -48,6 +48,7 @@ export default {
 	methods: {
 		// @vuese
 		//load unread messages from the store
+		// @arg no argument
 		async loadUnreadMessages() {
 			try {
 				await this.$store.dispatch('messages/loadUnreadMessages', {

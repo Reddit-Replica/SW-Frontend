@@ -15,12 +15,13 @@
 <!-- @vuese:TheHeader:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|showSettingsSubMenu|Used to show or hide settings menu|-|
-|showHomeSubMenu|Used to show or hide home menu|-|
-|goToSettings|Used to go to settings page|-|
-|goToHome|Used to go to Home page|-|
-|goToSubmit|Used to go to submit page|-|
-|goToUserPage|Used to go to user page|-|
+|showSettingsSubMenu|Used to show or hide settings menu|no argument|
+|showHomeSubMenu|Used to show or hide home menu|no argument|
+|goToSettings|Used to go to settings page|no argument|
+|goToHome|Used to go to Home page|no argument|
+|goToSubmit|Used to go to submit page|no argument|
+|goToUserPage|Used to go to user page|no argument|
+|handlelogout|Used handle logout action|no argument|
 
 <!-- @vuese:TheHeader:methods:end -->
 
