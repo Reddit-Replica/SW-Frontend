@@ -139,13 +139,13 @@ export default {
 		},
 		// @vuese
 		//change title of Who can send you chat requests menu
-		// @arg The argument is a string value representing choosen title
+		// @arg The argument is a string value representing choosen title in first sub menu
 		changeFirstTitle(title) {
 			this.titleFirst = title;
 		},
 		// @vuese
 		//change title of Who can send you private messages
-		// @arg The argument is a string value representing choosen title
+		// @arg The argument is a string value representing choosen title in second sub menu
 		changeSecondTitle(title) {
 			this.titleSecond = title;
 		},

@@ -15,7 +15,7 @@
 <!-- @vuese:SearchBar:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|enterSearch|-|-|
+|enterSearch|Fire when entered search value|The argument is a string value representing search input|
 
 <!-- @vuese:SearchBar:events:end -->
 
