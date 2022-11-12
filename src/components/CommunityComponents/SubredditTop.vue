@@ -63,12 +63,14 @@ export default {
 	},
 	methods: {
 		//@vuese
-		//Toogle Joining and leaving a subreddit
+		//Toogle Joining and leaving a subreddit button
+		//@arg no argument
 		toogleJoin() {
 			this.isJoined = !this.isJoined;
 		},
 		//@vuese
-		//Change button text from Joined to Lreave when hovering on button
+		//Change button text from Joined to Leave when hovering on button
+		//@arg text to be written inside button
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},

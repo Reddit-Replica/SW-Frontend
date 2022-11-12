@@ -854,6 +854,10 @@ export default {
 		//@vuese
 		//upvote on post
 		async upvote() {
+			if (this.downClicked) {
+				this.downClicked = false;
+				this.counter++;
+			}
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
@@ -871,14 +875,14 @@ export default {
 				this.upClicked = false;
 				this.counter--;
 			}
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
 		},
 		//@vuese
 		//downvote on post
 		async downvote() {
+			if (this.upClicked) {
+				this.upClicked = false;
+				this.counter--;
+			}
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
@@ -895,10 +899,6 @@ export default {
 			} else {
 				this.downClicked = false;
 				this.counter++;
-			}
-			if (this.upClicked) {
-				this.upClicked = false;
-				this.counter--;
 			}
 		},
 		//@vuese
@@ -1426,9 +1426,11 @@ textarea:focus {
 	line-height: 16px;
 	padding: 4px 8px;
 	color: white;
-	background-color: var(--color-pink);
 	display: block;
 	margin-left: auto;
+}
+.comment-button:not(:disabled) {
+	background-color: var(--color-pink);
 }
 .comment-submit {
 	padding: 24px 0px;

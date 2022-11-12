@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import store from '../../src/store/index.js';
 
 import { describe, it, expect } from 'vitest';
-describe('SocialLinkStatic.vue', () => {
+describe('SocialLinkStatic.vue', async () => {
 	it('should renders if show is true ', () => {
 		const wrapper = mount(SocialLinks, {
 			props: {
@@ -50,7 +50,7 @@ describe('SocialLinkStatic.vue', () => {
 		const byId = wrapper.find('#static-Facebook');
 		expect(byId.text()).toBe('Facebook');
 	});
-	it('check for rendering social link items ', async () => {
+	it('check for rendering social link items 2 ', async () => {
 		const wrapper = mount(SocialLinks, {
 			props: {
 				show: true,
@@ -65,20 +65,4 @@ describe('SocialLinkStatic.vue', () => {
 		const byId = wrapper.find('#static-Twitter');
 		expect(byId.text()).toBe('Twitter');
 	});
-	it('check for rendering social link items ', async () => {
-		const wrapper = mount(SocialLinks, {
-			props: {
-				show: true,
-			},
-			global: {
-				// OR:
-				mocks: {
-					$store: store,
-				},
-			},
-		});
-		const byId = wrapper.find('#static-Twitter');
-		await byId.trigger('click');
-		expect(wrapper.exists()).toBe(true);
 	});
-});
