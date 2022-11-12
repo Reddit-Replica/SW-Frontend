@@ -113,9 +113,6 @@ export default {
 		},
 	},
 	methods: {
-		// hide(index) {
-		// 	this.shown[index] = !this.shown[index];
-		// },
 		//@vuese
 		//Hide element when clicking on exit icon
 		//@arg no argument

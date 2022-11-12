@@ -54,18 +54,26 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { TopCommunity, BaseButton },
 	props: {
+		//@vuese
+		//Top communities Title
 		topCommunitiesCaption: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Route to Top communities Page
 		topCommunitiesLink: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Top communities Background image URL
 		topCommunitiesImage: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Top communities List
 		topCommunities: {
 			type: Object,
 			default() {
@@ -78,6 +86,8 @@ export default {
 				};
 			},
 		},
+		//@vuese
+		//Top communities categories recommendations
 		topCommunitiesRecommendations: {
 			type: Object,
 			default() {
@@ -90,6 +100,8 @@ export default {
 		},
 	},
 	computed: {
+		//@vuese
+		//Set background image of top communities bar
 		style() {
 			return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
 		},
