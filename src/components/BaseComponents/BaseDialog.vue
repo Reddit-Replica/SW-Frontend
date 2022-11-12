@@ -36,25 +36,35 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Is dialog shown or not
 		show: {
 			type: Boolean,
 			required: true,
 		},
+		//@vuese
+		//Title in dialog header
 		title: {
 			type: String,
 			required: false,
 			default: '',
 		},
+		//@vuese
+		//Is dialog title aligned to center or to left by default
 		center: {
 			type: Boolean,
 			required: false,
 			default: false,
 		},
+		//@vuese
+		//Style dialog
 		dialogClass: {
 			type: String,
 			required: false,
 			default: '',
 		},
+		//@vuese
+		//Is dialog background transparent or not
 		transparentBackground: {
 			type: Boolean,
 			required: false,
@@ -63,9 +73,15 @@ export default {
 	},
 	emits: ['close'],
 	methods: {
+		//@vuese
+		//Close dialog
 		tryClose() {
+			//@vuese
+			//Fire exit event when clicking on exit icon
 			this.$emit('close');
 		},
+		//@vuese
+		//Check if screen is mobile
 		isMobile() {
 			return screen.width <= 780;
 		},
