@@ -533,34 +533,43 @@ export default {
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
+		// @arg no argument
 		showSettingsSubMenu() {
 			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
 		},
 		// @vuese
 		// Used to show or hide home menu
+		// @arg no argument
 		showHomeSubMenu() {
 			this.homeSubMenuDisplay = !this.homeSubMenuDisplay;
 		},
 		// @vuese
 		// Used to go to settings page
+		// @arg no argument
 		goToSettings() {
 			this.$router.push('/settings');
 		},
 		// @vuese
 		// Used to go to Home page
+		// @arg no argument
 		goToHome() {
 			this.$router.push('/');
 		},
 		// @vuese
 		// Used to go to submit page
+		// @arg no argument
 		goToSubmit() {
 			this.$router.push('/submit');
 		},
 		// @vuese
 		// Used to go to user page
+		// @arg no argument
 		goToUserPage() {
 			this.$router.push(`/user/${this.$store.getters.getUserName}`);
 		},
+		// @vuese
+		// Used handle logout action
+		// @arg no argument
 		async handlelogout() {
 			try {
 				await this.$store.dispatch('logout_handle');
@@ -571,7 +580,9 @@ export default {
 			}
 		},
 	},
+
 	computed: {
+		// Get usename
 		userName() {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');

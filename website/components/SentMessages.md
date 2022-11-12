@@ -5,7 +5,7 @@
 <!-- @vuese:SentMessages:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadSentMessages|load messages from the store|-|
+|loadSentMessages|load messages from the store|no argument|
 
 <!-- @vuese:SentMessages:methods:end -->
 

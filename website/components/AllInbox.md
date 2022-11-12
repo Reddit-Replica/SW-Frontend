@@ -5,7 +5,7 @@
 <!-- @vuese:AllInbox:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadInboxMessages|load compose messages from the store|-|
+|loadInboxMessages|load compose messages from the store|no argument|
 
 <!-- @vuese:AllInbox:methods:end -->
 

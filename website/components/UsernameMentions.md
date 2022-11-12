@@ -5,7 +5,7 @@
 <!-- @vuese:UsernameMentions:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadUserMentions|load user mentions from the store|-|
+|loadUserMentions|load user mentions from the store|no argument|
 
 <!-- @vuese:UsernameMentions:methods:end -->
 

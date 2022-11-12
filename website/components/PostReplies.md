@@ -5,7 +5,7 @@
 <!-- @vuese:PostReplies:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadPostReplies|load post replies from the store|-|
+|loadPostReplies|load post replies from the store|no argument|
 
 <!-- @vuese:PostReplies:methods:end -->
 

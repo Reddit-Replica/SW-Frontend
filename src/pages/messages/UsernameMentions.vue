@@ -50,6 +50,7 @@ export default {
 	methods: {
 		// @vuese
 		//load user mentions from the store
+		// @arg no argument
 		async loadUserMentions() {
 			try {
 				await this.$store.dispatch('messages/loadUserMentions', {

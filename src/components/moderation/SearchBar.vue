@@ -61,11 +61,15 @@
 export default {
 	emits: ['enterSearch'],
 	props: {
+		// @vuese
+		//if clicked in see all then value of searching should be ''
 		emptyInput: {
 			type: String,
 		},
 	},
 	watch: {
+		// @vuese
+		//watch if clicked in see all then value of searching should be ''
 		emptyInput() {
 			if (this.emptyInput == '') {
 				this.search = '';
@@ -78,6 +82,9 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//used to take action in entering value of search
+		// @arg no argument
 		enterSearch() {
 			this.$emit('enterSearch', this.search);
 		},

@@ -50,6 +50,7 @@ export default {
 	methods: {
 		// @vuese
 		//load post replies from the store
+		// @arg no argument
 		async loadPostReplies() {
 			try {
 				await this.$store.dispatch('messages/loadPostReplies', {

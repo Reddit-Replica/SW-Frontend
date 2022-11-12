@@ -16,14 +16,20 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//titles in sub menu
 		titles: {
 			type: Array,
 			required: true,
 		},
+		// @vuese
+		//should sub menu display or not
 		display: {
 			type: Boolean,
 			required: true,
 		},
+		// @vuese
+		//choosen title
 		clickedProp: {
 			type: String,
 			required: true,

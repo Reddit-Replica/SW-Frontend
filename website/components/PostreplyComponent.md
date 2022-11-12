@@ -20,9 +20,9 @@
 |removeAction|toggle remove action|The argument is a string value representing if user click ok|
 |blockAction|handle block action|The argument is a string value representing if user click ok|
 |spamAction|handle spam action|The argument is a string value representing if user click ok|
-|upvote|handle upvote action|-|
-|downvote|handle downvote action|-|
-|unreadAction|handle unread action|-|
+|upvote|handle upvote action|no argument|
+|downvote|handle downvote action|no argument|
+|unreadAction|handle unread action|no argument|
 
 <!-- @vuese:PostreplyComponent:methods:end -->
 

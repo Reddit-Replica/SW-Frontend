@@ -100,6 +100,7 @@ export default {
 	methods: {
 		// @vuese
 		//load moderators list from the store
+		// @arg no argument
 		async loadListOfModerators() {
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
@@ -127,6 +128,7 @@ export default {
 		},
 		// @vuese
 		//show all list of moderators
+		// @arg no argument
 		seeAll() {
 			this.search = '';
 			this.noItems = false;

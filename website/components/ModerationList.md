@@ -5,9 +5,9 @@
 <!-- @vuese:ModerationList:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadListOfModerators|load moderators list from the store|-|
+|loadListOfModerators|load moderators list from the store|no argument|
 |enterSearch|access value of search|The argument is a string value representing search input|
-|seeAll|show all list of moderators|-|
+|seeAll|show all list of moderators|no argument|
 
 <!-- @vuese:ModerationList:methods:end -->
 
