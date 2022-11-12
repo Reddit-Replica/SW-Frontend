@@ -100,6 +100,7 @@
 </template>
 
 <script>
+// @it is reset password component 
 export default {
 	data() {
 		return {

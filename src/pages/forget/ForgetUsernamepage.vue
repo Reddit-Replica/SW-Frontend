@@ -81,6 +81,7 @@
 
 <script>
 import TheRecaptcha from '../../components/TheRecaptcha.vue';
+// @it is forget username component 
 export default {
 	data() {
 		return {
