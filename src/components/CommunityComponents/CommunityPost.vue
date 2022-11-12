@@ -351,27 +351,32 @@ export default {
 	methods: {
 		//@vuese
 		//Check hovering on up vote icon
+		//@arg boolen to check if hovering/clickig or not
 		setHover1(shown) {
 			this.isHover1 = shown;
 		},
 		//@vuese
 		//Check hovering on down vote icon
+		//@arg boolen to check if hovering/clickig or not
 		setHover2(shown) {
 			this.isHover2 = shown;
 		},
 		//@vuese
 		//Show/Hide votes up count
+		//@arg boolen to choose showing or hiding up votes
 		toggleVotesUp(shown) {
 			this.votesUpShown = shown;
 		},
 		//@vuese
 		//Show/Hide icons list
+		//@arg no argument
 		toggleIconsList() {
 			this.iconsListShown = !this.iconsListShown;
 		},
 
 		//@vuese
 		//Increase votes up count
+		//@arg no argument
 		voteUp() {
 			this.setHover1(true);
 			this.setHover2(false);
@@ -380,6 +385,7 @@ export default {
 		},
 		//@vuese
 		//Increase votes down count
+		//@arg no argument
 		voteDown() {
 			this.setHover2(true);
 			this.setHover1(false);
