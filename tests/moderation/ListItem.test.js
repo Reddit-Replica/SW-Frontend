@@ -23,7 +23,7 @@ describe ('ListItem.vue', () => {
   //                     Testing content page
   //--------------------------------------------------------
 
-  it ('Testing the sender name is correct', () => {
+  it ('Testing the moderator name is correct', () => {
     const wrapper = mount (ListItem, {
       props: {
         moderator,
@@ -41,53 +41,37 @@ describe ('ListItem.vue', () => {
     );
   });
 
-  // it ('Testing the reciever name is correct', () => {
-  //   const wrapper = mount (AllinboxComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('#message-receiver-0').text ()).contain (
-  //     '/u/asmaaadel0'
-  //   );
-  // });
+  it ('Testing the date of moderation name is correct', () => {
+    const wrapper = mount (ListItem, {
+      props: {
+        moderator,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('.time').text ()).contain (
+      '2 years ago'
+    );
+  });
 
-  // it ('Testing subject is correct', () => {
-  //   const wrapper = mount (AllinboxComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('.subject-text').text ()).contain ('hi');
-  // });
-
-  // it ('Testing text message is correct', () => {
-  //   const wrapper = mount (AllinboxComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
-  // });
+  it ('Testing permissions is correct', () => {
+    const wrapper = mount (ListItem, {
+      props: {
+        moderator,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('.permissions').text ()).contain ('everything');
+  });
 });
