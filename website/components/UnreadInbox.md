@@ -5,7 +5,7 @@
 <!-- @vuese:UnreadInbox:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadUnreadMessages|load unread messages from the store|-|
+|loadUnreadMessages|load unread messages from the store|no argument|
 
 <!-- @vuese:UnreadInbox:methods:end -->
 
@@ -15,7 +15,7 @@
 <!-- @vuese:UnreadInbox:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|unreadMessages|-|return unread messages|Yes|
+|unreadMessages|`object`|return unread messages|Yes|
 
 <!-- @vuese:UnreadInbox:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:UnreadInbox:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|unreadMessages|watch unread messages if it's empty|-|
+|unreadMessages|watch unread messages if it's empty|no argument|
 
 <!-- @vuese:UnreadInbox:watch:end -->
 

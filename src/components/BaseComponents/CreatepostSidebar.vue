@@ -45,11 +45,13 @@ export default {
 	methods: {
 		// @vuese
 		// Used to change router to submit page
+		// @arg no argument
 		goToSubmit() {
 			this.$router.push('/submit');
 		},
 		// @vuese
 		// Used to show create community popup
+		// @arg no argument
 		showCreateCommunity() {
 			this.createCommunityShown = !this.createCommunityShown;
 		},

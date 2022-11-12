@@ -16,7 +16,7 @@
 <!-- @vuese:ListItem:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|show|-|at searching check if it is the value of seacrhing or not|No|
+|show|`boolean`|at searching check if it is the value of seacrhing or not|No|
 
 <!-- @vuese:ListItem:computed:end -->
 

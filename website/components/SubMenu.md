@@ -5,9 +5,9 @@
 <!-- @vuese:SubMenu:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|titles|-|`Array`|`true`|-|
-|display|-|`Boolean`|`true`|-|
-|clickedProp|-|`String`|`true`|-|
+|titles|titles in sub menu|`Array`|`true`|-|
+|display|should sub menu display or not|`Boolean`|`true`|-|
+|clickedProp|choosen title|`String`|`true`|-|
 
 <!-- @vuese:SubMenu:props:end -->
 

@@ -221,6 +221,8 @@ export default {
 			isRead: this.message.isRead,
 		};
 	},
+	// @vuese
+	//decide if background color in  white or grey depends on if count even or odd
 	beforeMount() {
 		if (this.count % 2 == 0) {
 			this.backcolor = 'white';
@@ -272,6 +274,7 @@ export default {
 		},
 		// @vuese
 		//handle upvote action
+		// @arg no argument
 		upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
@@ -284,6 +287,7 @@ export default {
 		},
 		// @vuese
 		//handle downvote action
+		// @arg no argument
 		downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
@@ -296,6 +300,7 @@ export default {
 		},
 		// @vuese
 		//handle unread action
+		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
 		},
