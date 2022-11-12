@@ -32,9 +32,7 @@
 							:class="!checkedEmail || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
-					<p 
-					id="invalidEmail"
-					class="invalid" v-if="invalidEmail">
+					<p id="invalidEmail" class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -50,13 +48,10 @@
 						</base-button>
 					</div>
 					<div class="separate"></div>
-					<p 
-					id="error" class="invalid" v-if="!success">
+					<p id="error" class="invalid" v-if="!success">
 						{{ error }}
 					</p>
-					<p
-					id="success"
-					class="valid" v-if="success">
+					<p id="success" class="valid" v-if="success">
 						Thanks! If there are any Reddit accounts associated with that email
 						address, you'll get an email with your username(s) shortly.
 					</p>
@@ -102,7 +97,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate email
-		// @arg The argument is a string value representing email 
+		// @arg The argument is a string value representing email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -151,7 +146,7 @@ export default {
 	watch: {
 		// @vuese
 		// watch emailAddress
-		// @arg The argument is a string value representing username 
+		// @arg The argument is a string value representing username
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);
