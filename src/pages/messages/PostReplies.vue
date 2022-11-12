@@ -36,6 +36,7 @@ export default {
 	computed: {
 		// @vuese
 		//return post replies
+		// @type object
 		postReplies() {
 			return this.$store.getters['messages/postReplies'];
 		},
@@ -43,6 +44,7 @@ export default {
 	watch: {
 		// @vuese
 		//watch post replies if it's empty
+		// @arg no argument
 		postReplies() {
 			if (this.postReplies.length == 0) this.noMessages = true;
 		},

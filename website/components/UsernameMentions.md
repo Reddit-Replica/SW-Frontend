@@ -15,7 +15,7 @@
 <!-- @vuese:UsernameMentions:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|userMentions|-|return user mentions|Yes|
+|userMentions|`object`|return user mentions|Yes|
 
 <!-- @vuese:UsernameMentions:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:UsernameMentions:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|userMentions|watchmentions if it's empty|-|
+|userMentions|watchmentions if it's empty|no argument|
 
 <!-- @vuese:UsernameMentions:watch:end -->
 

@@ -30,8 +30,8 @@
 <!-- @vuese:MessagesComponent:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|getUserName|-|get username from store|No|
-|ifMessageRecieved|-|check if user is reciever or sender|No|
+|getUserName|`string`|get username from store|No|
+|ifMessageRecieved|`boolean`|check if user is reciever or sender|No|
 
 <!-- @vuese:MessagesComponent:computed:end -->
 

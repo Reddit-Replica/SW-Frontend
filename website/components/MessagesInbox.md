@@ -15,7 +15,7 @@
 <!-- @vuese:MessagesInbox:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|userMessages|-|return all messages sent or recieved|Yes|
+|userMessages|`object`|return all messages sent or recieved|Yes|
 
 <!-- @vuese:MessagesInbox:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:MessagesInbox:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|userMessages|watch messages if it's empty|-|
+|userMessages|watch messages if it's empty|no argument|
 
 <!-- @vuese:MessagesInbox:watch:end -->
 

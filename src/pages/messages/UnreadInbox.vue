@@ -34,6 +34,7 @@ export default {
 	computed: {
 		// @vuese
 		//return unread messages
+		// @type object
 		unreadMessages() {
 			return this.$store.getters['messages/unreadMessages'];
 		},
@@ -41,6 +42,7 @@ export default {
 	watch: {
 		// @vuese
 		//watch unread messages if it's empty
+		// @arg no argument
 		unreadMessages() {
 			if (this.unreadMessages.length == 0) this.noMessages = true;
 		},

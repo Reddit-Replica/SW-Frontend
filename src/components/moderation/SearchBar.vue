@@ -70,6 +70,7 @@ export default {
 	watch: {
 		// @vuese
 		//watch if clicked in see all then value of searching should be ''
+		// @arg no parameters
 		emptyInput() {
 			if (this.emptyInput == '') {
 				this.search = '';
@@ -86,6 +87,8 @@ export default {
 		//used to take action in entering value of search
 		// @arg no argument
 		enterSearch() {
+			// Fire when entered search value
+			// @arg The argument is a string value representing search input
 			this.$emit('enterSearch', this.search);
 		},
 	},

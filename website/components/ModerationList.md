@@ -17,8 +17,8 @@
 <!-- @vuese:ModerationList:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|subredditName|-|return subreddit name|Yes|
-|listOfModerators|-|return list of moderators|Yes|
+|subredditName|`string`|return subreddit name|Yes|
+|listOfModerators|`object`|return list of moderators|Yes|
 
 <!-- @vuese:ModerationList:computed:end -->
 

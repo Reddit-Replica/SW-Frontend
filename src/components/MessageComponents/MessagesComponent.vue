@@ -219,11 +219,13 @@ export default {
 	computed: {
 		// @vuese
 		//get username from store
+		// @type string
 		getUserName() {
 			return '/u/' + this.$store.getters.getUserName;
 		},
 		// @vuese
 		//check if user is reciever or sender
+		// @type boolean
 		ifMessageRecieved() {
 			return this.getUserName == this.message.receiverUsername;
 		},
