@@ -80,6 +80,8 @@ export default {
 		 * @arg no arg
 		 */
 		tryClose() {
+			/* when this event was emitted  the parent component will
+			listen on it and make show to false to hide the dialog*/
 			this.$emit('close');
 		},
 		/**
@@ -89,6 +91,8 @@ export default {
 		 * @arg no arg
 		 */
 		tryOpen() {
+			/* when this event was emitted  the parent component will
+			listen on it and make show to true to open the dialog*/
 			this.$emit('open');
 		},
 		/**
