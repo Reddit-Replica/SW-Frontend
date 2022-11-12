@@ -263,6 +263,7 @@ export default {
 		},
 		// @vuese
 		// Used to show submenu for responsive design
+		// @arg no argument
 		showSubMenu() {
 			this.showMenu = !this.showMenu;
 		},

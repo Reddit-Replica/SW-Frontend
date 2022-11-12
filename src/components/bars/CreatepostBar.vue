@@ -31,6 +31,7 @@ export default {
 	methods: {
 		// @vuese
 		// Used to change router to submit page
+		// @arg no argument
 		changeRouter() {
 			this.$router.push('/submit');
 		},

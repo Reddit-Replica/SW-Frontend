@@ -453,41 +453,49 @@ export default {
 	methods: {
 		//@vuese
 		//Toogle Show/hide options list in about community bar by clicking on dots icon.
+		//@arg no argument
 		dotsClick() {
 			this.dotsClicked = !this.dotsClicked;
 		},
 		//@vuese
 		//Mark subreddit added to custom feed
+		//@arg no argument
 		addToCustomFeed() {
 			this.addedToCustomFeed = true;
 		},
 		//@vuese
 		//Mark subreddit added to favourites
+		//@arg no argument
 		addToFavourite() {
 			this.addedToFavourite = true;
 		},
 		//@vuese
 		//Decrease characters count while typing
+		//@arg no argument
 		charCount() {
 			this.charRemaining--;
 		},
 		//@vuese
 		//Mark text area shown
+		//@arg no argument
 		showTextarea() {
 			this.textareaShown = true;
 		},
 		//@vuese
 		//Mark text area hidden
+		//@arg no argument
 		hideTextarea() {
 			this.textareaShown = false;
 		},
 		//@vuese
 		//Save subreddit added description
+		//@arg no argument
 		saveDescription() {
 			this.communityDescription = this.description;
 		},
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
+		//@arg chosen topic to be saved
 		setTopic(topic) {
 			this.communityTopic = topic;
 			this.topicChosen = true;
@@ -495,6 +503,7 @@ export default {
 		},
 		//@vuese
 		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
+		//@arg chosen subtopic to be added to list
 		setSubtopic(subtopic) {
 			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
@@ -511,16 +520,19 @@ export default {
 		},
 		//@vuese
 		//Show/Hide topics list
+		//@arg no argument
 		toogleTopicsList() {
 			this.topicsShown = !this.topicsShown;
 		},
 		//@vuese
 		//Show/Hide subtopics list
+		//@arg no argument
 		toogleSubtopics() {
 			this.subtopicsShown = !this.subtopicsShown;
 		},
 		//@vuese
 		//Delete subtopics from chosen subtopics list
+		//@arg no argument
 		deleteSubtopic(subtopic) {
 			const index = this.communitySubtopics.findIndex(
 				(topic) => topic.id === subtopic.id
@@ -530,17 +542,20 @@ export default {
 		},
 		//@vuese
 		//save chosen subtopics list
+		//@arg no argument
 		saveSubtopics() {
 			this.isSubtopicsSaved = true;
 			this.savedCommunitySubtopics = this.communitySubtopics;
 		},
 		//@vuese
 		//Show/Hide Save or Discard dialog
+		//@arg no argument
 		toogleSaveDialog() {
 			this.saveDialogShown = !this.saveDialogShown;
 		},
 		//@vuese
 		//Cancel chosen subtopics list and show dialog save or discard
+		//@arg no argument
 		toogleSubtopicsCancel() {
 			this.toogleSubtopics();
 			if (!this.isSubtopicsSaved) {
@@ -549,6 +564,7 @@ export default {
 		},
 		//@vuese
 		//Show/Hide date box while hovering on subreddit creation date
+		//@arg no argument
 		toogleDateBox() {
 			this.dateBoxShown = !this.dateBoxShown;
 		},
@@ -559,16 +575,19 @@ export default {
 		},
 		//@vuese
 		//Show/Hide online members count box while hovering on subreddit online members count
+		//@arg no argument
 		toogleOnlineMembersCountBox() {
 			this.onlineMembersCountBoxShown = !this.onlineMembersCountBoxShown;
 		},
 		//@vuese
 		//Show/Hide topics info box while hovering on subreddit topics title
+		//@arg no argument
 		toogleTopicsArrrowBox() {
 			this.topicsArrrowBoxShown = !this.topicsArrrowBoxShown;
 		},
 		//@vuese
 		//Show/Hide subreddit new mark
+		//@arg no argument
 		toogleNew() {
 			this.isNew = !this.isNew;
 		},
