@@ -1,17 +1,21 @@
 # SentMessages
 
-## Props
+## Methods
 
-<!-- @vuese:SentMessages:props:start -->
-|Name|Description|Type|Required|Default|
-|---|---|---|---|---|
-|message|details of message|`Object`|`true`|{"id":"","text":"","receiverUsername":"","sendAt":"","subject":""}|
-|index|index to handle unique ids|`Number`|`true`|0|
+<!-- @vuese:SentMessages:methods:start -->
+|Method|Description|Parameters|
+|---|---|---|
+|loadSentMessages|load messages from the store|no argument|
 
-<!-- @vuese:SentMessages:props:end -->
+<!-- @vuese:SentMessages:methods:end -->
 
 
-entMessages|`object`|return all messages sent or recieved|Yes|
+## Computed
+
+<!-- @vuese:SentMessages:computed:start -->
+|Computed|Type|Description|From Store|
+|---|---|---|---|
+|sentMessages|`object`|return all messages sent or recieved|Yes|
 
 <!-- @vuese:SentMessages:computed:end -->
 
