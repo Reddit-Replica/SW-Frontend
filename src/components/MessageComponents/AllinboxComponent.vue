@@ -165,14 +165,7 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handle background color
-		count: {
-			type: Number,
-			required: true,
-			default: 1,
-		},
-		// @vuese
-		//index to handle unique ids
+		//index to handle unique ids and background color
 		index: {
 			type: Number,
 			required: true,
@@ -191,11 +184,12 @@ export default {
 		};
 	},
 	// @vuese
-	//decide if background color in  white or grey depends on if count even or odd
+	//decide if background color in  white or grey depends on if index even or odd
 	beforeMount() {
-		if (this.count % 2 == 0) {
+		if (this.index % 2 == 0) {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
+		console.log('all', this.index, ' ', this.backcolor);
 	},
 	methods: {
 		// @vuese

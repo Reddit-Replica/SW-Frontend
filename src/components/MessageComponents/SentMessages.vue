@@ -1,8 +1,5 @@
 <template>
-	<div
-		class="message"
-		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
-	>
+	<div class="message">
 		<li>
 			<p class="subject-text">
 				<span>{{ message.subject }}</span>
@@ -53,11 +50,6 @@ export default {
 			required: true,
 			default: 0,
 		},
-	},
-	data() {
-		return {
-			backcolor: 'grey',
-		};
 	},
 	methods: {},
 };

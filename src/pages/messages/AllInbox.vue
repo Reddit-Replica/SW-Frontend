@@ -7,19 +7,16 @@
 		>
 			<allinbox-component
 				v-if="message.type == 'Messages'"
-				:count="++count"
 				:message="message"
 				:index="index"
 			></allinbox-component>
 			<PostreplyComponent
 				v-if="message.type == 'Post replies'"
-				:count="++count"
 				:message="message"
 				:index="index"
 			></PostreplyComponent>
 			<user-mentions
 				v-if="message.type == 'Mentions'"
-				:count="++count"
 				:message="message"
 				:index="index"
 			></user-mentions>
@@ -49,7 +46,6 @@ export default {
 	data() {
 		return {
 			noMessages: false,
-			count: 1,
 		};
 	},
 	computed: {
