@@ -125,21 +125,27 @@ export default {
 	methods: {
 		// @vuese
 		//show menu of Who can send you chat requests menu
+		// @arg no argument
 		showFirstMenuFunction() {
 			this.showFirstMenu = !this.showFirstMenu;
+			this.showSecondMenu = false;
 		},
 		// @vuese
 		//show menu of Who can send you private messages
+		// @arg no argument
 		showSecondMenuFunction() {
 			this.showSecondMenu = !this.showSecondMenu;
+			this.showFirstMenu = false;
 		},
 		// @vuese
 		//change title of Who can send you chat requests menu
+		// @arg The argument is a string value representing choosen title in first sub menu
 		changeFirstTitle(title) {
 			this.titleFirst = title;
 		},
 		// @vuese
 		//change title of Who can send you private messages
+		// @arg The argument is a string value representing choosen title in second sub menu
 		changeSecondTitle(title) {
 			this.titleSecond = title;
 		},
@@ -153,6 +159,7 @@ export default {
 }
 .choice {
 	position: relative;
+	cursor: pointer;
 }
 .title {
 	font-size: 1.2rem;

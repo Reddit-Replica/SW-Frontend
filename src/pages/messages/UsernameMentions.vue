@@ -3,7 +3,6 @@
 		<div>
 			<user-mentions
 				v-for="(message, index) in userMentions"
-				:count="++count"
 				:key="message"
 				:message="message"
 				:index="index"
@@ -30,12 +29,12 @@ export default {
 	data() {
 		return {
 			noMessages: false,
-			count: 0,
 		};
 	},
 	computed: {
 		// @vuese
 		//return user mentions
+		// @type object
 		userMentions() {
 			return this.$store.getters['messages/userMentions'];
 		},
@@ -43,6 +42,7 @@ export default {
 	watch: {
 		// @vuese
 		//watchmentions if it's empty
+		// @arg no argument
 		userMentions() {
 			if (this.userMentions.length == 0) this.noMessages = true;
 		},
@@ -50,6 +50,7 @@ export default {
 	methods: {
 		// @vuese
 		//load user mentions from the store
+		// @arg no argument
 		async loadUserMentions() {
 			try {
 				await this.$store.dispatch('messages/loadUserMentions', {

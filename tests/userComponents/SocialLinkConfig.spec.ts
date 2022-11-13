@@ -98,4 +98,5 @@ describe('SocialLinkConfig.vue', () => {
 		await byId.trigger('click');
     expect(wrapper.isVisible()).toBe(false)
 	});
+	
 });

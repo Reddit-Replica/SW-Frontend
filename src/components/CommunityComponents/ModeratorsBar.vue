@@ -32,7 +32,9 @@
 				>
 			</div>
 			<div class="box-body flex-end text text-view" id="view-mods">
-				<router-link to="/message">VIEW ALL MODERATORS</router-link>
+				<router-link to="/r/subredditName/about/moderators"
+					>VIEW ALL MODERATORS</router-link
+				>
 			</div>
 		</div>
 	</div>
@@ -41,6 +43,8 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Subreddit moderators list
 		moderators: {
 			type: Array,
 			default: () => [],
@@ -54,7 +58,7 @@ export default {
 
 <style scoped>
 .about-bar {
-	margin-top: 12px;
+	margin-top: 1.2rem;
 	background-color: var(--color-white-1);
 	color: var(--color-dark-4);
 	fill: var(--color-dark-4);
@@ -65,50 +69,50 @@ export default {
 }
 .about-header {
 	background-color: var(--color-blue-2);
-	border-radius: 3px 3px 0 0;
+	border-radius: 0.3rem 0.3rem 0 0;
 	color: var(--color-white-1);
 	display: flex;
 	fill: var(--color-white-1);
-	padding: 0 12px 12px;
+	padding: 0 1.2rem 1.2rem;
 }
 .about-title {
-	padding: 12px 0 0;
+	padding: 1.2rem 0 0;
 }
 .about-h2 {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
-	line-height: 18px;
+	line-height: 1.8rem;
 	font-weight: 700;
 	text-transform: none;
 }
 .about-body {
-	padding: 12px;
+	padding: 1.2rem;
 }
 .box-body {
-	margin-top: 12px;
+	margin-top: 1.2rem;
 }
 .button-message {
 	align-items: center;
 	display: flex;
-	margin-bottom: 20px;
+	margin-bottom: 2rem;
 	justify-content: center;
 	border: var(--line-5);
 	color: var(--color-blue-2);
 	fill: var(----color-blue-2);
-	min-height: 32px;
-	min-width: 32px;
-	padding: 4px 16px;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
 }
 svg {
-	margin-right: 4px;
+	margin-right: 0.4rem;
 }
 .flex-start {
 	display: flex;
 	flex-direction: column;
-	font-size: 12px;
+	font-size: 1.2rem;
 	font-weight: 500;
-	line-height: 16px;
-	margin-bottom: 16px;
+	line-height: 1.6rem;
+	margin-bottom: 1.6rem;
 	width: 100%;
 }
 .flex-end {
@@ -117,15 +121,15 @@ svg {
 	align-items: center;
 }
 .mod-link {
-	margin: 2px;
+	margin: 0.2rem;
 }
 .text {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 700;
-	line-height: 17px;
+	line-height: 1.7rem;
 }
 .text-view {
-	font-size: 12px;
+	font-size: 1.2rem;
 }
 a {
 	text-decoration: none;

@@ -5,7 +5,7 @@
 <!-- @vuese:PostReplies:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadPostReplies|load post replies from the store|-|
+|loadPostReplies|load post replies from the store|no argument|
 
 <!-- @vuese:PostReplies:methods:end -->
 
@@ -15,7 +15,7 @@
 <!-- @vuese:PostReplies:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|postReplies|-|return post replies|Yes|
+|postReplies|`object`|return post replies|Yes|
 
 <!-- @vuese:PostReplies:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:PostReplies:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|postReplies|watch post replies if it's empty|-|
+|postReplies|watch post replies if it's empty|no argument|
 
 <!-- @vuese:PostReplies:watch:end -->
 

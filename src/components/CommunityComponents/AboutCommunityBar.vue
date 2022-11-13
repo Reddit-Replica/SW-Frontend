@@ -391,22 +391,32 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
 	props: {
+		//@vuese
+		//Array of Subreddit suggested topics
 		topics: {
 			type: Array,
 			default: () => [],
 		},
+		//@vuese
+		//Number of members in subreddit
 		membersCount: {
 			type: Number,
 			default: 1,
 		},
+		//@vuese
+		//Number of online members in subreddit
 		onlineMembersCount: {
 			type: Number,
 			default: 1,
 		},
+		//@vuese
+		//Subreddit creation date
 		communityDate: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit type (public, restricted, private)
 		communityType: {
 			type: String,
 			default: '',
@@ -441,50 +451,88 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Toogle Show/hide options list in about community bar by clicking on dots icon.
+		//@arg no argument
 		dotsClick() {
 			this.dotsClicked = !this.dotsClicked;
 		},
+		//@vuese
+		//Mark subreddit added to custom feed
+		//@arg no argument
 		addToCustomFeed() {
 			this.addedToCustomFeed = true;
 		},
+		//@vuese
+		//Mark subreddit added to favourites
+		//@arg no argument
 		addToFavourite() {
 			this.addedToFavourite = true;
 		},
+		//@vuese
+		//Decrease characters count while typing
+		//@arg no argument
 		charCount() {
 			this.charRemaining--;
 		},
+		//@vuese
+		//Mark text area shown
+		//@arg no argument
 		showTextarea() {
 			this.textareaShown = true;
 		},
+		//@vuese
+		//Mark text area hidden
+		//@arg no argument
 		hideTextarea() {
 			this.textareaShown = false;
 		},
+		//@vuese
+		//Save subreddit added description
+		//@arg no argument
 		saveDescription() {
 			this.communityDescription = this.description;
 		},
+		//@vuese
+		//Save subreddit chosen topic and hide topic list
+		//@arg chosen topic to be saved
 		setTopic(topic) {
 			this.communityTopic = topic;
 			this.topicChosen = true;
 			this.toogleTopicsList();
 		},
+		//@vuese
+		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
+		//@arg chosen subtopic to be added to list
 		setSubtopic(subtopic) {
+			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
 				const index = this.communitySubtopics.findIndex(
 					(topic) => topic.id === subtopic.id
 				);
-				if (index != '') {
+				//check if subreddit chosen before
+				if (index === -1) {
 					this.communitySubtopics.push(subtopic);
 					this.subtopicChosen = true;
 					this.subtopicsCount++;
 				}
 			}
 		},
+		//@vuese
+		//Show/Hide topics list
+		//@arg no argument
 		toogleTopicsList() {
 			this.topicsShown = !this.topicsShown;
 		},
+		//@vuese
+		//Show/Hide subtopics list
+		//@arg no argument
 		toogleSubtopics() {
 			this.subtopicsShown = !this.subtopicsShown;
 		},
+		//@vuese
+		//Delete subtopics from chosen subtopics list
+		//@arg no argument
 		deleteSubtopic(subtopic) {
 			const index = this.communitySubtopics.findIndex(
 				(topic) => topic.id === subtopic.id
@@ -492,33 +540,54 @@ export default {
 			this.communitySubtopics.splice(index, 1);
 			this.subtopicsCount--;
 		},
+		//@vuese
+		//save chosen subtopics list
+		//@arg no argument
 		saveSubtopics() {
 			this.isSubtopicsSaved = true;
 			this.savedCommunitySubtopics = this.communitySubtopics;
 		},
+		//@vuese
+		//Show/Hide Save or Discard dialog
+		//@arg no argument
 		toogleSaveDialog() {
 			this.saveDialogShown = !this.saveDialogShown;
 		},
+		//@vuese
+		//Cancel chosen subtopics list and show dialog save or discard
+		//@arg no argument
 		toogleSubtopicsCancel() {
 			this.toogleSubtopics();
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
 		},
-
+		//@vuese
+		//Show/Hide date box while hovering on subreddit creation date
+		//@arg no argument
 		toogleDateBox() {
 			this.dateBoxShown = !this.dateBoxShown;
 		},
+		//@vuese
+		//Show/Hide members count box while hovering on subreddit members count
 		toogleMembersCountBox() {
 			this.MembersCountBoxShown = !this.MembersCountBoxShown;
 		},
+		//@vuese
+		//Show/Hide online members count box while hovering on subreddit online members count
+		//@arg no argument
 		toogleOnlineMembersCountBox() {
 			this.onlineMembersCountBoxShown = !this.onlineMembersCountBoxShown;
 		},
+		//@vuese
+		//Show/Hide topics info box while hovering on subreddit topics title
+		//@arg no argument
 		toogleTopicsArrrowBox() {
 			this.topicsArrrowBoxShown = !this.topicsArrrowBoxShown;
 		},
-
+		//@vuese
+		//Show/Hide subreddit new mark
+		//@arg no argument
 		toogleNew() {
 			this.isNew = !this.isNew;
 		},
@@ -538,34 +607,33 @@ export default {
 }
 .about-header {
 	background-color: var(--color-blue-2);
-	border-radius: 3px 3px 0 0;
 	color: var(--color-white-1);
-	display: flex;
 	fill: var(--color-white-1);
-	padding: 0 12px 12px;
+	border-radius: 0.3rem 0.3rem 0 0;
+	display: flex;
+	padding: 0 1.2rem 1.2rem;
 }
 .about-title {
-	padding: 12px 0 0;
+	padding: 1.2rem 0 0;
 }
 .about-h2 {
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
+	font-size: 1.4rem;
+	line-height: 1.8rem;
 	font-weight: 700;
 	text-transform: none;
 }
 .about-options {
 	margin: auto 0 auto auto;
-	padding-top: 10px;
+	padding-top: 1rem;
 	vertical-align: middle;
 }
 .mod-tools {
 	color: var(--color-white-1);
 	outline: none;
-	border-radius: 2px;
-	border-radius: 4px;
+	border-radius: 0.2rem;
+	border-radius: 0.4rem;
 	display: inline-block;
-	padding: 4px;
+	padding: 0.4rem;
 }
 .mod-tools:hover {
 	background-color: rgba(0, 53, 132, 0.2);
@@ -574,58 +642,58 @@ a {
 	text-decoration: none;
 }
 .bi-shield {
-	margin-right: 4px;
+	margin-right: 0.4rem;
 }
 .bi-three-dots:hover {
 	background-color: rgba(0, 53, 132, 0.2);
 	cursor: pointer;
 }
 .bi-three-dots {
-	margin-left: 4px;
-	margin-right: 4px;
-	border-radius: 2px;
+	margin-left: 0.4rem;
+	margin-right: 0.4rem;
+	border-radius: 0.2rem;
 }
 .box-options {
 	border: 1px solid var(--color-blue-light-2);
-	border-radius: 4px;
 	box-shadow: var(--shadow-menu);
-	color: var(--color-dark-4);
-	overflow: hidden;
 	background-color: var(--color-white-1);
+	color: var(--color-dark-4);
+	border-radius: 0.4rem;
+	overflow: hidden;
 	position: absolute;
 	z-index: 10;
-	margin-top: 5px;
+	margin-top: 0.5rem;
 }
 .button-option {
 	color: var(--color-grey-light-5);
 	background-color: var(--color-white-1);
+	display: block;
+	text-transform: capitalize;
+	text-align: left;
 	outline: none;
 	border: none;
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
-	line-height: 18px;
-	display: block;
-	padding: 8px;
-	text-transform: capitalize;
+	line-height: 1.8rem;
+	padding: 0.8rem;
 	width: 100%;
-	text-align: left;
 }
 .button-option:hover {
 	color: var(--color-dark-4);
 	background-color: var(--color-blue-light-2);
 }
 .about-body {
-	padding: 12px;
+	padding: 1.2rem;
 }
 .description-1 {
 	display: block;
-	background-color: var(--color-blue-light-4);
-	border-radius: 4px;
-	padding: 8px;
-	margin-bottom: 12px;
-	margin-top: 8px;
-	border: var(--line-10);
 	cursor: pointer;
+	background-color: var(--color-blue-light-4);
+	border-radius: 0.4rem;
+	padding: 0.8rem;
+	margin-bottom: 1.2rem;
+	margin-top: 0.8rem;
+	border: var(--line-10);
 }
 .description-1:hover {
 	border: var(--line-5);
@@ -634,49 +702,48 @@ a {
 	border: var(--line-5);
 }
 .description-1-text {
-	font-size: 12px;
+	font-size: 1.2rem;
 	font-weight: 700;
-	line-height: 16px;
+	line-height: 1.6rem;
 	color: var(--color-blue-2);
 }
 .description-textarea {
 	overflow: hidden;
 	overflow-wrap: break-word;
-	height: 21px;
+	width: 100%;
+	height: 2.1rem;
 	resize: none;
 	cursor: auto;
-
 	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 14px;
-	line-height: 21px;
+	font-size: 1.4rem;
+	line-height: 2.1rem;
 	font-weight: 400;
 	word-wrap: break-word;
-	width: 100%;
 	padding: 0;
 	border: none;
-	background-color: transparent;
 	outline: none;
+	background-color: transparent;
 	color: var(--color-dark-4);
 }
 .span-char {
 	flex: 100%;
 	color: var(--color-grey-light-5);
-	padding-top: 5px;
+	padding-top: 0.5rem;
 	font-weight: 400;
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 1.2rem;
+	line-height: 1.6rem;
 }
 .span-cancel {
-	margin-right: 8px;
+	margin-right: 0.8rem;
 	color: red;
 }
 .span-save {
 	color: var(--color-blue-2);
 }
 .span-cancel-save {
-	font-size: 12px;
+	font-size: 1.2rem;
 	font-weight: 700;
-	line-height: 16px;
+	line-height: 1.6rem;
 	cursor: pointer;
 	align-self: flex-end;
 }
@@ -684,30 +751,30 @@ a {
 	display: flex;
 }
 .box-body {
-	margin-top: 12px;
+	margin-top: 1.2rem;
 	position: relative;
 }
 .text-grey {
 	color: var(--color-grey-light-5);
 }
 .text {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 400;
-	line-height: 18px;
+	line-height: 1.8rem;
 }
 .text-bold {
-	font-size: 16px;
+	font-size: 1.6rem;
 	font-weight: 500;
-	line-height: 20px;
+	line-height: 2rem;
 }
 .space {
-	margin-left: 8px;
+	margin-left: 0.8rem;
 }
 .line {
 	background-color: var(--color-grey-light-3);
 	border: none;
-	height: 1px;
-	margin: 16px 0;
+	height: 0.1rem;
+	margin: 1.6rem 0;
 }
 .flex-between {
 	display: flex;
@@ -717,22 +784,22 @@ a {
 	color: var(--color-green);
 }
 .span-new {
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 1.2rem;
+	line-height: 1.6rem;
 	font-weight: 700;
 	color: red;
 	text-transform: uppercase;
-	margin-right: 4px;
+	margin-right: 0.4rem;
 }
 .bi-info-circle {
 	color: var(--color-grey-light-5);
-	margin-left: 4px;
+	margin-left: 0.4rem;
 }
 .info-span :hover {
 	color: var(--color-blue-2);
 }
 .bi-chevron-down {
-	margin-left: 4px;
+	margin-left: 0.4rem;
 	color: var(--color-blue-2);
 }
 .box-topic {
@@ -740,9 +807,9 @@ a {
 	cursor: pointer;
 }
 .topics-list {
-	max-height: 198px;
+	max-height: 20rem;
 	overflow-y: auto;
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	min-width: 100%;
 	position: absolute;
 	z-index: 10;
@@ -753,7 +820,7 @@ a {
 }
 .button-topic {
 	display: block;
-	padding: 8px;
+	padding: 0.8rem;
 	text-transform: capitalize;
 	white-space: nowrap;
 	width: 100%;
@@ -767,17 +834,17 @@ a {
 }
 .sub-topic {
 	outline: none;
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	border: var(--line-10);
 }
 .bi-plus-lg {
 	color: var(--color-blue-2);
 }
 .button-subtopic {
-	margin-left: 8px;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	padding: 2px 12px 2px 6px;
+	margin-left: 0.8rem;
+	margin-top: 0.8rem;
+	margin-bottom: 0.8rem;
+	padding: 0.2rem 1.2rem 0.2rem 0.6rem;
 }
 input {
 	outline: 0;
@@ -786,22 +853,22 @@ input {
 	width: 100%;
 }
 .sug-subtopic {
-	padding: 12px 16px;
+	padding: 1.2rem 1.6rem;
 	background-color: var(--color-white-1);
 }
 .subtopic {
 	outline: 0 solid transparent;
 	background-color: var(--color-grey-light-3);
 	color: var(--color-blue-2);
-	border-radius: 12px;
+	border-radius: 1.2rem;
 	border: 1px solid transparent;
 	cursor: pointer;
 	display: inline-block;
-	margin-bottom: 8px;
-	margin-right: 4px;
-	padding: 2px 10px;
+	margin-bottom: 0.8rem;
+	margin-right: 0.4rem;
+	padding: 0.2rem 1rem;
 	text-align: center;
-	max-width: 245px;
+	max-width: 24.5rem;
 }
 .subtopic:hover {
 	background-color: var(--color-blue-2);
@@ -811,31 +878,30 @@ input {
 	background-color: var(--color-grey-light-2);
 	padding: 16px;
 	margin: 16px -16px -16px;
+	border-bottom-right-radius: 4px;
 	display: flex;
 	justify-content: flex-end;
-	border-bottom-right-radius: 4px;
 	box-sizing: border-box;
 }
 .button-white-2 {
-	border: 1px solid var(--color-blue-2);
+	border: var(--line-5);
 	color: var(--color-blue-2);
-	padding: 4px 16px;
-	margin-left: 8px;
+	padding: 0.4rem 1.6rem;
+	margin-left: 0.8rem;
 }
 .button-blue-2 {
 	background-color: var(--color-blue-2);
-	border: none;
 	color: var(--color-white-1);
-	padding: 4px 16px;
-	margin-left: 8px;
+	border: none;
+	padding: 0.4rem 1.6rem;
+	margin-left: 0.8rem;
 }
 .button-create-post {
-	height: 32px;
+	height: 3.2rem;
 	width: 100%;
 	margin: 0;
 }
 .box {
-	/* width: 150px; */
 	background-color: var(--color-dark-1);
 	color: var(--color-white-1);
 	font-size: 9px;
@@ -846,7 +912,6 @@ input {
 	pointer-events: none;
 	transform: translateX(-50%);
 	z-index: 100;
-	/* right: 20%; */
 }
 .box.arrow-top {
 	margin-top: 10px;
@@ -875,10 +940,10 @@ input {
 	padding: 10px;
 }
 .box-arrow-4 {
-	right: -100px;
-	width: 250px;
-	font-size: 14px;
-	padding: 10px;
+	right: -10rem;
+	width: 25rem;
+	font-size: 1.4rem;
+	padding: 1rem;
 	text-align: left;
 	background-color: var(--color-blue-2);
 }

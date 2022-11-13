@@ -1,6 +1,9 @@
 export default {
 	getUserData(state) {
-		return state.userData;
+		return {
+			userData: state.userData,
+			userModeratorData: state.userData.moderatorOf,
+		};
 	},
 	getStaticSocialLinks(state) {
 		return state.socialLinkItems;

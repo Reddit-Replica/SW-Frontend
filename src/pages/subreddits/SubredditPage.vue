@@ -74,30 +74,26 @@ export default {
 .subreddit-page {
 	max-width: 100%;
 	height: 100%;
-	box-sizing: border-box;
+	min-height: 2000px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	box-sizing: border-box;
 	margin: 0 auto;
 }
 .subreddit-page-left {
-	/* width: 50%; */
-	width: 640px;
+	width: 64rem;
 	height: 100%;
 }
 .subreddit-page-right {
-	/* width: 25%; */
-	width: 312px;
+	width: 31.2rem;
 	height: 100%;
-	margin-left: 24px;
-	margin-top: 15px;
+	margin-left: 2.4rem;
+	margin-top: 1.5rem;
 }
-@media only screen and (max-width: 991px) {
-	.subreddit-page-left {
-		width: 100%;
-	}
+@media only screen and (max-width: 850px) {
 	.subreddit-page-right {
-		width: 0%;
+		display: none;
 	}
 }
 </style>

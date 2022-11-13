@@ -43,6 +43,7 @@ import TheHidden from './pages/users/PagesComponents/TheHidden.vue';
 import TheHistory from './pages/users/PagesComponents/TheHistory.vue';
 import ThePosts from './pages/users/PagesComponents/ThePosts.vue';
 import TheSaved from './pages/users/PagesComponents/TheSaved.vue';
+import ModerationList from './pages/moderation/ModerationList.vue';
 
 import NotFound from './pages/NotFound.vue';
 
@@ -97,6 +98,10 @@ const router = createRouter({
 			name: 'subreddit',
 			component: SubredditPage,
 		}, //render subreddit component
+		{
+			path: '/r/:subredditName/about/moderators',
+			component: ModerationList,
+		},
 		{
 			path: '/settings',
 			name: 'settings',

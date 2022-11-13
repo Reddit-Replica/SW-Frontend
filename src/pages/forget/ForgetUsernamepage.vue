@@ -18,15 +18,21 @@
 							type="email"
 							required="required"
 							v-model="emailAddress"
-							:class="invalidEmail ? 'red-border' : ''"
+							:class="
+								!showSignemail
+									? ''
+									: !checkedEmail || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> Email Address</span>
 						<span
 							v-if="showSignemail"
-							:class="checkedEmail ? 'correct-check' : 'wrong-check'"
+							:class="!checkedEmail || error ? 'wrong-check' : 'correct-check'"
 						></span>
 					</div>
-					<p class="invalid" v-if="invalidEmail">
+					<p id="invalidEmail" class="invalid" v-if="invalidEmail">
 						Please enter an email address to continue
 					</p>
 					<div>
@@ -42,12 +48,12 @@
 						</base-button>
 					</div>
 					<div class="separate"></div>
-					<p class="invalid" v-if="!success">
+					<p id="error" class="invalid" v-if="!success">
 						{{ error }}
 					</p>
-					<p class="valid" v-if="success">
-						Thanks! If email address correct, you'll get an email with your
-						username.
+					<p id="success" class="valid" v-if="success">
+						Thanks! If there are any Reddit accounts associated with that email
+						address, you'll get an email with your username(s) shortly.
 					</p>
 					<div class="separate"></div>
 					<the-recaptcha
@@ -55,7 +61,7 @@
 						v-if="showSignemail"
 					></the-recaptcha>
 					<div class="bottomText">
-						<label>
+						<label id="bottom">
 							Don't have an email or need assistance logging in?
 							<a class="link" id="help">Get Help </a></label
 						>
@@ -74,7 +80,8 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha';
+import TheRecaptcha from '../../components/TheRecaptcha.vue';
+// @it is forget username component
 export default {
 	data() {
 		return {
@@ -83,7 +90,7 @@ export default {
 			showSignemail: false,
 			checkedEmail: false,
 			invalidEmail: false,
-			error: '',
+			error: null,
 			success: false,
 			buttonDisabled: true,
 		};
@@ -91,6 +98,7 @@ export default {
 	methods: {
 		// @vuese
 		// validate email
+		// @arg The argument is a string value representing email
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
@@ -106,6 +114,9 @@ export default {
 		// @vuese
 		// handle form submission
 		async handleSubmit() {
+			if (!this.checkedEmail) {
+				return;
+			}
 			const actionPayload = {
 				email: this.emailAddress,
 				baseurl: this.$baseurl,
@@ -136,6 +147,7 @@ export default {
 	watch: {
 		// @vuese
 		// watch emailAddress
+		// @arg The argument is a string value representing username
 		emailAddress(value) {
 			this.emailAddress = value;
 			this.validatEmail(value);
@@ -213,6 +225,18 @@ div {
 	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
 }
+.input-box input:hover ~ .span-input::after,
+.input-box input:focus ~ .span-input::after,
+.input-box input:valid ~ .span-input::after {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 7px;
+	content: '';
+	color: #24a0ed;
+}
 .input-box input:hover ~ .span-input::after {
 	display: none;
 }
@@ -249,6 +273,17 @@ div {
 .input-box .red-border {
 	border: 0.5px solid #ea0027;
 }
+/*.input-box input {
+	
+	background: white;
+}*/
+/*input:-internal-autofill-selected {
+	background: white;
+}*/
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
+}
+
 /*.input-field input:focus {
 	border: 0.5px solid rgba(0, 0, 0, 0.2);
 }*/

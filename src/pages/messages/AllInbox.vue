@@ -7,19 +7,16 @@
 		>
 			<allinbox-component
 				v-if="message.type == 'Messages'"
-				:count="++count"
 				:message="message"
 				:index="index"
 			></allinbox-component>
 			<PostreplyComponent
 				v-if="message.type == 'Post replies'"
-				:count="++count"
 				:message="message"
 				:index="index"
 			></PostreplyComponent>
 			<user-mentions
 				v-if="message.type == 'Mentions'"
-				:count="++count"
 				:message="message"
 				:index="index"
 			></user-mentions>
@@ -49,12 +46,12 @@ export default {
 	data() {
 		return {
 			noMessages: false,
-			count: 1,
 		};
 	},
 	computed: {
 		// @vuese
 		//return inbox messages
+		// @type object
 		inboxMessages() {
 			return this.$store.getters['messages/inboxMessages'];
 		},
@@ -62,6 +59,7 @@ export default {
 	watch: {
 		// @vuese
 		//watch compose messages if it's empty
+		// @arg no argument
 		inboxMessages() {
 			if (this.inboxMessages.length == 0) this.noMessages = true;
 		},
@@ -69,6 +67,7 @@ export default {
 	methods: {
 		// @vuese
 		//load compose messages from the store
+		// @arg no argument
 		async loadInboxMessages() {
 			try {
 				await this.$store.dispatch('messages/loadInboxMessages', {

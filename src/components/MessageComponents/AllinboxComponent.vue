@@ -24,7 +24,9 @@
 							}}</a>
 						</span></span
 					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
-					><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
+					><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
+						{{ message.sendAt }}</time
+					>
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list ul-messages">
@@ -163,14 +165,7 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handle background color
-		count: {
-			type: Number,
-			required: true,
-			default: 1,
-		},
-		// @vuese
-		//index to handle unique ids
+		//index to handle unique ids and background color
 		index: {
 			type: Number,
 			required: true,
@@ -188,14 +183,18 @@ export default {
 			isRead: this.message.isRead,
 		};
 	},
+	// @vuese
+	//decide if background color in  white or grey depends on if index even or odd
 	beforeMount() {
-		if (this.count % 2 == 0) {
+		if (this.index % 2 == 0) {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
+		console.log('all', this.index, ' ', this.backcolor);
 	},
 	methods: {
 		// @vuese
 		//handle delete action
+		// @arg The argument is a string value representing if user click ok
 		deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {
@@ -209,6 +208,7 @@ export default {
 		},
 		// @vuese
 		//handle spam action
+		// @arg The argument is a string value representing if user click ok
 		spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
@@ -223,6 +223,7 @@ export default {
 		},
 		// @vuese
 		//handle block action
+		// @arg The argument is a string value representing if user click ok
 		blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
@@ -236,6 +237,7 @@ export default {
 		},
 		// @vuese
 		//handle unread action
+		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
 		},

@@ -17,15 +17,23 @@
 							type="password"
 							required="required"
 							v-model="password"
-							:class="invalidPassword ? 'red-border' : ''"
+							:class="
+								!showSignpassword
+									? ''
+									: !checkedPassword || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> New password</span>
 						<span
 							v-if="showSignpassword"
-							:class="checkedPassword ? 'correct-check' : 'wrong-check'"
+							:class="
+								!checkedPassword || error ? 'wrong-check' : 'correct-check'
+							"
 						></span>
 					</div>
-					<p class="invalid" v-if="invalidPassword">
+					<p id="invalidPassword" class="invalid" v-if="invalidPassword">
 						Password must be at least 8 characters long
 					</p>
 					<div class="separate"></div>
@@ -35,15 +43,29 @@
 							type="password"
 							required="required"
 							v-model="passwordVerify"
-							:class="invalidPasswordverify ? 'red-border' : ''"
+							:class="
+								!showSignpasswordverify
+									? ''
+									: !checkedPasswordverify || error
+									? 'red-border'
+									: 'blue-border'
+							"
 						/>
 						<span class="span-input"> verify password</span>
 						<span
 							v-if="showSignpasswordverify"
-							:class="checkedPasswordverify ? 'correct-check' : 'wrong-check'"
+							:class="
+								!checkedPasswordverify || error
+									? 'wrong-check'
+									: 'correct-check'
+							"
 						></span>
 					</div>
-					<p class="invalid" v-if="invalidPasswordverify">
+					<p
+						id="invalidPasswordverify"
+						class="invalid"
+						v-if="invalidPasswordverify"
+					>
 						Password must match
 					</p>
 
@@ -62,8 +84,11 @@
 						>
 						</base-button>
 					</div>
-					<p class="valid" v-if="success">password reset successfully</p>
-					<p class="invalid" v-if="!success">{{ error }}</p>
+					<div class="separate"></div>
+					<p id="success" class="valid" v-if="success">
+						password reset successfully
+					</p>
+					<p id="error" class="invalid" v-if="!success">{{ error }}</p>
 				</form>
 				<div class="end">
 					<router-link to="/login" class="link">Log in</router-link>
@@ -76,6 +101,7 @@
 </template>
 
 <script>
+// @it is reset password component
 export default {
 	data() {
 		return {
@@ -92,13 +118,13 @@ export default {
 			token: this.$route.params.token,
 			checked: false,
 			success: null,
-			error: '',
+			error: null,
 		};
 	},
 	methods: {
 		// @vuese
 		// validate Password
-
+		// @arg The argument is a string value representing password
 		validatePassword(value) {
 			if (value.length < 8) {
 				//
@@ -114,6 +140,7 @@ export default {
 		},
 		// @vuese
 		// validate Password Verify
+		// @arg The argument is a string value representing password verify
 		validatepasswordVerify(value) {
 			if (value != this.password) {
 				//
@@ -241,6 +268,19 @@ div {
 .input-box input:hover ~ .span-input {
 	transform: translateX(0.5px) translateY(-10px);
 	font-size: 10px;
+}
+
+.input-box input:hover ~ .span-input::after,
+.input-box input:focus ~ .span-input::after,
+.input-box input:valid ~ .span-input::after {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 7px;
+	content: '';
+	color: #24a0ed;
 }
 .input-box input:hover ~ .span-input::after {
 	display: none;
@@ -412,5 +452,8 @@ p {
 }
 .input-box .red-border {
 	border: 0.5px solid #ea0027;
+}
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
 }
 </style>

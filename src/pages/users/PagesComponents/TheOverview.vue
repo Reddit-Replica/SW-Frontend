@@ -48,10 +48,15 @@
 							<span class="post-title"><h3>fdf</h3></span>
 							<span class="post-spoiler"><p>spoiler</p></span>
 							<span class="post-nsfw"><p>nsfw</p></span>
+							<span class="post-oc"><p>OC</p></span>
 						</div>
 						<div class="post-user-information">
 							<div class="post-user-name"><a>u/Creative-dentist1095</a></div>
-							<div class="posted-by">posted by <a href="">u/Dendn</a></div>
+							<div class="posted-by">
+								posted by
+								<a style="margin-left: 3px" href="">u/Creative-dentist1095 </a>
+							</div>
+							<div>2 days ago</div>
 						</div>
 						<div class="post-options" margin-top="8px">
 							<ul class="services">
@@ -414,6 +419,9 @@ export default {
 };
 </script>
 <style scoped>
+.sort-post-content {
+	margin-top: 2px !important;
+}
 .base-profile-post .box {
 	border: thin solid #ccc;
 	border-radius: 5px;
@@ -428,6 +436,9 @@ export default {
 	border-bottom-width: 1px;
 	padding-bottom: 0;
 }
+.base-profile-post .box:hover {
+	outline: 1px solid;
+}
 .box-items {
 	display: flex;
 	flex-direction: flex-start;
@@ -438,13 +449,15 @@ export default {
 	align-items: center;
 	justify-content: center;
 	background-color: #ccc;
-	background-color: rgba(255, 255, 255, 0.8);
+	/* background-color: rgba(255, 255, 255, 0.8); */
+	background-color: var(--color-grey-light-2);
 	/* opacity: 0.4; */
 }
 .post-card div.vote-box {
 	/* background-color: var(--color-grey-light-2); */
 	text-align: center;
 	border-radius: 5px 0px 0px 5px;
+	background-color: var(--color-grey-light-2);
 	/* width: 40px; */
 	/* padding-top: 10px; */
 }
@@ -511,6 +524,8 @@ export default {
 	margin-left: 8px;
 }
 .post-header {
+	display: flex;
+	align-items: center;
 }
 span {
 	display: inline-block;
@@ -533,15 +548,15 @@ span {
 	line-height: 16px;
 	border-radius: 2px;
 	margin-right: 5px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	vertical-align: text-bottom;
 	line-height: 14px;
 	padding: 0 4px;
 }
 .post-user-information {
 	display: flex;
 	align-items: center;
+}
+.post-user-information div {
+	margin-right: 3px;
 }
 .post-user-name a {
 	font-size: 12px;
@@ -553,6 +568,17 @@ span {
 	text-decoration: none;
 	margin-right: 3px;
 }
+span.post-nsfw {
+	border: 1px solid rgb(255, 88, 91) !important;
+	color: rgb(255, 88, 91) !important;
+}
+span.post-oc {
+	border: none !important;
+	background-color: rgb(0, 121, 211) !important;
+	color: rgb(255, 255, 255) !important;
+	text-align: center;
+}
+
 .posted-by,
 .posted-by a {
 	display: flex;
@@ -562,6 +588,13 @@ span {
 	align-items: center;
 	color: inherit;
 	flex-wrap: wrap;
+}
+.posted-by a:hover {
+	text-decoration: underline;
+}
+.post-user-name a:hover {
+	color: #1c1c11;
+	text-decoration: underline;
 }
 
 .services {

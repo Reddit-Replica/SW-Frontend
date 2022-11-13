@@ -16,6 +16,10 @@ describe ('MessagesInbox', () => {
     isReply: false,
     isRead: true,
   };
+
+  //--------------------------------------------------------
+  //                     Rendering
+  //--------------------------------------------------------
   it ('should renders if MessagesInbox content is correct', () => {
     const wrapper = shallowMount (MessagesInbox, {
       props: {
@@ -29,5 +33,23 @@ describe ('MessagesInbox', () => {
       },
     });
     expect (wrapper.exists ()).toBe (true);
+  });
+
+  //--------------------------------------------------------
+  //                     Testing no message
+  //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (MessagesInbox, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
   });
 });

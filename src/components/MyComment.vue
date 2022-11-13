@@ -66,14 +66,14 @@
 						<li><font-awesome-icon icon="fa-regular fa-message" /> Reply</li>
 						<li>Share</li>
 						<li>Save</li>
-						<li @click="edit">Edit</li>
+						<li @click="edit" id="edit">Edit</li>
 						<li>Follow</li>
-						<li @click="displaySubmenu">
+						<li @click="displaySubmenu" id="dots">
 							<font-awesome-icon icon="fa-solid fa-ellipsis" />
 							<ul class="sub-menu" v-if="display">
 								<li
 									class="icon-box"
-									id="'sum-menu' + 'delete'"
+									id="sub-menu-delete"
 									@click="deleteComment"
 								>
 									<font-awesome-icon
@@ -360,12 +360,16 @@ export default {
 		NestedReply,
 	},
 	computed: {
+		//@vuese
+		//chceks if there is a written text in text area or not to edit the comment
 		noComment() {
 			if (this.edittedComment == '') return true;
 			return false;
 		},
 	},
 	props: {
+		//@vuese
+		//the comment data object that will get displayed in this component
 		comment: {
 			type: Object,
 			required: true,
@@ -387,32 +391,46 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//show services submenu of comments
 		displaySubmenu() {
 			this.display = !this.display;
 		},
+		//@vuese
+		//called when upvote is clicked to change the style of upvote icon and increment vote counter
 		upClick() {
 			if (this.downClicked) this.downClick();
 			this.upClicked = !this.upClicked;
 			if (this.upClicked) this.voteCounter++;
 			else this.voteCounter--;
 		},
+		//@vuese
+		//called when downvote is clicked to change the style of downvote icon and decrement vote counter
 		downClick() {
 			if (this.upClicked) this.upClick();
 			this.downClicked = !this.downClicked;
 			if (this.downClicked) this.voteCounter--;
 			else this.voteCounter++;
 		},
+		//@vuese
+		//sets comment in editting mode (stlye is changed)
 		edit() {
 			this.editing = true;
 			this.edittedComment = this.newComment;
 		},
+		//@vuese
+		//cancel editting done to comment and assign comment's old value back to it
 		cancelEditing() {
 			this.editing = false;
 		},
+		//@vuese
+		//save edittings done to comment
 		saveEditing() {
 			this.editing = false;
 			this.newComment = this.edittedComment;
 		},
+		//@vuese
+		//delete comment
 		deleteComment() {
 			this.deleted = true;
 		},

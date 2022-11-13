@@ -308,7 +308,11 @@
 </template>
 <script>
 export default {
-	emits: ['showComments'],
+	emits: [
+		'showComments',
+		//@vuese
+		//show comments of emitting post
+	],
 	data() {
 		return {
 			id: '1',
@@ -322,16 +326,27 @@ export default {
 		};
 	},
 	props: {
+		//@vuese
+		//post object that will get displayed in this base post component
 		post: {
 			type: Object,
 			required: true,
 		},
 	},
 	methods: {
+		//@vuese
+		//show post comments
 		showPostComments() {
+			// Fire when the post is clicked
 			this.$emit('showComments');
 		},
+		//@vuese
+		//upvote on post
 		async upvote() {
+			if (this.downClicked) {
+				this.downClicked = false;
+				this.counter++;
+			}
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
@@ -349,12 +364,14 @@ export default {
 				this.upClicked = false;
 				this.counter--;
 			}
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
 		},
+		//@vuese
+		//down vote on post
 		async downvote() {
+			if (this.upClicked) {
+				this.upClicked = false;
+				this.counter--;
+			}
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
@@ -372,18 +389,20 @@ export default {
 				this.downClicked = false;
 				this.counter++;
 			}
-			if (this.upClicked) {
-				this.upClicked = false;
-				this.counter--;
-			}
 		},
+		//@vuese
+		//show services submenu
 		showSubMenu() {
 			this.subMenuDisplay = !this.subMenuDisplay;
 			this.shareSubMenuDisplay = false;
 		},
+		//@vuese
+		//hide post action
 		hidePost() {
 			this.postHidden = true;
 		},
+		//@vuese
+		//save post
 		async savePost() {
 			this.saved = !this.saved;
 			if (this.saved == true) {
@@ -408,6 +427,8 @@ export default {
 				}
 			}
 		},
+		//@vuese
+		//show share submenu
 		showShareSubMenu() {
 			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
 			this.subMenuDisplay = false;

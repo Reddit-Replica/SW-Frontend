@@ -32,6 +32,7 @@ export default {
 	computed: {
 		// @vuese
 		//return if bath not sent bath or compose
+		// @type boolean
 		showSecondBar() {
 			return (
 				this.$route.path !== '/message/compose' &&
@@ -66,10 +67,10 @@ export default {
 	list-style: none;
 }
 .message-grey {
-	background-color: var(--color-grey-light-9);
+	background-color: var(--color-grey-light-10) !important;
 }
 .message-white {
-	background-color: var(--color-white-1);
+	background-color: var(--main-white-color) !important;
 }
 .message:nth-child(odd) {
 	background-color: var(--color-grey-light-9);

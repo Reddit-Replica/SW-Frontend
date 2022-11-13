@@ -15,8 +15,8 @@
 <!-- @vuese:SocialLinks:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|close|-|-|
-|open|-|-|
+|close|when this event was emitted  the parent component will listen on it and make show to false to hide the dialog|-|
+|open|when this event was emitted  the parent component will listen on it and make show to true to open the dialog|-|
 
 <!-- @vuese:SocialLinks:events:end -->
 

@@ -1,4 +1,5 @@
 {
+  "hide": [],
   "vote": [
     {
       "id": 1,
@@ -119,6 +120,54 @@
       "nsfw": false,
       "category": "Sports",
       "id": 7
+    },
+    {
+      "subredditName": "hikoklkllklllllllllll",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 8
+    },
+    {
+      "subredditName": "hikoklkllklllllllllll",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 9
+    },
+    {
+      "subredditName": "hikoklkllklllllllllll",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 10
+    },
+    {
+      "subredditName": "hikoklkllklllllllllll",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 11
+    },
+    {
+      "subredditName": "hikoklkllklllllllllll",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 12
+    },
+    {
+      "subredditName": "hikoklkllklllllllllll",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 13
+    }
+  ],
+  "subreddit-name-available": [
+    {
+      "id": 1,
+      "subredditName": "FrontEnd"
     }
   ],
   "saved-categories": [
@@ -251,6 +300,58 @@
       "sendAt": "",
       "subject": "rtyuiop",
       "id": 13
+    },
+    {
+      "text": "sdfg",
+      "senderUsername": {
+        "text": "asmaa first subbreddit"
+      },
+      "receiverUsername": "adelasmaa333@gmail.com",
+      "sendAt": "",
+      "subject": "wfgh",
+      "id": 14
+    },
+    {
+      "text": "hjk",
+      "senderUsername": "username-value",
+      "receiverUsername": "rtyui",
+      "sendAt": "",
+      "subject": "hj",
+      "id": 15
+    },
+    {
+      "text": "uio",
+      "senderUsername": {
+        "text": "asmaa first subbreddit"
+      },
+      "receiverUsername": "uio",
+      "sendAt": "",
+      "subject": "uio",
+      "id": 16
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "username-value",
+      "receiverUsername": "dfghjkl",
+      "sendAt": "",
+      "subject": "rtyui",
+      "id": 17
+    },
+    {
+      "text": "ghjkl",
+      "senderUsername": "asmaa second subbreddit",
+      "receiverUsername": "rtyuil",
+      "sendAt": "",
+      "subject": "tyuio;",
+      "id": 18
+    },
+    {
+      "text": "ghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "dfghjk",
+      "sendAt": "",
+      "subject": "g;",
+      "id": 19
     }
   ],
   "inbox": [
@@ -456,6 +557,66 @@
       ]
     }
   ],
+  "suggested-sender": [
+    {
+      "children": [
+        {
+          "text": "asmaa first subbreddit"
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "text": "asmaa second subbreddit"
+        }
+      ]
+    }
+  ],
+  "moderator-list": [
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "asmaa",
+          "nickname": "asmaa",
+          "dateOfModeration": "9 years ago",
+          "permissions": [
+            "Everything"
+          ]
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "hoda",
+          "nickname": "hoda",
+          "dateOfModeration": "3 years ago",
+          "permissions": [
+            "Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+          ]
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "mena",
+          "nickname": "mena",
+          "dateOfModeration": "1 year ago",
+          "permissions": [
+            "Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+          ]
+        }
+      ]
+    }
+  ],
   "block-user": [
     {
       "block": true,
@@ -634,8 +795,8 @@
   "user": {
     "displayName": "Abdalhameed_Emad",
     "about": "",
-    "banner": "string",
-    "picture": "../../../../assets/R.png",
+    "banner": "https://styles.redditmedia.com/t5_7cfmec/styles/profileBanner_q7sgjdrxrsy91.jpg",
+    "picture": "https://styles.redditmedia.com/t5_7cfmec/styles/profileIcon_ljohnaqdssy91.png",
     "karma": 10,
     "cakeDate": "2019-01-24",
     "socialLinks": [
@@ -675,9 +836,9 @@
     ]
   },
   "social-link": {
-    "type": "Twitter",
-    "displayText": "hgfvct",
-    "link": "https://twitter.com/hgfvct"
+    "type": "Instagram",
+    "displayText": "ukjy",
+    "link": "https://www.instagram.com/ukjy"
   },
   "user1": {
     "displayName": "Abdalhameed_Emad",

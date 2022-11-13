@@ -43,17 +43,18 @@ export default {
 	components: {
 		BaseButton,
 	},
+	// @vuese
+	// userModerators is an array of useModerators subreddit (name of subreddit , number of members , joined or not )
 	props: {
 		userModerators: {
 			type: Array,
 			required: true,
 		},
 	},
+	// @vuese
+	// at mounting we loop for each moderator to add button text if joined or not
 	mounted() {
-		console.log(this.userModerators);
-		this.userModerators.forEach((element) => {
-			element.buttonText = 'joined';
-		});
+		// console.log(this.userModerators);
 		this.userModerators.forEach((element) => {
 			element.buttonText = 'joined';
 			if (!element.joined) element.buttonText = 'join';
@@ -65,6 +66,11 @@ export default {
 		};
 	},
 	watch: {
+		/**
+		 * @vuese
+		 * we watch changes of to set again if change happened button text
+		 * @arg no arg
+		 */
 		userModerators() {
 			this.userModerators.forEach((element) => {
 				element.buttonText = 'joined';
@@ -74,6 +80,11 @@ export default {
 	},
 	computed: {},
 	methods: {
+		/**
+		 * @vuese
+		 * at hover in button we chage button text if joined to leave
+		 * @arg no arg
+		 */
 		hoverButton(key) {
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
@@ -83,6 +94,11 @@ export default {
 				}
 			});
 		},
+		/**
+		 * @vuese
+		 * we reset button text we unhover
+		 * @arg no arg
+		 */
 		unHoverButton() {
 			this.userModerators.forEach((element) => {
 				if (element.joined) {
@@ -90,6 +106,11 @@ export default {
 				}
 			});
 		},
+		/**
+		 * @vuese
+		 * at clicking on the button we change it state  joined <-> join
+		 * @arg no arg
+		 */
 		changeButtonState(key) {
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
@@ -111,7 +132,7 @@ ul {
 }
 .mod-card {
 	margin-top: 16px;
-	background-color: #ffffff;
+	background-color: var(--main-white-color);
 	width: 100%;
 	border: 1px solid #ccc;
 	border-radius: 4px;
@@ -122,7 +143,7 @@ ul {
 	letter-spacing: 0.5px;
 	line-height: 12px;
 	border-radius: 3px 3px 0 0;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 	display: flex;
 	padding: 0 12px 12px;
 }
@@ -148,13 +169,13 @@ p {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	background-color: #0079d3;
+	background-color: var(--color-blue-2);
 	margin-right: 9px;
 	position: relative;
 }
 .mod-list i::after {
 	content: 'r';
-	color: #ffffff;
+	color: var(--main-white-color);
 	background-color: transparent;
 	width: 30px;
 	height: 30px;
@@ -177,23 +198,23 @@ span {
 	flex-grow: 1;
 	justify-content: flex-start;
 	align-items: flex-start;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 }
 a,
 p {
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
-	color: #1a1a1b;
+	color: var(--color-dark-4);
 }
 li span a:hover {
 	text-decoration: underline;
 }
 .join-button {
-	background-color: #0079d3;
-	border: 1px solid #0079d3;
+	background-color: var(--color-blue-2);
+	border: 1px solid var(--color-blue-2);
 	border-radius: 9999px;
-	color: #ffffff;
+	color: var(--main-white-color);
 	font-size: 14px;
 	font-weight: 700;
 	cursor: pointer;
@@ -205,9 +226,9 @@ li span a:hover {
 	width: 104px;
 }
 .joined-button {
-	background-color: #ffffff;
-	border: 1px solid #0079d3;
-	color: #0079d3;
+	background-color: var(--main-white-color);
+	border: 1px solid var(--color-blue-2);
+	color: var(--color-blue-2);
 	position: relative;
 }
 .joined-button::before {
@@ -218,7 +239,7 @@ li span a:hover {
 	width: 100%;
 	height: 100%;
 	border-radius: 9999px;
-	background: #0079d3;
+	background: var(--color-blue-2);
 	opacity: 0;
 }
 .joined-button:hover::before {
