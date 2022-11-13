@@ -16,14 +16,20 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//titles in sub menu
 		titles: {
 			type: Array,
 			required: true,
 		},
+		// @vuese
+		//should sub menu display or not
 		display: {
 			type: Boolean,
 			required: true,
 		},
+		// @vuese
+		//choosen title
 		clickedProp: {
 			type: String,
 			required: true,
@@ -36,6 +42,9 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//handle choosen title
+		// @arg The argument is a string value representing choosen value from user
 		clickedFunction(title) {
 			this.clicked = title;
 			this.$emit('change-title', title);

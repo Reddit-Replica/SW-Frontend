@@ -16,7 +16,7 @@
 			</div>
 		</template>
 		<template #default>
-			<div class="social-link-config-header-body">
+			<div class="social-link-config-header-body" id="social-link-config-item">
 				<sociallink-item
 					:text="data.text"
 					:img-src="data.imgSrc"
@@ -37,8 +37,18 @@
 					@input="socialLinkModeration"
 					id="social-link-config-input-sociallink"
 				/>
-				<div v-if="!validUrl" class="invalid-url">Invalid URL</div>
-				<div v-else-if="!correctSpelling" class="invalid-url">
+				<div
+					v-if="!validUrl"
+					class="invalid-url"
+					id="social-link-config-invalid-url"
+				>
+					Invalid URL
+				</div>
+				<div
+					v-else-if="!correctSpelling"
+					class="invalid-url"
+					id="social-link-config-invalid-spelling"
+				>
 					Looks like this isn’t a valid URL. Double-check your spelling.
 				</div>
 			</div>
@@ -50,6 +60,8 @@ import BaseDialog from '../../../BaseComponents/BaseDialog.vue';
 import BaseButton from '../../../BaseComponents/BaseButton.vue';
 import SociallinkItem from './SociallinkItem.vue';
 export default {
+	// @vuese
+	// data contain social link ( text ,imag-src, image alternate text )
 	props: {
 		data: {
 			type: Object,
@@ -94,6 +106,7 @@ export default {
 		 * @arg no arg
 		 */
 		back() {
+			/* this event emitted to know the parent component that he clicked to to back button to close it and open social links dialog */
 			this.$emit('back');
 		},
 		/**
@@ -183,9 +196,7 @@ export default {
 						link: `${this.data.baseUrl}${this.displayedTextField.substring(1)}`,
 					};
 				}
-				/* request to back end */
-
-				/* */
+				/* this event emitted to know the parent component that he clicked to to save button to close it*/
 				this.$emit('save');
 				try {
 					await this.$store.dispatch('user/AddNewSocialLink', {
@@ -261,26 +272,26 @@ button#save-button:disabled {
 	height: 36px;
 	padding: 0 8px;
 	box-sizing: border-box;
-	background-color: #ffffff;
-	color: #1c1c1c;
+	background-color: var(--main-white-color);
+	color: var(--color-dark-3);
 	width: 100%;
-	border: 1px solid #edeff1;
+	border: 1px solid var(--color-grey-light-10);
 	border-radius: 4px;
 	margin: 12px 2px;
 	outline: none;
 }
 .social-link-config-header-body input:focus {
-	border-color: #0079d3;
+	border-color: var(--color-blue-2);
 }
 /* .active-save-button {
-	background-color: #0079d3;
-	color: #ffffff;
+	background-color: var(--color-blue-2);
+	color: var(--main-white-color);
 	filter: unset;
 	cursor: unset;
 } */
 .social-link-config-header .active-save-button {
-	background-color: #0079d3;
-	color: #ffffff;
+	background-color: var(--color-blue-2);
+	color: var(--main-white-color);
 	filter: unset;
 	cursor: pointer;
 }

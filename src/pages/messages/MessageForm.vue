@@ -9,14 +9,18 @@
 						name="message-from"
 						id="message-from"
 						v-model="senderUsername"
+						value="username-value"
 					>
+						<option :value="userName" selected="selected">
+							{{ '/u/' + userName }}
+						</option>
 						<option
-							v-for="username in usernames"
-							:id="'message-from-options-' + username"
-							:key="username"
-							:value="username"
+							v-for="username in suggestedSender"
+							:id="'message-from-options-' + username.text"
+							:key="username.text"
+							:value="username.text"
 						>
-							{{ username }}
+							{{ 'r/' + username.text }}
 						</option>
 					</select>
 				</div>
@@ -153,7 +157,6 @@ export default {
 	data() {
 		return {
 			text: '',
-			usernames: ['/u/asmaaadel0', 'r/firstcommunity', 'r/secondcommunity'],
 			senderUsername: '/u/asmaaadel0',
 			receiverUsername: '',
 			sendAt: '',
@@ -165,17 +168,30 @@ export default {
 	},
 	// @vuese
 	//change title name
-	created() {
+	beforeMount() {
 		document.title = 'messages: compose';
+		this.loadSuggestedSender();
+	},
+	computed: {
+		// @vuese
+		//return suggested sender
+		// @type object
+		suggestedSender() {
+			return this.$store.getters['messages/suggestedSender'];
+		},
+		// @vuese
+		//return username
+		// @type string
+		userName() {
+			return this.$store.state.userName;
+		},
 	},
 	methods: {
 		// @vuese
 		//make form validation
+		// @arg no argument
 		formValidation() {
 			this.delivered = false;
-			console.log('to ', this.receiverUsername);
-			console.log('subject', this.subject);
-			console.log('message', this.text);
 			if (this.receiverUsername == '') {
 				this.error = 'messageTo';
 			} else if (this.subject == '') {
@@ -186,6 +202,7 @@ export default {
 		},
 		// @vuese
 		//handle submit form and send post request
+		// @arg no argument
 		handleSubmit() {
 			this.formValidation();
 			if (this.error != '') return;
@@ -198,6 +215,7 @@ export default {
 				subject: this.subject,
 				baseurl: this.$baseurl,
 			});
+			console.log(this.senderUsername);
 			this.receiverUsername = '';
 			this.sendAt = '';
 			this.subject = '';
@@ -206,9 +224,22 @@ export default {
 		},
 		// @vuese
 		//change title to formatting or hide
+		// @arg no argument
 		changeTitle() {
 			if (this.formatting == 'formatting') this.formatting = 'hide';
 			else this.formatting = 'formatting';
+		},
+		// @vuese
+		//load suggested senders from the store
+		// @arg no argument
+		async loadSuggestedSender() {
+			try {
+				await this.$store.dispatch('messages/loadSuggestedSender', {
+					baseurl: this.$baseurl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };

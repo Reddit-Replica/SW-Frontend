@@ -543,12 +543,13 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//show gender menu
 		showGenderMenu() {
 			this.genderMenuDisplayed = !this.genderMenuDisplayed;
 		},
-		setGender(gender) {
-			this.gender = gender;
-		},
+		//@vuese
+		//change gender
 		changeGender(gender) {
 			this.gender = gender;
 		},

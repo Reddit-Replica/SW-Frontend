@@ -82,7 +82,7 @@
 							d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
 						/>
 					</svg>
-					<span class="icon-text">0</span>
+					<span class="icon-text icon-text-1">0</span>
 				</div>
 				<div class="icons" id="initial-post-icon-2">
 					<svg
@@ -98,7 +98,7 @@
 							d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"
 						/>
 					</svg>
-					<span class="icon-text">Share</span>
+					<span class="icon-text icon-text-1">Share</span>
 				</div>
 				<div class="icons" id="initial-post-icon-3">
 					<svg
@@ -116,7 +116,7 @@
 							d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
 						/>
 					</svg>
-					<span class="icon-text">Approve</span>
+					<span class="icon-text icon-text-1">Approve</span>
 				</div>
 				<div class="icons" id="initial-post-icon-4">
 					<svg
@@ -134,7 +134,7 @@
 							d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"
 						/>
 					</svg>
-					<span class="icon-text">Remove</span>
+					<span class="icon-text icon-text-1">Remove</span>
 				</div>
 				<div class="icons" id="initial-post-icon-5">
 					<svg
@@ -150,11 +150,7 @@
 						/>
 					</svg>
 				</div>
-				<div
-					class="icons icons-dots"
-					@click="toggleIconsList"
-					id="initial-post-icon-15"
-				>
+				<div class="icons" @click="toggleIconsList" id="initial-post-icon-15">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -353,25 +349,43 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Check hovering on up vote icon
+		//@arg boolen to check if hovering/clickig or not
 		setHover1(shown) {
 			this.isHover1 = shown;
 		},
+		//@vuese
+		//Check hovering on down vote icon
+		//@arg boolen to check if hovering/clickig or not
 		setHover2(shown) {
 			this.isHover2 = shown;
 		},
+		//@vuese
+		//Show/Hide votes up count
+		//@arg boolen to choose showing or hiding up votes
 		toggleVotesUp(shown) {
 			this.votesUpShown = shown;
 		},
+		//@vuese
+		//Show/Hide icons list
+		//@arg no argument
 		toggleIconsList() {
 			this.iconsListShown = !this.iconsListShown;
 		},
 
+		//@vuese
+		//Increase votes up count
+		//@arg no argument
 		voteUp() {
 			this.setHover1(true);
 			this.setHover2(false);
 			this.votesUpCount++;
 			this.toggleVotesUp(true);
 		},
+		//@vuese
+		//Increase votes down count
+		//@arg no argument
 		voteDown() {
 			this.setHover2(true);
 			this.setHover1(false);
@@ -387,32 +401,33 @@ export default {
 	background: var(--color-white-1);
 	display: flex;
 	flex-direction: row;
-	margin-bottom: 12px;
-	border-radius: 4px;
+	margin-bottom: 1.2rem;
+	border-radius: 0.4rem;
 }
 .post-card:hover {
 	border: var(--line-7);
 	outline: none;
 }
 .votes-box {
-	width: 40px;
-	align-items: center;
-	box-sizing: border-box;
+	width: 4rem;
+	left: 0;
+	top: 0;
 	display: flex;
 	flex-direction: column;
-	left: 0;
-	padding: 8px 0px 8px 0;
-	top: 0;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 0.8rem 0 0.8rem 0;
 	background: var(--color-grey-light-3);
 }
 .post-box {
-	background: rgb(255, 255, 255);
+	background: var(--color-white-1);
+	position: relative;
 }
 .div-1 {
-	padding-top: 8px;
+	padding-top: 0.8rem;
 }
 .div-margin {
-	margin: 0 8px 8px;
+	margin: 0 0.8rem 0.8rem;
 }
 .flex-center {
 	display: flex;
@@ -423,28 +438,28 @@ export default {
 	fill: var(--color-green);
 }
 .text-bold {
-	font-size: 10px;
+	font-size: 1rem;
 	font-weight: 700;
-	line-height: 12px;
-	letter-spacing: 0.5px;
+	line-height: 1.2rem;
+	letter-spacing: 0.05rem;
 	text-transform: uppercase;
 }
 .text-small {
-	font-size: 12px;
+	font-size: 1.2rem;
 	font-weight: 400;
-	line-height: 16px;
+	line-height: 1.6rem;
 }
 .text-big {
-	font-size: 18px;
+	font-size: 1.8rem;
 	font-weight: 500;
-	line-height: 22px;
+	line-height: 2.2rem;
 }
 .text-red {
 	color: var(--color-white-1);
 	background: var(--color-primary);
-	padding: 4px 4px;
-	border-radius: 14px;
-	margin-right: 4px;
+	padding: 0.4rem 0.4rem;
+	border-radius: 1.4rem;
+	margin-right: 0.4rem;
 }
 .hover-fill-up {
 	fill: #ff5213;
@@ -453,50 +468,46 @@ export default {
 	fill: #7193ff;
 }
 .flex-icons {
-	align-items: stretch;
 	display: flex;
-	flex-direction: row;
-	overflow: hidden;
-	padding: 0 8px 0 4px;
 	flex-grow: 1;
+	flex-direction: row;
+	align-items: stretch;
+	overflow: hidden;
+	padding: 0 0.8rem 0 0.4rem;
+	/* position: relative; */
 }
 .icons {
-	margin-right: 4px;
-	align-items: center;
+	margin-right: 0.4rem;
+	margin-bottom: 0.2rem;
+	padding: 0.8rem;
 	display: flex;
-	padding: 8px;
+	align-items: center;
 	word-break: normal;
-	margin-bottom: 2px;
 }
 .icons:hover {
 	background-color: var(--color-grey-light-3);
-	border-radius: 4px;
+	border-radius: 0.4rem;
 }
 .icon-text {
-	margin-left: 6px;
+	margin-left: 0.6rem;
 }
 .icons-list {
-	border: 1px solid var(--newCommunityTheme-line);
-	border-radius: 4px;
-	box-shadow: 0 2px 4px 0 var(--newCommunityTheme-bodyTextAlpha20);
-	color: var(--newCommunityTheme-bodyText);
-	overflow: hidden;
-	background-color: var(--newCommunityTheme-body);
-	position: absolute;
-	z-index: 10;
+	border: var(--line-8);
+	box-shadow: var(--shadow-menu);
+	border-radius: 0.4rem;
+	color: var(--color-dark-4);
+	background-color: var(--color-white-1);
 	display: flex;
 	flex-direction: column;
-
-	/* left: 500px;
-	top: 1150px; */
-	left: 50%;
-	top: 160%;
-}
-.icon-dots {
-	position: relative;
+	overflow: hidden;
+	position: absolute;
+	z-index: 10;
+	left: 40%;
+	top: 100%;
 }
 button {
 	border: none;
+	text-align: left;
 }
 .icon-button {
 	background-color: var(--color-white-1);
@@ -508,5 +519,10 @@ button {
 	color: var(--color-dark-4);
 	fill: var(--color-dark-4);
 	margin: 0;
+}
+@media only screen and (max-width: 30rem) {
+	.icon-text-1 {
+		display: none;
+	}
 }
 </style>

@@ -86,6 +86,8 @@
 export default {
 	name: 'NestedReply',
 	props: {
+		//@vuese
+		//reply data object to get display in that component
 		comment: {
 			type: Object,
 			required: true,
@@ -102,12 +104,16 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//called when upvote is clicked to change the style of upvote icon and increment vote counter
 		upClick() {
 			if (this.downClicked) this.downClick();
 			this.upClicked = !this.upClicked;
 			if (this.upClicked) this.voteCounter++;
 			else this.voteCounter--;
 		},
+		//@vuese
+		//called when downvote is clicked to change the style of downvote icon and decrement vote counter
 		downClick() {
 			if (this.upClicked) this.upClick();
 			this.downClicked = !this.downClicked;

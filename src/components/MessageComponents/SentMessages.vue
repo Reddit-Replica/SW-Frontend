@@ -1,8 +1,5 @@
 <template>
-	<div
-		class="message"
-		:class="backcolor == 'grey' ? 'message-grey' : 'message-white'"
-	>
+	<div class="message">
 		<li>
 			<p class="subject-text">
 				<span>{{ message.subject }}</span>
@@ -16,7 +13,8 @@
 								message.receiverUsername
 							}}</a>
 						</span></span
-					><span>&nbsp;sent&nbsp;</span><time> {{ message.sendAt }}</time>
+					><span>&nbsp;sent&nbsp;</span
+					><time :id="'time-' + index"> {{ message.sendAt }}</time>
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list ul-messages">
@@ -52,11 +50,6 @@ export default {
 			required: true,
 			default: 0,
 		},
-	},
-	data() {
-		return {
-			backcolor: 'grey',
-		};
 	},
 	methods: {},
 };

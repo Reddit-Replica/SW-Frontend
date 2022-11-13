@@ -17,11 +17,11 @@
 <!-- @vuese:UserMentions:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|blockAction|handle block action|-|
-|spamAction|handle spam action|-|
-|upvote|handle upvote action|-|
-|downvote|handle downvote action|-|
-|unreadAction|handle unread action|-|
+|blockAction|handle block action|The argument is a string value representing if user click ok|
+|spamAction|handle spam action|The argument is a string value representing if user click ok|
+|upvote|handle upvote action|no argument|
+|downvote|handle downvote action|no argument|
+|unreadAction|handle unread action|no argument|
 
 <!-- @vuese:UserMentions:methods:end -->
 

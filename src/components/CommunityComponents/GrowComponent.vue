@@ -1,5 +1,5 @@
 <template>
-	<div class="grow-link" v-if="shownAlone">
+	<div class="grow-link" v-if="shownAlone" :id="'grow-link-' + index">
 		<svg
 			viewBox="0 0 100 100"
 			xmlns="http://www.w3.org/2000/svg"
@@ -57,26 +57,38 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//Index of grow your community element
 		index: {
 			type: Number,
 			default: 0,
 		},
+		//@vuese
+		//Color of grow your community element
 		color: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Main title of grow your community element
 		title: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Description of grow your community element
 		content: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Link to where of grow your community element should go
 		link: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Button text of grow your community element
 		button: {
 			type: String,
 			default: '',
@@ -89,17 +101,21 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//Set background color with chosen color
 		styleBack() {
 			return 'background-color:' + this.color;
 		},
+		//@vuese
+		//Set filling color with chosen color
 		styleFill() {
 			return 'fill:' + this.color;
 		},
 	},
 	methods: {
-		hide(index) {
-			this.shown[index] = !this.shown[index];
-		},
+		//@vuese
+		//Hide element when clicking on exit icon
+		//@arg no argument
 		hideAlone() {
 			this.shownAlone = !this.shownAlone;
 		},
@@ -109,12 +125,11 @@ export default {
 
 <style scoped>
 .tri-1 {
-	/* width: 67px; */
 	transform: rotate(90deg);
 }
 .tri {
-	border-bottom-left-radius: 4px;
-	border-top-left-radius: 4px;
+	border-bottom-left-radius: 0.4rem;
+	border-top-left-radius: 0.4rem;
 	bottom: 0;
 	height: 100%;
 	left: 0;
@@ -125,73 +140,69 @@ export default {
 .grow-link {
 	background-color: var(--color-white-1);
 	border: var(--line-8);
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	cursor: pointer;
 	display: block;
-	margin-top: 12px;
-	max-width: 640px;
-	padding: 16px 16px 16px 72px;
+	margin-top: 1.2rem;
+	/* max-width: 64rem; */
+	padding: 1.6rem 1.6rem 1.6rem 7.2rem;
 	position: relative;
-}
-.delete {
-	width: 100%;
-	height: 150px;
 }
 .bi-x-lg {
 	outline: none;
-	margin-top: 12px;
+	margin-top: 1.2rem;
 	position: absolute;
 	right: 0;
 	text-decoration: none;
 	top: 0;
-	margin-right: 12px;
+	margin-right: 1.2rem;
 	color: var(--color-grey-light-5);
 }
 .grow-content {
-	padding-right: 16px;
+	padding-right: 1.6rem;
 	width: 100%;
 }
 h2 {
 	color: var(--color-dark-4);
 	font-weight: 500;
-	font-size: 22px;
-	line-height: 26px;
+	font-size: 2.2rem;
+	line-height: 2.6rem;
 }
 p {
 	color: var(--color-grey-light-5);
-	font-size: 14px;
-	line-height: 18px;
-	margin-top: 8px;
+	font-size: 1.4rem;
+	line-height: 1.8rem;
+	margin-top: 0.8rem;
 }
 .button {
 	color: var(--color-white-1);
-	margin-right: 4px;
-	margin-top: 8px;
-	padding: 6px 12px;
-	font-size: 14px;
+	margin-right: 0.4rem;
+	margin-left: 5rem;
+	margin-top: 0.8rem;
+	padding: 0.6rem 1.2rem;
+	font-size: 1.4rem;
 	border: none;
-	margin-left: 50px;
 }
 .button:hover {
 	opacity: 0.92;
 }
 .circle {
 	fill: var(--color-white-1);
-	border-radius: 50%;
 	color: var(--color-white-1);
-	height: 24px;
-	left: 16px;
-	padding: 10px;
+	border-radius: 50%;
+	height: 2.4rem;
+	width: 2.4rem;
+	left: 1.6rem;
+	top: 1.2rem;
+	padding: 1rem;
 	position: absolute;
 	text-align: center;
-	top: 12px;
-	width: 24px;
 	box-sizing: content-box;
 }
 .icon-circle {
-	font-size: 24px;
-	height: 24px;
-	line-height: 24px;
-	width: 24px;
+	font-size: 2.4rem;
+	height: 2.4rem;
+	width: 2.4rem;
+	line-height: 2.4rem;
 }
 </style>

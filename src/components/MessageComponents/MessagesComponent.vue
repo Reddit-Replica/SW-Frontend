@@ -53,13 +53,15 @@
 							}}</a>
 						</span>
 					</span>
-					&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+					&nbsp;sent&nbsp;<time :id="'time-' + index">
+						{{ message.sendAt }}</time
+					>
 				</p>
 				<div v-if="expandAll">
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list ul-messages">
 						<li :id="'permalink-' + index">
-							<a href="" :id="'permalink-linl-' + index">Permalink</a>
+							<a href="" :id="'permalink-link-' + index">Permalink</a>
 						</li>
 						<li v-if="ifMessageRecieved">
 							<form action="#">
@@ -219,11 +221,13 @@ export default {
 	computed: {
 		// @vuese
 		//get username from store
+		// @type string
 		getUserName() {
 			return '/u/' + this.$store.getters.getUserName;
 		},
 		// @vuese
 		//check if user is reciever or sender
+		// @type boolean
 		ifMessageRecieved() {
 			return this.getUserName == this.message.receiverUsername;
 		},
@@ -231,6 +235,7 @@ export default {
 	methods: {
 		// @vuese
 		//handle delete action
+		// @arg The argument is a string value representing if user click ok
 		deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {
@@ -244,6 +249,7 @@ export default {
 		},
 		// @vuese
 		//handle block action
+		// @arg The argument is a string value representing if user click ok
 		blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
@@ -257,11 +263,13 @@ export default {
 		},
 		// @vuese
 		//handle unread action
+		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
 		},
 		// @vuese
 		//handle spam action
+		// @arg The argument is a string value representing if user click ok
 		spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
@@ -276,6 +284,7 @@ export default {
 		},
 		// @vuese
 		//expand or collapse message details
+		// @arg The argument is a string value representing if its expand or collapse
 		expand(action) {
 			if (action == 'expand') {
 				this.expandAll = true;
@@ -302,10 +311,10 @@ ul {
 	list-style: none;
 }
 .message:nth-child(odd) {
-	background-color: var(--color-grey-light-9);
+	background-color: var(--color-grey-light-10);
 }
 .message:nth-child(even) {
-	background-color: var(--color-white-1);
+	background-color: var(--main-white-color);
 }
 .box {
 	display: flex;

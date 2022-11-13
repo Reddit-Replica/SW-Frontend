@@ -5,7 +5,7 @@
 <!-- @vuese:SentMessages:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|loadSentMessages|load messages from the store|-|
+|loadSentMessages|load messages from the store|no argument|
 
 <!-- @vuese:SentMessages:methods:end -->
 
@@ -15,7 +15,7 @@
 <!-- @vuese:SentMessages:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|sentMessages|-|return all messages sent or recieved|Yes|
+|sentMessages|`object`|return all messages sent or recieved|Yes|
 
 <!-- @vuese:SentMessages:computed:end -->
 
@@ -25,7 +25,7 @@
 <!-- @vuese:SentMessages:watch:start -->
 |Name|Description|Parameters|
 |---|---|---|
-|sentMessages|watch messages if it's empty|-|
+|sentMessages|watch messages if it's empty|no argument|
 
 <!-- @vuese:SentMessages:watch:end -->
 

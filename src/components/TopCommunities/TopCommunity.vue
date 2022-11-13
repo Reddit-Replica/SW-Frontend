@@ -35,22 +35,32 @@
 <script>
 export default {
 	props: {
+		//@vuese
+		//index of community in top communities list
 		index: {
 			type: Number,
 			default: 0,
 		},
+		//@vuese
+		//Image URL of community in top communities list
 		image: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Name of community in top communities list
 		name: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//ID of community in top communities list
 		id: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Route to community page in top communities list
 		link: {
 			type: String,
 			default: '',

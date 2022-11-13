@@ -11,6 +11,7 @@ export default {
 	methods: {
 		// @vuese
 		// Used to make page go up
+		// @arg no argument
 		scrollUp() {
 			window.scrollTo(0, 0);
 		},

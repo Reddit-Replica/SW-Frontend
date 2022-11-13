@@ -17,4 +17,7 @@ export default {
 	setSentMessages(state, payload) {
 		state.sentMessages = payload;
 	},
+	setSuggestedSender(state, payload) {
+		state.suggestedSender = payload;
+	},
 };

@@ -17,4 +17,7 @@ export default {
 	sentMessages(state) {
 		return state.sentMessages;
 	},
+	suggestedSender(state) {
+		return state.suggestedSender;
+	},
 };

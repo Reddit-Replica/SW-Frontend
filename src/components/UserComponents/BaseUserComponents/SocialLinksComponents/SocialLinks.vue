@@ -5,6 +5,7 @@
 			:show="show"
 			center="true"
 			title="Adding Social link"
+			id="close-social-link-dialog"
 			@close="tryClose"
 		>
 			<template #default>
@@ -16,6 +17,7 @@
 						:text="sociallinkItem.text"
 						:img-src="sociallinkItem.imgSrc"
 						:alt="sociallinkItem.alt"
+						:id="`static-${sociallinkItem.text}`"
 						@click="openSocialLinkConfig(sociallinkItem.text)"
 					></sociallink-item>
 				</div>
@@ -78,6 +80,8 @@ export default {
 		 * @arg no arg
 		 */
 		tryClose() {
+			/* when this event was emitted  the parent component will
+			listen on it and make show to false to hide the dialog*/
 			this.$emit('close');
 		},
 		/**
@@ -87,6 +91,8 @@ export default {
 		 * @arg no arg
 		 */
 		tryOpen() {
+			/* when this event was emitted  the parent component will
+			listen on it and make show to true to open the dialog*/
 			this.$emit('open');
 		},
 		/**

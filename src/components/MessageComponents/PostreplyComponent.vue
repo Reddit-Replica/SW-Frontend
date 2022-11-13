@@ -50,7 +50,9 @@
 								}}</a>
 							</span></span
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
-						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
+						><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
+							{{ message.sendAt }}</time
+						>
 					</p>
 					<p class="md">{{ message.text }}</p>
 					<ul class="ul-messages flat-list">
@@ -194,14 +196,7 @@ export default {
 			}),
 		},
 		// @vuese
-		//counter to handle background color
-		count: {
-			type: Number,
-			required: true,
-			default: 1,
-		},
-		// @vuese
-		//index to handle unique ids
+		//index to handle unique ids and background color
 		index: {
 			type: Number,
 			required: true,
@@ -221,14 +216,18 @@ export default {
 			isRead: this.message.isRead,
 		};
 	},
+	// @vuese
+	//decide if background color in  white or grey depends on if count even or odd
 	beforeMount() {
-		if (this.count % 2 == 0) {
+		if (this.index % 2 == 0) {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
+		console.log('reply', this.index, ' ', this.backcolor);
 	},
 	methods: {
 		// @vuese
 		//toggle remove action
+		// @arg The argument is a string value representing if user click ok
 		removeAction(action) {
 			this.removeUser = !this.removeUser;
 			if (action == 'yes') {
@@ -242,6 +241,7 @@ export default {
 		},
 		// @vuese
 		//handle block action
+		// @arg The argument is a string value representing if user click ok
 		blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
@@ -255,6 +255,7 @@ export default {
 		},
 		// @vuese
 		//handle spam action
+		// @arg The argument is a string value representing if user click ok
 		spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
@@ -269,6 +270,7 @@ export default {
 		},
 		// @vuese
 		//handle upvote action
+		// @arg no argument
 		upvote() {
 			if (this.upClicked == false) {
 				this.upClicked = true;
@@ -281,6 +283,7 @@ export default {
 		},
 		// @vuese
 		//handle downvote action
+		// @arg no argument
 		downvote() {
 			if (this.downClicked == false) {
 				this.downClicked = true;
@@ -293,6 +296,7 @@ export default {
 		},
 		// @vuese
 		//handle unread action
+		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
 		},

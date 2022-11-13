@@ -6,15 +6,21 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
+				:style="`background-image: url(${userData.banner}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
-				<span @click="addCoverImage" class="add-image">
+				<span
+					v-if="state == 'profile'"
+					@click="addCoverImage"
+					class="add-image"
+				>
 					<div style="display: none">
 						<input
 							type="file"
 							id="add-cover-button"
 							ref="coverFile"
 							@change="loadCoverPic"
+							accept="image/x-png,image/jpeg"
 						/>
 					</div>
 					<!-- add image icon (+) -->
@@ -23,6 +29,7 @@
 				<!-- ///////////////////////////////////////////////////////////// -->
 				<!-- profile settings icon -->
 				<router-link
+					v-if="state == 'profile'"
 					id="profile-settings-icon-card"
 					to="/settings/profile"
 					class="profile-settings"
@@ -92,30 +99,40 @@
 							></path>
 						</g>
 					</svg>
-					<div style="position: relative; z-index: 2">
-						<img src="../../../../assets/R.png" alt="" id="profile-picture" />
-					</div>
-					<div style="display: none">
-						<input
-							type="file"
-							id="add-profile-button"
-							ref="profileFile"
-							@change="loadProfilePic"
+					<div
+						style="position: relative; z-index: 2; width: 100%; height: 100%"
+					>
+						<img
+							v-if="userData.picture != ''"
+							:src="userData.picture"
+							alt=""
+							id="profile-picture"
 						/>
 					</div>
+
 					<span
 						@click="addProfileImage"
 						class="add-image"
 						style="bottom: 0px; right: 0px"
 						id="add-profile-image-button"
+						v-if="state == 'profile'"
 					>
+						<div style="display: none">
+							<input
+								type="file"
+								id="add-profile-button"
+								ref="profileFile"
+								@change="loadProfilePic"
+								accept="image/x-png,image/jpeg"
+							/>
+						</div>
 						<i class="fa-regular fa-square-plus add-image-icon" />
 					</span>
 				</div>
 				<!-- //////////////////////////////////// -->
 				<!-- incase of avatar pic preview -->
 				<div class="profile-avatar" v-else>
-					<img src="../../../../assets/avatar.png" alt="" />
+					<img :src="userData.picture" alt="" />
 				</div>
 				<!-- //////////////////////////// -->
 				<!-- incase of profile picture display name , user name style -->
@@ -162,7 +179,7 @@
 			</div>
 			<!-- ////////////////////////////////////////////// -->
 			<!-- avatar styling button -->
-			<div class="profile-button">
+			<div v-if="state == 'profile'" class="profile-button">
 				<button id="style-avatar">
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
 				</button>
@@ -202,15 +219,17 @@
 			</div>
 			<!-- //////////////////////////////////////////// -->
 			<!-- follow chat for other users -->
-			<follow-chat-component v-if="0"></follow-chat-component>
+			<follow-chat-component v-if="state == 'user'"></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
 			<sociallinks-block
+				v-if="state == 'profile'"
 				:social-data="userData.socialLinks"
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button
+				v-if="state == 'profile'"
 				class="new-post"
 				@click="$router.push('/submit')"
 				id="profile-new-post"
@@ -268,19 +287,24 @@ export default {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// Data of user page ( name , photo url , birth date ,karma , .....)
 		userData: {
 			type: Object,
 			required: true,
+			// default: []
+		},
+		// @vuese
+		// state profile page  or other user page
+		state: {
+			type: String,
+			required: true,
 		},
 	},
-	/**
-	 * @vuese
-	 * when the component was created  we get user data from user store
-	 * @arg no arg
-	 */
-	created() {
+	mounted() {
 		// this.userData = this.$store.getters['user/getUserData'];
 		// console.log(this.userData);
+		// this.uploadBanner();
 	},
 	data() {
 		return {
@@ -288,6 +312,7 @@ export default {
 			// userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
+			banner: this.userData.banner,
 			// mySocialLinks: [
 			// 	{
 			// 		id: '',
@@ -296,7 +321,7 @@ export default {
 			// 		type: '' /* there are three types username  */,
 			// 	},
 			// ],
-			profileOptions: [
+			myProfileOptions: [
 				{
 					name: 'Profile to Moderation',
 					toLink: '/about/edit/moderation',
@@ -310,8 +335,41 @@ export default {
 					toLink: '/about/edit/moderation',
 				},
 			],
+			userProfileOptions: [
+				{
+					name: 'Send Message',
+					toLink: '/message/compose/?to=' /* add in html only user name */,
+				},
+				{
+					name: 'Block User',
+					toLink: '/about/edit/moderation',
+				},
+				{
+					name: 'Get Them Help and Support',
+					toLink: '/about/edit/moderation',
+				},
+				{
+					name: 'Report User',
+					toLink: '/about/edit/moderation',
+				},
+				{
+					name: 'Add to Cusrom Feed',
+					toLink: '/about/edit/moderation',
+				},
+			],
 			isAvatar: false,
 		};
+	},
+	computed: {
+		/**
+		 * @vuese
+		 * change options from profile user options state to other user options state
+		 * @arg no arg
+		 */
+		profileOptions() {
+			if (this.state == 'profile') return this.myProfileOptions;
+			return this.userProfileOptions;
+		},
 	},
 	methods: {
 		/**
@@ -353,7 +411,15 @@ export default {
 			const reader = new FileReader();
 			reader.onload = () => {
 				const result = reader.result;
-				document.querySelector('#profile-picture').src = result;
+				const img = new Image();
+				img.onload = () => {
+					console.log(img.width, img.height);
+					// if (img.width > 1280 && img.height > 384 && file.size < 500) {
+					document.querySelector('#profile-picture').src = result;
+					// }
+				};
+
+				img.src = result;
 			};
 			reader.readAsDataURL(file);
 		},
@@ -374,6 +440,11 @@ export default {
 			};
 			reader.readAsDataURL(file);
 		},
+		/**
+		 * @vuese
+		 * change month date from number to its name
+		 * @arg no arg
+		 */
 		getMonthName(monthNumber) {
 			const monthNumberI = Number(monthNumber);
 			const date = new Date();
@@ -517,7 +588,7 @@ a.profile-settings:hover {
 	/* margin-top: 16px; */
 	top: calc(16px + 15px);
 	left: 12px;
-	background-color: #ffffff;
+	background-color: var(--main-white-color);
 	border-radius: 6px;
 	box-sizing: border-box;
 }
@@ -528,7 +599,7 @@ a.profile-settings:hover {
 	border-radius: 4px;
 	object-fit: cover;
 	object-position: top;
-	border: 1px solid #edeff1;
+	border: 1px solid var(--color-grey-light-10);
 }
 
 .profile-name {
@@ -571,7 +642,7 @@ a.profile-settings:hover {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 18px;
-	color: #1c1c1c;
+	color: var(--color-dark-3);
 	/* margin-bottom: 8px; */
 	margin-top: 8px;
 }
