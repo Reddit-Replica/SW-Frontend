@@ -222,7 +222,6 @@ export default {
 		if (this.index % 2 == 0) {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
-		console.log('reply', this.index, ' ', this.backcolor);
 	},
 	methods: {
 		// @vuese
