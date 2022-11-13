@@ -311,10 +311,10 @@ ul {
 	list-style: none;
 }
 .message:nth-child(odd) {
-	background-color: var(--color-grey-light-9);
+	background-color: var(--color-grey-light-10);
 }
 .message:nth-child(even) {
-	background-color: var(--color-white-1);
+	background-color: var(--main-white-color);
 }
 .box {
 	display: flex;
