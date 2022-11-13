@@ -53,13 +53,15 @@
 							}}</a>
 						</span>
 					</span>
-					&nbsp;sent&nbsp;<time> {{ message.sendAt }}</time>
+					&nbsp;sent&nbsp;<time :id="'time-' + index">
+						{{ message.sendAt }}</time
+					>
 				</p>
 				<div v-if="expandAll">
 					<p class="md">{{ message.text }}</p>
 					<ul class="flat-list ul-messages">
 						<li :id="'permalink-' + index">
-							<a href="" :id="'permalink-linl-' + index">Permalink</a>
+							<a href="" :id="'permalink-link-' + index">Permalink</a>
 						</li>
 						<li v-if="ifMessageRecieved">
 							<form action="#">

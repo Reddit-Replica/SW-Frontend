@@ -4,6 +4,7 @@ import PostReplies
 import {describe, it, expect} from 'vitest';
 import Vuex from 'vuex';
 import store from '../../src/store/index.js';
+import mockservice from '../../../mockservice.txt';
 
 describe ('PostreplyComponent.vue', () => {
   const message = {
@@ -20,6 +21,7 @@ describe ('PostreplyComponent.vue', () => {
     isRead: true,
   };
   const index = 0;
+  let count = 2;
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -35,7 +37,7 @@ describe ('PostreplyComponent.vue', () => {
     const wrapper = mount (PostReplies, {
       props: {
         message,
-				index,
+        index,
       },
       global: {
         // OR:
@@ -53,7 +55,7 @@ describe ('PostreplyComponent.vue', () => {
     const wrapper = mount (PostReplies, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -71,7 +73,7 @@ describe ('PostreplyComponent.vue', () => {
     const wrapper = mount (PostReplies, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -87,7 +89,7 @@ describe ('PostreplyComponent.vue', () => {
     const wrapper = mount (PostReplies, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -97,5 +99,194 @@ describe ('PostreplyComponent.vue', () => {
       },
     });
     expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  });
+  it ('Testing the time is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
+  });
+
+  it ('Testing the context button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#context-a-0').text ()).contain ('context');
+  });
+  
+  it ('Testing the Full Comments(5) button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#full-comment-a-0').text ()).contain ('Full Comments(5)');
+  });
+
+  it ('Testing the delete button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#click-remove-0').text ()).contain ('Remove');
+  });
+
+  it ('Testing the spam button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
+  });
+
+  it ('Testing the block button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#block-user-0').text ()).contain ('Block User');
+  });
+
+  it ('Testing the mark un read button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
+  });
+
+  it ('Testing the mark un read button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#reply-0').text ()).contain ('Reply');
+  });
+  //--------------------------------------------------------
+  //                     Testing message color background page
+  //--------------------------------------------------------
+  it ('Testing block message background is white', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+      data () {
+        return {
+          backcolor: 'grey',
+        };
+      },
+    });
+    expect (this.backcolor == 'grey').toBe (false);
+  });
+  //--------------------------------------------------------
+  //                     Testing clickig buttons
+  //--------------------------------------------------------
+  it ('Testing clicking unread', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+          fetch: mockservice,
+        },
+      },
+      data () {
+        return {
+          isRead: true,
+        };
+      },
+    });
+    const blockBtn = wrapper.find ('#unread-0');
+    blockBtn
+      .trigger ('click')
+      .then (() => {
+        expect (this.isRead == true).toBe (false);
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
   });
 });
