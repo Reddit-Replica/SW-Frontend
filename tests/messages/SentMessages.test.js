@@ -4,6 +4,7 @@ import SentMessages
 import {describe, it, expect} from 'vitest';
 import Vuex from 'vuex';
 import store from '../../src/store/index.js';
+import mockservice from '../../../mockservice.txt';
 
 describe ('SentMessages.vue', () => {
   const message = {
@@ -14,6 +15,7 @@ describe ('SentMessages.vue', () => {
     sendAt: '2019-08-24T14:15:22Z',
   };
   const index = 0;
+  let count = 2;
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -29,7 +31,7 @@ describe ('SentMessages.vue', () => {
     const wrapper = mount (SentMessages, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -47,7 +49,7 @@ describe ('SentMessages.vue', () => {
     const wrapper = mount (SentMessages, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -63,7 +65,7 @@ describe ('SentMessages.vue', () => {
     const wrapper = mount (SentMessages, {
       props: {
         message,
-				index
+        index,
       },
       global: {
         // OR:
@@ -73,5 +75,62 @@ describe ('SentMessages.vue', () => {
       },
     });
     expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  });
+
+  it ('Testing the time is correct', () => {
+    const wrapper = mount (SentMessages, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
+  });
+
+  it ('Testing the Permalink button text is correct', () => {
+    const wrapper = mount (SentMessages, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
+  });
+
+  //--------------------------------------------------------
+  //                     Testing message color background page
+  //--------------------------------------------------------
+  it ('Testing block message background is white', () => {
+    const wrapper = mount (SentMessages, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+      data () {
+        return {
+          backcolor: 'grey',
+        };
+      },
+    });
+    expect (this.backcolor == 'grey').toBe (false);
   });
 });

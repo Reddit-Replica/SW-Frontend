@@ -16,7 +16,8 @@
 								message.receiverUsername
 							}}</a>
 						</span></span
-					><span>&nbsp;sent&nbsp;</span><time> {{ message.sendAt }}</time>
+					><span>&nbsp;sent&nbsp;</span
+					><time :id="'time-' + index"> {{ message.sendAt }}</time>
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list ul-messages">

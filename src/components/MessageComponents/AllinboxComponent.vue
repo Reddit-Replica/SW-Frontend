@@ -24,7 +24,9 @@
 							}}</a>
 						</span></span
 					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
-					><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
+					><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
+						{{ message.sendAt }}</time
+					>
 				</p>
 				<p class="md">{{ message.text }}</p>
 				<ul class="flat-list ul-messages">
