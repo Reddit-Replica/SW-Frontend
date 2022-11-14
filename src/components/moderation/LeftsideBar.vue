@@ -18,7 +18,7 @@
 			</div>
 			<router-link
 				:to="'/r/' + subredditName + '/about/modqueue'"
-				class="options selected"
+				class="options"
 				>Mod queue</router-link
 			>
 			<router-link
@@ -442,7 +442,8 @@ export default {
 .options:hover {
 	background-color: var(--color-grey-light-10);
 }
-.selected {
+.selected,
+a.router-link-active {
 	border-left: 0.4rem solid var(--color-blue-2);
 	display: -ms-flexbox;
 	display: flex;

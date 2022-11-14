@@ -1,5 +1,5 @@
 <template>
-	<div>Edited</div>
+	<div>The Edited</div>
 </template>
 
 <script>
