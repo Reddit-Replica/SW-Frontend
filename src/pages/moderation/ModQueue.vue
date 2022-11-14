@@ -1,5 +1,5 @@
 <template>
-	<div>moderation list</div>
+	<div>Mod Queue</div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-	<div>moderation list</div>
+	<div>Banned</div>
 </template>
 
 <script>

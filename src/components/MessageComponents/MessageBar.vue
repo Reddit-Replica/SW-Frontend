@@ -65,7 +65,7 @@ export default {
 <style scoped>
 .content {
 	background-color: var(--color-blue-2);
-	margin: 0;
+	margin-top: 5rem;
 	padding: 0;
 	border-bottom: none;
 	display: flex;

@@ -36,6 +36,28 @@ export default {
 	align-items: center;
 	justify-content: left;
 	height: 4rem;
+
+	-ms-flex-align: center;
+	align-items: center;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	margin-top: 0;
+	color: var(--color-dark-3);
+	flex-grow: 0;
+	flex-shrink: 0;
+	right: 0;
+	left: 0;
+	top: 5rem;
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	z-index: 2000;
 }
 .subreddit-img {
 	width: 2.5rem;
