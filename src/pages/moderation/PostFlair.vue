@@ -1,5 +1,5 @@
 <template>
-	<div>moderation list</div>
+	<div>Post Flair</div>
 </template>
 
 <script>

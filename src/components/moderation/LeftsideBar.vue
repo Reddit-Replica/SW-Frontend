@@ -16,11 +16,27 @@
 				</svg>
 				Queues
 			</div>
-			<a href="#" class="options selected">Mod queue</a>
-			<a href="#" class="options">Reports</a>
-			<a href="#" class="options">Spam</a>
-			<a href="#" class="options">Edited</a>
-			<a href="#" class="options">Unmoderated</a>
+			<router-link
+				:to="'/r/' + subredditName + '/about/modqueue'"
+				class="options"
+				>Mod queue</router-link
+			>
+			<router-link
+				:to="'/r/' + subredditName + '/about/reports'"
+				class="options"
+				>Reports</router-link
+			>
+			<router-link :to="'/r/' + subredditName + '/about/spam'" class="options"
+				>Spam</router-link
+			>
+			<router-link :to="'/r/' + subredditName + '/about/edited'" class="options"
+				>Edited</router-link
+			>
+			<router-link
+				:to="'/r/' + subredditName + '/about/unmoderated'"
+				class="options"
+				>Unmoderated</router-link
+			>
 		</div>
 		<div class="box">
 			<div class="head">
@@ -42,7 +58,12 @@
 			<a href="#" class="options">Muted</a>
 			<a href="#" class="options">Approved</a>
 			<a href="#" class="options">Talk hosts</a>
-			<a href="#" class="options">Moderators</a>
+			<router-link
+				:to="'/r/' + subredditName + '/about/moderators'"
+				class="options"
+			>
+				Moderators</router-link
+			>
 		</div>
 		<div class="box">
 			<div class="head">
@@ -344,7 +365,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+	props: {
+		subredditName: {
+			type: String,
+			default: 'Subreddit Name',
+			requiered: true,
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -413,7 +442,8 @@ export default {};
 .options:hover {
 	background-color: var(--color-grey-light-10);
 }
-.selected {
+.selected,
+a.router-link-active {
 	border-left: 0.4rem solid var(--color-blue-2);
 	display: -ms-flexbox;
 	display: flex;
