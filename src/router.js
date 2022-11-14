@@ -93,10 +93,11 @@ const router = createRouter({
 			props: true,
 		}, //render user component
 		{
-			// path: '/subreddit/:subredditName',
-			path: '/subreddit', //to be changed
+			path: '/r/:subredditName',
+			// path: '/subreddit', //to be changed
 			name: 'subreddit',
 			component: SubredditPage,
+			props: true,
 		}, //render subreddit component
 		{
 			path: '/r/:subredditName/about/moderators',
