@@ -112,7 +112,7 @@ const router = createRouter({
 		{
 			path: '/r/:subredditName',
 			// path: '/subreddit', //to be changed
-			name: 'subredditName',
+			name: 'subreddit',
 			component: SubredditPage,
 			props: true,
 		}, //render subreddit component

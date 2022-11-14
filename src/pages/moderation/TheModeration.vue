@@ -4,14 +4,14 @@
 	<div>
 		<unmoderator-view
 			v-if="!moderatorByMe"
-			:listOfModerators="listOfModerators"
-			:subredditName="subredditName"
+			:list-of-moderators="listOfModerators"
+			:subreddit-name="subredditName"
 		></unmoderator-view>
 		<div v-else>
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-6 col-md-4">
-						<leftside-bar :subredditName="subredditName"></leftside-bar>
+						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
 					<div class="col-12 col-sm-6 col-md-8">
 						<router-view v-slot="slotProps">
