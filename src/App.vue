@@ -66,6 +66,7 @@ export default {
 
 	--color-red-dark-1: #ea0027;
 	--color-red-dark-2: #cc3700;
+	--color-red-dark-3: #ff4500;
 
 	--color-pink: #ff64ae;
 
