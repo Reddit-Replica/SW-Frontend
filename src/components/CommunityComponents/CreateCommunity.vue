@@ -78,24 +78,26 @@
 							<span class="more-text" @click="showMore" id="more">More</span>
 						</div>
 					</div>
-					<base-dialog
-						:show="moreIsShown"
-						title="Error"
-						@close="showMore"
-						transparent-background
-					>
-						<div class="error-dialog">
-							<div class="error-text">
-								Community names must be between 3–21 characters, and can only
-								contain letters, numbers, or underscores.
+					<div id="more-dialog">
+						<base-dialog
+							:show="moreIsShown"
+							title="Error"
+							@close="showMore"
+							transparent-background
+						>
+							<div class="error-dialog">
+								<div class="error-text">
+									Community names must be between 3–21 characters, and can only
+									contain letters, numbers, or underscores.
+								</div>
+								<div class="box-buttons box-ok">
+									<base-button @click="showMore" class="button-blue" id="ok"
+										>OK</base-button
+									>
+								</div>
 							</div>
-							<div class="box-buttons box-ok">
-								<base-button @click="showMore" class="button-blue" id="ok"
-									>OK</base-button
-								>
-							</div>
-						</div>
-					</base-dialog>
+						</base-dialog>
+					</div>
 				</div>
 				<div class="community-box flex-column">
 					<div class="community-box-title">
@@ -509,6 +511,10 @@ export default {
 				category: this.communityCategory,
 				baseurl: this.$baseurl,
 				token: accessToken,
+			});
+			this.$router.push({
+				name: 'subreddit',
+				params: { subredditName: this.communityName },
 			});
 		},
 		//@vuese
