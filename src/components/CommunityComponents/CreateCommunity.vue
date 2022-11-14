@@ -383,8 +383,10 @@ export default {
 		//@arg no argument
 		async loadCategories() {
 			try {
+				const accessToken = localStorage.getItem('accessToken');
 				await this.$store.dispatch('community/getSavedCategories', {
 					baseurl: this.$baseurl,
+					token: accessToken,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something failed!';
@@ -499,12 +501,14 @@ export default {
 			} else if (this.communityCategoryRequiredError) {
 				return;
 			}
+			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/createSubreddit', {
 				subredditName: this.communityName,
 				type: this.communityType,
 				nsfw: this.nsfwChosen,
 				category: this.communityCategory,
 				baseurl: this.$baseurl,
+				token: accessToken,
 			});
 		},
 		//@vuese
