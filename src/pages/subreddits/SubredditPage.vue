@@ -2,7 +2,7 @@
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
-			subreddit-name="Subreddit"
+			:subreddit-name="subredditName"
 			subreddit-image-url="https://b.thumbs.redditmedia.com/voAwqXNBDO4JwIODmO4HXXkUJbnVo_mL_bENHeagDNo.png"
 		></subreddit-top>
 		<div class="subreddit-page">
@@ -23,6 +23,32 @@
 				<moderators-bar :moderators="moderators"></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
+		</div>
+		<div id="first-time-subreddit" class="first-time-subreddit">
+			<base-dialog
+				:show="showFirstDialog"
+				@close="hideFirstDialog"
+				title="Create your first post"
+			>
+				<div class="text">
+					Welcome to your new community, r/{{ subredditName }}! Set the tone for
+					your community and welcome new members with a post.
+				</div>
+				<div class="box-buttons">
+					<base-button
+						class="button-white-2 text"
+						@click="hideFirstDialog"
+						id="continue-to-subreddit-button"
+						>Continue</base-button
+					>
+					<base-button
+						class="button-blue-2 text"
+						@click="createPost"
+						id="create-first-post-subreddit-button"
+						>Create A Post</base-button
+					>
+				</div>
+			</base-dialog>
 		</div>
 	</div>
 </template>
@@ -48,6 +74,13 @@ export default {
 		ModeratorsBar,
 		BacktotopButton,
 	},
+	props: {
+		subredditName: {
+			type: String,
+			default: '',
+			required: true,
+		},
+	},
 	data() {
 		return {
 			topics: [
@@ -65,7 +98,18 @@ export default {
 				{ id: 1, name: 'AsmaaAdel' },
 				{ id: 2, name: 'Abdalhameed' },
 			],
+			showFirstDialog: true,
 		};
+	},
+	methods: {
+		hideFirstDialog() {
+			this.showFirstDialog = false;
+		},
+		createPost() {
+			this.$router.push({
+				name: 'SubmitPage',
+			});
+		},
 	},
 };
 </script>
@@ -90,6 +134,36 @@ export default {
 	height: 100%;
 	margin-left: 2.4rem;
 	margin-top: 1.5rem;
+}
+.first-time-subreddit {
+	width: 41rem;
+}
+.text {
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 1.8rem;
+}
+.box-buttons {
+	background-color: var(--color-grey-light-2);
+	padding: 16px;
+	margin: 16px -16px -16px;
+	border-bottom-right-radius: 4px;
+	display: flex;
+	justify-content: flex-end;
+	box-sizing: border-box;
+}
+.button-white-2 {
+	border: var(--line-5);
+	color: var(--color-blue-2);
+	padding: 0.4rem 1.6rem;
+	margin-left: 0.8rem;
+}
+.button-blue-2 {
+	background-color: var(--color-blue-2);
+	color: var(--color-white-1);
+	border: none;
+	padding: 0.4rem 1.6rem;
+	margin-left: 0.8rem;
 }
 @media only screen and (max-width: 850px) {
 	.subreddit-page-right {
