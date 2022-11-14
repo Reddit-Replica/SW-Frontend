@@ -24,29 +24,31 @@
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
 		</div>
-		<div id="first-time-subreddit" class="first-time-subreddit">
+		<div id="first-time-subreddit">
 			<base-dialog
-				:show="showFirstDialog"
+				:show="toBeShown"
 				@close="hideFirstDialog"
 				title="Create your first post"
 			>
-				<div class="text">
-					Welcome to your new community, r/{{ subredditName }}! Set the tone for
-					your community and welcome new members with a post.
-				</div>
-				<div class="box-buttons">
-					<base-button
-						class="button-white-2 text"
-						@click="hideFirstDialog"
-						id="continue-to-subreddit-button"
-						>Continue</base-button
-					>
-					<base-button
-						class="button-blue-2 text"
-						@click="createPost"
-						id="create-first-post-subreddit-button"
-						>Create A Post</base-button
-					>
+				<div class="first-time-subreddit">
+					<div class="text">
+						Welcome to your new community, r/{{ subredditName }}! Set the tone
+						for your community and welcome new members with a post.
+					</div>
+					<div class="box-buttons">
+						<base-button
+							class="button-white-2 text"
+							@click="hideFirstDialog"
+							id="continue-to-subreddit-button"
+							>Continue</base-button
+						>
+						<base-button
+							class="button-blue-2 text"
+							@click="createPost"
+							id="create-first-post-subreddit-button"
+							>Create A Post</base-button
+						>
+					</div>
 				</div>
 			</base-dialog>
 		</div>
@@ -78,7 +80,10 @@ export default {
 		subredditName: {
 			type: String,
 			default: '',
-			required: true,
+		},
+		firstCreated: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -101,13 +106,19 @@ export default {
 			showFirstDialog: true,
 		};
 	},
+	computed: {
+		toBeShown() {
+			return this.firstCreated && this.showFirstDialog;
+		},
+	},
 	methods: {
 		hideFirstDialog() {
 			this.showFirstDialog = false;
 		},
 		createPost() {
 			this.$router.push({
-				name: 'SubmitPage',
+				name: 'submit',
+				params: { subredditName: this.subredditName },
 			});
 		},
 	},
@@ -136,7 +147,7 @@ export default {
 	margin-top: 1.5rem;
 }
 .first-time-subreddit {
-	width: 41rem;
+	max-width: 41rem;
 }
 .text {
 	font-size: 1.4rem;

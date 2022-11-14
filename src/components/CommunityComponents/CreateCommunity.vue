@@ -514,7 +514,7 @@ export default {
 			});
 			this.$router.push({
 				name: 'subreddit',
-				params: { subredditName: this.communityName },
+				params: { subredditName: this.communityName, firstCreated: true },
 			});
 		},
 		//@vuese
