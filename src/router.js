@@ -119,7 +119,8 @@ const router = createRouter({
 			],
 		},
 
-		{ path: '/submit', component: SubmitPage },
+		{ path: '/submit', name: 'submit', component: SubmitPage, props: true },
+		// { path: '/submit', component: SubmitPage},
 
 		{
 			path: '/message',
