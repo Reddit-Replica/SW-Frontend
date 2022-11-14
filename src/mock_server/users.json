@@ -162,6 +162,20 @@
       "nsfw": false,
       "category": "Programming",
       "id": 13
+    },
+    {
+      "subredditName": "feeltired",
+      "type": "Restricted",
+      "nsfw": true,
+      "category": "Sports",
+      "id": 14
+    },
+    {
+      "subredditName": "whyallthat",
+      "type": "Restricted",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 15
     }
   ],
   "subreddit-name-available": [
