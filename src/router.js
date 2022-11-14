@@ -44,22 +44,23 @@ import TheHistory from './pages/users/PagesComponents/TheHistory.vue';
 import ThePosts from './pages/users/PagesComponents/ThePosts.vue';
 import TheSaved from './pages/users/PagesComponents/TheSaved.vue';
 
+import TheModeration from './pages/moderation/TheModeration.vue';
 import ModerationList from './pages/moderation/ModerationList.vue';
 import ModQueue from './pages/moderation/ModQueue.vue';
 import TheReports from './pages/moderation/TheReports.vue';
 import TheSpam from './pages/moderation/TheSpam.vue';
 import TheEdited from './pages/moderation/TheEdited.vue';
 import TheUnmoderated from './pages/moderation/TheUnmoderated.vue';
-import TheBanned from './pages/moderation/TheBanned.vue';
-import TheMuted from './pages/moderation/TheMuted.vue';
-import TheContributors from './pages/moderation/TheContributors.vue';
-import TheFlair from './pages/moderation/TheFlair.vue';
-import TheEmojis from './pages/moderation/TheEmojis.vue';
-import UserFlair from './pages/moderation/UserFlair.vue';
-import PostFlair from './pages/moderation/PostFlair.vue';
-import TheRules from './pages/moderation/TheRules.vue';
-import TheRemoval from './pages/moderation/TheRemoval.vue';
-import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
+// import TheBanned from './pages/moderation/TheBanned.vue';
+// import TheMuted from './pages/moderation/TheMuted.vue';
+// import TheContributors from './pages/moderation/TheContributors.vue';
+// import TheFlair from './pages/moderation/TheFlair.vue';
+// import TheEmojis from './pages/moderation/TheEmojis.vue';
+// import UserFlair from './pages/moderation/UserFlair.vue';
+// import PostFlair from './pages/moderation/PostFlair.vue';
+// import TheRules from './pages/moderation/TheRules.vue';
+// import TheRemoval from './pages/moderation/TheRemoval.vue';
+// import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
 
 import NotFound from './pages/NotFound.vue';
 
@@ -111,14 +112,14 @@ const router = createRouter({
 		{
 			path: '/r/:subredditName',
 			// path: '/subreddit', //to be changed
-			name: 'subreddit',
+			name: 'subredditName',
 			component: SubredditPage,
 			props: true,
 		}, //render subreddit component
 		{
 			path: '/r/:subredditName/about/moderators',
 			name: 'moderation',
-			component: ModerationList,
+			component: TheModeration,
 			children: [
 				{
 					path: '/r/:subredditName/about/moderators',
@@ -132,41 +133,41 @@ const router = createRouter({
 					path: '/r/:subredditName/about/unmoderated',
 					component: TheUnmoderated,
 				},
-				{ path: '/r/:subredditName/about/banned', component: TheBanned },
-				{ path: '/r/:subredditName/about/muted', component: TheMuted },
-				{
-					path: '/r/:subredditName/about/contributors',
-					component: TheContributors,
-				},
-				{ path: '/r/:subredditName/about/flair', component: TheFlair },
-				{ path: '/r/:subredditName/about/emojis', component: TheEmojis },
-				{ path: '/r/:subredditName/about/userflair', component: UserFlair },
-				{ path: '/r/:subredditName/about/postflair', component: PostFlair },
-				{ path: '/r/:subredditName/about/rules', component: TheRules },
-				{ path: '/r/:subredditName/about/removal', component: TheRemoval },
-				{ path: '/r/:subredditName/about/settings', component: ThesettingsMod },
-				{
-					path: '/r/:subredditName/about/wiki/config/automoderator/',
-					component: TheHistory,
-				},
-				{
-					path: '/r/:subredditName/about/scheduledposts',
-					component: TheHistory,
-				},
-				{ path: '/r/:subredditName/about/eventposts', component: TheHistory },
-				{ path: '/r/:subredditName/about/awards', component: TheHistory },
-				{ path: '/r/:subredditName/about/edit', component: TheHistory },
-				//?page=community ?page=posts ?page=notifications
-				{ path: '/subreddit', component: SubredditPage }, //to be changed
-				{ path: '/mail/all', component: TheHistory },
-				{ path: '/r/:subredditName/about/traffic', component: TheHistory },
-				{ path: '/r/:subredditName/about/log', component: TheHistory },
-				{ path: '/hc/en-us', component: TheHistory },
-				{ path: '/reddithelp', component: TheHistory },
-				{ path: '/policies/moderator-guidelines', component: TheHistory },
-				{ path: '/r/ModSupport/', component: TheHistory },
-				{ path: '/r/modhelp/', component: TheHistory },
-				{ path: '/hc/en-us/requests/new', component: TheHistory },
+				// { path: '/r/:subredditName/about/banned', component: TheBanned },
+				// { path: '/r/:subredditName/about/muted', component: TheMuted },
+				// {
+				// 	path: '/r/:subredditName/about/contributors',
+				// 	component: TheContributors,
+				// },
+				// { path: '/r/:subredditName/about/flair', component: TheFlair },
+				// { path: '/r/:subredditName/about/emojis', component: TheEmojis },
+				// { path: '/r/:subredditName/about/userflair', component: UserFlair },
+				// { path: '/r/:subredditName/about/postflair', component: PostFlair },
+				// { path: '/r/:subredditName/about/rules', component: TheRules },
+				// { path: '/r/:subredditName/about/removal', component: TheRemoval },
+				// { path: '/r/:subredditName/about/settings', component: ThesettingsMod },
+				// {
+				// 	path: '/r/:subredditName/about/wiki/config/automoderator/',
+				// 	component: TheHistory,
+				// },
+				// {
+				// 	path: '/r/:subredditName/about/scheduledposts',
+				// 	component: TheHistory,
+				// },
+				// { path: '/r/:subredditName/about/eventposts', component: TheHistory },
+				// { path: '/r/:subredditName/about/awards', component: TheHistory },
+				// { path: '/r/:subredditName/about/edit', component: TheHistory },
+				// //?page=community ?page=posts ?page=notifications
+				// { path: '/r/:subredditName', component: SubredditPage }, //to be changed
+				// { path: '/mail/all', component: TheHistory },
+				// { path: '/r/:subredditName/about/traffic', component: TheHistory },
+				// { path: '/r/:subredditName/about/log', component: TheHistory },
+				// { path: '/hc/en-us', component: TheHistory },
+				// { path: '/reddithelp', component: TheHistory },
+				// { path: '/policies/moderator-guidelines', component: TheHistory },
+				// { path: '/r/ModSupport/', component: TheHistory },
+				// { path: '/r/modhelp/', component: TheHistory },
+				// { path: '/hc/en-us/requests/new', component: TheHistory },
 			],
 			props: true,
 		},

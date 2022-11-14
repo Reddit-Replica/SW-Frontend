@@ -594,15 +594,34 @@ export default {
 
 <style scoped>
 .header {
+	-ms-flex-align: center;
+	align-items: center;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	margin-top: 0;
+	color: var(--color-dark-3);
+	flex-grow: 0;
+	flex-shrink: 0;
+	right: 0;
+	left: 0;
+	top: 0;
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	z-index: 2000;
+
 	font-size: 1.4rem;
 	height: 5rem;
 	background-color: #fff;
 	border-bottom: var(--line);
 	width: auto;
 
-	/* display: flex;
-  justify-content: left;
-  align-items: center; */
 	display: grid;
 	grid-template-columns: max-content 20% 25% max-content;
 	grid-template-rows: max-content;
