@@ -83,6 +83,7 @@ export default {
 	background: var(--color-blue-light-3);
 	height: 8rem;
 	width: 100%;
+	margin-top: 5rem;
 }
 .link {
 	height: 100%;

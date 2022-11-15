@@ -70,6 +70,12 @@ export default {
 		SubmitBar,
 		SubmitFooter,
 	},
+	props: {
+		subredditName: {
+			type: String,
+			default: '',
+		},
+	},
 	created() {
 		document.title = 'Submit to Reddit';
 	},

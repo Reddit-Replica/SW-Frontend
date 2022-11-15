@@ -310,6 +310,8 @@
 export default {
 	emits: [
 		'showComments',
+		'saved',
+		'unsaved',
 		//@vuese
 		//show comments of emitting post
 	],
@@ -406,6 +408,7 @@ export default {
 		async savePost() {
 			this.saved = !this.saved;
 			if (this.saved == true) {
+				this.$emit('saved', this.id);
 				try {
 					await this.$store.dispatch('postCommentActions/save', {
 						baseurl: this.$baseurl,
@@ -416,6 +419,7 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
+				this.$emit('unsaved', this.id);
 				try {
 					await this.$store.dispatch('postCommentActions/unsave', {
 						baseurl: this.$baseurl,
