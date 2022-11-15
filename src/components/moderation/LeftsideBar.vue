@@ -45,7 +45,7 @@
 				User Management
 			</div>
 			<router-link :to="'/r/' + subredditName + '/about/banned'" class="options"
-				>Bannded</router-link
+				>Banned</router-link
 			>
 			<router-link :to="'/r/' + subredditName + '/about/muted'" class="options"
 				>Muted</router-link
@@ -162,6 +162,7 @@
 				</svg>
 			</router-link>
 		</div>
+		<!-- Modmail -->
 		<!-- <div class="box">
 			<div class="head">
 				<svg
@@ -221,7 +222,8 @@
 				>Traffic stats</router-link
 			>
 		</div>
-		<div class="box">
+		<!-- Mod Help -->
+		<!-- <div class="box">
 			<div class="head">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -360,7 +362,7 @@
 					/>
 				</svg>
 			</a>
-		</div>
+		</div> -->
 	</div>
 </template>
 

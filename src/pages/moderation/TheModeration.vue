@@ -1,6 +1,9 @@
 <template>
 	<the-header :header-title="subredditName"></the-header>
-	<listmoderation-bar :subreddit-name="subredditName"></listmoderation-bar>
+	<listmoderation-bar
+		:subreddit-name="subredditName"
+		:title="title"
+	></listmoderation-bar>
 	<div>
 		<unmoderator-view
 			v-if="!moderatorByMe"
@@ -64,9 +67,15 @@ export default {
 		listOfModerators() {
 			return this.$store.getters['moderation/listOfModerators'];
 		},
+		// @vuese
+		//return user name
+		// @type string
 		getUserName() {
 			return this.$store.getters.getUserName;
 		},
+		// @vuese
+		//return if i'm a moderator in this subreddit or not
+		// @type boolean
 		moderatorByMe() {
 			for (let i = 0; i < this.listOfModerators.length; i++) {
 				if (this.listOfModerators[i].username == this.getUserName) {
@@ -74,6 +83,70 @@ export default {
 				}
 			}
 			return false;
+		},
+		// @vuese
+		//return title of moderation bar
+		// @type string
+		title() {
+			if (this.$route.path === '/r/' + this.subredditName + '/about/spam') {
+				return 'Spam';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/edited'
+			) {
+				return 'Edited';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/unmoderated'
+			) {
+				return 'Unmoderated';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/banned'
+			) {
+				return 'banned';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/muted'
+			) {
+				return 'muted';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/contributors'
+			) {
+				return 'Approved';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/moderators'
+			) {
+				return 'moderators';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/postflair'
+			) {
+				return 'post flair';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/rules'
+			) {
+				return 'rules';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/settings'
+			) {
+				return 'Content Controls';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			) {
+				return 'scheduled posts';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/edit'
+			) {
+				return 'Community Settings';
+			}
+			return 'Trafic Stats';
 		},
 	},
 	methods: {
