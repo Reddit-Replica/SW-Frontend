@@ -1,7 +1,7 @@
 <template>
 	<div id="facebook-login" class="log-google log-ag" @click="facebookLogin()">
 		<div><img src="../../img/Facebook_f_logo_(2021).svg.png" alt="" /></div>
-		<span>Continue with Facebook</span>
+		<div class="cont">continue with Google</div>
 	</div>
 	<!-- <v-facebook-login
 		v-model="model"
@@ -43,12 +43,11 @@ img {
 }
 .log-google {
 	align-items: center;
-	justify-content: space-between;
-	display: flex;
+	display: inline-flex;
 	height: 50px;
-	width: 300px;
+	width: 270px;
 	margin: 8px 8px;
-	padding: 4.2px;
+	padding: 4px;
 	cursor: pointer;
 	font-weight: 600;
 }
@@ -70,7 +69,10 @@ img {
 	text-transform: uppercase;
 	background-color: #fff;
 	color: #0079d3;
-	display: block;
+	display: inline-flex;
 	/* width: 60%; */
+}
+.cont {
+	padding-left: 25px;
 }
 </style>
