@@ -11,12 +11,13 @@
 			:subreddit-name="subredditName"
 		></unmoderator-view>
 		<div v-else>
+			<!-- 576 -->
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-6 col-md-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-12 col-sm-6 col-md-8 right">
+					<div class="col-sm-6 right">
 						<router-view v-slot="slotProps">
 							<transition name="route" mode="out-in">
 								<component :is="slotProps.Component"></component>
@@ -174,5 +175,10 @@ export default {
 }
 .right {
 	margin-top: 9rem;
+}
+@media only screen and (max-width: 36em) {
+	.row > * {
+		width: 50%;
+	}
 }
 </style>
