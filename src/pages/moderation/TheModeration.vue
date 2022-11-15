@@ -13,7 +13,7 @@
 					<div class="col-6 col-md-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-12 col-sm-6 col-md-8">
+					<div class="col-12 col-sm-6 col-md-8 right">
 						<router-view v-slot="slotProps">
 							<transition name="route" mode="out-in">
 								<component :is="slotProps.Component"></component>
@@ -98,5 +98,8 @@ export default {
 .container {
 	margin: 0;
 	padding: 0;
+}
+.right {
+	margin-top: 9rem;
 }
 </style>

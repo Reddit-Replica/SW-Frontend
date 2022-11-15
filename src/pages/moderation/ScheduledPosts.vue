@@ -1,5 +1,5 @@
 <template>
-	<div>The Reports</div>
+	<div>Scheduled posts</div>
 </template>
 
 <script>
