@@ -1,9 +1,7 @@
 <template>
-	<div>
-		<div id="google-login" @click="handlesign" class="log-google log-ag">
-			<div><img src="../../img/Google__G__Logo.svg.png" alt="" /></div>
-			<div>continue with Google</div>
-		</div>
+	<div id="google-login" @click="handlesign" class="log-google log-ag">
+		<div><img src="../../img/Google__G__Logo.svg.png" alt="" /></div>
+		<div class="cont">continue with Google</div>
 	</div>
 </template>
 <script>
@@ -37,12 +35,17 @@ export default {
 };
 </script>
 <style scoped>
+img {
+	width: 22px;
+	height: 22px;
+	margin-left: 12px;
+	background-color: white;
+}
 .log-google {
 	align-items: center;
-	justify-content: space-between;
-	display: flex;
+	display: inline-flex;
 	height: 50px;
-	width: 300px;
+	width: 270px;
 	margin: 8px 8px;
 	padding: 4.2px;
 	cursor: pointer;
@@ -52,9 +55,21 @@ export default {
 	background-color: var(--color-blue-2);
 	color: var(--color-white-1);
 }
-img {
-	width: 22px;
-	height: 22px;
-	background-color: white;
+.log-ag {
+	font-size: 14px;
+	font-family: 'IBMPlexSans', sans-serif;
+	letter-spacing: 0.5px;
+	border: 1px solid #0079d3;
+	border-radius: 4px;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: #fff;
+	color: #0079d3;
+	display: inline-flex;
+	/* width: 60%; */
+}
+
+.cont {
+	padding-left: 25px;
 }
 </style>

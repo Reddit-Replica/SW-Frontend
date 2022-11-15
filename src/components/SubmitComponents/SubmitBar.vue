@@ -104,9 +104,10 @@ export default {
 <style scoped>
 .create-post-header {
 	padding: 4px;
-	margin: 16px 0;
+	margin: 1.6rem 0;
 	border-bottom: 1px solid var(--color-grey-light-1);
 	display: flex;
+	margin-top: 6.6rem;
 }
 .submit-title {
 	font-size: 18px;

@@ -32,7 +32,7 @@
 				>
 			</div>
 			<div class="box-body flex-end text text-view" id="view-mods">
-				<router-link to="/r/subredditName/about/moderators"
+				<router-link :to="'/r/' + subredditName + '/about/moderators'"
 					>VIEW ALL MODERATORS</router-link
 				>
 			</div>
@@ -52,6 +52,11 @@ export default {
 	},
 	data() {
 		return {};
+	},
+	computed: {
+		subredditName() {
+			return this.$store.state.subredditName;
+		},
 	},
 };
 </script>

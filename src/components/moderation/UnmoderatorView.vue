@@ -1,7 +1,7 @@
 <template>
-	<div class="list-moderations">
-		<div class="text-moderation">
-			{{ title }}
+	<div class="page-content">
+		<h3 class="heading-3">
+			Moderators of r/{{ subredditName }}
 			<a
 				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
 				__blank="targe"
@@ -22,7 +22,7 @@
 					/>
 				</svg>
 			</a>
-		</div>
+		</h3>
 		<search-bar
 			@enter-search="(search) => enterSearch(search)"
 			:empty-input="search"
@@ -59,29 +59,13 @@
 </template>
 
 <script>
-import SearchBar from '../../components/moderation/SearchBar.vue';
-import ListItem from '../../components/moderation/ListItem.vue';
+import SearchBar from './SearchBar.vue';
+import ListItem from './ListItem.vue';
+
 export default {
-	components: { SearchBar, ListItem },
-	computed: {
-		// @vuese
-		//return list of moderators
-		// @type object
-		listOfModerators() {
-			return this.$store.getters['moderation/listOfModerators'];
-		},
-		// @vuese
-		//return subreddit name
-		// @type string
-		subredditName() {
-			return this.$store.state.subredditName;
-		},
-		// @vuese
-		//return title to use in component
-		// @type string
-		title() {
-			return 'Moderators of r/' + this.subredditName;
-		},
+	components: {
+		SearchBar,
+		ListItem,
 	},
 	data() {
 		return {
@@ -89,6 +73,27 @@ export default {
 			count: 0,
 			noItems: false,
 		};
+	},
+	props: {
+		// @vuese
+		//details of moderators
+		listOfModerators: {
+			type: Object,
+			required: true,
+			default: () => ({
+				username: '',
+				nickname: '',
+				dateOfModeration: '',
+				permissions: '',
+			}),
+		},
+		// @vuese
+		//subreddit name
+		subredditName: {
+			type: String,
+			required: true,
+			default: '',
+		},
 	},
 	methods: {
 		// @vuese
@@ -131,21 +136,20 @@ export default {
 };
 </script>
 
-<style>
-.list-moderations {
-	padding-top: 6.4rem;
-	border-radius: 0 0 4px 4px;
-	overflow: hidden;
+<style scoped>
+.page-content {
+	width: 95%;
+	margin: auto;
 }
-.text-moderation {
-	font-size: 1.8rem;
-	font-weight: 500;
-	line-height: 2.2rem;
-	color: var(--color-dark-2);
-	margin-bottom: 1.6rem;
+.icon-info {
+	width: 2rem;
+	height: 2rem;
+	fill: var(--color-blue-2);
+	cursor: pointer;
 }
-.input-search {
-	width: 60% !important;
+.heading-3 {
+	margin-left: 1rem;
+	margin-top: 5rem;
 }
 .ul-items {
 	list-style: none;
@@ -162,10 +166,23 @@ export default {
 	font-size: 2rem;
 	font-weight: bold;
 }
+.icon-search {
+	width: 3rem;
+	height: 3rem;
+}
 .see-all-button {
 	padding: 0 1.5rem;
 	color: var(--color-blue-2);
 	background-color: var(--color-white-1);
 	font-weight: bold;
+}
+.see-all-button:hover {
+	background-color: var(--color-grey-light-8);
+}
+/* 635px */
+@media only screen and (max-width: 40em) {
+	.content {
+		width: 100%;
+	}
 }
 </style>
