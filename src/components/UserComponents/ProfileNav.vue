@@ -201,6 +201,7 @@ nav {
 	height: 39px;
 	border-bottom: 1px solid var(--color-grey-light-10);
 	border-top: 1px solid var(--color-grey-light-10);
+	margin-top: 5rem;
 }
 
 nav ul:first-child {
