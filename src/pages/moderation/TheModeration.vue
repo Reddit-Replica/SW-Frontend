@@ -38,8 +38,6 @@
 <script>
 import ListBar from '../../components/moderation/ListBar.vue';
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
-// import SearchBar from '../../components/moderation/SearchBar.vue';
-// import ListItem from '../../components/moderation/ListItem.vue';
 import LeftsideBar from '../../components/moderation/LeftsideBar.vue';
 import UnmoderatorView from '../../components/moderation/UnmoderatorView.vue';
 export default {
@@ -52,8 +50,6 @@ export default {
 	},
 	components: {
 		ListmoderationBar,
-		// SearchBar,
-		// ListItem,
 		LeftsideBar,
 		UnmoderatorView,
 		ListBar,

@@ -1,12 +1,11 @@
 <template>
-	<!-- <no-list :title="'Approved'"></no-list> -->
-	<div>Approved</div>
+	<no-list :title="'Approved users'"></no-list>
 </template>
 
 <script>
-// import NoList from '../../components/moderation/NoList.vue';
+import NoList from '../../components/moderation/NoList.vue';
 export default {
-	// components: { NoList },
+	components: { NoList },
 };
 </script>
 

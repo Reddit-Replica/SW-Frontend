@@ -1,9 +1,12 @@
 <template>
-	<div>muted</div>
+	<no-list :title="'Muted users'"></no-list>
 </template>
 
 <script>
-export default {};
+import NoList from '../../components/moderation/NoList.vue';
+export default {
+	components: { NoList },
+};
 </script>
 
 <style></style>
