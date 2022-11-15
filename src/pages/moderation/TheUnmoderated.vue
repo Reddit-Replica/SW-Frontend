@@ -1,5 +1,5 @@
 <template>
-	<div>moderation list</div>
+	<div>Unmoderators</div>
 </template>
 
 <script>

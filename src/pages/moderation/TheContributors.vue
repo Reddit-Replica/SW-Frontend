@@ -1,5 +1,5 @@
 <template>
-	<div>moderation list</div>
+	<div>The contributers</div>
 </template>
 
 <script>

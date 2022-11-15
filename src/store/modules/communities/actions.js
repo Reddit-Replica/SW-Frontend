@@ -10,7 +10,10 @@ export default {
 
 		const response = await fetch(baseurl + '/create-subreddit', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
 			body: JSON.stringify(newSubreddit),
 		});
 
@@ -51,7 +54,13 @@ export default {
 	async getSavedCategories(context, payload) {
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/saved-categories');
+		const response = await fetch(baseurl + '/saved-categories', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+		});
 
 		const responseData = await response.json();
 
