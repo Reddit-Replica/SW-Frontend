@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 .content {
-	margin-top: 1.5rem;
+	margin-top: 6.5rem;
 	font-size: 1.4rem;
 	height: 5.5rem;
 	background-color: #fff;
