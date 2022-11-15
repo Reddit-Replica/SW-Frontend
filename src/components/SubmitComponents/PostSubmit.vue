@@ -333,9 +333,11 @@ textarea:focus {
 }
 .mark-down {
 	border-radius: 9999px;
-	position: absolute;
+	/*position: absolute;
 	left: 88%;
 	width: 94px;
+	width: max-content;*/
+	width: min-content;
 	font-family: 'Noto Sans', Arial, sans-serif;
 	font-size: 12px;
 	font-weight: 700;
@@ -347,6 +349,8 @@ textarea:focus {
 	min-width: 24px;
 	padding: 4px 8px;
 	color: #0079d3;
+	display: block;
+	margin-left: auto;
 }
 .mark-down:hover {
 	background-color: #dae0e6;
@@ -408,5 +412,177 @@ button {
 }
 .fancy:hover {
 	background-color: #dae0e6;
+}
+@media (max-width: 1600px) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(13),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(14),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(15) {
+		display: flex;
+	}
+}
+@media (max-width: 1287px) {
+	.icons-box .tool-tip:nth-of-type(12) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(12) {
+		display: flex;
+	}
+}
+@media (max-width: 1255px) {
+	.icons-box .tool-tip:nth-of-type(11) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(11) {
+		display: flex;
+	}
+}
+@media (max-width: 1223px) {
+	.icons-box .tool-tip:nth-of-type(10) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(10) {
+		display: flex;
+	}
+}
+@media (max-width: 1192px) {
+	.icons-box .tool-tip:nth-of-type(9) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(9) {
+		display: flex;
+	}
+}
+@media (max-width: 1192px) {
+	.icons-box .space-in {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(8) {
+		display: flex;
+	}
+}
+@media (max-width: 1146px) {
+	.icons-box .tool-tip:nth-of-type(7) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(7) {
+		display: flex;
+	}
+}
+@media (max-width: 991px) {
+	.icons-box div.tool-tip:nth-of-type(7),
+	.icons-box div.tool-tip:nth-of-type(8),
+	.icons-box div.tool-tip:nth-of-type(9),
+	.icons-box div.tool-tip:nth-of-type(10),
+	.icons-box div.tool-tip:nth-of-type(11),
+	.icons-box div.tool-tip:nth-of-type(12) {
+		display: block;
+	}
+	.icons-box .space-in {
+		display: block;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(7),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(8),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(9),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(10),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(11),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(12) {
+		display: none;
+	}
+}
+@media (max-width: 943px) {
+	.icons-box div.tool-tip:nth-of-type(12) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(12) {
+		display: flex;
+	}
+}
+@media (max-width: 911px) {
+	.icons-box div.tool-tip:nth-of-type(11) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(11) {
+		display: flex;
+	}
+}
+@media (max-width: 879px) {
+	.icons-box div.tool-tip:nth-of-type(10) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(10) {
+		display: flex;
+	}
+}
+@media (max-width: 847px) {
+	.icons-box div.tool-tip:nth-of-type(9) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(9) {
+		display: flex;
+	}
+}
+@media (max-width: 815px) {
+	.icons-box .space-in {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(8) {
+		display: flex;
+	}
+}
+@media (max-width: 802px) {
+	.icons-box div.tool-tip:nth-of-type(7) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(7) {
+		display: flex;
+	}
+}
+@media (max-width: 770px) {
+	.icons-box div.tool-tip:nth-of-type(6) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(6) {
+		display: flex;
+	}
+}
+@media (max-width: 738px) {
+	.icons-box div.tool-tip:nth-of-type(5) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(5) {
+		display: flex;
+	}
+}
+@media (max-width: 706px) {
+	.icons-box div.tool-tip:nth-of-type(4) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(4) {
+		display: flex;
+	}
+}
+@media (max-width: 674px) {
+	.icons-box div.tool-tip:nth-of-type(3) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(3) {
+		display: flex;
+	}
+}
+@media (max-width: 642px) {
+	.icons-box div.tool-tip:nth-of-type(2) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(2) {
+		display: flex;
+	}
+}
+@media (max-width: 610px) {
+	.icons-box div.tool-tip:nth-of-type(1) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
+		display: flex;
+	}
 }
 </style>
