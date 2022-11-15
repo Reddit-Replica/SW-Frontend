@@ -11,7 +11,6 @@
 			:subreddit-name="subredditName"
 		></unmoderator-view>
 		<div v-else>
-			<!-- 576 -->
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-6 col-md-4">
@@ -19,9 +18,15 @@
 					</div>
 					<div class="col-sm-6 right">
 						<router-view v-slot="slotProps">
-							<transition name="route" mode="out-in">
-								<component :is="slotProps.Component"></component>
-							</transition>
+							<div>
+								<list-bar
+									v-if="banned || muted || approved || moderators"
+									:title="barTitle"
+								></list-bar>
+								<transition name="route" mode="out-in">
+									<component :is="slotProps.Component"></component>
+								</transition>
+							</div>
 						</router-view>
 					</div>
 				</div>
@@ -31,6 +36,7 @@
 </template>
 
 <script>
+import ListBar from '../../components/moderation/ListBar.vue';
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
 // import SearchBar from '../../components/moderation/SearchBar.vue';
 // import ListItem from '../../components/moderation/ListItem.vue';
@@ -50,6 +56,7 @@ export default {
 		// ListItem,
 		LeftsideBar,
 		UnmoderatorView,
+		ListBar,
 	},
 	beforeMount() {
 		document.title = this.$store.state.subredditName;
@@ -148,6 +155,54 @@ export default {
 				return 'Community Settings';
 			}
 			return 'Trafic Stats';
+		},
+		// @vuese
+		// return banned bath
+		// @type boolean
+		banned() {
+			return this.$route.path === '/r/' + this.subredditName + '/about/banned';
+		},
+		// @vuese
+		// return muted bath
+		// @type boolean
+		muted() {
+			return this.$route.path === '/r/' + this.subredditName + '/about/muted';
+		},
+		// @vuese
+		// return approved bath
+		// @type boolean
+		approved() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/contributors'
+			);
+		},
+		// @vuese
+		// return moderators bath
+		// @type boolean
+		moderators() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/moderators'
+			);
+		},
+		// @vuese
+		//return title of button in fixed bar
+		// @type string
+		barTitle() {
+			if (this.$route.path === '/r/' + this.subredditName + '/about/banned') {
+				return 'Banned';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/muted'
+			) {
+				return 'Muted';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/contributors'
+			) {
+				return 'Approved';
+			} else {
+				return 'Moderators of t/' + this.subredditName;
+			}
 		},
 	},
 	methods: {
