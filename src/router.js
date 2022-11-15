@@ -65,6 +65,7 @@ import TheUnmoderated from './pages/moderation/TheUnmoderated.vue';
 import NotFound from './pages/NotFound.vue';
 
 import PostComments from './pages/PostComments.vue';
+
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [

@@ -12,13 +12,9 @@
 							<base-post
 								:post="post"
 								@show-comments="showPostComments"
+								@saved="savePost"
+								@unsaved="unsavePost"
 							></base-post>
-							<base-post :post="post"></base-post>
-							<base-post :post="post"></base-post>
-							<base-post :post="post"></base-post>
-							<base-post :post="post"></base-post>
-							<base-post :post="post"></base-post>
-							<base-post :post="post"></base-post>
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -37,6 +33,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="positioning">
+				<SaveUnsavePopupMessage
+					v-for="message in savedUnsavedPosts"
+					:key="message.id"
+					:type="message.type"
+					:state="message.state"
+					:typeid="message.postid"
+					@undo-action="undoSaveUnsave"
+				></SaveUnsavePopupMessage>
+			</div>
 		</div>
 		<router-view></router-view>
 	</div>
@@ -50,6 +56,7 @@ import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar
 import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar.vue';
 import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
+import SaveUnsavePopupMessage from '@/components/SaveUnsavePopupMessage.vue';
 export default {
 	components: {
 		CreatepostBar,
@@ -59,6 +66,7 @@ export default {
 		CreatepostSidebar,
 		RightsideFooter,
 		BacktotopButton,
+		SaveUnsavePopupMessage,
 	},
 	computed: {
 		showPostComments() {
@@ -83,6 +91,7 @@ export default {
 				commentsCount: 22,
 			},
 			showComments: false,
+			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
@@ -100,6 +109,53 @@ export default {
 					console.log(error);
 				});
 		},
+		savePost(id) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: id,
+				type: 'post',
+				state: 'saved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		unsavePost(id) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: id,
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
 	},
 };
 </script>
@@ -112,6 +168,16 @@ export default {
 } */
 .left-col {
 	margin-top: 6.5rem;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 .back {
 	position: fixed;
