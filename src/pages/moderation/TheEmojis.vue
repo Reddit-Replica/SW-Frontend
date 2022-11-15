@@ -1,5 +1,5 @@
 <template>
-	<div>moderation list</div>
+	<div>Emojis</div>
 </template>
 
 <script>

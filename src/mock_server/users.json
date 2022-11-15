@@ -162,6 +162,111 @@
       "nsfw": false,
       "category": "Programming",
       "id": 13
+    },
+    {
+      "subredditName": "feeltired",
+      "type": "Restricted",
+      "nsfw": true,
+      "category": "Sports",
+      "id": 14
+    },
+    {
+      "subredditName": "whyallthat",
+      "type": "Restricted",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 15
+    },
+    {
+      "subredditName": "whyplease",
+      "type": "Private",
+      "nsfw": true,
+      "category": "Learning",
+      "id": 16
+    },
+    {
+      "subredditName": "popopo",
+      "type": "Private",
+      "nsfw": false,
+      "category": "News",
+      "id": 17
+    },
+    {
+      "subredditName": "wewewe",
+      "type": "Private",
+      "nsfw": false,
+      "category": "Gaming",
+      "id": 18
+    },
+    {
+      "subredditName": "yooooooh",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Sports",
+      "id": 19
+    },
+    {
+      "subredditName": "jijijijijij",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 20
+    },
+    {
+      "subredditName": "koko",
+      "type": "Restricted",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 21
+    },
+    {
+      "subredditName": "lplplplplpl",
+      "type": "Restricted",
+      "nsfw": false,
+      "category": "News",
+      "id": 22
+    },
+    {
+      "subredditName": "huhuhu",
+      "type": "Restricted",
+      "nsfw": false,
+      "category": "News",
+      "id": 23
+    },
+    {
+      "subredditName": "tyty",
+      "type": "Public",
+      "nsfw": false,
+      "category": "News",
+      "id": 24
+    },
+    {
+      "subredditName": "kokoko",
+      "type": "Public",
+      "nsfw": false,
+      "category": "News",
+      "id": 25
+    },
+    {
+      "subredditName": "popoiuiu",
+      "type": "Public",
+      "nsfw": false,
+      "category": "News",
+      "id": 26
+    },
+    {
+      "subredditName": "uiouio",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Learning",
+      "id": 27
+    },
+    {
+      "subredditName": "kokpkl",
+      "type": "Public",
+      "nsfw": false,
+      "category": "Learning",
+      "id": 28
     }
   ],
   "subreddit-name-available": [
