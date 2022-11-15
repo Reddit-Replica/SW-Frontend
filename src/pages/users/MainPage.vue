@@ -110,9 +110,9 @@ export default {
   grid-template-columns: 60% 40%;
   grid-gap: 30px;
 } */
-/* .left-col {
-	margin-left: 5rem;
-} */
+.left-col {
+	margin-top: 6.5rem;
+}
 .back {
 	position: fixed;
 	left: 0;
