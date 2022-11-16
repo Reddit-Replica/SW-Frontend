@@ -1,6 +1,6 @@
 <template>
 	<div class="big-box">
-		<div class="icons-box" v-if="!markdownMode">
+		<div id="my-toolbar1" class="icons-box" v-if="!markdownMode">
 			<div class="tool-tip">
 				<span class="tool-tip-text">Bold</span>
 				<button class="icons" id="bold">
@@ -166,22 +166,106 @@
 				placeholder="Text (optional)"
 			></textarea>
 		</div>
+
+		<QuillEditor
+			class="editor"
+			theme="snow"
+			toolbar="#my-toolbar"
+			placeholder="Text (optional)"
+			style="color: black"
+			ref="myQuillEditor"
+		>
+			<template #toolbar>
+				<div id="my-toolbar">
+					<!-- Add buttons as you would before -->
+					<div class="tool-tip">
+						<span class="tool-tip-text">Bold</span>
+
+						<button class="ql-bold"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text">Italics</span>
+						<button class="ql-italic"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text">Link</span>
+						<button class="ql-link"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Strikethrough</span>
+						<button class="ql-strike"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Inline Code</span>
+						<button class="ql-code"></button>
+					</div>
+					<button class="ql-script" value="super"></button>
+					<button class="ql-spoiler"></button>
+					<button class="ql-header" value="1"></button>
+					<button class="ql-list" value="bullet"></button>
+					<button class="ql-list" value="ordered"></button>
+					<button class="ql-blockquote"></button>
+					<button class="ql-code-block"></button>
+					<button class="icons" id="" @click="insertTable">
+						<div class="icon">
+							<font-awesome-icon icon="fa-solid fa-table" />
+						</div>
+					</button>
+					<button class="ql-image"></button>
+					<button class="ql-video"></button>
+
+					<!-- But you can also add your own -->
+					<button id="custom-button"></button>
+				</div>
+			</template>
+		</QuillEditor>
 	</div>
 </template>
 
 <script>
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+// import * as Quill from 'quill';
+// import * as QuillTableUI from 'quill-table-ui';
+// Quill.register(
+// 	{
+// 		'modules/tableUI': QuillTableUI.default,
+// 	},
+// 	true
+// );
+
 export default {
 	data() {
 		return {
 			markdownMode: false,
+			// editorOption: {
+			// 	theme: 'snow',
+			// 	modules: {
+			// 		/* toolbar : false, */
+			// 		table: true,
+			// 		tableUI: true,
+			// 	},
+			// },
 		};
 	},
+
 	methods: {
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
+		insertTable() {
+			const tableModule = this.editor.editorgetModule('table');
+			tableModule.insertTable(3, 3);
+		},
 	},
-	mounted() {},
+	components: {
+		QuillEditor,
+	},
+	computed: {
+		editor() {
+			return this.$refs.myQuillEditor.quill;
+		},
+	},
 };
 </script>
 
@@ -412,6 +496,11 @@ button {
 }
 .fancy:hover {
 	background-color: #dae0e6;
+}
+
+.ql-editor {
+	resize: vertical;
+	color: #000;
 }
 @media (max-width: 1600px) {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(13),

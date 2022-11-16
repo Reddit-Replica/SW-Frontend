@@ -3,7 +3,11 @@
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">About Community</h2></div>
 			<div class="about-options">
-				<router-link to="/subreddit" class="mod-tools" id="mod-tools">
+				<router-link
+					:to="'/r/' + subredditName + '/about/'"
+					class="mod-tools"
+					id="mod-tools"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -45,7 +49,7 @@
 						@click="addToFavourite"
 						id="add-to-favourite"
 					>
-						Add To Favourites
+						{{ favouriteText }}
 					</button>
 				</div>
 			</div>
@@ -421,12 +425,17 @@ export default {
 			type: String,
 			default: '',
 		},
+		subredditName: {
+			type: String,
+			default: '',
+		},
 	},
 	data() {
 		return {
 			dotsClicked: false,
 			addedToCustomFeed: false,
 			addedToFavourite: false,
+			favouriteText: 'Add To Favourites',
 			charRemaining: 500,
 			textareaShown: false,
 			communityDescription: '',
@@ -467,7 +476,24 @@ export default {
 		//Mark subreddit added to favourites
 		//@arg no argument
 		addToFavourite() {
-			this.addedToFavourite = true;
+			//toggle add to favourite data
+			this.addedToFavourite = !this.addedToFavourite;
+
+			//change button text
+			this.favouriteText = this.addedToFavourite
+				? 'Remove From Favourites'
+				: 'Add To Favourites';
+
+			//hide list
+			this.dotsClick();
+
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/ToggleFavourite', {
+				subredditName: this.communityName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
 		},
 		//@vuese
 		//Decrease characters count while typing
