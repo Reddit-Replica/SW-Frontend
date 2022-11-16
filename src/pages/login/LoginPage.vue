@@ -106,6 +106,9 @@
 						</fieldset>
 
 						<button class="submit-login" type="submit">Log In</button>
+						<div class="redirected-message" v-if="done_login">
+							{{ done_message }}
+						</div>
 
 						<div class="forgot-usr-pass">
 							<span>Forgot your</span>
@@ -142,6 +145,8 @@ export default {
 			Check: false, // flag for validation
 			users: {}, //test array
 			checkedPass: true, //true or error for pass
+			done_message: '',
+			done_login: false,
 		};
 	},
 	methods: {
@@ -184,7 +189,11 @@ export default {
 				// // console.log(response);
 				// console.log(response);
 				if (response == 200) {
-					this.$router.replace('/main');
+					this.done_login = true;
+					this.done_message =
+						'youre now logged in, You will be redirected to main page';
+					// this.$router.replace('/main');
+					setTimeout(() => this.$router.replace('/main'), 1000);
 				}
 			} catch (err) {
 				this.showSignuser = true;
@@ -239,6 +248,7 @@ export default {
 	background-color: #fff;
 }
 h1 {
+	font-family: 'IBMPlexSans', sans-serif;
 	display: block;
 	margin-block-start: 0.7em;
 	margin-block-end: 0.7em;
@@ -372,6 +382,17 @@ button {
 	max-height: 1000px;
 	opacity: 1;
 	color: #ea0027;
+	transition: all 0.2s ease-in-out;
+}
+.redirected-message {
+	padding: 10px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	margin-top: 4px;
+	max-height: 1000px;
+	opacity: 1;
+	color: #0079d3;
 	transition: all 0.2s ease-in-out;
 }
 .animation-usr-pass::after {

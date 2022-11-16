@@ -17,58 +17,165 @@
 						>Privacy Policy</a
 					>.
 				</p>
-				<div class="login-google-apple">
-					<GoogleSigninButton id="google-login" class="log-google log-ag" />
-					<div class="page-divider-comp">
-						<span class="page-divider-comp-line"></span>
-						<span class="page-divider-comp-text">or</span>
-						<span class="page-divider-comp-line"></span>
+				<form @submit.prevent="handleSubmit">
+					<div class="login-google-apple">
+						<GoogleSigninButton id="google-login" class="log-google log-ag" />
+						<facebookSigninButton
+							id="facebook-login"
+							class="log-google log-ag"
+						/>
+						<div class="page-divider-comp">
+							<span class="page-divider-comp-line"></span>
+							<span class="page-divider-comp-text">or</span>
+							<span class="page-divider-comp-line"></span>
+						</div>
 					</div>
-				</div>
-				<div class="input-box usr-pass-div">
-					<input type="text" required="required" v-model="username" />
-					<span class="span-input"> Username</span>
-				</div>
-				<!-- <p class="invalid">Please enter a username to continue</p> -->
-				<div class="input-box usr-pass-div">
-					<input type="password" required="required" v-model="password" />
-					<span class="span-input"> Password</span>
-				</div>
-				<!-- <p class="invalid">Please enter an email address to continue</p> -->
-				<div class="forgot-usr-pass-comp">
-					<span>Forgot your</span> <a href="/forgetUsernamepage">username</a>
-					<span> or </span> <a href="/forgetPasswordpage">password</a
-					><span>?</span>
-				</div>
-				<base-button button-text="Log In" class="button-class"> </base-button>
+					<div class="input-box usr-pass-div">
+						<input
+							id="user-name"
+							type="text"
+							required="required"
+							v-model="username"
+							:class="
+								!showSignuser ? '' : !checkedUser ? 'red-border' : 'blue-border'
+							"
+						/>
+						<span class="span-input"> Username</span>
+						<span
+							v-if="showSignuser"
+							:class="checkedUser ? 'correct-check' : 'wrong-check'"
+						></span>
 
-				<div class="bottomText">
-					<label>
-						Don't have an email or need assistance logging in?
-						<a class="link">Get Help </a></label
-					>
+						<div class="username-error-message" v-if="messageErrorShowUser">
+							{{ error_message }}
+						</div>
+					</div>
+					<!-- <p class="invalid">Please enter a username to continue</p> -->
+					<div class="input-box usr-pass-div">
+						<input
+							id="password"
+							type="password"
+							required="required"
+							v-model="password"
+							:class="messageErrorShowPass ? 'red-border' : ''"
+						/>
+						<span class="span-input"> Password</span>
+						<span
+							v-if="showSignPass"
+							:class="checkedPass ? 'correct-check' : 'wrong-check'"
+						></span>
+					</div>
+					<!-- <p class="invalid">Please enter an email address to continue</p> -->
+					<div class="forgot-usr-pass-comp">
+						<span>Forgot your</span> <a href="/forgetUsernamepage">username</a>
+						<span> or </span> <a href="/forgetPasswordpage">password</a
+						><span>?</span>
+					</div>
+					<base-button button-text="Log In" class="button-class"> </base-button>
+
+					<div class="bottomText">
+						<label>
+							Don't have an email or need assistance logging in?
+							<a class="link">Get Help </a></label
+						>
+					</div>
+				</form>
+				<div class="register-bottom-Comp">
+					New to Reddit?
+
+					<li><router-link to="/signup">Sign Up </router-link></li>
 				</div>
 			</form>
-			<div class="register-bottom-Comp">
-				New to Reddit?
-
-				<li><router-link to="/signup">Sign Up </router-link></li>
-			</div>
+			=
 		</div>
 	</div>
 </template>
 
 <script>
+import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
+import facebookSigninButton from '../../components/facebookSigninButton.vue';
 export default {
 	data() {
 		return {
-			buttonIsactive: true,
-			username: '',
-			password: '',
+			username: '', // username
+			password: '', // password user
+			showSignuser: false, // true or error for user
+			checkedUser: true, // true or error for user
+			error_message: '', // error message shown
+			messageErrorShowUser: false, // showing err message
+			messageErrorShowPass: false,
+			showSignPass: false, // true or error for pass
+			Check: false, // flag for validation
+			users: {}, //test array
+			checkedPass: true, //true or error for pass
+			done_message: '',
+			done_login: false,
 		};
 	},
-	methods: {},
-	components: {},
+	methods: {
+		// @vuese
+		// Validation for UserName (Not a long or Short Input)
+		validateUser(value) {
+			this.showSignuser = false;
+			this.messageErrorShowUser = false;
+			this.showSignPass = false;
+			this.messageErrorShowPass = false;
+			if (value.length < 3 || value.length > 20) {
+				this.showSignuser = true;
+				this.checkedUser = false;
+				this.messageErrorShowUser = true;
+				this.error_message = 'Username must be between 3 and 20 characters';
+			} else {
+				this.showSignuser = true;
+				this.checkedUser = true;
+				this.messageErrorShowUser = false;
+			}
+		},
+		// @vuese
+		// posting username and password and wait for token to get login
+		async handleSubmit() {
+			const actionPayload = {
+				username: this.username,
+				password: this.password,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('loginhandle', actionPayload);
+				const response = localStorage.getItem('response');
+				// // console.log(response);
+				// console.log(response);
+				if (response == 200) {
+					location.reload();
+					// this.done_login = true;
+					// this.done_message =
+					// 	'youre now logged in, You will be redirected to main page';
+					// this.$router.replace('/main');
+					// setTimeout(() => this.$router.replace('/main'), 1000);
+				}
+			} catch (err) {
+				this.showSignuser = true;
+				this.checkedUser = false;
+				this.messageErrorShowUser = true;
+				this.error_message = 'Incorrect username or password';
+				this.showSignPass = true;
+				this.checkedPass = false;
+				this.messageErrorShowPass = true;
+				// this.error = err;
+				// document.querySelector('#user-name').style.border =
+				// 	'0.5px solid #ea0027';
+			}
+		},
+	},
+	watch: {
+		// @vuese
+		//watch username if it's not empty
+		username(value) {
+			this.username = value;
+			this.validateUser(value);
+		},
+	},
+	components: { GoogleSigninButton, facebookSigninButton },
 };
 </script>
 
@@ -273,5 +380,39 @@ h1 {
 }
 .x::after {
 	transform: rotate(45deg);
+}
+.username-error-message {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	margin-top: 4px;
+	max-height: 1000px;
+	opacity: 1;
+	color: #ea0027;
+	transition: all 0.2s ease-in-out;
+}
+.input-box .correct-check {
+	position: absolute;
+	z-index: 1;
+	right: 20px;
+	top: 50%;
+	height: 10px;
+	width: 12px;
+	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
+}
+.input-box .wrong-check {
+	position: absolute;
+	right: 20px;
+	top: 28%;
+	height: 12px;
+	width: 2px;
+	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);
+}
+.input-box .red-border {
+	border: 0.5px solid #ea0027;
+}
+.input-box .blue-border {
+	border: 0.5px solid #0079d3;
+	border-color: #24a0ed;
 }
 </style>

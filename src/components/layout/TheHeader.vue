@@ -562,7 +562,7 @@ export default {
 		// Used to go to Home page
 		// @arg no argument
 		goToHome() {
-			this.$router.push('/');
+			this.$router.push('/main');
 		},
 		// @vuese
 		// Used to go to submit page

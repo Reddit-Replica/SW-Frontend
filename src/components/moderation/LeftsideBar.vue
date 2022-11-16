@@ -16,16 +16,6 @@
 				</svg>
 				Queues
 			</div>
-			<router-link
-				:to="'/r/' + subredditName + '/about/modqueue'"
-				class="options"
-				>Mod queue</router-link
-			>
-			<router-link
-				:to="'/r/' + subredditName + '/about/reports'"
-				class="options"
-				>Reports</router-link
-			>
 			<router-link :to="'/r/' + subredditName + '/about/spam'" class="options"
 				>Spam</router-link
 			>
@@ -54,10 +44,17 @@
 				</svg>
 				User Management
 			</div>
-			<a href="#" class="options">Bannded</a>
-			<a href="#" class="options">Muted</a>
-			<a href="#" class="options">Approved</a>
-			<a href="#" class="options">Talk hosts</a>
+			<router-link :to="'/r/' + subredditName + '/about/banned'" class="options"
+				>Banned</router-link
+			>
+			<router-link :to="'/r/' + subredditName + '/about/muted'" class="options"
+				>Muted</router-link
+			>
+			<router-link
+				:to="'/r/' + subredditName + '/about/contributors'"
+				class="options"
+				>Approved</router-link
+			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/moderators'"
 				class="options"
@@ -84,10 +81,11 @@
 				</svg>
 				Flair & emojis
 			</div>
-			<a href="#" class="options">Grant user flair</a>
-			<a href="#" class="options">Emojis</a>
-			<a href="#" class="options">User flair</a>
-			<a href="#" class="options">Post flair</a>
+			<router-link
+				:to="'/r/' + subredditName + '/about/postflair'"
+				class="options"
+				>Post flair</router-link
+			>
 		</div>
 		<div class="box">
 			<div class="head">
@@ -105,10 +103,14 @@
 				</svg>
 				Ruled and requlations
 			</div>
-			<a href="#" class="options">Rules</a>
-			<a href="#" class="options">Removal reasons</a>
-			<a href="#" class="options">Content controls</a>
-			<a href="#" class="options">Automod</a>
+			<router-link :to="'/r/' + subredditName + '/about/rules'" class="options"
+				>Rules</router-link
+			>
+			<router-link
+				:to="'/r/' + subredditName + '/about/settings'"
+				class="options"
+				>Content controls</router-link
+			>
 		</div>
 		<div class="box">
 			<div class="head">
@@ -127,8 +129,11 @@
 				</svg>
 				Content
 			</div>
-			<a href="#" class="options">Scheduled posts</a>
-			<a href="#" class="options">Event posts</a>
+			<router-link
+				:to="'/r/' + subredditName + '/about/scheduledposts'"
+				class="options"
+				>Scheduled posts</router-link
+			>
 		</div>
 		<div class="box">
 			<div class="head">
@@ -149,23 +154,16 @@
 				</svg>
 				Other
 			</div>
-			<a href="#" class="options">Awards</a>
-			<a href="#" class="options">Wiki pages</a>
-			<a href="#" class="options"
+			<router-link :to="'/r/' + subredditName + '/about/edit'" class="options"
 				>Community settings
 				<div class="new">New</div>
 				<svg class="icon-mod icon-arrow icon-right">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
 				</svg>
-			</a>
-			<a href="#" class="options"
-				>Community appearance
-				<svg class="icon-mod icon-arrow icon-right">
-					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
-				</svg>
-			</a>
+			</router-link>
 		</div>
-		<div class="box">
+		<!-- Modmail -->
+		<!-- <div class="box">
 			<div class="head">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +199,7 @@
 					/>
 				</svg>
 			</a>
-		</div>
+		</div> -->
 		<div class="box">
 			<div class="head">
 				<svg
@@ -218,10 +216,14 @@
 				</svg>
 				Community Activity
 			</div>
-			<a href="#" class="options">Traffic stats</a>
-			<a href="#" class="options">Mod log</a>
+			<router-link
+				:to="'/r/' + subredditName + '/about/traffic'"
+				class="options"
+				>Traffic stats</router-link
+			>
 		</div>
-		<div class="box">
+		<!-- Mod Help -->
+		<!-- <div class="box">
 			<div class="head">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -360,7 +362,7 @@
 					/>
 				</svg>
 			</a>
-		</div>
+		</div> -->
 	</div>
 </template>
 

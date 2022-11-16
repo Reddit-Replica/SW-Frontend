@@ -1,5 +1,5 @@
 <template>
-	<no-list :title="'Muted users'"></no-list>
+	<no-list :title="'Approved users'"></no-list>
 </template>
 
 <script>
