@@ -96,4 +96,29 @@ export default {
 			throw error;
 		}
 	},
+	async AddDescription(_, payload) {
+		const description = payload.description;
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/add-description`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+				body: JSON.stringify(description),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };
