@@ -59,13 +59,16 @@
 			<div
 				class="description-1"
 				@click="showTextarea"
-				v-if="!textareaShown"
+				v-if="!textareaShown && emptyDescription"
 				id="add-description-before"
 			>
 				<div class="description-1-text">Add description</div>
 			</div>
 
-			<div class="description-1 blue-border" v-else>
+			<div
+				class="description-1 blue-border"
+				v-else-if="textareaShown && !showDescription"
+			>
 				<textarea
 					placeholder="Tell us about your community"
 					maxlength="500"
@@ -79,6 +82,7 @@
 					<span class="span-char"
 						>{{ charRemaining }} Characters remaining</span
 					>
+
 					<span
 						class="span-cancel-save span-cancel"
 						@click="hideTextarea"
@@ -92,6 +96,25 @@
 						>Save</span
 					>
 				</div>
+			</div>
+			<div
+				v-if="showDescription && !emptyDescription"
+				class="text desc-box"
+				@click="editDescription"
+			>
+				{{ communityDescription }}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-pencil"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
+					/>
+				</svg>
 			</div>
 
 			<div class="box-body" id="created-date">
@@ -450,6 +473,7 @@ export default {
 			subtopicsCount: 0,
 			saveDialogShown: false,
 			isSubtopicsSaved: false,
+			showDescription: false,
 
 			isNew: true,
 
@@ -458,6 +482,11 @@ export default {
 			onlineMembersCountBoxShown: false,
 			topicsArrrowBoxShown: false,
 		};
+	},
+	computed: {
+		emptyDescription() {
+			return this.communityDescription === '' && this.description === '';
+		},
 	},
 	methods: {
 		//@vuese
@@ -517,7 +546,26 @@ export default {
 		//Save subreddit added description
 		//@arg no argument
 		saveDescription() {
+			//save description
 			this.communityDescription = this.description;
+
+			//hide text area
+			this.hideTextarea();
+
+			//show description
+			this.showDescription = !this.showDescription;
+
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddDescription', {
+				description: this.communityDescription,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+		},
+		editDescription() {
+			this.showDescription = !this.showDescription;
+			this.showTextarea();
 		},
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
@@ -723,6 +771,14 @@ a {
 }
 .description-1:hover {
 	border: var(--line-5);
+}
+.bi-pencil {
+	fill: var(--color-blue-2);
+}
+.desc-box:hover {
+	border: var(--line-5);
+	border-radius: 0.4rem;
+	padding: 1rem;
 }
 .blue-border {
 	border: var(--line-5);
