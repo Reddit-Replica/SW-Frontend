@@ -47,7 +47,7 @@
 export default {
 	props: {
 		title: {
-			Type: String,
+			type: String,
 			default: '',
 			required: true,
 		},
