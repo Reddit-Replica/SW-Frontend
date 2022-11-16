@@ -12,7 +12,7 @@
 					>r/{{ subredditName }}</span
 				></a
 			>
-			/ moderators
+			/ {{ title }}
 		</h5>
 	</div>
 </template>
@@ -24,6 +24,10 @@ export default {
 		subredditName: {
 			type: String,
 			default: 'subredditName',
+		},
+		title: {
+			type: String,
+			default: 'moderator',
 		},
 	},
 };

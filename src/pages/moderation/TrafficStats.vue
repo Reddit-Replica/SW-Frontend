@@ -1,5 +1,5 @@
 <template>
-	<div>Mod Queue</div>
+	<div>Traffic stats</div>
 </template>
 
 <script>

@@ -144,11 +144,7 @@
 							{{ error_message_pass }}
 						</div>
 					</fieldset>
-					<TheRecaptcha
-						@verified="verifyRec"
-						v-if="showSignuser && showSignPass && showRepatcha"
-						id="repatcha"
-					/>
+					<TheRecaptcha @verified="verifyRec" id="repatcha" />
 				</form>
 				<div class="username-generator" style="display: block">
 					<p>
@@ -212,6 +208,7 @@ export default {
 			checkused: false,
 			success: false,
 			buttonDisabled: true,
+			flag: false,
 		};
 	},
 	methods: {
@@ -227,12 +224,14 @@ export default {
 				this.showSignemail = true;
 				this.checkedEmail = false;
 				this.messageErrorShowEmail = true;
+				this.flag = false;
 				// document.querySelector('#email-input').style.border =
 				// 	'0.5px solid #ea0027';
 			} else {
 				this.messageErrorShowEmail = false;
 				this.showSignemail = true;
 				this.checkedEmail = true;
+				this.flag = true;
 				// document.querySelector('#email-input').style.border =
 				// 	'0.5px solid #0079d3';
 				// check_email = true;
@@ -260,8 +259,10 @@ export default {
 		// @vuese
 		//In SignUp page to show second Page
 		handleSubmit() {
+			// var flag = false;
 			if (!this.checkedEmail || this.email == '') {
 				this.validatEmail(this.email);
+				// this.flag = true;
 			} else if (!this.checkused && this.email != '') {
 				this.email_available();
 			} else {
@@ -342,14 +343,16 @@ export default {
 				// document.querySelector('#email-input').style.border =
 				// 	'0.5px solid #0079d3';
 			} catch (err) {
-				const response = localStorage.getItem('response');
-				console.log(response);
-				this.error_email = true;
-				this.error_email_message = 'Email is already taken';
-				this.showSignemail = true;
-				this.checkedEmail = false;
-				this.messageErrorShowEmail = true;
-				this.checkused = false;
+				if (this.flag) {
+					const response = localStorage.getItem('response');
+					console.log(response);
+					this.error_email = true;
+					this.error_email_message = 'Email is already taken';
+					this.showSignemail = true;
+					this.checkedEmail = false;
+					this.messageErrorShowEmail = true;
+					this.checkused = false;
+				}
 				// document.querySelector('#email-input').style.border =
 				// 	'0.5px solid #ea0027';
 				// this.error = err;

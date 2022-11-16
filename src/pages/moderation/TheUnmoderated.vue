@@ -1,9 +1,14 @@
 <template>
-	<div>Unmoderators</div>
+	<div>
+		<clean-queue :title="'Unmoderated'"></clean-queue>
+	</div>
 </template>
 
 <script>
-export default {};
+import CleanQueue from '../../components/moderation/CleanQueue.vue';
+export default {
+	components: { CleanQueue },
+};
 </script>
 
 <style></style>

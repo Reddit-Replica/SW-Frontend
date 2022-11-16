@@ -1,9 +1,14 @@
 <template>
-	<div>The Edited</div>
+	<div>
+		<clean-queue :title="'Edited'"></clean-queue>
+	</div>
 </template>
 
 <script>
-export default {};
+import CleanQueue from '../../components/moderation/CleanQueue.vue';
+export default {
+	components: { CleanQueue },
+};
 </script>
 
 <style></style>

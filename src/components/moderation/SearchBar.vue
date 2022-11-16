@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<form class="input" @submit.prevent="enterSearch">
+		<form class="input-search" @submit.prevent="enterSearch">
 			<input
 				type="text"
 				name="search-moderator"
@@ -107,7 +107,7 @@ export default {
 	justify-content: space-between;
 	border-radius: 0.5rem 0.5rem 0 0.5rem;
 }
-.input {
+.input-search {
 	margin-left: 1.5rem;
 	width: 23%;
 	height: 3.5rem;
@@ -133,6 +133,7 @@ export default {
 }
 .arrows {
 	margin: 2rem;
+	display: none;
 }
 .icon {
 	cursor: pointer;

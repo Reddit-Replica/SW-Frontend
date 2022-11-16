@@ -41,6 +41,9 @@ export default {
 	background-color: white;
 	border-top: 1px solid #eceff1;
 }
+.settings-bar {
+	margin-top: 5rem;
+}
 .heading-3 {
 	font-size: 18px;
 	font-weight: 500;

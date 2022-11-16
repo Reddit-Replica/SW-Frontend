@@ -1,5 +1,5 @@
 <template>
-	<div>Emojis</div>
+	<div>Content Controls</div>
 </template>
 
 <script>

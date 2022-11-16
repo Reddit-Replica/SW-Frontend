@@ -119,6 +119,7 @@ export default {
 	border-radius: 4px;
 	overflow: visible;
 	word-wrap: break-word;
+	margin-top: 5rem;
 }
 .topCommunitiesTitleBlock {
 	background-color: var(--color-blue-2);

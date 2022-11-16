@@ -1,9 +1,14 @@
 <template>
-	<div>The Spam</div>
+	<div>
+		<clean-queue :title="'Spam'"></clean-queue>
+	</div>
 </template>
 
 <script>
-export default {};
+import CleanQueue from '../../components/moderation/CleanQueue.vue';
+export default {
+	components: { CleanQueue },
+};
 </script>
 
 <style></style>

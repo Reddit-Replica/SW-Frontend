@@ -14,6 +14,7 @@
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
+					:subreddit-name="subredditName"
 					:topics="topics"
 					:members-count="1"
 					:online-members-count="5"
