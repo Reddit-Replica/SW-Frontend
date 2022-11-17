@@ -9,7 +9,7 @@
 		</div>
 		<div class="choose-post-community-1">
 			<div class="choose-post-community-2">
-				<div class="choose-post-community-3">
+				<div class="choose-post-community-3" @click="setFocused">
 					<span v-if="!inputFocused" class="dashed-circle"></span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,6 @@
 						<input
 							class="choose-community-input"
 							placeholder="Choose a community"
-							@click="setFocused"
 						/>
 					</div>
 					<svg

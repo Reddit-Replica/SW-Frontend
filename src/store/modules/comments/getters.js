@@ -1,6 +1,6 @@
 export default {
-	getSubredditDescription(state) {
-		return state.subredditDescription;
+	getSubreddit(state) {
+		return state.subreddit;
 	},
 	getIfFollowedPosts(state) {
 		return state.followedPosts;

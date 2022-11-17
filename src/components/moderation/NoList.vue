@@ -37,7 +37,10 @@
 					d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"
 				/>
 			</svg> -->
-			<div class="text-white">No {{ title }} in r/{{ subredditName }}</div>
+			<div class="text-white" v-if="title == 'Rules'">No {{ title }} yet</div>
+			<div class="text-white" v-else>
+				No {{ title }} in r/{{ subredditName }}
+			</div>
 		</div>
 	</div>
 </template>
