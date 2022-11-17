@@ -146,4 +146,29 @@ export default {
 			throw error;
 		}
 	},
+	async AddSubTopic(_, payload) {
+		const title = { subtopics: payload.subtopics };
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/add-subtopic`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+				body: JSON.stringify(title),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };

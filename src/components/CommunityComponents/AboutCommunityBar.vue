@@ -357,7 +357,11 @@
 					</div>
 				</div>
 
-				<div class="topics-list" v-if="subtopicsShown" id="subtopics-list">
+				<div
+					class="topics-list"
+					v-if="subtopicsShown && !isSubtopicsSaved"
+					id="subtopics-list"
+				>
 					<div class="text-grey sug-subtopic">SUGGESTED TOPICS</div>
 					<button
 						v-for="(subtopic, index) in topics"
@@ -603,6 +607,7 @@ export default {
 				const index = this.communitySubtopics.findIndex(
 					(topic) => topic.id === subtopic.id
 				);
+
 				//check if subreddit chosen before
 				if (index === -1) {
 					this.communitySubtopics.push(subtopic);
@@ -637,8 +642,20 @@ export default {
 		//save chosen subtopics list
 		//@arg no argument
 		saveSubtopics() {
+			//mark sub topics as saved
 			this.isSubtopicsSaved = true;
+
+			//set subtopics list
 			this.savedCommunitySubtopics = this.communitySubtopics;
+
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddSubTopic', {
+				subtopics: this.savedCommunitySubtopics,
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
 		},
 		//@vuese
 		//Show/Hide Save or Discard dialog
