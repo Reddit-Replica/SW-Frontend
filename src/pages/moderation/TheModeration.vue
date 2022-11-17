@@ -20,8 +20,14 @@
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
-									v-if="banned || muted || approved || moderators || rules"
-									:rules="rules"
+									v-if="
+										banned ||
+										muted ||
+										approved ||
+										moderators ||
+										rules ||
+										postFlair
+									"
 									:title="barTitle"
 								></list-bar>
 								<transition name="route" mode="out-in">
@@ -188,6 +194,14 @@ export default {
 			return this.$route.path === '/r/' + this.subredditName + '/about/rules';
 		},
 		// @vuese
+		// return post flair bath
+		// @type boolean
+		postFlair() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/postflair'
+			);
+		},
+		// @vuese
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
@@ -208,8 +222,13 @@ export default {
 				'/r/' + this.subredditName + '/about/moderators'
 			) {
 				return 'Moderators of t/' + this.subredditName;
-			} else {
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/rules'
+			) {
 				return 'Rules';
+			} else {
+				return 'Post flair';
 			}
 		},
 	},
