@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="bar" v-if="title != 'Rules'">
+		<div class="bar" v-if="title != 'Rules' && title != 'Post flair'">
 			<base-button class="button-white" v-if="isModeratorList"
 				>Leave as mod</base-button
 			>
@@ -29,6 +29,14 @@ export default {
 			default: '',
 			required: true,
 		},
+		// @vuese
+		// title to be written in bar
+		// @type string
+		subredditName: {
+			type: String,
+			default: '',
+			required: true,
+		},
 	},
 	data() {
 		return {};
@@ -41,9 +49,13 @@ export default {
 				return 'Mute user';
 			} else if (this.title == 'Approved') {
 				return 'Approve user';
-			} else {
+			} else if (this.title == 'Moderators of t/' + this.subredditName) {
 				return 'Invite user as mod';
-			}
+			} else if (this.title == 'Rules') {
+				return 'Rules';
+			} else if (this.title == 'Schedule Post') {
+				return 'Schedule Post';
+			} else return '';
 		},
 		isModeratorList() {
 			return this.barTitle == 'Invite user as mod';
