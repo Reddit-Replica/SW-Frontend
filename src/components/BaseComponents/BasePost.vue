@@ -32,52 +32,7 @@
 
 		<!-- section to display post information -->
 		<div class="post-content" @click="showPostComments">
-			<div class="subreddit-info">
-				<span class="subreddit-image"
-					><img src="../../../img/user-image.jpg" alt=""
-				/></span>
-				<span class="subreddit-name">
-					<router-link
-						:to="{
-							name: 'subreddit',
-							params: { subredditName: post.subredditName },
-						}"
-						id="subreddit-router"
-						>{{ post.subredditName }}
-					</router-link>
-				</span>
-				<span>
-					. Posted by .
-					<router-link
-						:to="{ name: 'user', params: { userName: post.userName } }"
-						id="post-by-router"
-					>
-						{{ post.userName }} </router-link
-					>&nbsp;{{ post.duration }} ago
-				</span>
-			</div>
-			<router-link
-				:to="{
-					name: 'comments',
-					params: {
-						postName: post.postName,
-						subredditName: post.subredditName,
-						postId: id,
-					},
-				}"
-				id="post-router"
-			>
-				<div class="post-title">
-					<h3>{{ post.postName }}</h3>
-				</div>
-				<div class="post-text">
-					<p>
-						{{
-							post.postDescription.substr(0, post.postDescription.length * 0.7)
-						}}
-					</p>
-				</div>
-			</router-link>
+			<post-content :post="post"></post-content>
 			<div class="post-services">
 				<span class="vote-services vote-box">
 					<span class="upvote" @click="upvote" id="upvote-service">
@@ -114,9 +69,9 @@
 							:to="{
 								name: 'comments',
 								params: {
-									postName: post.postName,
-									subredditName: post.subredditName,
-									postId: id,
+									postName: post.title,
+									subredditName: post.subreddit,
+									postId: post.id,
 								},
 							}"
 							id="post-router-comment"
@@ -133,7 +88,7 @@
 									d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
 								/>
 							</svg>
-							{{ post.commentsCount }} Comments
+							{{ post.comments }} Comments
 						</router-link>
 					</li>
 
@@ -307,6 +262,7 @@
 	</div>
 </template>
 <script>
+import PostContent from '../PostContent.vue';
 export default {
 	emits: [
 		'showComments',
@@ -317,14 +273,13 @@ export default {
 	],
 	data() {
 		return {
-			id: '1',
-			counter: this.post.voteCount,
-			upClicked: false,
-			downClicked: false,
+			counter: this.post.votes,
+			upClicked: this.post.votingType == 1 ? true : false,
+			downClicked: this.post.votingType == -1 ? true : false,
 			subMenuDisplay: false,
 			shareSubMenuDisplay: false,
 			postHidden: false,
-			saved: false,
+			saved: this.post.saved,
 		};
 	},
 	props: {
@@ -333,6 +288,36 @@ export default {
 		post: {
 			type: Object,
 			required: true,
+		},
+	},
+	watch: {
+		savedUnsavedInMainID(newID) {
+			if (newID == this.post.id)
+				this.saved = this.$store.state.latestSavedUnsavedPost.saved;
+			console.log('newvalue= ' + newID);
+		},
+		savedUnsavedInMainState(newState) {
+			if (this.$store.state.latestSavedUnsavedPost.id == this.post.id)
+				this.saved = newState;
+			console.log('newvalue= ' + newState);
+		},
+		post(newValue) {
+			this.counter = newValue.votes;
+			this.upClicked = newValue.votingType == 1 ? true : false;
+			this.downClicked = newValue.votingType == -1 ? true : false;
+			this.saved = newValue.saved;
+		},
+	},
+	computed: {
+		savedUnsavedInMainID: function () {
+			{
+				return this.$store.state.latestSavedUnsavedPost.id;
+			}
+		},
+		savedUnsavedInMainState: function () {
+			{
+				return this.$store.state.latestSavedUnsavedPost.saved;
+			}
 		},
 	},
 	methods: {
@@ -408,22 +393,22 @@ export default {
 		async savePost() {
 			this.saved = !this.saved;
 			if (this.saved == true) {
-				this.$emit('saved', this.id);
+				this.$emit('saved', this.post.id);
 				try {
 					await this.$store.dispatch('postCommentActions/save', {
 						baseurl: this.$baseurl,
-						id: this.id,
+						id: this.post.id,
 						type: 'post',
 					});
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
-				this.$emit('unsaved', this.id);
+				this.$emit('unsaved', this.post.id);
 				try {
 					await this.$store.dispatch('postCommentActions/unsave', {
 						baseurl: this.$baseurl,
-						id: this.id,
+						id: this.post.id,
 						type: 'post',
 					});
 				} catch (error) {
@@ -437,6 +422,9 @@ export default {
 			this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
 			this.subMenuDisplay = false;
 		},
+	},
+	components: {
+		PostContent,
 	},
 };
 </script>
@@ -505,24 +493,6 @@ export default {
 .vote-box .vote-count.down-clicked {
 	color: var(--color-blue);
 }
-
-.post-content {
-	padding: 8px 8px 3px 5px;
-	width: 100%;
-}
-
-.post-content .post-title h3 {
-	color: black;
-	margin: 10px 0px;
-}
-
-.post-content .post-text {
-	color: black;
-	mask-image: linear-gradient(180deg, #000 60%, transparent);
-	overflow: hidden;
-	font-size: 12px;
-}
-
 .post-services .services {
 	padding: 0px;
 	margin: 0px;
@@ -556,34 +526,6 @@ export default {
 
 a {
 	text-decoration: none;
-}
-
-.post-card .subreddit-info .subreddit-image img {
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-}
-
-.post-card .subreddit-info .subreddit-image {
-	padding-right: 5px;
-}
-
-.post-card .subreddit-info .subreddit-name a {
-	font-weight: 700;
-	color: black;
-}
-
-.post-card .subreddit-info .subreddit-name a:hover {
-	text-decoration: underline;
-}
-
-.post-card .subreddit-info span:nth-of-type(3),
-.post-card .subreddit-info span:nth-of-type(3) a {
-	color: var(--color-grey-dark-2);
-}
-
-.post-card .subreddit-info span:nth-of-type(3) a:hover {
-	text-decoration: underline;
 }
 .post-card .post-content .post-services .services .sub-menu {
 	position: absolute;
@@ -702,5 +644,9 @@ a {
 }
 #post-router-comment {
 	color: var(--color-grey-dark-2);
+}
+.post-content {
+	padding: 8px 8px 3px 5px;
+	width: 100%;
 }
 </style>

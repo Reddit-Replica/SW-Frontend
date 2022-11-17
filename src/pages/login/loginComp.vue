@@ -83,10 +83,9 @@
 				<div class="register-bottom-Comp">
 					New to Reddit?
 
-					<li><router-link to="/signup">Sign Up </router-link></li>
+					<li><router-link to="/signupcomp">Sign Up </router-link></li>
 				</div>
 			</form>
-			=
 		</div>
 	</div>
 </template>
