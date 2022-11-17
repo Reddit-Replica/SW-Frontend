@@ -97,6 +97,7 @@
 					>
 				</div>
 			</div>
+
 			<div
 				v-if="showDescription && !emptyDescription"
 				class="text desc-box"
@@ -356,7 +357,11 @@
 					</div>
 				</div>
 
-				<div class="topics-list" v-if="subtopicsShown" id="subtopics-list">
+				<div
+					class="topics-list"
+					v-if="subtopicsShown && !isSubtopicsSaved"
+					id="subtopics-list"
+				>
 					<div class="text-grey sug-subtopic">SUGGESTED TOPICS</div>
 					<button
 						v-for="(subtopic, index) in topics"
@@ -519,7 +524,7 @@ export default {
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/ToggleFavourite', {
-				subredditName: this.communityName,
+				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
@@ -547,8 +552,9 @@ export default {
 		//@arg no argument
 		saveDescription() {
 			//save description
-			this.communityDescription = this.description;
-
+			if (this.description !== '') {
+				this.communityDescription = this.description;
+			}
 			//hide text area
 			this.hideTextarea();
 
@@ -556,12 +562,15 @@ export default {
 			this.showDescription = !this.showDescription;
 
 			//send request
-			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddDescription', {
-				description: this.communityDescription,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (this.description !== '') {
+				const accessToken = localStorage.getItem('accessToken');
+				this.$store.dispatch('community/AddDescription', {
+					description: this.communityDescription,
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			}
 		},
 		editDescription() {
 			this.showDescription = !this.showDescription;
@@ -571,9 +580,23 @@ export default {
 		//Save subreddit chosen topic and hide topic list
 		//@arg chosen topic to be saved
 		setTopic(topic) {
+			//set topic
 			this.communityTopic = topic;
+
+			//mark topic is chosen
 			this.topicChosen = true;
+
+			//hide topics list
 			this.toogleTopicsList();
+
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddMainTopic', {
+				topic: this.communityTopic,
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
 		},
 		//@vuese
 		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
@@ -584,6 +607,7 @@ export default {
 				const index = this.communitySubtopics.findIndex(
 					(topic) => topic.id === subtopic.id
 				);
+
 				//check if subreddit chosen before
 				if (index === -1) {
 					this.communitySubtopics.push(subtopic);
@@ -618,8 +642,20 @@ export default {
 		//save chosen subtopics list
 		//@arg no argument
 		saveSubtopics() {
+			//mark sub topics as saved
 			this.isSubtopicsSaved = true;
+
+			//set subtopics list
 			this.savedCommunitySubtopics = this.communitySubtopics;
+
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddSubTopic', {
+				subtopics: this.savedCommunitySubtopics,
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
 		},
 		//@vuese
 		//Show/Hide Save or Discard dialog
