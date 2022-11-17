@@ -5,6 +5,6 @@ export default {
 	// to edit a state
 	setSubredditInfo(state, payload) {
 		console.log(payload);
-		state.subredditDescription = payload;
+		state.subreddit = payload;
 	},
 };
