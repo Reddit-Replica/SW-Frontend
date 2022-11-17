@@ -77,6 +77,7 @@ const router = createRouter({
 		{ path: '/', redirect: '/main' },
 		{
 			path: '/main',
+			alias: '/main/:title/',
 			component: MainPage,
 			children: [
 				{
@@ -86,7 +87,6 @@ const router = createRouter({
 				},
 			],
 		},
-
 		{ path: '/forgetPassword', component: ForgetPassword },
 		{ path: '/forgetUsername', component: ForgetUsername },
 		{ path: '/forgetPasswordpage', component: ForgetPasswordpage },

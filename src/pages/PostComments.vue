@@ -762,6 +762,7 @@ export default {
 	data() {
 		return {
 			id: 1,
+			subredditName: 'subredditNamme',
 			userName: 'mena',
 			upClicked: false,
 			downClicked: false,
