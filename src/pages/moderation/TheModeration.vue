@@ -16,7 +16,7 @@
 					<div class="col-6 col-md-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-sm-6 right">
+					<div class="col-md-8 right">
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
