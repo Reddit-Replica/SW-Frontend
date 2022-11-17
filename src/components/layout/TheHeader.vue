@@ -938,6 +938,7 @@ export default {
 
 .sub-menu li {
 	padding: 0px 10px;
+	z-index: 3000;
 }
 
 .setting-choice {
