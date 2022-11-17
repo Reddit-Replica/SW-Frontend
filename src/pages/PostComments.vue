@@ -739,7 +739,7 @@
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<subreddit-info></subreddit-info>
+							<subreddit-info subreddit-name="subredditName"></subreddit-info>
 						</div>
 					</div>
 				</div>
