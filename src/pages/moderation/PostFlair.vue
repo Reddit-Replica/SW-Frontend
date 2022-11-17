@@ -49,6 +49,79 @@
 				</div>
 			</div>
 		</div>
+		<div class="base-box">
+			<div class="first-section">Post flair preview</div>
+			<div class="first-section">
+				CSS class<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-info-circle icon"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+					/>
+					<path
+						d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+					/>
+				</svg>
+			</div>
+			<div class="first-section">
+				Settings<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-info-circle icon"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+					/>
+					<path
+						d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+					/>
+				</svg>
+			</div>
+			<div class="first-section">
+				Flair ID<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-info-circle icon"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+					/>
+					<path
+						d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+					/>
+				</svg>
+			</div>
+		</div>
+		<div class="center-box">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				fill="currentColor"
+				class="bi bi-tag icon-tag"
+				viewBox="0 0 16 16"
+			>
+				<path
+					d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"
+				/>
+				<path
+					d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"
+				/>
+			</svg>
+			<h3 class="heading-3-postflair">You do not have any post flair</h3>
+			<p class="text-p-postflair">Create post flair in your community today</p>
+		</div>
 	</div>
 </template>
 
@@ -112,5 +185,83 @@ export default {};
 	line-height: 1.6rem;
 	color: var(--color-dark-3);
 	padding-top: 0.4rem;
+}
+.base-box {
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	line-height: 1.2rem;
+	text-transform: uppercase;
+	-ms-flex-align: center;
+	align-items: center;
+	background-color: var(--color-grey-light-9);
+	border-radius: 4px 4px 0 0;
+	color: var(--color-grey-dark-8);
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.6rem;
+	white-space: nowrap;
+}
+.icon {
+	margin-left: 4px;
+	vertical-align: middle;
+}
+.first-section {
+	margin-left: 0;
+	/* width: 40rem; */
+}
+/* .second-section {
+	width: 14.4rem;
+} */
+/* .third-section {
+	 width: 28rem; 
+} */
+.forth-section {
+	-ms-flex: 1;
+	flex: 1;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	/* padding-right: 12rem; */
+	margin-right: 0;
+}
+.center-box {
+	-ms-flex-align: center;
+	align-items: center;
+	background-color: var(--main-white-color);
+	color: var(--color-dark-3);
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-flow: column nowrap;
+	flex-flow: column nowrap;
+	-ms-flex-pack: center;
+	justify-content: center;
+	min-height: 40rem;
+	border-radius: 0 0 4px 4px;
+}
+.icon-tag {
+	color: var(--color-grey-dark-8);
+	font-size: 4rem;
+	margin: 2.4rem;
+	width: 4rem;
+	height: 4rem;
+	font-size: 2rem;
+	font-weight: 400;
+	height: 2rem;
+	line-height: 2rem;
+	vertical-align: middle;
+}
+.heading-3-postflair {
+	font-size: 1.8rem;
+	font-weight: 500;
+	line-height: 2.2rem;
+}
+.text-p-postflair {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 1.8rem;
+	margin-top: 0.8rem;
 }
 </style>
