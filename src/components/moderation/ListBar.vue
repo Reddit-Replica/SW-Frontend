@@ -1,10 +1,14 @@
 <template>
 	<div>
-		<div class="bar">
+		<div class="bar" v-if="!rules">
 			<base-button class="button-white" v-if="isModeratorList"
 				>Leave as mod</base-button
 			>
 			<base-button class="base-button">{{ barTitle }}</base-button>
+		</div>
+		<div class="bar" v-else>
+			<base-button class="reorder-button">Reorder rules</base-button>
+			<base-button class="base-button">Add rule</base-button>
 		</div>
 	</div>
 </template>
@@ -12,10 +16,20 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// title to be written in bar
+		// @type string
 		title: {
 			type: String,
 			default: '',
 			required: true,
+		},
+		// @vuese
+		// if it is rule bar
+		// @type Boolean
+		rules: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -85,6 +99,9 @@ export default {
 	text-align: center;
 	width: auto;
 }
+.base-button:hover {
+	background-color: var(--color-blue-6);
+}
 .button-white {
 	margin-right: 0.8rem;
 	position: relative;
@@ -100,5 +117,29 @@ export default {
 	min-height: 3.2rem;
 	min-width: 3.2rem;
 	padding: 0.4rem 1.6rem;
+}
+.button-white:hover {
+	background-color: var(--color-blue-light-5);
+}
+.reorder-button {
+	cursor: not-allowed;
+	filter: grayscale(1);
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
+	position: relative;
+	border: 1px solid transparent;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
+	margin-right: 1rem;
+}
+.reorder-button:hover {
+	background-color: var(--color-grey-light-4);
 }
 </style>
