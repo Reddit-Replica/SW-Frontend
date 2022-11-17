@@ -26,9 +26,11 @@
 										approved ||
 										moderators ||
 										rules ||
-										postFlair
+										postFlair ||
+										scheduledPosts
 									"
 									:title="barTitle"
+									:subredditName="subredditName"
 								></list-bar>
 								<transition name="route" mode="out-in">
 									<component :is="slotProps.Component"></component>
@@ -202,6 +204,15 @@ export default {
 			);
 		},
 		// @vuese
+		// return scheduled posts bath
+		// @type boolean
+		scheduledPosts() {
+			return (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			);
+		},
+		// @vuese
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
@@ -227,9 +238,18 @@ export default {
 				'/r/' + this.subredditName + '/about/rules'
 			) {
 				return 'Rules';
-			} else {
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/postflair'
+			) {
 				return 'Post flair';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			) {
+				return 'Schedule Post';
 			}
+			return '';
 		},
 	},
 	methods: {
