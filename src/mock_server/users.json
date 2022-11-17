@@ -1,4 +1,43 @@
 {
+  "post-details": [
+    {
+      "kind": "text",
+      "subreddit": "string",
+      "content": "string",
+      "images": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": true,
+      "title": "string",
+      "sharePostId": "string",
+      "flair": {
+        "id": "string",
+        "flairName": "string",
+        "order": 0,
+        "backgroundColor": "string",
+        "textColor": "string"
+      },
+      "comments": 0,
+      "votes": 0,
+      "postedAt": "string",
+      "deletedAt": "string",
+      "editedAt": "string",
+      "postedBy": "string",
+      "votingType": 1,
+      "saved": false,
+      "followed": false,
+      "hidden": false,
+      "spammed": false,
+      "inYourSubreddit": false,
+      "moderation": {
+        "approve": {},
+        "remove": {},
+        "spam": {},
+        "lock": true
+      }
+    }
+  ],
   "hot": [
     {
       "after": "string",
@@ -6,7 +45,7 @@
       "children": [
         {
           "id": "1",
-          "kind": "link",
+          "kind": "post",
           "subreddit": "hotSubreddit",
           "content": "hot content",
           "images": [],
@@ -37,7 +76,7 @@
       "children": [
         {
           "id": "2",
-          "kind": "link",
+          "kind": "text",
           "subreddit": "hotSubreddit",
           "content": "hot content",
           "images": [],
@@ -70,7 +109,7 @@
       "children": [
         {
           "id": "1",
-          "kind": "link",
+          "kind": "text",
           "subreddit": "bestSubreddit",
           "content": "best content",
           "images": [],
@@ -103,7 +142,7 @@
       "children": [
         {
           "id": "1",
-          "kind": "link",
+          "kind": "text",
           "subreddit": "newSubreddit",
           "content": "new content",
           "images": [],
@@ -136,7 +175,7 @@
       "children": [
         {
           "id": "1",
-          "kind": "link",
+          "kind": "text",
           "subreddit": "topSubreddit",
           "content": "top content",
           "images": [],
@@ -203,6 +242,11 @@
       "type": "post",
       "direction": -1,
       "id": 8
+    },
+    {
+      "type": "post",
+      "direction": -1,
+      "id": 9
     }
   ],
   "save": [
