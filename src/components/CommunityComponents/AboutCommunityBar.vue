@@ -97,6 +97,7 @@
 					>
 				</div>
 			</div>
+
 			<div
 				v-if="showDescription && !emptyDescription"
 				class="text desc-box"
@@ -519,7 +520,7 @@ export default {
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/ToggleFavourite', {
-				subredditName: this.communityName,
+				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
@@ -547,8 +548,9 @@ export default {
 		//@arg no argument
 		saveDescription() {
 			//save description
-			this.communityDescription = this.description;
-
+			if (this.description !== '') {
+				this.communityDescription = this.description;
+			}
 			//hide text area
 			this.hideTextarea();
 
@@ -556,12 +558,15 @@ export default {
 			this.showDescription = !this.showDescription;
 
 			//send request
-			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddDescription', {
-				description: this.communityDescription,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (this.description !== '') {
+				const accessToken = localStorage.getItem('accessToken');
+				this.$store.dispatch('community/AddDescription', {
+					description: this.communityDescription,
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			}
 		},
 		editDescription() {
 			this.showDescription = !this.showDescription;
@@ -571,9 +576,23 @@ export default {
 		//Save subreddit chosen topic and hide topic list
 		//@arg chosen topic to be saved
 		setTopic(topic) {
+			//set topic
 			this.communityTopic = topic;
+
+			//mark topic is chosen
 			this.topicChosen = true;
+
+			//hide topics list
 			this.toogleTopicsList();
+
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddMainTopic', {
+				topic: this.communityTopic,
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
 		},
 		//@vuese
 		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25

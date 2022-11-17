@@ -45,6 +45,7 @@ export default {
 	--color-grey-light-12: #e8e8e8;
 	--color-grey-light-13: #e0dfdf;
 	--color-grey-light-14: #ededed;
+	--color-grey-light-15: #efefef;
 
 	/* dark grey colors */
 	--color-grey-dark-1: #333;
@@ -71,6 +72,8 @@ export default {
 	--color-red-dark-3: #ff4500;
 
 	--color-pink: #ff64ae;
+	--color-pink-2: #fff9fb;
+	--color-pink-3: #fcbcdc;
 
 	/* blue colors */
 	--color-blue: #6094fe;
