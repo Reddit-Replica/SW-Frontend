@@ -40,41 +40,39 @@
 					<router-link
 						:to="{
 							name: 'subreddit',
-							params: { subredditName: post.subredditName },
+							params: { subredditName: post.subreddit },
 						}"
 						id="subreddit-router"
-						>{{ post.subredditName }}
+						>{{ post.subreddit }}
 					</router-link>
 				</span>
 				<span>
 					. Posted by .
 					<router-link
-						:to="{ name: 'user', params: { userName: post.userName } }"
+						:to="{ name: 'user', params: { userName: post.postedBy } }"
 						id="post-by-router"
 					>
-						{{ post.userName }} </router-link
-					>&nbsp;{{ post.duration }} ago
+						{{ post.postedBy }} </router-link
+					>&nbsp;{{ post.postedAt }} ago
 				</span>
 			</div>
 			<router-link
 				:to="{
 					name: 'comments',
 					params: {
-						postName: post.postName,
-						subredditName: post.subredditName,
-						postId: id,
+						postName: post.title,
+						subredditName: post.subreddit,
+						postId: post.id,
 					},
 				}"
 				id="post-router"
 			>
 				<div class="post-title">
-					<h3>{{ post.postName }}</h3>
+					<h3>{{ post.title }}</h3>
 				</div>
 				<div class="post-text">
 					<p>
-						{{
-							post.postDescription.substr(0, post.postDescription.length * 0.7)
-						}}
+						{{ post.content.substr(0, post.content.length * 0.7) }}
 					</p>
 				</div>
 			</router-link>
@@ -114,9 +112,9 @@
 							:to="{
 								name: 'comments',
 								params: {
-									postName: post.postName,
-									subredditName: post.subredditName,
-									postId: id,
+									postName: post.title,
+									subredditName: post.subreddit,
+									postId: post.id,
 								},
 							}"
 							id="post-router-comment"
@@ -133,7 +131,7 @@
 									d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
 								/>
 							</svg>
-							{{ post.commentsCount }} Comments
+							{{ post.comments }} Comments
 						</router-link>
 					</li>
 
@@ -317,14 +315,13 @@ export default {
 	],
 	data() {
 		return {
-			id: '1',
-			counter: this.post.voteCount,
-			upClicked: false,
-			downClicked: false,
+			counter: this.post.votes,
+			upClicked: this.post.votingType == 1 ? true : false,
+			downClicked: this.post.votingType == -1 ? true : false,
 			subMenuDisplay: false,
 			shareSubMenuDisplay: false,
 			postHidden: false,
-			saved: false,
+			saved: this.post.saved,
 		};
 	},
 	props: {
@@ -333,6 +330,36 @@ export default {
 		post: {
 			type: Object,
 			required: true,
+		},
+	},
+	watch: {
+		savedUnsavedInMainID(newID) {
+			if (newID == this.post.id)
+				this.saved = this.$store.state.latestSavedUnsavedPost.saved;
+			console.log('newvalue= ' + newID);
+		},
+		savedUnsavedInMainState(newState) {
+			if (this.$store.state.latestSavedUnsavedPost.id == this.post.id)
+				this.saved = newState;
+			console.log('newvalue= ' + newState);
+		},
+		post(newValue) {
+			this.counter = newValue.votes;
+			this.upClicked = newValue.votingType == 1 ? true : false;
+			this.downClicked = newValue.votingType == -1 ? true : false;
+			this.saved = newValue.saved;
+		},
+	},
+	computed: {
+		savedUnsavedInMainID: function () {
+			{
+				return this.$store.state.latestSavedUnsavedPost.id;
+			}
+		},
+		savedUnsavedInMainState: function () {
+			{
+				return this.$store.state.latestSavedUnsavedPost.saved;
+			}
 		},
 	},
 	methods: {
@@ -408,22 +435,22 @@ export default {
 		async savePost() {
 			this.saved = !this.saved;
 			if (this.saved == true) {
-				this.$emit('saved', this.id);
+				this.$emit('saved', this.post.id);
 				try {
 					await this.$store.dispatch('postCommentActions/save', {
 						baseurl: this.$baseurl,
-						id: this.id,
+						id: this.post.id,
 						type: 'post',
 					});
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
-				this.$emit('unsaved', this.id);
+				this.$emit('unsaved', this.post.id);
 				try {
 					await this.$store.dispatch('postCommentActions/unsave', {
 						baseurl: this.$baseurl,
-						id: this.id,
+						id: this.post.id,
 						type: 'post',
 					});
 				} catch (error) {
