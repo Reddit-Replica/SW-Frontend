@@ -92,76 +92,6 @@
 			"id": 3
 		},
 		{
-			"subredditName": "hello",
-			"type": "Private",
-			"nsfw": false,
-			"category": "leave",
-			"id": 4
-		},
-		{
-			"subredditName": "hhh",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Sports",
-			"id": 5
-		},
-		{
-			"subredditName": "hhh",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Sports",
-			"id": 6
-		},
-		{
-			"subredditName": "dfgh",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Sports",
-			"id": 7
-		},
-		{
-			"subredditName": "hikoklkllklllllllllll",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 8
-		},
-		{
-			"subredditName": "hikoklkllklllllllllll",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 9
-		},
-		{
-			"subredditName": "hikoklkllklllllllllll",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 10
-		},
-		{
-			"subredditName": "hikoklkllklllllllllll",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 11
-		},
-		{
-			"subredditName": "hikoklkllklllllllllll",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 12
-		},
-		{
-			"subredditName": "hikoklkllklllllllllll",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 13
-		},
-		{
 			"subredditName": "feeltired",
 			"type": "Restricted",
 			"nsfw": true,
@@ -181,96 +111,40 @@
 			"nsfw": true,
 			"category": "Learning",
 			"id": 16
-		},
-		{
-			"subredditName": "popopo",
-			"type": "Private",
-			"nsfw": false,
-			"category": "News",
-			"id": 17
-		},
-		{
-			"subredditName": "wewewe",
-			"type": "Private",
-			"nsfw": false,
-			"category": "Gaming",
-			"id": 18
-		},
-		{
-			"subredditName": "yooooooh",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Sports",
-			"id": 19
-		},
-		{
-			"subredditName": "jijijijijij",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 20
-		},
-		{
-			"subredditName": "koko",
-			"type": "Restricted",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 21
-		},
-		{
-			"subredditName": "lplplplplpl",
-			"type": "Restricted",
-			"nsfw": false,
-			"category": "News",
-			"id": 22
-		},
-		{
-			"subredditName": "huhuhu",
-			"type": "Restricted",
-			"nsfw": false,
-			"category": "News",
-			"id": 23
-		},
-		{
-			"subredditName": "tyty",
-			"type": "Public",
-			"nsfw": false,
-			"category": "News",
-			"id": 24
-		},
-		{
-			"subredditName": "kokoko",
-			"type": "Public",
-			"nsfw": false,
-			"category": "News",
-			"id": 25
-		},
-		{
-			"subredditName": "popoiuiu",
-			"type": "Public",
-			"nsfw": false,
-			"category": "News",
-			"id": 26
-		},
-		{
-			"subredditName": "uiouio",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Learning",
-			"id": 27
-		},
-		{
-			"subredditName": "kokpkl",
-			"type": "Public",
-			"nsfw": false,
-			"category": "Learning",
-			"id": 28
 		}
 	],
 	"subreddit-name-available": [
 		{
 			"id": 1,
 			"subredditName": "FrontEnd"
+		}
+	],
+	"add-description": [
+		{
+			"description": "hello every body it is a new subreddit",
+			"rId": "subreddit",
+			"id": 3
+		},
+		{
+			"description": "Hi there, have fun.",
+			"rId": "subreddit",
+			"id": 4
+		}
+	],
+	"add-maintopic": [
+		{
+			"title": {
+				"id": 2,
+				"name": "Beauty"
+			},
+			"rId": "subreddit",
+			"id": 2
+		}
+	],
+	"toggle-favorite": [
+		{
+			"id": 1,
+			"isFavorite": false
 		}
 	],
 	"saved-categories": [
