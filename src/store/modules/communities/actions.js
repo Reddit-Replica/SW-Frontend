@@ -97,7 +97,7 @@ export default {
 		}
 	},
 	async AddDescription(_, payload) {
-		const description = payload.description;
+		const description = { description: payload.description };
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
@@ -109,6 +109,31 @@ export default {
 					Authorization: 'Bearer ' + payload.token,
 				},
 				body: JSON.stringify(description),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async AddMainTopic(_, payload) {
+		const title = { title: payload.topic };
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/add-maintopic`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+				body: JSON.stringify(title),
 			}
 		);
 
