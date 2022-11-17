@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>posts</div>
+		<!-- <div>posts</div> -->
 		<base-user-post :post="post"></base-user-post>
 		<base-user-post :post="post"></base-user-post>
 		<base-user-post :post="post"></base-user-post>
