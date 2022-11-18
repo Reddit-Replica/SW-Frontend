@@ -287,6 +287,11 @@ export default {
 			const tableModule = this.editor.getModule('QuillTableUI');
 			tableModule.insertTable(3, 3);
 		},
+		setContent(value) {
+			this.$store.commit('posts/setContent', {
+				content: value,
+			});
+		},
 	},
 	components: {
 		QuillEditor,
@@ -296,7 +301,12 @@ export default {
 			return this.$refs.myQuillEditor.quill;
 		},
 	},
-
+	watch: {
+		content(value) {
+			this.content = value;
+			this.setContent(value);
+		},
+	},
 	// setup: () => {
 	// 	const modules = {
 	// 		name: 'QuillTableUI',

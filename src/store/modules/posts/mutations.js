@@ -23,4 +23,8 @@ export default {
 		console.log(payload);
 		state.sendReplies = payload.sendReplies;
 	},
+	setContent(state, payload) {
+		console.log(payload);
+		state.content = payload.content;
+	},
 };

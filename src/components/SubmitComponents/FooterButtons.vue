@@ -86,8 +86,8 @@
 export default {
 	data() {
 		return {
-			nsfw: null,
-			spoiler: null,
+			nsfw: false,
+			spoiler: false,
 			flairId: 123,
 		};
 	},
