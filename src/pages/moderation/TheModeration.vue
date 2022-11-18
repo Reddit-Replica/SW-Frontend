@@ -27,7 +27,8 @@
 										moderators ||
 										rules ||
 										postFlair ||
-										scheduledPosts
+										scheduledPosts ||
+										contentControls
 									"
 									:title="barTitle"
 									:subreddit-name="subredditName"
@@ -213,6 +214,14 @@ export default {
 			);
 		},
 		// @vuese
+		// return content controls bath
+		// @type boolean
+		contentControls() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/settings'
+			);
+		},
+		// @vuese
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
@@ -248,6 +257,11 @@ export default {
 				'/r/' + this.subredditName + '/about/scheduledposts'
 			) {
 				return 'Schedule Post';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/settings'
+			) {
+				return 'Content controls';
 			}
 			return '';
 		},
