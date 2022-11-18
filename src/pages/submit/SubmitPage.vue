@@ -43,8 +43,10 @@
 							<div class="border-bottom"></div>
 							<div class="down-row">
 								<base-button
+									@click="handleSubmit"
 									class="post-button"
 									button-text="Post"
+									:disable-button="buttonDisabled"
 								></base-button>
 							</div>
 
@@ -89,18 +91,111 @@ export default {
 		document.title = 'Submit to Reddit';
 	},
 	mounted() {
-		this.getTitle();
+		//this.getTitle();
 	},
 	data() {
 		return {
 			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
-			title: 'hello',
+			buttonDisabled: false,
+
+			//post params
+			kind: null,
+			subreddit: null,
+			title: null,
+			content: null,
+			files: [{}],
+			nsfw: null,
+			spoiler: null,
+			flairId: 123,
+			imageCaptions: [],
+			imageLinks: [],
+			sendReplies: null,
 		};
 	},
 	watch: {},
 	methods: {
 		getTitle() {
 			this.title = this.$store.getters['posts/getTitle'];
+		},
+		getKind() {
+			if (this.submitTypesActive[0]) this.kind = 'text';
+			else if (this.submitTypesActive[1]) this.kind = 'image';
+			else if (this.submitTypesActive[2]) this.kind = 'link';
+			console.log(this.kind);
+		},
+		getNsfw() {
+			this.nsfw = this.$store.getters['posts/getNsfw'];
+		},
+		getSpoiler() {
+			this.spoiler = this.$store.getters['posts/getSpoiler'];
+		},
+		getFlairId() {
+			//this.flairId = this.$store.getters['posts/getFlairId'];
+		},
+		getsendReplies() {
+			this.sendReplies = this.$store.getters['posts/getsendReplies'];
+		},
+		getContent() {
+			this.content = this.$store.getters['posts/getContent'];
+		},
+		async handleSubmit() {
+			this.getTitle();
+			this.getKind();
+			this.getNsfw();
+			this.getSpoiler();
+			//this.getFlairId();
+			this.getsendReplies();
+			this.getContent();
+			console.log('print values');
+			console.log(this.title);
+			console.log(this.kind);
+			console.log(this.spoiler);
+			console.log(this.nsfw);
+			console.log(this.sendReplies);
+			console.log(this.content);
+
+			if (
+				this.title === null ||
+				this.kind === null ||
+				//this.subreddit == null ||
+				this.content === '' ||
+				this.nsfw === null ||
+				this.spoiler === null ||
+				//this.flairId == null ||
+				this.sendReplies === null
+			) {
+				return;
+			}
+			console.log('hello from hell');
+			this.disableButton = false;
+			const actionPayload = {
+				kind: this.kind,
+				subreddit: this.subreddit,
+				title: this.title,
+				content: this.content,
+				files: this.files,
+				nsfw: this.nsfw,
+				spoiler: this.spoiler,
+				flairId: this.flairId,
+				imageCaptions: this.imageCaptions,
+				imageLinks: this.imageLinks,
+				sendReplies: this.sendReplies,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('posts/createPost', actionPayload);
+				const response = localStorage.getItem('response');
+
+				if (response == 200) {
+					console.log(response);
+					this.success = true;
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(this.error);
+				this.success = false;
+			}
 		},
 		selectPostType(e) {
 			if (
@@ -203,7 +298,6 @@ nav ul li:hover {
 	border-bottom: var(--line);
 }
 .post-button {
-	cursor: not-allowed;
 	filter: grayscale(1);
 	background-color: #3293db;
 	color: rgba(255, 255, 255, 0.5);
