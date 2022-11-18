@@ -10,6 +10,8 @@
 							<createpost-bar></createpost-bar>
 							<sortposts-bar></sortposts-bar>
 							<base-post
+								v-for="post in posts"
+								:key="post.id"
 								:post="post"
 								@show-comments="showPostComments"
 								@saved="savePost"
@@ -58,6 +60,18 @@ import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 import SaveUnsavePopupMessage from '@/components/SaveUnsavePopupMessage.vue';
 export default {
+	beforeMount() {
+		let title = this.$route.params.title;
+		if (title == null) title = 'best';
+		this.fetchPosts(title);
+	},
+	watch: {
+		'$route.params.title': {
+			handler: function () {
+				this.fetchPosts(this.$route.params.title);
+			},
+		},
+	},
 	components: {
 		CreatepostBar,
 		SortpostsBar,
@@ -80,16 +94,7 @@ export default {
 	data() {
 		return {
 			colorGreyDark2: '#0099CC',
-			post: {
-				userName: 'mena',
-				voteCount: 22,
-				subredditName: 'sub-com',
-				duration: '22 minutes',
-				postName: 'Hello World',
-				postDescription:
-					'post description Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-				commentsCount: 22,
-			},
+			posts: [],
 			showComments: false,
 			savedUnsavedPosts: [],
 		};
@@ -134,6 +139,8 @@ export default {
 		async undoSaveUnsave(state, typeid) {
 			if (state == 'saved') {
 				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
 				try {
 					await this.$store.dispatch('postCommentActions/unsave', {
 						baseurl: this.$baseurl,
@@ -145,6 +152,8 @@ export default {
 				}
 			} else {
 				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
 				try {
 					await this.$store.dispatch('postCommentActions/save', {
 						baseurl: this.$baseurl,
@@ -155,6 +164,17 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 			}
+		},
+		async fetchPosts(title) {
+			try {
+				await this.$store.dispatch('listing/fetchPosts', {
+					baseurl: this.$baseurl,
+					title: title,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.posts = this.$store.getters['listing/getPosts'];
 		},
 	},
 };

@@ -7,6 +7,7 @@ import userModule from './modules/userStore/index.js';
 import commentsModule from './modules/comments/index.js';
 import postCommentActionsModule from './modules/postCommentActions/index.js';
 import postsModule from './modules/posts/index.js';
+import listingModule from './modules/Listing/index.js';
 const store = createStore({
 	modules: {
 		auth: authModule,
@@ -17,6 +18,7 @@ const store = createStore({
 		comments: commentsModule,
 		postCommentActions: postCommentActionsModule,
 		posts: postsModule,
+		listing: listingModule,
 	},
 	state() {
 		return {
@@ -25,6 +27,7 @@ const store = createStore({
 			userName: 'asmaaadel0',
 			accessToken: '',
 			subredditName: 'asmaaSubredditName',
+			latestSavedUnsavedPost: {},
 		};
 	},
 	getters: {

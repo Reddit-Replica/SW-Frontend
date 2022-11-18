@@ -27,7 +27,7 @@
 		<div class="sort-post-box-1">
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Best' }"
+				:class="{ clicked: clicked == 'best' }"
 				@click="selectSort('Best')"
 				id="best-sort"
 			>
@@ -48,7 +48,7 @@
 
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Hot' }"
+				:class="{ clicked: clicked == 'hot' }"
 				@click="selectSort('Hot')"
 				id="hot-sort"
 			>
@@ -69,7 +69,7 @@
 			</div>
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'New' }"
+				:class="{ clicked: clicked == 'new' }"
 				@click="selectSort('New')"
 				id="new-sort"
 			>
@@ -90,7 +90,7 @@
 			</div>
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Top' }"
+				:class="{ clicked: clicked == 'top' }"
 				@click="selectSort('Top')"
 				id="top-sort"
 			>
@@ -153,7 +153,7 @@
 		<ul class="sort-post-sub-menu" v-if="showMenu">
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Best' }"
+				:class="{ clicked: clicked == 'best' }"
 				@click="selectSort('Best')"
 				id="best-sort-sub-menu"
 			>
@@ -174,7 +174,7 @@
 			</li>
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Hot' }"
+				:class="{ clicked: clicked == 'hot' }"
 				@click="selectSort('Hot')"
 				id="hot-sort-sub-menu"
 			>
@@ -195,7 +195,7 @@
 			</li>
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'New' }"
+				:class="{ clicked: clicked == 'new' }"
 				@click="selectSort('New')"
 				id="new-sort-sub-menu"
 			>
@@ -216,7 +216,7 @@
 			</li>
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Top' }"
+				:class="{ clicked: clicked == 'top' }"
 				@click="selectSort('Top')"
 				id="top-sort-sub-menu"
 			>
@@ -248,9 +248,14 @@
 export default {
 	data() {
 		return {
-			clicked: 'Best',
 			showMenu: false,
 		};
+	},
+	computed: {
+		clicked() {
+			if (this.$route.params.title == null) return 'best';
+			else return this.$route.params.title;
+		},
 	},
 	methods: {
 		// @vuese
@@ -259,6 +264,7 @@ export default {
 		selectSort(title) {
 			this.clicked = title;
 			if (this.showMenu) this.showSubMenu();
+			this.$router.push({ path: '/main/' + title.toLowerCase() });
 		},
 		// @vuese
 		// Used to show submenu for responsive design
