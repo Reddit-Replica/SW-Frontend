@@ -102,7 +102,6 @@ export default {
 			moderators: [
 				{ id: 0, name: 'HodaGamal' },
 				{ id: 1, name: 'AsmaaAdel' },
-				{ id: 2, name: 'Abdalhameed' },
 			],
 			showFirstDialog: true,
 		};

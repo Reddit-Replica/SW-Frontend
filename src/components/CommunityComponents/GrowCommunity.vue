@@ -36,12 +36,14 @@
 		<div class="grow-body" v-if="growBodyShown">
 			<grow-component
 				:index="0"
+				:is-shown="shownFirst"
 				:color="blue"
 				title="Add 5 more posts today"
 				content="Make your community lively and welcoming, by adding posts for your
 				visitors to interact with."
 				link="/submit"
 				button="Make a Post"
+				@exit="hideFirst"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -60,12 +62,14 @@
 
 			<grow-component
 				:index="1"
+				:is-shown="shownSecond"
 				:color="orange"
 				title="Share your community"
 				content="Spread the word about your community by sharing it on different social
 				platforms."
 				link="/submit"
 				button="Start Sharing"
+				@exit="hideSecond"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -84,12 +88,14 @@
 
 			<grow-component
 				:index="2"
+				:is-shown="shownThird"
 				:color="red"
 				title="Crosspost your best posts"
 				content="Build your community and attract more visitors by crossposting posts to
 				other communities."
 				link="/submit"
 				button="Learn More"
+				@exit="hideThird"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -111,6 +117,7 @@
 
 			<grow-component
 				:index="3"
+				:is-shown="!shownFirst"
 				:color="green"
 				title="Recruit more members"
 				content="Learn how to use invitations to bring more members and moderators to
@@ -151,6 +158,9 @@ export default {
 			orange: '#ffae00',
 			red: '#ff585b',
 			green: '#0dd3bb',
+			shownFirst: true,
+			shownSecond: true,
+			shownThird: true,
 		};
 	},
 	//@vuese
@@ -159,6 +169,15 @@ export default {
 	methods: {
 		toggleGrowBody() {
 			this.growBodyShown = !this.growBodyShown;
+		},
+		hideFirst() {
+			this.shownFirst = !this.shownFirst;
+		},
+		hideSecond() {
+			this.shownSecond = !this.shownSecond;
+		},
+		hideThird() {
+			this.shownThird = !this.shownThird;
 		},
 	},
 };
