@@ -30,7 +30,7 @@
 										scheduledPosts
 									"
 									:title="barTitle"
-									:subredditName="subredditName"
+									:subreddit-name="subredditName"
 								></list-bar>
 								<transition name="route" mode="out-in">
 									<component :is="slotProps.Component"></component>
