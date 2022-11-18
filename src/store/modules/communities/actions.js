@@ -171,4 +171,52 @@ export default {
 			throw error;
 		}
 	},
+
+	async getSubreddit(context, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + `/r/${payload.subredditName}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+
+		context.commit('setSubreddit', responseData['0']);
+	},
+	async joinSubreddit(_, payload) {
+		const joinInfo = {
+			subredditId: payload.subredditId,
+			message: payload.message,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/join-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+			body: JSON.stringify(joinInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };

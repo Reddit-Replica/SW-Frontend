@@ -65,10 +65,7 @@
 				<div class="description-1-text">Add description</div>
 			</div>
 
-			<div
-				class="description-1 blue-border"
-				v-else-if="textareaShown && !showDescription"
-			>
+			<div class="description-1 blue-border" v-else-if="textareaShown">
 				<textarea
 					placeholder="Tell us about your community"
 					maxlength="500"
@@ -99,9 +96,9 @@
 			</div>
 
 			<div
-				v-if="showDescription && !emptyDescription"
+				v-if="!textareaShown && !emptyDescription"
 				class="text desc-box"
-				@click="editDescription"
+				@click="showTextarea"
 			>
 				{{ communityDescription }}
 				<svg
@@ -229,8 +226,6 @@
 						fill="currentColor"
 						class="bi bi-info-circle"
 						viewBox="0 0 16 16"
-						@mouseover="toogleTopicsArrrowBox"
-						@mouseleave="toogleTopicsArrrowBox"
 					>
 						<path
 							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -259,7 +254,7 @@
 					@click="toogleTopicsList"
 					v-if="topicChosen"
 					id="topic-added"
-					>{{ communityTopic.name }}</span
+					>{{ communityTopic }}</span
 				>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -283,13 +278,13 @@
 						@click="setTopic(topic)"
 						:id="'topic-' + index"
 					>
-						{{ topic.name }}
+						{{ topic }}
 					</button>
 				</div>
 
 				<div
 					class="sub-topic"
-					v-if="!subtopicsShown && topicChosen"
+					v-if="!subtopicChosen && topicChosen && addSubtopicShown"
 					id="subtopic-box-1"
 				>
 					<base-button class="button-subtopic" id="subtopic-box-2">
@@ -306,26 +301,24 @@
 								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 							/>
 						</svg>
-						<span class="text span-save" @click="toogleSubtopics"
-							>Add subtopic</span
-						>
+						<span class="text span-save" @click="showBoth">Add subtopic</span>
 					</base-button>
 				</div>
 
 				<div
 					class="blue-border description-1 box-topic"
-					v-if="subtopicsShown"
+					v-if="subtopicsBoxShown || subtopicChosen"
 					id="subtopic-box-3"
 				>
 					<input v-if="!subtopicChosen" id="subtopic-box-4" />
-					<div v-if="subtopicChosen">
+					<div v-if="subtopicChosen" @click="showBoth">
 						<base-button
 							v-for="(subtopic, index) in communitySubtopics"
 							:key="subtopic.id"
 							class="subtopic text"
 							@click="deleteSubtopic(subtopic)"
 							:id="'chosen-subtopic-' + index"
-							>{{ subtopic.name }}
+							>{{ subtopic }}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -359,11 +352,7 @@
 					</div>
 				</div>
 
-				<div
-					class="topics-list"
-					v-if="subtopicsShown && !isSubtopicsSaved"
-					id="subtopics-list"
-				>
+				<div class="topics-list" v-if="subtopicsListShown" id="subtopics-list">
 					<div class="text-grey sug-subtopic">SUGGESTED TOPICS</div>
 					<button
 						v-for="(subtopic, index) in topics"
@@ -372,7 +361,7 @@
 						@click="setSubtopic(subtopic)"
 						:id="'subtopic-' + index"
 					>
-						{{ subtopic.name }}
+						{{ subtopic }}
 					</button>
 				</div>
 
@@ -459,6 +448,14 @@ export default {
 			type: String,
 			default: '',
 		},
+		communityDescriptionProp: {
+			type: String,
+			default: '',
+		},
+		communityTopicProp: {
+			type: Object,
+			default: () => ({ mainTopic: '', subtopics: [] }),
+		},
 	},
 	data() {
 		return {
@@ -468,19 +465,18 @@ export default {
 			favouriteText: 'Add To Favourites',
 			charRemaining: 500,
 			textareaShown: false,
-			communityDescription: '',
+			// communityDescription: this.communityDescriptionProp,
 			description: '',
-			communityTopic: {},
-			topicChosen: false,
+			// communityTopic: {},
+			// topicChosen: false,
 			topicsShown: false,
 			subtopicsShown: false,
-			communitySubtopics: [],
+			// communitySubtopics: [],
 			savedCommunitySubtopics: [],
-			subtopicChosen: false,
-			subtopicsCount: 0,
+			// subtopicChosen: false,
+			// subtopicsCount: 0,
 			saveDialogShown: false,
 			isSubtopicsSaved: false,
-			showDescription: false,
 
 			isNew: true,
 
@@ -488,11 +484,33 @@ export default {
 			MembersCountBoxShown: false,
 			onlineMembersCountBoxShown: false,
 			topicsArrrowBoxShown: false,
+
+			addSubtopicShown: true,
+			subtopicsBoxShown: false,
+			subtopicsListShown: false,
 		};
 	},
 	computed: {
 		emptyDescription() {
-			return this.communityDescription === '' && this.description === '';
+			return this.communityDescription === '';
+		},
+		communityDescription() {
+			return this.communityDescriptionProp;
+		},
+		communityTopic() {
+			return this.communityTopicProp.topicTitle;
+		},
+		topicChosen() {
+			return this.communityTopic !== '';
+		},
+		communitySubtopics() {
+			return this.communityTopicProp.subtopics;
+		},
+		subtopicChosen() {
+			return this.communitySubtopics.length !== 0;
+		},
+		subtopicsCount() {
+			return this.communitySubtopics.length;
 		},
 	},
 	methods: {
@@ -554,29 +572,24 @@ export default {
 		//@arg no argument
 		saveDescription() {
 			//save description
-			if (this.description !== '') {
-				this.communityDescription = this.description;
-			}
+			// if (this.description !== '') {
+			this.communityDescription = this.description;
+			// }
+
+			this.isSubtopicsSaved = true;
 			//hide text area
 			this.hideTextarea();
 
-			//show description
-			this.showDescription = !this.showDescription;
-
 			//send request
-			if (this.description !== '') {
-				const accessToken = localStorage.getItem('accessToken');
-				this.$store.dispatch('community/AddDescription', {
-					description: this.communityDescription,
-					subredditName: this.subredditName,
-					baseurl: this.$baseurl,
-					token: accessToken,
-				});
-			}
-		},
-		editDescription() {
-			this.showDescription = !this.showDescription;
-			this.showTextarea();
+			// if (this.description !== '') {
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddDescription', {
+				description: this.communityDescription,
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			// }
 		},
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
@@ -607,13 +620,12 @@ export default {
 			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
 				const index = this.communitySubtopics.findIndex(
-					(topic) => topic.id === subtopic.id
+					(topic) => topic === subtopic
 				);
 
 				//check if subreddit chosen before
 				if (index === -1) {
 					this.communitySubtopics.push(subtopic);
-					this.subtopicChosen = true;
 					this.subtopicsCount++;
 				}
 			}
@@ -644,20 +656,27 @@ export default {
 		//save chosen subtopics list
 		//@arg no argument
 		saveSubtopics() {
+			this.subtopicsListShown = false;
+
 			//mark sub topics as saved
-			this.isSubtopicsSaved = true;
+			// this.isSubtopicsSaved = true;
 
 			//set subtopics list
-			this.savedCommunitySubtopics = this.communitySubtopics;
+			// this.savedCommunitySubtopics = this.communitySubtopics;
 
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/AddSubTopic', {
-				subtopics: this.savedCommunitySubtopics,
+				subtopics: this.communitySubtopics,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+		},
+		showBoth() {
+			this.addSubtopicShown = false;
+			this.subtopicsBoxShown = true;
+			this.subtopicsListShown = !this.subtopicsListShown;
 		},
 		//@vuese
 		//Show/Hide Save or Discard dialog
@@ -669,7 +688,7 @@ export default {
 		//Cancel chosen subtopics list and show dialog save or discard
 		//@arg no argument
 		toogleSubtopicsCancel() {
-			this.toogleSubtopics();
+			this.subtopicsListShown = false;
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
