@@ -45,6 +45,7 @@
 								<base-button
 									class="post-button"
 									button-text="Post"
+									:disable-button="buttonDisabled"
 								></base-button>
 							</div>
 
@@ -89,18 +90,25 @@ export default {
 		document.title = 'Submit to Reddit';
 	},
 	mounted() {
-		this.getTitle();
+		//this.getTitle();
 	},
 	data() {
 		return {
 			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
-			title: 'hello',
+			buttonDisabled: true,
+			title: null,
+			kind: null,
 		};
 	},
 	watch: {},
 	methods: {
 		getTitle() {
 			this.title = this.$store.getters['posts/getTitle'];
+		},
+		getKind() {
+			if (this.submitTypesActive[0]) this.kind = 'text';
+			else if (this.submitTypesActive[1]) this.kind = 'image';
+			else if (this.submitTypesActive[2]) this.kind = 'link';
 		},
 		selectPostType(e) {
 			if (
@@ -203,7 +211,6 @@ nav ul li:hover {
 	border-bottom: var(--line);
 }
 .post-button {
-	cursor: not-allowed;
 	filter: grayscale(1);
 	background-color: #3293db;
 	color: rgba(255, 255, 255, 0.5);
