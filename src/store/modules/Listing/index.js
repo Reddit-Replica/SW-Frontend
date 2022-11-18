@@ -5,8 +5,7 @@ export default {
 	namespaced: true,
 	state() {
 		return {
-			subreddit: {},
-			followedPosts: [],
+			Posts: [],
 		};
 	},
 	actions,

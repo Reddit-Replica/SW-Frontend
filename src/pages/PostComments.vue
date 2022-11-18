@@ -739,7 +739,7 @@
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<subreddit-info></subreddit-info>
+							<subreddit-info subreddit-name="subredditName"></subreddit-info>
 						</div>
 					</div>
 				</div>
@@ -762,6 +762,7 @@ export default {
 	data() {
 		return {
 			id: 1,
+			subredditName: 'subredditNamme',
 			userName: 'mena',
 			upClicked: false,
 			downClicked: false,
