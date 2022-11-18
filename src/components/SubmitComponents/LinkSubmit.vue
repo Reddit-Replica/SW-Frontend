@@ -1,13 +1,37 @@
 <template>
 	<div class="url-content">
 		<form class="url-form">
-			<textarea placeholder="Url" class="url-placeholder" rows="1"></textarea>
+			<textarea
+				placeholder="Url"
+				class="url-placeholder"
+				rows="1"
+				v-model="content"
+			></textarea>
 		</form>
 	</div>
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			content: '',
+		};
+	},
+	methods: {
+		setContent(value) {
+			this.$store.commit('posts/setContent', {
+				content: value,
+			});
+		},
+	},
+	watch: {
+		content(value) {
+			this.content = value;
+			this.setContent(value);
+		},
+	},
+};
 </script>
 
 <style scoped>
