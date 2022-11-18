@@ -16,7 +16,7 @@
 					<div class="col-6 col-md-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-md-8 right">
+					<div class="col-12 col-md-8 right">
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
@@ -278,7 +278,7 @@ export default {
 .right {
 	margin-top: 9rem;
 }
-@media only screen and (max-width: 36em) {
+@media only screen and (max-width: 50em) {
 	.row > * {
 		width: 50%;
 	}
