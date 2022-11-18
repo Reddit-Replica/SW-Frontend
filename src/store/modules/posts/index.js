@@ -4,7 +4,18 @@ import getters from './getters.js';
 export default {
 	namespaced: true,
 	state() {
-		return {};
+		return {
+			kind: '',
+			ubreddit: '',
+			title: '',
+			content: '',
+			files: [{}],
+			nsfw: true,
+			spoiler: true,
+			flairId: '',
+			imageCaptions: [''],
+			imageLinks: [''],
+		};
 	},
 	actions,
 	mutations,
