@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<div class="bar" v-if="title != 'Rules' && title != 'Post flair'">
+		<div
+			class="bar"
+			v-if="
+				title != 'Rules' && title != 'Post flair' && title != 'Content controls'
+			"
+		>
 			<base-button class="button-white" v-if="isModeratorList"
 				>Leave as mod</base-button
 			>
@@ -14,6 +19,14 @@
 			<base-button class="button-white">Post flair settings</base-button>
 			<base-button class="reorder-post-flair-button">Reorder</base-button>
 			<base-button class="base-button">Add flair</base-button>
+		</div>
+		<div class="bar" v-if="title == 'Post flair'">
+			<base-button class="button-white">Post flair settings</base-button>
+			<base-button class="reorder-post-flair-button">Reorder</base-button>
+			<base-button class="base-button">Add flair</base-button>
+		</div>
+		<div class="bar" v-if="title == 'Content controls'">
+			<base-button class="content-controls-button">Save changes</base-button>
 		</div>
 	</div>
 </template>
@@ -82,7 +95,7 @@ export default {
 	right: 0;
 	z-index: 3;
 }
-.base-button {
+button {
 	position: relative;
 	background-color: var(--color-blue-2);
 	border: none;
@@ -109,24 +122,18 @@ export default {
 	text-align: center;
 	width: auto;
 }
+/* .base-button {
+} */
 .base-button:hover {
 	background-color: var(--color-blue-6);
 }
 .button-white {
 	margin-right: 0.8rem;
-	position: relative;
 	border: 1px solid var(--color-blue-2);
 	color: var(--color-blue-2);
 	fill: var(--color-blue-2);
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 1.4rem;
-	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 1.7rem;
-	text-transform: unset;
-	min-height: 3.2rem;
-	min-width: 3.2rem;
 	padding: 0.4rem 1.6rem;
+	background-color: transparent;
 }
 .button-white:hover {
 	background-color: var(--color-blue-light-5);
@@ -136,18 +143,9 @@ export default {
 	filter: grayscale(1);
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
-	position: relative;
-	border: 1px solid transparent;
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 1.4rem;
-	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 1.7rem;
-	text-transform: unset;
-	min-height: 3.2rem;
-	min-width: 3.2rem;
 	padding: 0.4rem 1.6rem;
 	margin-right: 1rem;
+	background-color: transparent;
 }
 .reorder-button:hover,
 .reorder-post-flair-button:hover {
@@ -163,26 +161,18 @@ export default {
 	border: 1px solid var(--color-grey-light-5);
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 1.4rem;
-	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 1.7rem;
-	text-transform: unset;
-	min-height: 3.2rem;
-	min-width: 3.2rem;
-	padding: 0.4rem 1.6rem;
-	-ms-flex-align: center;
-	align-items: center;
-	border-radius: 9999px;
-	box-sizing: border-box;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-pack: center;
-	justify-content: center;
-	position: relative;
-	text-align: center;
-	width: auto;
-	background: transparent;
+	background-color: transparent;
+}
+.content-controls-button {
+	min-width: 15rem;
+	cursor: not-allowed;
+	filter: grayscale(1);
+	border: none;
+	color: rgba(255, 255, 255, 0.5);
+	fill: rgba(255, 255, 255, 0.5);
+	background-color: var(--color-grey-light-5);
+}
+.content-controls-button:hover {
+	opacity: 0.8;
 }
 </style>
