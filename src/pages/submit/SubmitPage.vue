@@ -23,14 +23,14 @@
 										<div id="2" class="clicked-button"></div>
 										<i class="fa-solid fa-link icon"></i>Link
 									</li>
-									<li>
+									<!-- <li>
 										<div id="3" class="clicked-button"></div>
 										<i class="fa-solid fa-list-check icon"></i>Poll
 									</li>
 									<li>
 										<div id="4" class="clicked-button"></div>
 										<i class="fa-solid fa-microphone icon"></i>Talk
-									</li>
+									</li> -->
 								</ul>
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
@@ -39,8 +39,15 @@
 							<image-submit v-if="submitTypesActive[1]"></image-submit>
 							<link-submit v-if="submitTypesActive[2]"></link-submit>
 							<footer-buttons></footer-buttons>
+
 							<div class="border-bottom"></div>
-							<div>post button</div>
+							<div class="down-row">
+								<base-button
+									class="post-button"
+									button-text="Post"
+								></base-button>
+							</div>
+
 							<submit-footer></submit-footer>
 						</div>
 					</div>
@@ -48,6 +55,8 @@
 				<div class="col-lg-4">right</div>
 			</div>
 		</div>
+		<button @click="getTitle">check</button>
+		{{ title }}
 	</div>
 </template>
 
@@ -79,12 +88,20 @@ export default {
 	created() {
 		document.title = 'Submit to Reddit';
 	},
+	mounted() {
+		this.getTitle();
+	},
 	data() {
 		return {
 			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
+			title: 'hello',
 		};
 	},
+	watch: {},
 	methods: {
+		getTitle() {
+			this.title = this.$store.getters['posts/getTitle'];
+		},
 		selectPostType(e) {
 			if (
 				e.target.id &&
@@ -125,6 +142,7 @@ li {
 
 	margin-bottom: 15px;
 	border-radius: 5px;
+	position: relative;
 	/* max-width: 740rem; you must delete this line when making layout */
 }
 nav {
@@ -183,5 +201,35 @@ nav ul li:hover {
 	margin: auto;
 	width: 95%;
 	border-bottom: var(--line);
+}
+.post-button {
+	cursor: not-allowed;
+	filter: grayscale(1);
+	background-color: #3293db;
+	color: rgba(255, 255, 255, 0.5);
+	fill: rgba(255, 255, 255, 0.5);
+	width: 8%;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 17px;
+	text-transform: unset;
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	position: absolute;
+	left: 88%;
+	top: 20%;
+}
+.down-row {
+	height: 50px;
+	position: relative;
+	background-color: #ffffff;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	text-align: center;
 }
 </style>
