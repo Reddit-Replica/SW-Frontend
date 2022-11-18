@@ -61,7 +61,7 @@ export default {
 		},
 	},
 	watch: {
-		userName(value) {
+		sendReplies(value) {
 			this.sendReplies = value;
 			this.setsendReplies(value);
 		},
