@@ -1,5 +1,5 @@
 <template>
-	<div class="grow-link" v-if="shownAlone" :id="'grow-link-' + index">
+	<div class="grow-link" v-if="isShown" :id="'grow-link-' + index">
 		<svg
 			viewBox="0 0 100 100"
 			xmlns="http://www.w3.org/2000/svg"
@@ -56,6 +56,7 @@
 
 <script>
 export default {
+	emits: ['exit'],
 	props: {
 		//@vuese
 		//Index of grow your community element
@@ -93,11 +94,16 @@ export default {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Is grow option shown/hidden
+		isShown: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	data() {
 		return {
-			shown: [true, true, true, true, true],
-			shownAlone: true,
+			// shownAlone: this.isShown,
 		};
 	},
 	computed: {
@@ -117,7 +123,8 @@ export default {
 		//Hide element when clicking on exit icon
 		//@arg no argument
 		hideAlone() {
-			this.shownAlone = !this.shownAlone;
+			// this.shownAlone = !this.shownAlone;
+			this.$emit('exit');
 		},
 	},
 };

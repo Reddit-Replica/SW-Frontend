@@ -5,7 +5,7 @@
 		</div>
 		<div class="about-body">
 			<div class="box-body" id="message-mods">
-				<base-button link to="/message/sent" class="button-message text"
+				<base-button link to="/message/compose" class="button-message text"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -26,9 +26,9 @@
 					class="mod-link"
 					v-for="(mod, index) in moderators"
 					:key="mod.id"
-					to="/user/Abd"
+					to="/user/Abdalhameed"
 					:id="'mods-bar-' + index"
-					>u/{{ mod.name }}</router-link
+					>u/{{ mod.username }}</router-link
 				>
 			</div>
 			<div class="box-body flex-end text text-view" id="view-mods">

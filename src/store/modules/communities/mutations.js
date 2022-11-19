@@ -5,4 +5,7 @@ export default {
 	setSavedCategories(state, payload) {
 		state.categories = payload;
 	},
+	setSubreddit(state, payload) {
+		state.subreddit = payload;
+	},
 };

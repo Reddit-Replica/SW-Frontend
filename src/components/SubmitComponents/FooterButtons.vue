@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div class="buttons-section">
-			<base-button class="grey-button" button-text="OC" id="footer-button-oc">
+			<!-- <base-button class="grey-button" button-text="OC" id="footer-button-oc">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -14,8 +14,9 @@
 						d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
 					/>
 				</svg>
-			</base-button>
+			</base-button> -->
 			<base-button
+				@click="toggleSpoiler"
 				class="grey-button"
 				button-text="Spoiler"
 				id="footer-button-spoiler"
@@ -37,6 +38,7 @@
 				class="grey-button"
 				button-text="NSFW"
 				id="footer-button-nsfw"
+				@click="toggleNsfw"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +53,11 @@
 					/>
 				</svg>
 			</base-button>
-			<base-button class="grey-button not-allowed" id="footer-button-flair">
+			<base-button
+				@click="setFlairId"
+				class="grey-button not-allowed"
+				id="footer-button-flair"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -77,7 +83,35 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			nsfw: false,
+			spoiler: false,
+			flairId: 123,
+		};
+	},
+	watch: {},
+	methods: {
+		toggleNsfw() {
+			this.nsfw = !this.nsfw;
+			this.$store.commit('posts/setNsfw', {
+				nsfw: this.nsfw,
+			});
+		},
+		toggleSpoiler() {
+			this.spoiler = !this.spoiler;
+			this.$store.commit('posts/setSpoiler', {
+				spoiler: this.spoiler,
+			});
+		},
+		setFlairId() {
+			this.$store.commit('posts/setFlairId', {
+				flairId: this.flairId,
+			});
+		},
+	},
+};
 </script>
 
 <style scoped>

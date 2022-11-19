@@ -16,7 +16,7 @@
 					<div class="col-6 col-md-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-md-8 right">
+					<div class="col-12 col-md-8 right">
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
@@ -26,9 +26,12 @@
 										approved ||
 										moderators ||
 										rules ||
-										postFlair
+										postFlair ||
+										scheduledPosts ||
+										contentControls
 									"
 									:title="barTitle"
+									:subreddit-name="subredditName"
 								></list-bar>
 								<transition name="route" mode="out-in">
 									<component :is="slotProps.Component"></component>
@@ -202,6 +205,23 @@ export default {
 			);
 		},
 		// @vuese
+		// return scheduled posts bath
+		// @type boolean
+		scheduledPosts() {
+			return (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			);
+		},
+		// @vuese
+		// return content controls bath
+		// @type boolean
+		contentControls() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/settings'
+			);
+		},
+		// @vuese
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
@@ -227,9 +247,23 @@ export default {
 				'/r/' + this.subredditName + '/about/rules'
 			) {
 				return 'Rules';
-			} else {
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/postflair'
+			) {
 				return 'Post flair';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			) {
+				return 'Schedule Post';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/settings'
+			) {
+				return 'Content controls';
 			}
+			return '';
 		},
 	},
 	methods: {
@@ -258,7 +292,7 @@ export default {
 .right {
 	margin-top: 9rem;
 }
-@media only screen and (max-width: 36em) {
+@media only screen and (max-width: 50em) {
 	.row > * {
 		width: 50%;
 	}

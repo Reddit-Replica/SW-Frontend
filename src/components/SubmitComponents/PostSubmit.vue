@@ -1,6 +1,6 @@
 <template>
 	<div class="big-box">
-		<div id="my-toolbar1" class="icons-box" v-if="!markdownMode">
+		<!-- <div id="my-toolbar1" class="icons-box" v-if="!markdownMode">
 			<div class="tool-tip">
 				<span class="tool-tip-text">Bold</span>
 				<button class="icons" id="bold">
@@ -165,7 +165,7 @@
 				class="text-area"
 				placeholder="Text (optional)"
 			></textarea>
-		</div>
+		</div> -->
 
 		<QuillEditor
 			class="editor"
@@ -174,21 +174,22 @@
 			placeholder="Text (optional)"
 			style="color: black"
 			ref="myQuillEditor"
+			v-model:content="content"
 		>
 			<template #toolbar>
-				<div id="my-toolbar">
+				<div id="my-toolbar" class="icons-box">
 					<!-- Add buttons as you would before -->
 					<div class="tool-tip">
-						<span class="tool-tip-text">Bold</span>
+						<span class="tool-tip-text-small">Bold</span>
 
 						<button class="ql-bold"></button>
 					</div>
 					<div class="tool-tip">
-						<span class="tool-tip-text">Italics</span>
+						<span class="tool-tip-text-small">Italics</span>
 						<button class="ql-italic"></button>
 					</div>
 					<div class="tool-tip">
-						<span class="tool-tip-text">Link</span>
+						<span class="tool-tip-text-small">Link</span>
 						<button class="ql-link"></button>
 					</div>
 					<div class="tool-tip">
@@ -199,32 +200,58 @@
 						<span class="tool-tip-text strike">Inline Code</span>
 						<button class="ql-code"></button>
 					</div>
-					<button class="ql-script" value="super"></button>
-					<button class="ql-spoiler"></button>
-					<button class="ql-header" value="1"></button>
-					<button class="ql-list" value="bullet"></button>
-					<button class="ql-list" value="ordered"></button>
-					<button class="ql-blockquote"></button>
-					<button class="ql-code-block"></button>
-					<button class="icons" id="" @click="insertTable">
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Superscript</span>
+						<button class="ql-script" value="super"></button>
+					</div>
+					<!-- <button class="ql-spoiler"></button> -->
+					<div class="space-in"></div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Heading</span>
+						<button class="ql-header" value="1"></button>
+					</div>
+
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Bulleted List</span>
+						<button class="ql-list" value="bullet"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Numbered List</span>
+						<button class="ql-list" value="ordered"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Quote Block</span>
+						<button class="ql-blockquote"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Code Block</span>
+						<button class="ql-code-block"></button>
+					</div>
+					<div class="space-in"></div>
+					<!-- <button class="icons" id="" @click="insertTable">
 						<div class="icon">
 							<font-awesome-icon icon="fa-solid fa-table" />
 						</div>
-					</button>
-					<button class="ql-image"></button>
-					<button class="ql-video"></button>
-
-					<!-- But you can also add your own -->
-					<button id="custom-button"></button>
+					</button> -->
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Add an image</span>
+						<button class="ql-image"></button>
+					</div>
+					<div class="tool-tip">
+						<span class="tool-tip-text strike">Add a video</span>
+						<button class="ql-video"></button>
+					</div>
 				</div>
 			</template>
 		</QuillEditor>
+		{{ content }}
 	</div>
 </template>
 
 <script>
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+//import * as QuillTableUI from 'quill-table-ui';
 // import * as Quill from 'quill';
 // import * as QuillTableUI from 'quill-table-ui';
 // Quill.register(
@@ -238,6 +265,8 @@ export default {
 	data() {
 		return {
 			markdownMode: false,
+			content: '',
+
 			// editorOption: {
 			// 	theme: 'snow',
 			// 	modules: {
@@ -253,9 +282,15 @@ export default {
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
+		getpostContent() {},
 		insertTable() {
-			const tableModule = this.editor.editorgetModule('table');
+			const tableModule = this.editor.getModule('QuillTableUI');
 			tableModule.insertTable(3, 3);
+		},
+		setContent(value) {
+			this.$store.commit('posts/setContent', {
+				content: value,
+			});
 		},
 	},
 	components: {
@@ -266,6 +301,22 @@ export default {
 			return this.$refs.myQuillEditor.quill;
 		},
 	},
+	watch: {
+		content(value) {
+			this.content = value;
+			this.setContent(value);
+		},
+	},
+	// setup: () => {
+	// 	const modules = {
+	// 		name: 'QuillTableUI',
+	// 		module: QuillTableUI,
+	// 		options: {
+	// 			/* options */
+	// 		},
+	// 	};
+	// 	return { modules };
+	// },
 };
 </script>
 
@@ -395,6 +446,24 @@ textarea:focus {
 	border-radius: 5px;
 	visibility: hidden;
 	padding: 2px 2px 20px 2px;
+	transform: translateX(-35%);
+	opacity: 0;
+}
+
+.tool-tip-text-small {
+	text-align: center;
+	width: 60px;
+	height: 25px;
+	position: absolute;
+	color: white;
+	background-color: black;
+	border: 2px solid black;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	border-radius: 5px;
+	visibility: hidden;
+	padding: 2px 2px 20px 2px;
 	transform: translateX(-20%);
 	opacity: 0;
 }
@@ -410,7 +479,21 @@ textarea:focus {
 	transform: translateX(-50%);
 	border-color: #000 #0000 #0000 #0000;
 }
+.tool-tip-text-small::before {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	border: 8px solid;
+	transform: translateX(-50%);
+	border-color: #000 #0000 #0000 #0000;
+}
 .tool-tip:hover .tool-tip-text {
+	top: -40px;
+	visibility: visible;
+	opacity: 1;
+}
+.tool-tip:hover .tool-tip-text-small {
 	top: -40px;
 	visibility: visible;
 	opacity: 1;
