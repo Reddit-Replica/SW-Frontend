@@ -9,12 +9,12 @@ pipeline {
     stage("unit test"){
       agent {
         docker {
-            image 'node:14.16.1'
+            image 'node:lts'
             reuseNode true
         }
     }
     steps {
-              sh "npm i "
+              sh "npm i --force"
               sh "npm run test"
               // timeout(time: 20, unit: 'SECONDS') {sh "npm run serve"}
       }
