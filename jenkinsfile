@@ -15,7 +15,7 @@ pipeline {
     }
     steps {
               sh "npm i "
-              sh "npm run test"
+              // sh "npm run test"
               // timeout(time: 20, unit: 'SECONDS') {sh "npm run serve"}
       }
   }
