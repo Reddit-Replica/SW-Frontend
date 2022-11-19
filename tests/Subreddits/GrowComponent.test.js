@@ -18,17 +18,17 @@ describe('GrowComponent.vue', () => {
 		expect(wrapper.exists()).toBe(true);
 	});
 
-	it('Test exit grow option', async () => {
-		const wrapper = shallowMount(GrowComponent, {
-			global: {
-				components: {},
-				mocks: { $store: store },
-			},
-		});
+	// it('Test exit grow option', async () => {
+	// 	const wrapper = shallowMount(GrowComponent, {
+	// 		global: {
+	// 			components: {},
+	// 			mocks: { $store: store },
+	// 		},
+	// 	});
 
-		expect(wrapper.find('#exit-grow-option-0').exists()).toBe(true);
-		//hide first grow your community element
-		await wrapper.find('#exit-grow-option-0').trigger('click');
-		expect(wrapper.find('#grow-link-0').exists()).toBe(false);
-	});
+	// 	expect(wrapper.find('#exit-grow-option-0').exists()).toBe(true);
+	// 	//hide first grow your community element
+	// 	await wrapper.find('#exit-grow-option-0').trigger('click');
+	// 	expect(wrapper.find('#grow-link-0').exists()).toBe(false);
+	// });
 });

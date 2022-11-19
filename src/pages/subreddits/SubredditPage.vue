@@ -3,7 +3,8 @@
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
 			:subreddit-name="subredditName"
-			subreddit-image-url="https://b.thumbs.redditmedia.com/voAwqXNBDO4JwIODmO4HXXkUJbnVo_mL_bENHeagDNo.png"
+			:subreddit-image-url="subreddit.picture"
+			:joined="subreddit.isMember"
 		></subreddit-top>
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
@@ -16,12 +17,14 @@
 				<about-community-bar
 					:subreddit-name="subredditName"
 					:topics="topics"
-					:members-count="1"
-					:online-members-count="5"
-					community-date="OCT 28, 2022"
-					community-type="Private"
+					:members-count="subreddit.members"
+					:online-members-count="subreddit.online"
+					:community-date="subreddit.dateOfCreation"
+					:community-type="subreddit.type"
+					:community-description-prop="subreddit.description"
+					:community-topic-prop="subreddit.mainTopic"
 				></about-community-bar>
-				<moderators-bar :moderators="moderators"></moderators-bar>
+				<moderators-bar :moderators="subreddit.moderators"></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
 		</div>
@@ -90,27 +93,44 @@ export default {
 	data() {
 		return {
 			topics: [
-				{ id: 0, name: 'Art' },
-				{ id: 1, name: 'Anime' },
-				{ id: 2, name: 'Beauty' },
-				{ id: 3, name: 'Cars' },
-				{ id: 4, name: 'Fashion' },
-				{ id: 5, name: 'Music' },
-				{ id: 6, name: 'Sports' },
-				{ id: 7, name: 'Travel' },
+				// { id: 0, name: 'Art' },
+				// { id: 1, name: 'Anime' },
+				// { id: 2, name: 'Beauty' },
+				// { id: 3, name: 'Cars' },
+				// { id: 4, name: 'Fashion' },
+				// { id: 5, name: 'Music' },
+				// { id: 6, name: 'Sports' },
+				// { id: 7, name: 'Travel' },
+				'Art',
+				'Anime',
+				'Beauty',
+				'Cars',
+				'Fashion',
+				'Music',
+				'Sports',
+				'Travel',
 			],
 			moderators: [
 				{ id: 0, name: 'HodaGamal' },
 				{ id: 1, name: 'AsmaaAdel' },
-				{ id: 2, name: 'Abdalhameed' },
 			],
 			showFirstDialog: true,
+			subreddit: {},
 		};
 	},
 	computed: {
 		toBeShown() {
 			return this.firstCreated && this.showFirstDialog;
 		},
+	},
+	async created() {
+		const accessToken = localStorage.getItem('accessToken');
+		await this.$store.dispatch('community/getSubreddit', {
+			subredditName: this.subredditName,
+			baseurl: this.$baseurl,
+			token: accessToken,
+		});
+		this.subreddit = this.$store.getters['community/getSubreddit'];
 	},
 	methods: {
 		hideFirstDialog() {

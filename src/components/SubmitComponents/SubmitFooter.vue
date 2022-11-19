@@ -2,7 +2,7 @@
 	<div class="submit-footer">
 		<div class="footer-item">
 			<div class="item item-1">
-				<input type="checkbox" id="reply" name="reply" value="reply" />
+				<input type="checkbox" id="reply" name="reply" v-model="sendReplies" />
 				<span class="label">Send me post reply notifications</span>
 			</div>
 		</div>
@@ -47,11 +47,23 @@ export default {
 	data() {
 		return {
 			infoShown: false,
+			sendReplies: null,
 		};
 	},
 	methods: {
 		showInfo() {
 			this.infoShown = !this.infoShown;
+		},
+		setsendReplies(value) {
+			this.$store.commit('posts/setsendReplies', {
+				sendReplies: value,
+			});
+		},
+	},
+	watch: {
+		sendReplies(value) {
+			this.sendReplies = value;
+			this.setsendReplies(value);
 		},
 	},
 };
