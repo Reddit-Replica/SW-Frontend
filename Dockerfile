@@ -7,7 +7,7 @@ WORKDIR /vue-ui
 COPY package*.json ./
 
 # install dependencies
-RUN npm install
+RUN npm install --force
 
 # Copy rest of the files
 COPY . .
