@@ -1,7 +1,13 @@
 <template>
 	<div class="content">
 		<h3 class="heading-3">Drag and drop images or</h3>
-		<input type="file" class="blue-button" id="image-input" hidden />
+		<!-- <input type="file" class="blue-button" id="image-input" hidden /> -->
+		<input
+			type="file"
+			accept="image/png,image/gif,image/jpeg,image/webp,video/mp4,video/quicktime"
+			multiple=""
+			hidden
+		/>
 		<label class="blue-button" for="image-input">Upload</label>
 	</div>
 </template>
