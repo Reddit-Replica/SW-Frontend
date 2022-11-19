@@ -11,5 +11,6 @@
 	"r/subreddit/add-description": "/add-description",
 	"r/subreddit/add-maintopic": "/add-maintopic",
 	"r/subreddit/add-subtopic": "/add-subtopic",
-	"r/subreddit/toggle-favorite": "toggle-favorite"
+	"r/subreddit/toggle-favorite": "toggle-favorite",
+	"/r/subreddit": "/subreddit"
 }

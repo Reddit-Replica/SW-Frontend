@@ -23,14 +23,14 @@
 										<div id="2" class="clicked-button"></div>
 										<i class="fa-solid fa-link icon"></i>Link
 									</li>
-									<li>
+									<!-- <li>
 										<div id="3" class="clicked-button"></div>
 										<i class="fa-solid fa-list-check icon"></i>Poll
 									</li>
 									<li>
 										<div id="4" class="clicked-button"></div>
 										<i class="fa-solid fa-microphone icon"></i>Talk
-									</li>
+									</li> -->
 								</ul>
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
@@ -39,8 +39,17 @@
 							<image-submit v-if="submitTypesActive[1]"></image-submit>
 							<link-submit v-if="submitTypesActive[2]"></link-submit>
 							<footer-buttons></footer-buttons>
+
 							<div class="border-bottom"></div>
-							<div>post button</div>
+							<div class="down-row">
+								<base-button
+									@click="handleSubmit"
+									class="post-button"
+									button-text="Post"
+									:disable-button="buttonDisabled"
+								></base-button>
+							</div>
+
 							<submit-footer></submit-footer>
 						</div>
 					</div>
@@ -48,6 +57,8 @@
 				<div class="col-lg-4">right</div>
 			</div>
 		</div>
+		<button @click="getTitle">check</button>
+		{{ title }}
 	</div>
 </template>
 
@@ -79,12 +90,113 @@ export default {
 	created() {
 		document.title = 'Submit to Reddit';
 	},
+	mounted() {
+		//this.getTitle();
+	},
 	data() {
 		return {
 			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
+			buttonDisabled: false,
+
+			//post params
+			kind: null,
+			subreddit: null,
+			title: null,
+			content: null,
+			files: [{}],
+			nsfw: null,
+			spoiler: null,
+			flairId: 123,
+			imageCaptions: [],
+			imageLinks: [],
+			sendReplies: null,
 		};
 	},
+	watch: {},
 	methods: {
+		getTitle() {
+			this.title = this.$store.getters['posts/getTitle'];
+		},
+		getKind() {
+			if (this.submitTypesActive[0]) this.kind = 'text';
+			else if (this.submitTypesActive[1]) this.kind = 'image';
+			else if (this.submitTypesActive[2]) this.kind = 'link';
+			console.log(this.kind);
+		},
+		getNsfw() {
+			this.nsfw = this.$store.getters['posts/getNsfw'];
+		},
+		getSpoiler() {
+			this.spoiler = this.$store.getters['posts/getSpoiler'];
+		},
+		getFlairId() {
+			//this.flairId = this.$store.getters['posts/getFlairId'];
+		},
+		getsendReplies() {
+			this.sendReplies = this.$store.getters['posts/getsendReplies'];
+		},
+		getContent() {
+			this.content = this.$store.getters['posts/getContent'];
+		},
+		async handleSubmit() {
+			this.getTitle();
+			this.getKind();
+			this.getNsfw();
+			this.getSpoiler();
+			//this.getFlairId();
+			this.getsendReplies();
+			this.getContent();
+			console.log('print values');
+			console.log(this.title);
+			console.log(this.kind);
+			console.log(this.spoiler);
+			console.log(this.nsfw);
+			console.log(this.sendReplies);
+			console.log(this.content);
+
+			if (
+				this.title === null ||
+				this.kind === null ||
+				//this.subreddit == null ||
+				this.content === '' ||
+				this.nsfw === null ||
+				this.spoiler === null ||
+				//this.flairId == null ||
+				this.sendReplies === null
+			) {
+				return;
+			}
+			console.log('hello from hell');
+			this.disableButton = false;
+			const actionPayload = {
+				kind: this.kind,
+				subreddit: this.subreddit,
+				title: this.title,
+				content: this.content,
+				files: this.files,
+				nsfw: this.nsfw,
+				spoiler: this.spoiler,
+				flairId: this.flairId,
+				imageCaptions: this.imageCaptions,
+				imageLinks: this.imageLinks,
+				sendReplies: this.sendReplies,
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				await this.$store.dispatch('posts/createPost', actionPayload);
+				const response = localStorage.getItem('response');
+
+				if (response == 200) {
+					console.log(response);
+					this.success = true;
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(this.error);
+				this.success = false;
+			}
+		},
 		selectPostType(e) {
 			if (
 				e.target.id &&
@@ -125,6 +237,7 @@ li {
 
 	margin-bottom: 15px;
 	border-radius: 5px;
+	position: relative;
 	/* max-width: 740rem; you must delete this line when making layout */
 }
 nav {
@@ -183,5 +296,34 @@ nav ul li:hover {
 	margin: auto;
 	width: 95%;
 	border-bottom: var(--line);
+}
+.post-button {
+	filter: grayscale(1);
+	background-color: #3293db;
+	color: rgba(255, 255, 255, 0.5);
+	fill: rgba(255, 255, 255, 0.5);
+	width: 8%;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 17px;
+	text-transform: unset;
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	position: absolute;
+	left: 88%;
+	top: 20%;
+}
+.down-row {
+	height: 50px;
+	position: relative;
+	background-color: #ffffff;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	text-align: center;
 }
 </style>

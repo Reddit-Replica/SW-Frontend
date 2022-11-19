@@ -17,17 +17,16 @@
 						<div>
 							<base-button
 								class="button blue-button"
-								@click="toogleJoin"
-								v-if="!isJoined"
+								@click="joinsubreddit"
+								v-if="!joined"
 								id="join-button"
 								>Join</base-button
 							>
 							<base-button
 								class="button white-button"
-								@click="toogleJoin"
 								@mouseover="hoverJoin('Leave')"
 								@mouseleave="hoverJoin('Joined')"
-								v-if="isJoined"
+								v-if="joined"
 								id="leave-button"
 								>{{ hoverButtonText }}</base-button
 							>
@@ -54,26 +53,41 @@ export default {
 			type: String,
 			default: '',
 		},
+		joined: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
-			isJoined: false,
+			// joined: false,
 			hoverButtonText: 'Joined',
 		};
 	},
 	methods: {
-		//@vuese
-		//Toogle Joining and leaving a subreddit button
-		//@arg no argument
-		toogleJoin() {
-			this.isJoined = !this.isJoined;
-		},
 		//@vuese
 		//Change button text from Joined to Leave when hovering on button
 		//@arg text to be written inside button
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
+		joinsubreddit() {
+			// this.toogleJoin();
+
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/joinSubreddit', {
+				message: this.message,
+				subredditId: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+		},
+		// //@vuese
+		// //Toogle Joining and leaving a subreddit button
+		// //@arg no argument
+		// toogleJoin() {
+		// 	this.isJoined = !this.isJoined;
+		// },
 	},
 };
 </script>

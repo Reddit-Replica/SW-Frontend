@@ -2,10 +2,10 @@
 	<div>
 		<div class="create-post-header">
 			<div class="submit-title">Create a post</div>
-			<base-button class="drafts-button"
+			<!-- <base-button class="drafts-button"
 				>DRAFTS
 				<span class="drafts-count">5</span>
-			</base-button>
+			</base-button> -->
 		</div>
 		<div class="choose-post-community-1">
 			<div class="choose-post-community-2">
