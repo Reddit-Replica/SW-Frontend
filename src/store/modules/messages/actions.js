@@ -9,32 +9,40 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const messages = [];
+
+			for (const key in responseData) {
+				const message = {
+					before: responseData[key].before,
+					after: responseData[key].after,
+					id: responseData[key].children[0].id,
+					text: responseData[key].children[0].text,
+					type: responseData[key].children[0].type,
+					senderUsername: responseData[key].children[0].senderUsername,
+					receiverUsername: responseData[key].children[0].receiverUsername,
+					subredditName: responseData[key].children[0].subredditName,
+					postTitle: responseData[key].children[0].postTitle,
+					subject: responseData[key].children[0].subject,
+					sendAt: responseData[key].children[0].sendAt,
+					isReply: responseData[key].children[0].isReply,
+					isRead: responseData[key].children[0].isRead,
+				};
+				messages.push(message);
+			}
+			context.commit('setInboxMessages', messages);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const messages = [];
-
-		for (const key in responseData) {
-			const message = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				text: responseData[key].children[0].text,
-				type: responseData[key].children[0].type,
-				senderUsername: responseData[key].children[0].senderUsername,
-				receiverUsername: responseData[key].children[0].receiverUsername,
-				subredditName: responseData[key].children[0].subredditName,
-				postTitle: responseData[key].children[0].postTitle,
-				subject: responseData[key].children[0].subject,
-				sendAt: responseData[key].children[0].sendAt,
-				isReply: responseData[key].children[0].isReply,
-				isRead: responseData[key].children[0].isRead,
-			};
-			messages.push(message);
-		}
-		context.commit('setInboxMessages', messages);
 	},
 
 	async loadUnreadMessages(context, payload) {
@@ -43,36 +51,44 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const messages = [];
+
+			for (const key in responseData) {
+				const message = {
+					before: responseData[key].before,
+					after: responseData[key].after,
+					id: responseData[key].children[0].id,
+					text: responseData[key].children[0].text,
+					type: responseData[key].children[0].type,
+					senderUsername: responseData[key].children[0].senderUsername,
+					receiverUsername: responseData[key].children[0].receiverUsername,
+					subredditName: responseData[key].children[0].subredditName,
+					postTitle: responseData[key].children[0].postTitle,
+					subject: responseData[key].children[0].subject,
+					sendAt: responseData[key].children[0].sendAt,
+					isReply: responseData[key].children[0].isReply,
+					isRead: responseData[key].children[0].isRead,
+				};
+				messages.push(message);
+			}
+			context.commit('setUnreadMessages', messages);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const messages = [];
-
-		for (const key in responseData) {
-			const message = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				text: responseData[key].children[0].text,
-				type: responseData[key].children[0].type,
-				senderUsername: responseData[key].children[0].senderUsername,
-				receiverUsername: responseData[key].children[0].receiverUsername,
-				subredditName: responseData[key].children[0].subredditName,
-				postTitle: responseData[key].children[0].postTitle,
-				subject: responseData[key].children[0].subject,
-				sendAt: responseData[key].children[0].sendAt,
-				isReply: responseData[key].children[0].isReply,
-				isRead: responseData[key].children[0].isRead,
-			};
-			messages.push(message);
-		}
-		context.commit('setUnreadMessages', messages);
 	},
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
@@ -80,36 +96,44 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const mentions = [];
+
+			for (const key in responseData) {
+				const mention = {
+					before: responseData[key].before,
+					after: responseData[key].after,
+					id: responseData[key].children[0].id,
+					text: responseData[key].children[0].text,
+					type: responseData[key].children[0].type,
+					senderUsername: responseData[key].children[0].senderUsername,
+					receiverUsername: responseData[key].children[0].receiverUsername,
+					subredditName: responseData[key].children[0].subredditName,
+					postTitle: responseData[key].children[0].postTitle,
+					subject: responseData[key].children[0].subject,
+					sendAt: responseData[key].children[0].sendAt,
+					isReply: responseData[key].children[0].isReply,
+					isRead: responseData[key].children[0].isRead,
+				};
+				mentions.push(mention);
+			}
+			context.commit('setUserMentions', mentions);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const mentions = [];
-
-		for (const key in responseData) {
-			const mention = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				text: responseData[key].children[0].text,
-				type: responseData[key].children[0].type,
-				senderUsername: responseData[key].children[0].senderUsername,
-				receiverUsername: responseData[key].children[0].receiverUsername,
-				subredditName: responseData[key].children[0].subredditName,
-				postTitle: responseData[key].children[0].postTitle,
-				subject: responseData[key].children[0].subject,
-				sendAt: responseData[key].children[0].sendAt,
-				isReply: responseData[key].children[0].isReply,
-				isRead: responseData[key].children[0].isRead,
-			};
-			mentions.push(mention);
-		}
-		context.commit('setUserMentions', mentions);
 	},
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
@@ -163,32 +187,40 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const messages = [];
+
+			for (const key in responseData) {
+				const message = {
+					before: responseData[key].before,
+					after: responseData[key].after,
+					id: responseData[key].children[0].id,
+					text: responseData[key].children[0].text,
+					type: responseData[key].children[0].type,
+					senderUsername: responseData[key].children[0].senderUsername,
+					receiverUsername: responseData[key].children[0].receiverUsername,
+					subredditName: responseData[key].children[0].subredditName,
+					postTitle: responseData[key].children[0].postTitle,
+					subject: responseData[key].children[0].subject,
+					sendAt: responseData[key].children[0].sendAt,
+					isReply: responseData[key].children[0].isReply,
+					isRead: responseData[key].children[0].isRead,
+				};
+				messages.push(message);
+			}
+			context.commit('setPostReplies', messages);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const messages = [];
-
-		for (const key in responseData) {
-			const message = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				text: responseData[key].children[0].text,
-				type: responseData[key].children[0].type,
-				senderUsername: responseData[key].children[0].senderUsername,
-				receiverUsername: responseData[key].children[0].receiverUsername,
-				subredditName: responseData[key].children[0].subredditName,
-				postTitle: responseData[key].children[0].postTitle,
-				subject: responseData[key].children[0].subject,
-				sendAt: responseData[key].children[0].sendAt,
-				isReply: responseData[key].children[0].isReply,
-				isRead: responseData[key].children[0].isRead,
-			};
-			messages.push(message);
-		}
-		context.commit('setPostReplies', messages);
 	},
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
@@ -279,7 +311,7 @@ export default {
 	// 		method: 'patch',
 	// 		headers: {
 	// 			'Content-Type': 'application/json',
-	// 			Authorization: `Bearer ${localStorage.getItem('userName')}`,
+	// 			Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 	// 		},
 	// 		body: JSON.stringify(message),
 	// 	});
@@ -412,23 +444,31 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const suggests = [];
+
+			for (const key in responseData) {
+				const suggest = {
+					text: responseData[key].children[0].text,
+				};
+				suggests.push(suggest);
+			}
+			context.commit('setSuggestedSender', suggests);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const suggests = [];
-
-		for (const key in responseData) {
-			const suggest = {
-				text: responseData[key].children[0].text,
-			};
-			suggests.push(suggest);
-		}
-		context.commit('setSuggestedSender', suggests);
 	},
 };
