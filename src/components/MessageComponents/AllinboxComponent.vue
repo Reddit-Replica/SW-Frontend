@@ -28,7 +28,9 @@
 						{{ message.sendAt }}</time
 					>
 				</p>
-				<p class="md">{{ message.text }}</p>
+
+				<Markdown class="md" :source="message.text" />
+				<!-- <p class="md">{{ message.text }}</p> -->
 				<ul class="flat-list ul-messages">
 					<li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
@@ -143,7 +145,11 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
 export default {
+	components: {
+		Markdown,
+	},
 	props: {
 		// @vuese
 		//details of message

@@ -11,7 +11,7 @@
 						v-model="senderUsername"
 						value="username-value"
 					>
-						<option :value="userName" selected="selected">
+						<option value selected="selected">
 							{{ '/u/' + userName }}
 						</option>
 						<option

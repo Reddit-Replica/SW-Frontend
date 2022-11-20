@@ -747,7 +747,7 @@
       "children": [
         {
           "id": "1",
-          "text": "hello world",
+          "text": "*hello world*",
           "type": "Post replies",
           "senderUsername": "/u/norhan_reda",
           "receiverUsername": "/u/asmaaadel0",
@@ -766,7 +766,7 @@
       "children": [
         {
           "id": "2",
-          "text": "hello asmaa",
+          "text": "*hello asmaa*",
           "type": "Messages",
           "subredditName": "subredditName",
           "postTitle": "postTitle",
@@ -785,7 +785,7 @@
       "children": [
         {
           "id": "3",
-          "text": "hello asmaa",
+          "text": "**hello asmaa**",
           "type": "Mentions",
           "subredditName": "subredditName",
           "postTitle": "postTitle",

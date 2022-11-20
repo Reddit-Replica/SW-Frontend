@@ -54,7 +54,8 @@
 							{{ message.sendAt }}</time
 						>
 					</p>
-					<p class="md">{{ message.text }}</p>
+					<!-- <p class="md">{{ message.text }}</p> -->
+					<Markdown class="md" :source="message.text" />
 					<ul class="ul-messages flat-list">
 						<li :id="'context-link-' + index">
 							<a href="" :id="'context-a-' + index">context</a>
@@ -174,7 +175,11 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
 export default {
+	components: {
+		Markdown,
+	},
 	props: {
 		// @vuese
 		//details of message

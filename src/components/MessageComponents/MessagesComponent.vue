@@ -58,7 +58,8 @@
 					>
 				</p>
 				<div v-if="expandAll">
-					<p class="md">{{ message.text }}</p>
+					<!-- <p class="md">{{ message.text }}</p> -->
+					<Markdown class="md" :source="message.text" />
 					<ul class="flat-list ul-messages">
 						<li :id="'permalink-' + index">
 							<a href="" :id="'permalink-link-' + index">Permalink</a>
@@ -180,7 +181,11 @@
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
 export default {
+	components: {
+		Markdown,
+	},
 	// @vuese
 	//details of message
 	props: {
