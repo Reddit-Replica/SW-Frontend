@@ -9,9 +9,8 @@
 						name="message-from"
 						id="message-from"
 						v-model="senderUsername"
-						value="username-value"
 					>
-						<option value selected="selected">
+						<option :value="userName" selected="selected">
 							{{ '/u/' + userName }}
 						</option>
 						<option
@@ -23,6 +22,9 @@
 							{{ 'r/' + username.text }}
 						</option>
 					</select>
+					<p class="error" v-if="error == 'messageFrom'">
+						please choose sender
+					</p>
 				</div>
 				<div>
 					<label for="message-to" class="heading-3"
@@ -158,7 +160,7 @@ export default {
 	data() {
 		return {
 			text: '',
-			senderUsername: '/u/asmaaadel0',
+			senderUsername: '',
 			receiverUsername: '',
 			subject: '',
 			error: '',
@@ -194,7 +196,10 @@ export default {
 		formValidation() {
 			this.delivered = false;
 			this.errorResponse = null;
-			if (this.receiverUsername == '') {
+			console.log(this.senderUsername);
+			if (this.senderUsername == '') {
+				this.error = 'messageFrom';
+			} else if (this.receiverUsername == '') {
 				this.error = 'messageTo';
 			} else if (this.subject == '') {
 				this.error = 'subject';
