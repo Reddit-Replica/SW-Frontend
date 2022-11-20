@@ -399,7 +399,7 @@ export default {
 		}
 	},
 	async spamMessage(context, payload) {
-		context.commit('markSpamSuccessfully', true);
+		context.commit('markSpamSuccessfully', false);
 		const spam = {
 			id: payload.id,
 			type: payload.type,
@@ -465,6 +465,42 @@ export default {
 			throw error;
 		} else if (response.status == 404) {
 			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async voteComment(context, payload) {
+		context.commit('votedSuccessfully', false);
+		const vote = {
+			id: payload.id,
+			type: 'comment',
+			direction: payload.direction,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/vote', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(vote),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('votedSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'The request was invalid');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'User not allowed to vote');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Thing not found');
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');

@@ -306,9 +306,21 @@ export default {
 		// @vuese
 		//handle upvote action
 		// @arg no argument
-		upvote() {
+		async upvote() {
 			if (this.upClicked == false) {
-				this.upClicked = true;
+				try {
+					this.$store.dispatch('messages/voteComment', {
+						id: this.message.id,
+						direction: 1,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/votedSuccessfully']) {
+						this.upClicked = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.upClicked = false;
+				}
 			} else {
 				this.upClicked = false;
 			}
@@ -319,9 +331,21 @@ export default {
 		// @vuese
 		//handle downvote action
 		// @arg no argument
-		downvote() {
+		async downvote() {
 			if (this.downClicked == false) {
-				this.downClicked = true;
+				try {
+					this.$store.dispatch('messages/voteComment', {
+						id: this.message.id,
+						direction: -1,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/votedSuccessfully']) {
+						this.downClicked = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.downClicked = false;
+				}
 			} else {
 				this.downClicked = false;
 			}
