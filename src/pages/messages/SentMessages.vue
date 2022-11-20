@@ -11,6 +11,7 @@
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
 		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -30,6 +31,7 @@ export default {
 		return {
 			noMessages: false,
 			count: 0,
+			errorResponse: null,
 		};
 	},
 	computed: {
@@ -58,7 +60,7 @@ export default {
 					baseurl: this.$baseurl,
 				});
 			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.errorResponse = error.message || 'Something went wrong';
 			}
 		},
 	},

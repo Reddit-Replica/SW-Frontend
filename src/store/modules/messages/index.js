@@ -14,6 +14,9 @@ export default {
 			sentMessages: [],
 			suggestedSender: [],
 			sentSuccessfully: false,
+			deleteMessageSuccessfully: false,
+			markSpamSuccessfully: false,
+			blockSuccessfully: false,
 		};
 	},
 	mutations,

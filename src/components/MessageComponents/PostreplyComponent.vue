@@ -168,6 +168,9 @@
 							<span class="link" :id="'reply-' + index">Reply</span>
 						</li>
 					</ul>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
 				</div>
 			</div>
 		</li>
@@ -219,6 +222,7 @@ export default {
 			disappear: false,
 			spammed: false,
 			isRead: this.message.isRead,
+			errorResponse: null,
 		};
 	},
 	// @vuese
@@ -232,44 +236,71 @@ export default {
 		// @vuese
 		//toggle remove action
 		// @arg The argument is a string value representing if user click ok
-		removeAction(action) {
+		async removeAction(action) {
 			this.removeUser = !this.removeUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/deleteMessage', {
-					id: this.message.id,
-					type: 'comment',
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/deleteMessage', {
+						id: this.message.id,
+						type: 'comment',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
 		},
 		// @vuese
 		//handle block action
 		// @arg The argument is a string value representing if user click ok
-		blockAction(action) {
+		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/blockUser', {
-					block: true,
-					username: this.message.senderUsername,
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/blockUser', {
+						block: true,
+						username: this.message.senderUsername,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/blockSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
+		},
+		// @vuese
+		//handle unread action
+		// @arg no argument
+		unreadAction() {
+			this.isRead = false;
 		},
 		// @vuese
 		//handle spam action
 		// @arg The argument is a string value representing if user click ok
-		spamAction(action) {
+		async spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/spamMessage', {
-					id: this.message.id,
-					type: 'message',
-					reason: '',
-					baseurl: this.$baseurl,
-				});
-				this.spammed = true;
+				try {
+					this.$store.dispatch('messages/spamMessage', {
+						id: this.message.id,
+						type: 'comment',
+						reason: '',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/markSpamSuccessfully']) {
+						this.spammed = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.spammed = false;
+				}
 			}
 		},
 		// @vuese
@@ -297,12 +328,6 @@ export default {
 			if (this.upClicked) {
 				this.upClicked = false;
 			}
-		},
-		// @vuese
-		//handle unread action
-		// @arg no argument
-		unreadAction() {
-			this.isRead = false;
 		},
 	},
 };

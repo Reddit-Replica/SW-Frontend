@@ -117,33 +117,41 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const messages = [];
+
+			for (const key in responseData) {
+				const message = {
+					before: responseData[key].before,
+					after: responseData[key].after,
+					id: responseData[key].children[0].id,
+					text: responseData[key].children[0].text,
+					senderUsername: responseData[key].children[0].senderUsername,
+					receiverUsername: responseData[key].children[0].receiverUsername,
+					sendAt: responseData[key].children[0].sendAt,
+					subject: responseData[key].children[0].subject,
+					isReply: responseData[key].children[0].isReply,
+					isRead: responseData[key].children[0].isRead,
+				};
+				messages.push(message);
+			}
+			context.commit('setUserMessages', messages);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const messages = [];
-
-		for (const key in responseData) {
-			const message = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				text: responseData[key].children[0].text,
-				senderUsername: responseData[key].children[0].senderUsername,
-				receiverUsername: responseData[key].children[0].receiverUsername,
-				sendAt: responseData[key].children[0].sendAt,
-				subject: responseData[key].children[0].subject,
-				isReply: responseData[key].children[0].isReply,
-				isRead: responseData[key].children[0].isRead,
-			};
-			messages.push(message);
-		}
-		context.commit('setUserMessages', messages);
 	},
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
@@ -151,7 +159,7 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
@@ -188,30 +196,37 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		if (response.status == 200) {
+			const messages = [];
+
+			for (const key in responseData) {
+				const message = {
+					after: responseData[key].after,
+					id: responseData[key].children[0].msgID,
+					text: responseData[key].children[0].text,
+					receiverUsername: responseData[key].children[0].receiverUsername,
+					sendAt: responseData[key].children[0].sendAt,
+					subject: responseData[key].children[0].subject,
+				};
+				messages.push(message);
+			}
+			context.commit('setSentMessages', messages);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to view this info'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Page not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-
-		const messages = [];
-
-		for (const key in responseData) {
-			const message = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				text: responseData[key].children[0].text,
-				receiverUsername: responseData[key].children[0].receiverUsername,
-				subject: responseData[key].children[0].subject,
-				sendAt: responseData[key].children[0].sendAt,
-			};
-			messages.push(message);
-		}
-		context.commit('setSentMessages', messages);
 	},
 	async sendMessage(context, payload) {
 		context.commit('sentSuccessfully', false);
@@ -241,7 +256,6 @@ export default {
 			const error = new Error(
 				responseData.error || 'Unauthorized to send a message'
 			);
-			console.log(responseData.error);
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');
@@ -255,31 +269,32 @@ export default {
 		// }
 	},
 	//error
-	async unreadMessage(_, payload) {
-		const message = {
-			id: payload.id,
-		};
-		const baseurl = payload.baseurl;
+	// async unreadMessage(_, payload) {
+	// 	const message = {
+	// 		id: payload.id,
+	// 	};
+	// 	const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/unread-message', {
-			method: 'patch',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
-			},
-			body: JSON.stringify(message),
-		});
+	// 	const response = await fetch(baseurl + '/unread-message', {
+	// 		method: 'patch',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			Authorization: `Bearer ${localStorage.getItem('userName')}`,
+	// 		},
+	// 		body: JSON.stringify(message),
+	// 	});
 
-		const responseData = await response.json();
+	// 	const responseData = await response.json();
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
-	},
-	async blockUser(_, payload) {
+	// 	if (!response.ok) {
+	// 		const error = new Error(
+	// 			responseData.message || 'Failed to send request.'
+	// 		);
+	// 		throw error;
+	// 	}
+	// },
+	async blockUser(context, payload) {
+		context.commit('blockSuccessfully', false);
 		const block = {
 			block: true,
 			username: payload.username,
@@ -290,21 +305,32 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(block),
 		});
 
 		const responseData = await response.json();
-
-		if (!response.ok) {
+		if (response.status == 200) {
+			context.commit('blockSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'The request was invalid');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Access Denied');
+			throw error;
+		} else if (response.status == 404) {
 			const error = new Error(
-				responseData.message || 'Failed to send request.'
+				responseData.error || "Didn't find a user with that username"
 			);
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
 			throw error;
 		}
 	},
-	async deleteMessage(_, payload) {
+	async deleteMessage(context, payload) {
+		context.commit('deleteMessageSuccessfully', false);
 		const del = {
 			id: payload.id,
 			type: payload.type,
@@ -315,21 +341,33 @@ export default {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(del),
 		});
 
 		const responseData = await response.json();
 
-		if (!response.ok) {
+		if (response.status == 204) {
+			context.commit('deleteMessageSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'The request was invalid');
+			throw error;
+		} else if (response.status == 401) {
 			const error = new Error(
-				responseData.message || 'Failed to send request.'
+				responseData.error || 'Unauthorized to delete this thing'
 			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Thing not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},
-	async spamMessage(_, payload) {
+	async spamMessage(context, payload) {
+		context.commit('markSpamSuccessfully', true);
 		const spam = {
 			id: payload.id,
 			type: payload.type,
@@ -341,17 +379,30 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(spam),
 		});
 
 		const responseData = await response.json();
-
-		if (!response.ok) {
+		if (response.status == 200) {
+			context.commit('markSpamSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'The request was invalid');
+			throw error;
+		} else if (response.status == 401) {
 			const error = new Error(
-				responseData.message || 'Failed to send request.'
+				responseData.error || 'Unauthorized to delete this thing'
 			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Thing not found');
+			throw error;
+		} else if (response.status == 409) {
+			const error = new Error(responseData.error || 'Already marked as spam');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},
