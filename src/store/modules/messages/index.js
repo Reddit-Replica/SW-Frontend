@@ -13,6 +13,7 @@ export default {
 			postReplies: [],
 			sentMessages: [],
 			suggestedSender: [],
+			sentSuccessfully: false,
 		};
 	},
 	mutations,

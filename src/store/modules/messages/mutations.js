@@ -20,4 +20,7 @@ export default {
 	setSuggestedSender(state, payload) {
 		state.suggestedSender = payload;
 	},
+	sentSuccessfully(state, payload) {
+		state.sentSuccessfully = payload;
+	},
 };

@@ -20,4 +20,7 @@ export default {
 	suggestedSender(state) {
 		return state.suggestedSender;
 	},
+	sentSuccessfully(state) {
+		return state.sentSuccessfully;
+	},
 };
