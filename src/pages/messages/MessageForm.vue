@@ -196,7 +196,6 @@ export default {
 		formValidation() {
 			this.delivered = false;
 			this.errorResponse = null;
-			console.log(this.senderUsername);
 			if (this.senderUsername == '') {
 				this.error = 'messageFrom';
 			} else if (this.receiverUsername == '') {
