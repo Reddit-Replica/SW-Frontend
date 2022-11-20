@@ -32,4 +32,7 @@ export default {
 	blockSuccessfully(state, payload) {
 		state.blockSuccessfully = payload;
 	},
+	votedSuccessfully(state, payload) {
+		state.votedSuccessfully = payload;
+	},
 };
