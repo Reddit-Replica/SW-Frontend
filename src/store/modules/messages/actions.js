@@ -213,12 +213,12 @@ export default {
 		}
 		context.commit('setSentMessages', messages);
 	},
-	async sendMessage(_, payload) {
+	async sendMessage(context, payload) {
+		context.commit('sentSuccessfully', false);
 		const newMessage = {
 			text: payload.text,
 			senderUsername: payload.senderUsername,
 			receiverUsername: payload.receiverUsername,
-			sendAt: payload.sendAt,
 			subject: payload.subject,
 		};
 		const baseurl = payload.baseurl;
@@ -227,7 +227,7 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
@@ -235,12 +235,24 @@ export default {
 
 		const responseData = await response.json();
 
-		if (!response.ok) {
+		if (response.status == 201) {
+			context.commit('sentSuccessfully', true);
+		} else if (response.status == 401) {
 			const error = new Error(
-				responseData.message || 'Failed to send request.'
+				responseData.error || 'Unauthorized to send a message'
 			);
+			console.log(responseData.error);
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
 	},
 	//error
 	async unreadMessage(_, payload) {
