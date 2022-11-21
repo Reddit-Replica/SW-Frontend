@@ -136,7 +136,12 @@
 						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 					</li>
 					<li :id="'reply-box-' + index">
-						<span class="link" :id="'reply-' + index">Reply</span>
+						<span
+							class="link"
+							:id="'reply-' + index"
+							@click="replyFunction('show')"
+							>Reply</span
+						>
 					</li>
 				</ul>
 				<div class="no-messages" v-if="errorResponse">
@@ -144,14 +149,20 @@
 				</div>
 			</div>
 		</li>
+		<ReplyComponent
+			:show-reply-box="showReplyBox"
+			@hide-reply-box="replyFunction('hide')"
+		></ReplyComponent>
 	</div>
 </template>
 
 <script>
 import Markdown from 'vue3-markdown-it';
+import ReplyComponent from './ReplyComponent.vue';
 export default {
 	components: {
 		Markdown,
+		ReplyComponent,
 	},
 	props: {
 		// @vuese
@@ -191,6 +202,7 @@ export default {
 			spammed: false,
 			isRead: this.message.isRead,
 			errorResponse: null,
+			showReplyBox: false,
 		};
 	},
 	// @vuese
@@ -269,6 +281,16 @@ export default {
 					this.errorResponse = err;
 					this.spammed = false;
 				}
+			}
+		},
+		// @vuese
+		//show reply box or hide it
+		// @arg no argument
+		replyFunction(title) {
+			if (title == 'show') {
+				this.showReplyBox = true;
+			} else if (title == 'hide') {
+				this.showReplyBox = false;
 			}
 		},
 	},
