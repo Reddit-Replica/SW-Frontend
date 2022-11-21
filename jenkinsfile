@@ -37,7 +37,6 @@ pipeline {
     stage('Build') {
 
 			steps {
-        sh 'rm -rf node_modules'
 				sh 'docker build -t waer/frontend:latest .'
 			}
 		}

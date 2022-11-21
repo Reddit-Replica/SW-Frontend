@@ -7,6 +7,7 @@ WORKDIR /vue-ui
 COPY package*.json ./
 
 # install dependencies
+RUN npm cache clean --force
 RUN npm install --save-dev
 
 # Copy rest of the files
@@ -14,8 +15,8 @@ COPY . .
 
 # Build the project
 
+RUN npm rebuild node-sass --force
 RUN npm run build
-
 
 FROM nginx:1.17.10-alpine
 
