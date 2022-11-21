@@ -5,15 +5,17 @@
 			:subreddit-name="subredditName"
 			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
+			id="community-header"
 		></subreddit-top>
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
-				<createpost-bar></createpost-bar>
+				<createpost-bar id="create-post-bar-subreddit"></createpost-bar>
 				<sort-bar-subreddit
 					:subreddit-name="subredditName"
+					id="sort-post-bar-subreddit"
 				></sort-bar-subreddit>
-				<grow-community></grow-community>
-				<community-post></community-post>
+				<grow-community id="grow-community-comp"></grow-community>
+				<community-post id="pinned-post-comp"></community-post>
 				<base-post
 					v-for="post in posts"
 					:key="post.id"
@@ -23,6 +25,7 @@
 			<div class="subreddit-page-right">
 				<about-community-bar
 					v-if="isModerator"
+					id="abot-comm-comp"
 					:subreddit-name="subredditName"
 					:topics="topics"
 					:members-count="subreddit.members"
@@ -34,6 +37,7 @@
 				></about-community-bar>
 				<about-community-read-only
 					v-else
+					id="abot-comm-comp"
 					:subreddit-name="subredditName"
 					:members-count="subreddit.members"
 					:online-members-count="subreddit.online"
