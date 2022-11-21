@@ -196,6 +196,7 @@
 						>Add new rule</base-button
 					>
 				</div>
+				<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 			</div>
 		</base-dialog>
 	</div>
@@ -206,19 +207,27 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
 	emits: ['exit'],
+	props: {
+		subredditName: {
+			type: String,
+			default: '',
+			required: true,
+		},
+	},
 	data() {
 		return {
 			addRuleShown: true,
 			typeChosen0: true,
 			typeChosen1: false,
 			typeChosen2: false,
-			appliedType: 'Posts & comments',
+			appliedType: 'posts and comments',
 			ruleName: '',
 			reportReason: '',
 			description: '',
 			charRemainingName: '100',
 			charRemainingReason: '100',
 			charRemainingDescription: '500',
+			errorResponse: null,
 		};
 	},
 	methods: {
@@ -238,17 +247,17 @@ export default {
 				this.typeChosen2 = true;
 				this.typeChosen1 = false;
 				this.typeChosen0 = false;
-				this.appliedType = 'Posts & comments';
+				this.appliedType = 'posts and comments';
 			} else if (index == 1) {
 				this.typeChosen1 = true;
 				this.typeChosen2 = false;
 				this.typeChosen0 = false;
-				this.appliedType = 'Posts only';
+				this.appliedType = 'posts only';
 			} else {
 				this.typeChosen0 = true;
 				this.typeChosen1 = false;
 				this.typeChosen2 = false;
-				this.appliedType = 'Comments only';
+				this.appliedType = 'comments only';
 			}
 		},
 		//@vuese
@@ -266,7 +275,25 @@ export default {
 		//@vuese
 		//submit adding rule
 		//@arg no argument
-		submitRule() {},
+		async submitRule() {
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('moderation/addRule', {
+					ruleName: this.ruleName,
+					appliesTo: this.appliedType,
+					reportReason: this.reportReason,
+					description: this.description,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/addRuleSuccessfully']) {
+					this.hideAddRule();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 	},
 };
 </script>
