@@ -189,7 +189,7 @@
 						>Cancel</base-button
 					>
 					<base-button
-						@click="submitCommunity"
+						@click="submitRule()"
 						class="button-blue"
 						:class="ruleName == '' ? 'disabled' : ''"
 						id="create-button"
@@ -263,6 +263,10 @@ export default {
 				this.charRemainingDescription = 500 - this.description.length;
 			}
 		},
+		//@vuese
+		//submit adding rule
+		//@arg no argument
+		submitRule() {},
 	},
 };
 </script>
