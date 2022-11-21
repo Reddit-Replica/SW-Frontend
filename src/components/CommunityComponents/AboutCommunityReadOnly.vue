@@ -1,5 +1,5 @@
 <template>
-	<div class="about-bar" id="about-community-form">
+	<div class="about-bar" id="about-community-read-only">
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">About Community</h2></div>
 			<div class="about-options">
@@ -37,11 +37,11 @@
 		</div>
 
 		<div class="about-body">
-			<div class="text">
+			<div class="text" id="comm-desc-read">
 				{{ communityDescription }}
 			</div>
 
-			<div class="box-body" id="created-date">
+			<div class="box-body" id="comm-date-box">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -56,11 +56,16 @@
 				</svg>
 				<span
 					class="text-grey text space"
+					id="comm-date-text"
 					@mouseover="toogleDateBox"
 					@mouseleave="toogleDateBox"
 					>Created {{ communityDate }}</span
 				>
-				<div class="box arrow-top box-arrow-1" v-if="dateBoxShown">
+				<div
+					class="box arrow-top box-arrow-1"
+					id="comm-date-hover"
+					v-if="dateBoxShown"
+				>
 					10 days ago.
 				</div>
 			</div>
@@ -71,13 +76,18 @@
 				<div id="members-num" class="relative-flex">
 					<div
 						class="text-bold"
+						id="comm-mem"
 						@mouseover="toogleMembersCountBox"
 						@mouseleave="toogleMembersCountBox"
 					>
 						{{ membersCount }}
 					</div>
 					<div class="text-grey">Members</div>
-					<div class="box arrow-top box-arrow-2" v-if="MembersCountBoxShown">
+					<div
+						class="box arrow-top box-arrow-2"
+						id="comm-mem-hover"
+						v-if="MembersCountBoxShown"
+					>
 						{{ membersCount }} Members
 					</div>
 				</div>
@@ -95,6 +105,7 @@
 						</svg>
 						<span
 							class="text-bold"
+							id="comm-online-mem"
 							@mouseover="toogleOnlineMembersCountBox"
 							@mouseleave="toogleOnlineMembersCountBox"
 							>{{ onlineMembersCount }}</span
@@ -103,6 +114,7 @@
 					<div class="text-grey">Online</div>
 					<div
 						class="box arrow-top box-arrow-3"
+						id="comm-online-mem-hover"
 						v-if="onlineMembersCountBoxShown"
 					>
 						{{ onlineMembersCount }} Online

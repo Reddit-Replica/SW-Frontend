@@ -60,12 +60,16 @@
 				class="description-1"
 				@click="showTextarea"
 				v-if="!textareaShown && emptyDescription"
-				id="add-description-before"
+				id="add-description-1"
 			>
-				<div class="description-1-text">Add description</div>
+				<div class="description-1-text" id="add-desc">Add description</div>
 			</div>
 
-			<div class="description-1 blue-border" v-else-if="textareaShown">
+			<div
+				class="description-1 blue-border"
+				id="add-description-2"
+				v-else-if="textareaShown"
+			>
 				<textarea
 					placeholder="Tell us about your community"
 					maxlength="500"
@@ -73,10 +77,10 @@
 					class="description-textarea"
 					@keyup="charCount()"
 					v-model.trim="description"
-					id="add-description-after"
+					id="add-desc-textarea"
 				></textarea>
 				<div class="flex">
-					<span class="span-char"
+					<span class="span-char" id="char-num"
 						>{{ charRemaining }} Characters remaining</span
 					>
 
@@ -99,6 +103,7 @@
 				v-if="!textareaShown && !emptyDescription"
 				class="text desc-box"
 				@click="showTextarea"
+				id="add-description-3"
 			>
 				{{ communityDescription }}
 				<svg
@@ -130,11 +135,16 @@
 				</svg>
 				<span
 					class="text-grey text space"
+					id="comm-date"
 					@mouseover="toogleDateBox"
 					@mouseleave="toogleDateBox"
 					>Created {{ communityDate }}</span
 				>
-				<div class="box arrow-top box-arrow-1" v-if="dateBoxShown">
+				<div
+					class="box arrow-top box-arrow-1"
+					v-if="dateBoxShown"
+					id="date-hover"
+				>
 					10 days ago.
 				</div>
 			</div>
@@ -158,7 +168,7 @@
 						d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
 					/>
 				</svg>
-				<span class="text space">{{ communityType }}</span>
+				<span class="text space" id="comm-type">{{ communityType }}</span>
 			</div>
 
 			<div class="line"></div>
@@ -167,13 +177,18 @@
 				<div id="members-num" class="relative-flex">
 					<div
 						class="text-bold"
+						id="comm-mem"
 						@mouseover="toogleMembersCountBox"
 						@mouseleave="toogleMembersCountBox"
 					>
 						{{ membersCount }}
 					</div>
 					<div class="text-grey">Members</div>
-					<div class="box arrow-top box-arrow-2" v-if="MembersCountBoxShown">
+					<div
+						class="box arrow-top box-arrow-2"
+						id="comm-mem-hover"
+						v-if="MembersCountBoxShown"
+					>
 						{{ membersCount }} Members
 					</div>
 				</div>
@@ -191,6 +206,7 @@
 						</svg>
 						<span
 							class="text-bold"
+							id="comm-online-mem"
 							@mouseover="toogleOnlineMembersCountBox"
 							@mouseleave="toogleOnlineMembersCountBox"
 							>{{ onlineMembersCount }}</span
@@ -199,6 +215,7 @@
 					<div class="text-grey">Online</div>
 					<div
 						class="box arrow-top box-arrow-3"
+						id="comm-online-mem-hover"
 						v-if="onlineMembersCountBoxShown"
 					>
 						{{ onlineMembersCount }} Online
@@ -211,9 +228,10 @@
 			<div class="line"></div>
 
 			<div class="box-body">
-				<span class="span-new" v-if="isNew">NEW</span>
+				<span class="span-new" v-if="isNew" id="new-comm">NEW</span>
 				<span
 					class="text-bold"
+					id="comm-topics"
 					@mouseover="toogleTopicsArrrowBox"
 					@mouseleave="toogleTopicsArrrowBox"
 					>Community topics</span
@@ -235,7 +253,11 @@
 						/>
 					</svg>
 				</span>
-				<div class="box arrow-top box-arrow-4" v-if="topicsArrrowBoxShown">
+				<div
+					class="box arrow-top box-arrow-4"
+					v-if="topicsArrrowBoxShown"
+					id="comm-topics-hover"
+				>
 					Adding community topics allow people to find your community. Add a
 					primary topic and sub topics to be discovered more easily.
 				</div>
@@ -270,6 +292,7 @@
 						d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
 					/>
 				</svg>
+
 				<div class="topics-list" v-if="topicsShown" id="topics-list">
 					<button
 						v-for="(topic, index) in topics"
