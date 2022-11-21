@@ -7,7 +7,8 @@ WORKDIR /vue-ui
 COPY package*.json ./
 
 # install dependencies
-RUN npm install node-sass
+RUN npm uninstall node-sass
+RUN npm i -D sass
 RUN npm install
 
 # Copy rest of the files
