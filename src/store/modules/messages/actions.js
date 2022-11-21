@@ -507,4 +507,37 @@ export default {
 			throw error;
 		}
 	},
+
+	async replyMessage(context, payload) {
+		context.commit('replyMessageSuccessfully', false);
+		const newReply = {
+			text: payload.text,
+			senderUsername: payload.senderUsername,
+			receiverUsername: payload.receiverUsername,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/message/compose', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(newReply),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 201) {
+			context.commit('replyMessageSuccessfully', true);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
 };
