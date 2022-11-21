@@ -2,7 +2,7 @@
 	<div>
 		<list-bar
 			:title="'Rules'"
-			@show-addRuleFunction="showAddRuleFunction"
+			@show-add-rule-function="showAddRuleFunction"
 		></list-bar>
 		<no-list :title="'Rules'">
 			<svg
