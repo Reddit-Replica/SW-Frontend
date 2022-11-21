@@ -35,4 +35,7 @@ export default {
 	votedSuccessfully(state, payload) {
 		state.votedSuccessfully = payload;
 	},
+	replyMessageSuccessfully(state, payload) {
+		state.replyMessageSuccessfully = payload;
+	},
 };

@@ -35,4 +35,7 @@ export default {
 	votedSuccessfully(state) {
 		return state.votedSuccessfully;
 	},
+	replyMessageSuccessfully(state) {
+		return state.replyMessageSuccessfully;
+	},
 };

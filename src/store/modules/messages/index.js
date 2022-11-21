@@ -18,6 +18,7 @@ export default {
 			markSpamSuccessfully: false,
 			blockSuccessfully: false,
 			votedSuccessfully: false,
+			replyMessageSuccessfully: false,
 		};
 	},
 	mutations,
