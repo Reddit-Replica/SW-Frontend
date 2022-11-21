@@ -15,9 +15,9 @@ pipeline {
     }
     steps {
               echo "hello"
-              // sh "npm cache clean --force"
-              // sh "npm i"
-              // sh "npm run test"
+              sh "npm cache clean --force"
+              sh "npm i"
+              sh "npm run test"
               // timeout(time: 20, unit: 'SECONDS') {sh "npm run serve"}
       }
   }
