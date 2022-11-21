@@ -24,6 +24,7 @@
 		</no-list>
 		<addrule-popup
 			v-if="showAddRule"
+			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
 		></addrule-popup>
 	</div>
@@ -39,6 +40,14 @@ export default {
 		return {
 			showAddRule: false,
 		};
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			return this.$store.state.subredditName;
+		},
 	},
 	methods: {
 		// @vuese
