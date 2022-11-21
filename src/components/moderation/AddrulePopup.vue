@@ -138,7 +138,12 @@
 					</div>
 				</div>
 				<div class="rule-box-input flex-column">
-					<label for="rule-report" class="title-black">Report reason</label>
+					<label for="rule-report" class="title-black"
+						><p>Report reason</p>
+						<p class="small-title">
+							Defaults to rule name if left blank
+						</p></label
+					>
 					<textarea
 						class="input-name"
 						maxlength="100"
@@ -269,7 +274,7 @@ export default {
 	min-width: 41rem;
 }
 .rule-box {
-	margin-bottom: 20px;
+	margin-bottom: 3rem;
 }
 .rule-box-title {
 	max-width: 100%;
@@ -281,7 +286,7 @@ export default {
 	font-weight: 400;
 	line-height: 2rem;
 	color: var(--color-dark-1);
-	display: flex;
+	/* display: flex; */
 	margin-bottom: 0.4rem;
 }
 .title-grey {
@@ -293,6 +298,7 @@ export default {
 .rule-box-input {
 	align-items: flex-start;
 	margin-top: 1.2rem;
+	margin-bottom: 3rem;
 }
 .box {
 	margin-top: 1rem;
@@ -373,6 +379,13 @@ button:hover {
 	border: none;
 	color: var(--color-white-1);
 	padding: 0.4rem 1.6rem;
+}
+.small-title {
+	color: var(--color-grey-light-5);
+	font-size: 1.2rem;
+	font-weight: 400;
+	line-height: 1.6rem;
+	display: block;
 }
 .zero-char {
 	color: #ea0027;
