@@ -9,9 +9,17 @@
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
 				<createpost-bar></createpost-bar>
-				<sortposts-bar></sortposts-bar>
+				<!-- <sortposts-bar></sortposts-bar> -->
+				<sort-bar-subreddit
+					:subreddit-name="subredditName"
+				></sort-bar-subreddit>
 				<grow-community></grow-community>
 				<community-post></community-post>
+				<base-post
+					v-for="post in posts"
+					:key="post.id"
+					:post="post"
+				></base-post>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
@@ -62,23 +70,25 @@
 <script>
 import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue';
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
-import SortpostsBar from '../../components/bars/SortpostsBar.vue';
+import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
+import BasePost from '../../components/BaseComponents/BasePost.vue';
 
 export default {
 	components: {
 		SubredditTop,
 		CreatepostBar,
-		SortpostsBar,
+		SortBarSubreddit,
 		AboutCommunityBar,
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
 		BacktotopButton,
+		BasePost,
 	},
 	props: {
 		subredditName: {
@@ -116,6 +126,7 @@ export default {
 			],
 			showFirstDialog: true,
 			subreddit: {},
+			posts: [],
 		};
 	},
 	computed: {
@@ -123,6 +134,19 @@ export default {
 			return this.firstCreated && this.showFirstDialog;
 		},
 	},
+	beforeMount() {
+		let title = this.$route.params.title;
+		if (title == null) title = 'hot';
+		this.fetchSubredditPosts(title);
+	},
+	watch: {
+		'$route.params.title': {
+			handler: function () {
+				this.fetchSubredditPosts(this.$route.params.title);
+			},
+		},
+	},
+
 	async created() {
 		const accessToken = localStorage.getItem('accessToken');
 		await this.$store.dispatch('community/getSubreddit', {
@@ -141,6 +165,21 @@ export default {
 				name: 'submit',
 				params: { subredditName: this.subredditName },
 			});
+		},
+		async fetchSubredditPosts(title) {
+			try {
+				const accessToken = localStorage.getItem('accessToken');
+				await this.$store.dispatch('community/fetchSubredditPosts', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					title: title,
+					token: accessToken,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+
+			this.posts = this.$store.getters['community/getPosts'];
 		},
 	},
 };

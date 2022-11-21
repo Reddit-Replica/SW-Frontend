@@ -9,6 +9,7 @@ export default {
 			subredditNameTaken: false,
 			categories: [],
 			subreddit: {},
+			posts: [],
 		};
 	},
 	mutations,
