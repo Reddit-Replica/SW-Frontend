@@ -13,7 +13,9 @@
 		</div>
 		<div class="bar" v-if="title == 'Rules'">
 			<base-button class="reorder-button">Reorder rules</base-button>
-			<base-button class="base-button">Add rule</base-button>
+			<base-button class="base-button" @click="showAddRuleFunction()"
+				>Add rule</base-button
+			>
 		</div>
 		<div class="bar" v-if="title == 'Post flair'">
 			<base-button class="button-white">Post flair settings</base-button>
@@ -33,6 +35,7 @@
 
 <script>
 export default {
+	emits: ['showAddRuleFunction'],
 	props: {
 		// @vuese
 		// title to be written in bar
@@ -72,6 +75,14 @@ export default {
 		},
 		isModeratorList() {
 			return this.barTitle == 'Invite user as mod';
+		},
+	},
+	methods: {
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showAddRuleFunction() {
+			this.$emit('showAddRuleFunction', this.showAddRule);
 		},
 	},
 };
@@ -122,8 +133,6 @@ button {
 	text-align: center;
 	width: auto;
 }
-/* .base-button {
-} */
 .base-button:hover {
 	background-color: var(--color-blue-6);
 }
