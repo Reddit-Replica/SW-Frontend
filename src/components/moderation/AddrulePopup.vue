@@ -312,7 +312,7 @@ export default {
 .input-name {
 	border: 1px solid var(--color-grey-light-2);
 	max-height: 3.7rem;
-	padding: 0.4rem 2.4rem;
+	padding: 0.4rem 1rem;
 	background-color: var(--color-white-1);
 	color: var(--color-dark-1);
 	box-sizing: border-box;
