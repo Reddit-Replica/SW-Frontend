@@ -9,7 +9,6 @@
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
 				<createpost-bar></createpost-bar>
-				<!-- <sortposts-bar></sortposts-bar> -->
 				<sort-bar-subreddit
 					:subreddit-name="subredditName"
 				></sort-bar-subreddit>
@@ -23,6 +22,7 @@
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
+					v-if="isModerator"
 					:subreddit-name="subredditName"
 					:topics="topics"
 					:members-count="subreddit.members"
@@ -32,6 +32,24 @@
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
 				></about-community-bar>
+				<about-community-read-only
+					v-else
+					:subreddit-name="subredditName"
+					:members-count="subreddit.members"
+					:online-members-count="subreddit.online"
+					:community-date="subreddit.dateOfCreation"
+					:community-description-prop="subreddit.description"
+				></about-community-read-only>
+
+				<!-- for testing about community bar if the current user not moderator -->
+				<!-- <about-community-read-only
+					:subreddit-name="subredditName"
+					:members-count="subreddit.members"
+					:online-members-count="subreddit.online"
+					:community-date="subreddit.dateOfCreation"
+					:community-description="subreddit.description"
+				></about-community-read-only> -->
+
 				<moderators-bar :moderators="subreddit.moderators"></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
@@ -72,6 +90,7 @@ import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue'
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
+import AboutCommunityReadOnly from '../../components/CommunityComponents/AboutCommunityReadOnly.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
@@ -84,6 +103,7 @@ export default {
 		CreatepostBar,
 		SortBarSubreddit,
 		AboutCommunityBar,
+		AboutCommunityReadOnly,
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
@@ -127,6 +147,7 @@ export default {
 			showFirstDialog: true,
 			subreddit: {},
 			posts: [],
+			isModerator: true,
 		};
 	},
 	computed: {
@@ -180,6 +201,19 @@ export default {
 			}
 
 			this.posts = this.$store.getters['community/getPosts'];
+		},
+		checkIfModerator() {
+			const username = localStorage.getItem('userName');
+			const moderators = this.subreddit['moderators'];
+			const user = moderators.findIndex(
+				(moderator) => moderator.username === username
+			);
+			//not in subreddit moderators list
+			if (user === -1) {
+				this.isModerator = false;
+			} else {
+				this.isModerator = true;
+			}
 		},
 	},
 };
