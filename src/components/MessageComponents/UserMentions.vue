@@ -141,7 +141,11 @@
 				</div>
 			</div>
 		</li>
-		<div class="child-reply" v-if="showReplyBox">
+		<ReplyComponent
+			:show-reply-box="showReplyBox"
+			@hide-reply-box="replyFunction('hide')"
+		></ReplyComponent>
+		<!-- <div class="child-reply" v-if="showReplyBox">
 			<form action="#" class="form-reply">
 				<div class="user-text-reply">
 					<div class="md">
@@ -251,15 +255,17 @@
 					</table>
 				</div>
 			</form>
-		</div>
+		</div> -->
 	</div>
 </template>
 
 <script>
 import Markdown from 'vue3-markdown-it';
+import ReplyComponent from './ReplyComponent.vue';
 export default {
 	components: {
 		Markdown,
+		ReplyComponent,
 	},
 	props: {
 		// @vuese
@@ -300,7 +306,6 @@ export default {
 			disappear: false,
 			isRead: this.message.isRead,
 			errorResponse: null,
-			formatting: 'formatting',
 			showReplyBox: false,
 		};
 	},
@@ -413,13 +418,6 @@ export default {
 			}
 		},
 		// @vuese
-		//change title to formatting or hide
-		// @arg no argument
-		changeTitle() {
-			if (this.formatting == 'formatting') this.formatting = 'hide';
-			else this.formatting = 'formatting';
-		},
-		// @vuese
 		//show reply box or hide it
 		// @arg no argument
 		replyFunction(title) {
@@ -440,99 +438,5 @@ a:hover,
 }
 .big-box {
 	width: 100%;
-}
-.child-reply {
-	display: block;
-}
-.form-reply {
-	margin-top: 1rem;
-	margin-left: 1.2rem;
-	font-size: small;
-}
-.user-text-reply {
-	clear: left;
-	margin-top: 1.5em;
-	font-size: 1.2rem;
-	padding: 0 1px;
-	unicode-bidi: isolate;
-}
-.text-area {
-	font: normal small verdana, arial, helvetica, sans-serif;
-	line-height: 1.5em;
-	width: 70%;
-	height: 10rem;
-	margin-top: 0;
-	background-color: var(--color-white-1);
-	color: black;
-	display: block;
-	padding: 3px 6px;
-	box-sizing: border-box;
-	border: var(--line-7);
-	font-size: 1em;
-	margin-bottom: 0.2rem;
-}
-.markdown-links {
-	text-align: right;
-	width: 70%;
-}
-.markdown-links a,
-.markdown-link {
-	margin-left: 1rem;
-	font-size: smaller;
-}
-.submit-form {
-	background-color: var(--color-blue-2);
-	border-radius: 1rem;
-	padding: 0rem;
-	color: var(--color-white-1);
-	border-color: var(--color-blue-2);
-	font-weight: bolder;
-	font-size: small;
-	width: 8rem;
-	text-transform: uppercase;
-	margin-left: 1rem;
-}
-.markdown-link {
-	border: none;
-	color: #0d6efd;
-	background-color: var(--color-white-1);
-}
-.formatting-help {
-	border-top: var(--line-dashed-2);
-	margin: 0.5rem 2rem;
-	width: 56%;
-}
-table {
-	width: 100%;
-	margin: 5px 0px;
-	font-size: 1.2rem;
-	font-weight: 400;
-	max-width: 60em;
-	border-collapse: collapse;
-	display: table;
-	box-sizing: border-box;
-	text-indent: initial;
-	border-spacing: 2px;
-	border-color: grey;
-	clear: left;
-	margin-top: 1.5em;
-}
-table td {
-	text-align: left;
-}
-tr:first-child {
-	width: 50%;
-	border: 1px solid #c0c0c0;
-	background-color: #ffff99;
-}
-td,
-th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-}
-.block-quote {
-	margin-left: 5px;
-	border-left: 2px solid #c5c1ad;
 }
 </style>
