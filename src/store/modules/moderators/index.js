@@ -10,6 +10,7 @@ export default {
 			addRuleSuccessfully: false,
 			listOfRules: [],
 			updateRuleSuccessfully: false,
+			deleteRuleSuccessfully: false,
 		};
 	},
 	mutations,

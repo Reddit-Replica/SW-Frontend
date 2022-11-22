@@ -184,7 +184,7 @@
 				<div class="rule-box box-buttons">
 					<base-button
 						v-if="edit"
-						@click="submitRule()"
+						@click="deleteRule()"
 						class="delete-button"
 						:class="ruleName == '' ? 'disabled' : ''"
 						id="delete-button"
@@ -417,7 +417,7 @@ export default {
 			}
 		},
 		//@vuese
-		//submit adding rule
+		//handle update rule
 		//@arg no argument
 		async updateRule() {
 			this.errorResponse = null;
@@ -435,8 +435,27 @@ export default {
 					subredditName: this.subredditName,
 					ruleId: this.ruleId,
 				});
-				console.log(this.subredditName);
 				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
+					this.hideAddRule();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+
+		//@vuese
+		//handle delete rule
+		//@arg no argument
+		async deleteRule() {
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('moderation/deleteRule', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					ruleId: this.ruleId,
+				});
+				if (this.$store.getters['moderation/deleteRuleSuccessfully']) {
 					this.hideAddRule();
 				}
 			} catch (err) {

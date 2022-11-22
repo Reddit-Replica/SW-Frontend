@@ -70,7 +70,7 @@ export default {
 				responseData.error || 'Unauthorized to send a message'
 			);
 			throw error;
-		} else if (response.status == 504) {
+		} else if (response.status == 404) {
 			const error = new Error(responseData.error || 'Not Found');
 			throw error;
 		} else if (response.status == 500) {
@@ -81,10 +81,10 @@ export default {
 
 	async loadListOfRules(context, payload) {
 		const baseurl = payload.baseurl;
-		const accessToken = localStorage.getItem('accessToken');
-		// const accessToken =
-		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
-		console.log(baseurl + `/r/${payload.subredditName}/about/rules`);
+		/////////////////////should be localStorage.getItem('accessToken');/////////////////////
+		// const accessToken = localStorage.getItem('accessToken');
+		const accessToken =
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/rules`,
 			{
@@ -161,7 +161,44 @@ export default {
 				responseData.error || 'Unauthorized to send a message'
 			);
 			throw error;
-		} else if (response.status == 504) {
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async deleteRule(context, payload) {
+		context.commit('deleteRuleSuccessfully', false);
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/rules/${payload.ruleId}`,
+			{
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('deleteRuleSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
 			const error = new Error(responseData.error || 'Not Found');
 			throw error;
 		} else if (response.status == 500) {
