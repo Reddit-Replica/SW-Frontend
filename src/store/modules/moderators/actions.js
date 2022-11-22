@@ -77,4 +77,46 @@ export default {
 			throw error;
 		}
 	},
+
+	async loadListOfRules(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/rules`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+					subreddit: payload.subredditName,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			const rules = [];
+
+			for (const key in responseData) {
+				const rule = {
+					ruleID: responseData[key].rules[0].ruleID,
+					ruleName: responseData[key].rules[0].ruleName,
+					ruleOrder: responseData[key].rules[0].ruleOrder,
+					createdAt: responseData[key].rules[0].createdAt,
+					appliesTo: responseData[key].rules[0].appliesTo,
+					reportReason: responseData[key].rules[0].reportReason,
+					description: responseData[key].rules[0].description,
+				};
+				rules.push(rule);
+			}
+			context.commit('setListOfRules', rules);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
 };

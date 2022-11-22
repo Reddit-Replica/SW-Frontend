@@ -5,4 +5,7 @@ export default {
 	addRuleSuccessfully(state) {
 		return state.addRuleSuccessfully;
 	},
+	listOfRules(state) {
+		return state.listOfRules;
+	},
 };

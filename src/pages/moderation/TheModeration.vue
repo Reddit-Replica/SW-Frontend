@@ -194,12 +194,14 @@ export default {
 				this.$route.path === '/r/' + this.subredditName + '/about/moderators'
 			);
 		},
+
 		// // @vuese
 		// // return rules bath
 		// // @type boolean
 		// rules() {
 		// 	return this.$route.path === '/r/' + this.subredditName + '/about/rules';
 		// },
+
 		// @vuese
 		// return post flair bath
 		// @type boolean
