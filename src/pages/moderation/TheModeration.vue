@@ -158,8 +158,13 @@ export default {
 				'/r/' + this.subredditName + '/about/edit'
 			) {
 				return 'Community Settings';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/traffic'
+			) {
+				return 'Trafic Stats';
 			}
-			return 'Trafic Stats';
+			return '';
 		},
 		// @vuese
 		// return banned bath

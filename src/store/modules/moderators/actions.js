@@ -43,6 +43,8 @@ export default {
 		};
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;
+		// const accessToken =
+		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + '/r/' + subredditName + '/about/rules',
 			{
