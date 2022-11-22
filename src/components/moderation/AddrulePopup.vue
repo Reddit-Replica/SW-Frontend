@@ -183,17 +183,41 @@
 				</div>
 				<div class="rule-box box-buttons">
 					<base-button
+						v-if="edit"
+						@click="submitRule()"
+						class="delete-button"
+						:class="ruleName == '' ? 'disabled' : ''"
+						id="delete-button"
+						>Delete</base-button
+					>
+					<base-button
 						@click="hideAddRule"
 						class="button-white"
 						id="cancel-button"
 						>Cancel</base-button
 					>
 					<base-button
+						v-if="!edit"
 						@click="submitRule()"
 						class="button-blue"
 						:class="ruleName == '' ? 'disabled' : ''"
 						id="create-button"
 						>Add new rule</base-button
+					>
+					<base-button
+						v-else
+						@click="updateRule()"
+						class="button-blue"
+						:class="
+							ruleName == ruleNameEdit &&
+							reportReason == reportReasonEdit &&
+							description == descriptionEdit &&
+							appliedType == appliesToEdit
+								? 'disabled'
+								: ''
+						"
+						id="create-button"
+						>Save</base-button
 					>
 				</div>
 				<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
@@ -208,11 +232,70 @@ export default {
 	components: { BaseButton },
 	emits: ['exit'],
 	props: {
+		// @vuese
+		//return subreddit name
+		// @type string
 		subredditName: {
 			type: String,
 			default: '',
 			required: true,
 		},
+		// @vuese
+		//return edited rule name
+		// @type string
+		ruleNameEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return report reason edit
+		// @type string
+		reportReasonEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return applies to edit
+		// @type string
+		appliesToEdit: {
+			type: String,
+			default: 'posts and comments',
+			required: true,
+		},
+		// @vuese
+		//return report description edit
+		// @type string
+		descriptionEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return if there is an edited rule
+		// @type string
+		edit: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
+		// @vuese
+		//return if there is an edited rule
+		// @type string
+		ruleOrder: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
+		ruleId: {
+			type: String,
+			default: '',
+			required: true,
+		},
+	},
+	beforeMount() {
+		this.updateChoosen();
 	},
 	data() {
 		return {
@@ -220,16 +303,34 @@ export default {
 			typeChosen0: true,
 			typeChosen1: false,
 			typeChosen2: false,
-			appliedType: 'posts and comments',
-			ruleName: '',
-			reportReason: '',
-			description: '',
+			appliedType: this.appliesToEdit,
+			ruleName: this.ruleNameEdit,
+			reportReason: this.reportReasonEdit,
+			description: this.descriptionEdit,
 			charRemainingName: '100',
 			charRemainingReason: '100',
 			charRemainingDescription: '500',
 			errorResponse: null,
 		};
 	},
+	// watch: {
+	// 	appliesToEdit() {
+	// 		console.log(this.appliesToEdit);
+	// 		if (this.appliesToEdit == 'posts and comments') {
+	// 			this.typeChosen2 = true;
+	// 			this.typeChosen1 = false;
+	// 			this.typeChosen0 = false;
+	// 		} else if (this.appliesToEdit == 'posts only') {
+	// 			this.typeChosen1 = false;
+	// 			this.typeChosen2 = true;
+	// 			this.typeChosen0 = false;
+	// 		} else {
+	// 			this.typeChosen0 = false;
+	// 			this.typeChosen1 = false;
+	// 			this.typeChosen2 = true;
+	// 		}
+	// 	},
+	// },
 	methods: {
 		//@vuese
 		//Hide dialog
@@ -240,24 +341,42 @@ export default {
 			this.$emit('exit');
 		},
 		//@vuese
-		//Set chosen community type (public, restricted, private)
+		//Set chosen applied to type (posts and comments, posts only, comments only)
 		//@arg index to indicate chosen type
 		chooseType(index) {
-			if (index == 2) {
-				this.typeChosen2 = true;
-				this.typeChosen1 = false;
-				this.typeChosen0 = false;
-				this.appliedType = 'posts and comments';
-			} else if (index == 1) {
-				this.typeChosen1 = true;
-				this.typeChosen2 = false;
-				this.typeChosen0 = false;
-				this.appliedType = 'posts only';
-			} else {
+			if (index == 0) {
 				this.typeChosen0 = true;
 				this.typeChosen1 = false;
 				this.typeChosen2 = false;
+				this.appliedType = 'posts and comments';
+			} else if (index == 1) {
+				this.typeChosen0 = false;
+				this.typeChosen1 = true;
+				this.typeChosen2 = false;
+				this.appliedType = 'posts only';
+			} else {
+				this.typeChosen0 = false;
+				this.typeChosen1 = false;
+				this.typeChosen2 = true;
 				this.appliedType = 'comments only';
+			}
+		},
+		//@vuese
+		//update chosen applied to type (posts and comments, posts only, comments only)
+		//@arg index to indicate chosen type
+		updateChoosen() {
+			if (this.appliesToEdit == 'posts and comments') {
+				this.typeChosen2 = false;
+				this.typeChosen1 = false;
+				this.typeChosen0 = true;
+			} else if (this.appliesToEdit == 'posts only') {
+				this.typeChosen1 = true;
+				this.typeChosen2 = false;
+				this.typeChosen0 = false;
+			} else {
+				this.typeChosen0 = false;
+				this.typeChosen1 = false;
+				this.typeChosen2 = true;
 			}
 		},
 		//@vuese
@@ -290,6 +409,34 @@ export default {
 					subredditName: this.subredditName,
 				});
 				if (this.$store.getters['moderation/addRuleSuccessfully']) {
+					this.hideAddRule();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+		//@vuese
+		//submit adding rule
+		//@arg no argument
+		async updateRule() {
+			this.errorResponse = null;
+			if (this.reportReason == '') {
+				this.reportReason = this.ruleName;
+			}
+			try {
+				await this.$store.dispatch('moderation/updateRule', {
+					ruleName: this.ruleName,
+					ruleOrder: this.ruleOrder,
+					appliesTo: this.appliedType,
+					reportReason: this.reportReason,
+					description: this.description,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					ruleId: this.ruleId,
+				});
+				console.log(this.subredditName);
+				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
 					this.hideAddRule();
 				}
 			} catch (err) {
@@ -436,5 +583,27 @@ button:hover {
 	color: rgba(255, 255, 255, 0.5);
 	fill: rgba(255, 255, 255, 0.5);
 	background-color: var(--color-grey-light-5);
+}
+.delete-button {
+	margin-right: auto;
+	color: var(--color-red-dark-1);
+	position: relative;
+	border: 1px solid transparent;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
+}
+.delete-button:hover {
+	background-color: var(--color-grey-light-4);
+}
+.no-messages {
+	margin-top: 2rem;
+	padding: 1rem;
 }
 </style>

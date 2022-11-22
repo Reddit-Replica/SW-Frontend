@@ -63,6 +63,11 @@
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
+			:rule-name="''"
+			:report-reason="''"
+			:applies-to="''"
+			:description="''"
+			:edit="false"
 		></addrule-popup>
 	</div>
 </template>

@@ -8,4 +8,7 @@ export default {
 	listOfRules(state) {
 		return state.listOfRules;
 	},
+	updateRuleSuccessfully(state) {
+		return state.updateRuleSuccessfully;
+	},
 };

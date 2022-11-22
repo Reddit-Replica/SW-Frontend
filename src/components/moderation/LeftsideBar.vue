@@ -380,7 +380,7 @@ export default {
 
 <style scoped>
 .content {
-	background-color: var(--color-grey-light-9);
+	background-color: var(--color-blue-light-4);
 	bottom: 0;
 	box-sizing: border-box;
 	color: var(--color-dark-3);
