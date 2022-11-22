@@ -4,7 +4,7 @@
 			<span class="rule-order"> {{ rule.ruleOrder }}</span>
 			<span class="rule-name"> {{ rule.ruleName }}</span>
 			<span class="rule-edit">
-				<button class="button-edit">
+				<button class="button-edit" @click="showAddRuleFunction()">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -70,11 +70,27 @@
 				<span class="details-value">{{ rule.description }}</span></span
 			>
 		</div>
+		<addrule-popup
+			v-if="showAddRule"
+			:subreddit-name="subredditName"
+			@exit="showAddRuleFunction"
+			:rule-name-edit="rule.ruleName"
+			:report-reason-edit="rule.reportReason"
+			:applies-to-edit="rule.appliesTo"
+			:description-edit="rule.description"
+			:rule-order="rule.ruleOrder"
+			:rule-id="rule.ruleId"
+			:edit="true"
+		></addrule-popup>
 	</div>
 </template>
 
 <script>
+import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
 export default {
+	components: {
+		AddrulePopup,
+	},
 	props: {
 		// @vuese
 		//details of moderator
@@ -82,7 +98,7 @@ export default {
 			type: Object,
 			required: true,
 			default: () => ({
-				ruleID: '',
+				ruleId: '',
 				ruleName: '',
 				ruleOrder: '',
 				createdAt: '',
@@ -92,14 +108,32 @@ export default {
 			}),
 		},
 	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			return this.$store.state.subredditName;
+		},
+	},
 	data() {
 		return {
 			viewDetails: false,
+			showAddRule: false,
 		};
 	},
 	methods: {
+		// @vuese
+		// Used to show rule details
+		// @arg no argument
 		viewDetailsFunction() {
 			this.viewDetails = !this.viewDetails;
+		},
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showAddRuleFunction() {
+			this.showAddRule = !this.showAddRule;
 		},
 	},
 };
