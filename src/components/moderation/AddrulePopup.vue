@@ -277,6 +277,9 @@ export default {
 		//@arg no argument
 		async submitRule() {
 			this.errorResponse = null;
+			if (this.reportReason == '') {
+				this.reportReason = this.ruleName;
+			}
 			try {
 				await this.$store.dispatch('moderation/addRule', {
 					ruleName: this.ruleName,

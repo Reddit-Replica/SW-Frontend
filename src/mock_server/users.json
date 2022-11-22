@@ -1129,6 +1129,13 @@
       "reportReason": "",
       "description": "",
       "id": 3
+    },
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "posts and comments",
+      "reportReason": "asmaa",
+      "description": "",
+      "id": 4
     }
   ],
   "block-user": [
