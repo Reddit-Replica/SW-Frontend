@@ -35,11 +35,14 @@
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
 							<title-input></title-input>
+
 							<post-submit v-if="submitTypesActive[0]"></post-submit>
 							<image-submit v-if="submitTypesActive[1]"></image-submit>
 							<link-submit v-if="submitTypesActive[2]"></link-submit>
-							<footer-buttons></footer-buttons>
 
+							<div class="box1">
+								<footer-buttons></footer-buttons>
+							</div>
 							<div class="border-bottom"></div>
 							<div class="down-row">
 								<base-button
@@ -101,6 +104,7 @@ export default {
 			//post params
 			kind: null,
 			subreddit: null,
+			inSubreddit: null,
 			title: null,
 			content: null,
 			files: [{}],
@@ -138,6 +142,9 @@ export default {
 		getContent() {
 			this.content = this.$store.getters['posts/getContent'];
 		},
+		getSubreddit() {
+			this.subreddit = this.$store.getters['posts/getSubreddit'];
+		},
 		async handleSubmit() {
 			this.getTitle();
 			this.getKind();
@@ -146,6 +153,8 @@ export default {
 			//this.getFlairId();
 			this.getsendReplies();
 			this.getContent();
+			this.getSubreddit();
+
 			console.log('print values');
 			console.log(this.title);
 			console.log(this.kind);
@@ -153,11 +162,12 @@ export default {
 			console.log(this.nsfw);
 			console.log(this.sendReplies);
 			console.log(this.content);
+			console.log(this.subreddit);
 
 			if (
 				this.title === null ||
 				this.kind === null ||
-				//this.subreddit == null ||
+				this.subreddit == null ||
 				this.content === '' ||
 				this.nsfw === null ||
 				this.spoiler === null ||
@@ -325,5 +335,8 @@ nav ul li:hover {
 	-ms-flex-align: center;
 	align-items: center;
 	text-align: center;
+}
+.box1 {
+	margin-top: 50px;
 }
 </style>

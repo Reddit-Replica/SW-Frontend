@@ -27,4 +27,12 @@ export default {
 		console.log(payload);
 		state.content = payload.content;
 	},
+	setallSubreddits(state, payload) {
+		console.log(payload);
+		state.allSubreddits = payload;
+	},
+	setSubreddit(state, payload) {
+		console.log(payload);
+		state.subreddit = payload.subreddit;
+	},
 };

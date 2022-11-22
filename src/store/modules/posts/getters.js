@@ -23,4 +23,12 @@ export default {
 		console.log('getters content');
 		return state.content;
 	},
+	getallSubreddits(state) {
+		console.log('getters allsubreddits');
+		return state.allSubreddits;
+	},
+	getSubreddit(state) {
+		console.log('getters allsubreddits');
+		return state.subreddit;
+	},
 };
