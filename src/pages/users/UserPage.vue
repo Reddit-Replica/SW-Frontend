@@ -107,7 +107,7 @@ export default {
 			try {
 				await this.$store.dispatch('user/getUserData', {
 					baseurl: this.$baseurl,
-					userName: this.$store.state.userName,
+					userName: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

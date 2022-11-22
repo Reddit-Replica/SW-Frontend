@@ -32,7 +32,11 @@
 				<input
 					v-if="data.type == 'link'"
 					type="text"
-					placeholder="https://website.com"
+					:placeholder="`https://${
+						data.text == 'Custom URL'
+							? 'website'
+							: data.text.toLowerCase().replace(/\s/g, '')
+					}.com`"
 					v-model="socialLinkUrl"
 					@input="socialLinkModeration"
 					id="social-link-config-input-sociallink"

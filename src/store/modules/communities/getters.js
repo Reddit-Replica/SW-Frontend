@@ -5,4 +5,10 @@ export default {
 	categories(state) {
 		return state.categories;
 	},
+	getSubreddit(state) {
+		return state.subreddit;
+	},
+	getPosts(state) {
+		return state.Posts;
+	},
 };

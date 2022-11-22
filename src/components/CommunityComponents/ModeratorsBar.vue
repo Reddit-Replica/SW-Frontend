@@ -28,7 +28,7 @@
 					:key="mod.id"
 					to="/user/Abdalhameed"
 					:id="'mods-bar-' + index"
-					>u/{{ mod.name }}</router-link
+					>u/{{ mod.username }}</router-link
 				>
 			</div>
 			<div class="box-body flex-end text text-view" id="view-mods">

@@ -25,7 +25,6 @@
 										muted ||
 										approved ||
 										moderators ||
-										rules ||
 										postFlair ||
 										scheduledPosts ||
 										contentControls
@@ -33,9 +32,9 @@
 									:title="barTitle"
 									:subreddit-name="subredditName"
 								></list-bar>
-								<transition name="route" mode="out-in">
-									<component :is="slotProps.Component"></component>
-								</transition>
+								<!-- <transition name="route" mode="out-in"> -->
+								<component :is="slotProps.Component"></component>
+								<!-- </transition> -->
 							</div>
 						</router-view>
 					</div>
@@ -159,8 +158,13 @@ export default {
 				'/r/' + this.subredditName + '/about/edit'
 			) {
 				return 'Community Settings';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/traffic'
+			) {
+				return 'Trafic Stats';
 			}
-			return 'Trafic Stats';
+			return '';
 		},
 		// @vuese
 		// return banned bath
@@ -190,12 +194,12 @@ export default {
 				this.$route.path === '/r/' + this.subredditName + '/about/moderators'
 			);
 		},
-		// @vuese
-		// return rules bath
-		// @type boolean
-		rules() {
-			return this.$route.path === '/r/' + this.subredditName + '/about/rules';
-		},
+		// // @vuese
+		// // return rules bath
+		// // @type boolean
+		// rules() {
+		// 	return this.$route.path === '/r/' + this.subredditName + '/about/rules';
+		// },
 		// @vuese
 		// return post flair bath
 		// @type boolean
