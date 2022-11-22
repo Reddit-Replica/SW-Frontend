@@ -217,9 +217,29 @@
 					</span>
 				</span>
 			</div>
+			<div class="profile-items">
+				<router-link
+					:to="`/user/${$route.params.userName}/followers`"
+					style="color: inherit"
+					class="i karma"
+				>
+					<h5>Followers</h5>
+					<span>
+						<p id="Followers">
+							<span><i class="fa-solid fa-user"></i></span>{{ userData.karma }}
+							<i style="margin-left: 12px" class="fa-solid fa-angle-right"></i>
+						</p>
+					</span>
+				</router-link>
+			</div>
+
 			<!-- //////////////////////////////////////////// -->
 			<!-- follow chat for other users -->
-			<follow-chat-component v-if="state == 'user'"></follow-chat-component>
+			<follow-chat-component
+				v-if="state == 'user'"
+				:blocked="userData.blocked"
+				:followed="userData.followed"
+			></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
 			<sociallinks-block
@@ -239,6 +259,7 @@
 			<!-- ////////////// -->
 			<!-- more options button -->
 			<button
+				v-if="!(state != 'profile' && userData.blocked)"
 				id="more-options-button"
 				class="more-options"
 				@click="toggleShowMoreOptions"
@@ -248,7 +269,12 @@
 			</button>
 			<!-- /////////////////// -->
 			<!-- profile options -->
-			<ul id="profile-options" class="profile-options" v-show="showMoreOptions">
+			<ul
+				v-if="!(state != 'profile' && userData.blocked)"
+				id="profile-options"
+				class="profile-options"
+				v-show="showMoreOptions"
+			>
 				<router-link
 					v-for="profileOption in profileOptions"
 					:key="profileOption.name"
@@ -260,6 +286,7 @@
 			<!-- /////////////// -->
 			<!-- more options button -->
 			<button
+				v-if="!(state != 'profile' && userData.blocked)"
 				id="fewer-options-button"
 				class="fewer-options"
 				v-show="showMoreOptions"
@@ -308,31 +335,21 @@ export default {
 	},
 	data() {
 		return {
-			// NSFW: 'true',
-			// userData: {},
 			showMoreOptions: false,
 			addSocialLinkDialog: false,
 			banner: this.userData.banner,
-			// mySocialLinks: [
-			// 	{
-			// 		id: '',
-			// 		imagesUrl: '',
-			// 		name: '',
-			// 		type: '' /* there are three types username  */,
-			// 	},
-			// ],
 			myProfileOptions: [
 				{
-					name: 'Profile to Moderation',
+					name: 'Profile Moderation',
 					toLink: '/about/edit/moderation',
 				},
 				{
 					name: 'Add to Custom Feed',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 				{
 					name: 'Invite someone to chat',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 			],
 			userProfileOptions: [
@@ -342,19 +359,19 @@ export default {
 				},
 				{
 					name: 'Block User',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 				{
 					name: 'Get Them Help and Support',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 				{
 					name: 'Report User',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 				{
 					name: 'Add to Cusrom Feed',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 			],
 			isAvatar: false,
@@ -405,20 +422,37 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		loadProfilePic() {
+		async loadProfilePic() {
 			const file = this.$refs.profileFile.files[0];
 			// console.log('loadprofilepic');
 			const reader = new FileReader();
 			reader.onload = () => {
 				const result = reader.result;
 				const img = new Image();
-				img.onload = () => {
+				img.onload = async () => {
 					console.log(img.width, img.height);
 					// if (img.width > 1280 && img.height > 384 && file.size < 500) {
+					// const formData = new FormData();
+					// formData.append('ProfilePic', file, this.selectedFile.name);
+					// const imageUrl = await fetch(this.$baseurl + '/profile-picture', {
+					// 	method: 'POST',
+					// 	headers: {
+					// 		'Content-Type': 'application/json',
+					// 		Authorization: `Bearer ${localStorage.getItem('userName')}`,
+					// 	},
+					// 	body: formData,
+					// });
+					try {
+						await this.$store.dispatch('user/AddProfilePicture', {
+							baseurl: this.$baseurl,
+							// profilePictureUrl: imageUrl,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 					document.querySelector('#profile-picture').src = result;
 					// }
 				};
-
 				img.src = result;
 			};
 			reader.readAsDataURL(file);
@@ -432,8 +466,27 @@ export default {
 		loadCoverPic() {
 			const file = this.$refs.coverFile.files[0];
 			const reader = new FileReader();
-			reader.onload = () => {
+			reader.onload = async () => {
 				const result = reader.result;
+				// if (img.width > 1280 && img.height > 384 && file.size < 500) {
+				// const formData = new FormData();
+				// formData.append('ProfilePic', file, this.selectedFile.name);
+				// const imageUrl = await fetch(this.$baseurl + '/profile-picture', {
+				// 	method: 'POST',
+				// 	headers: {
+				// 		'Content-Type': 'application/json',
+				// 		Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				// 	},
+				// 	body: formData,
+				// });
+				try {
+					await this.$store.dispatch('user/AddProfileBanner', {
+						baseurl: this.$baseurl,
+						// bannerImageUrl: imageUrl,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 				document.querySelector(
 					'#cover-picture'
 				).style.backgroundImage = `url(${result})`;
@@ -672,7 +725,8 @@ a.profile-settings:hover {
 
 .profile-items {
 	display: block;
-	height: 52px;
+	/* height: 52px; */
+	margin-bottom: 12px;
 }
 
 .profile-items {

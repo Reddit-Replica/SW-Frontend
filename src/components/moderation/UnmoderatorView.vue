@@ -149,7 +149,7 @@ export default {
 }
 .heading-3 {
 	margin-left: 1rem;
-	margin-top: 5rem;
+	margin-top: 9rem;
 }
 .ul-items {
 	list-style: none;

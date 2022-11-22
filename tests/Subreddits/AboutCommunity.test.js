@@ -48,18 +48,18 @@ describe('AboutCommunityBar.vue', () => {
         expect(wrapper.find('#add-description-after').exists()).toBe(false);
 	});
 
-	it('Test topics list', async () => {
-		const wrapper = shallowMount(AboutCommunityBar, {
-			global: {
-				components: {},
-				mocks: { $store: store },
-			},
-		});
+	// it('Test topics list', async () => {
+	// 	const wrapper = shallowMount(AboutCommunityBar, {
+	// 		global: {
+	// 			components: {},
+	// 			mocks: { $store: store },
+	// 		},
+	// 	});
 
-		expect(wrapper.find('#add-topic').exists()).toBe(true);
-		//show topics list
-		await wrapper.find('#add-topic').trigger('click');
-        expect(wrapper.find('#topics-list').exists()).toBe(true);
-	});
+	// 	expect(wrapper.find('#add-topic').exists()).toBe(true);
+	// 	//show topics list
+	// 	await wrapper.find('#add-topic').trigger('click');
+  //       expect(wrapper.find('#topics-list').exists()).toBe(true);
+	// });
 
 });

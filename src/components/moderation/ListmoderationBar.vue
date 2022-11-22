@@ -61,7 +61,7 @@ export default {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	z-index: 200;
+	z-index: 50;
 }
 .subreddit-img {
 	width: 2.5rem;

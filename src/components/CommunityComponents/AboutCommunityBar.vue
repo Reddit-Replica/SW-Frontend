@@ -60,14 +60,15 @@
 				class="description-1"
 				@click="showTextarea"
 				v-if="!textareaShown && emptyDescription"
-				id="add-description-before"
+				id="add-description-1"
 			>
-				<div class="description-1-text">Add description</div>
+				<div class="description-1-text" id="add-desc">Add description</div>
 			</div>
 
 			<div
 				class="description-1 blue-border"
-				v-else-if="textareaShown && !showDescription"
+				id="add-description-2"
+				v-else-if="textareaShown"
 			>
 				<textarea
 					placeholder="Tell us about your community"
@@ -76,10 +77,10 @@
 					class="description-textarea"
 					@keyup="charCount()"
 					v-model.trim="description"
-					id="add-description-after"
+					id="add-desc-textarea"
 				></textarea>
 				<div class="flex">
-					<span class="span-char"
+					<span class="span-char" id="char-num"
 						>{{ charRemaining }} Characters remaining</span
 					>
 
@@ -99,9 +100,10 @@
 			</div>
 
 			<div
-				v-if="showDescription && !emptyDescription"
+				v-if="!textareaShown && !emptyDescription"
 				class="text desc-box"
-				@click="editDescription"
+				@click="showTextarea"
+				id="add-description-3"
 			>
 				{{ communityDescription }}
 				<svg
@@ -133,11 +135,16 @@
 				</svg>
 				<span
 					class="text-grey text space"
+					id="comm-date"
 					@mouseover="toogleDateBox"
 					@mouseleave="toogleDateBox"
 					>Created {{ communityDate }}</span
 				>
-				<div class="box arrow-top box-arrow-1" v-if="dateBoxShown">
+				<div
+					class="box arrow-top box-arrow-1"
+					v-if="dateBoxShown"
+					id="date-hover"
+				>
 					10 days ago.
 				</div>
 			</div>
@@ -161,7 +168,7 @@
 						d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"
 					/>
 				</svg>
-				<span class="text space">{{ communityType }}</span>
+				<span class="text space" id="comm-type">{{ communityType }}</span>
 			</div>
 
 			<div class="line"></div>
@@ -170,13 +177,18 @@
 				<div id="members-num" class="relative-flex">
 					<div
 						class="text-bold"
+						id="comm-mem"
 						@mouseover="toogleMembersCountBox"
 						@mouseleave="toogleMembersCountBox"
 					>
 						{{ membersCount }}
 					</div>
 					<div class="text-grey">Members</div>
-					<div class="box arrow-top box-arrow-2" v-if="MembersCountBoxShown">
+					<div
+						class="box arrow-top box-arrow-2"
+						id="comm-mem-hover"
+						v-if="MembersCountBoxShown"
+					>
 						{{ membersCount }} Members
 					</div>
 				</div>
@@ -194,6 +206,7 @@
 						</svg>
 						<span
 							class="text-bold"
+							id="comm-online-mem"
 							@mouseover="toogleOnlineMembersCountBox"
 							@mouseleave="toogleOnlineMembersCountBox"
 							>{{ onlineMembersCount }}</span
@@ -202,6 +215,7 @@
 					<div class="text-grey">Online</div>
 					<div
 						class="box arrow-top box-arrow-3"
+						id="comm-online-mem-hover"
 						v-if="onlineMembersCountBoxShown"
 					>
 						{{ onlineMembersCount }} Online
@@ -214,9 +228,10 @@
 			<div class="line"></div>
 
 			<div class="box-body">
-				<span class="span-new" v-if="isNew">NEW</span>
+				<span class="span-new" v-if="isNew" id="new-comm">NEW</span>
 				<span
 					class="text-bold"
+					id="comm-topics"
 					@mouseover="toogleTopicsArrrowBox"
 					@mouseleave="toogleTopicsArrrowBox"
 					>Community topics</span
@@ -229,8 +244,6 @@
 						fill="currentColor"
 						class="bi bi-info-circle"
 						viewBox="0 0 16 16"
-						@mouseover="toogleTopicsArrrowBox"
-						@mouseleave="toogleTopicsArrrowBox"
 					>
 						<path
 							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -240,7 +253,11 @@
 						/>
 					</svg>
 				</span>
-				<div class="box arrow-top box-arrow-4" v-if="topicsArrrowBoxShown">
+				<div
+					class="box arrow-top box-arrow-4"
+					v-if="topicsArrrowBoxShown"
+					id="comm-topics-hover"
+				>
 					Adding community topics allow people to find your community. Add a
 					primary topic and sub topics to be discovered more easily.
 				</div>
@@ -259,7 +276,7 @@
 					@click="toogleTopicsList"
 					v-if="topicChosen"
 					id="topic-added"
-					>{{ communityTopic.name }}</span
+					>{{ communityTopic }}</span
 				>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -275,6 +292,7 @@
 						d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
 					/>
 				</svg>
+
 				<div class="topics-list" v-if="topicsShown" id="topics-list">
 					<button
 						v-for="(topic, index) in topics"
@@ -283,13 +301,13 @@
 						@click="setTopic(topic)"
 						:id="'topic-' + index"
 					>
-						{{ topic.name }}
+						{{ topic }}
 					</button>
 				</div>
 
 				<div
 					class="sub-topic"
-					v-if="!subtopicsShown && topicChosen"
+					v-if="!subtopicChosen && topicChosen && addSubtopicShown"
 					id="subtopic-box-1"
 				>
 					<base-button class="button-subtopic" id="subtopic-box-2">
@@ -306,26 +324,24 @@
 								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 							/>
 						</svg>
-						<span class="text span-save" @click="toogleSubtopics"
-							>Add subtopic</span
-						>
+						<span class="text span-save" @click="showBoth">Add subtopic</span>
 					</base-button>
 				</div>
 
 				<div
 					class="blue-border description-1 box-topic"
-					v-if="subtopicsShown"
+					v-if="subtopicsBoxShown || subtopicChosen"
 					id="subtopic-box-3"
 				>
 					<input v-if="!subtopicChosen" id="subtopic-box-4" />
-					<div v-if="subtopicChosen">
+					<div v-if="subtopicChosen" @click="showBoth">
 						<base-button
 							v-for="(subtopic, index) in communitySubtopics"
 							:key="subtopic.id"
 							class="subtopic text"
 							@click="deleteSubtopic(subtopic)"
 							:id="'chosen-subtopic-' + index"
-							>{{ subtopic.name }}
+							>{{ subtopic }}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -359,11 +375,7 @@
 					</div>
 				</div>
 
-				<div
-					class="topics-list"
-					v-if="subtopicsShown && !isSubtopicsSaved"
-					id="subtopics-list"
-				>
+				<div class="topics-list" v-if="subtopicsListShown" id="subtopics-list">
 					<div class="text-grey sug-subtopic">SUGGESTED TOPICS</div>
 					<button
 						v-for="(subtopic, index) in topics"
@@ -372,7 +384,7 @@
 						@click="setSubtopic(subtopic)"
 						:id="'subtopic-' + index"
 					>
-						{{ subtopic.name }}
+						{{ subtopic }}
 					</button>
 				</div>
 
@@ -459,6 +471,14 @@ export default {
 			type: String,
 			default: '',
 		},
+		communityDescriptionProp: {
+			type: String,
+			default: '',
+		},
+		communityTopicProp: {
+			type: Object,
+			default: () => ({ mainTopic: '', subtopics: [] }),
+		},
 	},
 	data() {
 		return {
@@ -468,31 +488,49 @@ export default {
 			favouriteText: 'Add To Favourites',
 			charRemaining: 500,
 			textareaShown: false,
-			communityDescription: '',
+			// communityDescription: this.communityDescriptionProp,
 			description: '',
-			communityTopic: {},
-			topicChosen: false,
+			// communityTopic: {},
+			// topicChosen: false,
 			topicsShown: false,
 			subtopicsShown: false,
-			communitySubtopics: [],
+			// communitySubtopics: [],
 			savedCommunitySubtopics: [],
-			subtopicChosen: false,
-			subtopicsCount: 0,
+			// subtopicChosen: false,
+			// subtopicsCount: 0,
 			saveDialogShown: false,
 			isSubtopicsSaved: false,
-			showDescription: false,
-
 			isNew: true,
-
 			dateBoxShown: false,
 			MembersCountBoxShown: false,
 			onlineMembersCountBoxShown: false,
 			topicsArrrowBoxShown: false,
+			addSubtopicShown: true,
+			subtopicsBoxShown: false,
+			subtopicsListShown: false,
 		};
 	},
 	computed: {
 		emptyDescription() {
-			return this.communityDescription === '' && this.description === '';
+			return this.communityDescription === '';
+		},
+		communityDescription() {
+			return this.communityDescriptionProp;
+		},
+		communityTopic() {
+			return this.communityTopicProp.topicTitle;
+		},
+		topicChosen() {
+			return this.communityTopic !== '';
+		},
+		communitySubtopics() {
+			return this.communityTopicProp.subtopics;
+		},
+		subtopicChosen() {
+			return this.communitySubtopics.length !== 0;
+		},
+		subtopicsCount() {
+			return this.communitySubtopics.length;
 		},
 	},
 	methods: {
@@ -514,15 +552,12 @@ export default {
 		addToFavourite() {
 			//toggle add to favourite data
 			this.addedToFavourite = !this.addedToFavourite;
-
 			//change button text
 			this.favouriteText = this.addedToFavourite
 				? 'Remove From Favourites'
 				: 'Add To Favourites';
-
 			//hide list
 			this.dotsClick();
-
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/ToggleFavourite', {
@@ -554,29 +589,22 @@ export default {
 		//@arg no argument
 		saveDescription() {
 			//save description
-			if (this.description !== '') {
-				this.communityDescription = this.description;
-			}
+			// if (this.description !== '') {
+			this.communityDescription = this.description;
+			// }
+			this.isSubtopicsSaved = true;
 			//hide text area
 			this.hideTextarea();
-
-			//show description
-			this.showDescription = !this.showDescription;
-
 			//send request
-			if (this.description !== '') {
-				const accessToken = localStorage.getItem('accessToken');
-				this.$store.dispatch('community/AddDescription', {
-					description: this.communityDescription,
-					subredditName: this.subredditName,
-					baseurl: this.$baseurl,
-					token: accessToken,
-				});
-			}
-		},
-		editDescription() {
-			this.showDescription = !this.showDescription;
-			this.showTextarea();
+			// if (this.description !== '') {
+			const accessToken = localStorage.getItem('accessToken');
+			this.$store.dispatch('community/AddDescription', {
+				description: this.communityDescription,
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			// }
 		},
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
@@ -584,13 +612,10 @@ export default {
 		setTopic(topic) {
 			//set topic
 			this.communityTopic = topic;
-
 			//mark topic is chosen
 			this.topicChosen = true;
-
 			//hide topics list
 			this.toogleTopicsList();
-
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/AddMainTopic', {
@@ -607,13 +632,11 @@ export default {
 			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
 				const index = this.communitySubtopics.findIndex(
-					(topic) => topic.id === subtopic.id
+					(topic) => topic === subtopic
 				);
-
 				//check if subreddit chosen before
 				if (index === -1) {
 					this.communitySubtopics.push(subtopic);
-					this.subtopicChosen = true;
 					this.subtopicsCount++;
 				}
 			}
@@ -644,20 +667,24 @@ export default {
 		//save chosen subtopics list
 		//@arg no argument
 		saveSubtopics() {
+			this.subtopicsListShown = false;
 			//mark sub topics as saved
-			this.isSubtopicsSaved = true;
-
+			// this.isSubtopicsSaved = true;
 			//set subtopics list
-			this.savedCommunitySubtopics = this.communitySubtopics;
-
+			// this.savedCommunitySubtopics = this.communitySubtopics;
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/AddSubTopic', {
-				subtopics: this.savedCommunitySubtopics,
+				subtopics: this.communitySubtopics,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+		},
+		showBoth() {
+			this.addSubtopicShown = false;
+			this.subtopicsBoxShown = true;
+			this.subtopicsListShown = !this.subtopicsListShown;
 		},
 		//@vuese
 		//Show/Hide Save or Discard dialog
@@ -669,7 +696,7 @@ export default {
 		//Cancel chosen subtopics list and show dialog save or discard
 		//@arg no argument
 		toogleSubtopicsCancel() {
-			this.toogleSubtopics();
+			this.subtopicsListShown = false;
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
