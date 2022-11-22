@@ -58,7 +58,8 @@
 					>
 				</p>
 				<div v-if="expandAll">
-					<p class="md">{{ message.text }}</p>
+					<!-- <p class="md">{{ message.text }}</p> -->
+					<Markdown class="md" :source="message.text" />
 					<ul class="flat-list ul-messages">
 						<li :id="'permalink-' + index">
 							<a href="" :id="'permalink-link-' + index">Permalink</a>
@@ -91,7 +92,6 @@
 									>No</span
 								></span
 							>
-							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
 							<span
 								class="link"
 								v-else
@@ -151,7 +151,6 @@
 									>No</span
 								></span
 							>
-							<!-- <a href="" v-else @click="deleteAction()">Delete</a> -->
 							<span
 								class="link"
 								v-else
@@ -170,17 +169,35 @@
 							>
 						</li>
 						<li v-if="ifMessageRecieved" :id="'reply-box-' + index">
-							<span class="link" :id="'reply-' + index">Reply</span>
+							<span
+								class="link"
+								:id="'reply-' + index"
+								@click="replyFunction('show')"
+								>Reply</span
+							>
 						</li>
 					</ul>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
 				</div>
 			</div>
 		</li>
+		<ReplyComponent
+			:show-reply-box="showReplyBox"
+			@hide-reply-box="replyFunction('hide')"
+		></ReplyComponent>
 	</div>
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+import ReplyComponent from './ReplyComponent.vue';
 export default {
+	components: {
+		Markdown,
+		ReplyComponent,
+	},
 	// @vuese
 	//details of message
 	props: {
@@ -216,6 +233,8 @@ export default {
 			spammed: false,
 			spamUser: false,
 			isRead: this.message.isRead,
+			errorResponse: null,
+			showReplyBox: false,
 		};
 	},
 	computed: {
@@ -236,29 +255,43 @@ export default {
 		// @vuese
 		//handle delete action
 		// @arg The argument is a string value representing if user click ok
-		deleteAction(action) {
+		async deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/deleteMessage', {
-					id: this.message.id,
-					type: 'message',
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/deleteMessage', {
+						id: this.message.id,
+						type: 'message',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
 		},
 		// @vuese
 		//handle block action
 		// @arg The argument is a string value representing if user click ok
-		blockAction(action) {
+		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/blockUser', {
-					block: true,
-					username: this.message.senderUsername,
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/blockUser', {
+						block: true,
+						username: this.message.senderUsername,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/blockSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
 		},
 		// @vuese
@@ -270,16 +303,23 @@ export default {
 		// @vuese
 		//handle spam action
 		// @arg The argument is a string value representing if user click ok
-		spamAction(action) {
+		async spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/spamMessage', {
-					id: this.message.id,
-					type: 'message',
-					reason: '',
-					baseurl: this.$baseurl,
-				});
-				this.spammed = true;
+				try {
+					this.$store.dispatch('messages/spamMessage', {
+						id: this.message.id,
+						type: 'message',
+						reason: '',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/markSpamSuccessfully']) {
+						this.spammed = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.spammed = false;
+				}
 			}
 		},
 		// @vuese
@@ -292,6 +332,16 @@ export default {
 				this.expandAll = false;
 			} else {
 				this.expandAll = !this.expandAll;
+			}
+		},
+		// @vuese
+		//show reply box or hide it
+		// @arg no argument
+		replyFunction(title) {
+			if (title == 'show') {
+				this.showReplyBox = true;
+			} else if (title == 'hide') {
+				this.showReplyBox = false;
 			}
 		},
 	},
@@ -310,12 +360,6 @@ ul {
 	color: #373c3f;
 	list-style: none;
 }
-.message:nth-child(odd) {
-	background-color: var(--color-grey-light-10);
-}
-.message:nth-child(even) {
-	background-color: var(--main-white-color);
-}
 .box {
 	display: flex;
 	flex-direction: column;
@@ -324,8 +368,8 @@ ul {
 }
 .box-unread {
 	margin: 1rem;
-	background-color: var(--color-grey-light-10);
-	border-color: var(--color-grey-light-10);
+	background-color: var(--color-grey-light-10) !important;
+	border-color: var(--color-grey-light-10) !important;
 }
 .sender-box,
 .reciever-box {

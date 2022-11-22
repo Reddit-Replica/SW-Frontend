@@ -16,16 +16,25 @@
 					<div class="col-6 col-md-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-sm-6 right">
+					<div class="col-12 col-md-8 right">
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
-									v-if="banned || muted || approved || moderators"
+									v-if="
+										banned ||
+										muted ||
+										approved ||
+										moderators ||
+										postFlair ||
+										scheduledPosts ||
+										contentControls
+									"
 									:title="barTitle"
+									:subreddit-name="subredditName"
 								></list-bar>
-								<transition name="route" mode="out-in">
-									<component :is="slotProps.Component"></component>
-								</transition>
+								<!-- <transition name="route" mode="out-in"> -->
+								<component :is="slotProps.Component"></component>
+								<!-- </transition> -->
 							</div>
 						</router-view>
 					</div>
@@ -180,6 +189,37 @@ export default {
 				this.$route.path === '/r/' + this.subredditName + '/about/moderators'
 			);
 		},
+		// // @vuese
+		// // return rules bath
+		// // @type boolean
+		// rules() {
+		// 	return this.$route.path === '/r/' + this.subredditName + '/about/rules';
+		// },
+		// @vuese
+		// return post flair bath
+		// @type boolean
+		postFlair() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/postflair'
+			);
+		},
+		// @vuese
+		// return scheduled posts bath
+		// @type boolean
+		scheduledPosts() {
+			return (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			);
+		},
+		// @vuese
+		// return content controls bath
+		// @type boolean
+		contentControls() {
+			return (
+				this.$route.path === '/r/' + this.subredditName + '/about/settings'
+			);
+		},
 		// @vuese
 		//return title of button in fixed bar
 		// @type string
@@ -196,9 +236,33 @@ export default {
 				'/r/' + this.subredditName + '/about/contributors'
 			) {
 				return 'Approved';
-			} else {
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/moderators'
+			) {
 				return 'Moderators of t/' + this.subredditName;
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/rules'
+			) {
+				return 'Rules';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/postflair'
+			) {
+				return 'Post flair';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/scheduledposts'
+			) {
+				return 'Schedule Post';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/settings'
+			) {
+				return 'Content controls';
 			}
+			return '';
 		},
 	},
 	methods: {
@@ -227,7 +291,7 @@ export default {
 .right {
 	margin-top: 9rem;
 }
-@media only screen and (max-width: 36em) {
+@media only screen and (max-width: 50em) {
 	.row > * {
 		width: 50%;
 	}

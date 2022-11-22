@@ -39,7 +39,7 @@ export default {
 	--color-grey-light-6: #808486;
 	--color-grey-light-7: #cacdcf;
 	--color-grey-light-8: #eceff1;
-	--color-grey-light-9: #f6f7f8;
+	--color-grey-light-9: #edeff1;
 	--color-grey-light-10: #edeff1;
 	--color-grey-light-11: #ececf4;
 	--color-grey-light-12: #e8e8e8;
@@ -81,10 +81,12 @@ export default {
 	--color-blue-3: #3293db;
 	--color-blue-4: #336699;
 	--color-blue-5: #83afdc;
+	--color-blue-6: #0079f3;
 	--color-blue-light: rgb(67, 198, 249);
 	--color-blue-light-2: #e5f5fd;
 	--color-blue-light-3: rgb(51, 168, 255);
 	--color-blue-light-4: #f6f7f8;
+	--color-blue-light-5: #e5effa;
 
 	/* green colors */
 	--color-green: rgb(62, 231, 62);

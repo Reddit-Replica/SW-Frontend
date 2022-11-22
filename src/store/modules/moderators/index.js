@@ -7,6 +7,7 @@ export default {
 	state() {
 		return {
 			listOfModerators: [],
+			addRuleSuccessfully: false,
 		};
 	},
 	mutations,

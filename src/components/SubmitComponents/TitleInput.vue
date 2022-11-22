@@ -21,9 +21,20 @@ export default {
 		};
 	},
 	watch: {
-		inputTitle() {
+		inputTitle(value) {
 			this.inputCharCount = this.inputTitle.length;
+			this.inputTitle = value;
+			this.setTitle(value);
 			return this.inputCharCount;
+		},
+	},
+	methods: {
+		setTitle() {
+			//this.$store.dispatch('setTitle', this.inputTitle);
+			//this.$store.state.title = this.inputTitle;
+			this.$store.commit('posts/setTitle', {
+				title: this.inputTitle,
+			});
 		},
 	},
 };

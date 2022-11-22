@@ -48,7 +48,7 @@ export default {
 	margin: 2rem;
 }
 .no-messages {
-	background-color: var(--color-white-1);
+	background-color: var(--main-white-color);
 	padding: 2rem;
 	margin-right: auto;
 	color: var(--color-grey-dark-2);
@@ -67,16 +67,16 @@ export default {
 	list-style: none;
 }
 .message-grey {
-	background-color: var(--color-grey-light-10) !important;
+	background-color: var(--color-blue-light-4) !important;
 }
 .message-white {
 	background-color: var(--main-white-color) !important;
 }
 .message:nth-child(odd) {
-	background-color: var(--color-grey-light-9);
+	background-color: var(--color-blue-light-4);
 }
 .message:nth-child(even) {
-	background-color: var(--color-white-1);
+	background-color: var(--main-white-color);
 }
 .subject-text {
 	font-weight: bold;
