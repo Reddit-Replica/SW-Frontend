@@ -23,6 +23,7 @@
 						:user-data="getUserData.userData"
 					/>
 					<user-moderators-card
+						v-if="getUserData.userModeratorData.length != 0"
 						:user-moderators="getUserData.userModeratorData"
 					></user-moderators-card>
 				</aside>

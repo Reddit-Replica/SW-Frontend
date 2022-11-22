@@ -138,8 +138,12 @@
 				<!-- incase of profile picture display name , user name style -->
 			</div>
 			<div style="margin-bottom: 8px" v-if="!isAvatar">
-				<h4 class="profile-displayedname" id="profile-displayed-name">
-					{{ userData.displayName || 'Abdelhameed_Emad' }}
+				<h4
+					v-if="userData.displayName != ''"
+					class="profile-displayedname"
+					id="profile-displayed-name"
+				>
+					{{ userData.displayName }}
 					<svg
 						v-if="userData.nsfw"
 						id="profile-nsfw"
@@ -163,10 +167,14 @@
 					</svg>
 				</h4>
 				<router-link
-					:to="`/user/${userName}`"
+					:to="`/user/${
+						state == ' profile' ? userName : this.$route.params.userName
+					}`"
 					id="profile-pic-user-name"
 					class="profile-username"
-					>u/{{ userName }}</router-link
+					>u/{{
+						state == ' profile' ? userName : this.$route.params.userName
+					}}</router-link
 				>
 			</div>
 			<!-- /////////////////////////////// -->
@@ -219,6 +227,7 @@
 			</div>
 			<div class="profile-items">
 				<router-link
+					v-if="userData.followers && userData.followers.length != 0"
 					:to="`/user/${$route.params.userName}/followers`"
 					style="color: inherit"
 					class="i karma"
@@ -251,7 +260,7 @@
 			<button
 				v-if="state == 'profile'"
 				class="new-post"
-				@click="$router.push('/submit')"
+				@click="$router.push(`${userName}/submit`)"
 				id="profile-new-post"
 			>
 				New post
@@ -278,7 +287,8 @@
 				<router-link
 					v-for="profileOption in profileOptions"
 					:key="profileOption.name"
-					:to="`/user/${userName}${profileOption.toLink}`"
+					:to="profileOptionsToHandler(state, profileOption)"
+					@click="profileOptionsClickHandler(state, profileOption)"
 					:id="`profile-option-${profileOption.name}`"
 					>{{ profileOption.name }}
 				</router-link>
@@ -340,36 +350,44 @@ export default {
 			banner: this.userData.banner,
 			myProfileOptions: [
 				{
+					id: 0,
 					name: 'Profile Moderation',
 					toLink: '/about/edit/moderation',
 				},
 				{
+					id: 1,
 					name: 'Add to Custom Feed',
 					toLink: '',
 				},
 				{
+					id: 2,
 					name: 'Invite someone to chat',
 					toLink: '',
 				},
 			],
 			userProfileOptions: [
 				{
+					id: 0,
 					name: 'Send Message',
 					toLink: '/message/compose/?to=' /* add in html only user name */,
 				},
 				{
+					id: 1,
 					name: 'Block User',
 					toLink: '',
 				},
 				{
+					id: 2,
 					name: 'Get Them Help and Support',
 					toLink: '',
 				},
 				{
+					id: 3,
 					name: 'Report User',
 					toLink: '',
 				},
 				{
+					id: 4,
 					name: 'Add to Cusrom Feed',
 					toLink: '',
 				},
@@ -389,6 +407,38 @@ export default {
 		},
 	},
 	methods: {
+		profileOptionsClickHandler(state, profileOption) {
+			if (state != 'profile') {
+				if (profileOption.id == 1) {
+					// block user
+					this.blockUser();
+				}
+			}
+		},
+		async blockUser() {
+			try {
+				await this.$store.dispatch('user/blockUnblockUser', {
+					baseurl: this.$baseurl,
+					blockUnblockData: {
+						username: this.$route.params.userName,
+						block: true,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		profileOptionsToHandler(state, profileOption) {
+			if (state == 'profile') {
+				if (profileOption.id == 0) {
+					return `/user/${this.userName}${profileOption.toLink}`;
+				} else {
+					return '';
+				}
+			} else {
+				return '';
+			}
+		},
 		/**
 		 * @vuese
 		 * it toggle to Show or Hide user Options
