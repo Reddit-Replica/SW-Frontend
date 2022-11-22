@@ -166,84 +166,85 @@
 				placeholder="Text (optional)"
 			></textarea>
 		</div> -->
+		<div class="temp">
+			<QuillEditor
+				class="editor"
+				theme="snow"
+				toolbar="#my-toolbar"
+				placeholder="Text (optional)"
+				style="color: black"
+				ref="myQuillEditor"
+				v-model:content="content"
+			>
+				<template #toolbar>
+					<div id="my-toolbar" class="icons-box">
+						<!-- Add buttons as you would before -->
+						<div class="tool-tip">
+							<span class="tool-tip-text-small">Bold</span>
 
-		<QuillEditor
-			class="editor"
-			theme="snow"
-			toolbar="#my-toolbar"
-			placeholder="Text (optional)"
-			style="color: black"
-			ref="myQuillEditor"
-			v-model:content="content"
-		>
-			<template #toolbar>
-				<div id="my-toolbar" class="icons-box">
-					<!-- Add buttons as you would before -->
-					<div class="tool-tip">
-						<span class="tool-tip-text-small">Bold</span>
+							<button class="ql-bold"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text-small">Italics</span>
+							<button class="ql-italic"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text-small">Link</span>
+							<button class="ql-link"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Strikethrough</span>
+							<button class="ql-strike"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Inline Code</span>
+							<button class="ql-code"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Superscript</span>
+							<button class="ql-script" value="super"></button>
+						</div>
+						<!-- <button class="ql-spoiler"></button> -->
+						<div class="space-in"></div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Heading</span>
+							<button class="ql-header" value="1"></button>
+						</div>
 
-						<button class="ql-bold"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text-small">Italics</span>
-						<button class="ql-italic"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text-small">Link</span>
-						<button class="ql-link"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Strikethrough</span>
-						<button class="ql-strike"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Inline Code</span>
-						<button class="ql-code"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Superscript</span>
-						<button class="ql-script" value="super"></button>
-					</div>
-					<!-- <button class="ql-spoiler"></button> -->
-					<div class="space-in"></div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Heading</span>
-						<button class="ql-header" value="1"></button>
-					</div>
-
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Bulleted List</span>
-						<button class="ql-list" value="bullet"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Numbered List</span>
-						<button class="ql-list" value="ordered"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Quote Block</span>
-						<button class="ql-blockquote"></button>
-					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Code Block</span>
-						<button class="ql-code-block"></button>
-					</div>
-					<div class="space-in"></div>
-					<!-- <button class="icons" id="" @click="insertTable">
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Bulleted List</span>
+							<button class="ql-list" value="bullet"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Numbered List</span>
+							<button class="ql-list" value="ordered"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Quote Block</span>
+							<button class="ql-blockquote"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Code Block</span>
+							<button class="ql-code-block"></button>
+						</div>
+						<div class="space-in"></div>
+						<!-- <button class="icons" id="" @click="insertTable">
 						<div class="icon">
 							<font-awesome-icon icon="fa-solid fa-table" />
 						</div>
 					</button> -->
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Add an image</span>
-						<button class="ql-image"></button>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Add an image</span>
+							<button class="ql-image"></button>
+						</div>
+						<div class="tool-tip">
+							<span class="tool-tip-text strike">Add a video</span>
+							<button class="ql-video"></button>
+						</div>
 					</div>
-					<div class="tool-tip">
-						<span class="tool-tip-text strike">Add a video</span>
-						<button class="ql-video"></button>
-					</div>
-				</div>
-			</template>
-		</QuillEditor>
+				</template>
+			</QuillEditor>
+		</div>
 		{{ content }}
 	</div>
 </template>
@@ -333,10 +334,11 @@ div {
 	display: block;
 }
 .big-box {
-	margin: 16px;
+	margin: 16px 16px 0 16px;
 	border: 1px solid #edeff1;
 	border-radius: 4px;
 	position: relative;
+	height: 200px;
 }
 .icons-box {
 	z-index: 8;
@@ -581,7 +583,8 @@ button {
 	background-color: #dae0e6;
 }
 
-.ql-editor {
+.temp {
+	height: 155px;
 	resize: vertical;
 	color: #000;
 }
