@@ -266,22 +266,25 @@ export default {
 			text: payload.text,
 			senderUsername: payload.senderUsername,
 			receiverUsername: payload.receiverUsername,
+			type: 'Messages',
 			subject: payload.subject,
 		};
 		const baseurl = payload.baseurl;
-
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(baseurl + '/message/compose', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				Authorization: `Bearer ${accessToken}`,
 			},
 			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
 
 		const responseData = await response.json();
-
+		console.log(response.status);
 		if (response.status == 201) {
 			context.commit('sentSuccessfully', true);
 		} else if (response.status == 401) {
