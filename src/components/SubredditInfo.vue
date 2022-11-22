@@ -68,7 +68,6 @@ export default {
 	beforeMount() {
 		this.loadSubredditInfo();
 	},
-	computed: {},
 	methods: {
 		async loadSubredditInfo() {
 			try {

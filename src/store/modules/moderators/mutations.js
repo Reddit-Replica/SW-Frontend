@@ -8,4 +8,10 @@ export default {
 	setListOfRules(state, payload) {
 		state.listOfRules = payload;
 	},
+	updateRuleSuccessfully(state, payload) {
+		state.updateRuleSuccessfully = payload;
+	},
+	deleteRuleSuccessfully(state, payload) {
+		state.deleteRuleSuccessfully = payload;
+	},
 };

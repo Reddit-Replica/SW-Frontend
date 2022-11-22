@@ -9,6 +9,8 @@ export default {
 			listOfModerators: [],
 			addRuleSuccessfully: false,
 			listOfRules: [],
+			updateRuleSuccessfully: false,
+			deleteRuleSuccessfully: false,
 		};
 	},
 	mutations,
