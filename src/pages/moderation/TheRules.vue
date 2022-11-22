@@ -100,7 +100,6 @@ export default {
 		// @type boolean
 		noRules() {
 			if (this.listOfRules.length != 0) {
-				console.log(this.listOfRules.length);
 				return false;
 			}
 			return true;
