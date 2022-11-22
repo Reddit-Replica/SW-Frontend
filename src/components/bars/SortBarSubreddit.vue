@@ -1,5 +1,5 @@
 <template>
-	<div class="sort-post-content">
+	<div class="sort-post-content" id="sort-bar-subreddit">
 		<div class="sort-post-box-1-1">
 			<div
 				class="sort-post-icon-box clicked"
@@ -11,42 +11,20 @@
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-airplane-fill sort-post-icon"
+					class="bi bi-fire sort-post-icon"
 					viewBox="0 0 16 16"
 				>
 					<path
-						d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"
+						d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"
 					/>
 				</svg>
 				<span>{{ clicked }}</span>
-
 				<svg class="sort-post-arrow-icon sort-post-icon" id="arrow-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</div>
 		</div>
 		<div class="sort-post-box-1">
-			<div
-				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'best' }"
-				@click="selectSort('Best')"
-				id="best-sort"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="bi bi-airplane-fill sort-post-icon"
-					viewBox="0 0 16 16"
-				>
-					<path
-						d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"
-					/>
-				</svg>
-				<span>Best</span>
-			</div>
-
 			<div
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'hot' }"
@@ -65,7 +43,6 @@
 						d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"
 					/>
 				</svg>
-				<!-- <i class="fa-brands fa-hotjar icon"></i> -->
 				<span>Hot</span>
 			</div>
 			<div
@@ -74,7 +51,6 @@
 				@click="selectSort('New')"
 				id="new-sort"
 			>
-				<!-- <i class="fa-regular fa-sun icon"></i> -->
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -112,67 +88,10 @@
 						d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"
 					/>
 				</svg>
-				<!-- <i class="fa-solid fa-arrow-up-from-ground-water icon"></i> -->
 				<span>Top</span>
 			</div>
-			<!-- for rising -->
-			<!-- <div class="icon__box__setting">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-three-dots icon icon-setting"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-          />
-        </svg>
-      </div>  -->
 		</div>
-		<!-- <div class="sort-post-box-2">
-			<div class="sort-post-icon-box">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="bi bi-dash-square sort-post-icon sort-post-icon-square"
-					viewBox="0 0 16 16"
-				>
-					<path
-						d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-					/>
-					<path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-				</svg>
-				<svg class="sort-post-arrow-icon sort-post-icon">
-					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
-				</svg>
-			</div>
-		</div> -->
 		<ul class="sort-post-sub-menu" v-if="showMenu">
-			<li
-				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'best' }"
-				@click="selectSort('Best')"
-				id="best-sort-sub-menu"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="bi bi-airplane-fill sort-post-icon"
-					viewBox="0 0 16 16"
-				>
-					<path
-						d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z"
-					/>
-				</svg>
-				<!-- <i class="fa-brands fa-space-awesome icon"></i> -->
-				<span>Best</span>
-			</li>
 			<li
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'hot' }"
@@ -191,7 +110,6 @@
 						d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"
 					/>
 				</svg>
-				<!-- <i class="fa-brands fa-hotjar icon"></i> -->
 				<span>Hot</span>
 			</li>
 			<li
@@ -200,7 +118,6 @@
 				@click="selectSort('New')"
 				id="new-sort-sub-menu"
 			>
-				<!-- <i class="fa-regular fa-sun icon"></i> -->
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -238,7 +155,6 @@
 						d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"
 					/>
 				</svg>
-				<!-- <i class="fa-solid fa-arrow-up-from-ground-water icon"></i> -->
 				<span>Top</span>
 			</li>
 		</ul>
@@ -247,6 +163,12 @@
 
 <script>
 export default {
+	props: {
+		subredditName: {
+			type: String,
+			default: '',
+		},
+	},
 	data() {
 		return {
 			showMenu: false,
@@ -254,7 +176,7 @@ export default {
 	},
 	computed: {
 		clicked() {
-			if (this.$route.params.title == null) return 'best';
+			if (this.$route.params.title == null) return 'hot';
 			else return this.$route.params.title;
 		},
 	},
@@ -265,7 +187,9 @@ export default {
 		selectSort(title) {
 			this.clicked = title;
 			if (this.showMenu) this.showSubMenu();
-			this.$router.push({ path: '/main/' + title.toLowerCase() });
+			this.$router.push({
+				path: `/r/${this.subredditName}/` + title.toLowerCase(),
+			});
 		},
 		// @vuese
 		// Used to show submenu for responsive design

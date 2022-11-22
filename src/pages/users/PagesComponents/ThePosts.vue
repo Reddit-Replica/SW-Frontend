@@ -1,10 +1,23 @@
 <template>
 	<div>
 		<!-- <div>posts</div> -->
-		<base-user-post :post="post"></base-user-post>
-		<base-user-post :post="post"></base-user-post>
-		<base-user-post :post="post"></base-user-post>
-		<base-user-post :post="post"></base-user-post>
+		<base-user-post
+			v-for="(postData, index) in getUserPostData.postData.children"
+			:key="index"
+			:post-data="postData"
+		></base-user-post>
+		<!-- <base-user-post
+			:post="post"
+			:post-data="getUserPostData.postData"
+		></base-user-post>
+		<base-user-post
+			:post="post"
+			:post-data="getUserPostData.postData"
+		></base-user-post>
+		<base-user-post
+			:post="post"
+			:post-data="getUserPostData.postData"
+		></base-user-post> -->
 	</div>
 </template>
 
@@ -30,6 +43,32 @@ export default {
 			upClicked: false,
 			downClicked: false,
 		};
+	},
+	async created() {
+		this.loading = true;
+		const requestStatus = await this.RequestUserPostData();
+		this.loading = false;
+		if (requestStatus == 200) console.log('Sucessfully fetched data');
+		else if (requestStatus == 404) console.log('not found');
+		else if (requestStatus == 500) console.log(' internal server error');
+	},
+	computed: {
+		getUserPostData() {
+			// console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserPostData'];
+		},
+	},
+	methods: {
+		async RequestUserPostData() {
+			try {
+				await this.$store.dispatch('user/getUserPostData', {
+					baseurl: this.$baseurl,
+					// userName: this.$route.params.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 	},
 };
 </script>

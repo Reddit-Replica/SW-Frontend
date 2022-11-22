@@ -146,4 +146,138 @@ export default {
 			throw error;
 		}
 	},
+	async AddSubTopic(_, payload) {
+		const title = { subtopics: payload.subtopics };
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/add-subtopic`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+				body: JSON.stringify(title),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+
+	async getSubreddit(context, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + `/r/${payload.subredditName}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+
+		context.commit('setSubreddit', responseData['0']);
+	},
+	async joinSubreddit(_, payload) {
+		const joinInfo = {
+			subredditId: payload.subredditId,
+			message: payload.message,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/join-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+			body: JSON.stringify(joinInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+
+	async fetchSubredditPosts(context, payload) {
+		const baseurl = payload.baseurl;
+		const title = payload.title;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/${title}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+
+		const posts = [];
+		for (const key in responseData) {
+			const post = {
+				before: responseData[key].before,
+				after: responseData[key].after,
+				id: responseData[key].children[0].id,
+				content: responseData[key].children[0].content,
+				postedBy: responseData[key].children[0].postedBy,
+				subreddit: responseData[key].children[0].subreddit,
+				postedAt: responseData[key].children[0].postedAt,
+				title: responseData[key].children[0].title,
+				comments: responseData[key].children[0].comments,
+				votes: responseData[key].children[0].votes,
+				votingType: responseData[key].children[0].votingType,
+				saved: responseData[key].children[0].saved,
+				kind: responseData[key].children[0].kind,
+				sharePostId: responseData[key].children[0].sharePostId,
+			};
+			if (post.kind == 'post') {
+				const response2 = await fetch(baseurl + '/post-details', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: 'Bearer ' + payload.token,
+					},
+				});
+				const responseData2 = await response2.json();
+				if (!response2.ok) {
+					const error2 = new Error(responseData2.message || 'Failed to fetch!');
+					throw error2;
+				}
+				const sharedPostDetails = responseData2[0];
+				sharedPostDetails.id = post.sharePostId;
+				post.sharedPostDetails = sharedPostDetails;
+			}
+			posts.push(post);
+		}
+		context.commit('setPosts', posts);
+	},
 };

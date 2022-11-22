@@ -204,97 +204,35 @@
   "hide": [],
   "vote": [
     {
-      "id": 1,
-      "type": "post",
+      "id": "1",
+      "type": "comment",
       "direction": 1
     },
     {
-      "type": "post",
-      "direction": -1,
-      "id": 2
+      "id": "8",
+      "type": "comment",
+      "direction": 1
     },
     {
-      "type": "post",
-      "direction": -1,
-      "id": 3
+      "id": "9",
+      "type": "comment",
+      "direction": 1
     },
     {
-      "type": "post",
-      "direction": -1,
-      "id": 4
-    },
-    {
-      "type": "post",
-      "direction": 1,
-      "id": 5
-    },
-    {
-      "type": "post",
-      "direction": -1,
-      "id": 6
-    },
-    {
-      "type": "post",
-      "direction": -1,
-      "id": 7
-    },
-    {
-      "type": "post",
-      "direction": -1,
-      "id": 8
-    },
-    {
-      "type": "post",
-      "direction": -1,
-      "id": 9
-    },
-    {
-      "type": "post",
-      "direction": -1,
-      "id": 10
+      "id": "4",
+      "type": "comment",
+      "direction": 1
     }
   ],
   "save": [
     {
       "id": "1",
       "type": "post"
-    },
-    {
-      "type": "post",
-      "id": "ql7647U"
-    },
-    {
-      "type": "post",
-      "id": "6LPHDAC"
-    },
-    {
-      "type": "post",
-      "id": "FLX-23A"
-    },
-    {
-      "id": "2",
-      "type": "post"
     }
   ],
   "unsave": [
     {
       "id": "1",
-      "type": "post"
-    },
-    {
-      "id": "07oskSA",
-      "type": "post"
-    },
-    {
-      "id": "U7u9hH7",
-      "type": "post"
-    },
-    {
-      "id": "f0LtXRI",
-      "type": "post"
-    },
-    {
-      "id": "2",
       "type": "post"
     }
   ],
@@ -318,10 +256,79 @@
       "moderators": [],
       "isMember": true,
       "banner": "string",
-      "picture": "https://cdn.dribbble.com/users/5745266/screenshots/13977782/untitled-1__21__4x.png",
+      "picture": "string",
       "communityTheme": true,
       "views": 0,
       "mainTopic": {}
+    }
+  ],
+  "subreddit": [
+    {
+      "nsfw": false,
+      "type": "public",
+      "isFavorite": false,
+      "title": "",
+      "category": "Sports",
+      "members": 10,
+      "online": 5,
+      "description": "",
+      "dateOfCreation": "NOV 20, 2022",
+      "flairs": [],
+      "rules": [],
+      "bans": [],
+      "moderators": [
+        {
+          "username": "HodaGamal"
+        },
+        {
+          "username": "AsmaaAdel"
+        }
+      ],
+      "isMember": false,
+      "banner": "string",
+      "picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
+      "communityTheme": false,
+      "views": 0,
+      "mainTopic": {
+        "topicTitle": "",
+        "subtopics": []
+      }
+    }
+  ],
+  "subreddit_new": [
+    {
+      "nsfw": false,
+      "type": "public",
+      "isFavorite": false,
+      "title": "",
+      "category": "Sports",
+      "members": 10,
+      "online": 5,
+      "description": "Learn with us",
+      "dateOfCreation": "NOV 20, 2022",
+      "flairs": [],
+      "rules": [],
+      "bans": [],
+      "moderators": [
+        {
+          "username": "HodaGamal"
+        },
+        {
+          "username": "AsmaaAdel"
+        }
+      ],
+      "isMember": false,
+      "banner": "string",
+      "picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
+      "communityTheme": false,
+      "views": 0,
+      "mainTopic": {
+        "topicTitle": "Art",
+        "subtopics": [
+          "Fashion",
+          "Cars"
+        ]
+      }
     }
   ],
   "users": [
@@ -373,76 +380,6 @@
       "id": 3
     },
     {
-      "subredditName": "hello",
-      "type": "Private",
-      "nsfw": false,
-      "category": "leave",
-      "id": 4
-    },
-    {
-      "subredditName": "hhh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 5
-    },
-    {
-      "subredditName": "hhh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 6
-    },
-    {
-      "subredditName": "dfgh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 7
-    },
-    {
-      "subredditName": "hikoklkllklllllllllll",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 8
-    },
-    {
-      "subredditName": "hikoklkllklllllllllll",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 9
-    },
-    {
-      "subredditName": "hikoklkllklllllllllll",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 10
-    },
-    {
-      "subredditName": "hikoklkllklllllllllll",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 11
-    },
-    {
-      "subredditName": "hikoklkllklllllllllll",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 12
-    },
-    {
-      "subredditName": "hikoklkllklllllllllll",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 13
-    },
-    {
       "subredditName": "feeltired",
       "type": "Restricted",
       "nsfw": true,
@@ -462,96 +399,154 @@
       "nsfw": true,
       "category": "Learning",
       "id": 16
-    },
-    {
-      "subredditName": "popopo",
-      "type": "Private",
-      "nsfw": false,
-      "category": "News",
-      "id": 17
-    },
-    {
-      "subredditName": "wewewe",
-      "type": "Private",
-      "nsfw": false,
-      "category": "Gaming",
-      "id": 18
-    },
-    {
-      "subredditName": "yooooooh",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Sports",
-      "id": 19
-    },
-    {
-      "subredditName": "jijijijijij",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 20
-    },
-    {
-      "subredditName": "koko",
-      "type": "Restricted",
-      "nsfw": false,
-      "category": "Programming",
-      "id": 21
-    },
-    {
-      "subredditName": "lplplplplpl",
-      "type": "Restricted",
-      "nsfw": false,
-      "category": "News",
-      "id": 22
-    },
-    {
-      "subredditName": "huhuhu",
-      "type": "Restricted",
-      "nsfw": false,
-      "category": "News",
-      "id": 23
-    },
-    {
-      "subredditName": "tyty",
-      "type": "Public",
-      "nsfw": false,
-      "category": "News",
-      "id": 24
-    },
-    {
-      "subredditName": "kokoko",
-      "type": "Public",
-      "nsfw": false,
-      "category": "News",
-      "id": 25
-    },
-    {
-      "subredditName": "popoiuiu",
-      "type": "Public",
-      "nsfw": false,
-      "category": "News",
-      "id": 26
-    },
-    {
-      "subredditName": "uiouio",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Learning",
-      "id": 27
-    },
-    {
-      "subredditName": "kokpkl",
-      "type": "Public",
-      "nsfw": false,
-      "category": "Learning",
-      "id": 28
     }
   ],
   "subreddit-name-available": [
     {
       "id": 1,
       "subredditName": "FrontEnd"
+    }
+  ],
+  "add-description": [
+    {
+      "description": "hello every body it is a new subreddit",
+      "rId": "subreddit",
+      "id": 3
+    },
+    {
+      "description": "Hi there, have fun.",
+      "rId": "subreddit",
+      "id": 4
+    }
+  ],
+  "add-maintopic": [
+    {
+      "title": {
+        "id": 2,
+        "name": "Beauty"
+      },
+      "rId": "subreddit",
+      "id": 2
+    },
+    {
+      "title": {
+        "id": 0,
+        "name": "Art"
+      },
+      "rId": "subreddit",
+      "id": 3
+    },
+    {
+      "title": {
+        "id": 1,
+        "name": "Anime"
+      },
+      "rId": "subreddit",
+      "id": 4
+    },
+    {
+      "title": {
+        "id": 1,
+        "name": "Anime"
+      },
+      "rId": "subreddit",
+      "id": 5
+    },
+    {
+      "title": {
+        "id": 2,
+        "name": "Beauty"
+      },
+      "rId": "subreddit",
+      "id": 6
+    },
+    {
+      "title": {
+        "id": 2,
+        "name": "Beauty"
+      },
+      "rId": "subreddit",
+      "id": 7
+    },
+    {
+      "title": {
+        "id": 0,
+        "name": "Art"
+      },
+      "rId": "subreddit",
+      "id": 8
+    },
+    {
+      "title": {
+        "id": 0,
+        "name": "Art"
+      },
+      "rId": "subreddit",
+      "id": 9
+    },
+    {
+      "title": {
+        "id": 1,
+        "name": "Anime"
+      },
+      "rId": "subreddit",
+      "id": 10
+    }
+  ],
+  "add-subtopic": [
+    {
+      "rId": "subreddit",
+      "id": 1
+    },
+    {
+      "rId": "subreddit",
+      "id": 2
+    },
+    {
+      "subtopics": [
+        {
+          "id": 2,
+          "name": "Beauty"
+        },
+        {
+          "id": 3,
+          "name": "Cars"
+        },
+        {
+          "id": 1,
+          "name": "Anime"
+        }
+      ],
+      "rId": "subreddit",
+      "id": 3
+    },
+    {
+      "subtopics": [
+        {
+          "id": 0,
+          "name": "Art"
+        },
+        {
+          "id": 2,
+          "name": "Beauty"
+        },
+        {
+          "id": 3,
+          "name": "Cars"
+        },
+        {
+          "id": 4,
+          "name": "Fashion"
+        }
+      ],
+      "rId": "subreddit",
+      "id": 4
+    }
+  ],
+  "toggle-favorite": [
+    {
+      "id": 1,
+      "isFavorite": false
     }
   ],
   "saved-categories": [
@@ -736,6 +731,104 @@
       "sendAt": "",
       "subject": "g;",
       "id": 19
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 20
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 21
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 22
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 23
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 24
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 25
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 26
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "fghjk",
+      "subject": "fkl",
+      "id": 27
+    },
+    {
+      "text": "صبللااثي",
+      "senderUsername": "asmaa first subbreddit",
+      "receiverUsername": "adelasmaa333@gmail.com",
+      "subject": "rtyui",
+      "id": 28
+    },
+    {
+      "text": "لاتنم",
+      "senderUsername": "asmaa second subbreddit",
+      "receiverUsername": "رلاىةوز",
+      "subject": "اتنمك",
+      "id": 29
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "asmaa first subbreddit",
+      "receiverUsername": "vghjkl;",
+      "subject": "ghjkl",
+      "id": 30
+    },
+    {
+      "text": "yuio",
+      "senderUsername": "asmaa first subbreddit",
+      "receiverUsername": "dfghjkl",
+      "subject": "dfghjk",
+      "id": 31
+    },
+    {
+      "text": "dfghjkl",
+      "senderUsername": "asmaa second subbreddit",
+      "receiverUsername": "dfghjk",
+      "subject": "ghjkl",
+      "id": 32
+    },
+    {
+      "text": "hjk",
+      "senderUsername": "",
+      "receiverUsername": "fghjk",
+      "subject": "yuikl",
+      "id": 33
     }
   ],
   "inbox": [
@@ -745,7 +838,7 @@
       "children": [
         {
           "id": "1",
-          "text": "hello world",
+          "text": "*hello world*",
           "type": "Post replies",
           "senderUsername": "/u/norhan_reda",
           "receiverUsername": "/u/asmaaadel0",
@@ -764,7 +857,7 @@
       "children": [
         {
           "id": "2",
-          "text": "hello asmaa",
+          "text": "*hello asmaa*",
           "type": "Messages",
           "subredditName": "subredditName",
           "postTitle": "postTitle",
@@ -783,7 +876,7 @@
       "children": [
         {
           "id": "3",
-          "text": "hello asmaa",
+          "text": "**hello asmaa**",
           "type": "Mentions",
           "subredditName": "subredditName",
           "postTitle": "postTitle",
@@ -1015,6 +1108,29 @@
       ]
     }
   ],
+  "addRule": [
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "Posts & comments",
+      "reportReason": "",
+      "description": "",
+      "id": 1
+    },
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "Posts & comments",
+      "reportReason": "",
+      "description": "",
+      "id": 2
+    },
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "posts and comments",
+      "reportReason": "",
+      "description": "",
+      "id": 3
+    }
+  ],
   "block-user": [
     {
       "block": true,
@@ -1150,6 +1266,31 @@
       "block": true,
       "username": "/u/hoda_gamal",
       "id": 27
+    },
+    {
+      "block": true,
+      "username": "/u/hoda_gamal",
+      "id": 28
+    },
+    {
+      "block": true,
+      "username": "/u/hoda_gamal",
+      "id": 29
+    },
+    {
+      "block": true,
+      "username": "/u/norhan_reda",
+      "id": 30
+    },
+    {
+      "block": true,
+      "username": "/u/norhan_reda",
+      "id": 31
+    },
+    {
+      "block": true,
+      "username": "/u/hoda_gamal",
+      "id": 32
     }
   ],
   "delete": [],
@@ -1211,7 +1352,7 @@
     ],
     "nsfw": false,
     "followed": true,
-    "blocked": true,
+    "blocked": false,
     "moderatorOf": [
       {
         "subredditName": "string",
@@ -1234,9 +1375,169 @@
     ]
   },
   "social-link": {
-    "type": "Instagram",
-    "displayText": "ukjy",
-    "link": "https://www.instagram.com/ukjy"
+    "type": "Facebook",
+    "displayText": "cgbg",
+    "link": "http://gbfgnh.com"
+  },
+  "userpostdata": {
+    "after": "string",
+    "before": "string",
+    "children": [
+      {
+        "kind": "text",
+        "subreddit": "Cars",
+        "content": "Marcedes car is the best for ever",
+        "images": [
+          {
+            "path": "string",
+            "caption": "string",
+            "link": "string"
+          }
+        ],
+        "nsfw": true,
+        "spoiler": true,
+        "title": "The Cars",
+        "sharePostId": "string",
+        "flair": {
+          "id": "string",
+          "flairName": "Cars lovers",
+          "order": 0,
+          "backgroundColor": "red",
+          "textColor": "#ffffff"
+        },
+        "comments": 100,
+        "votes": 10,
+        "postedAt": "string",
+        "deletedAt": "string",
+        "editedAt": "string",
+        "postedBy": "string",
+        "votingType": 1,
+        "saved": false,
+        "followed": false,
+        "hidden": false,
+        "spammed": false,
+        "inYourSubreddit": false,
+        "moderation": {
+          "approve": {
+            "approvedBy": "string",
+            "approvedDate": "2019-08-24T14:15:22Z"
+          },
+          "remove": {
+            "removedBy": "string",
+            "removedDate": "2019-08-24T14:15:22Z"
+          },
+          "spam": {
+            "spammedBy": "string",
+            "spammedDate": "2019-08-24T14:15:22Z"
+          },
+          "lock": true
+        }
+      },
+      {
+        "kind": "image",
+        "subreddit": "Avatars",
+        "content": "",
+        "images": [
+          {
+            "path": "string",
+            "caption": "string",
+            "link": "string"
+          }
+        ],
+        "nsfw": false,
+        "spoiler": false,
+        "title": "The Avatars",
+        "sharePostId": "string",
+        "flair": {
+          "id": "string",
+          "flairName": "Avatars lovers",
+          "order": 0,
+          "backgroundColor": "blue",
+          "textColor": "#ffffff"
+        },
+        "comments": 90,
+        "votes": 10,
+        "postedAt": "string",
+        "deletedAt": "string",
+        "editedAt": "string",
+        "postedBy": "string",
+        "votingType": 1,
+        "saved": false,
+        "followed": false,
+        "hidden": false,
+        "spammed": true,
+        "inYourSubreddit": false,
+        "moderation": {
+          "approve": {
+            "approvedBy": "string",
+            "approvedDate": "2019-08-24T14:15:22Z"
+          },
+          "remove": {
+            "removedBy": "string",
+            "removedDate": "2019-08-24T14:15:22Z"
+          },
+          "spam": {
+            "spammedBy": "string",
+            "spammedDate": "2019-08-24T14:15:22Z"
+          },
+          "lock": true
+        }
+      },
+      {
+        "kind": "link",
+        "subreddit": "Cars",
+        "content": "Marcedes car is the best for ever",
+        "images": [
+          {
+            "path": "string",
+            "caption": "string",
+            "link": "string"
+          }
+        ],
+        "nsfw": true,
+        "spoiler": true,
+        "title": "The Cars",
+        "sharePostId": "string",
+        "flair": {
+          "id": "string",
+          "flairName": "Cars lovers",
+          "order": 0,
+          "backgroundColor": "red",
+          "textColor": "#ffffff"
+        },
+        "comments": 100,
+        "votes": 10,
+        "postedAt": "string",
+        "deletedAt": "string",
+        "editedAt": "string",
+        "postedBy": "string",
+        "votingType": 1,
+        "saved": false,
+        "followed": false,
+        "hidden": false,
+        "spammed": false,
+        "inYourSubreddit": false,
+        "moderation": {
+          "approve": {
+            "approvedBy": "string",
+            "approvedDate": "2019-08-24T14:15:22Z"
+          },
+          "remove": {
+            "removedBy": "string",
+            "removedDate": "2019-08-24T14:15:22Z"
+          },
+          "spam": {
+            "spammedBy": "string",
+            "spammedDate": "2019-08-24T14:15:22Z"
+          },
+          "lock": true
+        }
+      }
+    ]
+  },
+  "follow-user": {
+    "username": "kk",
+    "follow": false
   },
   "user1": {
     "displayName": "Abdalhameed_Emad",

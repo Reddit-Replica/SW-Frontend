@@ -85,21 +85,21 @@ describe ('AllinboxComponent.vue', () => {
     expect (wrapper.find ('.subject-text').text ()).contain ('hi');
   });
 
-  it ('Testing text message is correct', () => {
-    const wrapper = mount (AllinboxComponent, {
-      props: {
-        message,
-        index,
-      },
-      global: {
-        // OR:
-        mocks: {
-          $store: store,
-        },
-      },
-    });
-    expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
-  });
+  // it ('Testing text message is correct', () => {
+  //   const wrapper = mount (AllinboxComponent, {
+  //     props: {
+  //       message,
+  //       index,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  // });
 
   it ('Testing the time is correct', () => {
     const wrapper = mount (AllinboxComponent, {

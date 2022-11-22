@@ -52,7 +52,8 @@
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 						><time :class="!isRead ? 'unread' : ''"> {{ message.sendAt }}</time>
 					</p>
-					<p class="md">{{ message.text }}</p>
+					<!-- <p class="md">{{ message.text }}</p> -->
+					<Markdown class="md" :source="message.text" />
 					<ul class="flat-list ul-messages">
 						<li :id="'context-link-' + index">
 							<a href="" :id="'context-a-' + index">context</a>
@@ -126,17 +127,146 @@
 							>
 						</li>
 						<li :id="'reply-box-' + index">
-							<span class="link" :id="'reply-' + index">Reply</span>
+							<span
+								class="link"
+								:id="'reply-' + index"
+								@click="replyFunction('show')"
+								>Reply</span
+							>
 						</li>
 					</ul>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
 				</div>
 			</div>
 		</li>
+		<ReplyComponent
+			:show-reply-box="showReplyBox"
+			@hide-reply-box="replyFunction('hide')"
+		></ReplyComponent>
+		<!-- <div class="child-reply" v-if="showReplyBox">
+			<form action="#" class="form-reply">
+				<div class="user-text-reply">
+					<div class="md">
+						<textarea
+							name="text"
+							cols="1"
+							rows="1"
+							class="text-area"
+						></textarea>
+					</div>
+				</div>
+				<div class="markdown-links">
+					<a
+						href="https://www.redditinc.com/policies/content-policy"
+						target="__blank"
+						id="content-policy-link"
+						>content policy</a
+					>
+					<button
+						class="markdown-link"
+						href=""
+						@click="changeTitle()"
+						id="formatting-button"
+					>
+						{{ formatting }} help
+					</button>
+				</div>
+				<button class="submit-form" id="submit-form">Save</button>
+				<button
+					class="submit-form"
+					id="cancel-form"
+					@click="replyFunction('hide')"
+				>
+					Cancel
+				</button>
+				<div class="formatting-help" v-if="formatting == 'hide'">
+					<p>
+						reddit uses a slightly-customized version of
+						<a
+							href="https://daringfireball.net/projects/markdown/syntax"
+							id="markdown-link"
+							>Markdown</a
+						>
+						for formatting. See below for some basics, or check
+						<a
+							href="https://www.reddit.com/wiki/commenting/?utm_source=reddit&utm_medium=usertext&utm_name=frontpage&utm_content="
+							id="the-commenting-wiki-page-link"
+							>the commenting wiki page</a
+						>
+						for more detailed help and solutions to common issues.
+					</p>
+					<table>
+						<tr>
+							<th>You type</th>
+							<th>You see</th>
+						</tr>
+						<tr>
+							<td>*italic*</td>
+							<td><i>italic</i></td>
+						</tr>
+						<tr>
+							<td>**bold**</td>
+							<td><strong>bold</strong></td>
+						</tr>
+						<tr>
+							<td>[reddit!](https://reddit.com)</td>
+							<td><router-link to="/">reddit!</router-link></td>
+						</tr>
+						<tr>
+							<td>
+								* item 1 <br />
+								* item 2 <br />
+								* item 3
+							</td>
+							<td>
+								<li>item 1</li>
+								<li>item 2</li>
+								<li>item 3</li>
+							</td>
+						</tr>
+						<tr>
+							<td>> quoted text</td>
+							<td>
+								<blockquote class="block-quote">&nbsp;quoted text</blockquote>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Lines starting with four spaces are treated like code:<br />
+								&nbsp;&nbsp;&nbsp;&nbsp;if 1 * 2 &lt; 3: <br />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print "hello,
+								world!"
+							</td>
+							<td>
+								Lines starting with four spaces are treated like code:<br />
+								<pre>if 1 * 2 &lt; 3:<br/> &nbsp;&nbsp;&nbsp;&nbsp; print "hello, world!"</pre>
+							</td>
+						</tr>
+						<tr>
+							<td>~~strikethrough~~</td>
+							<td><strike>strikethrough</strike></td>
+						</tr>
+						<tr>
+							<td>super script</td>
+							<td>super<sup>script</sup></td>
+						</tr>
+					</table>
+				</div>
+			</form>
+		</div> -->
 	</div>
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+import ReplyComponent from './ReplyComponent.vue';
 export default {
+	components: {
+		Markdown,
+		ReplyComponent,
+	},
 	props: {
 		// @vuese
 		//details of message
@@ -175,6 +305,8 @@ export default {
 			spammed: false,
 			disappear: false,
 			isRead: this.message.isRead,
+			errorResponse: null,
+			showReplyBox: false,
 		};
 	},
 
@@ -189,38 +321,70 @@ export default {
 		// @vuese
 		//handle block action
 		// @arg The argument is a string value representing if user click ok
-		blockAction(action) {
+		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/blockUser', {
-					block: true,
-					username: this.message.senderUsername,
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/blockUser', {
+						block: true,
+						username: this.message.senderUsername,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/blockSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
+		},
+		// @vuese
+		//handle unread action
+		// @arg no argument
+		unreadAction() {
+			this.isRead = false;
 		},
 		// @vuese
 		//handle spam action
 		// @arg The argument is a string value representing if user click ok
-		spamAction(action) {
+		async spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/spamMessage', {
-					id: this.message.id,
-					type: 'message',
-					reason: '',
-					baseurl: this.$baseurl,
-				});
-				this.spammed = true;
+				try {
+					this.$store.dispatch('messages/spamMessage', {
+						id: this.message.id,
+						type: 'comment',
+						reason: '',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/markSpamSuccessfully']) {
+						this.spammed = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.spammed = false;
+				}
 			}
 		},
 		// @vuese
 		//handle upvote action
 		// @arg no argument
-		upvote() {
+		async upvote() {
 			if (this.upClicked == false) {
-				this.upClicked = true;
+				try {
+					this.$store.dispatch('messages/voteComment', {
+						id: this.message.id,
+						direction: 1,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/votedSuccessfully']) {
+						this.upClicked = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.upClicked = false;
+				}
 			} else {
 				this.upClicked = false;
 			}
@@ -231,9 +395,21 @@ export default {
 		// @vuese
 		//handle downvote action
 		// @arg no argument
-		downvote() {
+		async downvote() {
 			if (this.downClicked == false) {
-				this.downClicked = true;
+				try {
+					this.$store.dispatch('messages/voteComment', {
+						id: this.message.id,
+						direction: -1,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/votedSuccessfully']) {
+						this.downClicked = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.downClicked = false;
+				}
 			} else {
 				this.downClicked = false;
 			}
@@ -242,10 +418,14 @@ export default {
 			}
 		},
 		// @vuese
-		//handle unread action
+		//show reply box or hide it
 		// @arg no argument
-		unreadAction() {
-			this.isRead = false;
+		replyFunction(title) {
+			if (title == 'show') {
+				this.showReplyBox = true;
+			} else if (title == 'hide') {
+				this.showReplyBox = false;
+			}
 		},
 	},
 };
