@@ -43,6 +43,7 @@ export default {
 		};
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;
+		const accessToken = localStorage.getItem('accessToken');
 		// const accessToken =
 		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
@@ -51,7 +52,7 @@ export default {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+					Authorization: `Bearer ${accessToken}`,
 				},
 				body: JSON.stringify(newRule),
 			}
@@ -80,14 +81,16 @@ export default {
 
 	async loadListOfRules(context, payload) {
 		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/rules`,
 			{
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-					subreddit: payload.subredditName,
+					Authorization: `Bearer ${accessToken}`,
 				},
 			}
 		);
@@ -95,15 +98,15 @@ export default {
 		if (response.status == 200) {
 			const rules = [];
 
-			for (const key in responseData) {
+			for (let i = 0; i < responseData.rules.length; i++) {
 				const rule = {
-					ruleID: responseData[key].rules[0].ruleID,
-					ruleName: responseData[key].rules[0].ruleName,
-					ruleOrder: responseData[key].rules[0].ruleOrder,
-					createdAt: responseData[key].rules[0].createdAt,
-					appliesTo: responseData[key].rules[0].appliesTo,
-					reportReason: responseData[key].rules[0].reportReason,
-					description: responseData[key].rules[0].description,
+					ruleID: responseData.rules[i].ruleID,
+					ruleName: responseData.rules[i].ruleName,
+					ruleOrder: responseData.rules[i].ruleOrder,
+					createdAt: responseData.rules[i].createdAt,
+					appliesTo: responseData.rules[i].appliesTo,
+					reportReason: responseData.rules[i].reportReason,
+					description: responseData.rules[i].description,
 				};
 				rules.push(rule);
 			}

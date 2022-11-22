@@ -6,7 +6,7 @@
 	></listmoderation-bar>
 	<div>
 		<unmoderator-view
-			v-if="!moderatorByMe"
+			v-if="moderatorByMe"
 			:list-of-moderators="listOfModerators"
 			:subreddit-name="subredditName"
 		></unmoderator-view>
