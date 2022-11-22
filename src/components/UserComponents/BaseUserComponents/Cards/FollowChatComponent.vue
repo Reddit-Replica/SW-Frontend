@@ -17,6 +17,7 @@
 	</div>
 	<div v-if="blocked" class="blocked-user-button" id="blocked-user-box">
 		<base-button
+			@click="toggleBlockedUnblocked"
 			class="blocked-button"
 			id="blocked-user-button"
 			@mouseover="blockedText = 'Unblocked'"
@@ -56,8 +57,8 @@ export default {
 				await this.$store.dispatch('user/followUnfollowUser', {
 					baseurl: this.$baseurl,
 					followUnfollowData: {
-						username: this.$route.params.userName,
 						follow: !this.followed,
+						username: this.$route.params.userName,
 					},
 				});
 			} catch (error) {
