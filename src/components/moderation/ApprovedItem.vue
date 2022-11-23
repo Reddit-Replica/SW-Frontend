@@ -15,7 +15,9 @@
 			<span>{{ moderator.dateOfModeration }}</span>
 		</div>
 		<div class="remove">
-			<base-button class="button-remove">Remove</base-button>
+			<base-button class="button-remove" :id="'button-remove-' + index"
+				>Remove</base-button
+			>
 		</div>
 	</li>
 </template>
