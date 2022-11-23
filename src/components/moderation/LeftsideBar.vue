@@ -396,6 +396,7 @@ export default {
 	props: {
 		// @vuese
 		//subreddit name
+		// @type string
 		subredditName: {
 			type: String,
 			default: 'Subreddit Name',

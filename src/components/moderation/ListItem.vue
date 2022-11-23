@@ -15,9 +15,12 @@
 			<span>{{ moderator.dateOfModeration }}</span>
 		</div>
 		<div class="permissions">
-			<span v-for="permission in moderator.permissions" :key="permission">{{
-				permission
-			}}</span>
+			<span
+				v-for="(permission, index) in moderator.permissions"
+				:key="permission"
+				:id="'permission-' + index"
+				>{{ permission }}</span
+			>
 		</div>
 	</li>
 </template>
@@ -27,6 +30,7 @@ export default {
 	props: {
 		// @vuese
 		//details of moderator
+		// @type object
 		moderator: {
 			type: Object,
 			required: true,
@@ -39,12 +43,14 @@ export default {
 		},
 		// @vuese
 		//seacrhing value
+		// @type string
 		search: {
 			type: String,
 			default: '',
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,

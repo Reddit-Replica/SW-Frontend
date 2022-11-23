@@ -27,6 +27,7 @@ export default {
 	props: {
 		// @vuese
 		//details of moderator
+		// @type object
 		moderator: {
 			type: Object,
 			required: true,
@@ -39,12 +40,14 @@ export default {
 		},
 		// @vuese
 		//seacrhing value
+		// @type string
 		search: {
 			type: String,
 			default: '',
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
