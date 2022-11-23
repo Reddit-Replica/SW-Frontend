@@ -11,4 +11,7 @@ export default {
 	setPosts(state, payload) {
 		state.Posts = payload;
 	},
+	createdSuccessfully(state, payload) {
+		state.createdSuccessfully = payload;
+	},
 };
