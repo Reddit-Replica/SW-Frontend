@@ -16,15 +16,22 @@
 				</svg>
 				Queues
 			</div>
-			<router-link :to="'/r/' + subredditName + '/about/spam'" class="options"
+			<router-link
+				:to="'/r/' + subredditName + '/about/spam'"
+				class="options"
+				id="spam-button"
 				>Spam</router-link
 			>
-			<router-link :to="'/r/' + subredditName + '/about/edited'" class="options"
+			<router-link
+				:to="'/r/' + subredditName + '/about/edited'"
+				class="options"
+				id="edited-button"
 				>Edited</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/unmoderated'"
 				class="options"
+				id="unmoderated-button"
 				>Unmoderated</router-link
 			>
 		</div>
@@ -44,20 +51,28 @@
 				</svg>
 				User Management
 			</div>
-			<router-link :to="'/r/' + subredditName + '/about/banned'" class="options"
+			<router-link
+				:to="'/r/' + subredditName + '/about/banned'"
+				class="options"
+				id="banned-button"
 				>Banned</router-link
 			>
-			<router-link :to="'/r/' + subredditName + '/about/muted'" class="options"
+			<router-link
+				:to="'/r/' + subredditName + '/about/muted'"
+				class="options"
+				id="muted-button"
 				>Muted</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/contributors'"
 				class="options"
+				id="approved-button"
 				>Approved</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/moderators'"
 				class="options"
+				id="moderators-button"
 			>
 				Moderators</router-link
 			>
@@ -84,6 +99,7 @@
 			<router-link
 				:to="'/r/' + subredditName + '/about/postflair'"
 				class="options"
+				id="post-flair-button"
 				>Post flair</router-link
 			>
 		</div>
@@ -103,12 +119,16 @@
 				</svg>
 				Ruled and requlations
 			</div>
-			<router-link :to="'/r/' + subredditName + '/about/rules'" class="options"
+			<router-link
+				:to="'/r/' + subredditName + '/about/rules'"
+				class="options"
+				id="rules-button"
 				>Rules</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/settings'"
 				class="options"
+				id="content-controls-button"
 				>Content controls</router-link
 			>
 		</div>
@@ -132,6 +152,7 @@
 			<router-link
 				:to="'/r/' + subredditName + '/about/scheduledposts'"
 				class="options"
+				id="scheduled-posts-button"
 				>Scheduled posts</router-link
 			>
 		</div>
@@ -154,7 +175,10 @@
 				</svg>
 				Other
 			</div>
-			<router-link :to="'/r/' + subredditName + '/about/edit'" class="options"
+			<router-link
+				:to="'/r/' + subredditName + '/about/edit'"
+				class="options"
+				id="community-settings-button"
 				>Community settings
 				<div class="new">New</div>
 				<svg class="icon-mod icon-arrow icon-right">
@@ -219,6 +243,7 @@
 			<router-link
 				:to="'/r/' + subredditName + '/about/traffic'"
 				class="options"
+				id="traffic-stats-button"
 				>Traffic stats</router-link
 			>
 		</div>
@@ -369,6 +394,8 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//subreddit name
 		subredditName: {
 			type: String,
 			default: 'Subreddit Name',
