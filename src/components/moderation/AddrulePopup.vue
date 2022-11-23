@@ -28,14 +28,18 @@
 					<div class="rule-box-title">
 						<label for="type-post" class="title-black">Aplies to</label>
 					</div>
-					<div class="rule-box-input flex-column" role="radiogroup">
-						<input type="hidden" />
+					<div
+						class="rule-box-input flex-column"
+						role="radiogroup"
+						id="applied-to"
+					>
+						<input type="hidden" id="input-applied-to" />
 						<div
 							class="type-item"
 							role="radio"
 							value="public"
 							@click="chooseType(0)"
-							id="type-post"
+							id="posts-comments"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -45,6 +49,7 @@
 								class="bi bi-circle"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen0"
+								id="posts-comments"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -57,6 +62,7 @@
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
 								viewBox="0 0 16 16"
+								id="posts-comments"
 								v-else
 							>
 								<path
@@ -70,7 +76,7 @@
 							role="radio"
 							value="restricted"
 							@click="chooseType(1)"
-							id="type-restricted"
+							id="posts"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +86,7 @@
 								class="bi bi-circle"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen1"
+								id="posts"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -93,6 +100,7 @@
 								class="bi bi-record-circle-fill"
 								viewBox="0 0 16 16"
 								v-else
+								id="posts"
 							>
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
@@ -105,7 +113,7 @@
 							role="radio"
 							value="private"
 							@click="chooseType(2)"
-							id="type-private"
+							id="comments"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -115,6 +123,7 @@
 								class="bi bi-circle"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen2"
+								id="comments"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -128,6 +137,7 @@
 								class="bi bi-record-circle-fill"
 								viewBox="0 0 16 16"
 								v-else
+								id="comments"
 							>
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
@@ -201,7 +211,7 @@
 						@click="submitRule()"
 						class="button-blue"
 						:class="ruleName == '' ? 'disabled' : ''"
-						id="create-button"
+						id="create-rule-button"
 						>Add new rule</base-button
 					>
 					<base-button
@@ -216,7 +226,7 @@
 								? 'disabled'
 								: ''
 						"
-						id="create-button"
+						id="save-button"
 						>Save</base-button
 					>
 				</div>
@@ -273,6 +283,22 @@ export default {
 			required: true,
 		},
 		// @vuese
+		//return rule order
+		// @type string
+		ruleOrder: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
+		// @vuese
+		//return rule id
+		// @type string
+		ruleId: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
 		//return if there is an edited rule
 		// @type string
 		edit: {
@@ -280,20 +306,9 @@ export default {
 			default: false,
 			required: true,
 		},
-		// @vuese
-		//return if there is an edited rule
-		// @type string
-		ruleOrder: {
-			type: Number,
-			default: 0,
-			required: true,
-		},
-		ruleId: {
-			type: String,
-			default: '',
-			required: true,
-		},
 	},
+	// @vuese
+	//update choosen rule applied to
 	beforeMount() {
 		this.updateChoosen();
 	},
@@ -313,24 +328,6 @@ export default {
 			errorResponse: null,
 		};
 	},
-	// watch: {
-	// 	appliesToEdit() {
-	// 		console.log(this.appliesToEdit);
-	// 		if (this.appliesToEdit == 'posts and comments') {
-	// 			this.typeChosen2 = true;
-	// 			this.typeChosen1 = false;
-	// 			this.typeChosen0 = false;
-	// 		} else if (this.appliesToEdit == 'posts only') {
-	// 			this.typeChosen1 = false;
-	// 			this.typeChosen2 = true;
-	// 			this.typeChosen0 = false;
-	// 		} else {
-	// 			this.typeChosen0 = false;
-	// 			this.typeChosen1 = false;
-	// 			this.typeChosen2 = true;
-	// 		}
-	// 	},
-	// },
 	methods: {
 		//@vuese
 		//Hide dialog
@@ -363,7 +360,7 @@ export default {
 		},
 		//@vuese
 		//update chosen applied to type (posts and comments, posts only, comments only)
-		//@arg index to indicate chosen type
+		//@arg no argument
 		updateChoosen() {
 			if (this.appliesToEdit == 'posts and comments') {
 				this.typeChosen2 = false;
@@ -392,7 +389,7 @@ export default {
 			}
 		},
 		//@vuese
-		//submit adding rule
+		//handle submit adding rule
 		//@arg no argument
 		async submitRule() {
 			this.errorResponse = null;
