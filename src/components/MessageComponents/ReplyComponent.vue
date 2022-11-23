@@ -1,7 +1,7 @@
 <template>
 	<div class="child-reply" v-if="showReplyBox">
 		<form action="#" class="form-reply">
-			<div class="user-text-reply">
+			<div class="user-text-reply" :id="'reply-form-' + index">
 				<div class="md">
 					<textarea name="text" cols="1" rows="1" class="text-area"></textarea>
 				</div>
@@ -10,22 +10,22 @@
 				<a
 					href="https://www.redditinc.com/policies/content-policy"
 					target="__blank"
-					id="content-policy-link"
+					:id="'content-policy-link-' + index"
 					>content policy</a
 				>
 				<button
 					class="markdown-link"
 					href=""
 					@click="changeTitle()"
-					id="formatting-button"
+					:id="'formatting-button-' + index"
 				>
 					{{ formatting }} help
 				</button>
 			</div>
-			<button class="submit-form" id="submit-form">Save</button>
+			<button class="submit-form" :id="'submit-form-' + index">Save</button>
 			<button
 				class="submit-form"
-				id="cancel-form"
+				:id="'cancel-form-' + index"
 				@click="replyFunction('hide')"
 			>
 				Cancel
@@ -35,13 +35,13 @@
 					reddit uses a slightly-customized version of
 					<a
 						href="https://daringfireball.net/projects/markdown/syntax"
-						id="markdown-link"
+						:id="'markdown-link-' + index"
 						>Markdown</a
 					>
 					for formatting. See below for some basics, or check
 					<a
 						href="https://www.reddit.com/wiki/commenting/?utm_source=reddit&utm_medium=usertext&utm_name=frontpage&utm_content="
-						id="the-commenting-wiki-page-link"
+						:id="'the-commenting-wiki-page-link-' + index"
 						>the commenting wiki page</a
 					>
 					for more detailed help and solutions to common issues.
@@ -122,6 +122,13 @@ export default {
 			type: Boolean,
 			required: true,
 			default: false,
+		},
+		// @vuese
+		//index to handle unique ids and background color
+		index: {
+			type: Number,
+			required: true,
+			default: 0,
 		},
 	},
 	methods: {
