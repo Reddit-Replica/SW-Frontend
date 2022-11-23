@@ -61,9 +61,9 @@
 					<!-- <p class="md">{{ message.text }}</p> -->
 					<Markdown class="md" :source="message.text" />
 					<ul class="flat-list ul-messages">
-						<li :id="'permalink-' + index">
+						<!-- <li :id="'permalink-' + index">
 							<a href="" :id="'permalink-link-' + index">Permalink</a>
-						</li>
+						</li> -->
 						<li v-if="ifMessageRecieved">
 							<form action="#">
 								<input

@@ -32,9 +32,9 @@
 				<Markdown class="md" :source="message.text" />
 				<!-- <p class="md">{{ message.text }}</p> -->
 				<ul class="flat-list ul-messages">
-					<li :id="'permalink-link-' + index">
+					<!-- <li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
-					</li>
+					</li> -->
 					<li :id="'delete-message-li-' + index">
 						<form action="#">
 							<input
