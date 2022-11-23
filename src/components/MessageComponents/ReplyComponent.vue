@@ -124,7 +124,7 @@ export default {
 			default: false,
 		},
 		// @vuese
-		//index to handle unique ids and background color
+		//index to handle unique ids
 		index: {
 			type: Number,
 			required: true,
