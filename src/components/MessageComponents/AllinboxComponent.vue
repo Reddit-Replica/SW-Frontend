@@ -151,6 +151,7 @@
 		</li>
 		<ReplyComponent
 			:show-reply-box="showReplyBox"
+			:index="index"
 			@hide-reply-box="replyFunction('hide')"
 		></ReplyComponent>
 	</div>
