@@ -8,6 +8,7 @@
 				<button
 					class="button-bar"
 					:class="choosenTitle == 'Pageviews' ? 'clicked' : ''"
+					id="pageviews-button"
 					@click="chooseTitle('pageviews')"
 				>
 					Pageviews
@@ -15,6 +16,7 @@
 				<button
 					class="button-bar"
 					:class="choosenTitle == 'Uniques' ? 'clicked' : ''"
+					id="uniques-button"
 					@click="chooseTitle('uniques')"
 				>
 					Uniques
@@ -22,6 +24,7 @@
 				<button
 					class="button-bar"
 					:class="choosenTitle == 'Members' ? 'clicked' : ''"
+					id="members-button"
 					@click="chooseTitle('members')"
 				>
 					Members
@@ -60,7 +63,7 @@
 									<div class="color">
 										<div class="color-box-blue"></div>
 										<div class="span">
-											<span class="span-text">Joined</span>
+											<span class="span-text" id="joined-button">Joined</span>
 										</div>
 									</div>
 								</button>
@@ -68,7 +71,7 @@
 									<div class="color">
 										<div class="color-box-yellow"></div>
 										<div class="span">
-											<span class="span-text"> Left</span>
+											<span class="span-text" id="left-button"> Left</span>
 										</div>
 									</div>
 								</button>
@@ -84,6 +87,7 @@
 					class="button-bar"
 					:class="choosenSecondTitle == 'Day' ? 'clicked' : ''"
 					@click="chooseSecondTitle('day')"
+					id="day-button"
 				>
 					Day
 				</button>
@@ -91,6 +95,7 @@
 					class="button-bar"
 					:class="choosenSecondTitle == 'Day of week' ? 'clicked' : ''"
 					@click="chooseSecondTitle('day of week')"
+					id="day-of-week-button"
 				>
 					Day of week
 				</button>
@@ -98,6 +103,7 @@
 					class="button-bar"
 					:class="choosenSecondTitle == 'Month' ? 'clicked' : ''"
 					@click="chooseSecondTitle('month')"
+					id="month-button"
 				>
 					Month
 				</button>
@@ -115,6 +121,9 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		//handle choose title
+		// @arg The argument is a string value representing chosen value
 		chooseTitle(title) {
 			if (title == 'pageviews') {
 				this.choosenTitle = 'Pageviews';
@@ -124,6 +133,9 @@ export default {
 				this.choosenTitle = 'Members';
 			}
 		},
+		// @vuese
+		//handle choose second title
+		// @arg The argument is a string value representing chosen value
 		chooseSecondTitle(title) {
 			if (title == 'day') {
 				this.choosenSecondTitle = 'Day';

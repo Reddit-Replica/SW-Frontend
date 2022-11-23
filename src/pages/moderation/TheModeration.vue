@@ -64,6 +64,8 @@ export default {
 		UnmoderatorView,
 		ListBar,
 	},
+	// @vuese
+	//load moderators list and change document title
 	beforeMount() {
 		document.title = this.$store.state.subredditName;
 		this.loadListOfModerators();
