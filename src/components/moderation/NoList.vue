@@ -25,6 +25,9 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		//title bar name
+		// @type string
 		title: {
 			type: String,
 			default: '',
