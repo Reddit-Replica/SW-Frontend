@@ -420,7 +420,7 @@ export default {
 		},
 		// @vuese
 		//show reply box or hide it
-		// @arg no argument
+		// @arg The argument is a string value representing if show or hide reply box
 		replyFunction(title) {
 			if (title == 'show') {
 				this.showReplyBox = true;
