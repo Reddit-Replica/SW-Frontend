@@ -10,7 +10,11 @@
 						id="message-from"
 						v-model="senderUsername"
 					>
-						<option :value="userName" selected="selected">
+						<option
+							:value="userName"
+							selected="selected"
+							:id="'message-from-options-' + userName"
+						>
 							{{ '/u/' + userName }}
 						</option>
 						<option
@@ -178,7 +182,7 @@ export default {
 	computed: {
 		// @vuese
 		//return suggested sender
-		// @type object
+		// @type string
 		suggestedSender() {
 			return this.$store.getters['messages/suggestedSender'];
 		},
