@@ -16,9 +16,9 @@
 		</div>
 		<div class="permissions">
 			<span
-				v-for="(permission, index) in moderator.permissions"
+				v-for="(permission, index1) in moderator.permissions"
 				:key="permission"
-				:id="'permission-' + index"
+				:id="'permission-' + index1"
 				>{{ permission }}</span
 			>
 		</div>
