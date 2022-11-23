@@ -9,6 +9,7 @@
 			<a
 				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
 				__blank="targe"
+				id="info-link"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -17,6 +18,7 @@
 					fill="currentColor"
 					class="bi bi-info-circle icon-info"
 					viewBox="0 0 16 16"
+					id="icon-info"
 				>
 					<path
 						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -35,6 +37,7 @@
 				fill="currentColor"
 				class="bi bi-list-ol icon"
 				viewBox="0 0 16 16"
+				id="no-rules-icon"
 			>
 				<path
 					fill-rule="evenodd"
@@ -84,6 +87,8 @@ export default {
 			showAddRule: false,
 		};
 	},
+	// @vuese
+	//load List of Rules before mount
 	beforeMount() {
 		this.loadListOfRules();
 	},
