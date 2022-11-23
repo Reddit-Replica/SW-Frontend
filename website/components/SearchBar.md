@@ -25,7 +25,7 @@
 <!-- @vuese:SearchBar:methods:start -->
 |Method|Description|Parameters|
 |---|---|---|
-|enterSearch|used to take action in entering value of search|no argument|
+|enterSearch|used to take action at entering value of search|no argument|
 
 <!-- @vuese:SearchBar:methods:end -->
 

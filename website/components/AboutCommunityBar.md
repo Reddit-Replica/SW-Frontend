@@ -10,6 +10,9 @@
 |onlineMembersCount|Number of online members in subreddit|`Number`|`false`|1|
 |communityDate|Subreddit creation date|`String`|`false`|-|
 |communityType|Subreddit type (public, restricted, private)|`String`|`false`|-|
+|subredditName|-|`String`|`false`|-|
+|communityDescriptionProp|-|`String`|`false`|-|
+|communityTopicProp|-|`Object`|`false`|{"mainTopic":"","subtopics":[]}|
 
 <!-- @vuese:AboutCommunityBar:props:end -->
 
