@@ -79,6 +79,7 @@ export default {
 	props: {
 		// @vuese
 		//details of moderators
+		//@type object
 		listOfModerators: {
 			type: Object,
 			required: true,
@@ -91,6 +92,7 @@ export default {
 		},
 		// @vuese
 		//subreddit name
+		//@type string
 		subredditName: {
 			type: String,
 			required: true,
