@@ -16,6 +16,8 @@
 |Event Name|Description|Parameters|
 |---|---|---|
 |showComments|Fire when the post is clicked|-|
+|saved|-|-|
+|unsaved|-|-|
 
 <!-- @vuese:BasePost:events:end -->
 
