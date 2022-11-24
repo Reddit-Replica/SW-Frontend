@@ -467,14 +467,20 @@ export default {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit name
 		subredditName: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit description
 		communityDescriptionProp: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit main topic and array of subtopics
 		communityTopicProp: {
 			type: Object,
 			default: () => ({ mainTopic: '', subtopics: [] }),
@@ -552,12 +558,15 @@ export default {
 		addToFavourite() {
 			//toggle add to favourite data
 			this.addedToFavourite = !this.addedToFavourite;
+
 			//change button text
 			this.favouriteText = this.addedToFavourite
 				? 'Remove From Favourites'
 				: 'Add To Favourites';
+
 			//hide list
 			this.dotsClick();
+
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/ToggleFavourite', {
@@ -681,6 +690,9 @@ export default {
 				token: accessToken,
 			});
 		},
+		//@vuese
+		//Hide add subtopic button and show subtopics list and input area
+		//@arg no argument
 		showBoth() {
 			this.addSubtopicShown = false;
 			this.subtopicsBoxShown = true;
