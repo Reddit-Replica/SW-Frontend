@@ -9,9 +9,12 @@
 						name="message-from"
 						id="message-from"
 						v-model="senderUsername"
-						value="username-value"
 					>
-						<option :value="userName" selected="selected">
+						<option
+							:value="userName"
+							selected="selected"
+							:id="'message-from-options-' + userName"
+						>
 							{{ '/u/' + userName }}
 						</option>
 						<option
@@ -23,6 +26,9 @@
 							{{ 'r/' + username.text }}
 						</option>
 					</select>
+					<p class="error" v-if="error == 'messageFrom'">
+						please choose sender
+					</p>
 				</div>
 				<div>
 					<label for="message-to" class="heading-3"
@@ -92,7 +98,7 @@
 							<th>You see</th>
 						</tr>
 						<tr>
-							<td>**italic**</td>
+							<td>*italic*</td>
 							<td><i>italic</i></td>
 						</tr>
 						<tr>
@@ -147,6 +153,7 @@
 				<span class="delivered" v-if="delivered"
 					>your message has been delivered</span
 				>
+				<span class="delivered" v-if="errorResponse">{{ errorResponse }}</span>
 			</form>
 		</div>
 	</div>
@@ -157,13 +164,13 @@ export default {
 	data() {
 		return {
 			text: '',
-			senderUsername: '/u/asmaaadel0',
+			senderUsername: '',
 			receiverUsername: '',
-			sendAt: '',
 			subject: '',
 			error: '',
 			formatting: 'formatting',
 			delivered: false,
+			errorResponse: null,
 		};
 	},
 	// @vuese
@@ -175,7 +182,7 @@ export default {
 	computed: {
 		// @vuese
 		//return suggested sender
-		// @type object
+		// @type string
 		suggestedSender() {
 			return this.$store.getters['messages/suggestedSender'];
 		},
@@ -192,7 +199,10 @@ export default {
 		// @arg no argument
 		formValidation() {
 			this.delivered = false;
-			if (this.receiverUsername == '') {
+			this.errorResponse = null;
+			if (this.senderUsername == '') {
+				this.error = 'messageFrom';
+			} else if (this.receiverUsername == '') {
 				this.error = 'messageTo';
 			} else if (this.subject == '') {
 				this.error = 'subject';
@@ -203,24 +213,30 @@ export default {
 		// @vuese
 		//handle submit form and send post request
 		// @arg no argument
-		handleSubmit() {
+		async handleSubmit() {
 			this.formValidation();
 			if (this.error != '') return;
 			this.delivered = false;
-			this.$store.dispatch('messages/sendMessage', {
-				text: this.text,
-				senderUsername: this.senderUsername,
-				receiverUsername: this.receiverUsername,
-				sendAt: this.sendAt,
-				subject: this.subject,
-				baseurl: this.$baseurl,
-			});
-			console.log(this.senderUsername);
-			this.receiverUsername = '';
-			this.sendAt = '';
-			this.subject = '';
-			this.text = '';
-			this.delivered = true;
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('messages/sendMessage', {
+					text: this.text,
+					senderUsername: this.senderUsername,
+					receiverUsername: this.receiverUsername,
+					subject: this.subject,
+					baseurl: this.$baseurl,
+				});
+				if (this.$store.getters['messages/sentSuccessfully']) {
+					this.receiverUsername = '';
+					this.subject = '';
+					this.text = '';
+					this.delivered = true;
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+				this.delivered = false;
+			}
 		},
 		// @vuese
 		//change title to formatting or hide

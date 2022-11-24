@@ -8,4 +8,10 @@ export default {
 	getSubreddit(state) {
 		return state.subreddit;
 	},
+	getPosts(state) {
+		return state.Posts;
+	},
+	createdSuccessfully(state) {
+		return state.createdSuccessfully;
+	},
 };

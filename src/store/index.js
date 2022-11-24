@@ -24,7 +24,7 @@ const store = createStore({
 		return {
 			// userName: 'mena',
 			// userName: '/u/asmaaadel0',
-			userName: 'asmaaadel0',
+			userName: localStorage.getItem('userName'),
 			accessToken: '',
 			subredditName: 'asmaaSubredditName',
 			latestSavedUnsavedPost: {},

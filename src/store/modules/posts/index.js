@@ -7,6 +7,7 @@ export default {
 		return {
 			kind: null,
 			subreddit: null,
+			inSubreddit: null,
 			title: null,
 			content: null,
 			files: [{}],
@@ -16,6 +17,7 @@ export default {
 			imageCaptions: [],
 			imageLinks: [],
 			sendReplies: null,
+			allSubreddits: [],
 		};
 	},
 	actions,

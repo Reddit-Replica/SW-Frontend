@@ -1,11 +1,15 @@
 <template>
 	<div class="follow-chat-div">
 		<base-button
-			button-text="Follow"
+			v-if="!blocked"
+			:button-text="followed ? 'Unfollow' : 'Follow'"
 			class="chat-follow-button"
 			id="profile-follow-button"
+			@click="toggleFollowed"
+			:class="[followed ? 'chat-unfollow-button' : '']"
 		></base-button>
 		<base-button
+			v-if="!blocked"
 			button-text="Chat"
 			class="chat-follow-button"
 			id="profile-chat-button"
@@ -13,6 +17,7 @@
 	</div>
 	<div v-if="blocked" class="blocked-user-button" id="blocked-user-box">
 		<base-button
+			@click="toggleBlockedUnblocked"
 			class="blocked-button"
 			id="blocked-user-button"
 			@mouseover="blockedText = 'Unblocked'"
@@ -31,6 +36,11 @@ export default {
 			required: false,
 			default: false,
 		},
+		followed: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
 	},
 	components: {
 		BaseButton,
@@ -38,7 +48,36 @@ export default {
 	data() {
 		return {
 			blockedText: 'Blocked',
+			// Followed: false,
 		};
+	},
+	methods: {
+		async toggleFollowed() {
+			try {
+				await this.$store.dispatch('user/followUnfollowUser', {
+					baseurl: this.$baseurl,
+					followUnfollowData: {
+						follow: !this.followed,
+						username: this.$route.params.userName,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async toggleBlockedUnblocked() {
+			try {
+				await this.$store.dispatch('user/blockUnblockUser', {
+					baseurl: this.$baseurl,
+					blockUnblockData: {
+						username: this.$route.params.userName,
+						block: !this.blocked,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 	},
 };
 </script>
@@ -70,6 +109,12 @@ export default {
 	width: 139px;
 	position: relative;
 }
+.chat-unfollow-button {
+	background-color: var(--main-white-color);
+	color: var(--color-blue-2);
+	border: 1px solid var(--color-blue-2);
+}
+
 .chat-follow-button::before {
 	content: '';
 	position: absolute;
@@ -79,6 +124,18 @@ export default {
 	height: 100%;
 	border-radius: 9999px;
 	background-color: var(--main-white-color);
+	z-index: 55;
+	opacity: 0;
+}
+.chat-unfollow-button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 9999px;
+	background-color: #0079d3;
 	z-index: 55;
 	opacity: 0;
 }

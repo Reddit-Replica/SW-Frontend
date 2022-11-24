@@ -4,6 +4,7 @@
 			Content controls
 			<a
 				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
+				id="content-controls"
 				__blank="targe"
 			>
 				<svg
@@ -47,7 +48,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="provide-members"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -63,7 +64,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="require-words"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -79,7 +80,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="ban-words-title"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -95,7 +96,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="ban-words-body"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -113,7 +114,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="require-or-ban"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -132,7 +133,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="restrict-how-often"></switch-button>
 					</div>
 				</div>
 			</fieldset>
@@ -151,7 +152,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="require-post-flair"></switch-button>
 					</div>
 				</div>
 				<div class="field field-choose">
@@ -169,7 +170,7 @@
 								class="form-check-input radio-input"
 								type="radio"
 								name="flexRadioDefault"
-								id="flexRadioDefault1"
+								id="flex-radio-default-1"
 							/>
 							<label class="form-check-label" for="flexRadioDefault1">
 								Text body is optional for all post types
@@ -180,7 +181,7 @@
 								class="form-check-input radio-input"
 								type="radio"
 								name="flexRadioDefault"
-								id="flexRadioDefault2"
+								id="flex-radio-default-2"
 								checked
 							/>
 							<label class="form-check-label" for="flexRadioDefault2">
@@ -192,7 +193,7 @@
 								class="form-check-input radio-input"
 								type="radio"
 								name="flexRadioDefault"
-								id="flexRadioDefault2"
+								id="flex-radio-default-3"
 								checked
 							/>
 							<label class="form-check-label" for="flexRadioDefault2">
@@ -213,7 +214,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="title-length"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -230,7 +231,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="use-title-text"></switch-button>
 					</div>
 				</div>
 				<div class="field">
@@ -247,7 +248,7 @@
 						</p>
 					</div>
 					<div class="field-button">
-						<switch-button></switch-button>
+						<switch-button id="requirements"></switch-button>
 					</div>
 				</div>
 			</fieldset>

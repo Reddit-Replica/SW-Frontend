@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from './pages/users/MainPage.vue';
 import UserPage from './pages/users/UserPage.vue';
 
-import ForgetPassword from './pages/forget/ForgetPassword.vue';
-import ForgetUsername from './pages/forget/ForgetUsername.vue';
+import ForgetPassword from './pages/forFuture/ForgetPassword.vue';
+import ForgetUsername from './pages/forFuture/ForgetUsername.vue';
 import ForgetPasswordpage from './pages/forget/ForgetPasswordpage.vue';
 import ForgetUsernamepage from './pages/forget/ForgetUsernamepage.vue';
 import ResetPassword from './pages/forget/ResetPassword.vue';
@@ -83,7 +83,7 @@ const router = createRouter({
 			children: [
 				{
 					name: 'comments',
-					path: '/r/:subredditName/comments/:postId/:postName/',
+					path: '/r/:subredditName/comments/:postId/:postName/', //$route.path.split('/')[2: for subredditname , 4: for post id]
 					component: PostComments,
 				},
 			],
@@ -118,10 +118,17 @@ const router = createRouter({
 		}, //render user component
 		{
 			path: '/r/:subredditName',
-			// path: '/subreddit', //to be changed
+			// alias: '/r/:subredditName/:title',
 			name: 'subreddit',
 			component: SubredditPage,
 			props: true,
+			children: [
+				{
+					path: '/r/:subredditName/:title',
+					name: 'subredditsort',
+					component: SubredditPage,
+				},
+			],
 		}, //render subreddit component
 		{
 			path: '/r/:subredditName/about/',

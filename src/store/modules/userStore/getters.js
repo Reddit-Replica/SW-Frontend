@@ -5,6 +5,11 @@ export default {
 			userModeratorData: state.userData.moderatorOf,
 		};
 	},
+	getUserPostData(state) {
+		return {
+			postData: state.postData,
+		};
+	},
 	getStaticSocialLinks(state) {
 		return state.socialLinkItems;
 	},

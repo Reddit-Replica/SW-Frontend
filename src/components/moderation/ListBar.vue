@@ -12,27 +12,45 @@
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div>
 		<div class="bar" v-if="title == 'Rules'">
-			<base-button class="reorder-button">Reorder rules</base-button>
-			<base-button class="base-button">Add rule</base-button>
+			<base-button class="reorder-button" id="reorder-rules-button"
+				>Reorder rules</base-button
+			>
+			<base-button
+				class="base-button"
+				@click="showAddRuleFunction()"
+				id="add-rules-button"
+				>Add rule</base-button
+			>
 		</div>
 		<div class="bar" v-if="title == 'Post flair'">
+			<base-button class="button-white" id="post-flair-button"
+				>Post flair settings</base-button
+			>
+			<base-button
+				class="reorder-post-flair-button"
+				id="reorder-post-flair-button"
+				>Reorder</base-button
+			>
+			<base-button class="base-button" id="add-flair-button"
+				>Add flair</base-button
+			>
+		</div>
+		<!-- <div class="bar" v-if="title == 'Post flair'">
 			<base-button class="button-white">Post flair settings</base-button>
 			<base-button class="reorder-post-flair-button">Reorder</base-button>
 			<base-button class="base-button">Add flair</base-button>
-		</div>
-		<div class="bar" v-if="title == 'Post flair'">
-			<base-button class="button-white">Post flair settings</base-button>
-			<base-button class="reorder-post-flair-button">Reorder</base-button>
-			<base-button class="base-button">Add flair</base-button>
-		</div>
+		</div> -->
 		<div class="bar" v-if="title == 'Content controls'">
-			<base-button class="content-controls-button">Save changes</base-button>
+			<base-button class="content-controls-button" id="content-controls-button"
+				>Save changes</base-button
+			>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
+	emits: ['showAddRuleFunction'],
 	props: {
 		// @vuese
 		// title to be written in bar
@@ -43,7 +61,7 @@ export default {
 			required: true,
 		},
 		// @vuese
-		// title to be written in bar
+		// subreddit name
 		// @type string
 		subredditName: {
 			type: String,
@@ -72,6 +90,14 @@ export default {
 		},
 		isModeratorList() {
 			return this.barTitle == 'Invite user as mod';
+		},
+	},
+	methods: {
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showAddRuleFunction() {
+			this.$emit('showAddRuleFunction', this.showAddRule);
 		},
 	},
 };
@@ -122,8 +148,6 @@ button {
 	text-align: center;
 	width: auto;
 }
-/* .base-button {
-} */
 .base-button:hover {
 	background-color: var(--color-blue-6);
 }
