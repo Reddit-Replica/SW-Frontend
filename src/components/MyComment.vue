@@ -431,8 +431,16 @@ export default {
 		},
 		//@vuese
 		//delete comment
-		deleteComment() {
+		async deleteComment() {
 			this.deleted = true;
+			try {
+				await this.$store.dispatch('comments/deleteComment', {
+					baseurl: this.$baseurl,
+					id: this.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };

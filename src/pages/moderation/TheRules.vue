@@ -1,28 +1,141 @@
 <template>
-	<no-list :title="'Rules'">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="16"
-			height="16"
-			fill="currentColor"
-			class="bi bi-list-ol icon"
-			viewBox="0 0 16 16"
-		>
-			<path
-				fill-rule="evenodd"
-				d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"
-			/>
-			<path
-				d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z"
-			/>
-		</svg>
-	</no-list>
+	<div>
+		<list-bar
+			:title="'Rules'"
+			@show-add-rule-function="showAddRuleFunction"
+		></list-bar>
+		<div class="text">
+			Rules
+			<a
+				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
+				__blank="targe"
+				id="info-link"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-info-circle icon-info"
+					viewBox="0 0 16 16"
+					id="icon-info"
+				>
+					<path
+						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+					/>
+					<path
+						d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+					/>
+				</svg>
+			</a>
+		</div>
+		<no-list :title="'Rules'" v-if="noRules">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				fill="currentColor"
+				class="bi bi-list-ol icon"
+				viewBox="0 0 16 16"
+				id="no-rules-icon"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"
+				/>
+				<path
+					d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338v.041zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635V5z"
+				/>
+			</svg>
+		</no-list>
+		<div v-else>
+			<span class="rules-description">
+				These are rules that visitors must follow to participate. They can be
+				used as reasons to report or ban posts, comments, and users. Communities
+				can have a maximum of 15 rules.</span
+			>
+			<ul class="ul-items">
+				<list-rules
+					v-for="rule in listOfRules"
+					:key="rule"
+					:rule="rule"
+				></list-rules>
+			</ul>
+		</div>
+		<addrule-popup
+			v-if="showAddRule"
+			:subreddit-name="subredditName"
+			@exit="showAddRuleFunction"
+			:rule-name="''"
+			:report-reason="''"
+			:applies-to="''"
+			:description="''"
+			:edit="false"
+		></addrule-popup>
+	</div>
 </template>
 
 <script>
+import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
+import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
+import ListRules from '../../components/moderation/ListRules.vue';
 export default {
-	components: { NoList },
+	components: { NoList, AddrulePopup, ListBar, ListRules },
+	data() {
+		return {
+			showAddRule: false,
+		};
+	},
+	// @vuese
+	//load List of Rules before mount
+	beforeMount() {
+		this.loadListOfRules();
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			return this.$store.state.subredditName;
+		},
+		// @vuese
+		//return list of Rules
+		// @type object
+		listOfRules() {
+			return this.$store.getters['moderation/listOfRules'];
+		},
+		// @vuese
+		//return true if there is no rules, false otherwise
+		// @type boolean
+		noRules() {
+			if (this.listOfRules.length != 0) {
+				return false;
+			}
+			return true;
+		},
+	},
+	methods: {
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showAddRuleFunction() {
+			this.showAddRule = !this.showAddRule;
+		},
+		// @vuese
+		//load Rules list from the store
+		// @arg no argument
+		async loadListOfRules() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfRules', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+	},
 };
 </script>
 
@@ -32,5 +145,25 @@ export default {
 	font-size: 3rem;
 	height: 3rem;
 	width: 3rem;
+}
+.text {
+	font-size: 1.8rem;
+	font-weight: 500;
+	line-height: 2.2rem;
+	color: var(--color-dark-2);
+	padding-top: 9rem;
+	margin-bottom: 1rem;
+}
+.ul-items {
+	list-style: none;
+	background-color: var(--color-white-1);
+	padding-left: 0rem;
+	margin-top: 1rem;
+}
+.rules-description {
+	font-size: 1.3rem;
+	font-weight: 400;
+	line-height: 1.8rem;
+	color: var(--color-dark-3);
 }
 </style>

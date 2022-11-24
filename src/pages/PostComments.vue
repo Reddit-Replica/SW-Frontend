@@ -148,12 +148,12 @@
 													<router-link
 														:to="{
 															name: 'user',
-															params: { userName: userName },
+															params: { userName: postedBy },
 														}"
 														id="poster-router"
 													>
-														{{ userName }} </router-link
-													>&nbsp;{{ duration }} ago
+														{{ postedBy }} </router-link
+													>&nbsp;{{ postedAt }} ago
 												</span>
 											</div>
 											<div class="bell" @click="follow" id="follow">
@@ -406,7 +406,7 @@
 													:to="{
 														name: 'user',
 														params: {
-															userName: this.$store.getters.getUserName,
+															userName: getuserName,
 														},
 													}"
 													id="user-router"
@@ -761,18 +761,15 @@ export default {
 	},
 	data() {
 		return {
-			id: 1,
-			subredditName: 'subredditNamme',
-			userName: 'mena',
+			subredditName: this.$route.path.split('/')[2],
 			upClicked: false,
 			downClicked: false,
 			counter: 22,
-			postName:
-				'Can you guys help me finish my code or at least help me find the solution, I really tried to google it but I just can not find it and as I said I am still new.',
-			duration: '1 day',
-			postDescription:
-				'I suck at programming. Always feel like I am behind everyone in my classes but I absolutely love the material. I have dreams about solutions and think about how to fix problems all day long…but I suck at it.',
+			postName: '',
+			postDescription: '',
 			commentsCount: 22,
+			postedBy: 'dummy',
+			postedAt: '',
 			isFollowed: false,
 			subMenuDisplay: false,
 			shareSubMenuDisplay: false,
@@ -824,15 +821,35 @@ export default {
 		//@vuese
 		//get userName
 		getuserName() {
-			return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 	},
+	beforeMount() {
+		this.getPostDetails();
+	},
 	methods: {
+		async getPostDetails() {
+			try {
+				await this.$store.dispatch('listing/postDetails', {
+					baseurl: this.$baseurl,
+					id: this.$route.path.split('/')[4],
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			const postDetails = this.$store.getters['listing/getPostDetails'];
+			this.counter = postDetails.votes;
+			this.postName = postDetails.title;
+			this.postDescription = postDetails.content;
+			this.commentsCount = postDetails.comments;
+			this.postedBy = postDetails.postedBy;
+			this.postedAt = postDetails.postedAt;
+		},
 		//@vuese
 		//adds new comment
 		writeNewComment() {
 			let write = {
-				userName: this.$store.getters.getUserName,
+				userName: this.getuserName,
 				duration: 'just now',
 				content: this.newComment,
 				replies: [],

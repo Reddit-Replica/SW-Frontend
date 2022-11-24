@@ -16,6 +16,7 @@ export default {
 	props: {
 		// @vuese
 		// title for bar
+		// @type string
 		title: {
 			type: String,
 			default: '',

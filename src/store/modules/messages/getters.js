@@ -20,4 +20,22 @@ export default {
 	suggestedSender(state) {
 		return state.suggestedSender;
 	},
+	sentSuccessfully(state) {
+		return state.sentSuccessfully;
+	},
+	deleteMessageSuccessfully(state) {
+		return state.deleteMessageSuccessfully;
+	},
+	markSpamSuccessfully(state) {
+		return state.markSpamSuccessfully;
+	},
+	blockSuccessfully(state) {
+		return state.blockSuccessfully;
+	},
+	votedSuccessfully(state) {
+		return state.votedSuccessfully;
+	},
+	replyMessageSuccessfully(state) {
+		return state.replyMessageSuccessfully;
+	},
 };

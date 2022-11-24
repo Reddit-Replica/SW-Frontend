@@ -53,4 +53,20 @@ export default {
 			throw error;
 		}
 	},
+	async getAllsubreddits(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/subredditName');
+		const responseData = await response.json();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+			context.commit('setallSubreddits', responseData);
+			console.log(response);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
 };
