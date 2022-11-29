@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<li class="item">
-			<span class="rule-order"> {{ rule.ruleOrder }}</span>
+			<span class="rule-order"> {{ rule.ruleOrder + 1 }}</span>
 			<span class="rule-name"> {{ rule.ruleName }}</span>
 			<span class="rule-edit">
 				<button
@@ -85,6 +85,7 @@
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
+			@done-successfully="doneSuccessfully"
 			:rule-name-edit="rule.ruleName"
 			:report-reason-edit="rule.reportReason"
 			:applies-to-edit="rule.appliesTo"
@@ -146,6 +147,26 @@ export default {
 		// @arg no argument
 		showAddRuleFunction() {
 			this.showAddRule = !this.showAddRule;
+		},
+
+		// @vuese
+		//load Rules list from the store
+		// @arg no argument
+		async loadListOfRules() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfRules', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		// handle load rules instead of refreshing
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadListOfRules();
 		},
 	},
 };

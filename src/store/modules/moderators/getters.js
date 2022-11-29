@@ -14,4 +14,7 @@ export default {
 	deleteRuleSuccessfully(state) {
 		return state.deleteRuleSuccessfully;
 	},
+	updateRulesSuccessfully(state) {
+		return state.updateRulesSuccessfully;
+	},
 };
