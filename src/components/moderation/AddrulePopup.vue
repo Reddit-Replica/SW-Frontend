@@ -12,7 +12,6 @@
 							type="text"
 							placeholder="Rule displayed(e.g. 'No photo')"
 							v-model.trim="ruleName"
-							@blur="ruleName"
 							@keyup="charCount('name')"
 							id="rule-input"
 						></textarea>
@@ -240,7 +239,7 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
-	emits: ['exit'],
+	emits: ['exit', 'doneSuccessfully'],
 	props: {
 		// @vuese
 		//return subreddit name
@@ -407,6 +406,7 @@ export default {
 				});
 				if (this.$store.getters['moderation/addRuleSuccessfully']) {
 					this.hideAddRule();
+					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {
 				console.log(err);
@@ -434,6 +434,7 @@ export default {
 				});
 				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
 					this.hideAddRule();
+					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {
 				console.log(err);
@@ -454,6 +455,7 @@ export default {
 				});
 				if (this.$store.getters['moderation/deleteRuleSuccessfully']) {
 					this.hideAddRule();
+					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {
 				console.log(err);

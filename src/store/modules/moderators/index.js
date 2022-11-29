@@ -11,6 +11,7 @@ export default {
 			listOfRules: [],
 			updateRuleSuccessfully: false,
 			deleteRuleSuccessfully: false,
+			updateRulesSuccessfully: false,
 		};
 	},
 	mutations,
