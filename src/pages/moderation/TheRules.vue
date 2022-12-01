@@ -7,6 +7,7 @@
 			@reorder-rules="reorderRules()"
 			@save-reorder-rules="saveReorderRules()"
 			:drag-drop="dragDrop"
+			:subredditName="subredditName"
 		></list-bar>
 		<div class="text">
 			Rules
@@ -101,7 +102,19 @@
 			:description="''"
 			:edit="false"
 		></addrule-popup>
+
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
+
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -110,6 +123,7 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
 import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
 import ListRules from '../../components/moderation/ListRules.vue';
+import SaveUnsavePopupMessage from '@/components/SaveUnsavePopupMessage.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 export default {
 	components: {
@@ -118,6 +132,7 @@ export default {
 		ListBar,
 		ListRules,
 		draggable: VueDraggableNext,
+		SaveUnsavePopupMessage,
 	},
 	data() {
 		return {
@@ -125,6 +140,7 @@ export default {
 			dragDrop: false,
 			errorResponse: null,
 			newList: [],
+			savedUnsavedPosts: [],
 		};
 	},
 	// @vuese
@@ -214,11 +230,74 @@ export default {
 				this.errorResponse = err;
 			}
 		},
+
 		// @vuese
 		// handle load rules instead of refreshing
 		// @arg no argument
 		doneSuccessfully() {
 			this.loadListOfRules();
+			this.savePost();
+		},
+
+		// @vuese
+		// Used to show handle save action popup
+		// @arg no argument
+		savePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'Rule',
+				state: 'added',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 	},
 };
@@ -287,5 +366,16 @@ export default {
 	border-bottom: 1px solid var(--color-grey-light-9);
 	padding: 1.2rem 0;
 	margin: 1.2rem 0 !important;
+}
+
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>
