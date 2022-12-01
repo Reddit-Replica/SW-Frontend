@@ -86,6 +86,7 @@
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
 			@done-successfully="doneSuccessfully"
+			@clicked-delete="clickDelete"
 			:rule-name-edit="rule.ruleName"
 			:report-reason-edit="rule.reportReason"
 			:applies-to-edit="rule.appliesTo"
@@ -94,14 +95,23 @@
 			:rule-id="rule.ruleId"
 			:edit="true"
 		></addrule-popup>
+		<sure-popup
+			v-if="showSureDelete"
+			:subredditName="subredditName"
+			:rule-id="rule.ruleId"
+			@exit="clickDelete()"
+			@doneSuccessfully="doneSuccessfully()"
+		></sure-popup>
 	</div>
 </template>
 
 <script>
 import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
+import SurePopup from '../../components/moderation/SurePopup.vue';
 export default {
 	components: {
 		AddrulePopup,
+		SurePopup,
 	},
 	props: {
 		// @vuese
@@ -133,6 +143,7 @@ export default {
 		return {
 			viewDetails: false,
 			showAddRule: false,
+			showSureDelete: false,
 		};
 	},
 	methods: {
@@ -167,6 +178,12 @@ export default {
 		// @arg no argument
 		doneSuccessfully() {
 			this.loadListOfRules();
+		},
+		// @vuese
+		// Used to show delete rule popup
+		// @arg no argument
+		clickDelete() {
+			this.showSureDelete = !this.showSureDelete;
 		},
 	},
 };
