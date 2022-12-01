@@ -14,6 +14,13 @@ commands:
             sudo npm install --global n
             sudo n 13.8.
   
+  configure_docker:
+    description: login with my dockerhub
+    steps:
+      - run:
+          name: Install Node.js 13.8.0
+          command: |
+            docker login -u $DOCKERNAME -p $DOCKERPASS
   install_docker:
     description: Install docker
     steps:
@@ -26,7 +33,6 @@ commands:
             py-pip=9.0.0-r1
             pip install \
             docker-compose==1.12.0 \
-
 
 jobs:
   unit-testing:
@@ -69,7 +75,6 @@ jobs:
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer/frontend
             docker push  waer/frontend:latest
-
 
 workflows:
   main:
