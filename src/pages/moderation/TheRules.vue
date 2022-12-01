@@ -66,6 +66,7 @@
 					v-for="rule in listOfRules"
 					:key="rule"
 					:rule="rule"
+					@done-successfully="(title) => doneSuccessfully(title)"
 				></list-rules>
 			</ul>
 		</div>
@@ -95,7 +96,7 @@
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction()"
-			@done-successfully="doneSuccessfully()"
+			@done-successfully="doneSuccessfully('added')"
 			:rule-name="''"
 			:report-reason="''"
 			:applies-to="''"
@@ -234,20 +235,20 @@ export default {
 		// @vuese
 		// handle load rules instead of refreshing
 		// @arg no argument
-		doneSuccessfully() {
+		doneSuccessfully(title) {
 			this.loadListOfRules();
-			this.savePost();
+			this.savePost(title);
 		},
 
 		// @vuese
 		// Used to show handle save action popup
 		// @arg no argument
-		savePost() {
+		savePost(title) {
 			this.savedUnsavedPosts.push({
 				id: this.savedUnsavedPosts.length,
 				postid: '1',
 				type: 'Rule',
-				state: 'added',
+				state: title,
 			});
 			setTimeout(() => {
 				this.savedUnsavedPosts.shift();
