@@ -21,6 +21,7 @@
 |unreadAction|handle unread action|no argument|
 |spamAction|handle spam action|The argument is a string value representing if user click ok|
 |expand|expand or collapse message details|The argument is a string value representing if its expand or collapse|
+|replyFunction|show reply box or hide it|no argument|
 
 <!-- @vuese:MessagesComponent:methods:end -->
 

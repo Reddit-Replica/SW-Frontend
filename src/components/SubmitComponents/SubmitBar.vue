@@ -56,46 +56,98 @@
 								/>
 							</div>
 							<div class="name-box">
-								<span class="name">u/HodaGamal</span>
+								<span class="name"> u/{{ userName }}</span>
 							</div>
 						</div>
 					</div>
 					<div class="input-drop-down-box-2">
 						<div class="title-community-header">
 							<span class="title-community title">YOUR COMMUNITIES</span>
-							<base-button class="create-button">Create New</base-button>
+							<base-button
+								class="create-button"
+								@click="showCreateCommunity"
+								id="create-community-sidebar"
+								>Create New</base-button
+							>
 						</div>
-						<div class="section-box">
+						<create-community
+							v-if="createCommunityShown"
+							@exit="showCreateCommunity"
+						></create-community>
+
+						<div
+							class="section-box"
+							v-for="subreddit in subreddits"
+							:key="subreddit.id"
+							@click="setsubreddit(subreddit.title)"
+						>
 							<div class="image-box">
 								<img
-									src="https://styles.redditmedia.com/t5_2r0ij/styles/communityIcon_yor9myhxz5x11.png
-	"
+									:src="subreddit.picture"
 									alt="image"
 									class="img-community"
 								/>
 							</div>
 							<div class="comm-box">
-								<span class="name">r/announcement</span>
-								<span class="name members-count">179,356,569 members</span>
+								<span class="name">r/{{ subreddit.title }}</span>
+								<span class="name members-count">{{ subreddit.members }}</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- {{ subreddits }} -->
 	</div>
 </template>
 
 <script>
+import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 export default {
+	components: {
+		CreateCommunity,
+	},
 	data() {
 		return {
 			inputFocused: false,
+
+			createCommunityShown: false,
+			subreddits: [],
+			subredditTitle: null,
 		};
 	},
 	methods: {
-		setFocused() {
+		async setFocused() {
 			this.inputFocused = !this.inputFocused;
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			await this.$store.dispatch('posts/getAllsubreddits', actionPayload);
+			this.getSubreddit();
+		},
+		// @vuese
+		// Used to show create community popup
+		// @arg no argument
+		showCreateCommunity() {
+			this.createCommunityShown = !this.createCommunityShown;
+		},
+		getSubreddit() {
+			this.subreddits = this.$store.getters['posts/getallSubreddits'];
+		},
+		setsubreddit(title) {
+			this.subredditTitle = title;
+			this.$store.commit('posts/setSubreddit', {
+				subreddit: title,
+			});
+		},
+	},
+	computed: {
+		// @vuese
+		// Get usename
+		// @type string
+		userName() {
+			// return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 	},
 };
@@ -242,6 +294,7 @@ export default {
 	line-height: 12px;
 	text-transform: uppercase;
 	color: var(--color-grey-dark-2);
+	width: 200px;
 }
 .title-profile {
 	padding: 16px 16px 3px;
@@ -304,7 +357,7 @@ img {
 	text-overflow: ellipsis;
 }
 .create-button {
-	margin-left: auto;
+	margin-left: 0;
 	position: relative;
 	border: 1px solid transparent;
 	color: var(--color-blue-2);
@@ -312,8 +365,7 @@ img {
 	background-color: transparent;
 	font-size: 12px;
 	font-weight: 700;
-	min-height: 24px;
-	min-width: 24px;
+	width: 100px;
 	padding: 4px 8px;
 }
 .create-button:hover {
@@ -327,5 +379,15 @@ img {
 }
 .members-count {
 	color: var(--color-grey-dark-3);
+}
+button {
+	width: 100%;
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 </style>

@@ -36,7 +36,90 @@
 			}
 		}
 	],
-
+	"submit": [
+		{
+			"kind": "text",
+			"subreddit": null,
+			"title": "hi",
+			"content": null,
+			"files": [{}],
+			"nsfw": true,
+			"spoiler": true,
+			"flairId": null,
+			"imageCaptions": [],
+			"imageLinks": [],
+			"sendReplies": null,
+			"id": 1
+		},
+		{
+			"kind": "text",
+			"subreddit": null,
+			"title": "hello",
+			"content": null,
+			"files": [{}],
+			"nsfw": true,
+			"spoiler": true,
+			"flairId": 123,
+			"imageCaptions": [],
+			"imageLinks": [],
+			"sendReplies": null,
+			"id": 2
+		},
+		{
+			"kind": "text",
+			"subreddit": null,
+			"title": "hello",
+			"content": {
+				"ops": [
+					{
+						"insert": "hello from hell"
+					},
+					{
+						"attributes": {
+							"header": 1
+						},
+						"insert": "\n"
+					}
+				]
+			},
+			"files": [{}],
+			"nsfw": true,
+			"spoiler": true,
+			"flairId": 123,
+			"imageCaptions": [],
+			"imageLinks": [],
+			"sendReplies": true,
+			"id": 3
+		},
+		{
+			"kind": "link",
+			"subreddit": null,
+			"title": "hello",
+			"content": "http://localhost:8081/submit",
+			"files": [{}],
+			"nsfw": true,
+			"spoiler": true,
+			"flairId": 123,
+			"imageCaptions": [],
+			"imageLinks": [],
+			"sendReplies": true,
+			"id": 4
+		},
+		{
+			"kind": "link",
+			"subreddit": null,
+			"title": "hello",
+			"content": "http://localhost:3000/submit",
+			"files": [{}],
+			"nsfw": true,
+			"spoiler": false,
+			"flairId": 123,
+			"imageCaptions": [],
+			"imageLinks": [],
+			"sendReplies": false,
+			"id": 5
+		}
+	],
 	"hot": [
 		{
 			"after": "string",
@@ -101,7 +184,6 @@
 			]
 		}
 	],
-
 	"best": [
 		{
 			"after": "string",
@@ -135,7 +217,6 @@
 			]
 		}
 	],
-
 	"new": [
 		{
 			"after": "string",
@@ -169,7 +250,6 @@
 			]
 		}
 	],
-
 	"top": [
 		{
 			"after": "string",
@@ -203,7 +283,6 @@
 			]
 		}
 	],
-
 	"hide": [],
 	"vote": [
 		{
@@ -230,10 +309,31 @@
 			"nsfw": true,
 			"type": "private",
 			"isFavorite": true,
-			"title": "string",
+			"title": "ludo club",
 			"category": "string",
-			"members": 0,
-			"online": 0,
+			"members": 2000,
+			"online": 150,
+			"description": "it is a gaming subreddit",
+			"dateOfCreation": "string",
+			"flairs": [],
+			"rules": [],
+			"bans": [],
+			"moderators": [],
+			"isMember": true,
+			"banner": "string",
+			"picture": "https://play-lh.googleusercontent.com/9jnWEhWMGhsPnDN6DyzfNkv6DwxyzebUmKlUNtUVYTw3-ztghgR1Ph2OnVM3Xv5yHp2r",
+			"communityTheme": true,
+			"views": 0,
+			"mainTopic": {}
+		},
+		{
+			"nsfw": true,
+			"type": "private",
+			"isFavorite": true,
+			"title": "hello world",
+			"category": "string",
+			"members": 1500,
+			"online": 50,
 			"description": "it is a programming subreddit",
 			"dateOfCreation": "string",
 			"flairs": [],
@@ -242,7 +342,7 @@
 			"moderators": [],
 			"isMember": true,
 			"banner": "string",
-			"picture": "string",
+			"picture": "https://www.netsolutions.com/insights/wp-content/uploads/2021/12/11-most-popular-programming-languages-2022.webp",
 			"communityTheme": true,
 			"views": 0,
 			"mainTopic": {}
@@ -923,6 +1023,57 @@
 			]
 		}
 	],
+	"addRule": [
+		{
+			"ruleName": "asmaa",
+			"appliesTo": "Posts & comments",
+			"reportReason": "",
+			"description": "",
+			"id": 1
+		},
+		{
+			"ruleName": "asmaa",
+			"appliesTo": "Posts & comments",
+			"reportReason": "",
+			"description": "",
+			"id": 2
+		},
+		{
+			"ruleName": "asmaa",
+			"appliesTo": "posts and comments",
+			"reportReason": "",
+			"description": "",
+			"id": 3
+		}
+	],
+	"rule": [
+		{
+			"rules": [
+				{
+					"ruleID": "1",
+					"ruleName": "ruleName",
+					"ruleOrder": 0,
+					"createdAt": "2019-08-24T14:15:22Z",
+					"appliesTo": "posts and comments",
+					"reportReason": "reportReason",
+					"description": "description"
+				}
+			]
+		},
+		{
+			"rules": [
+				{
+					"ruleID": "2",
+					"ruleName": "ruleName2",
+					"ruleOrder": 0,
+					"createdAt": "2019-08-24T14:15:22Z",
+					"appliesTo": "posts only",
+					"reportReason": "reportReason2",
+					"description": "description2"
+				}
+			]
+		}
+	],
 	"block-user": [
 		{
 			"block": true,
@@ -933,131 +1084,6 @@
 			"block": true,
 			"username": "/u/norhan_reda",
 			"id": 2
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 3
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 4
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 5
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 6
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 7
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 8
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 9
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 10
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 11
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 12
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 13
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 14
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 15
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 16
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 17
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 18
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 19
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 20
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 21
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 22
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 23
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 24
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 25
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 26
-		},
-		{
-			"block": true,
-			"username": "/u/hoda_gamal",
-			"id": 27
 		}
 	],
 	"delete": [],
@@ -1188,5 +1214,231 @@
 				"joined": true
 			}
 		]
+	},
+	"subreddit": [
+		{
+			"nsfw": false,
+			"type": "public",
+			"isFavorite": false,
+			"title": "",
+			"category": "Sports",
+			"members": 10,
+			"online": 5,
+			"description": "",
+			"dateOfCreation": "NOV 20, 2022",
+			"flairs": [],
+			"rules": [],
+			"bans": [],
+			"moderators": [
+				{
+					"username": "HodaGamal"
+				},
+				{
+					"username": "AsmaaAdel"
+				}
+			],
+			"isMember": false,
+			"banner": "string",
+			"picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
+			"communityTheme": false,
+			"views": 0,
+			"mainTopic": {
+				"topicTitle": "",
+				"subtopics": []
+			}
+		}
+	],
+	"subreddit_new": [
+		{
+			"nsfw": false,
+			"type": "public",
+			"isFavorite": false,
+			"title": "",
+			"category": "Sports",
+			"members": 10,
+			"online": 5,
+			"description": "Learn with us",
+			"dateOfCreation": "NOV 20, 2022",
+			"flairs": [],
+			"rules": [],
+			"bans": [],
+			"moderators": [
+				{
+					"username": "HodaGamal"
+				},
+				{
+					"username": "AsmaaAdel"
+				}
+			],
+			"isMember": false,
+			"banner": "string",
+			"picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
+			"communityTheme": false,
+			"views": 0,
+			"mainTopic": {
+				"topicTitle": "Art",
+				"subtopics": ["Fashion", "Cars"]
+			}
+		}
+	],
+	"userpostdata": {
+		"after": "string",
+		"before": "string",
+		"children": [
+			{
+				"kind": "text",
+				"subreddit": "Cars",
+				"content": "Marcedes car is the best for ever",
+				"images": [
+					{
+						"path": "string",
+						"caption": "string",
+						"link": "string"
+					}
+				],
+				"nsfw": true,
+				"spoiler": true,
+				"title": "The Cars",
+				"sharePostId": "string",
+				"flair": {
+					"id": "string",
+					"flairName": "Cars lovers",
+					"order": 0,
+					"backgroundColor": "red",
+					"textColor": "#ffffff"
+				},
+				"comments": 100,
+				"votes": 10,
+				"postedAt": "string",
+				"deletedAt": "string",
+				"editedAt": "string",
+				"postedBy": "string",
+				"votingType": 1,
+				"saved": false,
+				"followed": false,
+				"hidden": false,
+				"spammed": false,
+				"inYourSubreddit": false,
+				"moderation": {
+					"approve": {
+						"approvedBy": "string",
+						"approvedDate": "2019-08-24T14:15:22Z"
+					},
+					"remove": {
+						"removedBy": "string",
+						"removedDate": "2019-08-24T14:15:22Z"
+					},
+					"spam": {
+						"spammedBy": "string",
+						"spammedDate": "2019-08-24T14:15:22Z"
+					},
+					"lock": true
+				}
+			},
+			{
+				"kind": "image",
+				"subreddit": "Avatars",
+				"content": "",
+				"images": [
+					{
+						"path": "string",
+						"caption": "string",
+						"link": "string"
+					}
+				],
+				"nsfw": false,
+				"spoiler": false,
+				"title": "The Avatars",
+				"sharePostId": "string",
+				"flair": {
+					"id": "string",
+					"flairName": "Avatars lovers",
+					"order": 0,
+					"backgroundColor": "blue",
+					"textColor": "#ffffff"
+				},
+				"comments": 90,
+				"votes": 10,
+				"postedAt": "string",
+				"deletedAt": "string",
+				"editedAt": "string",
+				"postedBy": "string",
+				"votingType": 1,
+				"saved": false,
+				"followed": false,
+				"hidden": false,
+				"spammed": true,
+				"inYourSubreddit": false,
+				"moderation": {
+					"approve": {
+						"approvedBy": "string",
+						"approvedDate": "2019-08-24T14:15:22Z"
+					},
+					"remove": {
+						"removedBy": "string",
+						"removedDate": "2019-08-24T14:15:22Z"
+					},
+					"spam": {
+						"spammedBy": "string",
+						"spammedDate": "2019-08-24T14:15:22Z"
+					},
+					"lock": true
+				}
+			},
+			{
+				"kind": "link",
+				"subreddit": "Cars",
+				"content": "Marcedes car is the best for ever",
+				"images": [
+					{
+						"path": "string",
+						"caption": "string",
+						"link": "string"
+					}
+				],
+				"nsfw": true,
+				"spoiler": true,
+				"title": "The Cars",
+				"sharePostId": "string",
+				"flair": {
+					"id": "string",
+					"flairName": "Cars lovers",
+					"order": 0,
+					"backgroundColor": "red",
+					"textColor": "#ffffff"
+				},
+				"comments": 100,
+				"votes": 10,
+				"postedAt": "string",
+				"deletedAt": "string",
+				"editedAt": "string",
+				"postedBy": "string",
+				"votingType": 1,
+				"saved": false,
+				"followed": false,
+				"hidden": false,
+				"spammed": false,
+				"inYourSubreddit": false,
+				"moderation": {
+					"approve": {
+						"approvedBy": "string",
+						"approvedDate": "2019-08-24T14:15:22Z"
+					},
+					"remove": {
+						"removedBy": "string",
+						"removedDate": "2019-08-24T14:15:22Z"
+					},
+					"spam": {
+						"spammedBy": "string",
+						"spammedDate": "2019-08-24T14:15:22Z"
+					},
+					"lock": true
+				}
+			}
+		]
+	},
+	"follow-user": {
+		"username": "string",
+		"follow": true
 	}
 }

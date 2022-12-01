@@ -28,7 +28,7 @@
 |Computed|Type|Description|From Store|
 |---|---|---|---|
 |noComment|-|check if a text is written in text area to be added as comment or not|No|
-|getuserName|-|get userName|Yes|
+|getuserName|-|get userName|No|
 
 <!-- @vuese:PostComments:computed:end -->
 

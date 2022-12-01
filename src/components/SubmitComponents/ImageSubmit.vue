@@ -5,8 +5,8 @@
 		<input
 			type="file"
 			accept="image/png,image/gif,image/jpeg,image/webp,video/mp4,video/quicktime"
-			multiple=""
-			hidden
+			multiple
+			style="display: none"
 		/>
 		<label class="blue-button" for="image-input">Upload</label>
 	</div>

@@ -5,16 +5,27 @@
 			:subreddit-name="subredditName"
 			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
+			id="community-header"
 		></subreddit-top>
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
-				<createpost-bar></createpost-bar>
-				<sortposts-bar></sortposts-bar>
-				<grow-community></grow-community>
-				<community-post></community-post>
+				<createpost-bar id="create-post-bar-subreddit"></createpost-bar>
+				<sort-bar-subreddit
+					:subreddit-name="subredditName"
+					id="sort-post-bar-subreddit"
+				></sort-bar-subreddit>
+				<grow-community id="grow-community-comp"></grow-community>
+				<community-post id="pinned-post-comp"></community-post>
+				<base-post
+					v-for="post in posts"
+					:key="post.id"
+					:post="post"
+				></base-post>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
+					v-if="isModerator"
+					id="abot-comm-comp"
 					:subreddit-name="subredditName"
 					:topics="topics"
 					:members-count="subreddit.members"
@@ -24,6 +35,25 @@
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
 				></about-community-bar>
+				<about-community-read-only
+					v-else
+					id="abot-comm-comp"
+					:subreddit-name="subredditName"
+					:members-count="subreddit.members"
+					:online-members-count="subreddit.online"
+					:community-date="subreddit.dateOfCreation"
+					:community-description-prop="subreddit.description"
+				></about-community-read-only>
+
+				<!-- for testing about community bar if the current user not moderator -->
+				<!-- <about-community-read-only
+					:subreddit-name="subredditName"
+					:members-count="subreddit.members"
+					:online-members-count="subreddit.online"
+					:community-date="subreddit.dateOfCreation"
+					:community-description="subreddit.description"
+				></about-community-read-only> -->
+
 				<moderators-bar :moderators="subreddit.moderators"></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
@@ -62,23 +92,27 @@
 <script>
 import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue';
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
-import SortpostsBar from '../../components/bars/SortpostsBar.vue';
+import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
+import AboutCommunityReadOnly from '../../components/CommunityComponents/AboutCommunityReadOnly.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
+import BasePost from '../../components/BaseComponents/BasePost.vue';
 
 export default {
 	components: {
 		SubredditTop,
 		CreatepostBar,
-		SortpostsBar,
+		SortBarSubreddit,
 		AboutCommunityBar,
+		AboutCommunityReadOnly,
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
 		BacktotopButton,
+		BasePost,
 	},
 	props: {
 		subredditName: {
@@ -116,6 +150,8 @@ export default {
 			],
 			showFirstDialog: true,
 			subreddit: {},
+			posts: [],
+			isModerator: true,
 		};
 	},
 	computed: {
@@ -123,6 +159,19 @@ export default {
 			return this.firstCreated && this.showFirstDialog;
 		},
 	},
+	beforeMount() {
+		let title = this.$route.params.title;
+		if (title == null) title = 'hot';
+		this.fetchSubredditPosts(title);
+	},
+	watch: {
+		'$route.params.title': {
+			handler: function () {
+				this.fetchSubredditPosts(this.$route.params.title);
+			},
+		},
+	},
+
 	async created() {
 		const accessToken = localStorage.getItem('accessToken');
 		await this.$store.dispatch('community/getSubreddit', {
@@ -141,6 +190,34 @@ export default {
 				name: 'submit',
 				params: { subredditName: this.subredditName },
 			});
+		},
+		async fetchSubredditPosts(title) {
+			try {
+				const accessToken = localStorage.getItem('accessToken');
+				await this.$store.dispatch('community/fetchSubredditPosts', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					title: title,
+					token: accessToken,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+
+			this.posts = this.$store.getters['community/getPosts'];
+		},
+		checkIfModerator() {
+			const username = localStorage.getItem('userName');
+			const moderators = this.subreddit['moderators'];
+			const user = moderators.findIndex(
+				(moderator) => moderator.username === username
+			);
+			//not in subreddit moderators list
+			if (user === -1) {
+				this.isModerator = false;
+			} else {
+				this.isModerator = true;
+			}
 		},
 	},
 };

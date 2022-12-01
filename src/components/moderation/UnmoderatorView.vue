@@ -4,6 +4,7 @@
 			Moderators of r/{{ subredditName }}
 			<a
 				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
+				id="info-link"
 				__blank="targe"
 			>
 				<svg
@@ -13,6 +14,7 @@
 					fill="currentColor"
 					class="bi bi-info-circle icon-info"
 					viewBox="0 0 16 16"
+					id="icon-info"
 				>
 					<path
 						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -77,6 +79,7 @@ export default {
 	props: {
 		// @vuese
 		//details of moderators
+		//@type object
 		listOfModerators: {
 			type: Object,
 			required: true,
@@ -89,6 +92,7 @@ export default {
 		},
 		// @vuese
 		//subreddit name
+		//@type string
 		subredditName: {
 			type: String,
 			required: true,
@@ -149,7 +153,7 @@ export default {
 }
 .heading-3 {
 	margin-left: 1rem;
-	margin-top: 5rem;
+	margin-top: 9rem;
 }
 .ul-items {
 	list-style: none;

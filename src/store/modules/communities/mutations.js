@@ -8,4 +8,10 @@ export default {
 	setSubreddit(state, payload) {
 		state.subreddit = payload;
 	},
+	setPosts(state, payload) {
+		state.Posts = payload;
+	},
+	createdSuccessfully(state, payload) {
+		state.createdSuccessfully = payload;
+	},
 };

@@ -122,7 +122,7 @@ a:hover {
 .info-box {
 	box-shadow: 0 2px 4px 0 var(--newCommunityTheme-actionIcon);
 	color: var(--color-grey-dark-2);
-	padding: 0;
+	padding: 15px;
 	text-align: left;
 	white-space: pre-line;
 
@@ -131,14 +131,15 @@ a:hover {
 
 	left: 50%;
 	position: absolute;
-
+	width: 320px;
+	height: 80px;
 	font-size: 12px;
 	font-weight: 500;
 	line-height: 16px;
-	background-color: var(--color-dark-1);
+	background-color: white;
 	border-radius: 5px;
 	pointer-events: none;
-	transform: translateX(-50%);
+	transform: translateX(-44%);
 	z-index: 100;
 }
 .info-box::before {

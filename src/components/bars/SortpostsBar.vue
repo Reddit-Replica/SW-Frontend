@@ -19,6 +19,7 @@
 					/>
 				</svg>
 				<span>{{ clicked }}</span>
+
 				<svg class="sort-post-arrow-icon sort-post-icon" id="arrow-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
