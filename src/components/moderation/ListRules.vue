@@ -85,7 +85,7 @@
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
-			@done-successfully="doneSuccessfully"
+			@done-successfully="doneSuccessfully('updated')"
 			@clicked-delete="clickDelete"
 			:rule-name-edit="rule.ruleName"
 			:report-reason-edit="rule.reportReason"
@@ -100,31 +100,19 @@
 			:subredditName="subredditName"
 			:rule-id="rule.ruleId"
 			@exit="clickDelete()"
-			@doneSuccessfully="doneSuccessfully()"
+			@doneSuccessfully="doneSuccessfully('deleted')"
 		></sure-popup>
-
-		<div class="positioning">
-			<SaveUnsavePopupMessage
-				v-for="message in savedUnsavedPosts"
-				:key="message.id"
-				:type="message.type"
-				:state="message.state"
-				:typeid="message.postid"
-				@undo-action="undoSaveUnsave"
-			></SaveUnsavePopupMessage>
-		</div>
 	</div>
 </template>
 
 <script>
 import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
 import SurePopup from '../../components/moderation/SurePopup.vue';
-import SaveUnsavePopupMessage from '@/components/SaveUnsavePopupMessage.vue';
 export default {
+	emits: ['doneSuccessfully'],
 	components: {
 		AddrulePopup,
 		SurePopup,
-		SaveUnsavePopupMessage,
 	},
 	props: {
 		// @vuese
@@ -157,7 +145,6 @@ export default {
 			viewDetails: false,
 			showAddRule: false,
 			showSureDelete: false,
-			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
@@ -190,76 +177,15 @@ export default {
 		// @vuese
 		// handle load rules instead of refreshing
 		// @arg no argument
-		doneSuccessfully() {
+		doneSuccessfully(title) {
 			this.loadListOfRules();
-			this.savePost();
+			this.$emit('doneSuccessfully', title);
 		},
 		// @vuese
 		// Used to show delete rule popup
 		// @arg no argument
 		clickDelete() {
 			this.showSureDelete = !this.showSureDelete;
-		},
-
-		// @vuese
-		// Used to show handle save action popup
-		// @arg no argument
-		savePost() {
-			this.savedUnsavedPosts.push({
-				id: this.savedUnsavedPosts.length,
-				postid: '1',
-				type: 'Rule',
-				state: 'deleted',
-			});
-			setTimeout(() => {
-				this.savedUnsavedPosts.shift();
-			}, 10000);
-		},
-		// @vuese
-		// Used to show handle unsave action popup
-		// @arg no argument
-		unsavePost() {
-			this.savedUnsavedPosts.push({
-				id: this.savedUnsavedPosts.length,
-				postid: '1',
-				type: 'post',
-				state: 'unsaved',
-			});
-			setTimeout(() => {
-				this.savedUnsavedPosts.shift();
-			}, 10000);
-		},
-		// @vuese
-		// Used to show handle undo save action popup
-		// @arg no argument
-		async undoSaveUnsave(state, typeid) {
-			if (state == 'saved') {
-				this.unsavePost(typeid);
-				this.$store.state.latestSavedUnsavedPost.id = typeid;
-				this.$store.state.latestSavedUnsavedPost.saved = false;
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: typeid,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
-			} else {
-				this.savePost(typeid);
-				this.$store.state.latestSavedUnsavedPost.id = typeid;
-				this.$store.state.latestSavedUnsavedPost.saved = true;
-				try {
-					await this.$store.dispatch('postCommentActions/save', {
-						baseurl: this.$baseurl,
-						id: typeid,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
-			}
 		},
 	},
 };
