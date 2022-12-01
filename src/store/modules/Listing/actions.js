@@ -59,21 +59,15 @@ export default {
 	},
 	async postDetails(context, payload) {
 		const baseurl = payload.baseurl;
-		//const id = payload.id;
-		const response = await fetch(
-			baseurl + '/post-details?id=637d1abbc6d8c2bdbb26a2c3',
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-				//body: JSON.stringify({ id: '637d1abbc6d8c2bdbb26a2c3' }),
-			}
-		);
+		const id = payload.id;
+		const response = await fetch(baseurl + '/post-details?id=' + id, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
 		const responseData = await response.json();
-		console.log(response);
-		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;
