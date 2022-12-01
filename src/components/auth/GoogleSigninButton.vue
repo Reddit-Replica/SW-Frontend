@@ -1,6 +1,6 @@
 <template>
 	<div id="google-login" @click="handlesign" class="log-google log-ag">
-		<div><img src="../../img/Google__G__Logo.svg.png" alt="" /></div>
+		<div><img src="../../../img/Google__G__Logo.svg.png" alt="" /></div>
 		<div class="cont">continue with Google</div>
 	</div>
 </template>
@@ -38,44 +38,23 @@ export default {
 img {
 	width: 22px;
 	height: 22px;
+	margin-left: 12px;
+	background-color: white;
 }
 .log-google {
-	-webkit-box-align: center;
 	align-items: center;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	flex-flow: row nowrap;
-	justify-content: space-between;
-	border-radius: 20px;
-	border-color: darkgrey;
 	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	box-sizing: border-box;
+	height: 50px;
+	width: 270px;
+	margin: 8px 8px;
+	padding: 4.2px;
 	cursor: pointer;
-	transition: background-color 0.2s;
-	border: none;
-	font-size: 12px;
-	direction: ltr;
-	font-synthesis: none;
-	position: relative;
-	letter-spacing: initial;
-	width: 100%;
-	height: 100%;
-	min-width: 130px;
-	max-width: 375px;
-	min-height: 30px;
-	max-height: 64px;
-	text-align: center;
-	user-select: none;
-	white-space: nowrap;
-	margin: 10px;
+	font-weight: 600;
 }
 .log-google:hover {
 	background-color: var(--color-blue-2);
 	color: var(--color-white-1);
 }
-
 .log-ag {
 	font-size: 14px;
 	font-family: 'IBMPlexSans', sans-serif;
@@ -85,10 +64,11 @@ img {
 	text-align: center;
 	text-transform: uppercase;
 	background-color: #fff;
-	color: #1a1a1b;
+	color: #0079d3;
 	display: inline-flex;
 	/* width: 60%; */
 }
+
 .cont {
 	padding-left: 25px;
 }

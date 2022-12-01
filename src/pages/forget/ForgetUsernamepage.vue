@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha.vue';
+import TheRecaptcha from '../../components/auth/TheRecaptcha.vue';
 // @it is forget username component
 export default {
 	data() {
