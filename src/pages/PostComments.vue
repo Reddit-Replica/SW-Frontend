@@ -762,6 +762,7 @@ export default {
 	data() {
 		return {
 			subredditName: this.$route.path.split('/')[2],
+			haveSubreddit: false,
 			upClicked: false,
 			downClicked: false,
 			counter: 22,
@@ -837,6 +838,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			//console.log(this.$route.path.split('/')[4]);
 			const postDetails = this.$store.getters['listing/getPostDetails'];
 			this.counter = postDetails.votes;
 			this.postName = postDetails.title;
@@ -847,7 +849,7 @@ export default {
 		},
 		//@vuese
 		//adds new comment
-		writeNewComment() {
+		async writeNewComment() {
 			let write = {
 				userName: this.getuserName,
 				duration: 'just now',
@@ -855,6 +857,19 @@ export default {
 				replies: [],
 			};
 			this.userComments.unshift(write);
+			try {
+				await this.$store.dispatch('comments/comment', {
+					baseurl: this.$baseurl,
+					text: this.newComment,
+					parentId: this.$route.path.split('/')[4],
+					parentType: 'post',
+					level: 0,
+					subredditName: this.subredditName,
+					haveSubreddit: this.haveSubreddit,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 			this.newComment = '';
 		},
 		//@vuese
