@@ -23,6 +23,7 @@
 				class="base-button"
 				@click="showAddRuleFunction()"
 				id="add-rules-button"
+				:class="rulesCount == 15 ? 'content-controls-button' : ''"
 				>Add rule</base-button
 			>
 		</div>
@@ -209,15 +210,17 @@ button {
 	background-color: var(--color-blue-light-5);
 }
 .reorder-button {
-	filter: grayscale(1);
-	color: var(--color-grey-light-5);
-	fill: var(--color-grey-light-5);
+	color: var(--color-blue-2) !important;
+	fill: var(--color-blue-2);
 	padding: 0.4rem 1.6rem;
 	margin-right: 1rem;
 	background-color: transparent;
 }
 .disable-button {
+	filter: grayscale(1);
 	cursor: not-allowed;
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
 }
 .reorder-button:hover,
 .reorder-post-flair-button:hover {

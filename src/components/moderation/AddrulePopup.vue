@@ -239,7 +239,7 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
-	emits: ['exit', 'doneSuccessfully'],
+	emits: ['exit', 'doneSuccessfully', 'clickedDelete'],
 	props: {
 		// @vuese
 		//return subreddit name
@@ -446,21 +446,8 @@ export default {
 		//handle delete rule
 		//@arg no argument
 		async deleteRule() {
-			this.errorResponse = null;
-			try {
-				await this.$store.dispatch('moderation/deleteRule', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-					ruleId: this.ruleId,
-				});
-				if (this.$store.getters['moderation/deleteRuleSuccessfully']) {
-					this.hideAddRule();
-					this.$emit('doneSuccessfully');
-				}
-			} catch (err) {
-				console.log(err);
-				this.errorResponse = err;
-			}
+			this.$emit('clickedDelete');
+			this.hideAddRule();
 		},
 	},
 };
