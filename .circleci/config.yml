@@ -14,14 +14,6 @@ commands:
             sudo npm install --global n
             sudo n 13.8.
   
-  configure_docker:
-    description: login with my dockerhub
-    steps:
-      - run:
-          name: Install Node.js 13.8.0
-          command: |
-            docker login -u $DOCKERNAME -p $DOCKERPASS
-
   install_docker:
     description: Install docker
     steps:
@@ -42,35 +34,50 @@ jobs:
       - image: circleci/node:lts
     steps:
     - checkout
+
+    - restore_cache:
+        name: Restore nodemodules Cache
+        keys:
+          - v1-vue-modules-{{ checksum "package.json" }}
+          - v1-vue-modules-
+
     - run:
         name: Install npm dependencies
         command: |
           npm install
+          
+    - save_cache:
+        name: Save Yarn Package Cachek
+        key: v1-vue-modules-{{ checksum "package.json" }}
+        paths:
+          - node_modules
+
     - run:
         name: Run Unit Tests
         command: |
           npm run test
 
-
-
-  integration-testing:
+  build-frontend:
     docker:
-      - image: circleci/node:lts
+      - image: docker:17.05.0-ce-git
     steps:
-    - checkout
-    - run:
-        name: Install npm dependencies
-        command: |
-          npm i
-    - run:
-        name: Run integration Tests
-        command: |
-          ls
+      - checkout
+      - install_docker
+      - run:
+          name: Build , tag , push front-end
+          command: |
+            docker build -t frontend:v1 .
+            docker tag frontend:v1  waer/frontend
+            docker push  waer/frontend:latest
+
 
 workflows:
   main:
     jobs:
       - unit-testing
-      - integration-testing:
+      - build-frontend:
           requires: 
             - unit-testing
+          filters:
+            branches:
+              only: master
