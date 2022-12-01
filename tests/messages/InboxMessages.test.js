@@ -85,21 +85,21 @@ describe ('AllinboxComponent.vue', () => {
     expect (wrapper.find ('.subject-text').text ()).contain ('hi');
   });
 
-  it ('Testing text message is correct', () => {
-    const wrapper = mount (AllinboxComponent, {
-      props: {
-        message,
-        index,
-      },
-      global: {
-        // OR:
-        mocks: {
-          $store: store,
-        },
-      },
-    });
-    expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
-  });
+  // it ('Testing text message is correct', () => {
+  //   const wrapper = mount (AllinboxComponent, {
+  //     props: {
+  //       message,
+  //       index,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  // });
 
   it ('Testing the time is correct', () => {
     const wrapper = mount (AllinboxComponent, {
@@ -117,21 +117,21 @@ describe ('AllinboxComponent.vue', () => {
     expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
   });
 
-  it ('Testing the Permalink button text is correct', () => {
-    const wrapper = mount (AllinboxComponent, {
-      props: {
-        message,
-        index,
-      },
-      global: {
-        // OR:
-        mocks: {
-          $store: store,
-        },
-      },
-    });
-    expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
-  });
+  // it ('Testing the Permalink button text is correct', () => {
+  //   const wrapper = mount (AllinboxComponent, {
+  //     props: {
+  //       message,
+  //       index,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
+  // });
 
   it ('Testing the delete button text is correct', () => {
     const wrapper = mount (AllinboxComponent, {

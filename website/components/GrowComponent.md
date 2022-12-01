@@ -11,8 +11,19 @@
 |content|Description of grow your community element|`String`|`false`|-|
 |link|Link to where of grow your community element should go|`String`|`false`|-|
 |button|Button text of grow your community element|`String`|`false`|-|
+|isShown|Is grow option shown/hidden|`Boolean`|`false`|true|
 
 <!-- @vuese:GrowComponent:props:end -->
+
+
+## Events
+
+<!-- @vuese:GrowComponent:events:start -->
+|Event Name|Description|Parameters|
+|---|---|---|
+|exit|this.shownAlone = !this.shownAlone;|-|
+
+<!-- @vuese:GrowComponent:events:end -->
 
 
 ## Slots

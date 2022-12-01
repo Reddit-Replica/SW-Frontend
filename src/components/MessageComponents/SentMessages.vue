@@ -16,19 +16,24 @@
 					><span>&nbsp;sent&nbsp;</span
 					><time :id="'time-' + index"> {{ message.sendAt }}</time>
 				</p>
-				<p class="md">{{ message.text }}</p>
-				<ul class="flat-list ul-messages">
+				<!-- <p class="md">{{ message.text }}</p> -->
+				<Markdown class="md" :source="message.text" />
+				<!-- <ul class="flat-list ul-messages">
 					<li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 		</li>
 	</div>
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
 export default {
+	components: {
+		Markdown,
+	},
 	props: {
 		// @vuese
 		//details of message

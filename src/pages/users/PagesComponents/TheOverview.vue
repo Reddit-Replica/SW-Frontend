@@ -2,7 +2,7 @@
 	<sortposts-bar></sortposts-bar>
 	<!-- <base-post :post="post"></base-post> -->
 	<!-- <base-post :post="post"></base-post> -->
-	<base-post :post="post"></base-post>
+	<!-- <base-post :post="post"></base-post> -->
 	<div class="base-profile-post">
 		<div class="box">
 			<div class="box-items">
@@ -365,11 +365,11 @@
 
 <script>
 import SortpostsBar from '../../../components/bars/SortpostsBar.vue';
-import BasePost from '../../../components/BaseComponents/BasePost.vue';
+// import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
 		SortpostsBar,
-		BasePost,
+		// BasePost,
 	},
 	data() {
 		return {

@@ -54,7 +54,8 @@
 							{{ message.sendAt }}</time
 						>
 					</p>
-					<p class="md">{{ message.text }}</p>
+					<!-- <p class="md">{{ message.text }}</p> -->
+					<Markdown class="md" :source="message.text" />
 					<ul class="ul-messages flat-list">
 						<li :id="'context-link-' + index">
 							<a href="" :id="'context-a-' + index">context</a>
@@ -164,17 +165,36 @@
 							>
 						</li>
 						<li :id="'reply-box-' + index">
-							<span class="link" :id="'reply-' + index">Reply</span>
+							<span
+								class="link"
+								:id="'reply-' + index"
+								@click="replyFunction('show')"
+								>Reply</span
+							>
 						</li>
 					</ul>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
 				</div>
 			</div>
 		</li>
+		<ReplyComponent
+			:show-reply-box="showReplyBox"
+			:index="index"
+			@hide-reply-box="replyFunction('hide')"
+		></ReplyComponent>
 	</div>
 </template>
 
 <script>
+import Markdown from 'vue3-markdown-it';
+import ReplyComponent from './ReplyComponent.vue';
 export default {
+	components: {
+		Markdown,
+		ReplyComponent,
+	},
 	props: {
 		// @vuese
 		//details of message
@@ -214,6 +234,8 @@ export default {
 			disappear: false,
 			spammed: false,
 			isRead: this.message.isRead,
+			errorResponse: null,
+			showReplyBox: false,
 		};
 	},
 	// @vuese
@@ -227,52 +249,91 @@ export default {
 		// @vuese
 		//toggle remove action
 		// @arg The argument is a string value representing if user click ok
-		removeAction(action) {
+		async removeAction(action) {
 			this.removeUser = !this.removeUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/deleteMessage', {
-					id: this.message.id,
-					type: 'comment',
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/deleteMessage', {
+						id: this.message.id,
+						type: 'comment',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
 		},
 		// @vuese
 		//handle block action
 		// @arg The argument is a string value representing if user click ok
-		blockAction(action) {
+		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/blockUser', {
-					block: true,
-					username: this.message.senderUsername,
-					baseurl: this.$baseurl,
-				});
-				this.disappear = true;
+				try {
+					this.$store.dispatch('messages/blockUser', {
+						block: true,
+						username: this.message.senderUsername,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/blockSuccessfully']) {
+						this.disappear = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.disappear = false;
+				}
 			}
+		},
+		// @vuese
+		//handle unread action
+		// @arg no argument
+		unreadAction() {
+			this.isRead = false;
 		},
 		// @vuese
 		//handle spam action
 		// @arg The argument is a string value representing if user click ok
-		spamAction(action) {
+		async spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
-				this.$store.dispatch('messages/spamMessage', {
-					id: this.message.id,
-					type: 'message',
-					reason: '',
-					baseurl: this.$baseurl,
-				});
-				this.spammed = true;
+				try {
+					this.$store.dispatch('messages/spamMessage', {
+						id: this.message.id,
+						type: 'comment',
+						reason: '',
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/markSpamSuccessfully']) {
+						this.spammed = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.spammed = false;
+				}
 			}
 		},
 		// @vuese
 		//handle upvote action
 		// @arg no argument
-		upvote() {
+		async upvote() {
 			if (this.upClicked == false) {
-				this.upClicked = true;
+				try {
+					this.$store.dispatch('messages/voteComment', {
+						id: this.message.id,
+						direction: 1,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/votedSuccessfully']) {
+						this.upClicked = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.upClicked = false;
+				}
 			} else {
 				this.upClicked = false;
 			}
@@ -283,9 +344,21 @@ export default {
 		// @vuese
 		//handle downvote action
 		// @arg no argument
-		downvote() {
+		async downvote() {
 			if (this.downClicked == false) {
-				this.downClicked = true;
+				try {
+					this.$store.dispatch('messages/voteComment', {
+						id: this.message.id,
+						direction: -1,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/votedSuccessfully']) {
+						this.downClicked = true;
+					}
+				} catch (err) {
+					this.errorResponse = err;
+					this.downClicked = false;
+				}
 			} else {
 				this.downClicked = false;
 			}
@@ -294,10 +367,14 @@ export default {
 			}
 		},
 		// @vuese
-		//handle unread action
+		//show reply box or hide it
 		// @arg no argument
-		unreadAction() {
-			this.isRead = false;
+		replyFunction(title) {
+			if (title == 'show') {
+				this.showReplyBox = true;
+			} else if (title == 'hide') {
+				this.showReplyBox = false;
+			}
 		},
 	},
 };

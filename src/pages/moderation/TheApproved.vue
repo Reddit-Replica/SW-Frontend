@@ -4,6 +4,7 @@
 			{{ title }}
 			<a
 				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
+				id="info-link"
 				__blank="targe"
 			>
 				<svg
@@ -13,6 +14,7 @@
 					fill="currentColor"
 					class="bi bi-info-circle icon-info"
 					viewBox="0 0 16 16"
+					id="icon-info"
 				>
 					<path
 						d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -44,7 +46,7 @@
 				fill="currentColor"
 				class="bi bi-search icon-search"
 				viewBox="0 0 16 16"
-				id="search"
+				id="search-icon"
 			>
 				<path
 					d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
@@ -77,7 +79,7 @@ export default {
 			return this.$store.state.subredditName;
 		},
 		// @vuese
-		//return title to use in component
+		//return title page
 		// @type string
 		title() {
 			return 'Approved users';

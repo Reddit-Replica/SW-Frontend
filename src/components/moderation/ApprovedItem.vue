@@ -15,7 +15,9 @@
 			<span>{{ moderator.dateOfModeration }}</span>
 		</div>
 		<div class="remove">
-			<base-button class="button-remove">Remove</base-button>
+			<base-button class="button-remove" :id="'button-remove-' + index"
+				>Remove</base-button
+			>
 		</div>
 	</li>
 </template>
@@ -25,6 +27,7 @@ export default {
 	props: {
 		// @vuese
 		//details of moderator
+		// @type object
 		moderator: {
 			type: Object,
 			required: true,
@@ -37,12 +40,14 @@ export default {
 		},
 		// @vuese
 		//seacrhing value
+		// @type string
 		search: {
 			type: String,
 			default: '',
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,

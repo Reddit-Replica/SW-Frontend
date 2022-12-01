@@ -21,10 +21,14 @@ export default {
 	props: {
 		// @vuese
 		//subreddit name
+		// @type string
 		subredditName: {
 			type: String,
 			default: 'subredditName',
 		},
+		// @vuese
+		//title bar name
+		// @type string
 		title: {
 			type: String,
 			default: 'moderator',
@@ -61,7 +65,7 @@ export default {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	z-index: 200;
+	z-index: 50;
 }
 .subreddit-img {
 	width: 2.5rem;
