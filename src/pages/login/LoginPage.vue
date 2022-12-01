@@ -128,8 +128,8 @@
 </template>
 
 <script>
-import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
-import facebookSigninButton from '../../components/facebookSigninButton.vue';
+import GoogleSigninButton from '../../components/auth/GoogleSigninButton.vue';
+import facebookSigninButton from '../../components/auth/facebookSigninButton.vue';
 export default {
 	name: 'LogIn',
 	data() {

@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha.vue';
+import TheRecaptcha from '../../components/auth/TheRecaptcha.vue';
 // @vuese
 // @it is forget password component
 export default {
