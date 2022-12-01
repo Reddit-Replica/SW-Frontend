@@ -7,7 +7,7 @@
 			@reorder-rules="reorderRules()"
 			@save-reorder-rules="saveReorderRules()"
 			:drag-drop="dragDrop"
-			:subredditName="subredditName"
+			:subreddit-name="subredditName"
 		></list-bar>
 		<div class="text">
 			Rules

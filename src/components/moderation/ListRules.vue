@@ -97,7 +97,7 @@
 		></addrule-popup>
 		<sure-popup
 			v-if="showSureDelete"
-			:subredditName="subredditName"
+			:subreddit-name="subredditName"
 			:rule-id="rule.ruleId"
 			@exit="clickDelete()"
 			@doneSuccessfully="doneSuccessfully('deleted')"
