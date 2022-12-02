@@ -160,6 +160,10 @@ export default {
 		},
 	},
 	beforeMount() {
+		//fetch subreddit details
+		this.getSubreddit();
+
+		//set listing as hot by default
 		let title = this.$route.params.title;
 		if (title == null) title = 'hot';
 		this.fetchSubredditPosts(title);
@@ -172,16 +176,20 @@ export default {
 		},
 	},
 
-	async created() {
-		const accessToken = localStorage.getItem('accessToken');
-		await this.$store.dispatch('community/getSubreddit', {
-			subredditName: this.subredditName,
-			baseurl: this.$baseurl,
-			token: accessToken,
-		});
-		this.subreddit = this.$store.getters['community/getSubreddit'];
-	},
 	methods: {
+		async getSubreddit() {
+			// const accessToken = localStorage.getItem('accessToken');
+			const accessToken =
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+		},
+
 		hideFirstDialog() {
 			this.showFirstDialog = false;
 		},
