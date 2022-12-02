@@ -496,6 +496,8 @@ export default {
 		//Validate create community form and submit it.
 		//@arg no argument
 		submitCommunity() {
+			this.errorResponse = null;
+
 			this.validateCommunityName();
 
 			if (!this.communityNameValidity) {
@@ -503,19 +505,30 @@ export default {
 			} else if (this.communityCategoryRequiredError) {
 				return;
 			}
-			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/createSubreddit', {
-				subredditName: this.communityName,
-				type: this.communityType,
-				nsfw: this.nsfwChosen,
-				category: this.communityCategory,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
-			this.$router.push({
-				name: 'subreddit',
-				params: { subredditName: this.communityName, firstCreated: true },
-			});
+			// const accessToken = localStorage.getItem('accessToken');
+			const accessToken =
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+
+			try {
+				this.$store.dispatch('community/createSubreddit', {
+					subredditName: this.communityName,
+					type: this.communityType,
+					nsfw: this.nsfwChosen,
+					category: this.communityCategory,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+
+				if (this.$store.getters['community/createdSuccessfully']) {
+					this.$router.push({
+						name: 'subreddit',
+						params: { subredditName: this.communityName, firstCreated: true },
+					});
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 		//@vuese
 		//Show Error dialog when click on more when subreddit name contain symbols or not in range of 3:20 characters

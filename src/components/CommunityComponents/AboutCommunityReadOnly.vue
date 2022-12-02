@@ -162,10 +162,14 @@ export default {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit name
 		subredditName: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit description
 		communityDescription: {
 			type: String,
 			default: '',

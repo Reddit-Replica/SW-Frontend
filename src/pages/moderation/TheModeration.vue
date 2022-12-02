@@ -5,6 +5,7 @@
 		:title="title"
 	></listmoderation-bar>
 	<div>
+		<!-- ///////////change to !moderatorByMe/////////// -->
 		<unmoderator-view
 			v-if="!moderatorByMe"
 			:list-of-moderators="listOfModerators"
@@ -63,6 +64,8 @@ export default {
 		UnmoderatorView,
 		ListBar,
 	},
+	// @vuese
+	//load moderators list and change document title
 	beforeMount() {
 		document.title = this.$store.state.subredditName;
 		this.loadListOfModerators();
@@ -194,12 +197,14 @@ export default {
 				this.$route.path === '/r/' + this.subredditName + '/about/moderators'
 			);
 		},
+
 		// // @vuese
 		// // return rules bath
 		// // @type boolean
 		// rules() {
 		// 	return this.$route.path === '/r/' + this.subredditName + '/about/rules';
 		// },
+
 		// @vuese
 		// return post flair bath
 		// @type boolean

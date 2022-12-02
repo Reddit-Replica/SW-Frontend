@@ -11,31 +11,65 @@
 			>
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div>
-		<div class="bar" v-if="title == 'Rules'">
-			<base-button class="reorder-button">Reorder rules</base-button>
-			<base-button class="base-button" @click="showAddRuleFunction()"
+		<div class="bar" v-if="title == 'Rules' && !dragDrop">
+			<base-button
+				class="reorder-button"
+				id="reorder-rules-button"
+				:class="rulesCount > 1 ? '' : 'disable-button'"
+				@click="reorderRules()"
+				>Reorder rules</base-button
+			>
+			<base-button
+				class="base-button"
+				@click="showAddRuleFunction()"
+				id="add-rules-button"
+				:class="rulesCount == 15 ? 'content-controls-button' : ''"
 				>Add rule</base-button
 			>
 		</div>
+		<div class="bar" v-if="title == 'Rules' && dragDrop">
+			<base-button
+				class="button-white"
+				id="cancel-rules-button"
+				@click="reorderRules()"
+				>Cancel</base-button
+			>
+			<base-button
+				class="base-button"
+				id="save-rules-button"
+				@click="saveReorderRules()"
+				>Save</base-button
+			>
+		</div>
 		<div class="bar" v-if="title == 'Post flair'">
+			<base-button class="button-white" id="post-flair-button"
+				>Post flair settings</base-button
+			>
+			<base-button
+				class="reorder-post-flair-button"
+				id="reorder-post-flair-button"
+				>Reorder</base-button
+			>
+			<base-button class="base-button" id="add-flair-button"
+				>Add flair</base-button
+			>
+		</div>
+		<!-- <div class="bar" v-if="title == 'Post flair'">
 			<base-button class="button-white">Post flair settings</base-button>
 			<base-button class="reorder-post-flair-button">Reorder</base-button>
 			<base-button class="base-button">Add flair</base-button>
-		</div>
-		<div class="bar" v-if="title == 'Post flair'">
-			<base-button class="button-white">Post flair settings</base-button>
-			<base-button class="reorder-post-flair-button">Reorder</base-button>
-			<base-button class="base-button">Add flair</base-button>
-		</div>
+		</div> -->
 		<div class="bar" v-if="title == 'Content controls'">
-			<base-button class="content-controls-button">Save changes</base-button>
+			<base-button class="content-controls-button" id="content-controls-button"
+				>Save changes</base-button
+			>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
-	emits: ['showAddRuleFunction'],
+	emits: ['showAddRuleFunction', 'reorderRules', 'saveReorderRules'],
 	props: {
 		// @vuese
 		// title to be written in bar
@@ -46,11 +80,27 @@ export default {
 			required: true,
 		},
 		// @vuese
-		// title to be written in bar
+		// subreddit name
 		// @type string
 		subredditName: {
 			type: String,
 			default: '',
+			required: true,
+		},
+		// @vuese
+		// rules count
+		// @type string
+		rulesCount: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
+		// @vuese
+		// if there is drag and drop or not
+		// @type string
+		dragDrop: {
+			type: Boolean,
+			default: false,
 			required: true,
 		},
 	},
@@ -83,6 +133,18 @@ export default {
 		// @arg no argument
 		showAddRuleFunction() {
 			this.$emit('showAddRuleFunction', this.showAddRule);
+		},
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		reorderRules() {
+			this.$emit('reorderRules');
+		},
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		saveReorderRules() {
+			this.$emit('saveReorderRules');
 		},
 	},
 };
@@ -148,13 +210,17 @@ button {
 	background-color: var(--color-blue-light-5);
 }
 .reorder-button {
-	cursor: not-allowed;
-	filter: grayscale(1);
-	color: var(--color-grey-light-5);
-	fill: var(--color-grey-light-5);
+	color: var(--color-blue-2) !important;
+	fill: var(--color-blue-2);
 	padding: 0.4rem 1.6rem;
 	margin-right: 1rem;
 	background-color: transparent;
+}
+.disable-button {
+	filter: grayscale(1);
+	cursor: not-allowed;
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
 }
 .reorder-button:hover,
 .reorder-post-flair-button:hover {

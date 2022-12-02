@@ -1,0 +1,23 @@
+# loginComp
+
+## Methods
+
+<!-- @vuese:loginComp:methods:start -->
+|Method|Description|Parameters|
+|---|---|---|
+|validateUser|Validation for UserName (Not a long or Short Input)|-|
+|handleSubmit|posting username and password and wait for token to get login|-|
+
+<!-- @vuese:loginComp:methods:end -->
+
+
+## Watch
+
+<!-- @vuese:loginComp:watch:start -->
+|Name|Description|Parameters|
+|---|---|---|
+|username|watch username if it's not empty|-|
+
+<!-- @vuese:loginComp:watch:end -->
+
+

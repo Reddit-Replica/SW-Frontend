@@ -18,7 +18,7 @@
 <!-- @vuese:MessageForm:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|suggestedSender|`object`|return suggested sender|Yes|
+|suggestedSender|`string`|return suggested sender|Yes|
 |userName|`string`|return username|Yes|
 
 <!-- @vuese:MessageForm:computed:end -->

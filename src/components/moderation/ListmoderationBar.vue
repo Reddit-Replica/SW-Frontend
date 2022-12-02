@@ -21,10 +21,14 @@ export default {
 	props: {
 		// @vuese
 		//subreddit name
+		// @type string
 		subredditName: {
 			type: String,
 			default: 'subredditName',
 		},
+		// @vuese
+		//title bar name
+		// @type string
 		title: {
 			type: String,
 			default: 'moderator',

@@ -32,21 +32,21 @@ describe('AboutCommunityBar.vue', () => {
         expect(wrapper.find('.box-options').exists()).toBe(true);
 	});
 
-    it('Add description', async () => {
-		const wrapper = shallowMount(AboutCommunityBar, {
-			global: {
-				components: {},
-				mocks: { $store: store },
-			},
-		});
+  //   it('Add description', async () => {
+	// 	const wrapper = shallowMount(AboutCommunityBar, {
+	// 		global: {
+	// 			components: {},
+	// 			mocks: { $store: store },
+	// 		},
+	// 	});
 
-		//show add description text area
-		await wrapper.find('#add-description-before').trigger('click');
-        expect(wrapper.find('#add-description-after').exists()).toBe(true);
-		//hide add description text area
-        await wrapper.find('#cancel-description').trigger('click');
-        expect(wrapper.find('#add-description-after').exists()).toBe(false);
-	});
+	// 	//show add description text area
+	// 	await wrapper.find('#add-description-before').trigger('click');
+  //       expect(wrapper.find('#add-description-after').exists()).toBe(true);
+	// 	//hide add description text area
+  //       await wrapper.find('#cancel-description').trigger('click');
+  //       expect(wrapper.find('#add-description-after').exists()).toBe(false);
+	// });
 
 	// it('Test topics list', async () => {
 	// 	const wrapper = shallowMount(AboutCommunityBar, {

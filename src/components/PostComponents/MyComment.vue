@@ -5,7 +5,7 @@
 				<div class="image">
 					<router-link
 						:to="{ name: 'user', params: { userName: comment.userName } }"
-						><img src="../../img/user-image.jpg" alt="" id="user"
+						><img src="../../../img/user-image.jpg" alt="" id="user"
 					/></router-link>
 				</div>
 				<div class="vertical-line"></div>
@@ -31,7 +31,7 @@
 								@click="upClick"
 								id="upvote"
 							>
-								<use xlink:href="../../img/shift.svg#icon-shift"></use>
+								<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 							</svg>
 							<svg
 								class="icon icon-arrow-up p-1 vote"
@@ -39,7 +39,7 @@
 								@click="upClick"
 								id="cancel-upvote"
 							>
-								<use xlink:href="../../img/vote.svg#icon-arrow-up"></use>
+								<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
 						</li>
 						<li :class="upClicked ? 'up' : downClicked ? 'down' : ''">
@@ -52,7 +52,7 @@
 								@click="downClick"
 								id="downvote"
 							>
-								<use xlink:href="../../img/shift.svg#icon-shift"></use>
+								<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 							</svg>
 							<svg
 								class="icon icon-arrow-down p-1 vote"
@@ -60,7 +60,7 @@
 								@click="downClick"
 								id="cancel-downvote"
 							>
-								<use xlink:href="../../img/vote.svg#icon-arrow-down"></use>
+								<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
 							</svg>
 						</li>
 						<li><font-awesome-icon icon="fa-regular fa-message" /> Reply</li>
@@ -431,8 +431,16 @@ export default {
 		},
 		//@vuese
 		//delete comment
-		deleteComment() {
+		async deleteComment() {
 			this.deleted = true;
+			try {
+				await this.$store.dispatch('comments/deleteComment', {
+					baseurl: this.$baseurl,
+					id: this.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };

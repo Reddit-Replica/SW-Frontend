@@ -69,7 +69,7 @@ import TrafficStats from './pages/moderation/TrafficStats.vue';
 
 import NotFound from './pages/NotFound.vue';
 
-import PostComments from './pages/PostComments.vue';
+import PostComments from './components/PostComponents/PostComments.vue';
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -83,7 +83,7 @@ const router = createRouter({
 			children: [
 				{
 					name: 'comments',
-					path: '/r/:subredditName/comments/:postId/:postName/',
+					path: '/r/:subredditName/comments/:postId/:postName/', //$route.path.split('/')[2: for subredditname , 4: for post id]
 					component: PostComments,
 				},
 			],

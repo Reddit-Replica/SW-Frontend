@@ -163,19 +163,28 @@ export default {
 			shownThird: true,
 		};
 	},
-	//@vuese
-	//Show/Hide grow your community part
-	//@arg no argument
 	methods: {
+		//@vuese
+		//Show/Hide grow your community part
+		//@arg no argument
 		toggleGrowBody() {
 			this.growBodyShown = !this.growBodyShown;
 		},
+		//@vuese
+		//Show/Hide first grow your community option
+		//@arg no argument
 		hideFirst() {
 			this.shownFirst = !this.shownFirst;
 		},
+		//@vuese
+		//Show/Hide second grow your community option
+		//@arg no argument
 		hideSecond() {
 			this.shownSecond = !this.shownSecond;
 		},
+		//@vuese
+		//Show/Hide third grow your community option
+		//@arg no argument
 		hideThird() {
 			this.shownThird = !this.shownThird;
 		},

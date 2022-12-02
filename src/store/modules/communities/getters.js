@@ -11,4 +11,7 @@ export default {
 	getPosts(state) {
 		return state.Posts;
 	},
+	createdSuccessfully(state) {
+		return state.createdSuccessfully;
+	},
 };

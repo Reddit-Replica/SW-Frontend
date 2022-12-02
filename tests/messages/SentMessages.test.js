@@ -93,21 +93,21 @@ describe ('SentMessages.vue', () => {
     expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
   });
 
-  it ('Testing the Permalink button text is correct', () => {
-    const wrapper = mount (SentMessages, {
-      props: {
-        message,
-        index,
-      },
-      global: {
-        // OR:
-        mocks: {
-          $store: store,
-        },
-      },
-    });
-    expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
-  });
+  // it ('Testing the Permalink button text is correct', () => {
+  //   const wrapper = mount (SentMessages, {
+  //     props: {
+  //       message,
+  //       index,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
+  // });
 
   //--------------------------------------------------------
   //                     Testing message color background page

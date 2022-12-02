@@ -32,4 +32,32 @@ export default {
 			throw error;
 		}
 	},
+	async comment(_, payload) {
+		const newComment = {
+			text: payload.text,
+			parentId: payload.parentId,
+			parentType: payload.parentType,
+			level: payload.level,
+			subredditName: payload.subredditName,
+			haveSubreddit: payload.haveSubreddit,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/comment', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(newComment),
+		});
+
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };

@@ -12,7 +12,6 @@
 							type="text"
 							placeholder="Rule displayed(e.g. 'No photo')"
 							v-model.trim="ruleName"
-							@blur="ruleName"
 							@keyup="charCount('name')"
 							id="rule-input"
 						></textarea>
@@ -28,14 +27,18 @@
 					<div class="rule-box-title">
 						<label for="type-post" class="title-black">Aplies to</label>
 					</div>
-					<div class="rule-box-input flex-column" role="radiogroup">
-						<input type="hidden" />
+					<div
+						class="rule-box-input flex-column"
+						role="radiogroup"
+						id="applied-to"
+					>
+						<input type="hidden" id="input-applied-to" />
 						<div
 							class="type-item"
 							role="radio"
 							value="public"
 							@click="chooseType(0)"
-							id="type-post"
+							id="posts-comments"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -45,6 +48,7 @@
 								class="bi bi-circle"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen0"
+								id="posts-comments"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -57,6 +61,7 @@
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
 								viewBox="0 0 16 16"
+								id="posts-comments"
 								v-else
 							>
 								<path
@@ -70,7 +75,7 @@
 							role="radio"
 							value="restricted"
 							@click="chooseType(1)"
-							id="type-restricted"
+							id="posts"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +85,7 @@
 								class="bi bi-circle"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen1"
+								id="posts"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -93,6 +99,7 @@
 								class="bi bi-record-circle-fill"
 								viewBox="0 0 16 16"
 								v-else
+								id="posts"
 							>
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
@@ -105,7 +112,7 @@
 							role="radio"
 							value="private"
 							@click="chooseType(2)"
-							id="type-private"
+							id="comments"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -115,6 +122,7 @@
 								class="bi bi-circle"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen2"
+								id="comments"
 							>
 								<path
 									d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
@@ -128,6 +136,7 @@
 								class="bi bi-record-circle-fill"
 								viewBox="0 0 16 16"
 								v-else
+								id="comments"
 							>
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
@@ -183,17 +192,41 @@
 				</div>
 				<div class="rule-box box-buttons">
 					<base-button
+						v-if="edit"
+						@click="deleteRule()"
+						class="delete-button"
+						:class="ruleName == '' ? 'disabled' : ''"
+						id="delete-button"
+						>Delete</base-button
+					>
+					<base-button
 						@click="hideAddRule"
 						class="button-white"
 						id="cancel-button"
 						>Cancel</base-button
 					>
 					<base-button
+						v-if="!edit"
 						@click="submitRule()"
 						class="button-blue"
 						:class="ruleName == '' ? 'disabled' : ''"
-						id="create-button"
+						id="create-rule-button"
 						>Add new rule</base-button
+					>
+					<base-button
+						v-else
+						@click="updateRule()"
+						class="button-blue"
+						:class="
+							ruleName == ruleNameEdit &&
+							reportReason == reportReasonEdit &&
+							description == descriptionEdit &&
+							appliedType == appliesToEdit
+								? 'disabled'
+								: ''
+						"
+						id="save-button"
+						>Save</base-button
 					>
 				</div>
 				<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
@@ -206,13 +239,77 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
-	emits: ['exit'],
+	emits: ['exit', 'doneSuccessfully', 'clickedDelete'],
 	props: {
+		// @vuese
+		//return subreddit name
+		// @type string
 		subredditName: {
 			type: String,
 			default: '',
 			required: true,
 		},
+		// @vuese
+		//return edited rule name
+		// @type string
+		ruleNameEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return report reason edit
+		// @type string
+		reportReasonEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return applies to edit
+		// @type string
+		appliesToEdit: {
+			type: String,
+			default: 'posts and comments',
+			required: true,
+		},
+		// @vuese
+		//return report description edit
+		// @type string
+		descriptionEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return rule order
+		// @type string
+		ruleOrder: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
+		// @vuese
+		//return rule id
+		// @type string
+		ruleId: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return if there is an edited rule
+		// @type string
+		edit: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
+	},
+	// @vuese
+	//update choosen rule applied to
+	beforeMount() {
+		this.updateChoosen();
 	},
 	data() {
 		return {
@@ -220,10 +317,10 @@ export default {
 			typeChosen0: true,
 			typeChosen1: false,
 			typeChosen2: false,
-			appliedType: 'posts and comments',
-			ruleName: '',
-			reportReason: '',
-			description: '',
+			appliedType: this.appliesToEdit,
+			ruleName: this.ruleNameEdit,
+			reportReason: this.reportReasonEdit,
+			description: this.descriptionEdit,
 			charRemainingName: '100',
 			charRemainingReason: '100',
 			charRemainingDescription: '500',
@@ -240,24 +337,42 @@ export default {
 			this.$emit('exit');
 		},
 		//@vuese
-		//Set chosen community type (public, restricted, private)
+		//Set chosen applied to type (posts and comments, posts only, comments only)
 		//@arg index to indicate chosen type
 		chooseType(index) {
-			if (index == 2) {
-				this.typeChosen2 = true;
-				this.typeChosen1 = false;
-				this.typeChosen0 = false;
-				this.appliedType = 'posts and comments';
-			} else if (index == 1) {
-				this.typeChosen1 = true;
-				this.typeChosen2 = false;
-				this.typeChosen0 = false;
-				this.appliedType = 'posts only';
-			} else {
+			if (index == 0) {
 				this.typeChosen0 = true;
 				this.typeChosen1 = false;
 				this.typeChosen2 = false;
+				this.appliedType = 'posts and comments';
+			} else if (index == 1) {
+				this.typeChosen0 = false;
+				this.typeChosen1 = true;
+				this.typeChosen2 = false;
+				this.appliedType = 'posts only';
+			} else {
+				this.typeChosen0 = false;
+				this.typeChosen1 = false;
+				this.typeChosen2 = true;
 				this.appliedType = 'comments only';
+			}
+		},
+		//@vuese
+		//update chosen applied to type (posts and comments, posts only, comments only)
+		//@arg no argument
+		updateChoosen() {
+			if (this.appliesToEdit == 'posts and comments') {
+				this.typeChosen2 = false;
+				this.typeChosen1 = false;
+				this.typeChosen0 = true;
+			} else if (this.appliesToEdit == 'posts only') {
+				this.typeChosen1 = true;
+				this.typeChosen2 = false;
+				this.typeChosen0 = false;
+			} else {
+				this.typeChosen0 = false;
+				this.typeChosen1 = false;
+				this.typeChosen2 = true;
 			}
 		},
 		//@vuese
@@ -273,7 +388,7 @@ export default {
 			}
 		},
 		//@vuese
-		//submit adding rule
+		//handle submit adding rule
 		//@arg no argument
 		async submitRule() {
 			this.errorResponse = null;
@@ -291,11 +406,48 @@ export default {
 				});
 				if (this.$store.getters['moderation/addRuleSuccessfully']) {
 					this.hideAddRule();
+					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {
 				console.log(err);
 				this.errorResponse = err;
 			}
+		},
+		//@vuese
+		//handle update rule
+		//@arg no argument
+		async updateRule() {
+			this.errorResponse = null;
+			if (this.reportReason == '') {
+				this.reportReason = this.ruleName;
+			}
+			try {
+				await this.$store.dispatch('moderation/updateRule', {
+					ruleName: this.ruleName,
+					ruleOrder: this.ruleOrder,
+					appliesTo: this.appliedType,
+					reportReason: this.reportReason,
+					description: this.description,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					ruleId: this.ruleId,
+				});
+				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
+					this.hideAddRule();
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+
+		//@vuese
+		//handle delete rule
+		//@arg no argument
+		async deleteRule() {
+			this.$emit('clickedDelete');
+			this.hideAddRule();
 		},
 	},
 };
@@ -436,5 +588,27 @@ button:hover {
 	color: rgba(255, 255, 255, 0.5);
 	fill: rgba(255, 255, 255, 0.5);
 	background-color: var(--color-grey-light-5);
+}
+.delete-button {
+	margin-right: auto;
+	color: var(--color-red-dark-1);
+	position: relative;
+	border: 1px solid transparent;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
+}
+.delete-button:hover {
+	background-color: var(--color-grey-light-4);
+}
+.no-messages {
+	margin-top: 2rem;
+	padding: 1rem;
 }
 </style>
