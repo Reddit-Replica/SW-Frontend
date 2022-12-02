@@ -24,16 +24,22 @@ export default {
 		};
 	},
 	props: {
+		//@vuese
+		//type component being saved or unsaved
 		type: {
 			type: String,
 			required: true,
 			default: '',
 		},
+		//@vuese
+		//the state of component save or unsave
 		state: {
 			type: String,
 			required: true,
 			default: '',
 		},
+		//@vuese
+		//id of pot/comment
 		typeid: {
 			type: String,
 			required: true,
@@ -41,10 +47,16 @@ export default {
 		},
 	},
 	methods: {
+		//@vuese
+		//closing the message
 		closeMessage() {
 			this.close = true;
 		},
+		//@vuese
+		//undo action
 		undo() {
+			// Fire when the action is undone
+			// @arg The argument are a string value representing state, a string value representing id
 			this.$emit('undoAction', this.state, this.typeid);
 		},
 	},
