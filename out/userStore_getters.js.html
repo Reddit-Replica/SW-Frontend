@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: userStore/getters.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,45 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: userStore/getters.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module 'UserStore' object.
+ * @name UserGetters
+ * @type {object}
+ * @getter {object} getUserData={userData,userModeratorData} Returns an Object contain userData for user Card, userModeratorData for moderator card property.
+ * @getter {object} getUserPostData=postData Returns Object contain postData.
+ * @getter {object} getStaticSocialLinks=socialLinkItems Returns a property that is a number.
+ */
+export default {
+	getUserData(state) {
+		return {
+			userData: state.userData,
+			userModeratorData: state.userData.moderatorOf,
+		};
+	},
+	getUserPostData(state) {
+		return {
+			postData: state.postData,
+		};
+	},
+	getStaticSocialLinks(state) {
+		return state.socialLinkItems;
+	},
+	getSocialLinkIcon(state) {
+		return state.socialLinkItems;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
