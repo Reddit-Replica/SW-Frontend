@@ -22,6 +22,32 @@ describe ('AllinboxComponent.vue', () => {
   };
   const index = 0;
   let count = 2;
+
+  //Mocking the store
+  // store = new Vuex.Store ({
+  //   modules: {
+  //     messageModule: {
+  //       namespaced: true,
+  //       state: {
+  //         inboxMessages: [],
+  //         unreadMessages: [],
+  //         userMentions: [],
+  //         userMessages: [],
+  //         postReplies: [],
+  //         sentMessages: [],
+  //         suggestedSender: [],
+  //         sentSuccessfully: false,
+  //         deleteMessageSuccessfully: false,
+  //         markSpamSuccessfully: false,
+  //         blockSuccessfully: false,
+  //         votedSuccessfully: false,
+  //         replyMessageSuccessfully: false,
+  //       },
+  //       mutations,
+  //       actions,
+  //     },
+  //   },
+  // });
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -98,7 +124,7 @@ describe ('AllinboxComponent.vue', () => {
   //       },
   //     },
   //   });
-  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
+  //   expect (wrapper.find ('#md').text ()).contain ('hello asmaa');
   // });
 
   it ('Testing the time is correct', () => {
@@ -201,7 +227,7 @@ describe ('AllinboxComponent.vue', () => {
     expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
   });
 
-  it ('Testing the mark un read button text is correct', () => {
+  it ('Testing the mark reply button text is correct', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
         message,
@@ -217,9 +243,11 @@ describe ('AllinboxComponent.vue', () => {
     });
     expect (wrapper.find ('#reply-0').text ()).contain ('Reply');
   });
+
   //--------------------------------------------------------
   //                     Testing message color background page
   //--------------------------------------------------------
+
   it ('Testing block message background is white', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
@@ -241,6 +269,7 @@ describe ('AllinboxComponent.vue', () => {
     });
     expect (this.backcolor == 'grey').toBe (false);
   });
+
   //--------------------------------------------------------
   //                     Testing clickig buttons
   //--------------------------------------------------------
