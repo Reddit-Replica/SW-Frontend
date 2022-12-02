@@ -8,8 +8,8 @@
 |membersCount|Number of members in subreddit|`Number`|`false`|1|
 |onlineMembersCount|Number of online members in subreddit|`Number`|`false`|1|
 |communityDate|Subreddit creation date|`String`|`false`|-|
-|subredditName|-|`String`|`false`|-|
-|communityDescription|-|`String`|`false`|-|
+|subredditName|Subreddit name|`String`|`false`|-|
+|communityDescription|Subreddit description|`String`|`false`|-|
 
 <!-- @vuese:AboutCommunityReadOnly:props:end -->
 
