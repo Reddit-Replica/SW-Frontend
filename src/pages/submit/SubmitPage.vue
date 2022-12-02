@@ -60,8 +60,8 @@
 				<div class="col-lg-4">right</div>
 			</div>
 		</div>
-		<button @click="getTitle">check</button>
-		{{ title }}
+		<!-- <button @click="getTitle">check</button>
+		{{ title }} -->
 	</div>
 </template>
 
@@ -114,37 +114,65 @@ export default {
 			imageCaptions: [],
 			imageLinks: [],
 			sendReplies: null,
+			choosen: null,
 		};
 	},
 	watch: {},
 	methods: {
+		// @vuese
+		// get the title of the post
+
 		getTitle() {
 			this.title = this.$store.getters['posts/getTitle'];
 		},
+		// @vuese
+		// get the kind of the post
+
 		getKind() {
 			if (this.submitTypesActive[0]) this.kind = 'text';
 			else if (this.submitTypesActive[1]) this.kind = 'image';
 			else if (this.submitTypesActive[2]) this.kind = 'link';
 			console.log(this.kind);
 		},
+		// @vuese
+		// get the NSFW of the post
+
 		getNsfw() {
 			this.nsfw = this.$store.getters['posts/getNsfw'];
 		},
+		// @vuese
+		// get poiler of the post
+
 		getSpoiler() {
 			this.spoiler = this.$store.getters['posts/getSpoiler'];
 		},
+		// @vuese
+		// get flair id of the post
+
 		getFlairId() {
 			//this.flairId = this.$store.getters['posts/getFlairId'];
 		},
+		// @vuese
+		// get send replies of the post
+
 		getsendReplies() {
 			this.sendReplies = this.$store.getters['posts/getsendReplies'];
 		},
+		// @vuese
+		// get the content of the post
+
 		getContent() {
 			this.content = this.$store.getters['posts/getContent'];
 		},
+		// @vuese
+		// get the subreddit of the post
+
 		getSubreddit() {
 			this.subreddit = this.$store.getters['posts/getSubreddit'];
 		},
+		// @vuese
+		// dispatch createpost from the store 
+
 		async handleSubmit() {
 			this.getTitle();
 			this.getKind();
