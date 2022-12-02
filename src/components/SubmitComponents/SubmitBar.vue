@@ -122,16 +122,21 @@
 				v-if="isSet"
 			></subreddit-info>
 		</div>
+		<div class="col-lg-3 posting">
+			<postingto-reddit></postingto-reddit>
+		</div>
 	</div>
 </template>
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import SubredditInfo from '../PostComponents/SubredditInfo.vue';
+import PostingtoReddit from '@/components/PostComponents/PostingtoReddit.vue';
 export default {
 	components: {
 		CreateCommunity,
 		SubredditInfo,
+		PostingtoReddit,
 	},
 	data() {
 		return {
@@ -455,12 +460,18 @@ button {
 	left: 108%;
 	width: 300px;
 }
+.posting {
+	position: absolute;
+	left: 108%;
+	width: 300px;
+	top: 100%;
+}
 .big-box {
 	position: relative;
 }
-@media (max-width: 1255px) {
+/*@media (max-width: 1255px) {
 	.subreddit-info {
 		display: none;
 	}
-}
+}*/
 </style>
