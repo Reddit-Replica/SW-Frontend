@@ -495,7 +495,7 @@ export default {
 		// @vuese
 		//Validate create community form and submit it.
 		//@arg no argument
-		submitCommunity() {
+		async submitCommunity() {
 			this.errorResponse = null;
 
 			this.validateCommunityName();
@@ -505,12 +505,10 @@ export default {
 			} else if (this.communityCategoryRequiredError) {
 				return;
 			}
-			// const accessToken = localStorage.getItem('accessToken');
-			const accessToken =
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+			const accessToken = localStorage.getItem('accessToken');
 
 			try {
-				this.$store.dispatch('community/createSubreddit', {
+				await this.$store.dispatch('community/createSubreddit', {
 					subredditName: this.communityName,
 					type: this.communityType,
 					nsfw: this.nsfwChosen,
