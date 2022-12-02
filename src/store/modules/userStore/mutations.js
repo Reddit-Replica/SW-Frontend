@@ -1,3 +1,11 @@
+/**
+ * The module 'setters' object.
+ * @name userMutations
+ * @type {object} 
+ * @mutator {object} setUserData=userData Sets the state boolean property.
+ * @mutator {object} setUserPostData=strProp Sets the state string property.
+ * @mutator {object} addUserSocialLink=numProp Sets the state numerical property.
+ */
 export default {
 	setUserData(state, payload) {
 		if (payload.responseStatus == 200)
