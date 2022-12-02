@@ -159,10 +159,10 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		//this.$cookies.set('response', response.status);
 		// console.log(response.status);
-		if (response.ok) {
+		if (response.status == 200) {
 			console.log(response);
 			console.log(response.status);
 			if (responseData.token && responseData.username) {
@@ -192,7 +192,7 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		if (response.status == 200 || response.status == 201) {
 			localStorage.setItem('accessToken', responseData.token);
 			localStorage.setItem('userName', responseData.username);
@@ -215,7 +215,7 @@ export default {
 			baseurl + '/username-available' + '?username=' + payload.username
 		);
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		console.log(response.status);
 		if (response.ok) {
 			if (!responseData.Error) {
@@ -253,7 +253,7 @@ export default {
 	logout_handle(context) {
 		localStorage.removeItem('userName');
 		localStorage.removeItem('accessToken');
-		localStorage.removeItem('response');
+		// localStorage.removeItem('response');
 		context.commit('setUser', {
 			accessToken: null,
 			userName: null,
