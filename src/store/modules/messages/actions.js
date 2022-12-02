@@ -271,8 +271,8 @@ export default {
 			text: payload.text,
 			senderUsername: payload.senderUsername,
 			receiverUsername: payload.receiverUsername,
-			type: 'Messages',
 			subject: payload.subject,
+			type: 'Messages',
 		};
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
@@ -287,9 +287,9 @@ export default {
 			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
+		console.log(newMessage);
 
 		const responseData = await response.json();
-		console.log(response.status);
 		if (response.status == 201) {
 			context.commit('sentSuccessfully', true);
 		} else if (response.status == 401) {
