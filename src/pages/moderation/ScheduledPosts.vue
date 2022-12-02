@@ -68,7 +68,8 @@ export default {
 		//return subreddit name
 		// @type string
 		subredditName() {
-			return this.$store.state.subredditName;
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
 		},
 	},
 };
