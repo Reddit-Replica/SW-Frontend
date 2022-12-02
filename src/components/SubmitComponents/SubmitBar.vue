@@ -122,7 +122,7 @@
 				v-if="isSet"
 			></subreddit-info>
 		</div>
-		<div class="col-lg-3 posting">
+		<div :class="isSet ? 'col-lg-3 posting1' : 'col-lg-3 posting2'">
 			<postingto-reddit></postingto-reddit>
 		</div>
 	</div>
@@ -460,11 +460,16 @@ button {
 	left: 108%;
 	width: 300px;
 }
-.posting {
+.posting1 {
 	position: absolute;
 	left: 108%;
 	width: 300px;
-	top: 100%;
+	top: 400px;
+}
+.posting2 {
+	position: absolute;
+	left: 108%;
+	width: 300px;
 }
 .big-box {
 	position: relative;
