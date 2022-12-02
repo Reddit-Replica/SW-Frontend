@@ -262,7 +262,7 @@
 	</div>
 </template>
 <script>
-import PostContent from '../PostContent.vue';
+import PostContent from '../PostComponents/PostContent.vue';
 export default {
 	emits: [
 		'showComments',

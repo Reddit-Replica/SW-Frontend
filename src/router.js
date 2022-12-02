@@ -69,7 +69,7 @@ import TrafficStats from './pages/moderation/TrafficStats.vue';
 
 import NotFound from './pages/NotFound.vue';
 
-import PostComments from './pages/PostComments.vue';
+import PostComments from './components/PostComponents/PostComments.vue';
 
 const router = createRouter({
 	history: createWebHistory(),
