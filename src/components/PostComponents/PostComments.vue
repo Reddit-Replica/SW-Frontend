@@ -11,10 +11,10 @@
 										class="icon icon-arrow-down p-1 up-clicked"
 										v-if="upClicked"
 									>
-										<use xlink:href="../../img/vote.svg#icon-arrow-up"></use>
+										<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 									</svg>
 									<svg class="icon icon-shift" v-else>
-										<use xlink:href="../../img/shift.svg#icon-shift"></use>
+										<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 									</svg>
 								</div>
 								<div
@@ -31,10 +31,12 @@
 										:class="downClicked ? 'down-clicked' : ''"
 										v-if="downClicked"
 									>
-										<use xlink:href="../../img/vote.svg#icon-arrow-down"></use>
+										<use
+											xlink:href="../../../img/vote.svg#icon-arrow-down"
+										></use>
 									</svg>
 									<svg class="icon icon-shift" v-else>
-										<use xlink:href="../../img/shift.svg#icon-shift"></use>
+										<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 									</svg>
 								</div>
 							</div>
@@ -93,11 +95,13 @@
 												v-if="upClicked"
 											>
 												<use
-													xlink:href="../../img/vote.svg#icon-arrow-up"
+													xlink:href="../../../img/vote.svg#icon-arrow-up"
 												></use>
 											</svg>
 											<svg class="icon icon-shift" v-else>
-												<use xlink:href="../../img/shift.svg#icon-shift"></use>
+												<use
+													xlink:href="../../../img/shift.svg#icon-shift"
+												></use>
 											</svg>
 										</div>
 										<div
@@ -119,11 +123,13 @@
 												v-if="downClicked"
 											>
 												<use
-													xlink:href="../../img/vote.svg#icon-arrow-down"
+													xlink:href="../../../img/vote.svg#icon-arrow-down"
 												></use>
 											</svg>
 											<svg class="icon icon-shift" v-else>
-												<use xlink:href="../../img/shift.svg#icon-shift"></use>
+												<use
+													xlink:href="../../../img/shift.svg#icon-shift"
+												></use>
 											</svg>
 										</div>
 									</div>
@@ -131,7 +137,7 @@
 										<div class="info d-flex justify-content-space-between">
 											<div class="subreddit-info">
 												<span class="subreddit-image"
-													><img src="../../img/user-image.jpg" alt=""
+													><img src="../../../img/user-image.jpg" alt=""
 												/></span>
 												<span class="subreddit-name">
 													<router-link
@@ -148,12 +154,12 @@
 													<router-link
 														:to="{
 															name: 'user',
-															params: { userName: userName },
+															params: { userName: postedBy },
 														}"
 														id="poster-router"
 													>
-														{{ userName }} </router-link
-													>&nbsp;{{ duration }} ago
+														{{ postedBy }} </router-link
+													>&nbsp;{{ postedAt }} ago
 												</span>
 											</div>
 											<div class="bell" @click="follow" id="follow">
@@ -406,7 +412,7 @@
 													:to="{
 														name: 'user',
 														params: {
-															userName: this.$store.getters.getUserName,
+															userName: getuserName,
 														},
 													}"
 													id="user-router"
@@ -748,10 +754,10 @@
 	</div>
 </template>
 <script>
-import SubMenu from '../components/BaseComponents/SubMenu.vue';
-import NestedReply from '../components/NestedReply.vue';
-import SubredditInfo from '../components/SubredditInfo.vue';
-import MyComment from '../components/MyComment.vue';
+import SubMenu from '../BaseComponents/SubMenu.vue';
+import NestedReply from './NestedReply.vue';
+import SubredditInfo from './SubredditInfo.vue';
+import MyComment from './MyComment.vue';
 export default {
 	components: {
 		SubMenu,
@@ -761,18 +767,16 @@ export default {
 	},
 	data() {
 		return {
-			id: 1,
-			subredditName: 'subredditNamme',
-			userName: 'mena',
+			subredditName: this.$route.path.split('/')[2],
+			haveSubreddit: false,
 			upClicked: false,
 			downClicked: false,
 			counter: 22,
-			postName:
-				'Can you guys help me finish my code or at least help me find the solution, I really tried to google it but I just can not find it and as I said I am still new.',
-			duration: '1 day',
-			postDescription:
-				'I suck at programming. Always feel like I am behind everyone in my classes but I absolutely love the material. I have dreams about solutions and think about how to fix problems all day long…but I suck at it.',
+			postName: '',
+			postDescription: '',
 			commentsCount: 22,
+			postedBy: 'dummy',
+			postedAt: '',
 			isFollowed: false,
 			subMenuDisplay: false,
 			shareSubMenuDisplay: false,
@@ -824,20 +828,54 @@ export default {
 		//@vuese
 		//get userName
 		getuserName() {
-			return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 	},
+	beforeMount() {
+		this.getPostDetails();
+	},
 	methods: {
+		async getPostDetails() {
+			try {
+				await this.$store.dispatch('listing/postDetails', {
+					baseurl: this.$baseurl,
+					id: this.$route.path.split('/')[4],
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			//console.log(this.$route.path.split('/')[4]);
+			const postDetails = this.$store.getters['listing/getPostDetails'];
+			this.counter = postDetails.votes;
+			this.postName = postDetails.title;
+			this.postDescription = postDetails.content;
+			this.commentsCount = postDetails.comments;
+			this.postedBy = postDetails.postedBy;
+			this.postedAt = postDetails.postedAt;
+		},
 		//@vuese
 		//adds new comment
-		writeNewComment() {
+		async writeNewComment() {
 			let write = {
-				userName: this.$store.getters.getUserName,
+				userName: this.getuserName,
 				duration: 'just now',
 				content: this.newComment,
 				replies: [],
 			};
 			this.userComments.unshift(write);
+			try {
+				await this.$store.dispatch('comments/comment', {
+					baseurl: this.$baseurl,
+					text: this.newComment,
+					parentId: this.$route.path.split('/')[4],
+					parentType: 'post',
+					level: 0,
+					subredditName: this.subredditName,
+					haveSubreddit: this.haveSubreddit,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 			this.newComment = '';
 		},
 		//@vuese

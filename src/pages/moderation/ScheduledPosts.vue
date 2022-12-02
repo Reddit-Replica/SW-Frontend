@@ -14,6 +14,7 @@
 						fill="currentColor"
 						class="bi bi-clock time-icon"
 						viewBox="0 0 16 16"
+						id="time-icon"
 					>
 						<path
 							d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
@@ -22,7 +23,9 @@
 							d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
 						/>
 					</svg>
-					<a href="#" class="left-box-link">Schedule post</a>
+					<a href="#" class="left-box-link" id="schedule-post-link"
+						>Schedule post</a
+					>
 				</div>
 			</div>
 			<div class="right-box">
@@ -39,6 +42,7 @@
 						fill="currentColor"
 						class="bi bi-arrow-clockwise reload-icon"
 						viewBox="0 0 16 16"
+						id="reload-icon"
 					>
 						<path
 							fill-rule="evenodd"
@@ -48,7 +52,9 @@
 							d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
 						/>
 					</svg>
-					<a href="#" class="right-box-link">Schedule recurring post</a>
+					<a href="#" class="right-box-link" id="schedule-recurring-post"
+						>Schedule recurring post</a
+					>
 				</div>
 			</div>
 		</div>

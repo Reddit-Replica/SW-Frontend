@@ -10,6 +10,7 @@ export default {
 			categories: [],
 			subreddit: {},
 			posts: [],
+			createdSuccessfully: false,
 		};
 	},
 	mutations,

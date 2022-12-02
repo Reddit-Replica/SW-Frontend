@@ -53,6 +53,8 @@ export default {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Is this user joined in subreddit or not
 		joined: {
 			type: Boolean,
 			default: false,

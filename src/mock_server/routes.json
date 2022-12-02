@@ -14,5 +14,5 @@
 	"r/subreddit/toggle-favorite": "toggle-favorite",
 	"/r/subreddit": "/subreddit",
 	"/r/subreddit_new": "/subreddit_new",
-	"/r/asmaaSubredditName/about/rules": "/addRule"
+	"/r/asmaaSubredditName/about/rules": "/rule"
 }

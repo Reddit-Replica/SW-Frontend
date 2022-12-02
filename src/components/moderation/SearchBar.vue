@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<form class="input-search" @submit.prevent="enterSearch">
+		<form class="input-search" @submit.prevent="enterSearch" id="search-form">
 			<input
 				type="text"
 				name="search-moderator"
@@ -16,7 +16,7 @@
 				fill="currentColor"
 				class="bi bi-search icon-search icon"
 				viewBox="0 0 16 16"
-				id="search"
+				id="search-icon"
 				@click="enterSearch()"
 			>
 				<path
@@ -63,6 +63,7 @@ export default {
 	props: {
 		// @vuese
 		//if clicked in see all then value of searching should be ''
+		//@type string
 		emptyInput: {
 			type: String,
 			default: '',
@@ -86,7 +87,7 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//used to take action in entering value of search
+		//used to take action at entering value of search
 		// @arg no argument
 		enterSearch() {
 			// Fire when entered search value

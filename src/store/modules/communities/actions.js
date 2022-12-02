@@ -1,5 +1,6 @@
 export default {
-	async createSubreddit(_, payload) {
+	async createSubreddit(context, payload) {
+		context.commit('createdSuccessfully', false);
 		const newSubreddit = {
 			subredditName: payload.subredditName,
 			type: payload.type,
@@ -19,10 +20,21 @@ export default {
 
 		const responseData = await response.json();
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(newSubreddit);
+
+		if (response.status == 201) {
+			context.commit('createdSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},

@@ -18,11 +18,11 @@
 				</p>
 				<!-- <p class="md">{{ message.text }}</p> -->
 				<Markdown class="md" :source="message.text" />
-				<ul class="flat-list ul-messages">
+				<!-- <ul class="flat-list ul-messages">
 					<li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 		</li>
 	</div>

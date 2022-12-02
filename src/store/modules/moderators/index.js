@@ -8,6 +8,10 @@ export default {
 		return {
 			listOfModerators: [],
 			addRuleSuccessfully: false,
+			listOfRules: [],
+			updateRuleSuccessfully: false,
+			deleteRuleSuccessfully: false,
+			updateRulesSuccessfully: false,
 		};
 	},
 	mutations,
