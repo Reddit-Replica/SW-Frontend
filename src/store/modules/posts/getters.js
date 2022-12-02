@@ -31,7 +31,7 @@ export default {
 		console.log('getters allsubreddits');
 		return state.subreddit;
 	},
-	setinSubreddit(state) {
+	getinSubreddit(state) {
 		console.log('getters in subreddit');
 		return state.nSubreddit;
 	},
