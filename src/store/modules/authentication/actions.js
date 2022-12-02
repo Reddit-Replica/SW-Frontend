@@ -15,7 +15,10 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
 			//this.$cookies.set('response', response.status);
 			//this.$cookies.set('response', response.status);
 			//this.$cookie.setCookie('response', response.status);
@@ -43,7 +46,10 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
 			//this.$cookies.set('response', response.status);
 			console.log(response);
 			console.log(responseData);
@@ -82,7 +88,10 @@ export default {
 		console.log(responseData);
 		//console.log(responseData.token);
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
 			//this.$cookies.set('response', response.status);
 			if (responseData.token)
 				//localStorage.setItem('accessToken', responseData.token);

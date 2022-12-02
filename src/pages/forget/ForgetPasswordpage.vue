@@ -195,9 +195,9 @@ export default {
 
 			try {
 				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
-				const response = localStorage.getItem('response');
-				//const response = this.$cookies.get('response');
-				//const response = this.$cookie.getCookie('response');
+				// const response = localStorage.getItem('response');
+				const response = this.getResponse();
+
 				if (response == 200) {
 					console.log(response);
 					this.success = true;
@@ -213,6 +213,11 @@ export default {
 		verifyRec() {
 			console.log('verified 2');
 			this.buttonDisabled = false;
+		},
+		// @vuese
+		// get the response status
+		getResponse() {
+			return this.$store.getters['getResponse'];
 		},
 	},
 

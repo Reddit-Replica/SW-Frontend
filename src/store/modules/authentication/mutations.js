@@ -7,4 +7,8 @@ export default {
 	// setAutoLogout(state) {
 	// 	state.didAutoLogout = true;
 	// },
+	setResponse(state, payload) {
+		console.log(payload);
+		state.response = payload.response;
+	},
 };
