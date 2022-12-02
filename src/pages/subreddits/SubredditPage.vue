@@ -54,7 +54,10 @@
 					:community-description="subreddit.description"
 				></about-community-read-only> -->
 
-				<moderators-bar :moderators="subreddit.moderators"></moderators-bar>
+				<moderators-bar
+					:moderators="subreddit.moderators"
+					:subreddit-name="subredditName"
+				></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
 		</div>
