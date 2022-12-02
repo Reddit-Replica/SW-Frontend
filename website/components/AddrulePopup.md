@@ -23,6 +23,8 @@
 |Event Name|Description|Parameters|
 |---|---|---|
 |exit|Fire emit to close create community dialog|-|
+|doneSuccessfully|-|-|
+|clickedDelete|-|-|
 
 <!-- @vuese:AddrulePopup:events:end -->
 

@@ -10,6 +10,16 @@
 <!-- @vuese:ListRules:props:end -->
 
 
+## Events
+
+<!-- @vuese:ListRules:events:start -->
+|Event Name|Description|Parameters|
+|---|---|---|
+|doneSuccessfully|-|-|
+
+<!-- @vuese:ListRules:events:end -->
+
+
 ## Methods
 
 <!-- @vuese:ListRules:methods:start -->
@@ -17,6 +27,9 @@
 |---|---|---|
 |viewDetailsFunction|Used to show rule details|no argument|
 |showAddRuleFunction|Used to show add rule popup|no argument|
+|loadListOfRules|load Rules list from the store|no argument|
+|doneSuccessfully|handle load rules instead of refreshing|no argument|
+|clickDelete|Used to show delete rule popup|no argument|
 
 <!-- @vuese:ListRules:methods:end -->
 
