@@ -10,9 +10,9 @@
 |onlineMembersCount|Number of online members in subreddit|`Number`|`false`|1|
 |communityDate|Subreddit creation date|`String`|`false`|-|
 |communityType|Subreddit type (public, restricted, private)|`String`|`false`|-|
-|subredditName|-|`String`|`false`|-|
-|communityDescriptionProp|-|`String`|`false`|-|
-|communityTopicProp|-|`Object`|`false`|{"mainTopic":"","subtopics":[]}|
+|subredditName|Subreddit name|`String`|`false`|-|
+|communityDescriptionProp|Subreddit description|`String`|`false`|-|
+|communityTopicProp|Subreddit main topic and array of subtopics|`Object`|`false`|{"mainTopic":"","subtopics":[]}|
 
 <!-- @vuese:AboutCommunityBar:props:end -->
 
@@ -35,6 +35,7 @@
 |toogleSubtopics|Show/Hide subtopics list|no argument|
 |deleteSubtopic|Delete subtopics from chosen subtopics list|no argument|
 |saveSubtopics|save chosen subtopics list|no argument|
+|showBoth|Hide add subtopic button and show subtopics list and input area|no argument|
 |toogleSaveDialog|Show/Hide Save or Discard dialog|no argument|
 |toogleSubtopicsCancel|Cancel chosen subtopics list and show dialog save or discard|no argument|
 |toogleDateBox|Show/Hide date box while hovering on subreddit creation date|no argument|

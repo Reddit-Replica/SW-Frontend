@@ -7,7 +7,7 @@
 |---|---|---|---|---|
 |subredditName|Subreddit name|`String`|`false`|-|
 |subredditImageUrl|Subreddit Image URL|`String`|`false`|-|
-|joined|-|`Boolean`|`false`|false|
+|joined|Is this user joined in subreddit or not|`Boolean`|`false`|false|
 
 <!-- @vuese:SubredditTop:props:end -->
 
