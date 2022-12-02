@@ -476,9 +476,11 @@ button {
 .big-box {
 	position: relative;
 }
-/*@media (max-width: 1255px) {
-	.subreddit-info {
+@media (max-width: 1255px) {
+	.subreddit-info,
+	.posting1,
+	.posting2 {
 		display: none;
 	}
-}*/
+}
 </style>
