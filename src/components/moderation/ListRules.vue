@@ -100,7 +100,7 @@
 			:subreddit-name="subredditName"
 			:rule-id="rule.ruleId"
 			@exit="clickDelete()"
-			@doneSuccessfully="doneSuccessfully('deleted')"
+			@done-successfully="doneSuccessfully('deleted')"
 		></sure-popup>
 	</div>
 </template>
