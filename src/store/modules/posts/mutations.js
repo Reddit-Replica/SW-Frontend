@@ -35,4 +35,8 @@ export default {
 		console.log(payload);
 		state.subreddit = payload.subreddit;
 	},
+	setinSubreddit(state, payload) {
+		console.log(payload);
+		state.sinSubreddit = payload.inSubreddit;
+	},
 };
