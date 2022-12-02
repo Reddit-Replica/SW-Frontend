@@ -56,7 +56,7 @@ export default {
 		//undo action
 		undo() {
 			// Fire when the action is undone
-      		// @arg The argument are a string value representing state, a string value representing id
+			// @arg The argument are a string value representing state, a string value representing id
 			this.$emit('undoAction', this.state, this.typeid);
 		},
 	},
