@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: communities/getters.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,45 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: communities/getters.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module 'CommunityStore' object.
+ * @name CommunityGetters
+ * @type {Object}
+ * @getter {Boolean} subredditNameTaken=subredditNameTaken Returns an boolean contain check if this subreddit name is used before property.
+ * @getter {Array} categories=categories Returns an array contain recommended categories for creating a subreddit property.
+ * @getter {Object} getSubreddit=getSubreddit Returns an object contain subreddit details property.
+ * @getter {Array} getPosts=getPosts Returns an array contain posts in a subreddit property.
+ * @getter {Boolean} createdSuccessfully=createdSuccessfully Returns an boolean contain check if this subreddit created successfully property.
+ */
+export default {
+	subredditNameTaken(state) {
+		return state.subredditNameTaken;
+	},
+	categories(state) {
+		return state.categories;
+	},
+	getSubreddit(state) {
+		return state.subreddit;
+	},
+	getPosts(state) {
+		return state.Posts;
+	},
+	createdSuccessfully(state) {
+		return state.createdSuccessfully;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
