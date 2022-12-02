@@ -171,7 +171,7 @@ export default {
 			this.subreddit = this.$store.getters['posts/getSubreddit'];
 		},
 		// @vuese
-		// dispatch createpost from the store 
+		// dispatch createpost from the store
 
 		async handleSubmit() {
 			this.getTitle();
