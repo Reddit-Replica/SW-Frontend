@@ -187,7 +187,11 @@
 			</div>
 			<!-- ////////////////////////////////////////////// -->
 			<!-- avatar styling button -->
-			<div v-if="state == 'profile'" class="profile-button">
+			<div
+				v-if="state == 'profile'"
+				class="profile-button"
+				style="margin-bottom: 8px"
+			>
 				<button id="style-avatar">
 					<i class="fa-solid fa-shirt avatar-style" />Style Avatar
 				</button>
@@ -225,9 +229,11 @@
 					</span>
 				</span>
 			</div>
-			<div class="profile-items">
+			<div
+				class="profile-items"
+				v-if="userData.followers && userData.followers.length != 0"
+			>
 				<router-link
-					v-if="userData.followers && userData.followers.length != 0"
 					:to="`/user/${$route.params.userName}/followers`"
 					style="color: inherit"
 					class="i karma"
