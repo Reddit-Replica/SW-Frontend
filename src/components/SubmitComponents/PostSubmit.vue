@@ -283,7 +283,7 @@ export default {
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
-		
+
 		// @vuese
 		// set content
 		// @arg The argument is a string value representing content
@@ -296,12 +296,10 @@ export default {
 	components: {
 		QuillEditor,
 	},
-	computed: {
-		
-	},
+	computed: {},
 	watch: {
 		// @vuese
-		// watch content when it changed set it 
+		// watch content when it changed set it
 		// @arg The argument is a string value representing content
 		content(value) {
 			this.content = value;
