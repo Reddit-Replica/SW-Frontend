@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="big-box">
 		<div class="create-post-header">
 			<div class="submit-title">Create a post</div>
 			<!-- <base-button class="drafts-button"
@@ -115,14 +115,23 @@
 			</div>
 		</div>
 		<!-- {{ subreddits }} -->
+		<!-- <subreddit-info class="subreddit-info"> </subreddit-info> -->
+		<div class="col-lg-3 subreddit-info">
+			<subreddit-info
+				:subreddit-name="subredditTitle"
+				v-if="isSet"
+			></subreddit-info>
+		</div>
 	</div>
 </template>
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
+import SubredditInfo from '../PostComponents/SubredditInfo.vue';
 export default {
 	components: {
 		CreateCommunity,
+		SubredditInfo,
 	},
 	data() {
 		return {
@@ -440,5 +449,12 @@ button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+.subreddit-info {
+	position: absolute;
+	left: 120%;
+}
+.big-box {
+	position: relative;
 }
 </style>

@@ -182,50 +182,50 @@
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Bold</span>
 
-							<button class="ql-bold"></button>
+							<button class="icon ql-bold"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Italics</span>
-							<button class="ql-italic"></button>
+							<button class="icon ql-italic"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Link</span>
-							<button class="ql-link"></button>
+							<button class="icon ql-link"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Strikethrough</span>
-							<button class="ql-strike"></button>
+							<button class="icon ql-strike"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Inline Code</span>
-							<button class="ql-code"></button>
+							<button class="icon ql-code"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Superscript</span>
-							<button class="ql-script" value="super"></button>
+							<button class="icon ql-script" value="super"></button>
 						</div>
 						<!-- <button class="ql-spoiler"></button> -->
 						<div class="space-in"></div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Heading</span>
-							<button class="ql-header" value="1"></button>
+							<button class="icon ql-header" value="1"></button>
 						</div>
 
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Bulleted List</span>
-							<button class="ql-list" value="bullet"></button>
+							<button class="icon ql-list" value="bullet"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Numbered List</span>
-							<button class="ql-list" value="ordered"></button>
+							<button class="icon ql-list" value="ordered"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Quote Block</span>
-							<button class="ql-blockquote"></button>
+							<button class="icon ql-blockquote"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Code Block</span>
-							<button class="ql-code-block"></button>
+							<button class="icon ql-code-block"></button>
 						</div>
 						<div class="space-in"></div>
 						<!-- <button class="icons" id="" @click="insertTable">
@@ -235,11 +235,11 @@
 					</button> -->
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Add an image</span>
-							<button class="ql-image"></button>
+							<button class="icon ql-image"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Add a video</span>
-							<button class="ql-video"></button>
+							<button class="icon ql-video"></button>
 						</div>
 					</div>
 				</template>
@@ -406,7 +406,7 @@ textarea:focus {
 	overflow: auto;
 }
 
-.icons {
+.icon {
 	align-items: center;
 	box-sizing: border-box;
 	display: flex;
@@ -591,13 +591,13 @@ button {
 	resize: vertical;
 	color: #000;
 }
-@media (max-width: 1600px) {
+/*@media (max-width: 1600px) {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(13),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(14),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(15) {
 		display: flex;
 	}
-}
+}*/
 @media (max-width: 1287px) {
 	.icons-box .tool-tip:nth-of-type(12) {
 		display: none;

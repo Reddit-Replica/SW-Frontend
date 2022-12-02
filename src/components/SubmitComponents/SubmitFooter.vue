@@ -8,7 +8,7 @@
 		</div>
 		<div class="footer-item">
 			<div class="item item-2">
-				<router-link to="/settings/account"
+				<router-link to="/settings/account" target="_blank"
 					>Connect accounts to share your post
 				</router-link>
 
@@ -126,9 +126,9 @@ a:hover {
 	text-align: left;
 	white-space: pre-line;
 
-	bottom: 100%;
+	top: 100%px;
 	margin-bottom: 5px;
-
+	position: absolute;
 	left: 50%;
 	position: absolute;
 	width: 320px;
@@ -140,21 +140,29 @@ a:hover {
 	border-radius: 5px;
 	pointer-events: none;
 	transform: translateX(-44%);
-	z-index: 100;
+	z-index: 2;
+	box-shadow: 1px 1px 4px 0 var(--color-grey-dark-2);
+	border: 1px solid var(--color-grey-dark-2);
+	opacity: 0;
+	visibility: hidden;
 }
 .info-box::before {
-	border: 1px solid var(--color-grey-dark-2);
-	box-shadow: 1px 1px 4px 0 var(--color-grey-dark-2);
+	background-color: white;
 	content: '';
-	display: block;
 	height: 10px;
-	left: 50%;
+	left: 48%;
 	margin-left: -6px;
 	margin-top: -9px;
 	position: absolute;
-	top: 100%;
-	transform: rotate(45deg);
+	top: 105%;
+	transform: rotate(-45deg);
 	width: 10px;
+	z-index: 1;
+}
+.info-1:hover .info-box {
+	top: -90px;
+	visibility: visible;
+	opacity: 1;
 }
 .info-1 {
 	position: relative;
