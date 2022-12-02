@@ -457,19 +457,21 @@ button {
 }
 .subreddit-info {
 	position: absolute;
-	left: 108%;
+	left: 103%;
 	width: 300px;
+	top: 0;
 }
 .posting1 {
 	position: absolute;
-	left: 108%;
+	left: 103%;
 	width: 300px;
-	top: 400px;
+	top: 300px;
 }
 .posting2 {
 	position: absolute;
-	left: 108%;
+	left: 103%;
 	width: 300px;
+	top: 0;
 }
 .big-box {
 	position: relative;
