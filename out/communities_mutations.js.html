@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: communities/mutations.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,45 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: communities/mutations.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module 'CommunityMutations' object.
+ * @name CommunityMutations
+ * @type {Object}
+ * @mutator {Boolean} checkSubredditName=subredditNameTaken Sets the state boolean property "subredditNameTaken".
+ * @mutator {Boolean} createdSuccessfully=createdSuccessfully Sets the state boolean property "createdSuccessfully".
+ * @mutator {Object} setSubreddit=subreddit Sets the state object property "subreddit".
+ * @mutator {Array} setPosts=posts Sets the state array property "posts".
+ * @mutator {Array} setSavedCategories=categories Sets the state array property "categories".
+ */
+export default {
+	checkSubredditName(state, payload) {
+		state.subredditNameTaken = payload;
+	},
+	setSavedCategories(state, payload) {
+		state.categories = payload;
+	},
+	setSubreddit(state, payload) {
+		state.subreddit = payload;
+	},
+	setPosts(state, payload) {
+		state.posts = payload;
+	},
+	createdSuccessfully(state, payload) {
+		state.createdSuccessfully = payload;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
