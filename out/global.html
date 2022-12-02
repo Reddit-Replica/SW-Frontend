@@ -98,6 +98,372 @@
 
         
             
+<h4 class="name" id="AuthenticationGetters"><span class="type-signature"></span>AuthenticationGetters<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    <table class="params">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Returns Type</th>
+                
+                <th>Returns State Property</th>
+                <th class="last">Description</th>
+                </tr>
+            </thead>
+            <tr>
+            <td class="name"><code>getUserName</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>userName</code></td>
+            <td class="description last">Returns The UserName That has logged In.</td>
+            </tr><tr>
+            <td class="name"><code>getAccessToken</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>accessToken</code></td>
+            <td class="description last">Returns The access Token.</td>
+            </tr><tr>
+            <td class="name"><code>getResponse</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>response</code></td>
+            <td class="description last">Returns response from API.</td>
+            </tr>
+            </table>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="authentication_getters.js.html">authentication/getters.js</a>, <a href="authentication_getters.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="AuthenticationMutations"><span class="type-signature"></span>AuthenticationMutations<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    <table class="params">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Accepts Type</th>
+                
+                <th>Mutates State Property</th>
+                <th class="last">Description</th>
+                </tr>
+            </thead>
+            <tr>
+            <td class="name"><code>setUser</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>{userName,accessToken}</code></td>
+            <td class="description last">Sets the User info properties.</td>
+            </tr><tr>
+            <td class="name"><code>setResponse</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>response</code></td>
+            <td class="description last">Sets the response status property.</td>
+            </tr>
+            </table>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="authentication_mutations.js.html">authentication/mutations.js</a>, <a href="authentication_mutations.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="AuthenticationState"><span class="type-signature"></span>AuthenticationState<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    The Vuex 'AuthenticationState' object.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">contains User-Name logged In .</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>accessToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">contains Access Token.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the response from Server.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="authentication_index.js.html">authentication/index.js</a>, <a href="authentication_index.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="MessagesGetters"><span class="type-signature"></span>MessagesGetters<span class="type-signature"> :object</span></h4>
 
 
@@ -1185,13 +1551,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#MessagesGetters">MessagesGetters</a></li><li><a href="global.html#MessagesMutations">MessagesMutations</a></li><li><a href="global.html#MessagesState">MessagesState</a></li><li><a href="global.html#UserGetters">UserGetters</a></li><li><a href="global.html#UserState">UserState</a></li><li><a href="global.html#userMutations">userMutations</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AuthenticationGetters">AuthenticationGetters</a></li><li><a href="global.html#AuthenticationMutations">AuthenticationMutations</a></li><li><a href="global.html#AuthenticationState">AuthenticationState</a></li><li><a href="global.html#MessagesGetters">MessagesGetters</a></li><li><a href="global.html#MessagesMutations">MessagesMutations</a></li><li><a href="global.html#MessagesState">MessagesState</a></li><li><a href="global.html#UserGetters">UserGetters</a></li><li><a href="global.html#UserState">UserState</a></li><li><a href="global.html#userMutations">userMutations</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Fri Dec 02 2022 22:48:44 GMT+0200 (Eastern European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Fri Dec 02 2022 23:32:54 GMT+0200 (Eastern European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

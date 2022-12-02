@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: authentication/mutations.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,39 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: authentication/mutations.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module 'setters' object.
+ * @name AuthenticationMutations
+ * @type {object}
+ * @mutator {object} setUser={userName,accessToken} Sets the User info properties.
+ * @mutator {object} setResponse=response Sets the response status property.
+ */
+export default {
+	setUser(state, payload) {
+		state.userName = payload.userName;
+		state.accessToken = payload.accessToken;
+		//state.didAutoLogout = false;
+	},
+	// setAutoLogout(state) {
+	// 	state.didAutoLogout = true;
+	// },
+	setResponse(state, payload) {
+		console.log(payload);
+		state.response = payload.response;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
