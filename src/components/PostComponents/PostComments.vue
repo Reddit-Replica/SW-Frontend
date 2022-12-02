@@ -11,10 +11,10 @@
 										class="icon icon-arrow-down p-1 up-clicked"
 										v-if="upClicked"
 									>
-										<use xlink:href="../../img/vote.svg#icon-arrow-up"></use>
+										<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 									</svg>
 									<svg class="icon icon-shift" v-else>
-										<use xlink:href="../../img/shift.svg#icon-shift"></use>
+										<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 									</svg>
 								</div>
 								<div
@@ -31,10 +31,12 @@
 										:class="downClicked ? 'down-clicked' : ''"
 										v-if="downClicked"
 									>
-										<use xlink:href="../../img/vote.svg#icon-arrow-down"></use>
+										<use
+											xlink:href="../../../img/vote.svg#icon-arrow-down"
+										></use>
 									</svg>
 									<svg class="icon icon-shift" v-else>
-										<use xlink:href="../../img/shift.svg#icon-shift"></use>
+										<use xlink:href="../../../img/shift.svg#icon-shift"></use>
 									</svg>
 								</div>
 							</div>
@@ -93,11 +95,13 @@
 												v-if="upClicked"
 											>
 												<use
-													xlink:href="../../img/vote.svg#icon-arrow-up"
+													xlink:href="../../../img/vote.svg#icon-arrow-up"
 												></use>
 											</svg>
 											<svg class="icon icon-shift" v-else>
-												<use xlink:href="../../img/shift.svg#icon-shift"></use>
+												<use
+													xlink:href="../../../img/shift.svg#icon-shift"
+												></use>
 											</svg>
 										</div>
 										<div
@@ -119,11 +123,13 @@
 												v-if="downClicked"
 											>
 												<use
-													xlink:href="../../img/vote.svg#icon-arrow-down"
+													xlink:href="../../../img/vote.svg#icon-arrow-down"
 												></use>
 											</svg>
 											<svg class="icon icon-shift" v-else>
-												<use xlink:href="../../img/shift.svg#icon-shift"></use>
+												<use
+													xlink:href="../../../img/shift.svg#icon-shift"
+												></use>
 											</svg>
 										</div>
 									</div>
@@ -131,7 +137,7 @@
 										<div class="info d-flex justify-content-space-between">
 											<div class="subreddit-info">
 												<span class="subreddit-image"
-													><img src="../../img/user-image.jpg" alt=""
+													><img src="../../../img/user-image.jpg" alt=""
 												/></span>
 												<span class="subreddit-name">
 													<router-link
@@ -748,10 +754,10 @@
 	</div>
 </template>
 <script>
-import SubMenu from '../components/BaseComponents/SubMenu.vue';
-import NestedReply from '../components/NestedReply.vue';
-import SubredditInfo from '../components/SubredditInfo.vue';
-import MyComment from '../components/MyComment.vue';
+import SubMenu from '../BaseComponents/SubMenu.vue';
+import NestedReply from './NestedReply.vue';
+import SubredditInfo from './SubredditInfo.vue';
+import MyComment from './MyComment.vue';
 export default {
 	components: {
 		SubMenu,

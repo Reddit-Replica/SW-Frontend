@@ -124,7 +124,7 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
 import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
 import ListRules from '../../components/moderation/ListRules.vue';
-import SaveUnsavePopupMessage from '@/components/SaveUnsavePopupMessage.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 export default {
 	components: {

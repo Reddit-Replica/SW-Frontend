@@ -1,7 +1,7 @@
 <template>
 	<div class="subreddit-info">
 		<span class="subreddit-image"
-			><img src="../../img/user-image.jpg" alt=""
+			><img src="../../../img/user-image.jpg" alt=""
 		/></span>
 		<span class="subreddit-name">
 			<router-link
