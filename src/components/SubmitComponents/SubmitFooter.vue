@@ -51,9 +51,14 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// toggle infoshow
 		showInfo() {
 			this.infoShown = !this.infoShown;
 		},
+		// @vuese
+		// dispatch sendreplies
+		// arg boolean value to check if we will send replies or not
 		setsendReplies(value) {
 			this.$store.commit('posts/setsendReplies', {
 				sendReplies: value,
@@ -61,6 +66,9 @@ export default {
 		},
 	},
 	watch: {
+		// @vuese
+		// watch  send replies if it changes it's value
+		// arg boolean value to check if we will send replies or not
 		sendReplies(value) {
 			this.sendReplies = value;
 			this.setsendReplies(value);
