@@ -143,6 +143,11 @@ export default {
 			console.log('verified 2');
 			this.buttonDisabled = false;
 		},
+		// @vuese
+		// get the response status
+		getResponse() {
+			return this.$store.getters['getResponse'];
+		},
 	},
 	watch: {
 		// @vuese
