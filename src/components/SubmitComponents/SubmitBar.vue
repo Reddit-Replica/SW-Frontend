@@ -452,9 +452,15 @@ button {
 }
 .subreddit-info {
 	position: absolute;
-	left: 120%;
+	left: 108%;
+	width: 300px;
 }
 .big-box {
 	position: relative;
+}
+@media (max-width: 1255px) {
+	.subreddit-info {
+		display: none;
+	}
 }
 </style>

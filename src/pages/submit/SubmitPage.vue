@@ -353,6 +353,7 @@ nav ul li:hover {
 	position: absolute;
 	left: 88%;
 	top: 20%;
+	display: flex;
 }
 .down-row {
 	height: 50px;
@@ -366,5 +367,19 @@ nav ul li:hover {
 }
 .box1 {
 	margin-top: 50px;
+}
+@media (max-width: 1255px) {
+	.post-button {
+		width: max-content;
+		display: flex;
+		left: 70%;
+	}
+}
+@media (max-width: 221px) {
+	.post-button {
+		width: max-content;
+		display: flex;
+		left: 50%;
+	}
 }
 </style>
