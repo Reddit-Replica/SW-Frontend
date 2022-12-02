@@ -85,6 +85,7 @@
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
+			:list-of-rules="listOfRules"
 			@done-successfully="doneSuccessfully('updated')"
 			@clicked-delete="clickDelete"
 			:rule-name-edit="rule.ruleName"
@@ -139,6 +140,12 @@ export default {
 		subredditName() {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
+		},
+		// @vuese
+		//return list of Rules
+		// @type object
+		listOfRules() {
+			return this.$store.getters['moderation/listOfRules'];
 		},
 	},
 	data() {

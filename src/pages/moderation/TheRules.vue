@@ -66,6 +66,7 @@
 					v-for="rule in listOfRules"
 					:key="rule"
 					:rule="rule"
+					:list-of-rules="listOfRules"
 					@done-successfully="(title) => doneSuccessfully(title)"
 				></list-rules>
 			</ul>
@@ -95,6 +96,7 @@
 		<addrule-popup
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
+			:list-of-rules="listOfRules"
 			@exit="showAddRuleFunction()"
 			@done-successfully="doneSuccessfully('added')"
 			:rule-name="''"
