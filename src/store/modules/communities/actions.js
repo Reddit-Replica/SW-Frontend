@@ -209,6 +209,9 @@ export default {
 			throw error;
 		}
 	},
+	async changeFirstcreated(context, payload) {
+		context.commit('createdSuccessfully', payload);
+	},
 	async joinSubreddit(_, payload) {
 		const joinInfo = {
 			subredditId: payload.subredditId,
