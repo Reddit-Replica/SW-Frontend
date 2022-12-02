@@ -20,14 +20,6 @@ export default {
 
 		const responseData = await response.json();
 
-		// if (!response.ok) {
-		// 	const error = new Error(
-		// 		responseData.message || 'Failed to send request.'
-		// 	);
-		// 	throw error;
-		// }
-		console.log(newSubreddit);
-
 		if (response.status == 201) {
 			context.commit('createdSuccessfully', true);
 		} else if (response.status == 400) {
@@ -204,7 +196,18 @@ export default {
 			throw error;
 		}
 
-		context.commit('setSubreddit', responseData['0']);
+		if (response.status == 200) {
+			context.commit('setSubreddit', responseData['children']);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
 	},
 	async joinSubreddit(_, payload) {
 		const joinInfo = {
