@@ -245,7 +245,7 @@
 				</template>
 			</QuillEditor>
 		</div>
-		{{ content }}
+		<!-- {{ content }} -->
 	</div>
 </template>
 
@@ -283,11 +283,10 @@ export default {
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
-		getpostContent() {},
-		insertTable() {
-			const tableModule = this.editor.getModule('QuillTableUI');
-			tableModule.insertTable(3, 3);
-		},
+		
+		// @vuese
+		// set content
+		// @arg The argument is a string value representing content
 		setContent(value) {
 			this.$store.commit('posts/setContent', {
 				content: value,
@@ -298,11 +297,12 @@ export default {
 		QuillEditor,
 	},
 	computed: {
-		editor() {
-			return this.$refs.myQuillEditor.quill;
-		},
+		
 	},
 	watch: {
+		// @vuese
+		// watch content when it changed set it 
+		// @arg The argument is a string value representing content
 		content(value) {
 			this.content = value;
 			this.setContent(value);
@@ -339,7 +339,12 @@ div {
 	border-radius: 4px;
 	position: relative;
 	height: 200px;
+	/*min-height: 122px;
+	overflow: hidden;
+	padding: 8px 16px;
+	resize: vertical;*/
 }
+
 .icons-box {
 	z-index: 8;
 	height: 42px;
