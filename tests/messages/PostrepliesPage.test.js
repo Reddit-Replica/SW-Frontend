@@ -39,7 +39,7 @@ describe ('PostReplies', () => {
   //--------------------------------------------------------
   //                     Testing no message
   //--------------------------------------------------------
-  it ('Testing no message value is correct', () => {
+  it ('Testing no message value is false if there is message', () => {
     const wrapper = shallowMount (PostReplies, {
       props: {
         message,
