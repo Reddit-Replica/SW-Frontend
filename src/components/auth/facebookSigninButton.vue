@@ -3,22 +3,47 @@
 		<div><img src="../../../img/Facebook_f_logo_(2021).svg.png" alt="" /></div>
 		<div class="cont">continue with Google</div>
 	</div>
-	<!-- <v-facebook-login
-		v-model="model"
-		@sdk-init="handleSdkInit"
-	></v-facebook-login> -->
+	<!-- <facebook-login
+		class="button"
+		app-id="3257349194531334"
+		@login="getUserData"
+		@logout="onLogout"
+		@sdk-loaded="sdkLoaded"
+		@get-initial-status="getUserData"
+	>
+	</facebook-login> -->
 </template>
 <script>
+// import facebookLogin from 'facebook-login-vuejs';
 export default {
 	data() {
-		return {
-			FB: {},
-			model: {},
-			scope: {},
-			appId: '651769123026203',
-		};
+		return {};
 	},
 	methods: {
+		getUserData() {
+			this.FB.api(
+				'/me',
+				'GET',
+				{ fields: 'id,name,email' },
+				(userInformation) => {
+					console.warn('Get data from FB', userInformation);
+					this.personalID = userInformation.personalID;
+					this.email = userInformation.email;
+					this.name = userInformation.name;
+				}
+			);
+		},
+		sdkLoaded(payload) {
+			this.isConnected = payload.isConnected;
+			this.FB = payload.FB;
+			if (this.isConnected) {
+				this.getUserData();
+			}
+		},
+		onLogin() {
+			this.isConnected = true;
+			this.getUserData();
+		},
 		async facebookLogin() {},
 		handleSdkInit({ FB, scope }) {
 			this.FB = FB;
@@ -32,6 +57,7 @@ export default {
 			console.log(error);
 		},
 	},
+	// components: { facebookLogin },
 };
 </script>
 <style scoped>
