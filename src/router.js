@@ -138,6 +138,7 @@ const router = createRouter({
 				{
 					path: '/r/:subredditName/about/moderators',
 					component: ModerationList,
+					props: true,
 				},
 				{ path: '/r/:subredditName/about/spam', component: TheSpam },
 				{ path: '/r/:subredditName/about/edited', component: TheEdited },
