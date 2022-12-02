@@ -11,7 +11,7 @@
 			<p>{{ type }}&nbsp;{{ state }}&nbsp;successfully</p>
 		</div>
 		<div class="undo">
-			<base-button @click="undo">Undo</base-button>
+			<!-- <base-button @click="undo">Undo</base-button> -->
 		</div>
 	</div>
 </template>
