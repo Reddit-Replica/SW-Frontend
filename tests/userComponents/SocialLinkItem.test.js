@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils';
-import HelloWorld from '../src/components/HelloWorld.vue';
 import SociallinkItem from '../../src/components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinkItem.vue';
 import { describe, it, expect } from 'vitest';
 describe('SocialLink.vue', () => {
