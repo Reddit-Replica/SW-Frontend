@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: authentication/getters.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,37 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: authentication/getters.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The module 'AuthenticationStore' object.
+ * @name AuthenticationGetters
+ * @type {object}
+ * @getter {object} getUserName=userName Returns The UserName That has logged In.
+ * @getter {object} getAccessToken=accessToken Returns The access Token.
+ * @getter {object} getResponse=response Returns response from API.
+ */
+export default {
+	getUserName(state) {
+		return state.userName;
+	},
+	getAccessToken(state) {
+		return state.accessToken;
+	},
+	getResponse(state) {
+		return state.response;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
