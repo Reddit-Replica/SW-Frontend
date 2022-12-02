@@ -37,7 +37,7 @@ commands:
 jobs:
   unit-testing:
     docker:
-      - image: circleci/node:lts
+      - image: cimg/node:17.4.0
     steps:
     - checkout
 
