@@ -1,10 +1,15 @@
 /**
  * The module 'setters' object.
- * @name userMutations
+ * @name UserMutations
  * @type {object}
- * @mutator {object} setUserData=userData Sets the state boolean property.
- * @mutator {object} setUserPostData=strProp Sets the state string property.
- * @mutator {object} addUserSocialLink=numProp Sets the state numerical property.
+ * @mutator {object} setUserData=userData Sets the User Data.
+ * @mutator {object} setUserPostData=strProp Sets the post Data.
+ * @mutator {object} addUserSocialLink=numProp Sets the social link item.
+ * @mutator {object} addUserProfilePicture=userData.picture Sets the profile picture.
+ * @mutator {object} addUserProfileBannerImageUrl=userData.banner Sets profile Banner.
+ * @mutator {object} followUnfollowUser=userData.followed sets follow Or unfollow user.
+ * @mutator {object} blockUnblockUser=userData.blocked sets block Or unblock user .
+ * @mutator {object} getSocialLinkIcon=socialLinkItems return icon of a certain social link.
  */
 export default {
 	setUserData(state, payload) {
