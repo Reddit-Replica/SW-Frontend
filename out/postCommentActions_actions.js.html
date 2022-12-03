@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: messages/index.js</title>
+    <title>JSDoc: Source: postCommentActions/actions.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: messages/index.js</h1>
+    <h1 class="page-title">Source: postCommentActions/actions.js</h1>
 
     
 
@@ -26,49 +26,88 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import mutations from './mutations.js';
-import actions from './actions.js';
-import getters from './getters.js';
-
-export default {
-	namespaced: true,
+            <pre class="prettyprint source linenums"><code>export default {
 	/**
-	 * The Vuex 'MessagesState' object.
-	 * @name MessagesState
-	 * @type {object}
-	 * @property {Object} inboxMessages contain all inbox messages information.
-	 * @property {Object} unreadMessages contain all unread messages information.
-	 * @property {Object} userMentions contain all user mentions information.
-	 * @property {Object} postReplies contain all post repiles information.
-	 * @property {Object} sentMessages contain all sent messages information.
-	 * @property {Array} suggestedSender contain array of suggested senders
-	 * @property {Boolean} sentSuccessfully This property is boolean if sent successfully.
-	 * @property {Boolean} deleteMessageSuccessfully This property is boolean if delete message successfully.
-	 * @property {Boolean} markSpamSuccessfully This property is boolean if mark spam successfully.
-	 * @property {Boolean} blockSuccessfully This property is boolean if block successfully.
-	 * @property {Boolean} votedSuccessfully This property is boolean if voted successfully.
-	 * @property {Boolean} replyMessageSuccessfully This property is boolean if reply message successfully.
-	 */
-	state() {
-		return {
-			inboxMessages: [],
-			unreadMessages: [],
-			userMentions: [],
-			userMessages: [],
-			postReplies: [],
-			sentMessages: [],
-			suggestedSender: [],
-			sentSuccessfully: false,
-			deleteMessageSuccessfully: false,
-			markSpamSuccessfully: false,
-			blockSuccessfully: false,
-			votedSuccessfully: false,
-			replyMessageSuccessfully: false,
+	 * Action sends Post request to save endlpoint.
+	 * @action save 
+	 * @param {Object} contains An object parameter has baseurl, post/comment id and type.
+	 * @returns {void}
+	 * Action sends Post request to unsave endlpoint.
+	 * @action unsave
+	 * @param {Object} contains An object parameter has baseurl, post/comment id and type.
+	 * @returns {void}
+	 * Action sends Post request to vote endlpoint.
+	 * @action vote
+	 * @param {Object} contains An object parameter has baseurl, post/comment id, type and direction with indicate whether it is up/dow vote .
+	 * @returns {void}
+	*/
+	async save(_, payload) {
+		const save = {
+			id: payload.id,
+			type: payload.type,
 		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/save', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(save),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
 	},
-	mutations,
-	actions,
-	getters,
+	async unsave(_, payload) {
+		const unsave = {
+			id: payload.id,
+			type: payload.type,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/unsave', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(unsave),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async vote(_, payload) {
+		const vote = {
+			id: payload.id,
+			type: payload.type,
+			direction: payload.direction,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/vote', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(vote),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };
 </code></pre>
         </article>

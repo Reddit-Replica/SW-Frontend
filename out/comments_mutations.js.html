@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: comments/mutations.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,30 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: comments/mutations.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>export default {
+	/**
+	* The module 'setters' object.
+	* @name CommentsMutations
+ 	* @type {object}
+	 * @mutator {object} setSubredditInfo=subreddit Sets the state object property.
+	 */
+	setSubredditInfo(state, payload) {
+		console.log(payload);
+		state.subreddit = payload;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

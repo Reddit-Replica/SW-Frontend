@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: listing/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,40 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: listing/index.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import mutations from './mutations.js';
+import actions from './actions.js';
+import getters from './getters.js';
+export default {
+	namespaced: true,
+		/**
+	 * The Vuex 'listingstate' object.
+	 * @name ListingState
+	 * @type {object} 
+	 * @property {object} postDetails This property is an object of post details.
+	 * @property {list} Posts This property is a list of posts.
+	 */
+	state() {
+		return {
+			postDetails: {},
+			Posts: [],
+		};
+	},
+	actions,
+	mutations,
+	getters,
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
