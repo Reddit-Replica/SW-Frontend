@@ -3,11 +3,11 @@
  */
 export default {
 	/**
- * Make a request to get user information with specific name ,  
- * @action getUserData=setUserData
- * @param {object} payload An object contains baseurl and user name.
- * @returns {integer} return an object contains all its data
- */
+	 * Make a request to get user information with specific name ,
+	 * * @action getUserData=setUserData
+	 * * @param {object} payload An object contains baseurl and user name.
+	 * * @returns {integer} return an object contains all its data
+	 * */
 	async getUserData(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
@@ -33,11 +33,11 @@ export default {
 		});
 	},
 	/**
- * Make a request to get user posts data, 
- * @action getUserPostData=setUserPostData
- * @param {object} payload An object contains baseurl and user name.
- * @returns {integer} return status Code
- */
+	 * Make a request to get user posts data,
+	 * @action getUserPostData=setUserPostData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
@@ -59,19 +59,19 @@ export default {
 			);
 			throw error;
 		}
-		if(response.status == 200)
-		context.commit('setUserPostData', {
-			responseData,
-			responseStatus: response.status,
-		});
+		if (response.status == 200)
+			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
 		return response.status;
 	},
 	/**
- * Make a request to add new social link 
- * @action AddNewSocialLink=addUserSocialLink
- * @param {object} payload An object contains baseurl
- * @returns {integer} status code 
- */
+	 * Make a request to add new social link
+	 * @action AddNewSocialLink=addUserSocialLink
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
 	async AddNewSocialLink(context, payload) {
 		const newSocialLink = payload.newSocialLink;
 		const baseurl = payload.baseurl;
@@ -90,18 +90,18 @@ export default {
 			);
 			throw error;
 		}
-		if(response.status == 200)
-		context.commit('addUserSocialLink', {
-			newSocialLink,
-		});
+		if (response.status == 200)
+			context.commit('addUserSocialLink', {
+				newSocialLink,
+			});
 		return response.status;
 	},
 	/**
- * Make a request to Add Profile Picture
- * @action AddProfilePicture=addUserProfilePicture
- * @param {object} payload An object contains baseurl
- * @returns {integer} status code 
- */
+	 * Make a request to Add Profile Picture
+	 * @action AddProfilePicture=addUserProfilePicture
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
 	async AddProfilePicture(context, payload) {
 		const profilePictureUrl = payload.profilePictureUrl;
 		const baseurl = payload.baseurl;
@@ -127,11 +127,11 @@ export default {
 		return response.status;
 	},
 	/**
- * Make a request to Add Profile Banner 
- * @action AddProfileBanner=addUserProfileBannerImageUrl
- * @param {object} payload An object contains baseurl 
- * @returns {integer} status code 
- */
+	 * Make a request to Add Profile Banner
+	 * @action AddProfileBanner=addUserProfileBannerImageUrl
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
 	async AddProfileBanner(context, payload) {
 		const bannerImageUrl = payload.bannerImageUrl;
 		const baseurl = payload.baseurl;
@@ -157,11 +157,11 @@ export default {
 		return response.status;
 	},
 	/**
- * Make a request to followUnfollowUser 
- * @action followUnfollowUser=followUnfollowUser
- * @param {object} payload An object contains baseurl , object followUnfollowData contains (username,follow flag)
- * @returns {integer} status code 
- */
+	 * Make a request to followUnfollowUser
+	 * @action followUnfollowUser=followUnfollowUser
+	 * @param {object} payload An object contains baseurl , object followUnfollowData contains (username,follow flag)
+	 * @returns {integer} status code
+	 */
 	async followUnfollowUser(context, payload) {
 		const followUnfollowData = payload.followUnfollowData;
 		const baseurl = payload.baseurl;
@@ -192,11 +192,11 @@ export default {
 		return response.status;
 	},
 	/**
- * Make a request to blockUnblockUser
- * @action blockUnblockUser=blockUnblockUser
- * @param {object} payload An object contains baseurl , object conatins blockUnblockData (username,block flag)
- * @returns {integer} status code 
- */
+	 * Make a request to blockUnblockUser
+	 * @action blockUnblockUser=blockUnblockUser
+	 * @param {object} payload An object contains baseurl , object conatins blockUnblockData (username,block flag)
+	 * @returns {integer} status code
+	 */
 	async blockUnblockUser(context, payload) {
 		const blockUnblockData = payload.blockUnblockData;
 		const baseurl = payload.baseurl;
