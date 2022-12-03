@@ -468,14 +468,14 @@
 						<div class="post-picture" v-if="postData.kind == 'image'">
 							<div class="picture-container">
 								<span
-									v-if="lastLeftPic != 0"
-									@click="leftClick"
+									v-if="lastRightPic != 0"
+									@click="rightClick"
 									class="left-button"
 									><i class="fa-solid fa-angle-left"></i
 								></span>
 								<span
-									v-if="lastRightPic != 0"
-									@click="rightClick"
+									v-if="lastLeftPic != 0"
+									@click="leftClick"
 									class="right-button"
 									><i class="fa-solid fa-angle-right"></i
 								></span>
@@ -500,6 +500,21 @@
 							<div>
 								<p>This is A Post paragraph</p>
 							</div>
+						</div>
+						<div class="video" v-else-if="postData.kind == 'video'">
+							<video
+								controls
+								style="
+									background-color: rgb(0, 0, 0);
+									width: 100%;
+									max-height: 450px;
+								"
+							>
+								<source
+									src="../../../../video/userPostTest.mp4"
+									type="video/mp4"
+								/>
+							</video>
 						</div>
 					</div>
 				</div>

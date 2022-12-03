@@ -123,6 +123,7 @@
 					<div class="side-bars">
 						<div class="search-result-sidebar">
 							<CommunitesNav></CommunitesNav>
+							<PostNav></PostNav>
 						</div>
 					</div>
 				</div>
@@ -134,6 +135,7 @@
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 import SearchPost from '../../components/SearchComponents/SearchPost.vue';
 import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
+import PostNav from '../../components/SearchComponents/PeopleNav.vue';
 export default {
 	data() {
 		return {
@@ -172,6 +174,7 @@ export default {
 		SubMenu,
 		SearchPost,
 		CommunitesNav,
+		PostNav,
 	},
 };
 </script>
@@ -302,6 +305,11 @@ a {
 	flex: 0 0 312px;
 	margin-left: 24px;
 	max-width: 312px;
+}
+@media (max-width: 960px) {
+	.side-bars {
+		display: none;
+	}
 }
 .search-result-sidebar {
 	width: inherit;
