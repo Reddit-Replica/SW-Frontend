@@ -258,6 +258,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-circle"
+								id="bi-circle-3"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen2"
 							>
@@ -271,6 +272,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
+								id="bi-record-circle-fill-3"
 								viewBox="0 0 16 16"
 								v-else
 							>
