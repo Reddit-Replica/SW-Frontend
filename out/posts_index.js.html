@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: communities/mutations.js</title>
+    <title>JSDoc: Source: posts/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: communities/mutations.js</h1>
+    <h1 class="page-title">Source: posts/index.js</h1>
 
     
 
@@ -26,32 +26,49 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * The module 'CommunityMutations' object.
- * @name CommunityMutations
- * @type {Object}
- * @mutator {Boolean} checkSubredditName=subredditNameTaken Sets the state boolean property "subredditNameTaken".
- * @mutator {Boolean} createdSuccessfully=createdSuccessfully Sets the state boolean property "createdSuccessfully".
- * @mutator {Object} setSubreddit=subreddit Sets the state object property "subreddit".
- * @mutator {Array} setPosts=posts Sets the state array property "posts".
- * @mutator {Array} setSavedCategories=categories Sets the state array property "categories".
- */
+            <pre class="prettyprint source linenums"><code>import mutations from './mutations.js';
+import actions from './actions.js';
+import getters from './getters.js';
 export default {
-	checkSubredditName(state, payload) {
-		state.subredditNameTaken = payload;
+	namespaced: true,
+	/**
+	 * The Vuex 'PostsState' object.
+	 * @name PostsState
+	 * @type {object}
+	 * @property {Object} kind this is the kind of the post .
+	 * @property {Object} subreddit this is the subreddit of the post.
+	 * @property {Object} inSubreddit This is in subreddit of the post.
+	 * @property {Object} title This is the title of the post.
+	 * @property {Object} content This is the content of the post.
+	 * @property {Array} files This is the response from Server.
+	 * @property {Boolean} nsfw This is the nsfw of the post.
+	 * @property {Boolean} spoiler This is the spoiler of the post.
+	 * @property {Object} flairId This is the flair id of the post.
+	 * @property {Array} imageCaptions This is the image captions of the post.
+	 * @property {Array} imageLinks This is the image links of the post.
+	 * @property {Boolean} sendReplies This is the send replies fof post.
+	 * @property {Array} allSubreddits This is allSubreddits in Server.
+	 */
+	state() {
+		return {
+			kind: null,
+			subreddit: null,
+			inSubreddit: null,
+			title: null,
+			content: null,
+			files: [{}],
+			nsfw: null,
+			spoiler: null,
+			flairId: null,
+			imageCaptions: [],
+			imageLinks: [],
+			sendReplies: null,
+			allSubreddits: [],
+		};
 	},
-	setSavedCategories(state, payload) {
-		state.categories = payload;
-	},
-	setSubreddit(state, payload) {
-		state.subreddit = payload;
-	},
-	setPosts(state, payload) {
-		state.posts = payload;
-	},
-	createdSuccessfully(state, payload) {
-		state.createdSuccessfully = payload;
-	},
+	actions,
+	mutations,
+	getters,
 };
 </code></pre>
         </article>
