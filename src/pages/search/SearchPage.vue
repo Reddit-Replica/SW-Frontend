@@ -48,72 +48,81 @@
 							<!-- href="/search/?q=Query&amp;type=ppl" -->
 						</div>
 					</div>
+					<div class="sorting">
+						<div class="type-sorting">
+							<div class="items-meny-curser" @click="itemsMenuOneFunction">
+								<span class="items-span">{{ FirstitemChoice }}</span>
+								<span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-caret-down-fill"
+										viewBox="0 0 16 16"
+									>
+										<path
+											d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+										/>
+									</svg>
+								</span>
+								<subMenu
+									id="sub-menu-one"
+									:titles="['Relevance', 'Hot', 'New', 'Top', 'Most Comments']"
+									:display="ShowFirstitemChoice"
+									@change-title="changeFirstChoiceItem"
+									clicked-prop="Relevance"
+								/>
+							</div>
+						</div>
+						<div class="relevance-if" v-if="choiceRelevant">
+							<div class="items-meny-curser" @click="itemsMenuTwoFunction">
+								<span class="items-span">{{ SecitemChoice }}</span>
+								<span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-caret-down-fill"
+										viewBox="0 0 16 16"
+									>
+										<path
+											d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+										/>
+									</svg>
+								</span>
+								<subMenu
+									id="sub-menu-two"
+									:titles="[
+										'All Time',
+										'Last Year',
+										'Last Month',
+										'Last Week',
+										'Last 24 Horus',
+										'Last Hour',
+									]"
+									:display="ShowSecitemChoice"
+									@change-title="changeSecChoiceItem"
+									clicked-prop="Time"
+								/>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="sorting">
-					<div class="type-sorting">
-						<div class="items-meny-curser" @click="itemsMenuOneFunction">
-							<span class="items-span">{{ FirstitemChoice }}</span>
-							<span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									class="bi bi-caret-down-fill"
-									viewBox="0 0 16 16"
-								>
-									<path
-										d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-									/>
-								</svg>
-							</span>
-							<subMenu
-								id="sub-menu-one"
-								:titles="['Relevance', 'Hot', 'New', 'Top', 'Most Comments']"
-								:display="ShowFirstitemChoice"
-								@change-title="changeFirstChoiceItem"
-								clicked-prop="Relevance"
+				<div class="search-results">
+					<div class="posts">
+						<div class="post-results">
+							<SearchPost
+								id="searched-posts"
+								:community="Salah"
+								:profile="Hamada"
 							/>
 						</div>
 					</div>
-					<div class="relevance-if" v-if="choiceRelevant">
-						<div class="items-meny-curser" @click="itemsMenuTwoFunction">
-							<span class="items-span">{{ SecitemChoice }}</span>
-							<span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									class="bi bi-caret-down-fill"
-									viewBox="0 0 16 16"
-								>
-									<path
-										d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-									/>
-								</svg>
-							</span>
-							<subMenu
-								id="sub-menu-two"
-								:titles="[
-									'All Time',
-									'Last Year',
-									'Last Month',
-									'Last Week',
-									'Last 24 Horus',
-									'Last Hour',
-								]"
-								:display="ShowSecitemChoice"
-								@change-title="changeSecChoiceItem"
-								clicked-prop="Time"
-							/>
-						</div>
-					</div>
-				</div>
-				<div class="posts">
-					<div class="post-release">
-						<div class="post-name-bar">
-							<div class="name-pic"></div>
+					<div class="side-bars">
+						<div class="search-result-sidebar">
+							<CommunitesNav></CommunitesNav>
 						</div>
 					</div>
 				</div>
@@ -123,6 +132,8 @@
 </template>
 <script>
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
+import SearchPost from '../../components/SearchComponents/SearchPost.vue';
+import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
 export default {
 	data() {
 		return {
@@ -159,6 +170,8 @@ export default {
 	},
 	components: {
 		SubMenu,
+		SearchPost,
+		CommunitesNav,
 	},
 };
 </script>
@@ -268,5 +281,32 @@ a {
 }
 .relevance-if {
 	margin-left: 17px;
+}
+.search-results {
+	width: 100%;
+	max-width: 100%;
+	display: flex;
+	padding-top: 8px;
+}
+.posts {
+	height: auto;
+	width: 640px;
+	display: flex;
+	padding-top: 8px;
+}
+.post-results {
+	margin-bottom: 16px;
+}
+.side-bars {
+	display: block;
+	flex: 0 0 312px;
+	margin-left: 24px;
+	max-width: 312px;
+}
+.search-result-sidebar {
+	width: inherit;
+	flex-direction: column;
+	height: 100%;
+	display: flex;
 }
 </style>
