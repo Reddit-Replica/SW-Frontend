@@ -2,6 +2,9 @@ export default {
 	setListOfModerators(state, payload) {
 		state.listOfModerators = payload;
 	},
+
+	//////////////RULES/////////////////
+
 	addRuleSuccessfully(state, payload) {
 		state.addRuleSuccessfully = payload;
 	},
@@ -16,5 +19,14 @@ export default {
 	},
 	updateRulesSuccessfully(state, payload) {
 		state.updateRulesSuccessfully = payload;
+	},
+
+	//////////////FLAIRS/////////////////
+
+	setListOfFlairs(state, payload) {
+		state.listOfFlairs = payload;
+	},
+	addFlairSuccessfully(state, payload) {
+		state.addFlairSuccessfully = payload;
 	},
 };
