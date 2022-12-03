@@ -12,6 +12,7 @@ describe ('ModerationList', () => {
     dateOfModeration: '2 years ago',
     permissions: ['everything'],
   };
+  const subredditName = 'subredditName';
 
   //--------------------------------------------------------
   //                     Rendering
@@ -20,6 +21,9 @@ describe ('ModerationList', () => {
     const wrapper = shallowMount (ModerationList, {
       props: {
         moderators,
+      },
+      computed: {
+        subredditName,
       },
       global: {
         // OR:

@@ -302,8 +302,8 @@ export default {
 			};
 			try {
 				await this.$store.dispatch('available_user', actionPayload);
-				const response = localStorage.getItem('response');
-				console.log(response);
+				// const response = localStorage.getItem('response');
+				// console.log(response);
 				this.messageErrorShowUser = false;
 				this.showSignuser = true;
 				this.checkedUser = true;
@@ -334,8 +334,8 @@ export default {
 			};
 			try {
 				await this.$store.dispatch('available_email', actionPayload);
-				const response = localStorage.getItem('response');
-				console.log(response);
+				// const response = localStorage.getItem('response');
+				// console.log(response);
 				this.messageErrorShowEmail = false;
 				this.showSignemail = true;
 				this.checkused = true;
@@ -555,7 +555,7 @@ button {
 	width: 280px;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	/*justify-content: space-between;*/
 }
 
 .log-google:hover {

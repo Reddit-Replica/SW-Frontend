@@ -185,16 +185,14 @@ export default {
 
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
-				const response = localStorage.getItem('response');
-				// // console.log(response);
-				// console.log(response);
-				if (response == 200) {
-					this.done_login = true;
-					this.done_message =
-						'youre now logged in, You will be redirected to main page';
-					// this.$router.replace('/main');
-					setTimeout(() => this.$router.replace('/main'), 1000);
-				}
+				// const response = localStorage.getItem('response');
+				this.done_login = true;
+				this.done_message =
+					'youre now logged in, You will be redirected to main page';
+				// this.$router.replace('/main');
+				setTimeout(() => this.$router.replace('/main'), 1000);
+				// if (response == 200) {
+				// }
 			} catch (err) {
 				this.showSignuser = true;
 				this.checkedUser = false;
@@ -349,7 +347,7 @@ button {
 .field-pass-usr input {
 	position: relative;
 	transform: translateZ(0);
-	width: 28rem;
+	width: 26rem;
 	transition: all 0.2s ease-in-out;
 	height: 48px;
 	padding: 22px 12px 10px;
@@ -410,7 +408,7 @@ button {
 .input-box .correct-check {
 	position: absolute;
 	z-index: 1;
-	right: 120px;
+	right: 150px;
 	top: 50%;
 	height: 10px;
 	width: 12px;
@@ -418,7 +416,7 @@ button {
 }
 .input-box .wrong-check {
 	position: absolute;
-	right: 120px;
+	right: 150px;
 	top: 28%;
 	height: 12px;
 	width: 2px;
@@ -467,15 +465,15 @@ button {
 	cursor: pointer;
 	min-height: 35px;
 	max-width: 392px;
-	width: 28rem;
+	width: 26rem;
 	min-width: 155px;
 }
 .log-facebook,
 .log-google {
-	width: 280px;
+	width: 26rem;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	/*justify-content: space-between;*/
 }
 .log-facebook:hover,
 .log-google:hover {

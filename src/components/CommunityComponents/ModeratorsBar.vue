@@ -49,15 +49,23 @@ export default {
 			type: Array,
 			default: () => [],
 		},
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName: {
+			type: String,
+			default: '',
+			required: true,
+		},
 	},
 	data() {
 		return {};
 	},
-	computed: {
-		subredditName() {
-			return this.$store.state.subredditName;
-		},
-	},
+	// computed: {
+	// 	subredditName() {
+	// 		return this.$store.state.subredditName;
+	// 	},
+	// },
 };
 </script>
 

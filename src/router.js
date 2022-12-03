@@ -71,6 +71,8 @@ import NotFound from './pages/NotFound.vue';
 
 import PostComments from './components/PostComponents/PostComments.vue';
 
+import Search from './pages/search/SearchPage.vue';
+
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
@@ -97,6 +99,7 @@ const router = createRouter({
 		{ path: '/signup', component: SignupPage },
 		{ path: '/logincomp', component: LoginComp },
 		{ path: '/signupcomp', component: SignupComp },
+		{ path: '/search', component: Search },
 
 		{
 			path: '/user/:userName',
@@ -138,6 +141,7 @@ const router = createRouter({
 				{
 					path: '/r/:subredditName/about/moderators',
 					component: ModerationList,
+					props: true,
 				},
 				{ path: '/r/:subredditName/about/spam', component: TheSpam },
 				{ path: '/r/:subredditName/about/edited', component: TheEdited },
