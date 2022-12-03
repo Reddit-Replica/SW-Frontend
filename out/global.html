@@ -1605,6 +1605,680 @@
 
         
             
+<h4 class="name" id="PostsGetters"><span class="type-signature"></span>PostsGetters<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    <table class="params">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Returns Type</th>
+                
+                <th>Returns State Property</th>
+                <th class="last">Description</th>
+                </tr>
+            </thead>
+            <tr>
+            <td class="name"><code>getTitle</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>title</code></td>
+            <td class="description last">getTitle Returns The title of the post.</td>
+            </tr><tr>
+            <td class="name"><code>getNsfw</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>Nsfw</code></td>
+            <td class="description last">getNsfw Returns NSFW of post.</td>
+            </tr><tr>
+            <td class="name"><code>getSpoiler</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>Spoiler</code></td>
+            <td class="description last">getSpoiler Returns Spoiler of post.</td>
+            </tr><tr>
+            <td class="name"><code>getFlairId</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>FlairId</code></td>
+            <td class="description last">getFlairId Returns FlairId of post.</td>
+            </tr><tr>
+            <td class="name"><code>getsendReplies</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>sendReplies</code></td>
+            <td class="description last">getsendReplies Returns sendReplies of post.</td>
+            </tr><tr>
+            <td class="name"><code>getContent</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>Content</code></td>
+            <td class="description last">getContent Returns Content of post.</td>
+            </tr><tr>
+            <td class="name"><code>getallSubredditsReturns</code></td>
+            <td class="type">Array</td>
+            
+            <td class="default"><code>allSubredditsReturns</code></td>
+            <td class="description last">getallSubredditsReturns allSubreddits .</td>
+            </tr><tr>
+            <td class="name"><code>getSubreddit</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>Subreddit</code></td>
+            <td class="description last">getSubreddit Returns getSubreddit of post.</td>
+            </tr><tr>
+            <td class="name"><code>getinSubreddit</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>inSubreddit</code></td>
+            <td class="description last">getinSubreddit Returns inSubreddit of post.</td>
+            </tr>
+            </table>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="posts_getters.js.html">posts/getters.js</a>, <a href="posts_getters.js.html#line2">line 2</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="PostsMutations"><span class="type-signature"></span>PostsMutations<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    <table class="params">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Accepts Type</th>
+                
+                <th>Mutates State Property</th>
+                <th class="last">Description</th>
+                </tr>
+            </thead>
+            <tr>
+            <td class="name"><code>setTitle</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>{title}</code></td>
+            <td class="description last">Sets the title of the post.</td>
+            </tr><tr>
+            <td class="name"><code>setNsfw</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>{Nsfw}</code></td>
+            <td class="description last">Sets the Nsfw of the post.</td>
+            </tr><tr>
+            <td class="name"><code>setSpoiler</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>{spoiler}</code></td>
+            <td class="description last">Sets the spoiler info of the post.</td>
+            </tr><tr>
+            <td class="name"><code>setFlairId</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>{FlairId}</code></td>
+            <td class="description last">Sets the FlairId of post.</td>
+            </tr><tr>
+            <td class="name"><code>setsendReplies</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>{sendReplies}</code></td>
+            <td class="description last">Sets the sendReplies of the post.</td>
+            </tr><tr>
+            <td class="name"><code>ssetContent</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>{Content}</code></td>
+            <td class="description last">Sets content of the post.</td>
+            </tr><tr>
+            <td class="name"><code>setallSubreddits</code></td>
+            <td class="type">Array</td>
+            
+            <td class="default"><code>{allSubreddits}</code></td>
+            <td class="description last">Sets allsunreddits.</td>
+            </tr><tr>
+            <td class="name"><code>setSubreddit</code></td>
+            <td class="type">object</td>
+            
+            <td class="default"><code>{Subreddit}</code></td>
+            <td class="description last">Sets the Subreddit.</td>
+            </tr><tr>
+            <td class="name"><code>setinSubreddit</code></td>
+            <td class="type">Boolean</td>
+            
+            <td class="default"><code>{inSubreddit}</code></td>
+            <td class="description last">Sets the inSubreddit of the post.</td>
+            </tr>
+            </table>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="posts_mutations.js.html">posts/mutations.js</a>, <a href="posts_mutations.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="PostsState"><span class="type-signature"></span>PostsState<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    The Vuex 'PostsState' object.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>kind</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">this is the kind of the post .</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subreddit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">this is the subreddit of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>inSubreddit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is in subreddit of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the title of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the content of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>files</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the response from Server.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nsfw</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the nsfw of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>spoiler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the spoiler of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flairId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the flair id of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imageCaptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the image captions of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>imageLinks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the image links of the post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sendReplies</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is the send replies fof post.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>allSubreddits</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is allSubreddits in Server.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="posts_index.js.html">posts/index.js</a>, <a href="posts_index.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="UserGetters"><span class="type-signature"></span>UserGetters<span class="type-signature"> :object</span></h4>
 
 
@@ -1993,13 +2667,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AuthenticationGetters">AuthenticationGetters</a></li><li><a href="global.html#AuthenticationMutations">AuthenticationMutations</a></li><li><a href="global.html#AuthenticationState">AuthenticationState</a></li><li><a href="global.html#CommunityGetters">CommunityGetters</a></li><li><a href="global.html#CommunityMutations">CommunityMutations</a></li><li><a href="global.html#CommunityState">CommunityState</a></li><li><a href="global.html#MessagesGetters">MessagesGetters</a></li><li><a href="global.html#MessagesMutations">MessagesMutations</a></li><li><a href="global.html#MessagesState">MessagesState</a></li><li><a href="global.html#UserGetters">UserGetters</a></li><li><a href="global.html#UserState">UserState</a></li><li><a href="global.html#userMutations">userMutations</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AuthenticationGetters">AuthenticationGetters</a></li><li><a href="global.html#AuthenticationMutations">AuthenticationMutations</a></li><li><a href="global.html#AuthenticationState">AuthenticationState</a></li><li><a href="global.html#CommunityGetters">CommunityGetters</a></li><li><a href="global.html#CommunityMutations">CommunityMutations</a></li><li><a href="global.html#CommunityState">CommunityState</a></li><li><a href="global.html#MessagesGetters">MessagesGetters</a></li><li><a href="global.html#MessagesMutations">MessagesMutations</a></li><li><a href="global.html#MessagesState">MessagesState</a></li><li><a href="global.html#PostsGetters">PostsGetters</a></li><li><a href="global.html#PostsMutations">PostsMutations</a></li><li><a href="global.html#PostsState">PostsState</a></li><li><a href="global.html#UserGetters">UserGetters</a></li><li><a href="global.html#UserState">UserState</a></li><li><a href="global.html#userMutations">userMutations</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Sat Dec 03 2022 00:25:33 GMT+0200 (Eastern European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Sat Dec 03 2022 09:59:30 GMT+0200 (Eastern European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

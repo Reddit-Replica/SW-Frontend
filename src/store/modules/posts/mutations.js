@@ -3,6 +3,20 @@ export default {
 	//     state.statename= payload
 	// }
 	// to edit a state
+	/**
+ * The module 'setters' object.
+ * @name PostsMutations
+ * @type {object}
+ * @mutator {object} setTitle={title} Sets the title of the post.
+ * @mutator {Boolean} setNsfw={Nsfw} Sets the Nsfw of the post.
+ * @mutator {Boolean} setSpoiler={spoiler} Sets the spoiler info of the post.
+ * @mutator {object} setFlairId={FlairId} Sets the FlairId of post.
+ * @mutator {Boolean} setsendReplies={sendReplies} Sets the sendReplies of the post.
+ * @mutator {object} ssetContent={Content} Sets content of the post.
+ * @mutator {Array} setallSubreddits={allSubreddits} Sets allsunreddits.
+ * @mutator {object} setSubreddit={Subreddit} Sets the Subreddit.
+ * @mutator {Boolean} setinSubreddit={inSubreddit} Sets the inSubreddit of the post.
+ */
 	setTitle(state, payload) {
 		console.log(payload);
 		state.title = payload.title;

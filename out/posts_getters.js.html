@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: communities/mutations.js</title>
+    <title>JSDoc: Source: posts/getters.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: communities/mutations.js</h1>
+    <h1 class="page-title">Source: posts/getters.js</h1>
 
     
 
@@ -26,31 +26,56 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * The module 'CommunityMutations' object.
- * @name CommunityMutations
- * @type {Object}
- * @mutator {Boolean} checkSubredditName=subredditNameTaken Sets the state boolean property "subredditNameTaken".
- * @mutator {Boolean} createdSuccessfully=createdSuccessfully Sets the state boolean property "createdSuccessfully".
- * @mutator {Object} setSubreddit=subreddit Sets the state object property "subreddit".
- * @mutator {Array} setPosts=posts Sets the state array property "posts".
- * @mutator {Array} setSavedCategories=categories Sets the state array property "categories".
+            <pre class="prettyprint source linenums"><code>export default {
+	/**
+ * The module 'PostsStore' object.
+ * @name PostsGetters
+ * @type {object}
+ * @getter {object} getTitle=title getTitle Returns The title of the post.
+ * @getter {Boolean} getNsfw=Nsfw getNsfw Returns NSFW of post.
+ * @getter {Boolean} getSpoiler=Spoiler getSpoiler Returns Spoiler of post.
+ * @getter {object} getFlairId=FlairId getFlairId Returns FlairId of post.
+ * @getter {Boolean} getsendReplies=sendReplies getsendReplies Returns sendReplies of post.
+ * @getter {object} getContent=Content getContent Returns Content of post.
+ * @getter {Array} getallSubredditsReturns=allSubredditsReturns getallSubredditsReturns allSubreddits .
+ * @getter {object} getSubreddit=Subreddit getSubreddit Returns getSubreddit of post.
+ * @getter {Boolean} getinSubreddit=inSubreddit getinSubreddit Returns inSubreddit of post.
  */
-export default {
-	checkSubredditName(state, payload) {
-		state.subredditNameTaken = payload;
+	getTitle(state) {
+		console.log('getters title');
+		return state.title;
 	},
-	setSavedCategories(state, payload) {
-		state.categories = payload;
+	getNsfw(state) {
+		console.log('getters nsfw');
+		return state.nsfw;
 	},
-	setSubreddit(state, payload) {
-		state.subreddit = payload;
+	getSpoiler(state) {
+		console.log('getters spoiler');
+		return state.spoiler;
 	},
-	setPosts(state, payload) {
-		state.posts = payload;
+	getFlairId(state) {
+		console.log('getters flair id');
+		return state.flairId;
 	},
-	createdSuccessfully(state, payload) {
-		state.createdSuccessfully = payload;
+	getsendReplies(state) {
+		console.log('getters send replies');
+		return state.sendReplies;
+	},
+	getContent(state) {
+		console.log('getters content');
+		return state.content;
+	},
+	getallSubreddits(state) {
+		console.log('getters allsubreddits');
+		return state.allSubreddits;
+	},
+	getSubreddit(state) {
+		console.log('getters subreddit');
+		return state.subreddit;
+	},
+	getinSubreddit(state) {
+		console.log('getters in subreddit');
+		return state.nSubreddit;
 	},
 };
 </code></pre>
