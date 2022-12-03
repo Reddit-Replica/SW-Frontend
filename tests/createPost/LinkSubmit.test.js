@@ -19,8 +19,17 @@ describe('Submit footer rendring', () => {
 		expect(wrapper.exists()).toBe(true);
 	});
 
-
-
+    
+    // it('Render text box', async () => {
+	// 	//our component
+	// 	const wrapper = shallowMount(LinkSubmit, {
+	// 		global: {
+	// 			components: {},
+	// 			mocks: {},
+	// 		},
+	// 	});
+       
+	// });
 
 
 
