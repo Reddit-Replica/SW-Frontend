@@ -7,11 +7,16 @@ export default {
 	state() {
 		return {
 			listOfModerators: [],
+			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],
 			updateRuleSuccessfully: false,
 			deleteRuleSuccessfully: false,
 			updateRulesSuccessfully: false,
+
+			//////////////FLAIRS/////////////////
+			listOfFlairs: [],
+			addFlairSuccessfully: false,
 		};
 	},
 	mutations,
