@@ -118,7 +118,7 @@
 		<!-- <subreddit-info class="subreddit-info"> </subreddit-info> -->
 		<div class="col-lg-3 subreddit-info">
 			<subreddit-info
-				:subreddit-name="subredditTitle"
+				subreddit-name="subredditName"
 				v-if="isSet"
 			></subreddit-info>
 		</div>

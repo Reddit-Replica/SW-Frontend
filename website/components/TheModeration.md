@@ -15,7 +15,7 @@
 <!-- @vuese:TheModeration:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|subredditName|`string`|return subreddit name|Yes|
+|subredditName|`string`|return subreddit name|No|
 |listOfModerators|`object`|return list of moderators|Yes|
 |getUserName|`string`|return user name|Yes|
 |moderatorByMe|`boolean`|return if i'm a moderator in this subreddit or not|No|

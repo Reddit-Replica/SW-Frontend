@@ -6,6 +6,7 @@
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |subredditName|return subreddit name|`String`|`true`|-|
+|listOfRules|return list Of Rules|`Array`|`true`|[]|
 |ruleNameEdit|return edited rule name|`String`|`true`|-|
 |reportReasonEdit|return report reason edit|`String`|`true`|-|
 |appliesToEdit|return applies to edit|`String`|`true`|posts and comments|
@@ -43,5 +44,15 @@
 |deleteRule|handle delete rule|no argument|
 
 <!-- @vuese:AddrulePopup:methods:end -->
+
+
+## Computed
+
+<!-- @vuese:AddrulePopup:computed:start -->
+|Computed|Type|Description|From Store|
+|---|---|---|---|
+|isNameTaken|`boolean`|return if there exist rule name or not|No|
+
+<!-- @vuese:AddrulePopup:computed:end -->
 
 

@@ -8,6 +8,7 @@
 |validatEmail|validate email|The argument is a string value representing email|
 |handleSubmit|handle form submission|-|
 |verifyRec|enable button after recaptcha is verified|-|
+|getResponse|get the response status|-|
 
 <!-- @vuese:ForgetUsernamepage:methods:end -->
 
