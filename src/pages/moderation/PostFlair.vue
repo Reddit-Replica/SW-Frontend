@@ -107,7 +107,7 @@
 			</div>
 			<div class="first-section"></div>
 		</div>
-		<div class="center-box" v-if="noFlairs">
+		<div class="center-box" v-if="!noFlairs">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"
@@ -127,11 +127,16 @@
 			<h3 class="heading-3-postflair">You do not have any post flair</h3>
 			<p class="text-p-postflair">Create post flair in your community today</p>
 		</div>
+		<div class="add-flair"><add-flair></add-flair></div>
 	</div>
 </template>
 
 <script>
+import AddFlair from '../../components/moderation/AddFlair.vue';
 export default {
+	components: {
+		AddFlair,
+	},
 	// @vuese
 	//load List of Rules before mount
 	beforeMount() {
@@ -313,5 +318,11 @@ export default {
 	font-weight: 400;
 	line-height: 1.8rem;
 	margin-top: 0.8rem;
+}
+.add-flair {
+	border-radius: 0 0 0.4rem 0.4rem;
+	background-color: var(--color-grey-light-9);
+	color: var(--color-dark-3);
+	padding: 1.6rem;
 }
 </style>

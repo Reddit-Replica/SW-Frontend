@@ -2,12 +2,12 @@
  * @module AuthenticationActions
  */
 export default {
-		/**
-  * action for forget Password handle for sending forget password request
- * @action  forgetPasswordhandle
- * @param {Object} payload username and email .
- * @returns {void}
- */
+	/**
+	 * action for forget Password handle for sending forget password request
+	 * @action  forgetPasswordhandle
+	 * @param {Object} payload username and email .
+	 * @returns {void}
+	 */
 	async forgetPasswordhandle(context, payload) {
 		const userInfo = {
 			username: payload.username,
@@ -40,12 +40,12 @@ export default {
 			throw error;
 		}
 	},
-			/**
- * action for forget username handle sending forget username request
- * @action  forgetuserdhandle
- * @param {Object} contains  email .
- * @returns {void}
- */
+	/**
+	 * action for forget username handle sending forget username request
+	 * @action  forgetuserdhandle
+	 * @param {Object} contains  email .
+	 * @returns {void}
+	 */
 	async forgetuserdhandle(context, payload) {
 		const userInfo = {
 			email: payload.email,
@@ -77,12 +77,12 @@ export default {
 			throw error;
 		}
 	},
-			/**
-   * action for reset handle
- * @action  resethandle
- * @param {Object} payload new password .
- * @returns {void}
- */
+	/**
+	 * action for reset handle
+	 * @action  resethandle
+	 * @param {Object} payload new password .
+	 * @returns {void}
+	 */
 	async resethandle(context, payload) {
 		const userInfo = {
 			newPassword: payload.password,
