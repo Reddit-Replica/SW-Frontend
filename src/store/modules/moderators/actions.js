@@ -314,10 +314,10 @@ export default {
 			flairName: payload.flairName,
 			backgroundColor: payload.backgroundColor,
 			textColor: payload.textColor,
-			modOnly: payload.settings.modOnly,
-			allowUserEdits: payload.settings.allowUserEdits,
-			flairType: payload.settings.flairType,
-			emojisLimit: payload.settings.emojisLimit,
+			settings: {
+				modOnly: payload.modOnly,
+				allowUserEdits: payload.allowUserEdits,
+			},
 		};
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;
