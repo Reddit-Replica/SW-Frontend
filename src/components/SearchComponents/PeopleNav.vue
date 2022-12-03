@@ -1,33 +1,37 @@
 <template>
-	<div class="communities-nav">
-		<h4 class="communities-word">Communities</h4>
+	<div class="people-nav">
+		<h4 class="people-word">People</h4>
 		<div>
 			<div>
 				<div>
-					<a class="communities-status"
-						><div class="communities-status-release">
-							<img
-								src="https://styles.redditmedia.com/t5_3d5irw/styles/profileIcon_snoo590500c4-7be0-4699-aa5f-21b87d02314e-headshot-f.png?width=256&amp;height=256&amp;frame=1&amp;crop=256:256,smart&amp;s=2a008cc76be58e70a13a7e5b22cbc98b5278b432"
-								style="background-color: #0266b3"
-								class="communities-img"
-							/>
-							<div class="communities-content">
-								<div class="communities-content-release">
-									<h6 class="communities-name">r/{{ community }}</h6>
-									<p class="community-members">{{ members }} Members</p>
+					<a class="people-status"
+						><div class="people-status-release">
+							<div class="img-release">
+								<div class="img-holder">
+									<div class="img-div">
+										<img
+											class="people-img"
+											src="https://styles.redditmedia.com/t5_3d5irw/styles/profileIcon_snoo590500c4-7be0-4699-aa5f-21b87d02314e-headshot-f.png?width=256&amp;height=256&amp;frame=1&amp;crop=256:256,smart&amp;s=2a008cc76be58e70a13a7e5b22cbc98b5278b432"
+										/>
+									</div>
 								</div>
 							</div>
-							<div class="join">
+							<div class="people-content">
+								<div class="people-content-release">
+									<h6 class="people-name">u/{{ name }}</h6>
+									<p class="karma-number">{{ karm }} Karma</p>
+								</div>
+							</div>
+							<div class="follow">
 								<base-button
-									button-text="join"
-									class="join-button"
+									button-text="Follow"
+									class="follow-button"
 								></base-button>
 							</div></div
 					></a>
 				</div>
 			</div>
 		</div>
-		<a><p class="communities-go">See more communities</p></a>
 	</div>
 </template>
 
@@ -36,8 +40,8 @@ import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	data() {
 		return {
-			community: 'Salah',
-			members: '124k',
+			name: 'Salah',
+			karma: '124k',
 		};
 	},
 	components: {
@@ -67,7 +71,7 @@ p {
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
-.communities-nav {
+.people-nav {
 	background: #fff;
 	border: thin solid var(--newCommunityTheme-postLine);
 	border-radius: 4px;
@@ -75,29 +79,36 @@ p {
 	margin-bottom: 16px;
 	max-width: 100%;
 }
-.communities-word {
+.people-word {
 	font-weight: 500;
 	font-size: 16px;
 	line-height: 20px;
 	color: rgb(39, 32, 32);
 	padding: 16px 16px 0;
 }
-.communities-status {
-	margin-bottom: 0;
-	border-radius: 4px 4px 0 0;
-	border-bottom: thin solid #ccc;
+.people-status {
 	display: flex;
 	flex-direction: column;
-	margin-top: -1px;
+	margin-top: 0px;
 	padding: 16px;
-	cursor: pointer;
+	border-radius: 4px 4px 0 0;
+	border-bottom: thin solid #ccc;
 }
-.communities-status-release {
+.people-status-release {
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
 }
-.communities-img {
+.img-release {
+	font-size: 36px;
+	max-height: 36px;
+	max-width: 36px;
+	overflow: hidden;
+	width: 36px;
+	line-height: normal;
+	flex-shrink: 0;
+}
+.people-img {
 	font-size: 36px;
 	height: 36px;
 	max-height: 36px;
@@ -109,18 +120,18 @@ p {
 	border-radius: 100%;
 	vertical-align: middle;
 }
-.communities-content {
+.people-content {
 	flex-grow: 1;
 	padding: 0 8px;
 	overflow: hidden;
 	overflow-wrap: break-word;
 }
-.communities-content-release {
+.people-content-release {
 	display: flex;
 	align-items: baseline;
 	flex-direction: column;
 }
-.communities-name {
+.people-name {
 	max-width: 100%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -130,17 +141,17 @@ p {
 	color: rgb(58, 49, 49);
 	font-weight: 700;
 }
-.community-members {
+.karma-number {
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 16px;
 	color: lightgray;
 }
-.join {
+.follow {
 	flex-shrink: 0;
 	width: 88px;
 }
-.join-button {
+.follow-button {
 	width: 100%;
 	color: rgb(98, 98, 252);
 	font-family: Noto Sans, Arial, sans-serif;
@@ -152,12 +163,5 @@ p {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
-}
-.communities-go {
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
-	color: rgb(98, 98, 252);
-	padding: 16px;
 }
 </style>

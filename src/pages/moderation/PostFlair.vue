@@ -105,8 +105,9 @@
 					/>
 				</svg>
 			</div>
+			<div class="first-section"></div>
 		</div>
-		<div class="center-box">
+		<div class="center-box" v-if="noFlairs">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"
@@ -130,7 +131,52 @@
 </template>
 
 <script>
-export default {};
+export default {
+	// @vuese
+	//load List of Rules before mount
+	beforeMount() {
+		this.loadListOfFlairs();
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+		// @vuese
+		//return list of Rules
+		// @type object
+		listOfFlairs() {
+			return this.$store.getters['moderation/listOfFlairs'];
+		},
+		// @vuese
+		//return true if there is no flairs, false otherwise
+		// @type boolean
+		noFlairs() {
+			if (this.listOfFlairs.length != 0) {
+				return false;
+			}
+			return true;
+		},
+	},
+	methods: {
+		// @vuese
+		//load Rules list from the store
+		// @arg no argument
+		async loadListOfFlairs() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfFlairs', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+	},
+};
 </script>
 
 <style scoped>
