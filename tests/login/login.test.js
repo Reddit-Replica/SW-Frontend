@@ -5,7 +5,7 @@ describe('LoginPage.vue', () => {
 	//it-> test block
 	it('Render component exist', async () => {
 		//our component
-		const wrapper = shallowMount(LoginPage, {
+		const wrapper = mount(LoginPage, {
 			global: {
 				components: {},
 				mocks: {},
@@ -16,7 +16,7 @@ describe('LoginPage.vue', () => {
 
 	it('test v-model', async () => {
 		//our component
-		const wrapper = shallowMount(LoginPage, {
+		const wrapper = mount(LoginPage, {
 			global: {
 				components: {},
 				mocks: {},
@@ -35,7 +35,7 @@ describe('LoginPage.vue', () => {
 
 	it('test v-if rendring', async () => {
 		//our component
-		const wrapper = shallowMount(LoginPage, {
+		const wrapper = mount(LoginPage, {
 			global: {
 				components: {},
 				mocks: {},
@@ -67,5 +67,26 @@ describe('LoginPage.vue', () => {
 
 	});
 
+	//Testing wrong userName
+	it('Testing clicking submit', () => {
+		const wrapper = mount(LoginPage, {
+			props: {},
+			global: {},
+		});
+		const loginbtn = wrapper.find('#login-button');
+		const userName = wrapper.find('#user-name');
+		loginbtn
+			.trigger('click')
+			.then(() => {
+				userName.setValue('ks');
+				expect(userName.element.value).toBe('ks');
+				expect(wrapper.find('#messageErrorShowUser').exists()).toBe(true);
+				expect(wrapper.find('#showSignuser').exists()).toBe(true);
+			})
+			.catch(function () {
+				console.log('Promise Rejected');
+			});
+		return Promise.resolve();
+	});
 	
 });
