@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<sortposts-bar @title="sortBarClicked"></sortposts-bar>
 		<base-user-post
 			v-for="(postData, index) in getUserPostData.postData.children"
 			:key="index"
@@ -10,9 +11,11 @@
 
 <script>
 import BaseUserPost from '../../../components/UserComponents/BaseUserComponents/BaseUserPost.vue';
+import SortpostsBar from '../../../components/bars/SortpostsBar.vue';
 export default {
 	components: {
 		BaseUserPost,
+		SortpostsBar,
 	},
 	data() {
 		return {
@@ -36,13 +39,17 @@ export default {
 		},
 	},
 	methods: {
-		async RequestUserPostData() {
+		sortBarClicked(sortType) {
+			console.log(sortType);
+			this.RequestUserPostData(sortType);
+		},
+		async RequestUserPostData(sortType) {
 			try {
 				await this.$store.dispatch('user/getUserPostData', {
 					baseurl: this.$baseurl,
 					userName: this.$route.params.userName,
 					params: {
-						sort: 'new',
+						sort: `${sortType}`,
 						time: 'all',
 						before: '',
 						after: '',
@@ -56,3 +63,9 @@ export default {
 	},
 };
 </script>
+<style>
+.sort-post-content {
+	margin-top: 2px !important;
+	margin-bottom: 16px;
+}
+</style>
