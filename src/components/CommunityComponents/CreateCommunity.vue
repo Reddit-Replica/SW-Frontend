@@ -5,7 +5,7 @@
 			@close="hidecreateCommunity"
 			title="Create a community"
 		>
-			<div class="community-dialog flex-column">
+			<div class="community-dialog flex-column" id="comm-create">
 				<div class="community-box flex-column">
 					<div class="community-box-title flex-column">
 						<h3 class="title-black">Name</h3>
@@ -64,12 +64,17 @@
 						>
 							A community name is required
 						</div>
-						<div v-if="communityNameTakenError" class="title-grey title-red">
+						<div
+							v-if="communityNameTakenError"
+							class="title-grey title-red"
+							id="taken-name"
+						>
 							Sorry, r/{{ communityName }} is taken. Try another.
 						</div>
 						<div
 							v-if="communityNameCharError"
 							class="title-grey name-error title-red"
+							id="name-symbols"
 						>
 							<p class="title-red">
 								Community names must be between 3–21 characters, and can only
@@ -148,6 +153,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-circle"
+								id="bi-circle-1"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen0"
 							>
@@ -161,6 +167,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
+								id="bi-record-circle-fill-1"
 								viewBox="0 0 16 16"
 								v-else
 							>
@@ -198,6 +205,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-circle"
+								id="bi-circle-2"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen1"
 							>
@@ -211,6 +219,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
+								id="bi-record-circle-fill-2"
 								viewBox="0 0 16 16"
 								v-else
 							>
