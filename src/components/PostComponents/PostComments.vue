@@ -831,10 +831,14 @@ export default {
 			return localStorage.getItem('userName');
 		},
 	},
+	//@vuese
+	//before mount fetch posts according to type of sorting
 	beforeMount() {
 		this.getPostDetails();
 	},
 	methods: {
+		//@vuese
+		//fetch posts according to type of sorting
 		async getPostDetails() {
 			try {
 				await this.$store.dispatch('listing/postDetails', {
@@ -844,7 +848,6 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			//console.log(this.$route.path.split('/')[4]);
 			const postDetails = this.$store.getters['listing/getPostDetails'];
 			this.counter = postDetails.votes;
 			this.postName = postDetails.title;
