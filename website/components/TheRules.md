@@ -23,7 +23,7 @@
 <!-- @vuese:TheRules:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|subredditName|`string`|return subreddit name|Yes|
+|subredditName|`string`|return subreddit name|No|
 |listOfRules|`object`|return list of Rules|Yes|
 |noRules|`boolean`|return true if there is no rules, false otherwise|No|
 

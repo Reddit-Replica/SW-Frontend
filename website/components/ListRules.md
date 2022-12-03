@@ -39,7 +39,8 @@
 <!-- @vuese:ListRules:computed:start -->
 |Computed|Type|Description|From Store|
 |---|---|---|---|
-|subredditName|`string`|return subreddit name|Yes|
+|subredditName|`string`|return subreddit name|No|
+|listOfRules|`object`|return list of Rules|Yes|
 
 <!-- @vuese:ListRules:computed:end -->
 
