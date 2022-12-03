@@ -1,14 +1,8 @@
+
 /**
- * Action for creating Post
- * @action createPost 
- * @param {Object} contains post data and base url.
- * @returns {void}
- * Action for checking if subreddit name is used before.
- * @action getAllsubreddits
- * @param {Object} contains base url.
- * @returns {void}
- 
+ * @module PostsActions
  */
+
 export default {
 	async hide(_, payload) {
 		const hide = {
@@ -31,7 +25,12 @@ export default {
 			throw error;
 		}
 	},
-
+/**
+* Action for creating Post
+ * @action createPost 
+ * @param {Object} payload post data and base url.
+ * @returns {void}
+ */
 	async createPost(context, payload) {
 		const postInfo = {
 			kind: payload.kind,
@@ -64,6 +63,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+ * Action for checking if subreddit name is used before.
+ * @action getAllsubreddits
+ * @param {Object} payload base url.
+ * @returns {void}
+ */
 	async getAllsubreddits(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/subredditName');
