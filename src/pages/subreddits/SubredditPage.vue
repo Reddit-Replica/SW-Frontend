@@ -54,13 +54,16 @@
 					:community-description="subreddit.description"
 				></about-community-read-only> -->
 
-				<moderators-bar :moderators="subreddit.moderators"></moderators-bar>
+				<moderators-bar
+					:moderators="subreddit.moderators"
+					:subreddit-name="subredditName"
+				></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
 		</div>
 		<div id="first-time-subreddit">
 			<base-dialog
-				:show="toBeShown"
+				:show="this.firstTimeCreated && this.showFirstDialog"
 				@close="hideFirstDialog"
 				title="Create your first post"
 			>
@@ -149,18 +152,19 @@ export default {
 				{ id: 1, name: 'AsmaaAdel' },
 			],
 			showFirstDialog: true,
+			firstTimeCreated: false,
 			subreddit: {},
 			posts: [],
 			isModerator: true,
 		};
 	},
-	computed: {
-		toBeShown() {
-			return this.firstCreated && this.showFirstDialog;
-		},
-	},
-	beforeMount() {
+	async beforeMount() {
 		//fetch subreddit details
+		this.firstTimeCreated =
+			this.$store.getters['community/createdSuccessfully'];
+
+		await this.$store.dispatch('community/changeFirstcreated', false);
+
 		this.getSubreddit();
 
 		//set listing as hot by default
@@ -178,10 +182,7 @@ export default {
 
 	methods: {
 		async getSubreddit() {
-			// const accessToken = localStorage.getItem('accessToken');
-			const accessToken =
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
-
+			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('community/getSubreddit', {
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
@@ -194,6 +195,7 @@ export default {
 			this.showFirstDialog = false;
 		},
 		createPost() {
+			this.hideFirstDialog();
 			this.$router.push({
 				name: 'submit',
 				params: { subredditName: this.subredditName },

@@ -598,17 +598,14 @@ export default {
 		//@arg no argument
 		saveDescription() {
 			//save description
-			// if (this.description !== '') {
-			this.communityDescription = this.description;
-			// }
 			this.isSubtopicsSaved = true;
 			//hide text area
 			this.hideTextarea();
+
 			//send request
-			// if (this.description !== '') {
 			const accessToken = localStorage.getItem('accessToken');
 			this.$store.dispatch('community/AddDescription', {
-				description: this.communityDescription,
+				description: this.description,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,

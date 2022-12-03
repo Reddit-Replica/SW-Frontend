@@ -76,10 +76,7 @@ export default {
 		joinsubreddit() {
 			// this.toogleJoin();
 
-			// const accessToken = localStorage.getItem('accessToken');
-
-			const accessToken =
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+			const accessToken = localStorage.getItem('accessToken');
 
 			this.$store.dispatch('community/joinSubreddit', {
 				message: this.message,

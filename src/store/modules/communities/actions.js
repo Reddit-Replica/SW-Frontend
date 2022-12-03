@@ -1,3 +1,49 @@
+/**
+ * Action for creating a new subreddit.
+ * @action createSubreddit=createdSuccessfully
+ * @param {Object} contains new subreddit data.
+ * @returns {void}
+ * Action for checking if subreddit name is used before.
+ * @action checkSubredditName=checkSubredditName
+ * @param {Object} contains subreddit name.
+ * @returns {void}
+ *  Action for fetching recommended categories for a new subreddit.
+ * @action getSavedCategories=setSavedCategories
+ * @param {Object} contains base url
+ * @returns {void}
+ *  Action for toggling add a subreddit to favourite.
+ * @action ToggleFavourite
+ * @param {Object} contains base url
+ * @returns {void}
+ *  Action for adding a description for a specific subreddit.
+ * @action AddDescription
+ * @param {Object} contains description
+ * @returns {void}
+ * Action for adding a main topic for a specific subreddit.
+ * @action AddMainTopic
+ * @param {Object} contains topic
+ * @returns {void}
+ * Action for adding subtopics for a specific subreddit.
+ * @action AddSubTopic
+ * @param {Object} contains subtopics array
+ * @returns {void}
+ * Action for fetching a specific subreddit's details.
+ * @action getSubreddit=setSubreddit
+ * @param {Object} contains base url
+ * @returns {void}
+ * Action for changing value of new created subreddit boolean property.
+ * @action changeFirstcreated=createdSuccessfully
+ * @param {Object} contains boolean value
+ * @returns {void}
+ * Action for joining a specific subreddit.
+ * @action joinSubreddit
+ * @param {Object} contains message if it is a private subreddit
+ * @returns {void}
+ * Action for fetching posts of a specific subreddit.
+ * @action fetchSubredditPosts=setPosts
+ * @param {Object} contains posts sorting type
+ * @returns {void}
+ */
 export default {
 	async createSubreddit(context, payload) {
 		context.commit('createdSuccessfully', false);
@@ -30,7 +76,6 @@ export default {
 			throw error;
 		}
 	},
-
 	async checkSubredditName(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -209,6 +254,9 @@ export default {
 			throw error;
 		}
 	},
+	async changeFirstcreated(context, payload) {
+		context.commit('createdSuccessfully', payload);
+	},
 	async joinSubreddit(_, payload) {
 		const joinInfo = {
 			subredditId: payload.subredditId,
@@ -234,7 +282,6 @@ export default {
 			throw error;
 		}
 	},
-
 	async fetchSubredditPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const title = payload.title;
