@@ -1,6 +1,6 @@
 /**
  * The module 'setters' object.
- * @name UserMutations
+ * @module UserMutations
  * @type {object}
  * @mutator {object} setUserData=userData Sets the User Data.
  * @mutator {object} setUserPostData=strProp Sets the post Data.

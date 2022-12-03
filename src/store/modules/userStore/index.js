@@ -1,12 +1,11 @@
 import mutations from './mutations.js';
 import actions from './actions.js';
 import getters from './getters.js';
-
 export default {
 	namespaced: true,
 	/**
 	 * The Vuex 'UserState' object.
-	 * @name UserState
+	 * @module UserState
 	 * @type {object}
 	 * @property {Object} userData contain all user information DiasplayedName,about,banner.. .
 	 * @property {Array} SocialLinksItems contain array of static social links items data (picture,text,imgSrc,type).

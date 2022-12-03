@@ -1,6 +1,7 @@
+
 /**
  * The module 'UserStore' object.
- * @name UserGetters
+ * @module UserGetters
  * @type {object}
  * @getter {object} getUserData={userData,userModeratorData} Returns an Object contain userData for user Card, userModeratorData for moderator card property.
  * @getter {object} getUserPostData=postData Returns Object contain postData.
