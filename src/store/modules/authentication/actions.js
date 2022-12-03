@@ -13,7 +13,6 @@
  * @returns {void}
  */
 
-
 export default {
 	async forgetPasswordhandle(context, payload) {
 		const userInfo = {

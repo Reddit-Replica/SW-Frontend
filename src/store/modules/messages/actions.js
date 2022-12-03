@@ -287,7 +287,6 @@ export default {
 			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
-		console.log(newMessage);
 
 		const responseData = await response.json();
 		if (response.status == 201) {
