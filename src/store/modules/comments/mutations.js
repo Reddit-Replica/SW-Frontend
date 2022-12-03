@@ -1,8 +1,10 @@
 export default {
-	// addRequest(state, payload) {
-	//     state.statename= payload
-	// }
-	// to edit a state
+	/**
+	 * The module 'setters' object.
+	 * @name CommentsMutations
+	 * @type {object}
+	 * @mutator {object} setSubredditInfo=subreddit Sets the state object property.
+	 */
 	setSubredditInfo(state, payload) {
 		console.log(payload);
 		state.subreddit = payload;
