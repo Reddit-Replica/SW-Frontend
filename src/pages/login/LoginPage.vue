@@ -100,7 +100,9 @@
 							></span>
 						</div>
 
-						<button class="submit-login" type="submit">Log In</button>
+						<button id="login-button" class="submit-login" type="submit">
+							Log In
+						</button>
 						<div class="redirected-message" v-if="done_login">
 							{{ done_message }}
 						</div>
