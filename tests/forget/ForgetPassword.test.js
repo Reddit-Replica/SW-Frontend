@@ -108,6 +108,42 @@ describe('ForgetPasswordpage.vue', () => {
 		
 	});
 });
+
+  //--------------------------------------------------------
+  //                     Testing clickig buttons
+  //--------------------------------------------------------
+
+  it ('Testing clicking submit', () => {
+    const wrapper = mount (ForgetPasswordpage, {
+      props: {
+       
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+          fetch: mockservice,
+        },
+      },
+    });
+    const resetBtn = wrapper.find ('#reset-btn');
+	const userName = wrapper.find('#userName');
+    resetBtn
+	.trigger ('click')
+	.then (() => {
+	  expect (this.response== 200).toBe (true);
+	   userName.setValue('norhan');
+		expect(userName.element.value).toBe('norhan');
+		expect (this.userName== userName.element.value ).toBe (true);
+	})
+	.catch (function () {
+	  console.log ('Promise Rejected');
+	});
+    return Promise.resolve ();
+  });
+
+
+
 /*
 .trigger('click')
 			.then(() => {
