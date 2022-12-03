@@ -119,10 +119,12 @@
 		<div class="col-lg-3 subreddit-info">
 			<subreddit-info
 				subreddit-name="subredditName"
-				v-if="isSet"
+				v-if="isSet & inSubreddit"
 			></subreddit-info>
 		</div>
-		<div :class="isSet ? 'col-lg-3 posting1' : 'col-lg-3 posting2'">
+		<div
+			:class="isSet & inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
+		>
 			<postingto-reddit></postingto-reddit>
 		</div>
 	</div>
@@ -131,7 +133,7 @@
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import SubredditInfo from '../PostComponents/SubredditInfo.vue';
-import PostingtoReddit from '@/components/PostComponents/PostingtoReddit.vue';
+import PostingtoReddit from '../../components/PostComponents/PostingtoReddit.vue.vue';
 export default {
 	components: {
 		CreateCommunity,
