@@ -1,6 +1,7 @@
 <template>
 	<div class="big-container">
 		<h3>hello do you need any help ?!</h3>
+		<h3>help yourself because there is no one to help you 😃</h3>
 	</div>
 </template>
 
