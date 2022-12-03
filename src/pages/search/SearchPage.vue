@@ -115,7 +115,7 @@
 						<div class="post-results">
 							<SearchPost
 								id="searched-posts"
-								:community="Salah"
+								:community="salah"
 								:profile="Hamada"
 							/>
 						</div>
@@ -299,6 +299,7 @@ a {
 }
 .post-results {
 	margin-bottom: 16px;
+	width: 100%;
 }
 .side-bars {
 	display: block;
