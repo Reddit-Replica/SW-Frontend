@@ -72,6 +72,7 @@ import NotFound from './pages/NotFound.vue';
 import PostComments from './components/PostComponents/PostComments.vue';
 
 import Search from './pages/search/SearchPage.vue';
+import GetHelp from './pages/forget/GetHelp.vue';
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -100,6 +101,7 @@ const router = createRouter({
 		{ path: '/logincomp', component: LoginComp },
 		{ path: '/signupcomp', component: SignupComp },
 		{ path: '/search', component: Search },
+		{ path: '/help', component: GetHelp },
 
 		{
 			path: '/user/:userName',

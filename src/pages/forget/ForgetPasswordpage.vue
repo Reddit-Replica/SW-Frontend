@@ -108,7 +108,10 @@
 					<div class="bottomText">
 						<label id="bottom">
 							Don't have an email or need assistance logging in?
-							<a class="link" id="help">Get Help </a></label
+							<!-- <a class="link" id="help">Get Help </a> -->
+							<router-link to="/help" class="link" id="help"
+								>Get Help</router-link
+							></label
 						>
 					</div>
 				</form>
