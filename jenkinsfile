@@ -14,7 +14,9 @@ pipeline {
         }
     }
     steps {
-              sh "npm i "
+              echo "hello"
+              sh "npm cache clean --force"
+              sh "npm i"
               sh "npm run test"
               // timeout(time: 20, unit: 'SECONDS') {sh "npm run serve"}
       }
@@ -22,12 +24,11 @@ pipeline {
 
   stage("intgration testing"){
     steps {
-              echo "till get its waerrrrrrrrrrrrrrrrrr"
+              echo "till get its waerrrrrrrrrrrrr"
       }
   }
 
 		stage('Login') {
-
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
