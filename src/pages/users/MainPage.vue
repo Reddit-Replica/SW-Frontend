@@ -58,7 +58,7 @@ import TopCommunitiesBar from '../../components/TopCommunities/TopCommunitiesBar
 import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar.vue';
 import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
-import SaveUnsavePopupMessage from '@/components/SaveUnsavePopupMessage.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
 	beforeMount() {
 		let title = this.$route.params.title;

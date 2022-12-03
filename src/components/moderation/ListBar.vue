@@ -11,15 +11,34 @@
 			>
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div>
-		<div class="bar" v-if="title == 'Rules'">
-			<base-button class="reorder-button" id="reorder-rules-button"
+		<div class="bar" v-if="title == 'Rules' && !dragDrop">
+			<base-button
+				class="reorder-button"
+				id="reorder-rules-button"
+				:class="rulesCount > 1 ? '' : 'disable-button'"
+				@click="reorderRules()"
 				>Reorder rules</base-button
 			>
 			<base-button
 				class="base-button"
 				@click="showAddRuleFunction()"
 				id="add-rules-button"
+				:class="rulesCount == 15 ? 'content-controls-button' : ''"
 				>Add rule</base-button
+			>
+		</div>
+		<div class="bar" v-if="title == 'Rules' && dragDrop">
+			<base-button
+				class="button-white"
+				id="cancel-rules-button"
+				@click="reorderRules()"
+				>Cancel</base-button
+			>
+			<base-button
+				class="base-button"
+				id="save-rules-button"
+				@click="saveReorderRules()"
+				>Save</base-button
 			>
 		</div>
 		<div class="bar" v-if="title == 'Post flair'">
@@ -50,7 +69,7 @@
 
 <script>
 export default {
-	emits: ['showAddRuleFunction'],
+	emits: ['showAddRuleFunction', 'reorderRules', 'saveReorderRules'],
 	props: {
 		// @vuese
 		// title to be written in bar
@@ -66,6 +85,22 @@ export default {
 		subredditName: {
 			type: String,
 			default: '',
+			required: true,
+		},
+		// @vuese
+		// rules count
+		// @type string
+		rulesCount: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
+		// @vuese
+		// if there is drag and drop or not
+		// @type string
+		dragDrop: {
+			type: Boolean,
+			default: false,
 			required: true,
 		},
 	},
@@ -98,6 +133,18 @@ export default {
 		// @arg no argument
 		showAddRuleFunction() {
 			this.$emit('showAddRuleFunction', this.showAddRule);
+		},
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		reorderRules() {
+			this.$emit('reorderRules');
+		},
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		saveReorderRules() {
+			this.$emit('saveReorderRules');
 		},
 	},
 };
@@ -163,13 +210,17 @@ button {
 	background-color: var(--color-blue-light-5);
 }
 .reorder-button {
-	cursor: not-allowed;
-	filter: grayscale(1);
-	color: var(--color-grey-light-5);
-	fill: var(--color-grey-light-5);
+	color: var(--color-blue-2) !important;
+	fill: var(--color-blue-2);
 	padding: 0.4rem 1.6rem;
 	margin-right: 1rem;
 	background-color: transparent;
+}
+.disable-button {
+	filter: grayscale(1);
+	cursor: not-allowed;
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
 }
 .reorder-button:hover,
 .reorder-post-flair-button:hover {

@@ -90,6 +90,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/mentions', {
@@ -135,6 +136,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/messages', {
@@ -177,6 +179,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/post-reply', {
@@ -222,6 +225,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/sent', {
@@ -260,14 +264,15 @@ export default {
 			throw error;
 		}
 	},
+
 	async sendMessage(context, payload) {
 		context.commit('sentSuccessfully', false);
 		const newMessage = {
 			text: payload.text,
 			senderUsername: payload.senderUsername,
 			receiverUsername: payload.receiverUsername,
-			type: 'Messages',
 			subject: payload.subject,
+			type: 'Messages',
 		};
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
@@ -284,7 +289,6 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(response.status);
 		if (response.status == 201) {
 			context.commit('sentSuccessfully', true);
 		} else if (response.status == 401) {
@@ -303,6 +307,7 @@ export default {
 		// 	throw error;
 		// }
 	},
+
 	//error
 	// async unreadMessage(_, payload) {
 	// 	const message = {
@@ -328,6 +333,7 @@ export default {
 	// 		throw error;
 	// 	}
 	// },
+
 	async blockUser(context, payload) {
 		context.commit('blockSuccessfully', false);
 		const block = {
@@ -364,6 +370,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async deleteMessage(context, payload) {
 		context.commit('deleteMessageSuccessfully', false);
 		const del = {
@@ -401,6 +408,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async spamMessage(context, payload) {
 		context.commit('markSpamSuccessfully', false);
 		const spam = {
@@ -441,6 +449,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async loadSuggestedSender(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/suggested-sender', {

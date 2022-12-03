@@ -22,6 +22,45 @@ describe ('PostreplyComponent.vue', () => {
   };
   const index = 0;
   let count = 2;
+  const messagesAction = {
+    loadInboxMessages: vi.fn (),
+    loadUnreadMessages: vi.fn (),
+    loadUserMentions: vi.fn (),
+    loadPostReplies: vi.fn (),
+    loadSentMessages: vi.fn (),
+    sendMessage: vi.fn (),
+    blockUser: vi.fn (),
+    deleteMessage: vi.fn (),
+    spamMessage: vi.fn (),
+    loadSuggestedSender: vi.fn (),
+    voteComment: vi.fn (),
+    replyMessage: vi.fn (),
+  };
+
+  //Mocking the store
+  store = new Vuex.Store ({
+    modules: {
+      messageModule: {
+        namespaced: true,
+        state: {
+          inboxMessages: [],
+          unreadMessages: [],
+          userMentions: [],
+          userMessages: [],
+          postReplies: [],
+          sentMessages: [],
+          suggestedSender: [],
+          sentSuccessfully: false,
+          deleteMessageSuccessfully: false,
+          markSpamSuccessfully: false,
+          blockSuccessfully: false,
+          votedSuccessfully: false,
+          replyMessageSuccessfully: false,
+        },
+        actions: messagesAction,
+      },
+    },
+  });
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -100,7 +139,7 @@ describe ('PostreplyComponent.vue', () => {
   //   });
   //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
   // });
-  
+
   it ('Testing the time is correct', () => {
     const wrapper = mount (PostReplies, {
       props: {
@@ -132,7 +171,7 @@ describe ('PostreplyComponent.vue', () => {
     });
     expect (wrapper.find ('#context-a-0').text ()).contain ('context');
   });
-  
+
   it ('Testing the Full Comments(5) button text is correct', () => {
     const wrapper = mount (PostReplies, {
       props: {
@@ -146,7 +185,9 @@ describe ('PostreplyComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#full-comment-a-0').text ()).contain ('Full Comments(5)');
+    expect (wrapper.find ('#full-comment-a-0').text ()).contain (
+      'Full Comments(5)'
+    );
   });
 
   it ('Testing the delete button text is correct', () => {
@@ -260,6 +301,81 @@ describe ('PostreplyComponent.vue', () => {
   //--------------------------------------------------------
   //                     Testing clickig buttons
   //--------------------------------------------------------
+
+  it ('Testing clicking spam', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+          fetch: mockservice,
+        },
+      },
+      data () {
+        return {
+          isRead: false,
+        };
+      },
+    });
+    const spamBtn = wrapper.find ('#click-spam-0');
+    spamBtn
+      .trigger ('click')
+      .then (() => {
+        const yesBtn = wrapper.find ('#yes-spam-user-0');
+        yesBtn
+          .trigger ('click')
+          .then (() => {
+            expect (wrapper.text ()).contain ('spammed');
+          })
+          .catch (function () {
+            console.log ('Promise Rejected');
+          });
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
+  });
+
+  it ('Testing clicking block', async () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+          fetch: mockservice,
+        },
+      },
+    });
+    const blockBtn = wrapper.find ('#block-user-0');
+    blockBtn
+      .trigger ('click')
+      .then (() => {
+        const yesBtn = wrapper.find ('#yes-block-user-0');
+        yesBtn
+          .trigger ('click')
+          .then (() => {
+            expect (wrapper.text ())
+              .contain ('')
+              .toBeCalledWith ('uncaughtException', expect.any (Function));
+          })
+          .catch (function () {
+            console.log ('Promise Rejected');
+          });
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
+  });
   it ('Testing clicking unread', () => {
     const wrapper = mount (PostReplies, {
       props: {

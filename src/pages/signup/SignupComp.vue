@@ -155,9 +155,9 @@
 </template>
 
 <script>
-import GoogleSigninButton from '../../components/googleComp.vue';
-import facebookSigninButton from '../../components/fbComp.vue';
-import TheRecaptcha from '../../components/TheRecaptcha.vue';
+import GoogleSigninButton from '../../components/auth/googleComp.vue';
+import facebookSigninButton from '../../components/auth/fbComp.vue';
+import TheRecaptcha from '../../components/auth/TheRecaptcha.vue';
 export default {
 	data() {
 		return {

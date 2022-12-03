@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<li class="item">
-			<span class="rule-order"> {{ rule.ruleOrder }}</span>
+			<span class="rule-order"> {{ rule.ruleOrder + 1 }}</span>
 			<span class="rule-name"> {{ rule.ruleName }}</span>
 			<span class="rule-edit">
 				<button
@@ -85,6 +85,9 @@
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
 			@exit="showAddRuleFunction"
+			:list-of-rules="listOfRules"
+			@done-successfully="doneSuccessfully('updated')"
+			@clicked-delete="clickDelete"
 			:rule-name-edit="rule.ruleName"
 			:report-reason-edit="rule.reportReason"
 			:applies-to-edit="rule.appliesTo"
@@ -93,14 +96,24 @@
 			:rule-id="rule.ruleId"
 			:edit="true"
 		></addrule-popup>
+		<sure-popup
+			v-if="showSureDelete"
+			:subreddit-name="subredditName"
+			:rule-id="rule.ruleId"
+			@exit="clickDelete()"
+			@done-successfully="doneSuccessfully('deleted')"
+		></sure-popup>
 	</div>
 </template>
 
 <script>
 import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
+import SurePopup from '../../components/moderation/SurePopup.vue';
 export default {
+	emits: ['doneSuccessfully'],
 	components: {
 		AddrulePopup,
+		SurePopup,
 	},
 	props: {
 		// @vuese
@@ -125,13 +138,21 @@ export default {
 		//return subreddit name
 		// @type string
 		subredditName() {
-			return this.$store.state.subredditName;
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+		// @vuese
+		//return list of Rules
+		// @type object
+		listOfRules() {
+			return this.$store.getters['moderation/listOfRules'];
 		},
 	},
 	data() {
 		return {
 			viewDetails: false,
 			showAddRule: false,
+			showSureDelete: false,
 		};
 	},
 	methods: {
@@ -146,6 +167,33 @@ export default {
 		// @arg no argument
 		showAddRuleFunction() {
 			this.showAddRule = !this.showAddRule;
+		},
+
+		// @vuese
+		//load Rules list from the store
+		// @arg no argument
+		async loadListOfRules() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfRules', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		// handle load rules instead of refreshing
+		// @arg no argument
+		doneSuccessfully(title) {
+			this.loadListOfRules();
+			this.$emit('doneSuccessfully', title);
+		},
+		// @vuese
+		// Used to show delete rule popup
+		// @arg no argument
+		clickDelete() {
+			this.showSureDelete = !this.showSureDelete;
 		},
 	},
 };
@@ -244,5 +292,15 @@ export default {
 	display: -ms-flexbox;
 	display: flex;
 	padding: 0.8rem 0;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 </style>

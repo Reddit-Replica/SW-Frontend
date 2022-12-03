@@ -1,1444 +1,1480 @@
 {
-	"post-details": [
-		{
-			"kind": "text",
-			"subreddit": "string",
-			"content": "string",
-			"images": [{}],
-			"nsfw": true,
-			"spoiler": true,
-			"title": "string",
-			"sharePostId": "string",
-			"flair": {
-				"id": "string",
-				"flairName": "string",
-				"order": 0,
-				"backgroundColor": "string",
-				"textColor": "string"
-			},
-			"comments": 0,
-			"votes": 0,
-			"postedAt": "string",
-			"deletedAt": "string",
-			"editedAt": "string",
-			"postedBy": "string",
-			"votingType": 1,
-			"saved": false,
-			"followed": false,
-			"hidden": false,
-			"spammed": false,
-			"inYourSubreddit": false,
-			"moderation": {
-				"approve": {},
-				"remove": {},
-				"spam": {},
-				"lock": true
-			}
-		}
-	],
-	"submit": [
-		{
-			"kind": "text",
-			"subreddit": null,
-			"title": "hi",
-			"content": null,
-			"files": [{}],
-			"nsfw": true,
-			"spoiler": true,
-			"flairId": null,
-			"imageCaptions": [],
-			"imageLinks": [],
-			"sendReplies": null,
-			"id": 1
-		},
-		{
-			"kind": "text",
-			"subreddit": null,
-			"title": "hello",
-			"content": null,
-			"files": [{}],
-			"nsfw": true,
-			"spoiler": true,
-			"flairId": 123,
-			"imageCaptions": [],
-			"imageLinks": [],
-			"sendReplies": null,
-			"id": 2
-		},
-		{
-			"kind": "text",
-			"subreddit": null,
-			"title": "hello",
-			"content": {
-				"ops": [
-					{
-						"insert": "hello from hell"
-					},
-					{
-						"attributes": {
-							"header": 1
-						},
-						"insert": "\n"
-					}
-				]
-			},
-			"files": [{}],
-			"nsfw": true,
-			"spoiler": true,
-			"flairId": 123,
-			"imageCaptions": [],
-			"imageLinks": [],
-			"sendReplies": true,
-			"id": 3
-		},
-		{
-			"kind": "link",
-			"subreddit": null,
-			"title": "hello",
-			"content": "http://localhost:8081/submit",
-			"files": [{}],
-			"nsfw": true,
-			"spoiler": true,
-			"flairId": 123,
-			"imageCaptions": [],
-			"imageLinks": [],
-			"sendReplies": true,
-			"id": 4
-		},
-		{
-			"kind": "link",
-			"subreddit": null,
-			"title": "hello",
-			"content": "http://localhost:3000/submit",
-			"files": [{}],
-			"nsfw": true,
-			"spoiler": false,
-			"flairId": 123,
-			"imageCaptions": [],
-			"imageLinks": [],
-			"sendReplies": false,
-			"id": 5
-		}
-	],
-	"hot": [
-		{
-			"after": "string",
-			"before": "string",
-			"children": [
-				{
-					"id": "1",
-					"kind": "post",
-					"subreddit": "hotSubreddit",
-					"content": "hot content",
-					"images": [],
-					"nsfw": true,
-					"spoiler": true,
-					"title": "hot title",
-					"sharePostId": "string",
-					"flair": {},
-					"comments": 0,
-					"votes": 0,
-					"postedAt": "hot postedAt",
-					"deletedAt": "string",
-					"editedAt": "string",
-					"postedBy": "hot postedBy",
-					"votingType": 1,
-					"saved": false,
-					"followed": false,
-					"hidden": false,
-					"spammed": false,
-					"inYourSubreddit": false,
-					"moderation": {}
-				}
-			]
-		},
-		{
-			"after": "string",
-			"before": "string",
-			"children": [
-				{
-					"id": "2",
-					"kind": "text",
-					"subreddit": "hotSubreddit",
-					"content": "hot content",
-					"images": [],
-					"nsfw": true,
-					"spoiler": true,
-					"title": "hot title",
-					"sharePostId": "string",
-					"flair": {},
-					"comments": 0,
-					"votes": 0,
-					"postedAt": "hot postedAt",
-					"deletedAt": "string",
-					"editedAt": "string",
-					"postedBy": "hot postedBy",
-					"votingType": 1,
-					"saved": false,
-					"followed": false,
-					"hidden": false,
-					"spammed": false,
-					"inYourSubreddit": false,
-					"moderation": {}
-				}
-			]
-		}
-	],
-	"best": [
-		{
-			"after": "string",
-			"before": "string",
-			"children": [
-				{
-					"id": "1",
-					"kind": "text",
-					"subreddit": "bestSubreddit",
-					"content": "best content",
-					"images": [],
-					"nsfw": true,
-					"spoiler": true,
-					"title": "best title",
-					"sharePostId": "string",
-					"flair": {},
-					"comments": 0,
-					"votes": 0,
-					"postedAt": "best postedAt",
-					"deletedAt": "string",
-					"editedAt": "string",
-					"postedBy": "best postedBy",
-					"votingType": 1,
-					"saved": false,
-					"followed": false,
-					"hidden": false,
-					"spammed": false,
-					"inYourSubreddit": false,
-					"moderation": {}
-				}
-			]
-		}
-	],
-	"new": [
-		{
-			"after": "string",
-			"before": "string",
-			"children": [
-				{
-					"id": "1",
-					"kind": "text",
-					"subreddit": "newSubreddit",
-					"content": "new content",
-					"images": [],
-					"nsfw": true,
-					"spoiler": true,
-					"title": "new title",
-					"sharePostId": "string",
-					"flair": {},
-					"comments": 0,
-					"votes": 0,
-					"postedAt": "new postedAt",
-					"deletedAt": "string",
-					"editedAt": "string",
-					"postedBy": "new postedBy",
-					"votingType": 1,
-					"saved": false,
-					"followed": false,
-					"hidden": false,
-					"spammed": false,
-					"inYourSubreddit": false,
-					"moderation": {}
-				}
-			]
-		}
-	],
-	"top": [
-		{
-			"after": "string",
-			"before": "string",
-			"children": [
-				{
-					"id": "1",
-					"kind": "text",
-					"subreddit": "topSubreddit",
-					"content": "top content",
-					"images": [],
-					"nsfw": true,
-					"spoiler": true,
-					"title": "top title",
-					"sharePostId": "string",
-					"flair": {},
-					"comments": 0,
-					"votes": 0,
-					"postedAt": "top postedAt",
-					"deletedAt": "string",
-					"editedAt": "string",
-					"postedBy": "top postedBy",
-					"votingType": 1,
-					"saved": false,
-					"followed": false,
-					"hidden": false,
-					"spammed": false,
-					"inYourSubreddit": false,
-					"moderation": {}
-				}
-			]
-		}
-	],
-	"hide": [],
-	"vote": [
-		{
-			"id": 1,
-			"type": "post",
-			"direction": 1
-		}
-	],
-	"save": [
-		{
-			"id": "1",
-			"type": "post"
-		}
-	],
-	"unsave": [
-		{
-			"id": "1",
-			"type": "post"
-		}
-	],
-	"follow-post": [{}],
-	"subredditName": [
-		{
-			"nsfw": true,
-			"type": "private",
-			"isFavorite": true,
-			"title": "ludo club",
-			"category": "string",
-			"members": 2000,
-			"online": 150,
-			"description": "it is a gaming subreddit",
-			"dateOfCreation": "string",
-			"flairs": [],
-			"rules": [],
-			"bans": [],
-			"moderators": [],
-			"isMember": true,
-			"banner": "string",
-			"picture": "https://play-lh.googleusercontent.com/9jnWEhWMGhsPnDN6DyzfNkv6DwxyzebUmKlUNtUVYTw3-ztghgR1Ph2OnVM3Xv5yHp2r",
-			"communityTheme": true,
-			"views": 0,
-			"mainTopic": {}
-		},
-		{
-			"nsfw": true,
-			"type": "private",
-			"isFavorite": true,
-			"title": "hello world",
-			"category": "string",
-			"members": 1500,
-			"online": 50,
-			"description": "it is a programming subreddit",
-			"dateOfCreation": "string",
-			"flairs": [],
-			"rules": [],
-			"bans": [],
-			"moderators": [],
-			"isMember": true,
-			"banner": "string",
-			"picture": "https://www.netsolutions.com/insights/wp-content/uploads/2021/12/11-most-popular-programming-languages-2022.webp",
-			"communityTheme": true,
-			"views": 0,
-			"mainTopic": {}
-		}
-	],
-	"users": [
-		{
-			"id": 1,
-			"name": "Norhan Reda",
-			"email": "norhan.ahmed01@eng-st.cu.edu.eg",
-			"password": "12345"
-		},
-		{
-			"id": 2,
-			"name": "nora",
-			"email": "nora@gmail.com",
-			"password": "123456789"
-		}
-	],
-	"userTest": [
-		{
-			"name": "Karim",
-			"email": "karim@gmail.com",
-			"password": "123456789",
-			"username": "ksaqer8"
-		},
-		{
-			"name": "Abd",
-			"email": "Abd@gmail.com",
-			"password": "k123456789",
-			"username": "acmp2024"
-		}
-	],
-	"create-subreddit": [
-		{
-			"id": 1,
-			"subredditName": "FrontEnd",
-			"type": "Private",
-			"nsfw": false
-		},
-		{
-			"id": 2,
-			"subredditName": "BackEnd",
-			"type": "Private",
-			"nsfw": false
-		},
-		{
-			"subredditName": "hello",
-			"type": "Private",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 3
-		},
-		{
-			"subredditName": "feeltired",
-			"type": "Restricted",
-			"nsfw": true,
-			"category": "Sports",
-			"id": 14
-		},
-		{
-			"subredditName": "whyallthat",
-			"type": "Restricted",
-			"nsfw": false,
-			"category": "Programming",
-			"id": 15
-		},
-		{
-			"subredditName": "whyplease",
-			"type": "Private",
-			"nsfw": true,
-			"category": "Learning",
-			"id": 16
-		}
-	],
-	"subreddit-name-available": [
-		{
-			"id": 1,
-			"subredditName": "FrontEnd"
-		}
-	],
-	"add-description": [
-		{
-			"description": "hello every body it is a new subreddit",
-			"rId": "subreddit",
-			"id": 3
-		},
-		{
-			"description": "Hi there, have fun.",
-			"rId": "subreddit",
-			"id": 4
-		}
-	],
-	"add-maintopic": [
-		{
-			"title": {
-				"id": 2,
-				"name": "Beauty"
-			},
-			"rId": "subreddit",
-			"id": 2
-		},
-		{
-			"title": {
-				"id": 0,
-				"name": "Art"
-			},
-			"rId": "subreddit",
-			"id": 3
-		},
-		{
-			"title": {
-				"id": 1,
-				"name": "Anime"
-			},
-			"rId": "subreddit",
-			"id": 4
-		},
-		{
-			"title": {
-				"id": 1,
-				"name": "Anime"
-			},
-			"rId": "subreddit",
-			"id": 5
-		},
-		{
-			"title": {
-				"id": 2,
-				"name": "Beauty"
-			},
-			"rId": "subreddit",
-			"id": 6
-		},
-		{
-			"title": {
-				"id": 2,
-				"name": "Beauty"
-			},
-			"rId": "subreddit",
-			"id": 7
-		},
-		{
-			"title": {
-				"id": 0,
-				"name": "Art"
-			},
-			"rId": "subreddit",
-			"id": 8
-		},
-		{
-			"title": {
-				"id": 0,
-				"name": "Art"
-			},
-			"rId": "subreddit",
-			"id": 9
-		},
-		{
-			"title": {
-				"id": 1,
-				"name": "Anime"
-			},
-			"rId": "subreddit",
-			"id": 10
-		}
-	],
-	"add-subtopic": [
-		{
-			"rId": "subreddit",
-			"id": 1
-		},
-		{
-			"rId": "subreddit",
-			"id": 2
-		},
-		{
-			"subtopics": [
-				{
-					"id": 2,
-					"name": "Beauty"
-				},
-				{
-					"id": 3,
-					"name": "Cars"
-				},
-				{
-					"id": 1,
-					"name": "Anime"
-				}
-			],
-			"rId": "subreddit",
-			"id": 3
-		},
-		{
-			"subtopics": [
-				{
-					"id": 0,
-					"name": "Art"
-				},
-				{
-					"id": 2,
-					"name": "Beauty"
-				},
-				{
-					"id": 3,
-					"name": "Cars"
-				},
-				{
-					"id": 4,
-					"name": "Fashion"
-				}
-			],
-			"rId": "subreddit",
-			"id": 4
-		}
-	],
-	"toggle-favorite": [
-		{
-			"id": 1,
-			"isFavorite": false
-		}
-	],
-	"saved-categories": [
-		{
-			"id": 1,
-			"name": "Sports"
-		},
-		{
-			"id": 2,
-			"name": "Gaming"
-		},
-		{
-			"id": 3,
-			"name": "Programming"
-		},
-		{
-			"id": 4,
-			"name": "News"
-		},
-		{
-			"id": 5,
-			"name": "Learning"
-		},
-		{
-			"id": 6,
-			"name": "Films"
-		}
-	],
-	"compose": [
-		{
-			"text": "xcvghjkl",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "adelasmaa333@gmail.com",
-			"sendAt": "",
-			"subject": "ghjkl",
-			"id": 1
-		},
-		{
-			"text": "",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "dfghjkl;'",
-			"sendAt": "",
-			"subject": "rftgyhjukilo;'",
-			"id": 2
-		},
-		{
-			"text": "rtyuiop['\n",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "dfghjkl;'",
-			"sendAt": "",
-			"subject": "rftgyhjukilo;'",
-			"id": 3
-		},
-		{
-			"text": "dfghjk",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "asmaa.kawashty04@eng-st.cu.edu.eg",
-			"sendAt": "",
-			"subject": "nm,.",
-			"id": 4
-		},
-		{
-			"text": "fghjuikolp;",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "bnjkl;",
-			"sendAt": "",
-			"subject": "rtyui",
-			"id": 5
-		},
-		{
-			"text": "ertyuio",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "sdfghjkl",
-			"sendAt": "",
-			"subject": "sdfghjkl",
-			"id": 6
-		},
-		{
-			"text": "fghjk",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "tgyuiol;",
-			"sendAt": "",
-			"subject": "kl;'",
-			"id": 7
-		},
-		{
-			"text": "",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "tyujkl",
-			"sendAt": "",
-			"subject": "rtyuio",
-			"id": 8
-		},
-		{
-			"text": "",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "dfrgt",
-			"sendAt": "",
-			"subject": "fghnj",
-			"id": 9
-		},
-		{
-			"text": "",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "",
-			"sendAt": "",
-			"subject": "fvgbnh",
-			"id": 10
-		},
-		{
-			"text": "",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "hjkl;",
-			"sendAt": "",
-			"subject": "jkl;",
-			"id": 11
-		},
-		{
-			"text": "tyujkl",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "fghjkl",
-			"sendAt": "",
-			"subject": "fghjkl",
-			"id": 12
-		},
-		{
-			"text": "rtyuio",
-			"senderUsername": "/u/asmaaadel0",
-			"receiverUsername": "rtyuiop",
-			"sendAt": "",
-			"subject": "rtyuiop",
-			"id": 13
-		},
-		{
-			"text": "sdfg",
-			"senderUsername": {
-				"text": "asmaa first subbreddit"
-			},
-			"receiverUsername": "adelasmaa333@gmail.com",
-			"sendAt": "",
-			"subject": "wfgh",
-			"id": 14
-		},
-		{
-			"text": "hjk",
-			"senderUsername": "username-value",
-			"receiverUsername": "rtyui",
-			"sendAt": "",
-			"subject": "hj",
-			"id": 15
-		},
-		{
-			"text": "uio",
-			"senderUsername": {
-				"text": "asmaa first subbreddit"
-			},
-			"receiverUsername": "uio",
-			"sendAt": "",
-			"subject": "uio",
-			"id": 16
-		},
-		{
-			"text": "fghjkl",
-			"senderUsername": "username-value",
-			"receiverUsername": "dfghjkl",
-			"sendAt": "",
-			"subject": "rtyui",
-			"id": 17
-		},
-		{
-			"text": "ghjkl",
-			"senderUsername": "asmaa second subbreddit",
-			"receiverUsername": "rtyuil",
-			"sendAt": "",
-			"subject": "tyuio;",
-			"id": 18
-		},
-		{
-			"text": "ghjkl",
-			"senderUsername": "asmaaadel0",
-			"receiverUsername": "dfghjk",
-			"sendAt": "",
-			"subject": "g;",
-			"id": 19
-		}
-	],
-	"inbox": [
-		{
-			"before": "before",
-			"after": "after",
-			"children": [
-				{
-					"id": "1",
-					"text": "hello world",
-					"type": "Post replies",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "/u/asmaaadel0",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"id": "2",
-					"text": "hello asmaa",
-					"type": "Messages",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "/u/asmaaadel0",
-					"subject": "hi",
-					"sendAt": "2019-08-24T14:15:22Z",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"id": "3",
-					"text": "hello asmaa",
-					"type": "Mentions",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "/u/asmaaadel0",
-					"subject": "hi",
-					"sendAt": "2019-08-24T14:15:22Z",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		}
-	],
-	"unread": [],
-	"mentions": [
-		{
-			"before": "before",
-			"after": "after",
-			"children": [
-				{
-					"id": "4",
-					"text": "hello world",
-					"type": "Post replies",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "/u/asmaaadel0",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		},
-		{
-			"before": "before",
-			"after": "after",
-			"children": [
-				{
-					"id": "5",
-					"text": "hello world",
-					"type": "Post replies",
-					"senderUsername": "/u/nenahosam",
-					"receiverUsername": "/u/asmaaadel0",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"subject": "hiiii",
-					"sendAt": "6 days ago",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		}
-	],
-	"messages": [
-		{
-			"before": "before",
-			"after": "after",
-			"children": [
-				{
-					"id": "6",
-					"text": "hello world",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "/u/asmaaadel0",
-					"sendAt": "2019-08-24T14:15:22Z",
-					"subject": "hiiii",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"id": "7",
-					"text": "hello asmaa",
-					"senderUsername": "/u/asmaaadel0",
-					"receiverUsername": "/u/hoda_gamal",
-					"sendAt": "2019-08-24T14:15:22Z",
-					"subject": "hi",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		}
-	],
-	"post-reply": [
-		{
-			"before": "before",
-			"after": "after",
-			"children": [
-				{
-					"id": "8",
-					"text": "hello world",
-					"type": "type",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"senderUsername": "/u/norhan_reda",
-					"receiverUsername": "/u/asmaaadel0",
-					"sendAt": "2019-08-24T14:15:22Z",
-					"subject": "hiiii",
-					"isReply": false,
-					"isRead": true
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"id": "9",
-					"text": "hello asmaa",
-					"type": "type",
-					"subredditName": "subredditName",
-					"postTitle": "postTitle",
-					"senderUsername": "/u/hoda_gamal",
-					"receiverUsername": "/u/asmaaadel0",
-					"subject": "hi",
-					"sendAt": "2019-08-24T14:15:22Z",
-					"isReply": true,
-					"isRead": true
-				}
-			]
-		}
-	],
-	"unread-message": [],
-	"sent": [
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"id": "10",
-					"text": "hello hoda",
-					"receiverUsername": "/u/hoda_gamal",
-					"subject": "hi",
-					"sendAt": "2019-08-24T14:15:22Z"
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"id": "11",
-					"text": "hello mena",
-					"receiverUsername": "/u/menahosam",
-					"subject": "hi",
-					"sendAt": "2019-08-24T14:15:22Z"
-				}
-			]
-		}
-	],
-	"suggested-sender": [
-		{
-			"children": [
-				{
-					"text": "asmaa first subbreddit"
-				}
-			]
-		},
-		{
-			"children": [
-				{
-					"text": "asmaa second subbreddit"
-				}
-			]
-		}
-	],
-	"moderator-list": [
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"username": "asmaa",
-					"nickname": "asmaa",
-					"dateOfModeration": "9 years ago",
-					"permissions": ["Everything"]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"username": "hoda",
-					"nickname": "hoda",
-					"dateOfModeration": "3 years ago",
-					"permissions": [
-						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
-					]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"username": "mena",
-					"nickname": "mena",
-					"dateOfModeration": "1 year ago",
-					"permissions": [
-						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
-					]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
-				{
-					"username": "asmaaadel0",
-					"nickname": "asmaaadel0",
-					"dateOfModeration": "10 year ago",
-					"permissions": ["Everything"]
-				}
-			]
-		}
-	],
-	"addRule": [
-		{
-			"ruleName": "asmaa",
-			"appliesTo": "Posts & comments",
-			"reportReason": "",
-			"description": "",
-			"id": 1
-		},
-		{
-			"ruleName": "asmaa",
-			"appliesTo": "Posts & comments",
-			"reportReason": "",
-			"description": "",
-			"id": 2
-		},
-		{
-			"ruleName": "asmaa",
-			"appliesTo": "posts and comments",
-			"reportReason": "",
-			"description": "",
-			"id": 3
-		}
-	],
-	"rule": [
-		{
-			"rules": [
-				{
-					"ruleID": "1",
-					"ruleName": "ruleName",
-					"ruleOrder": 0,
-					"createdAt": "2019-08-24T14:15:22Z",
-					"appliesTo": "posts and comments",
-					"reportReason": "reportReason",
-					"description": "description"
-				}
-			]
-		},
-		{
-			"rules": [
-				{
-					"ruleID": "2",
-					"ruleName": "ruleName2",
-					"ruleOrder": 0,
-					"createdAt": "2019-08-24T14:15:22Z",
-					"appliesTo": "posts only",
-					"reportReason": "reportReason2",
-					"description": "description2"
-				}
-			]
-		}
-	],
-	"block-user": [
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 1
-		},
-		{
-			"block": true,
-			"username": "/u/norhan_reda",
-			"id": 2
-		}
-	],
-	"delete": [],
-	"mark-spam": [
-		{
-			"id": "4",
-			"type": "message",
-			"reason": ""
-		},
-		{
-			"id": "5",
-			"type": "message",
-			"reason": ""
-		},
-		{
-			"id": "8",
-			"type": "message",
-			"reason": ""
-		},
-		{
-			"id": "6",
-			"type": "message",
-			"reason": ""
-		},
-		{
-			"id": "1",
-			"type": "message",
-			"reason": ""
-		},
-		{
-			"id": "2",
-			"type": "message",
-			"reason": ""
-		},
-		{
-			"id": "3",
-			"type": "message",
-			"reason": ""
-		}
-	],
-	"user": {
-		"displayName": "Abdalhameed_Emad",
-		"about": "",
-		"banner": "https://styles.redditmedia.com/t5_7cfmec/styles/profileBanner_q7sgjdrxrsy91.jpg",
-		"picture": "https://styles.redditmedia.com/t5_7cfmec/styles/profileIcon_ljohnaqdssy91.png",
-		"karma": 10,
-		"cakeDate": "2019-01-24",
-		"socialLinks": [
-			{
-				"type": "Reddit",
-				"displayText": "medo",
-				"link": "https://www.instagram.com/medo"
-			},
-			{
-				"type": "Twitter",
-				"displayText": "abdok",
-				"link": "https://twitter.com/abdok"
-			}
-		],
-		"nsfw": false,
-		"followed": true,
-		"blocked": true,
-		"moderatorOf": [
-			{
-				"subredditName": "string",
-				"numOfMembers": 10,
-				"nsfw": true,
-				"joined": true
-			},
-			{
-				"subredditName": "stringff",
-				"numOfMembers": 110,
-				"nsfw": true,
-				"joined": false
-			},
-			{
-				"subredditName": "stringjj",
-				"numOfMembers": 10,
-				"nsfw": true,
-				"joined": true
-			}
-		]
-	},
-	"social-link": {
-		"type": "Instagram",
-		"displayText": "ukjy",
-		"link": "https://www.instagram.com/ukjy"
-	},
-	"user1": {
-		"displayName": "Abdalhameed_Emad",
-		"about": "",
-		"banner": "string",
-		"picture": "../../../../assets/R.png",
-		"karma": 100,
-		"cakeDate": "2020-12-24",
-		"socialLinks": [
-			{
-				"type": "Reddit",
-				"displayText": "medo",
-				"link": "https://www.instagram.com//medo"
-			},
-			{
-				"type": "Twitter",
-				"displayText": "abdok",
-				"link": "https://twitter.com//"
-			}
-		],
-		"nsfw": false,
-		"followed": true,
-		"blocked": true,
-		"moderatorOf": [
-			{
-				"subredditName": "string",
-				"numOfMembers": 10,
-				"nsfw": true,
-				"joined": true
-			},
-			{
-				"subredditName": "stringff",
-				"numOfMembers": 110,
-				"nsfw": true,
-				"joined": false
-			},
-			{
-				"subredditName": "stringjj",
-				"numOfMembers": 10,
-				"nsfw": false,
-				"joined": true
-			}
-		]
-	},
-	"subreddit": [
-		{
-			"nsfw": false,
-			"type": "public",
-			"isFavorite": false,
-			"title": "",
-			"category": "Sports",
-			"members": 10,
-			"online": 5,
-			"description": "",
-			"dateOfCreation": "NOV 20, 2022",
-			"flairs": [],
-			"rules": [],
-			"bans": [],
-			"moderators": [
-				{
-					"username": "HodaGamal"
-				},
-				{
-					"username": "AsmaaAdel"
-				}
-			],
-			"isMember": false,
-			"banner": "string",
-			"picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
-			"communityTheme": false,
-			"views": 0,
-			"mainTopic": {
-				"topicTitle": "",
-				"subtopics": []
-			}
-		}
-	],
-	"subreddit_new": [
-		{
-			"nsfw": false,
-			"type": "public",
-			"isFavorite": false,
-			"title": "",
-			"category": "Sports",
-			"members": 10,
-			"online": 5,
-			"description": "Learn with us",
-			"dateOfCreation": "NOV 20, 2022",
-			"flairs": [],
-			"rules": [],
-			"bans": [],
-			"moderators": [
-				{
-					"username": "HodaGamal"
-				},
-				{
-					"username": "AsmaaAdel"
-				}
-			],
-			"isMember": false,
-			"banner": "string",
-			"picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
-			"communityTheme": false,
-			"views": 0,
-			"mainTopic": {
-				"topicTitle": "Art",
-				"subtopics": ["Fashion", "Cars"]
-			}
-		}
-	],
-	"userpostdata": {
-		"after": "string",
-		"before": "string",
-		"children": [
-			{
-				"kind": "text",
-				"subreddit": "Cars",
-				"content": "Marcedes car is the best for ever",
-				"images": [
-					{
-						"path": "string",
-						"caption": "string",
-						"link": "string"
-					}
-				],
-				"nsfw": true,
-				"spoiler": true,
-				"title": "The Cars",
-				"sharePostId": "string",
-				"flair": {
-					"id": "string",
-					"flairName": "Cars lovers",
-					"order": 0,
-					"backgroundColor": "red",
-					"textColor": "#ffffff"
-				},
-				"comments": 100,
-				"votes": 10,
-				"postedAt": "string",
-				"deletedAt": "string",
-				"editedAt": "string",
-				"postedBy": "string",
-				"votingType": 1,
-				"saved": false,
-				"followed": false,
-				"hidden": false,
-				"spammed": false,
-				"inYourSubreddit": false,
-				"moderation": {
-					"approve": {
-						"approvedBy": "string",
-						"approvedDate": "2019-08-24T14:15:22Z"
-					},
-					"remove": {
-						"removedBy": "string",
-						"removedDate": "2019-08-24T14:15:22Z"
-					},
-					"spam": {
-						"spammedBy": "string",
-						"spammedDate": "2019-08-24T14:15:22Z"
-					},
-					"lock": true
-				}
-			},
-			{
-				"kind": "image",
-				"subreddit": "Avatars",
-				"content": "",
-				"images": [
-					{
-						"path": "string",
-						"caption": "string",
-						"link": "string"
-					}
-				],
-				"nsfw": false,
-				"spoiler": false,
-				"title": "The Avatars",
-				"sharePostId": "string",
-				"flair": {
-					"id": "string",
-					"flairName": "Avatars lovers",
-					"order": 0,
-					"backgroundColor": "blue",
-					"textColor": "#ffffff"
-				},
-				"comments": 90,
-				"votes": 10,
-				"postedAt": "string",
-				"deletedAt": "string",
-				"editedAt": "string",
-				"postedBy": "string",
-				"votingType": 1,
-				"saved": false,
-				"followed": false,
-				"hidden": false,
-				"spammed": true,
-				"inYourSubreddit": false,
-				"moderation": {
-					"approve": {
-						"approvedBy": "string",
-						"approvedDate": "2019-08-24T14:15:22Z"
-					},
-					"remove": {
-						"removedBy": "string",
-						"removedDate": "2019-08-24T14:15:22Z"
-					},
-					"spam": {
-						"spammedBy": "string",
-						"spammedDate": "2019-08-24T14:15:22Z"
-					},
-					"lock": true
-				}
-			},
-			{
-				"kind": "link",
-				"subreddit": "Cars",
-				"content": "Marcedes car is the best for ever",
-				"images": [
-					{
-						"path": "string",
-						"caption": "string",
-						"link": "string"
-					}
-				],
-				"nsfw": true,
-				"spoiler": true,
-				"title": "The Cars",
-				"sharePostId": "string",
-				"flair": {
-					"id": "string",
-					"flairName": "Cars lovers",
-					"order": 0,
-					"backgroundColor": "red",
-					"textColor": "#ffffff"
-				},
-				"comments": 100,
-				"votes": 10,
-				"postedAt": "string",
-				"deletedAt": "string",
-				"editedAt": "string",
-				"postedBy": "string",
-				"votingType": 1,
-				"saved": false,
-				"followed": false,
-				"hidden": false,
-				"spammed": false,
-				"inYourSubreddit": false,
-				"moderation": {
-					"approve": {
-						"approvedBy": "string",
-						"approvedDate": "2019-08-24T14:15:22Z"
-					},
-					"remove": {
-						"removedBy": "string",
-						"removedDate": "2019-08-24T14:15:22Z"
-					},
-					"spam": {
-						"spammedBy": "string",
-						"spammedDate": "2019-08-24T14:15:22Z"
-					},
-					"lock": true
-				}
-			}
-		]
-	},
-	"follow-user": {
-		"username": "string",
-		"follow": true
-	}
+  "post-details": [
+    {
+      "kind": "text",
+      "subreddit": "string",
+      "content": "string",
+      "images": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": true,
+      "title": "string",
+      "sharePostId": "string",
+      "flair": {
+        "id": "string",
+        "flairName": "string",
+        "order": 0,
+        "backgroundColor": "string",
+        "textColor": "string"
+      },
+      "comments": 0,
+      "votes": 0,
+      "postedAt": "string",
+      "deletedAt": "string",
+      "editedAt": "string",
+      "postedBy": "string",
+      "votingType": 1,
+      "saved": false,
+      "followed": false,
+      "hidden": false,
+      "spammed": false,
+      "inYourSubreddit": false,
+      "moderation": {
+        "approve": {},
+        "remove": {},
+        "spam": {},
+        "lock": true
+      }
+    }
+  ],
+  "submit": [
+    {
+      "kind": "text",
+      "subreddit": null,
+      "title": "hi",
+      "content": null,
+      "files": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": true,
+      "flairId": null,
+      "imageCaptions": [],
+      "imageLinks": [],
+      "sendReplies": null,
+      "id": 1
+    },
+    {
+      "kind": "text",
+      "subreddit": null,
+      "title": "hello",
+      "content": null,
+      "files": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": true,
+      "flairId": 123,
+      "imageCaptions": [],
+      "imageLinks": [],
+      "sendReplies": null,
+      "id": 2
+    },
+    {
+      "kind": "text",
+      "subreddit": null,
+      "title": "hello",
+      "content": {
+        "ops": [
+          {
+            "insert": "hello from hell"
+          },
+          {
+            "attributes": {
+              "header": 1
+            },
+            "insert": "\n"
+          }
+        ]
+      },
+      "files": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": true,
+      "flairId": 123,
+      "imageCaptions": [],
+      "imageLinks": [],
+      "sendReplies": true,
+      "id": 3
+    },
+    {
+      "kind": "link",
+      "subreddit": null,
+      "title": "hello",
+      "content": "http://localhost:8081/submit",
+      "files": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": true,
+      "flairId": 123,
+      "imageCaptions": [],
+      "imageLinks": [],
+      "sendReplies": true,
+      "id": 4
+    },
+    {
+      "kind": "link",
+      "subreddit": null,
+      "title": "hello",
+      "content": "http://localhost:3000/submit",
+      "files": [
+        {}
+      ],
+      "nsfw": true,
+      "spoiler": false,
+      "flairId": 123,
+      "imageCaptions": [],
+      "imageLinks": [],
+      "sendReplies": false,
+      "id": 5
+    }
+  ],
+  "hot": [
+    {
+      "after": "string",
+      "before": "string",
+      "children": [
+        {
+          "id": "1",
+          "kind": "post",
+          "subreddit": "hotSubreddit",
+          "content": "hot content",
+          "images": [],
+          "nsfw": true,
+          "spoiler": true,
+          "title": "hot title",
+          "sharePostId": "string",
+          "flair": {},
+          "comments": 0,
+          "votes": 0,
+          "postedAt": "hot postedAt",
+          "deletedAt": "string",
+          "editedAt": "string",
+          "postedBy": "hot postedBy",
+          "votingType": 1,
+          "saved": false,
+          "followed": false,
+          "hidden": false,
+          "spammed": false,
+          "inYourSubreddit": false,
+          "moderation": {}
+        }
+      ]
+    },
+    {
+      "after": "string",
+      "before": "string",
+      "children": [
+        {
+          "id": "2",
+          "kind": "text",
+          "subreddit": "hotSubreddit",
+          "content": "hot content",
+          "images": [],
+          "nsfw": true,
+          "spoiler": true,
+          "title": "hot title",
+          "sharePostId": "string",
+          "flair": {},
+          "comments": 0,
+          "votes": 0,
+          "postedAt": "hot postedAt",
+          "deletedAt": "string",
+          "editedAt": "string",
+          "postedBy": "hot postedBy",
+          "votingType": 1,
+          "saved": false,
+          "followed": false,
+          "hidden": false,
+          "spammed": false,
+          "inYourSubreddit": false,
+          "moderation": {}
+        }
+      ]
+    }
+  ],
+  "best": [
+    {
+      "after": "string",
+      "before": "string",
+      "children": [
+        {
+          "id": "1",
+          "kind": "text",
+          "subreddit": "bestSubreddit",
+          "content": "best content",
+          "images": [],
+          "nsfw": true,
+          "spoiler": true,
+          "title": "best title",
+          "sharePostId": "string",
+          "flair": {},
+          "comments": 0,
+          "votes": 0,
+          "postedAt": "best postedAt",
+          "deletedAt": "string",
+          "editedAt": "string",
+          "postedBy": "best postedBy",
+          "votingType": 1,
+          "saved": false,
+          "followed": false,
+          "hidden": false,
+          "spammed": false,
+          "inYourSubreddit": false,
+          "moderation": {}
+        }
+      ]
+    }
+  ],
+  "new": [
+    {
+      "after": "string",
+      "before": "string",
+      "children": [
+        {
+          "id": "1",
+          "kind": "text",
+          "subreddit": "newSubreddit",
+          "content": "new content",
+          "images": [],
+          "nsfw": true,
+          "spoiler": true,
+          "title": "new title",
+          "sharePostId": "string",
+          "flair": {},
+          "comments": 0,
+          "votes": 0,
+          "postedAt": "new postedAt",
+          "deletedAt": "string",
+          "editedAt": "string",
+          "postedBy": "new postedBy",
+          "votingType": 1,
+          "saved": false,
+          "followed": false,
+          "hidden": false,
+          "spammed": false,
+          "inYourSubreddit": false,
+          "moderation": {}
+        }
+      ]
+    }
+  ],
+  "top": [
+    {
+      "after": "string",
+      "before": "string",
+      "children": [
+        {
+          "id": "1",
+          "kind": "text",
+          "subreddit": "topSubreddit",
+          "content": "top content",
+          "images": [],
+          "nsfw": true,
+          "spoiler": true,
+          "title": "top title",
+          "sharePostId": "string",
+          "flair": {},
+          "comments": 0,
+          "votes": 0,
+          "postedAt": "top postedAt",
+          "deletedAt": "string",
+          "editedAt": "string",
+          "postedBy": "top postedBy",
+          "votingType": 1,
+          "saved": false,
+          "followed": false,
+          "hidden": false,
+          "spammed": false,
+          "inYourSubreddit": false,
+          "moderation": {}
+        }
+      ]
+    }
+  ],
+  "hide": [],
+  "vote": [
+    {
+      "id": 1,
+      "type": "post",
+      "direction": 1
+    },
+    {
+      "type": "post",
+      "direction": -1,
+      "id": 2
+    },
+    {
+      "type": "post",
+      "direction": 1,
+      "id": 3
+    },
+    {
+      "type": "post",
+      "direction": 1,
+      "id": 4
+    }
+  ],
+  "save": [
+    {
+      "id": "1",
+      "type": "post"
+    }
+  ],
+  "unsave": [
+    {
+      "id": "1",
+      "type": "post"
+    }
+  ],
+  "follow-post": [
+    {}
+  ],
+  "subredditName": [
+    {
+      "nsfw": true,
+      "type": "private",
+      "isFavorite": true,
+      "title": "ludo club",
+      "category": "string",
+      "members": 2000,
+      "online": 150,
+      "description": "it is a gaming subreddit",
+      "dateOfCreation": "27/9/2001",
+      "flairs": [],
+      "rules": [],
+      "bans": [],
+      "moderators": [],
+      "isMember": true,
+      "banner": "string",
+      "picture": "https://play-lh.googleusercontent.com/9jnWEhWMGhsPnDN6DyzfNkv6DwxyzebUmKlUNtUVYTw3-ztghgR1Ph2OnVM3Xv5yHp2r",
+      "communityTheme": true,
+      "views": 0,
+      "mainTopic": {}
+    },
+    {
+      "nsfw": true,
+      "type": "private",
+      "isFavorite": true,
+      "title": "hello world",
+      "category": "string",
+      "members": 1500,
+      "online": 50,
+      "description": "it is a programming subreddit",
+      "dateOfCreation": "string",
+      "flairs": [],
+      "rules": [],
+      "bans": [],
+      "moderators": [],
+      "isMember": true,
+      "banner": "string",
+      "picture": "https://www.netsolutions.com/insights/wp-content/uploads/2021/12/11-most-popular-programming-languages-2022.webp",
+      "communityTheme": true,
+      "views": 0,
+      "mainTopic": {}
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Norhan Reda",
+      "email": "norhan.ahmed01@eng-st.cu.edu.eg",
+      "password": "12345"
+    },
+    {
+      "id": 2,
+      "name": "nora",
+      "email": "nora@gmail.com",
+      "password": "123456789"
+    }
+  ],
+  "userTest": [
+    {
+      "name": "Karim",
+      "email": "karim@gmail.com",
+      "password": "123456789",
+      "username": "ksaqer8"
+    },
+    {
+      "name": "Abd",
+      "email": "Abd@gmail.com",
+      "password": "k123456789",
+      "username": "acmp2024"
+    }
+  ],
+  "create-subreddit": [
+    {
+      "id": 1,
+      "subredditName": "FrontEnd",
+      "type": "Private",
+      "nsfw": false
+    },
+    {
+      "id": 2,
+      "subredditName": "BackEnd",
+      "type": "Private",
+      "nsfw": false
+    },
+    {
+      "subredditName": "hello",
+      "type": "Private",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 3
+    },
+    {
+      "subredditName": "feeltired",
+      "type": "Restricted",
+      "nsfw": true,
+      "category": "Sports",
+      "id": 14
+    },
+    {
+      "subredditName": "whyallthat",
+      "type": "Restricted",
+      "nsfw": false,
+      "category": "Programming",
+      "id": 15
+    },
+    {
+      "subredditName": "whyplease",
+      "type": "Private",
+      "nsfw": true,
+      "category": "Learning",
+      "id": 16
+    }
+  ],
+  "subreddit-name-available": [
+    {
+      "id": 1,
+      "subredditName": "FrontEnd"
+    }
+  ],
+  "add-description": [
+    {
+      "description": "hello every body it is a new subreddit",
+      "rId": "subreddit",
+      "id": 3
+    },
+    {
+      "description": "Hi there, have fun.",
+      "rId": "subreddit",
+      "id": 4
+    }
+  ],
+  "add-maintopic": [
+    {
+      "title": {
+        "id": 2,
+        "name": "Beauty"
+      },
+      "rId": "subreddit",
+      "id": 2
+    },
+    {
+      "title": {
+        "id": 0,
+        "name": "Art"
+      },
+      "rId": "subreddit",
+      "id": 3
+    },
+    {
+      "title": {
+        "id": 1,
+        "name": "Anime"
+      },
+      "rId": "subreddit",
+      "id": 4
+    },
+    {
+      "title": {
+        "id": 1,
+        "name": "Anime"
+      },
+      "rId": "subreddit",
+      "id": 5
+    },
+    {
+      "title": {
+        "id": 2,
+        "name": "Beauty"
+      },
+      "rId": "subreddit",
+      "id": 6
+    },
+    {
+      "title": {
+        "id": 2,
+        "name": "Beauty"
+      },
+      "rId": "subreddit",
+      "id": 7
+    },
+    {
+      "title": {
+        "id": 0,
+        "name": "Art"
+      },
+      "rId": "subreddit",
+      "id": 8
+    },
+    {
+      "title": {
+        "id": 0,
+        "name": "Art"
+      },
+      "rId": "subreddit",
+      "id": 9
+    },
+    {
+      "title": {
+        "id": 1,
+        "name": "Anime"
+      },
+      "rId": "subreddit",
+      "id": 10
+    }
+  ],
+  "add-subtopic": [
+    {
+      "rId": "subreddit",
+      "id": 1
+    },
+    {
+      "rId": "subreddit",
+      "id": 2
+    },
+    {
+      "subtopics": [
+        {
+          "id": 2,
+          "name": "Beauty"
+        },
+        {
+          "id": 3,
+          "name": "Cars"
+        },
+        {
+          "id": 1,
+          "name": "Anime"
+        }
+      ],
+      "rId": "subreddit",
+      "id": 3
+    },
+    {
+      "subtopics": [
+        {
+          "id": 0,
+          "name": "Art"
+        },
+        {
+          "id": 2,
+          "name": "Beauty"
+        },
+        {
+          "id": 3,
+          "name": "Cars"
+        },
+        {
+          "id": 4,
+          "name": "Fashion"
+        }
+      ],
+      "rId": "subreddit",
+      "id": 4
+    }
+  ],
+  "toggle-favorite": [
+    {
+      "id": 1,
+      "isFavorite": false
+    }
+  ],
+  "saved-categories": [
+    {
+      "id": 1,
+      "name": "Sports"
+    },
+    {
+      "id": 2,
+      "name": "Gaming"
+    },
+    {
+      "id": 3,
+      "name": "Programming"
+    },
+    {
+      "id": 4,
+      "name": "News"
+    },
+    {
+      "id": 5,
+      "name": "Learning"
+    },
+    {
+      "id": 6,
+      "name": "Films"
+    }
+  ],
+  "compose": [
+    {
+      "text": "xcvghjkl",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "adelasmaa333@gmail.com",
+      "sendAt": "",
+      "subject": "ghjkl",
+      "id": 1
+    },
+    {
+      "text": "",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "dfghjkl;'",
+      "sendAt": "",
+      "subject": "rftgyhjukilo;'",
+      "id": 2
+    },
+    {
+      "text": "rtyuiop['\n",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "dfghjkl;'",
+      "sendAt": "",
+      "subject": "rftgyhjukilo;'",
+      "id": 3
+    },
+    {
+      "text": "dfghjk",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "asmaa.kawashty04@eng-st.cu.edu.eg",
+      "sendAt": "",
+      "subject": "nm,.",
+      "id": 4
+    },
+    {
+      "text": "fghjuikolp;",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "bnjkl;",
+      "sendAt": "",
+      "subject": "rtyui",
+      "id": 5
+    },
+    {
+      "text": "ertyuio",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "sdfghjkl",
+      "sendAt": "",
+      "subject": "sdfghjkl",
+      "id": 6
+    },
+    {
+      "text": "fghjk",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "tgyuiol;",
+      "sendAt": "",
+      "subject": "kl;'",
+      "id": 7
+    },
+    {
+      "text": "",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "tyujkl",
+      "sendAt": "",
+      "subject": "rtyuio",
+      "id": 8
+    },
+    {
+      "text": "",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "dfrgt",
+      "sendAt": "",
+      "subject": "fghnj",
+      "id": 9
+    },
+    {
+      "text": "",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "",
+      "sendAt": "",
+      "subject": "fvgbnh",
+      "id": 10
+    },
+    {
+      "text": "",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "hjkl;",
+      "sendAt": "",
+      "subject": "jkl;",
+      "id": 11
+    },
+    {
+      "text": "tyujkl",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "fghjkl",
+      "sendAt": "",
+      "subject": "fghjkl",
+      "id": 12
+    },
+    {
+      "text": "rtyuio",
+      "senderUsername": "/u/asmaaadel0",
+      "receiverUsername": "rtyuiop",
+      "sendAt": "",
+      "subject": "rtyuiop",
+      "id": 13
+    },
+    {
+      "text": "sdfg",
+      "senderUsername": {
+        "text": "asmaa first subbreddit"
+      },
+      "receiverUsername": "adelasmaa333@gmail.com",
+      "sendAt": "",
+      "subject": "wfgh",
+      "id": 14
+    },
+    {
+      "text": "hjk",
+      "senderUsername": "username-value",
+      "receiverUsername": "rtyui",
+      "sendAt": "",
+      "subject": "hj",
+      "id": 15
+    },
+    {
+      "text": "uio",
+      "senderUsername": {
+        "text": "asmaa first subbreddit"
+      },
+      "receiverUsername": "uio",
+      "sendAt": "",
+      "subject": "uio",
+      "id": 16
+    },
+    {
+      "text": "fghjkl",
+      "senderUsername": "username-value",
+      "receiverUsername": "dfghjkl",
+      "sendAt": "",
+      "subject": "rtyui",
+      "id": 17
+    },
+    {
+      "text": "ghjkl",
+      "senderUsername": "asmaa second subbreddit",
+      "receiverUsername": "rtyuil",
+      "sendAt": "",
+      "subject": "tyuio;",
+      "id": 18
+    },
+    {
+      "text": "ghjkl",
+      "senderUsername": "asmaaadel0",
+      "receiverUsername": "dfghjk",
+      "sendAt": "",
+      "subject": "g;",
+      "id": 19
+    }
+  ],
+  "inbox": [
+    {
+      "before": "before",
+      "after": "after",
+      "children": [
+        {
+          "id": "1",
+          "text": "**hello world**",
+          "type": "Post replies",
+          "senderUsername": "/u/norhan_reda",
+          "receiverUsername": "/u/asmaaadel0",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "subject": "hiiii",
+          "sendAt": "6 days ago",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "id": "2",
+          "text": "hello asmaa",
+          "type": "Messages",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "senderUsername": "/u/hoda_gamal",
+          "receiverUsername": "/u/asmaaadel0",
+          "subject": "hi",
+          "sendAt": "2019-08-24T14:15:22Z",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "id": "3",
+          "text": "hello asmaa",
+          "type": "Mentions",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "senderUsername": "/u/hoda_gamal",
+          "receiverUsername": "/u/asmaaadel0",
+          "subject": "hi",
+          "sendAt": "2019-08-24T14:15:22Z",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    }
+  ],
+  "unread": [],
+  "mentions": [
+    {
+      "before": "before",
+      "after": "after",
+      "children": [
+        {
+          "id": "4",
+          "text": "hello world",
+          "type": "Post replies",
+          "senderUsername": "/u/norhan_reda",
+          "receiverUsername": "/u/asmaaadel0",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "subject": "hiiii",
+          "sendAt": "6 days ago",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    },
+    {
+      "before": "before",
+      "after": "after",
+      "children": [
+        {
+          "id": "5",
+          "text": "hello world",
+          "type": "Post replies",
+          "senderUsername": "/u/nenahosam",
+          "receiverUsername": "/u/asmaaadel0",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "subject": "hiiii",
+          "sendAt": "6 days ago",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "before": "before",
+      "after": "after",
+      "children": [
+        {
+          "id": "6",
+          "text": "hello world",
+          "senderUsername": "/u/norhan_reda",
+          "receiverUsername": "/u/asmaaadel0",
+          "sendAt": "2019-08-24T14:15:22Z",
+          "subject": "hiiii",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "id": "7",
+          "text": "hello asmaa",
+          "senderUsername": "/u/asmaaadel0",
+          "receiverUsername": "/u/hoda_gamal",
+          "sendAt": "2019-08-24T14:15:22Z",
+          "subject": "hi",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    }
+  ],
+  "post-reply": [
+    {
+      "before": "before",
+      "after": "after",
+      "children": [
+        {
+          "id": "8",
+          "text": "hello world",
+          "type": "type",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "senderUsername": "/u/norhan_reda",
+          "receiverUsername": "/u/asmaaadel0",
+          "sendAt": "2019-08-24T14:15:22Z",
+          "subject": "hiiii",
+          "isReply": false,
+          "isRead": true
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "id": "9",
+          "text": "hello asmaa",
+          "type": "type",
+          "subredditName": "subredditName",
+          "postTitle": "postTitle",
+          "senderUsername": "/u/hoda_gamal",
+          "receiverUsername": "/u/asmaaadel0",
+          "subject": "hi",
+          "sendAt": "2019-08-24T14:15:22Z",
+          "isReply": true,
+          "isRead": true
+        }
+      ]
+    }
+  ],
+  "unread-message": [],
+  "sent": [
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "id": "10",
+          "text": "hello hoda",
+          "receiverUsername": "/u/hoda_gamal",
+          "subject": "hi",
+          "sendAt": "2019-08-24T14:15:22Z"
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "id": "11",
+          "text": "hello mena",
+          "receiverUsername": "/u/menahosam",
+          "subject": "hi",
+          "sendAt": "2019-08-24T14:15:22Z"
+        }
+      ]
+    }
+  ],
+  "suggested-sender": [
+    {
+      "children": [
+        {
+          "text": "asmaa first subbreddit"
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "text": "asmaa second subbreddit"
+        }
+      ]
+    }
+  ],
+  "moderator-list": [
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "asmaa",
+          "nickname": "asmaa",
+          "dateOfModeration": "9 years ago",
+          "permissions": [
+            "Everything"
+          ]
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "hoda",
+          "nickname": "hoda",
+          "dateOfModeration": "3 years ago",
+          "permissions": [
+            "Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+          ]
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "mena",
+          "nickname": "mena",
+          "dateOfModeration": "1 year ago",
+          "permissions": [
+            "Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+          ]
+        }
+      ]
+    },
+    {
+      "before": "string",
+      "after": "string",
+      "children": [
+        {
+          "username": "asmaaadel0",
+          "nickname": "asmaaadel0",
+          "dateOfModeration": "10 year ago",
+          "permissions": [
+            "Everything"
+          ]
+        }
+      ]
+    }
+  ],
+  "addRule": [
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "Posts & comments",
+      "reportReason": "",
+      "description": "",
+      "id": 1
+    },
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "Posts & comments",
+      "reportReason": "",
+      "description": "",
+      "id": 2
+    },
+    {
+      "ruleName": "asmaa",
+      "appliesTo": "posts and comments",
+      "reportReason": "",
+      "description": "",
+      "id": 3
+    }
+  ],
+  "rule": [
+    {
+      "rules": [
+        {
+          "ruleID": "1",
+          "ruleName": "ruleName",
+          "ruleOrder": 0,
+          "createdAt": "2019-08-24T14:15:22Z",
+          "appliesTo": "posts and comments",
+          "reportReason": "reportReason",
+          "description": "description"
+        }
+      ]
+    },
+    {
+      "rules": [
+        {
+          "ruleID": "2",
+          "ruleName": "ruleName2",
+          "ruleOrder": 0,
+          "createdAt": "2019-08-24T14:15:22Z",
+          "appliesTo": "posts only",
+          "reportReason": "reportReason2",
+          "description": "description2"
+        }
+      ]
+    }
+  ],
+  "block-user": [
+    {
+      "block": true,
+      "username": "/u/norhan_reda",
+      "id": 1
+    },
+    {
+      "block": true,
+      "username": "/u/norhan_reda",
+      "id": 2
+    }
+  ],
+  "delete": [],
+  "mark-spam": [
+    {
+      "id": "4",
+      "type": "message",
+      "reason": ""
+    },
+    {
+      "id": "5",
+      "type": "message",
+      "reason": ""
+    },
+    {
+      "id": "8",
+      "type": "message",
+      "reason": ""
+    },
+    {
+      "id": "6",
+      "type": "message",
+      "reason": ""
+    },
+    {
+      "id": "1",
+      "type": "message",
+      "reason": ""
+    },
+    {
+      "id": "2",
+      "type": "message",
+      "reason": ""
+    },
+    {
+      "id": "3",
+      "type": "message",
+      "reason": ""
+    }
+  ],
+  "user": {
+    "displayName": "Abdalhameed_Emad",
+    "about": "",
+    "banner": "https://styles.redditmedia.com/t5_7cfmec/styles/profileBanner_q7sgjdrxrsy91.jpg",
+    "picture": "https://styles.redditmedia.com/t5_7cfmec/styles/profileIcon_ljohnaqdssy91.png",
+    "karma": 10,
+    "cakeDate": "2019-01-24",
+    "socialLinks": [
+      {
+        "type": "Reddit",
+        "displayText": "medo",
+        "link": "https://www.instagram.com/medo"
+      },
+      {
+        "type": "Twitter",
+        "displayText": "abdok",
+        "link": "https://twitter.com/abdok"
+      }
+    ],
+    "nsfw": false,
+    "followed": true,
+    "blocked": true,
+    "moderatorOf": [
+      {
+        "subredditName": "string",
+        "numOfMembers": 10,
+        "nsfw": true,
+        "joined": true
+      },
+      {
+        "subredditName": "stringff",
+        "numOfMembers": 110,
+        "nsfw": true,
+        "joined": false
+      },
+      {
+        "subredditName": "stringjj",
+        "numOfMembers": 10,
+        "nsfw": true,
+        "joined": true
+      }
+    ]
+  },
+  "social-link": {
+    "type": "Instagram",
+    "displayText": "ukjy",
+    "link": "https://www.instagram.com/ukjy"
+  },
+  "user1": {
+    "displayName": "Abdalhameed_Emad",
+    "about": "",
+    "banner": "string",
+    "picture": "../../../../assets/R.png",
+    "karma": 100,
+    "cakeDate": "2020-12-24",
+    "socialLinks": [
+      {
+        "type": "Reddit",
+        "displayText": "medo",
+        "link": "https://www.instagram.com//medo"
+      },
+      {
+        "type": "Twitter",
+        "displayText": "abdok",
+        "link": "https://twitter.com//"
+      }
+    ],
+    "nsfw": false,
+    "followed": true,
+    "blocked": true,
+    "moderatorOf": [
+      {
+        "subredditName": "string",
+        "numOfMembers": 10,
+        "nsfw": true,
+        "joined": true
+      },
+      {
+        "subredditName": "stringff",
+        "numOfMembers": 110,
+        "nsfw": true,
+        "joined": false
+      },
+      {
+        "subredditName": "stringjj",
+        "numOfMembers": 10,
+        "nsfw": false,
+        "joined": true
+      }
+    ]
+  },
+  "subreddit": [
+    {
+      "nsfw": false,
+      "type": "public",
+      "isFavorite": false,
+      "title": "",
+      "category": "Sports",
+      "members": 10,
+      "online": 5,
+      "description": "",
+      "dateOfCreation": "NOV 20, 2022",
+      "flairs": [],
+      "rules": [],
+      "bans": [],
+      "moderators": [
+        {
+          "username": "HodaGamal"
+        },
+        {
+          "username": "AsmaaAdel"
+        }
+      ],
+      "isMember": false,
+      "banner": "string",
+      "picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
+      "communityTheme": false,
+      "views": 0,
+      "mainTopic": {
+        "topicTitle": "",
+        "subtopics": []
+      }
+    }
+  ],
+  "subreddit_new": [
+    {
+      "nsfw": false,
+      "type": "public",
+      "isFavorite": false,
+      "title": "",
+      "category": "Sports",
+      "members": 10,
+      "online": 5,
+      "description": "Learn with us",
+      "dateOfCreation": "NOV 20, 2022",
+      "flairs": [],
+      "rules": [],
+      "bans": [],
+      "moderators": [
+        {
+          "username": "HodaGamal"
+        },
+        {
+          "username": "AsmaaAdel"
+        }
+      ],
+      "isMember": false,
+      "banner": "string",
+      "picture": "https://b.thumbs.redditmedia.com/8cMVsK9DKU-HJSM2WEG9mAGHIgd8-cEsnpJNJlB5NPw.png",
+      "communityTheme": false,
+      "views": 0,
+      "mainTopic": {
+        "topicTitle": "Art",
+        "subtopics": [
+          "Fashion",
+          "Cars"
+        ]
+      }
+    }
+  ],
+  "userpostdata": {
+    "after": "string",
+    "before": "string",
+    "children": [
+      {
+        "kind": "text",
+        "subreddit": "Cars",
+        "content": "Marcedes car is the best for ever",
+        "images": [
+          {
+            "path": "string",
+            "caption": "string",
+            "link": "string"
+          }
+        ],
+        "nsfw": true,
+        "spoiler": true,
+        "title": "The Cars",
+        "sharePostId": "string",
+        "flair": {
+          "id": "string",
+          "flairName": "Cars lovers",
+          "order": 0,
+          "backgroundColor": "red",
+          "textColor": "#ffffff"
+        },
+        "comments": 100,
+        "votes": 10,
+        "postedAt": "string",
+        "deletedAt": "string",
+        "editedAt": "string",
+        "postedBy": "string",
+        "votingType": 1,
+        "saved": false,
+        "followed": false,
+        "hidden": false,
+        "spammed": false,
+        "inYourSubreddit": false,
+        "moderation": {
+          "approve": {
+            "approvedBy": "string",
+            "approvedDate": "2019-08-24T14:15:22Z"
+          },
+          "remove": {
+            "removedBy": "string",
+            "removedDate": "2019-08-24T14:15:22Z"
+          },
+          "spam": {
+            "spammedBy": "string",
+            "spammedDate": "2019-08-24T14:15:22Z"
+          },
+          "lock": true
+        }
+      },
+      {
+        "kind": "image",
+        "subreddit": "Avatars",
+        "content": "",
+        "images": [
+          {
+            "path": "string",
+            "caption": "string",
+            "link": "string"
+          }
+        ],
+        "nsfw": false,
+        "spoiler": false,
+        "title": "The Avatars",
+        "sharePostId": "string",
+        "flair": {
+          "id": "string",
+          "flairName": "Avatars lovers",
+          "order": 0,
+          "backgroundColor": "blue",
+          "textColor": "#ffffff"
+        },
+        "comments": 90,
+        "votes": 10,
+        "postedAt": "string",
+        "deletedAt": "string",
+        "editedAt": "string",
+        "postedBy": "string",
+        "votingType": 1,
+        "saved": false,
+        "followed": false,
+        "hidden": false,
+        "spammed": true,
+        "inYourSubreddit": false,
+        "moderation": {
+          "approve": {
+            "approvedBy": "string",
+            "approvedDate": "2019-08-24T14:15:22Z"
+          },
+          "remove": {
+            "removedBy": "string",
+            "removedDate": "2019-08-24T14:15:22Z"
+          },
+          "spam": {
+            "spammedBy": "string",
+            "spammedDate": "2019-08-24T14:15:22Z"
+          },
+          "lock": true
+        }
+      },
+      {
+        "kind": "link",
+        "subreddit": "Cars",
+        "content": "Marcedes car is the best for ever",
+        "images": [
+          {
+            "path": "string",
+            "caption": "string",
+            "link": "string"
+          }
+        ],
+        "nsfw": true,
+        "spoiler": true,
+        "title": "The Cars",
+        "sharePostId": "string",
+        "flair": {
+          "id": "string",
+          "flairName": "Cars lovers",
+          "order": 0,
+          "backgroundColor": "red",
+          "textColor": "#ffffff"
+        },
+        "comments": 100,
+        "votes": 10,
+        "postedAt": "string",
+        "deletedAt": "string",
+        "editedAt": "string",
+        "postedBy": "string",
+        "votingType": 1,
+        "saved": false,
+        "followed": false,
+        "hidden": false,
+        "spammed": false,
+        "inYourSubreddit": false,
+        "moderation": {
+          "approve": {
+            "approvedBy": "string",
+            "approvedDate": "2019-08-24T14:15:22Z"
+          },
+          "remove": {
+            "removedBy": "string",
+            "removedDate": "2019-08-24T14:15:22Z"
+          },
+          "spam": {
+            "spammedBy": "string",
+            "spammedDate": "2019-08-24T14:15:22Z"
+          },
+          "lock": true
+        }
+      }
+    ]
+  },
+  "follow-user": {
+    "username": "string",
+    "follow": true
+  }
 }

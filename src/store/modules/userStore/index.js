@@ -4,6 +4,14 @@ import getters from './getters.js';
 
 export default {
 	namespaced: true,
+	/**
+	 * The Vuex 'UserState' object.
+	 * @name UserState
+	 * @type {object}
+	 * @property {Object} userData contain all user information DiasplayedName,about,banner.. .
+	 * @property {Array} SocialLinksItems contain array of static social links items data (picture,text,imgSrc,type).
+	 * @property {Object} numProp This property is a number.
+	 */
 	state() {
 		return {
 			userData: {

@@ -4,7 +4,7 @@ import store from '../../src/store/index.js';
 
 import {describe, it, expect} from 'vitest';
 describe ('UsernameMentions', () => {
-  const message = {
+  const userMentions = {
     id: 2,
     text: 'hello asmaa',
     type: 'Messages',
@@ -24,7 +24,7 @@ describe ('UsernameMentions', () => {
   it ('should renders if UsernameMentions content is correct', () => {
     const wrapper = shallowMount (UsernameMentions, {
       props: {
-        message,
+        userMentions,
       },
       global: {
         // OR:
@@ -39,10 +39,10 @@ describe ('UsernameMentions', () => {
   //--------------------------------------------------------
   //                     Testing no message
   //--------------------------------------------------------
-  it ('Testing no message value is correct', () => {
+  it ('Testing no message value is false if there is message', () => {
     const wrapper = shallowMount (UsernameMentions, {
       props: {
-        message,
+        userMentions,
       },
       global: {
         // OR:

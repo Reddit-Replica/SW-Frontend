@@ -1,3 +1,11 @@
+/**
+ * The module 'UserStore' object.
+ * @name UserGetters
+ * @type {object}
+ * @getter {object} getUserData={userData,userModeratorData} Returns an Object contain userData for user Card, userModeratorData for moderator card property.
+ * @getter {object} getUserPostData=postData Returns Object contain postData.
+ * @getter {object} getStaticSocialLinks=socialLinkItems Returns a property that is a number.
+ */
 export default {
 	getUserData(state) {
 		return {

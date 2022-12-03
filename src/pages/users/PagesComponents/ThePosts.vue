@@ -1,23 +1,10 @@
 <template>
 	<div>
-		<!-- <div>posts</div> -->
 		<base-user-post
 			v-for="(postData, index) in getUserPostData.postData.children"
 			:key="index"
 			:post-data="postData"
 		></base-user-post>
-		<!-- <base-user-post
-			:post="post"
-			:post-data="getUserPostData.postData"
-		></base-user-post>
-		<base-user-post
-			:post="post"
-			:post-data="getUserPostData.postData"
-		></base-user-post>
-		<base-user-post
-			:post="post"
-			:post-data="getUserPostData.postData"
-		></base-user-post> -->
 	</div>
 </template>
 
@@ -29,16 +16,6 @@ export default {
 	},
 	data() {
 		return {
-			post: {
-				userName: 'mena',
-				voteCount: 22,
-				subredditName: 'sub-com',
-				duration: '22 minutes',
-				postName: 'Hello World',
-				postDescription:
-					'post description Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-				commentsCount: 22,
-			},
 			counter: 0,
 			upClicked: false,
 			downClicked: false,
@@ -48,7 +25,7 @@ export default {
 		this.loading = true;
 		const requestStatus = await this.RequestUserPostData();
 		this.loading = false;
-		if (requestStatus == 200) console.log('Sucessfully fetched data');
+		if (requestStatus == 200) console.log('Successfully fetched data');
 		else if (requestStatus == 404) console.log('not found');
 		else if (requestStatus == 500) console.log(' internal server error');
 	},
@@ -63,7 +40,14 @@ export default {
 			try {
 				await this.$store.dispatch('user/getUserPostData', {
 					baseurl: this.$baseurl,
-					// userName: this.$route.params.userName,
+					userName: this.$route.params.userName,
+					params: {
+						sort: 'new',
+						time: 'all',
+						before: '',
+						after: '',
+						limit: '25',
+					},
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

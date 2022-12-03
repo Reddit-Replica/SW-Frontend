@@ -1,3 +1,21 @@
+/**
+ * The module 'setters' object.
+ * @name MessagesMutations
+ * @type {object}
+ * @mutator {object} setInboxMessages=inboxMessages Sets the state object property.
+ * @mutator {object} setUnreadMessages=unreadMessages Sets the state object property.
+ * @mutator {object} setUserMentions=userMentions Sets the state object property.
+ * @mutator {object} setUserMessages=userMessages Sets the state object property.
+ * @mutator {object} setPostReplies=postReplies Sets the state object property.
+ * @mutator {object} setSentMessages=sentMessages Sets the state object property.
+ * @mutator {object} setSuggestedSender=suggestedSender Sets the state object property.
+ * @mutator {object} sentSuccessfully=sentSuccessfully Sets the state boolean property.
+ * @mutator {object} deleteMessageSuccessfully=deleteMessageSuccessfully Sets the state boolean property.
+ * @mutator {object} markSpamSuccessfully=markSpamSuccessfully Sets the state boolean property.
+ * @mutator {object} blockSuccessfully=blockSuccessfully Sets the state boolean property.
+ * @mutator {object} votedSuccessfully=votedSuccessfully Sets the state boolean property.
+ * @mutator {object} replyMessageSuccessfully=replyMessageSuccessfully Sets the state boolean property.
+ */
 export default {
 	setInboxMessages(state, payload) {
 		state.inboxMessages = payload;

@@ -21,6 +21,47 @@ describe ('PostreplyComponent.vue', () => {
   let getUserName = '/u/asmaaadel0';
   const index = 0;
   let count = 2;
+  const isRead = true;
+
+  const messagesAction = {
+    loadInboxMessages: vi.fn (),
+    loadUnreadMessages: vi.fn (),
+    loadUserMentions: vi.fn (),
+    loadPostReplies: vi.fn (),
+    loadSentMessages: vi.fn (),
+    sendMessage: vi.fn (),
+    blockUser: vi.fn (),
+    deleteMessage: vi.fn (),
+    spamMessage: vi.fn (),
+    loadSuggestedSender: vi.fn (),
+    voteComment: vi.fn (),
+    replyMessage: vi.fn (),
+  };
+
+  //Mocking the store
+  store = new Vuex.Store ({
+    modules: {
+      messageModule: {
+        namespaced: true,
+        state: {
+          inboxMessages: [],
+          unreadMessages: [],
+          userMentions: [],
+          userMessages: [],
+          postReplies: [],
+          sentMessages: [],
+          suggestedSender: [],
+          sentSuccessfully: false,
+          deleteMessageSuccessfully: false,
+          markSpamSuccessfully: false,
+          blockSuccessfully: false,
+          votedSuccessfully: false,
+          replyMessageSuccessfully: false,
+        },
+        actions: messagesAction,
+      },
+    },
+  });
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -277,8 +318,12 @@ describe ('PostreplyComponent.vue', () => {
   //         fetch: mockservice,
   //       },
   //     },
+  //     computed: {
+  //       ifMessageRecieved,
+  //       getUserName,
+  //     },
   //   });
-  //   const deleteBtn = wrapper.find ('#click-delete-0');
+  //   const deleteBtn = wrapper.find ('#delete-message-0');
   //   deleteBtn
   //     .trigger ('click')
   //     .then (() => {
@@ -304,6 +349,7 @@ describe ('PostreplyComponent.vue', () => {
   //       message,
   //       index,
   //       count,
+  //       isRead,
   //     },
   //     global: {
   //       // OR:
@@ -312,10 +358,9 @@ describe ('PostreplyComponent.vue', () => {
   //         fetch: mockservice,
   //       },
   //     },
-  //     data () {
-  //       return {
-  //         isRead: true,
-  //       };
+  //     computed: {
+  //       ifMessageRecieved,
+  //       getUserName,
   //     },
   //   });
   //   const blockBtn = wrapper.find ('#mark-un-read-0');
@@ -328,6 +373,7 @@ describe ('PostreplyComponent.vue', () => {
   //       console.log ('Promise Rejected');
   //     });
   // });
+  
   //--------------------------------------------------------
   //                     testing clicking on buttons
   //--------------------------------------------------------

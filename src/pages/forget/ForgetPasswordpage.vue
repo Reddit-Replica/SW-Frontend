@@ -108,7 +108,10 @@
 					<div class="bottomText">
 						<label id="bottom">
 							Don't have an email or need assistance logging in?
-							<a class="link" id="help">Get Help </a></label
+							<!-- <a class="link" id="help">Get Help </a> -->
+							<router-link to="/help" class="link" id="help"
+								>Get Help</router-link
+							></label
 						>
 					</div>
 				</form>
@@ -126,7 +129,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha.vue';
+import TheRecaptcha from '../../components/auth/TheRecaptcha.vue';
 // @vuese
 // @it is forget password component
 export default {
@@ -195,9 +198,9 @@ export default {
 
 			try {
 				await this.$store.dispatch('forgetPasswordhandle', actionPayload);
-				const response = localStorage.getItem('response');
-				//const response = this.$cookies.get('response');
-				//const response = this.$cookie.getCookie('response');
+				// const response = localStorage.getItem('response');
+				const response = this.getResponse();
+
 				if (response == 200) {
 					console.log(response);
 					this.success = true;
@@ -213,6 +216,11 @@ export default {
 		verifyRec() {
 			console.log('verified 2');
 			this.buttonDisabled = false;
+		},
+		// @vuese
+		// get the response status
+		getResponse() {
+			return this.$store.getters['getResponse'];
 		},
 	},
 

@@ -1,3 +1,18 @@
+/**
+ * action for forget Password handle for sending forget password request
+ * @action  forgetPasswordhandle
+ * @param {Object} contains username and email .
+ * @returns {void}
+ * action for forget username handle sending forget username request
+ * @action  forgetuserdhandle
+ * @param {Object} contains  email .
+ * @returns {void}
+ * action for reset handle
+ * @action  resethandle
+ * @param {Object} contains new password .
+ * @returns {void}
+ */
+
 export default {
 	async forgetPasswordhandle(context, payload) {
 		const userInfo = {
@@ -15,7 +30,10 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
 			//this.$cookies.set('response', response.status);
 			//this.$cookies.set('response', response.status);
 			//this.$cookie.setCookie('response', response.status);
@@ -43,7 +61,10 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
 			//this.$cookies.set('response', response.status);
 			console.log(response);
 			console.log(responseData);
@@ -82,7 +103,10 @@ export default {
 		console.log(responseData);
 		//console.log(responseData.token);
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
 			//this.$cookies.set('response', response.status);
 			if (responseData.token)
 				//localStorage.setItem('accessToken', responseData.token);
@@ -150,10 +174,10 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		//this.$cookies.set('response', response.status);
 		// console.log(response.status);
-		if (response.ok) {
+		if (response.status == 200) {
 			console.log(response);
 			console.log(response.status);
 			if (responseData.token && responseData.username) {
@@ -183,7 +207,7 @@ export default {
 			body: JSON.stringify(userInfo),
 		});
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		if (response.status == 200 || response.status == 201) {
 			localStorage.setItem('accessToken', responseData.token);
 			localStorage.setItem('userName', responseData.username);
@@ -206,7 +230,7 @@ export default {
 			baseurl + '/username-available' + '?username=' + payload.username
 		);
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		console.log(response.status);
 		if (response.ok) {
 			if (!responseData.Error) {
@@ -244,7 +268,7 @@ export default {
 	logout_handle(context) {
 		localStorage.removeItem('userName');
 		localStorage.removeItem('accessToken');
-		localStorage.removeItem('response');
+		// localStorage.removeItem('response');
 		context.commit('setUser', {
 			accessToken: null,
 			userName: null,
