@@ -227,6 +227,36 @@ describe('CreateCommunity.vue', () => {
 		//type 1 not chosen
 		const circleAfter1 = wrapper.find('#bi-record-circle-fill-1');
 		expect(circleAfter1.exists()).toBe(false);
+	});
 
+	it('type private', async () => {
+		const wrapper = mount(CreateCommunity, {
+			props: {},
+			global: {
+				// OR:
+				mocks: {
+					$store: store,
+				},
+			},
+		});
+
+		//type 3 not chosen
+		const circleBefore = wrapper.find('#bi-circle-3');
+		expect(circleBefore.exists()).toBe(true);
+
+		//choose type 3
+		const typeInput=wrapper.find('#type-private');
+		await typeInput.trigger('click');
+
+		//type 3 chosen
+		const circleAfter = wrapper.find('#bi-record-circle-fill-3');
+		expect(circleAfter.exists()).toBe(true);
+
+		//type 1 not chosen
+		const circleAfter1 = wrapper.find('#bi-record-circle-fill-1');
+		expect(circleAfter1.exists()).toBe(false);
+		//type 2 not chosen
+		const circleAfter2 = wrapper.find('#bi-record-circle-fill-2');
+		expect(circleAfter2.exists()).toBe(false);
 	});
 });
