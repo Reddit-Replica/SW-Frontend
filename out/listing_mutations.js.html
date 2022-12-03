@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: listing/mutations.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,35 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: listing/mutations.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>export default {
+	/**
+	* The module 'setters' object.
+ 	 * @name ListingMutations
+ 	 * @type {object}
+	 * @mutator {list} setPosts=Posts Sets the state list property.
+	 * @mutator {object} setPostDetails=postDetails Sets the state object property.
+	 */
+	setPosts(state, payload) {
+		state.Posts = payload;
+	},
+	//@vuese
+	//post details mutator
+	setPostDetails(state, payload) {
+		state.postDetails = payload;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
