@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: messages/index.js</title>
+    <title>JSDoc: Source: comments/actions.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: messages/index.js</h1>
+    <h1 class="page-title">Source: comments/actions.js</h1>
 
     
 
@@ -26,49 +26,83 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import mutations from './mutations.js';
-import actions from './actions.js';
-import getters from './getters.js';
-
-export default {
-	namespaced: true,
+            <pre class="prettyprint source linenums"><code>export default {
 	/**
-	 * The Vuex 'MessagesState' object.
-	 * @name MessagesState
-	 * @type {object}
-	 * @property {Object} inboxMessages contain all inbox messages information.
-	 * @property {Object} unreadMessages contain all unread messages information.
-	 * @property {Object} userMentions contain all user mentions information.
-	 * @property {Object} postReplies contain all post repiles information.
-	 * @property {Object} sentMessages contain all sent messages information.
-	 * @property {Array} suggestedSender contain array of suggested senders
-	 * @property {Boolean} sentSuccessfully This property is boolean if sent successfully.
-	 * @property {Boolean} deleteMessageSuccessfully This property is boolean if delete message successfully.
-	 * @property {Boolean} markSpamSuccessfully This property is boolean if mark spam successfully.
-	 * @property {Boolean} blockSuccessfully This property is boolean if block successfully.
-	 * @property {Boolean} votedSuccessfully This property is boolean if voted successfully.
-	 * @property {Boolean} replyMessageSuccessfully This property is boolean if reply message successfully.
-	 */
-	state() {
-		return {
-			inboxMessages: [],
-			unreadMessages: [],
-			userMentions: [],
-			userMessages: [],
-			postReplies: [],
-			sentMessages: [],
-			suggestedSender: [],
-			sentSuccessfully: false,
-			deleteMessageSuccessfully: false,
-			markSpamSuccessfully: false,
-			blockSuccessfully: false,
-			votedSuccessfully: false,
-			replyMessageSuccessfully: false,
-		};
+ * Action for getting subreddit details
+ * @action getSubreddit 
+ * @param {Object} contains An object parameter has baseurl and subredditName
+ * @returns {void}
+ * Action for following a post 
+ * @action followPost
+ * @param {Object} contains An object parameter has baseurl and post id .
+ * @returns {void}
+  * Action for adding a comment 
+ * @action comment
+ * @param {Object} contains An object parameter has baseurl, parent id, parent type, level, subredditName, havesubreddit .
+ * @returns {void}
+ 
+ */
+	async getSubreddit(context, payload) {
+		const baseurl = payload.baseurl;
+		const subredditName = payload.subredditName;
+		const response = await fetch(baseurl + '/r/' + subredditName);
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+		context.commit('setSubredditInfo', responseData[0]);
 	},
-	mutations,
-	actions,
-	getters,
+	async followPost(context, payload) {
+		const postInfo = {
+			follow: true,
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/follow-post', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async comment(_, payload) {
+		const newComment = {
+			text: payload.text,
+			parentId: payload.parentId,
+			parentType: payload.parentType,
+			level: payload.level,
+			subredditName: payload.subredditName,
+			haveSubreddit: payload.haveSubreddit,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/comment', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(newComment),
+		});
+
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };
 </code></pre>
         </article>

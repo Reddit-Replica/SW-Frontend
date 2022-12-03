@@ -221,7 +221,7 @@ export default {
 			try {
 				await this.$store.dispatch('messages/sendMessage', {
 					text: this.text,
-					senderUsername: this.senderUsername,
+					senderUsername: '/u/' + this.senderUsername,
 					receiverUsername: this.receiverUsername,
 					subject: this.subject,
 					baseurl: this.$baseurl,

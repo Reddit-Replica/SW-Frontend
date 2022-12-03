@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: comments/getters.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,33 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: comments/getters.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>export default {
+	/** 
+	 * The module 'comments' object.
+ 	 * @name CommentsGetters
+ 	 * @type {object}
+	 * @getter {object} getSubreddit=subreddit Returns an object property.
+	 * @getter {list} getIfFollowedPosts=followedPosts Returns a list property.
+	 */
+	getSubreddit(state) {
+		return state.subreddit;
+	},
+	getIfFollowedPosts(state) {
+		return state.followedPosts;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

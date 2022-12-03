@@ -1,4 +1,19 @@
 export default {
+	/**
+ * Action for getting subreddit details
+ * @action getSubreddit 
+ * @param {Object} contains An object parameter has baseurl and subredditName
+ * @returns {void}
+ * Action for following a post 
+ * @action followPost
+ * @param {Object} contains An object parameter has baseurl and post id .
+ * @returns {void}
+  * Action for adding a comment 
+ * @action comment
+ * @param {Object} contains An object parameter has baseurl, parent id, parent type, level, subredditName, havesubreddit .
+ * @returns {void}
+ 
+ */
 	async getSubreddit(context, payload) {
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;

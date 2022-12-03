@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: listing/getters.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,37 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: listing/getters.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>export default {
+	/** 
+	* The module 'listing' object.
+ 	 * @name ListingGetters
+ 	 * @type {object}
+	 * @getter {list} getPosts=Posts Returns a list property.
+	 * @getter {object} getPostDetails=postDetails Returns an object property.
+	 */
+	//@vuese
+	//posts array getter
+	getPosts(state) {
+		return state.Posts;
+	},
+	//@vuese
+	//post details getter
+	getPostDetails(state) {
+		return state.postDetails;
+	},
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
