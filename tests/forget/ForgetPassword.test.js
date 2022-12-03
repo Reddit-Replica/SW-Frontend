@@ -1,7 +1,28 @@
 import { describe, expect, it, vitest } from 'vitest';
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils';
 import ForgetPasswordpage from '../../src/pages/forget/ForgetPasswordpage.vue';
+import Vuex from 'vuex';
+import store from '../../src/store/index.js';
+import mockservice from '../../../mockservice.txt';
+const action = {
+    forgetPasswordhandle: vi.fn (),
+    
+  };
 
+  //Mocking the store
+  store = new Vuex.Store ({
+    modules: {
+		auth: {
+        namespaced: true,
+        state: {
+			userName: '',
+			accessToken: '',
+			response: '',
+        },
+        actions: action,
+      },
+    },
+  });
 
 
 
