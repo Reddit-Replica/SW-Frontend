@@ -182,50 +182,50 @@
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Bold</span>
 
-							<button class="ql-bold"></button>
+							<button class="icon ql-bold"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Italics</span>
-							<button class="ql-italic"></button>
+							<button class="icon ql-italic"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Link</span>
-							<button class="ql-link"></button>
+							<button class="icon ql-link"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Strikethrough</span>
-							<button class="ql-strike"></button>
+							<button class="icon ql-strike"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Inline Code</span>
-							<button class="ql-code"></button>
+							<button class="icon ql-code"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Superscript</span>
-							<button class="ql-script" value="super"></button>
+							<button class="icon ql-script" value="super"></button>
 						</div>
 						<!-- <button class="ql-spoiler"></button> -->
 						<div class="space-in"></div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Heading</span>
-							<button class="ql-header" value="1"></button>
+							<button class="icon ql-header" value="1"></button>
 						</div>
 
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Bulleted List</span>
-							<button class="ql-list" value="bullet"></button>
+							<button class="icon ql-list" value="bullet"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Numbered List</span>
-							<button class="ql-list" value="ordered"></button>
+							<button class="icon ql-list" value="ordered"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Quote Block</span>
-							<button class="ql-blockquote"></button>
+							<button class="icon ql-blockquote"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Code Block</span>
-							<button class="ql-code-block"></button>
+							<button class="icon ql-code-block"></button>
 						</div>
 						<div class="space-in"></div>
 						<!-- <button class="icons" id="" @click="insertTable">
@@ -235,17 +235,17 @@
 					</button> -->
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Add an image</span>
-							<button class="ql-image"></button>
+							<button class="icon ql-image"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Add a video</span>
-							<button class="ql-video"></button>
+							<button class="icon ql-video"></button>
 						</div>
 					</div>
 				</template>
 			</QuillEditor>
 		</div>
-		{{ content }}
+		<!-- {{ content }} -->
 	</div>
 </template>
 
@@ -283,11 +283,10 @@ export default {
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
-		getpostContent() {},
-		insertTable() {
-			const tableModule = this.editor.getModule('QuillTableUI');
-			tableModule.insertTable(3, 3);
-		},
+
+		// @vuese
+		// set content
+		// @arg The argument is a string value representing content
 		setContent(value) {
 			this.$store.commit('posts/setContent', {
 				content: value,
@@ -297,12 +296,11 @@ export default {
 	components: {
 		QuillEditor,
 	},
-	computed: {
-		editor() {
-			return this.$refs.myQuillEditor.quill;
-		},
-	},
+	computed: {},
 	watch: {
+		// @vuese
+		// watch content when it changed set it
+		// @arg The argument is a string value representing content
 		content(value) {
 			this.content = value;
 			this.setContent(value);
@@ -339,7 +337,12 @@ div {
 	border-radius: 4px;
 	position: relative;
 	height: 200px;
+	/*min-height: 122px;
+	overflow: hidden;
+	padding: 8px 16px;
+	resize: vertical;*/
 }
+
 .icons-box {
 	z-index: 8;
 	height: 42px;
@@ -403,7 +406,7 @@ textarea:focus {
 	overflow: auto;
 }
 
-.icons {
+.icon {
 	align-items: center;
 	box-sizing: border-box;
 	display: flex;
@@ -588,14 +591,38 @@ button {
 	resize: vertical;
 	color: #000;
 }
-@media (max-width: 1600px) {
+/*@media (max-width: 1600px) {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(13),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(14),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(15) {
 		display: flex;
 	}
-}
+}*/
 @media (max-width: 1287px) {
+	.icons-box .tool-tip:nth-of-type(15) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(15) {
+		display: flex;
+	}
+}
+@media (max-width: 1255px) {
+	.icons-box .tool-tip:nth-of-type(14) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(14) {
+		display: flex;
+	}
+}
+@media (max-width: 1223px) {
+	.icons-box .tool-tip:nth-of-type(13) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(13) {
+		display: flex;
+	}
+}
+@media (max-width: 1192px) {
 	.icons-box .tool-tip:nth-of-type(12) {
 		display: none;
 	}
@@ -603,15 +630,15 @@ button {
 		display: flex;
 	}
 }
-@media (max-width: 1255px) {
-	.icons-box .tool-tip:nth-of-type(11) {
+@media (max-width: 1192px) {
+	.icons-box .space-in {
 		display: none;
 	}
 	.icons-box .tool-tip:last-of-type li:nth-of-type(11) {
 		display: flex;
 	}
 }
-@media (max-width: 1223px) {
+@media (max-width: 1146px) {
 	.icons-box .tool-tip:nth-of-type(10) {
 		display: none;
 	}
@@ -619,80 +646,56 @@ button {
 		display: flex;
 	}
 }
-@media (max-width: 1192px) {
-	.icons-box .tool-tip:nth-of-type(9) {
-		display: none;
-	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(9) {
-		display: flex;
-	}
-}
-@media (max-width: 1192px) {
-	.icons-box .space-in {
-		display: none;
-	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(8) {
-		display: flex;
-	}
-}
-@media (max-width: 1146px) {
-	.icons-box .tool-tip:nth-of-type(7) {
-		display: none;
-	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(7) {
-		display: flex;
-	}
-}
 @media (max-width: 991px) {
-	.icons-box div.tool-tip:nth-of-type(7),
-	.icons-box div.tool-tip:nth-of-type(8),
-	.icons-box div.tool-tip:nth-of-type(9),
 	.icons-box div.tool-tip:nth-of-type(10),
 	.icons-box div.tool-tip:nth-of-type(11),
-	.icons-box div.tool-tip:nth-of-type(12) {
+	.icons-box div.tool-tip:nth-of-type(12),
+	.icons-box div.tool-tip:nth-of-type(13),
+	.icons-box div.tool-tip:nth-of-type(14),
+	.icons-box div.tool-tip:nth-of-type(15) {
 		display: block;
 	}
 	.icons-box .space-in {
 		display: block;
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(7),
-	.icons-box .tool-tip:last-of-type li:nth-of-type(8),
-	.icons-box .tool-tip:last-of-type li:nth-of-type(9),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(10),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(11),
-	.icons-box .tool-tip:last-of-type li:nth-of-type(12) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(12),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(13),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(14),
+	.icons-box .tool-tip:last-of-type li:nth-of-type(15) {
 		display: none;
 	}
 }
 @media (max-width: 943px) {
-	.icons-box div.tool-tip:nth-of-type(12) {
+	.icons-box div.tool-tip:nth-of-type(15) {
 		display: none;
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(12) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(15) {
 		display: flex;
 	}
 }
 @media (max-width: 911px) {
-	.icons-box div.tool-tip:nth-of-type(11) {
+	.icons-box div.tool-tip:nth-of-type(14) {
 		display: none;
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(11) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(14) {
 		display: flex;
 	}
 }
 @media (max-width: 879px) {
-	.icons-box div.tool-tip:nth-of-type(10) {
+	.icons-box div.tool-tip:nth-of-type(13) {
 		display: none;
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(10) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(13) {
 		display: flex;
 	}
 }
 @media (max-width: 847px) {
-	.icons-box div.tool-tip:nth-of-type(9) {
+	.icons-box div.tool-tip:nth-of-type(12) {
 		display: none;
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(9) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(12) {
 		display: flex;
 	}
 }
@@ -700,11 +703,35 @@ button {
 	.icons-box .space-in {
 		display: none;
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(8) {
+	.icons-box .tool-tip:last-of-type li:nth-of-type(11) {
 		display: flex;
 	}
 }
 @media (max-width: 802px) {
+	.icons-box div.tool-tip:nth-of-type(10) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(10) {
+		display: flex;
+	}
+}
+@media (max-width: 770px) {
+	.icons-box div.tool-tip:nth-of-type(9) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(9) {
+		display: flex;
+	}
+}
+@media (max-width: 738px) {
+	.icons-box div.tool-tip:nth-of-type(8) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(8) {
+		display: flex;
+	}
+}
+@media (max-width: 706px) {
 	.icons-box div.tool-tip:nth-of-type(7) {
 		display: none;
 	}
@@ -712,7 +739,7 @@ button {
 		display: flex;
 	}
 }
-@media (max-width: 770px) {
+@media (max-width: 674px) {
 	.icons-box div.tool-tip:nth-of-type(6) {
 		display: none;
 	}
@@ -720,7 +747,7 @@ button {
 		display: flex;
 	}
 }
-@media (max-width: 738px) {
+@media (max-width: 642px) {
 	.icons-box div.tool-tip:nth-of-type(5) {
 		display: none;
 	}
@@ -728,7 +755,7 @@ button {
 		display: flex;
 	}
 }
-@media (max-width: 706px) {
+@media (max-width: 610px) {
 	.icons-box div.tool-tip:nth-of-type(4) {
 		display: none;
 	}
@@ -736,27 +763,12 @@ button {
 		display: flex;
 	}
 }
-@media (max-width: 674px) {
+
+@media (max-width: 590px) {
 	.icons-box div.tool-tip:nth-of-type(3) {
 		display: none;
 	}
 	.icons-box .tool-tip:last-of-type li:nth-of-type(3) {
-		display: flex;
-	}
-}
-@media (max-width: 642px) {
-	.icons-box div.tool-tip:nth-of-type(2) {
-		display: none;
-	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(2) {
-		display: flex;
-	}
-}
-@media (max-width: 610px) {
-	.icons-box div.tool-tip:nth-of-type(1) {
-		display: none;
-	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
 		display: flex;
 	}
 }

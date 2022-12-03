@@ -63,7 +63,9 @@
 					<div class="bottomText">
 						<label id="bottom">
 							Don't have an email or need assistance logging in?
-							<a class="link" id="help">Get Help </a></label
+							<router-link to="/help" class="link" id="help"
+								>Get Help</router-link
+							></label
 						>
 					</div>
 				</form>
@@ -80,7 +82,7 @@
 </template>
 
 <script>
-import TheRecaptcha from '../../components/TheRecaptcha.vue';
+import TheRecaptcha from '../../components/auth/TheRecaptcha.vue';
 // @it is forget username component
 export default {
 	data() {
@@ -142,6 +144,11 @@ export default {
 		verifyRec() {
 			console.log('verified 2');
 			this.buttonDisabled = false;
+		},
+		// @vuese
+		// get the response status
+		getResponse() {
+			return this.$store.getters['getResponse'];
 		},
 	},
 	watch: {

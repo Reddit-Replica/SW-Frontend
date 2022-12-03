@@ -33,7 +33,6 @@ commands:
             py-pip=9.0.0-r1
             pip install \
             docker-compose==1.12.0 \
-
 jobs:
   unit-testing:
     docker:
@@ -62,7 +61,6 @@ jobs:
         name: Run Unit Tests
         command: |
           npm run test
-
   build-frontend:
     docker:
       - image: docker:17.05.0-ce-git
@@ -75,7 +73,6 @@ jobs:
             docker build -t frontend:v1 .
             docker tag frontend:v1  waer/frontend
             docker push  waer/frontend:latest
-
 workflows:
   main:
     jobs:

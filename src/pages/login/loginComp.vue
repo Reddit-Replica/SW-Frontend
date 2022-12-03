@@ -67,8 +67,8 @@
 					</div>
 					<!-- <p class="invalid">Please enter an email address to continue</p> -->
 					<div class="forgot-usr-pass-comp">
-						<span>Forgot your</span> <a href="/forgetUsernamepage">username</a>
-						<span> or </span> <a href="/forgetPasswordpage">password</a
+						<span>Forgot your</span> <a href="/forgetUsername">username</a>
+						<span> or </span> <a href="/forgetPassword">password</a
 						><span>?</span>
 					</div>
 					<base-button button-text="Log In" class="button-class"> </base-button>
@@ -91,8 +91,8 @@
 </template>
 
 <script>
-import GoogleSigninButton from '../../components/GoogleSigninButton.vue';
-import facebookSigninButton from '../../components/facebookSigninButton.vue';
+import GoogleSigninButton from '../../components/auth/GoogleSigninButton.vue';
+import facebookSigninButton from '../../components/auth/facebookSigninButton.vue';
 export default {
 	data() {
 		return {

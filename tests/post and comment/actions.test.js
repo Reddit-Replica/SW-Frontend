@@ -1,6 +1,6 @@
 import { describe, it,expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import MyComment from '../../src/components/MyComment.vue'
+import MyComment from '../../src/components/PostComponents/MyComment.vue'
 import BasePost from '../../src/components/BaseComponents/BasePost.vue'
 import store from '../../src/store/index.js';
 

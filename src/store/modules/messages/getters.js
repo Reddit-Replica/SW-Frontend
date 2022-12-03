@@ -1,3 +1,22 @@
+/**
+ * The module 'MessagesStore' object.
+ * @name MessagesGetters
+ * @type {object}
+ * @getter {object} inboxMessages=inboxMessages Returns Object contain inboxMessages.
+ * @getter {object} unreadMessages=unreadMessages Returns Object contain unreadMessages.
+ * @getter {object} userMentions=userMentions Returns Object contain userMentions.
+ * @getter {object} userMessages=userMessages Returns Object contain userMessages.
+ * @getter {object} postReplies=postReplies Returns Object contain postReplies.
+ * @getter {object} sentMessages=sentMessages Returns Object contain sentMessages.
+ * @getter {object} suggestedSender=suggestedSender Returns Object contain suggestedSender.
+ * @getter {boolean} sentSuccessfully=sentSuccessfully Returns boolean contain if sent Successfully.
+ * @getter {boolean} deleteMessageSuccessfully=deleteMessageSuccessfully Returns boolean contain if delete Message Successfully.
+ * @getter {boolean} markSpamSuccessfully=markSpamSuccessfully Returns boolean contain if mark Spam Successfully.
+ * @getter {boolean} blockSuccessfully=blockSuccessfully Returns boolean contain if block Successfully.
+ * @getter {boolean} votedSuccessfully=votedSuccessfully Returns boolean contain if voted Successfully.
+ * @getter {boolean} replyMessageSuccessfully=replyMessageSuccessfully Returns boolean contain if reply Message Successfully.
+ */
+
 export default {
 	inboxMessages(state) {
 		return state.inboxMessages;

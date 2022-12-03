@@ -45,7 +45,7 @@ export default {
 		const subredditName = payload.subredditName;
 		const accessToken = localStorage.getItem('accessToken');
 		// const accessToken =
-		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + '/r/' + subredditName + '/about/rules',
 			{
@@ -82,9 +82,9 @@ export default {
 	async loadListOfRules(context, payload) {
 		const baseurl = payload.baseurl;
 		/////////////////////should be localStorage.getItem('accessToken');/////////////////////
-		// const accessToken = localStorage.getItem('accessToken');
-		const accessToken =
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/rules`,
 			{
@@ -134,10 +134,9 @@ export default {
 			description: payload.description,
 		};
 		const baseurl = payload.baseurl;
-		console.log(JSON.stringify(updatedRule));
 		const accessToken = localStorage.getItem('accessToken');
 		// const accessToken =
-		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/rules/${payload.ruleId}`,
 			{
@@ -175,7 +174,7 @@ export default {
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
 		// const accessToken =
-		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/rules/${payload.ruleId}`,
 			{
@@ -190,6 +189,56 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			context.commit('deleteRuleSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async updateRulesOrder(context, payload) {
+		context.commit('updateRulesSuccessfully', false);
+		const rulesOrder = [];
+
+		for (let i = 0; i < payload.rulesOrder.length; i++) {
+			const rule = {
+				ruleId: payload.rulesOrder[i].ruleId,
+				ruleOrder: i,
+			};
+			rulesOrder.push(rule);
+		}
+		console.log();
+		const baseurl = payload.baseurl;
+		const subredditName = payload.subredditName;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + '/r/' + subredditName + '/about/rules-order',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify({ rulesOrder: rulesOrder }),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('updateRulesSuccessfully', true);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;

@@ -1,3 +1,10 @@
+/**
+ * The module 'setters' object.
+ * @name AuthenticationMutations
+ * @type {object}
+ * @mutator {object} setUser={userName,accessToken} Sets the User info properties.
+ * @mutator {object} setResponse=response Sets the response status property.
+ */
 export default {
 	setUser(state, payload) {
 		state.userName = payload.userName;
@@ -7,4 +14,8 @@ export default {
 	// setAutoLogout(state) {
 	// 	state.didAutoLogout = true;
 	// },
+	setResponse(state, payload) {
+		console.log(payload);
+		state.response = payload.response;
+	},
 };

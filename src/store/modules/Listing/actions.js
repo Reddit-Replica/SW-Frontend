@@ -1,4 +1,18 @@
 export default {
+	/**
+	 * Action sends fetch posts request according to sort type (top,hot,new,best).
+	 * @action fetchPosts
+	 * @param {Object} contains An object parameter has baseurl and title(sort type).
+	 * @returns {void}
+	 * Action sends fetch post details request to /post-details end point.
+	 * @action postDetails
+	 * @param {Object} contains An object parameter has baseurl and title(sort type).
+	 * @returns {void}
+	 * Action sends delete comment request.
+	 * @action deleteComment
+	 * @param {Object} contains An object parameter has baseurl and comment id.
+	 * @returns {void}
+	 */
 	async fetchPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const title = payload.title;
@@ -33,16 +47,12 @@ export default {
 				sharePostId: responseData[key].children[0].sharePostId,
 			};
 			if (post.kind == 'post') {
-				//const QUERY_PARAMETERS = {
-				//	id: post.sharePostId,
-				//};
 				const response2 = await fetch(baseurl + '/post-details', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Bearer ${localStorage.getItem('userName')}`,
 					},
-					//body: JSON.stringify(QUERY_PARAMETERS),
 				});
 				const responseData2 = await response2.json();
 				if (!response2.ok) {
@@ -59,21 +69,15 @@ export default {
 	},
 	async postDetails(context, payload) {
 		const baseurl = payload.baseurl;
-		//const id = payload.id;
-		const response = await fetch(
-			baseurl + '/post-details?id=637d1abbc6d8c2bdbb26a2c3',
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-				//body: JSON.stringify({ id: '637d1abbc6d8c2bdbb26a2c3' }),
-			}
-		);
+		const id = payload.id;
+		const response = await fetch(baseurl + '/post-details?id=' + id, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
 		const responseData = await response.json();
-		console.log(response);
-		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;

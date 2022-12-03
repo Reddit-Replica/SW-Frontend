@@ -1,4 +1,18 @@
 export default {
+	/**
+	 * The module 'PostsStore' object.
+	 * @name PostsGetters
+	 * @type {object}
+	 * @getter {object} getTitle=title getTitle Returns The title of the post.
+	 * @getter {Boolean} getNsfw=Nsfw getNsfw Returns NSFW of post.
+	 * @getter {Boolean} getSpoiler=Spoiler getSpoiler Returns Spoiler of post.
+	 * @getter {object} getFlairId=FlairId getFlairId Returns FlairId of post.
+	 * @getter {Boolean} getsendReplies=sendReplies getsendReplies Returns sendReplies of post.
+	 * @getter {object} getContent=Content getContent Returns Content of post.
+	 * @getter {Array} getallSubredditsReturns=allSubredditsReturns getallSubredditsReturns allSubreddits .
+	 * @getter {object} getSubreddit=Subreddit getSubreddit Returns getSubreddit of post.
+	 * @getter {Boolean} getinSubreddit=inSubreddit getinSubreddit Returns inSubreddit of post.
+	 */
 	getTitle(state) {
 		console.log('getters title');
 		return state.title;
@@ -28,7 +42,11 @@ export default {
 		return state.allSubreddits;
 	},
 	getSubreddit(state) {
-		console.log('getters allsubreddits');
+		console.log('getters subreddit');
 		return state.subreddit;
+	},
+	getinSubreddit(state) {
+		console.log('getters in subreddit');
+		return state.nSubreddit;
 	},
 };

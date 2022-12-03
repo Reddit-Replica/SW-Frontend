@@ -25,8 +25,18 @@ export default {
 	},
 	async getUserPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + `/userpostdata`);
-		// const response = await fetch(baseurl + `/user/${payload.userName}/posts`);
+		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		const response = await fetch(baseurl + `/userpostdata`); // mock server
+		// const response = await fetch(url); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(

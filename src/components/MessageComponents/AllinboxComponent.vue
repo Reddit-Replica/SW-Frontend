@@ -29,7 +29,7 @@
 					>
 				</p>
 
-				<Markdown class="md" :source="message.text" />
+				<Markdown class="md" id="md" :source="message.text" />
 				<!-- <p class="md">{{ message.text }}</p> -->
 				<ul class="flat-list ul-messages">
 					<!-- <li :id="'permalink-link-' + index">

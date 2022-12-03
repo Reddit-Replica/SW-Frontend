@@ -1,3 +1,14 @@
+/**
+ * Action for creating Post
+ * @action createPost 
+ * @param {Object} contains post data and base url.
+ * @returns {void}
+ * Action for checking if subreddit name is used before.
+ * @action getAllsubreddits
+ * @param {Object} contains base url.
+ * @returns {void}
+ 
+ */
 export default {
 	async hide(_, payload) {
 		const hide = {

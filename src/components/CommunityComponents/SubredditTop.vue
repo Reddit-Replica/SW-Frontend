@@ -77,6 +77,7 @@ export default {
 			// this.toogleJoin();
 
 			const accessToken = localStorage.getItem('accessToken');
+
 			this.$store.dispatch('community/joinSubreddit', {
 				message: this.message,
 				subredditId: this.subredditName,

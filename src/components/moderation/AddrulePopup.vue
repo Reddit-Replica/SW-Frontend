@@ -12,10 +12,12 @@
 							type="text"
 							placeholder="Rule displayed(e.g. 'No photo')"
 							v-model.trim="ruleName"
-							@blur="ruleName"
 							@keyup="charCount('name')"
 							id="rule-input"
 						></textarea>
+						<div class="title-grey zero-char" v-if="isNameTaken">
+							You have another rule with this title. Please change.
+						</div>
 						<div
 							class="title-grey"
 							:class="charRemainingName == 0 ? 'zero-char' : ''"
@@ -210,19 +212,20 @@
 						v-if="!edit"
 						@click="submitRule()"
 						class="button-blue"
-						:class="ruleName == '' ? 'disabled' : ''"
+						:class="ruleName == '' || isNameTaken ? 'disabled' : ''"
 						id="create-rule-button"
-						>Add new rule</base-button
-					>
+						>Add new rule
+					</base-button>
 					<base-button
 						v-else
 						@click="updateRule()"
 						class="button-blue"
 						:class="
-							ruleName == ruleNameEdit &&
-							reportReason == reportReasonEdit &&
-							description == descriptionEdit &&
-							appliedType == appliesToEdit
+							(ruleName == ruleNameEdit &&
+								reportReason == reportReasonEdit &&
+								description == descriptionEdit &&
+								appliedType == appliesToEdit) ||
+							isNameTaken
 								? 'disabled'
 								: ''
 						"
@@ -240,7 +243,7 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
-	emits: ['exit'],
+	emits: ['exit', 'doneSuccessfully', 'clickedDelete'],
 	props: {
 		// @vuese
 		//return subreddit name
@@ -248,6 +251,14 @@ export default {
 		subredditName: {
 			type: String,
 			default: '',
+			required: true,
+		},
+		// @vuese
+		//return list Of Rules
+		// @type string
+		listOfRules: {
+			type: Array,
+			default: () => [],
 			required: true,
 		},
 		// @vuese
@@ -322,11 +333,28 @@ export default {
 			ruleName: this.ruleNameEdit,
 			reportReason: this.reportReasonEdit,
 			description: this.descriptionEdit,
-			charRemainingName: '100',
+			charRemainingName: 100 - this.ruleNameEdit.length,
 			charRemainingReason: '100',
 			charRemainingDescription: '500',
 			errorResponse: null,
 		};
+	},
+
+	computed: {
+		// @vuese
+		//return if there exist rule name or not
+		// @type boolean
+		isNameTaken() {
+			for (let i = 0; i < this.listOfRules.length; i++) {
+				if (
+					this.listOfRules[i].ruleName == this.ruleName &&
+					this.ruleNameEdit != this.ruleName
+				) {
+					return true;
+				}
+			}
+			return false;
+		},
 	},
 	methods: {
 		//@vuese
@@ -380,6 +408,10 @@ export default {
 		//Decrease characters count while typing
 		//@arg no argument
 		charCount(title) {
+			if (this.isNameTaken) {
+				this.showError = true;
+				console.log(this.ruleNameEdit, ' ', this.ruleName);
+			}
 			if (title == 'reason') {
 				this.charRemainingReason = 100 - this.reportReason.length;
 			} else if (title == 'name') {
@@ -407,6 +439,7 @@ export default {
 				});
 				if (this.$store.getters['moderation/addRuleSuccessfully']) {
 					this.hideAddRule();
+					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {
 				console.log(err);
@@ -434,6 +467,7 @@ export default {
 				});
 				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
 					this.hideAddRule();
+					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {
 				console.log(err);
@@ -445,20 +479,8 @@ export default {
 		//handle delete rule
 		//@arg no argument
 		async deleteRule() {
-			this.errorResponse = null;
-			try {
-				await this.$store.dispatch('moderation/deleteRule', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-					ruleId: this.ruleId,
-				});
-				if (this.$store.getters['moderation/deleteRuleSuccessfully']) {
-					this.hideAddRule();
-				}
-			} catch (err) {
-				console.log(err);
-				this.errorResponse = err;
-			}
+			this.$emit('clickedDelete');
+			this.hideAddRule();
 		},
 	},
 };

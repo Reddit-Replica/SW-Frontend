@@ -2,7 +2,12 @@
 	<div>
 		<list-bar
 			:title="'Rules'"
-			@show-add-rule-function="showAddRuleFunction"
+			:rules-count="listOfRules.length"
+			@show-add-rule-function="showAddRuleFunction()"
+			@reorder-rules="reorderRules()"
+			@save-reorder-rules="saveReorderRules()"
+			:drag-drop="dragDrop"
+			:subreddit-name="subredditName"
 		></list-bar>
 		<div class="text">
 			Rules
@@ -29,6 +34,7 @@
 				</svg>
 			</a>
 		</div>
+		<!-- should be noRules -->
 		<no-list :title="'Rules'" v-if="noRules">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +54,8 @@
 				/>
 			</svg>
 		</no-list>
-		<div v-else>
+		<!-- should be !noRules && !dragDrop -->
+		<div v-if="!noRules && !dragDrop">
 			<span class="rules-description">
 				These are rules that visitors must follow to participate. They can be
 				used as reasons to report or ban posts, comments, and users. Communities
@@ -59,19 +66,58 @@
 					v-for="rule in listOfRules"
 					:key="rule"
 					:rule="rule"
+					:list-of-rules="listOfRules"
+					@done-successfully="(title) => doneSuccessfully(title)"
 				></list-rules>
 			</ul>
 		</div>
+		<!-- should be !noRules && dragDrop -->
+		<draggable
+			v-if="!noRules && dragDrop"
+			class="dragArea list-group w-full"
+			:list="listOfRules"
+			@change="log(listOfRules)"
+		>
+			<div
+				class="list-group-item bg-gray-300 m-1 p-3 rounded-md item drag-item"
+				v-for="rule in listOfRules"
+				:key="rule.ruleName"
+			>
+				<span class="rule-order"> {{ rule.ruleOrder + 1 }}</span>
+				<span class="rule-name"> {{ rule.ruleName }}</span>
+			</div>
+			<!-- <list-rules
+				class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+				v-for="rule in listOfRules"
+				:key="rule"
+				:rule="rule"
+			></list-rules> -->
+		</draggable>
 		<addrule-popup
 			v-if="showAddRule"
 			:subreddit-name="subredditName"
-			@exit="showAddRuleFunction"
+			:list-of-rules="listOfRules"
+			@exit="showAddRuleFunction()"
+			@done-successfully="doneSuccessfully('added')"
 			:rule-name="''"
 			:report-reason="''"
 			:applies-to="''"
 			:description="''"
 			:edit="false"
 		></addrule-popup>
+
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
+
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -80,11 +126,24 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
 import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
 import ListRules from '../../components/moderation/ListRules.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import { VueDraggableNext } from 'vue-draggable-next';
 export default {
-	components: { NoList, AddrulePopup, ListBar, ListRules },
+	components: {
+		NoList,
+		AddrulePopup,
+		ListBar,
+		ListRules,
+		draggable: VueDraggableNext,
+		SaveUnsavePopupMessage,
+	},
 	data() {
 		return {
 			showAddRule: false,
+			dragDrop: false,
+			errorResponse: null,
+			newList: [],
+			savedUnsavedPosts: [],
 		};
 	},
 	// @vuese
@@ -97,7 +156,8 @@ export default {
 		//return subreddit name
 		// @type string
 		subredditName() {
-			return this.$store.state.subredditName;
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
 		},
 		// @vuese
 		//return list of Rules
@@ -135,11 +195,126 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		reorderRules() {
+			this.dragDrop = !this.dragDrop;
+		},
+		// @vuese
+		// handle drag and drop action
+		// @arg The argument is the list of rules
+		log(listOfRules) {
+			const rules = [];
+			for (let i = 0; i < listOfRules.length; i++) {
+				const rule = {
+					ruleId: listOfRules[i].ruleName,
+					ruleOrder: i,
+				};
+				rules.push(rule);
+			}
+			this.newList = listOfRules;
+		},
+		// @vuese
+		// Used to handle save reorder rules action
+		// @arg no argument
+		async saveReorderRules() {
+			try {
+				await this.$store.dispatch('moderation/updateRulesOrder', {
+					rulesOrder: this.newList,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/updateRulesSuccessfully']) {
+					this.dragDrop = false;
+					this.loadListOfRules();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+
+		// @vuese
+		// handle load rules instead of refreshing
+		// @arg no argument
+		doneSuccessfully(title) {
+			this.loadListOfRules();
+			this.savePost(title);
+		},
+
+		// @vuese
+		// Used to show handle save action popup
+		// @arg no argument
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'Rule',
+				state: title,
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
 	},
 };
 </script>
 
 <style scoped>
+.item {
+	display: flex;
+	align-items: center;
+	height: 5rem;
+	border-bottom: var(--line);
+	color: var(--color-dark-3);
+}
 .icon {
 	color: var(--color-grey-dark-8);
 	font-size: 3rem;
@@ -165,5 +340,46 @@ export default {
 	font-weight: 400;
 	line-height: 1.8rem;
 	color: var(--color-dark-3);
+}
+.rule-order {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-weight: 400;
+	font-size: 1.6rem;
+	line-height: 2rem;
+	-ms-flex-align: center;
+	align-items: center;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex: 0 0 4.8rem;
+	flex: 0 0 4.8rem;
+	height: 100%;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 4.8rem;
+}
+.rule-name {
+	font-size: 1.4rem;
+	line-height: 1.8rem;
+	margin: 1.6rem 0.8rem;
+	word-break: break-word;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-weight: 400;
+}
+.drag-item {
+	cursor: pointer;
+	border-bottom: 1px solid var(--color-grey-light-9);
+	padding: 1.2rem 0;
+	margin: 1.2rem 0 !important;
+}
+
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>

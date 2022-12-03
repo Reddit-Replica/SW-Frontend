@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="big-box">
 		<div class="create-post-header">
 			<div class="submit-title">Create a post</div>
 			<!-- <base-button class="drafts-button"
@@ -10,24 +10,31 @@
 		<div class="choose-post-community-1">
 			<div class="choose-post-community-2">
 				<div class="choose-post-community-3" @click="setFocused">
-					<span v-if="!inputFocused" class="dashed-circle"></span>
+					<span v-if="!inputFocused & !isSet" class="dashed-circle"></span>
+					<img :src="image" alt="image" class="img-profile" v-if="isSet" />
+
 					<svg
+						v-if="inputFocused & !isSet"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"
 						fill="currentColor"
 						class="bi bi-search"
 						viewBox="0 0 16 16"
-						v-else
 					>
 						<path
 							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
 						/>
 					</svg>
+					<!-- <img
+						src="https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030"
+						alt="image"
+						class="img-icon"
+					/> -->
 					<div class="input-box">
 						<input
 							class="choose-community-input"
-							placeholder="Choose a community"
+							:placeholder="communityName"
 						/>
 					</div>
 					<svg
@@ -55,7 +62,15 @@
 									class="img-profile"
 								/>
 							</div>
-							<div class="name-box">
+							<div
+								class="name-box"
+								@click="
+									setName(
+										userName,
+										'https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030'
+									)
+								"
+							>
 								<span class="name"> u/{{ userName }}</span>
 							</div>
 						</div>
@@ -79,7 +94,7 @@
 							class="section-box"
 							v-for="subreddit in subreddits"
 							:key="subreddit.id"
-							@click="setsubreddit(subreddit.title)"
+							@click="setsubreddit(subreddit.title, subreddit.picture)"
 						>
 							<div class="image-box">
 								<img
@@ -90,7 +105,9 @@
 							</div>
 							<div class="comm-box">
 								<span class="name">r/{{ subreddit.title }}</span>
-								<span class="name members-count">{{ subreddit.members }}</span>
+								<span class="name members-count"
+									>{{ subreddit.members }} members</span
+								>
 							</div>
 						</div>
 					</div>
@@ -98,14 +115,28 @@
 			</div>
 		</div>
 		<!-- {{ subreddits }} -->
+		<!-- <subreddit-info class="subreddit-info"> </subreddit-info> -->
+		<div class="col-lg-3 subreddit-info">
+			<subreddit-info
+				subreddit-name="subredditName"
+				v-if="isSet"
+			></subreddit-info>
+		</div>
+		<div :class="isSet ? 'col-lg-3 posting1' : 'col-lg-3 posting2'">
+			<postingto-reddit></postingto-reddit>
+		</div>
 	</div>
 </template>
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
+import SubredditInfo from '../PostComponents/SubredditInfo.vue';
+import PostingtoReddit from '@/components/PostComponents/PostingtoReddit.vue';
 export default {
 	components: {
 		CreateCommunity,
+		SubredditInfo,
+		PostingtoReddit,
 	},
 	data() {
 		return {
@@ -114,9 +145,16 @@ export default {
 			createCommunityShown: false,
 			subreddits: [],
 			subredditTitle: null,
+			communityName: 'Choose a community',
+			name: null,
+			inSubreddit: null,
+			isSet: false,
+			image: null,
 		};
 	},
 	methods: {
+		// @vuese
+		// Used to change inputFocused state and dispatch getAllsubreddits and call getSubreddit
 		async setFocused() {
 			this.inputFocused = !this.inputFocused;
 			const actionPayload = {
@@ -131,13 +169,38 @@ export default {
 		showCreateCommunity() {
 			this.createCommunityShown = !this.createCommunityShown;
 		},
+		// @vuese
+		// Used to  get all Subreddits
+		// @arg no argument
 		getSubreddit() {
 			this.subreddits = this.$store.getters['posts/getallSubreddits'];
 		},
-		setsubreddit(title) {
+		// @vuese
+		// Used to  set the choosen subreddit
+		// @arg a string value representing subreddit name
+		setsubreddit(title, image) {
+			this.inSubreddit = true;
 			this.subredditTitle = title;
+			this.communityName = title;
+			this.inputFocused = !this.inputFocused;
+			this.isSet = true;
+			this.image = image;
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
+			});
+		},
+		// @vuese
+		// Used to  set the choosen subreddit that is profile
+		// @arg a string value representing subreddit name which is user name
+		setName(name, image) {
+			this.inSubreddit = false;
+			this.subredditTitle = name;
+			this.communityName = name;
+			this.inputFocused = !this.inputFocused;
+			this.isSet = true;
+			this.image = image;
+			this.$store.commit('posts/setSubreddit', {
+				subreddit: name,
 			});
 		},
 	},
@@ -231,7 +294,6 @@ export default {
 	vertical-align: middle;
 	background-color: transparent;
 	border: none;
-
 	position: relative;
 }
 /* input[placeholder] {
@@ -338,7 +400,10 @@ img {
 	border: 1px solid var(--color-grey-light-3);
 	object-fit: cover;
 	object-position: center;
+	padding: 0;
+	margin: 0;
 }
+
 .img-community {
 	border-radius: 50%;
 	vertical-align: middle;
@@ -389,5 +454,33 @@ button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+.subreddit-info {
+	position: absolute;
+	left: 103%;
+	width: 300px;
+	top: 0;
+}
+.posting1 {
+	position: absolute;
+	left: 103%;
+	width: 300px;
+	top: 300px;
+}
+.posting2 {
+	position: absolute;
+	left: 103%;
+	width: 300px;
+	top: 0;
+}
+.big-box {
+	position: relative;
+}
+@media (max-width: 1255px) {
+	.subreddit-info,
+	.posting1,
+	.posting2 {
+		display: none;
+	}
 }
 </style>
