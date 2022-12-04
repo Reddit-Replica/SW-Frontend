@@ -296,6 +296,57 @@ export default {
 					},
 				],
 			},
+			commentsData: {
+				before: 'string',
+				after: 'string',
+				children: [
+					{
+						id: 'string',
+						data: {
+							subreddit: 'string',
+							postedBy: 'string',
+							title: 'string',
+							type: 'text',
+							content: 'string',
+							flair: {
+								flairId: 'string',
+								flairText: 'string',
+								backgroundColor: 'string',
+								textColor: 'string',
+							},
+							nsfw: true,
+							spoiler: true,
+							comment: [
+								{
+									commentId: 'string',
+									commentBy: 'string',
+									commentBody: 'string',
+									points: 0,
+									editTime: '2019-08-24T14:15:22Z',
+									publishTime: '2019-08-24T14:15:22Z',
+									level: 0,
+									inYourSubreddit: true,
+									moderation: {
+										approve: {
+											approvedBy: 'string',
+											approvedDate: '2019-08-24T14:15:22Z',
+										},
+										remove: {
+											removedBy: 'string',
+											removedDate: '2019-08-24T14:15:22Z',
+										},
+										spam: {
+											spamedBy: 'string',
+											spamedDate: '2019-08-24T14:15:22Z',
+										},
+										lock: true,
+									},
+								},
+							],
+						},
+					},
+				],
+			},
 		};
 	},
 	mutations,
