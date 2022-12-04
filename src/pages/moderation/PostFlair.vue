@@ -59,6 +59,7 @@
 					<div class="text-1">Post flair is disabled</div>
 					<div class="text-2">
 						Post flairs will not be visible until feature is enabled
+						{{ showAddFlair }}
 					</div>
 				</div>
 			</div>
@@ -151,6 +152,11 @@
 				<add-flair
 					@done-successfully="doneSuccessfully('added')"
 					@exit="showAddFlairFunction()"
+					:flair-name-edit="''"
+					:background-color-edit="'#59c7f9'"
+					:text-color-edit="'black'"
+					:flair-id="''"
+					:edit="false"
 				></add-flair>
 			</div>
 			<div class="positioning">
