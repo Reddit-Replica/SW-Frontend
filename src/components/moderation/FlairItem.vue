@@ -4,7 +4,7 @@
 			<div class="flair-text-box">
 				<span
 					class="flair-text"
-					:style="{ background: flair.backgroundColor }"
+					:style="{ background: flair.backgroundColor, color: flair.textColor }"
 					>{{ flair.flairName }}</span
 				>
 			</div>

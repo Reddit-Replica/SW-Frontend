@@ -2,9 +2,11 @@
 	<div>
 		<div class="row">
 			<div class="flair-text-box">
-				<span class="flair-text" :style="{ background: backgroundColor }">{{
-					flairText
-				}}</span>
+				<span
+					class="flair-text"
+					:style="{ background: backgroundColor, color: textColor }"
+					>{{ flairText }}</span
+				>
 			</div>
 			<div class="buttons">
 				<button class="small-button">Edit</button>
@@ -252,7 +254,6 @@ export default {
 		// Used toggle text color
 		// @arg the argument is the type of the oldest color
 		toggleTextColor(type) {
-			console.log(type);
 			if (type == 'white') {
 				this.textColor = 'black';
 			} else if (type == 'black') {
