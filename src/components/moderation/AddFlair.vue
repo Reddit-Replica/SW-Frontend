@@ -104,8 +104,8 @@
 									:sucker-hide="false"
 									:sucker-canvas="suckerCanvas"
 									:sucker-area="suckerArea"
-									@changeColor="changeColor"
-									@openSucker="openSucker"
+									@change-color="changeColor"
+									@open-sucker="openSucker"
 								/>
 							</div>
 						</div>
@@ -160,7 +160,7 @@
 <script>
 import { ColorPicker } from 'vue-color-kit';
 export default {
-	emits: ['doneSuccessfully'],
+	emits: ['doneSuccessfully', 'exit'],
 	data() {
 		return {
 			charRemainingName: 64,
