@@ -117,7 +117,15 @@
 			</div> -->
 				<div class="first-section"></div>
 			</div>
-			<div class="center-box" v-if="!noFlairs">
+			<ul class="ul-items" v-if="!noFlairs">
+				<flair-item
+					v-for="flair in listOfFlairs"
+					:key="flair"
+					:flair="flair"
+					@done-successfully="(title) => doneSuccessfully(title)"
+				></flair-item>
+			</ul>
+			<div class="center-box" v-if="noFlairs">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -139,10 +147,9 @@
 					Create post flair in your community today
 				</p>
 			</div>
-			<div class="add-flair">
+			<div class="add-flair" v-if="showAddFlair">
 				<add-flair
 					@done-successfully="doneSuccessfully('added')"
-					v-if="showAddFlair"
 					@exit="showAddFlairFunction()"
 				></add-flair>
 			</div>
@@ -164,11 +171,13 @@
 import ListBar from '../../components/moderation/ListBar.vue';
 import AddFlair from '../../components/moderation/AddFlair.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import FlairItem from '../../components/moderation/FlairItem.vue';
 export default {
 	components: {
 		AddFlair,
 		SaveUnsavePopupMessage,
 		ListBar,
+		FlairItem,
 	},
 	data() {
 		return {
@@ -192,6 +201,7 @@ export default {
 		//return list of Rules
 		// @type object
 		listOfFlairs() {
+			console.log(this.$store.getters['moderation/listOfFlairs']);
 			return this.$store.getters['moderation/listOfFlairs'];
 		},
 		// @vuese

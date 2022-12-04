@@ -277,21 +277,21 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		// console.log(responseData.postFlairs);
 		if (response.status == 200) {
 			const flairs = [];
 
 			for (let i = 0; i < responseData.postFlairs.length; i++) {
 				const flair = {
-					flairId: responseData.postFlairs[i].ruleId,
-					flairName: responseData.postFlairs[i].ruleName,
-					flairOrder: responseData.postFlairs[i].ruleOrder,
+					flairId: responseData.postFlairs[i].flairId,
+					flairName: responseData.postFlairs[i].flairName,
+					flairOrder: responseData.postFlairs[i].flairOrder,
 					backgroundColor: responseData.postFlairs[i].backgroundColor,
 					textColor: responseData.postFlairs[i].textColor,
-					modOnly: responseData.postFlairs[i].settings.modOnly,
-					allowUserEdits: responseData.postFlairs[i].settings.allowUserEdits,
-					flairType: responseData.postFlairs[i].settings.flairType,
-					emojisLimit: responseData.postFlairs[i].settings.emojisLimit,
+					modOnly: responseData.postFlairs[i].flairSettings.modOnly,
+					allowUserEdits:
+						responseData.postFlairs[i].flairSettings.allowUserEdits,
+					flairType: responseData.postFlairs[i].flairSettings.flairType,
+					emojisLimit: responseData.postFlairs[i].flairSettings.emojisLimit,
 				};
 				flairs.push(flair);
 			}
