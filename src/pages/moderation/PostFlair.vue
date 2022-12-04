@@ -125,7 +125,7 @@
 					@done-successfully="(title) => doneSuccessfully(title)"
 				></flair-item>
 			</ul>
-			<div class="center-box" v-if="noFlairs">
+			<div class="center-box" v-if="noFlairs && !showAddFlair">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -201,7 +201,6 @@ export default {
 		//return list of Rules
 		// @type object
 		listOfFlairs() {
-			console.log(this.$store.getters['moderation/listOfFlairs']);
 			return this.$store.getters['moderation/listOfFlairs'];
 		},
 		// @vuese

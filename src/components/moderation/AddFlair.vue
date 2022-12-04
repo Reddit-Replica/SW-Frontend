@@ -130,24 +130,27 @@
 
 			<div class="rule-box box-buttons">
 				<base-button
-					v-if="edit"
-					@click="deleteRule()"
-					class="delete-button"
-					:class="ruleName == '' ? 'disabled' : ''"
-					id="delete-button"
-					>Delete</base-button
-				>
-				<base-button
 					@click="hideAddFlair"
 					class="button-white"
 					id="cancel-button"
 					>Cancel</base-button
 				>
 				<base-button
-					@click="updateRule()"
+					@click="submitFlair()"
 					class="button-blue"
 					:class="flairText == '' ? 'disabled' : ''"
 					id="save-button"
+					v-if="!edit"
+					>Save</base-button
+				>
+				<base-button
+					@click="updateFlair()"
+					class="button-blue"
+					:class="
+						flairText == '' || flairText == flairNameEdit ? 'disabled' : ''
+					"
+					id="save-button"
+					v-else
 					>Save</base-button
 				>
 			</div>
@@ -164,15 +167,57 @@ export default {
 	data() {
 		return {
 			charRemainingName: 64,
-			textColor: 'white',
-			flairText: '',
-			backgroundColor: '#59c7f9',
+			textColor: this.textColorEdit,
+			flairText: this.flairNameEdit,
+			backgroundColor: this.backgroundColorEdit,
 			suckerCanvas: null,
 			suckerArea: [],
 			isSucking: false,
 			viewPicker: false,
 			errorResponse: null,
 		};
+	},
+	props: {
+		// @vuese
+		//return edited flair name
+		// @type string
+		flairNameEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ed backgroundColor
+		// @type string
+		backgroundColorEdit: {
+			type: String,
+			default: 'posts and comments',
+			required: true,
+		},
+		// @vuese
+		//return report textColor edit
+		// @type string
+		textColorEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return if there is an edited rule
+		// @type string
+		edit: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
+		// @vuese
+		//return flair id
+		// @type string
+		flairId: {
+			type: String,
+			default: '',
+			required: true,
+		},
 	},
 	components: {
 		ColorPicker,
@@ -242,7 +287,32 @@ export default {
 					subredditName: this.subredditName,
 				});
 				if (this.$store.getters['moderation/addFlairSuccessfully']) {
-					this.hideAddRule();
+					this.hideAddFlair();
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+		//@vuese
+		//handle update flair
+		//@arg no argument
+		async updateFlair() {
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('moderation/updateFlair', {
+					flairId: this.flairId,
+					flairName: this.flairText,
+					backgroundColor: this.backgroundColor,
+					textColor: this.textColor,
+					modOnly: true,
+					allowUserEdits: false,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/updateFlairSuccessfully']) {
+					this.hideAddFlair();
 					this.$emit('doneSuccessfully');
 				}
 			} catch (err) {

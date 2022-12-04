@@ -29,4 +29,7 @@ export default {
 	addFlairSuccessfully(state, payload) {
 		state.addFlairSuccessfully = payload;
 	},
+	updateFlairSuccessfully(state, payload) {
+		state.updateFlairSuccessfully = payload;
+	},
 };
