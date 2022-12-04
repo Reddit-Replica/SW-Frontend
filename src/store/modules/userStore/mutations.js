@@ -22,6 +22,11 @@ export default {
 			Object.assign(state.postData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserCommentsData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.commentsData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
 	addUserSocialLink(state, payload) {
 		state.userData.socialLinks.push(payload.newSocialLink);
 	},

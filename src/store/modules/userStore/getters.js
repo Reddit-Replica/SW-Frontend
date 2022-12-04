@@ -18,6 +18,11 @@ export default {
 			postData: state.postData,
 		};
 	},
+	getUserCommentsData(state) {
+		return {
+			commentsData: state.commentsData,
+		};
+	},
 	getStaticSocialLinks(state) {
 		return state.socialLinkItems;
 	},
