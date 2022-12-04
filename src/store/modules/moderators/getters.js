@@ -32,4 +32,7 @@ export default {
 	updateFlairSuccessfully(state) {
 		return state.updateFlairSuccessfully;
 	},
+	deleteFlairSuccessfully(state) {
+		return state.deleteFlairSuccessfully;
+	},
 };
