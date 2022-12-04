@@ -149,7 +149,12 @@
 					@click="updateFlair()"
 					class="button-blue"
 					:class="
-						flairText == '' || flairText == flairNameEdit ? 'disabled' : ''
+						flairText == '' ||
+						(flairText == flairNameEdit &&
+							backgroundColor == backgroundColorEdit &&
+							textColor == textColorEdit)
+							? 'disabled'
+							: ''
 					"
 					id="save-button"
 					v-else

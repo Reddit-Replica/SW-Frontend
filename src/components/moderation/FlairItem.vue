@@ -12,7 +12,7 @@
 				<button class="small-button" @click="showAddFlairFunction()">
 					Edit
 				</button>
-				<button class="small-button">
+				<button class="small-button" @click="clickDelete">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -43,19 +43,29 @@
 				:edit="true"
 			></add-flair>
 		</div>
+		<delete-flair
+			v-if="showSureDelete"
+			:subreddit-name="subredditName"
+			:flair-id="flair.flairId"
+			@exit="clickDelete()"
+			@done-successfully="doneSuccessfully('deleted')"
+		></delete-flair>
 	</div>
 </template>
 
 <script>
 import AddFlair from '../../components/moderation/AddFlair.vue';
+import deleteFlair from '../../components/moderation/deleteFlair.vue';
 export default {
 	emits: ['doneSuccessfully'],
 	components: {
 		AddFlair,
+		deleteFlair,
 	},
 	data() {
 		return {
 			showAddFlair: false,
+			showSureDelete: false,
 		};
 	},
 	props: {
@@ -75,6 +85,13 @@ export default {
 		},
 	},
 	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
 		// @vuese
 		//at searching check if it is the value of seacrhing or not
 		// @type boolean
@@ -99,6 +116,12 @@ export default {
 		// @arg no argument
 		doneSuccessfully(title) {
 			this.$emit('doneSuccessfully', title);
+		},
+		// @vuese
+		// Used to show delete flair popup
+		// @arg no argument
+		clickDelete() {
+			this.showSureDelete = !this.showSureDelete;
 		},
 	},
 };

@@ -18,6 +18,7 @@ export default {
 			listOfFlairs: [],
 			addFlairSuccessfully: false,
 			updateFlairSuccessfully: false,
+			deleteFlairSuccessfully: false,
 		};
 	},
 	mutations,
