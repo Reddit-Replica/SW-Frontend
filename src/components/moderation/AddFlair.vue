@@ -146,15 +146,7 @@
 				<base-button
 					@click="updateRule()"
 					class="button-blue"
-					:class="
-						(ruleName == ruleNameEdit &&
-							reportReason == reportReasonEdit &&
-							description == descriptionEdit &&
-							appliedType == appliesToEdit) ||
-						isNameTaken
-							? 'disabled'
-							: ''
-					"
+					:class="flairText == '' ? 'disabled' : ''"
 					id="save-button"
 					>Save</base-button
 				>
