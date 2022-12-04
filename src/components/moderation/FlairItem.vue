@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="item">
 		<div class="flair-text-box">
 			<span class="flair-text">{{ flair.flairName }}</span>
 		</div>
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.item {
 	border-radius: 0 0 4px 4px;
 	font-family: Noto Sans, Arial, sans-serif;
 	font-size: 14px;
