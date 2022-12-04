@@ -1,33 +1,63 @@
 <template>
-	<div class="add-flair-box">
-		<fieldset class="box-1">
-			<legend class="legend">Flair appearance</legend>
-			<div class="field">
-				<label for="flair-text" class="full-width">
-					<span class="flair-text-span">Flair text</span>
-					<input
-						type="text"
-						name=""
-						id="flair-text"
-						maxlength="64"
-						class="input-field"
-						v-model.trim="flairText"
-						@keyup="charCount()"
-					/>
-					<div class="error" v-if="flairText == ''">
-						Error: text or emoji is required
-					</div>
-					<div
-						class="grey-title"
-						:class="charRemainingName == 0 ? 'zero-char' : ''"
-						v-else
-					>
-						{{ charRemainingName }} characters remaining
-					</div>
-				</label>
+	<div>
+		<div class="row">
+			<div class="flair-text-box">
+				<span class="flair-text" :style="{ background: backgroundColor }">{{
+					flairText
+				}}</span>
 			</div>
+			<div class="buttons">
+				<button class="small-button">Edit</button>
+				<button class="small-button">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-trash"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+						/>
+						<path
+							fill-rule="evenodd"
+							d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div class="add-flair-box">
+			<fieldset class="box-1">
+				<legend class="legend">Flair appearance</legend>
+				<div class="field">
+					<label for="flair-text" class="full-width">
+						<span class="flair-text-span">Flair text</span>
+						<input
+							type="text"
+							name=""
+							id="flair-text"
+							maxlength="64"
+							class="input-field"
+							v-model.trim="flairText"
+							:class="flairText == '' ? 'input-error' : ''"
+							@keyup="charCount()"
+						/>
+						<div class="error" v-if="flairText == ''">
+							Error: text or emoji is required
+						</div>
+						<div
+							class="grey-title"
+							:class="charRemainingName == 0 ? 'zero-char' : ''"
+							v-else
+						>
+							{{ charRemainingName }} characters remaining
+						</div>
+					</label>
+				</div>
 
-			<!-- <div class="field">
+				<!-- <div class="field">
 				<label for="css-class" class="full-width">
 					<span class="flair-text-span">CSS class</span>
 					<input
@@ -41,104 +71,104 @@
 				</label>
 			</div> -->
 
-			<div class="field">
-				<label class="label-box small-box-relative">
-					<span class="flair-text-span-2">Flair background color</span>
-					<div class="small-box" @click="viewPickerFunction()">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="currentColor"
-							class="bi bi-chevron-down icon-display"
-							viewBox="0 0 16 16"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-							/>
-						</svg>
-
+				<div class="field">
+					<label class="label-box small-box-relative">
+						<span class="flair-text-span-2">Flair background color</span>
 						<div
-							class="picker-color"
+							class="small-box"
 							@click="viewPickerFunction()"
-							v-if="viewPicker"
+							:style="{ background: backgroundColor }"
 						>
-							<ColorPicker
-								theme="light"
-								:color="backgroundColor"
-								:sucker-hide="false"
-								:sucker-canvas="suckerCanvas"
-								:sucker-area="suckerArea"
-								@changeColor="changeColor"
-								@openSucker="openSucker"
-							/>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								fill="currentColor"
+								class="bi bi-chevron-down icon-display"
+								viewBox="0 0 16 16"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+								/>
+							</svg>
+
+							<div
+								class="picker-color"
+								@click="viewPickerFunction()"
+								v-if="viewPicker"
+							>
+								<ColorPicker
+									theme="light"
+									:color="backgroundColor"
+									:sucker-hide="false"
+									:sucker-canvas="suckerCanvas"
+									:sucker-area="suckerArea"
+									@changeColor="changeColor"
+									@openSucker="openSucker"
+								/>
+							</div>
 						</div>
-					</div>
-				</label>
-			</div>
-			<div class="field">
-				<label class="label-box">
-					<span class="flair-text-span-2">Flair text color</span>
-					<button
-						class="small-box-button"
-						:class="textColor == 'white' ? 'white' : 'black'"
-						@click="toggleTextColor(textColor)"
-					>
-						Aa
-					</button>
-				</label>
-			</div>
-		</fieldset>
-		<!-- <fieldset class="box-1 box-2">
+					</label>
+				</div>
+				<div class="field">
+					<label class="label-box">
+						<span class="flair-text-span-2">Flair text color</span>
+						<button
+							class="small-box-button"
+							:class="textColor == 'white' ? 'white' : 'black'"
+							@click="toggleTextColor(textColor)"
+						>
+							Aa
+						</button>
+					</label>
+				</div>
+			</fieldset>
+			<!-- <fieldset class="box-1 box-2">
 			<legend class="legend">Flair settings</legend>
 		</fieldset> -->
 
-		<div class="rule-box box-buttons">
-			<base-button
-				v-if="edit"
-				@click="deleteRule()"
-				class="delete-button"
-				:class="ruleName == '' ? 'disabled' : ''"
-				id="delete-button"
-				>Delete</base-button
-			>
-			<base-button @click="hideAddRule" class="button-white" id="cancel-button"
-				>Cancel</base-button
-			>
-			<base-button
-				v-if="!edit"
-				@click="submitFlair()"
-				class="button-blue"
-				:class="flairText == '' ? 'disabled' : ''"
-				id="create-flair-button"
-				>Save
-			</base-button>
-			<base-button
-				v-else
-				@click="updateRule()"
-				class="button-blue"
-				:class="
-					(ruleName == ruleNameEdit &&
-						reportReason == reportReasonEdit &&
-						description == descriptionEdit &&
-						appliedType == appliesToEdit) ||
-					isNameTaken
-						? 'disabled'
-						: ''
-				"
-				id="save-button"
-				>Save</base-button
-			>
-		</div>
+			<div class="rule-box box-buttons">
+				<base-button
+					v-if="edit"
+					@click="deleteRule()"
+					class="delete-button"
+					:class="ruleName == '' ? 'disabled' : ''"
+					id="delete-button"
+					>Delete</base-button
+				>
+				<base-button
+					@click="hideAddFlair"
+					class="button-white"
+					id="cancel-button"
+					>Cancel</base-button
+				>
+				<base-button
+					@click="updateRule()"
+					class="button-blue"
+					:class="
+						(ruleName == ruleNameEdit &&
+							reportReason == reportReasonEdit &&
+							description == descriptionEdit &&
+							appliedType == appliesToEdit) ||
+						isNameTaken
+							? 'disabled'
+							: ''
+					"
+					id="save-button"
+					>Save</base-button
+				>
+			</div>
 
-		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
+			<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import { ColorPicker } from 'vue-color-kit';
 export default {
+	emits: ['doneSuccessfully'],
 	data() {
 		return {
 			charRemainingName: 64,
@@ -165,9 +195,17 @@ export default {
 		},
 	},
 	methods: {
+		//@vuese
+		//Hide add flair
+		//@arg no argument
+		hideAddFlair() {
+			//@vuese
+			//Fire emit to close create community dialog
+			this.$emit('exit');
+		},
 		// @vuese
 		// Used to change pick color
-		// @arg no argument
+		// @arg the argument is the color picked
 		changeColor(color) {
 			const { r, g, b, a } = color.rgba;
 			this.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -226,9 +264,45 @@ export default {
 
 <style scoped>
 @import 'vue-color-kit/dist/vue-color-kit.css';
-/* .add-flair-box {
+.add-flair-box {
+	padding: 1.6rem;
+}
+.row {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 2.1rem;
+	background-color: var(--main-white-color);
+	border-bottom: 1px solid var(--color-grey-dark-5);
+	color: var(--color-dark-3);
+	display: -ms-flexbox;
 	display: flex;
-} */
+	padding: 1.2rem 1.6rem;
+	white-space: nowrap;
+}
+.flair-text-box {
+	margin-left: 0;
+	width: 40rem;
+}
+.flair-text {
+	background-color: rgb(218, 218, 218);
+	color: rgb(0, 0, 0);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	border-radius: 2px;
+	display: inline-block;
+	margin-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: text-bottom;
+	white-space: pre;
+	word-break: normal;
+	padding: 0 4px;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .box-1 {
 	flex: 1;
 	max-width: 28rem;
@@ -367,6 +441,44 @@ export default {
 	width: 1.6rem;
 	/* display: none; */
 }
+.buttons {
+	font-size: 1.2rem;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	line-height: 2.4rem;
+	text-transform: uppercase;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex: 1;
+	flex: 1;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	white-space: nowrap;
+}
+.small-button {
+	margin-left: 3.2rem;
+	padding: 0;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
+	cursor: not-allowed;
+	filter: grayscale(1);
+	text-transform: uppercase;
+	border-radius: 1rem;
+}
+.small-button:hover {
+	background-color: var(--color-grey-light-7);
+}
+/* .trash {
+	cursor: not-allowed;
+	filter: grayscale(1);
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
+} */
 .small-box-button {
 	font-size: 1.2rem;
 	font-weight: 500;

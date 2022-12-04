@@ -26,7 +26,6 @@
 										muted ||
 										approved ||
 										moderators ||
-										postFlair ||
 										scheduledPosts ||
 										contentControls
 									"
