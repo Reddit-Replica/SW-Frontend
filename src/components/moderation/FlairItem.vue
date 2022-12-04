@@ -2,7 +2,11 @@
 	<div>
 		<div class="item" v-if="!showAddFlair">
 			<div class="flair-text-box">
-				<span class="flair-text">{{ flair.flairName }}</span>
+				<span
+					class="flair-text"
+					:style="{ background: flair.backgroundColor }"
+					>{{ flair.flairName }}</span
+				>
 			</div>
 			<div class="buttons">
 				<button class="small-button" @click="showAddFlairFunction()">
