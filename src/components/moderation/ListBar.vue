@@ -73,7 +73,12 @@
 
 <script>
 export default {
-	emits: ['showAddRuleFunction', 'reorderRules', 'saveReorderRules'],
+	emits: [
+		'showAddRuleFunction',
+		'reorderRules',
+		'saveReorderRules',
+		'showAddFlairFunction',
+	],
 	props: {
 		// @vuese
 		// title to be written in bar
