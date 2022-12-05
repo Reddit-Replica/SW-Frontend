@@ -28,8 +28,8 @@
 		<div class="sort-post-box-1">
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Best' }"
-				@click="selectSort('Best')"
+				:class="{ clicked: clicked == 'best' }"
+				@click="selectSort('best')"
 				id="best-sort"
 			>
 				<svg
@@ -49,8 +49,8 @@
 
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Hot' }"
-				@click="selectSort('Hot')"
+				:class="{ clicked: clicked == 'hot' }"
+				@click="selectSort('hot')"
 				id="hot-sort"
 			>
 				<svg
@@ -70,8 +70,8 @@
 			</div>
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'New' }"
-				@click="selectSort('New')"
+				:class="{ clicked: clicked == 'new' }"
+				@click="selectSort('new')"
 				id="new-sort"
 			>
 				<!-- <i class="fa-regular fa-sun icon"></i> -->
@@ -91,8 +91,8 @@
 			</div>
 			<div
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Top' }"
-				@click="selectSort('Top')"
+				:class="{ clicked: clicked == 'top' }"
+				@click="selectTime(time)"
 				id="top-sort"
 			>
 				<svg
@@ -112,50 +112,75 @@
 						d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"
 					/>
 				</svg>
-				<!-- <i class="fa-solid fa-arrow-up-from-ground-water icon"></i> -->
 				<span>Top</span>
 			</div>
-			<!-- for rising -->
-			<!-- <div class="icon__box__setting">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-three-dots icon icon-setting"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-          />
-        </svg>
-      </div>  -->
-		</div>
-		<!-- <div class="sort-post-box-2">
-			<div class="sort-post-icon-box">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					fill="currentColor"
-					class="bi bi-dash-square sort-post-icon sort-post-icon-square"
-					viewBox="0 0 16 16"
-				>
-					<path
-						d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-					/>
-					<path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-				</svg>
-				<svg class="sort-post-arrow-icon sort-post-icon">
+			<div
+				class="sort-post-icon-box clicked"
+				@click="showTimeSubMenu()"
+				id="show-sub-time-menu"
+				v-if="clicked == 'top'"
+			>
+				<span>{{ time }}</span>
+				<svg class="sort-post-arrow-icon sort-post-icon" id="arrow-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
+				<ul class="sort-post-sub-menu" v-if="showTimeMenu">
+					<li
+						class="sort-post-box"
+						:class="{ clicked: time == 'Now' }"
+						@click="selectTime('Now')"
+						id="now-sort-sub-menu"
+					>
+						<span>Now</span>
+					</li>
+					<li
+						class="sort-post-box"
+						:class="{ clicked: time == 'Today' }"
+						@click="selectTime('Today')"
+						id="today-sort-sub-menu"
+					>
+						<span>Today</span>
+					</li>
+					<li
+						class="sort-post-box"
+						:class="{ clicked: time == 'This Week' }"
+						@click="selectTime('This Week')"
+						id="this-week-sort-sub-menu"
+					>
+						<span>This Week</span>
+					</li>
+					<li
+						class="sort-post-box"
+						:class="{ clicked: time == 'This Month' }"
+						@click="selectTime('This Month')"
+						id="this-month-sort-sub-menu"
+					>
+						<span>This Month</span>
+					</li>
+					<li
+						class="sort-post-box"
+						:class="{ clicked: time == 'this-year' }"
+						@click="selectTime('This Year')"
+						id="this-year-sort-sub-menu"
+					>
+						<span>This Year</span>
+					</li>
+					<li
+						class="sort-post-box"
+						:class="{ clicked: time == 'All Time' }"
+						@click="selectTime('All Time')"
+						id="all-time-sort-sub-menu"
+					>
+						<span>All Time</span>
+					</li>
+				</ul>
 			</div>
-		</div> -->
+		</div>
 		<ul class="sort-post-sub-menu" v-if="showMenu">
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Best' }"
-				@click="selectSort('Best')"
+				:class="{ clicked: clicked == 'best' }"
+				@click="selectSort('best')"
 				id="best-sort-sub-menu"
 			>
 				<svg
@@ -175,8 +200,8 @@
 			</li>
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Hot' }"
-				@click="selectSort('Hot')"
+				:class="{ clicked: clicked == 'hot' }"
+				@click="selectSort('hot')"
 				id="hot-sort-sub-menu"
 			>
 				<svg
@@ -196,8 +221,8 @@
 			</li>
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'New' }"
-				@click="selectSort('New')"
+				:class="{ clicked: clicked == 'new' }"
+				@click="selectSort('new')"
 				id="new-sort-sub-menu"
 			>
 				<!-- <i class="fa-regular fa-sun icon"></i> -->
@@ -217,8 +242,8 @@
 			</li>
 			<li
 				class="sort-post-icon-box"
-				:class="{ clicked: clicked == 'Top' }"
-				@click="selectSort('Top')"
+				:class="{ clicked: clicked == 'top' }"
+				@click="selectTime(time)"
 				id="top-sort-sub-menu"
 			>
 				<svg
@@ -247,11 +272,20 @@
 
 <script>
 export default {
-	emits: ['title'],
+	emits: ['title', 'time'],
+	props: {
+		initialTitle: {
+			type: String,
+			required: true,
+			default: '',
+		},
+	},
 	data() {
 		return {
 			showMenu: false,
-			clicked: 'Best',
+			showTimeMenu: false,
+			clicked: this.initialTitle,
+			time: 'Today',
 		};
 	},
 	methods: {
@@ -263,11 +297,19 @@ export default {
 			if (this.showMenu) this.showSubMenu();
 			this.$emit('title', title.toLowerCase());
 		},
+		selectTime(title) {
+			this.time = title;
+			if (this.showMenu) this.showSubMenu();
+			this.$emit('time', title.toLowerCase());
+		},
 		// @vuese
 		// Used to show submenu for responsive design
 		// @arg no argument
 		showSubMenu() {
 			this.showMenu = !this.showMenu;
+		},
+		showTimeSubMenu() {
+			this.showTimeMenu = !this.showTimeMenu;
 		},
 	},
 };
@@ -296,6 +338,9 @@ export default {
 .sort-post-box-1-1 {
 	display: none;
 }
+.sort-post-box-1-2 {
+	display: flex;
+}
 .sort-post-box-1 {
 	display: flex;
 	align-items: center;
@@ -303,17 +348,19 @@ export default {
 }
 .sort-post-box-1 > *,
 .sort-post-box-2 > *,
-.sort-post-box-1-1 > * {
+.sort-post-box-1-1 > *,
+.sort-post-box-1-2 > * {
 	padding: 0 1rem;
 	cursor: pointer;
-	height: 100%;
 	display: flex;
 	align-items: center;
+	height: 35px;
+	margin: 0 5px;
 }
-
 .sort-post-box-1 > *:hover,
 .sort-post-box-2 > *:hover,
-.sort-post-box-1-1 > *:hover {
+.sort-post-box-1-1 > *:hover,
+.sort-post-box-1-2 > *:hover {
 	background-color: var(--color-grey-light-2);
 	border-radius: 2rem;
 }
@@ -331,7 +378,7 @@ export default {
 .sort-post-icon-square {
 	margin: 0;
 }
-.clicked {
+.sort-post-icon-box.clicked {
 	background-color: var(--color-grey-light-1);
 	color: var(--color-blue-light);
 	border-radius: 2rem;
@@ -348,6 +395,8 @@ export default {
 	top: 4rem;
 	box-shadow: 0px 2px 4px var(--color-grey-dark-2);
 	border-radius: 5px;
+	z-index: 2;
+	overflow: hidden;
 }
 .sort-post-sub-menu li {
 	color: var(--color-grey-dark-2);
@@ -357,16 +406,19 @@ export default {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	width: max-content;
+	padding: 0 5px;
+	height: 35px;
 }
 .sort-post-sub-menu li:hover {
 	background-color: var(--color-grey-light-2);
-	border-radius: 2rem;
+	color: black;
 }
 .sub-menu li {
 	padding: 0px 10px;
 }
 .sort-post-sub-menu li.clicked {
-	background-color: var(--color-white-1);
+	color: var(--color-blue-light);
 }
 @media only screen and (max-width: 40em) {
 	.sort-post-box-1 {
@@ -375,5 +427,8 @@ export default {
 	.sort-post-box-1-1 {
 		display: flex;
 	}
+}
+#show-sub-time-menu {
+	position: relative;
 }
 </style>
