@@ -29,4 +29,7 @@ export default {
 	getSocialLinkIcon(state) {
 		return state.socialLinkItems;
 	},
+	getBlockedUsersData(state) {
+		return state.blockedUsersData;
+	},
 };

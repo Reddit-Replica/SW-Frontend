@@ -347,6 +347,21 @@ export default {
 					},
 				],
 			},
+			blockedUsersData: {
+				before: 'string',
+				after: 'string',
+				children: [
+					{
+						id: 'string',
+						data: {
+							username: 'string',
+							blockDate: '2019-08-24T14:15:22Z',
+							userPic:
+								'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
+						},
+					},
+				],
+			},
 		};
 	},
 	mutations,
