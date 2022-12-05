@@ -24,6 +24,7 @@ export default {
 			downClicked: false,
 		};
 	},
+
 	async created() {
 		this.loading = true;
 		const requestStatus = await this.RequestUserPostData();
@@ -63,7 +64,7 @@ export default {
 	},
 };
 </script>
-<style>
+<style scoped>
 .sort-post-content {
 	margin-top: 2px !important;
 	margin-bottom: 16px;

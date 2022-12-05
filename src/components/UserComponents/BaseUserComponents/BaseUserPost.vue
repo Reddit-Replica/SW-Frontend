@@ -242,7 +242,7 @@
 											</div>
 										</router-link>
 									</li>
-									<li class="post-option-item">
+									<li class="post-option-item" @click="sharePost">
 										<router-link to="">
 											<div class="post-options-icon">
 												<i
@@ -607,6 +607,39 @@ export default {
 	// 	},
 	// },
 	methods: {
+		savePost() {
+			console.log('save');
+		},
+		removePost() {
+			console.log('remove');
+		},
+		sharePost() {
+			console.log('share');
+		},
+		editPost() {
+			console.log('edit');
+		},
+		pinPostToProfile() {
+			console.log('pin');
+		},
+		deletePost() {
+			console.log('delete');
+		},
+		hidePost() {
+			console.log('hide');
+		},
+		markAsOC() {
+			console.log('mark as os');
+		},
+		markAsSpoiler() {
+			console.log('mark as spoiler');
+		},
+		markAsNSFW() {
+			console.log('mark as nsfw');
+		},
+		approvePost() {
+			console.log('approve');
+		},
 		resizePost() {
 			console.log('resize');
 		},

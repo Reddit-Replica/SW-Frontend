@@ -29,4 +29,10 @@ export default {
 	addFlairSuccessfully(state) {
 		return state.addFlairSuccessfully;
 	},
+	updateFlairSuccessfully(state) {
+		return state.updateFlairSuccessfully;
+	},
+	deleteFlairSuccessfully(state) {
+		return state.deleteFlairSuccessfully;
+	},
 };

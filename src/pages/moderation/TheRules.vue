@@ -236,8 +236,8 @@ export default {
 		},
 
 		// @vuese
-		// handle load rules instead of refreshing
-		// @arg no argument
+		// handle load rules instead of refreshing, add show save sucessfully popup
+		// @arg the argument is the title used in show popup
 		doneSuccessfully(title) {
 			this.loadListOfRules();
 			this.savePost(title);
@@ -245,7 +245,7 @@ export default {
 
 		// @vuese
 		// Used to show handle save action popup
-		// @arg no argument
+		// @arg the argument is the title used in show popup
 		savePost(title) {
 			this.savedUnsavedPosts.push({
 				id: this.savedUnsavedPosts.length,

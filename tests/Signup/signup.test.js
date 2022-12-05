@@ -5,7 +5,7 @@ describe('SignupPage.vue', () => {
 	//it-> test block
 	it('Render component exist', async () => {
 		//our component
-		const wrapper = shallowMount(SignUpPage, {
+		const wrapper = mount(SignUpPage, {
 			global: {
 				components: {},
 				mocks: {},
@@ -16,7 +16,7 @@ describe('SignupPage.vue', () => {
 
 	it('test v-model', async () => {
 		//our component
-		const wrapper = shallowMount(SignUpPage, {
+		const wrapper = mount(SignUpPage, {
 			global: {
 				components: {},
 				mocks: {},
@@ -31,7 +31,7 @@ describe('SignupPage.vue', () => {
 
 	it('test v-if rendring', async () => {
 		//our component
-		const wrapper = shallowMount(SignUpPage, {
+		const wrapper = mount(SignUpPage, {
 			global: {
 				components: {},
 				mocks: {},
@@ -64,6 +64,27 @@ describe('SignupPage.vue', () => {
         expect(wrapper.find('#bottom_div').exists()).toBe(false);
 
 
+	});
+	//Testing wrong userName
+	it('Testing clicking submit', () => {
+		const wrapper = mount(SignUpPage, {
+			props: {},
+			global: {},
+		});
+		const signupbtn = wrapper.find('#button-Continue');
+		const emailinp = wrapper.find('#email-input');
+		signupbtn
+			.trigger('click')
+			.then(() => {
+				emailinp.setValue('ksasd');
+				expect(emailinp.element.value).toBe('ksasd');
+				expect(wrapper.find('#messageErrorShowEmail').exists()).toBe(true);
+				expect(wrapper.find('#showSignemail').exists()).toBe(true);
+			})
+			.catch(function () {
+				console.log('Promise Rejected');
+			});
+		return Promise.resolve();
 	});
     // it('test v-model', async () => {
 	// 	//our component
