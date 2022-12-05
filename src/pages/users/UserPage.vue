@@ -128,8 +128,9 @@ export default {
 			this.loading = true;
 			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
 			if (this.$route.params.userName == this.$store.getters.getUserName)
-				this.state = 'profile'; /* means same authenticated user */
-			else this.state = 'user'; /* means other user */
+				this.state = 'profile';
+			/* means same authenticated user */ else
+				this.state = 'user'; /* means other user */
 			// console.log(this.state);
 			/* after that we fetch data fetch user data */
 			document.title = this.$store.state.userName + ' - Reddit';
