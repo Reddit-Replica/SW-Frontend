@@ -34,6 +34,7 @@ export default {
 			flairId: null,
 			imageCaptions: [],
 			imageLinks: [],
+			images: [],
 			sendReplies: null,
 			allSubreddits: [],
 		};
