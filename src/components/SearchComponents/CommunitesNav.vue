@@ -1,26 +1,30 @@
 <template>
 	<div class="communities-nav">
 		<h4 class="communities-word">Communities</h4>
-		<div>
-			<div>
+		<div v-if="commcontents.length >= 4">
+			<div v-for="value in commcontents" :key="value.id">
 				<div>
 					<a class="communities-status"
 						><div class="communities-status-release">
-							<img
-								src="https://styles.redditmedia.com/t5_3d5irw/styles/profileIcon_snoo590500c4-7be0-4699-aa5f-21b87d02314e-headshot-f.png?width=256&amp;height=256&amp;frame=1&amp;crop=256:256,smart&amp;s=2a008cc76be58e70a13a7e5b22cbc98b5278b432"
-								style="background-color: #0266b3"
-								class="communities-img"
-							/>
+							<img style="background-color: #0266b3" class="communities-img" />
 							<div class="communities-content">
 								<div class="communities-content-release">
-									<h6 class="communities-name">r/{{ community }}</h6>
-									<p class="community-members">{{ members }} Members</p>
+									<h6 class="communities-name">r/{{ value.community }}</h6>
+									<p class="community-members">{{ value.members }} Members</p>
 								</div>
 							</div>
-							<div class="join">
+							<div class="join" v-if="value.notjoined">
 								<base-button
-									button-text="join"
+									button-text="Join"
 									class="join-button"
+									@click="clickedFunction(!value.commcontents.notjoined)"
+								></base-button>
+							</div>
+							<div class="join" v-if="!value.notjoined">
+								<base-button
+									button-text="Leave"
+									class="join-button"
+									@click="change"
 								></base-button>
 							</div></div
 					></a>
@@ -34,14 +38,32 @@
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
+	props: {
+		commcontents: {
+			type: Object,
+			required: true,
+		},
+		// index: {
+		// 	type: Number,
+		// 	required: true,
+		// },
+	},
 	data() {
 		return {
-			community: 'Salah',
-			members: '124k',
+			// community: 'Salah',
+			// members: '124k',
+			// notjoined: true,
 		};
 	},
 	components: {
 		BaseButton,
+	},
+	emits: ['change-joining'],
+	methods: {
+		clickedFunction(boolVal) {
+			this.$emit('change-joining', boolVal);
+			// this.$emit('change-joining');
+		},
 	},
 };
 </script>
@@ -62,8 +84,8 @@ a {
 }
 p {
 	display: block;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
+	margin-block-start: 0em;
+	margin-block-end: 0em;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
 }
@@ -134,7 +156,7 @@ p {
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 16px;
-	color: lightgray;
+	color: #bbb;
 }
 .join {
 	flex-shrink: 0;
