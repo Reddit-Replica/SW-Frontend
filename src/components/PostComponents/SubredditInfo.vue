@@ -43,9 +43,6 @@
 				id="leave-button"
 				>{{ hoverButtonText }}</base-button
 			>
-			<div class="options">
-				<base-button>COMMUNITY OPTIONS</base-button>
-			</div>
 		</div>
 	</div>
 </template>
@@ -181,8 +178,5 @@ p {
 }
 .white-button:focus {
 	background-color: var(--color-pink-3);
-}
-.options {
-	border-bottom: 1px solid var(--color-grey-light-8);
 }
 </style>
