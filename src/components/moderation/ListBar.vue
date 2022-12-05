@@ -3,7 +3,10 @@
 		<div
 			class="bar"
 			v-if="
-				title != 'Rules' && title != 'Post flair' && title != 'Content controls'
+				title != 'Rules' &&
+				title != 'Post flair' &&
+				title != 'Content controls' &&
+				title != 'banned'
 			"
 		>
 			<base-button class="button-white" v-if="isModeratorList"
@@ -11,6 +14,7 @@
 			>
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div>
+
 		<div class="bar" v-if="title == 'Rules' && !dragDrop">
 			<base-button
 				class="reorder-button"
@@ -39,6 +43,11 @@
 				id="save-rules-button"
 				@click="saveReorderRules()"
 				>Save</base-button
+			>
+		</div>
+		<div class="bar" v-if="title == 'banned'">
+			<base-button class="base-button" @click="showBanUser()"
+				>Ban user</base-button
 			>
 		</div>
 		<div class="bar" v-if="title == 'flair' && !dragDrop">
@@ -97,6 +106,7 @@ export default {
 		'showAddFlairFunction',
 		'reorderFlairs',
 		'savereorderFlairs',
+		'showBanUser',
 	],
 	props: {
 		// @vuese
@@ -150,16 +160,12 @@ export default {
 	},
 	computed: {
 		barTitle() {
-			if (this.title == 'Banned') {
-				return 'Ban user';
-			} else if (this.title == 'Muted') {
+			if (this.title == 'Muted') {
 				return 'Mute user';
 			} else if (this.title == 'Approved') {
 				return 'Approve user';
 			} else if (this.title == 'Moderators of t/' + this.subredditName) {
 				return 'Invite user as mod';
-			} else if (this.title == 'Rules') {
-				return 'Rules';
 			} else if (this.title == 'Schedule Post') {
 				return 'Schedule Post';
 			} else return '';
@@ -186,6 +192,12 @@ export default {
 		// @arg no argument
 		reorderRules() {
 			this.$emit('reorderRules');
+		},
+		// @vuese
+		// Used to show ban user
+		// @arg no argument
+		showBanUser() {
+			this.$emit('showBanUser');
 		},
 
 		// @vuese

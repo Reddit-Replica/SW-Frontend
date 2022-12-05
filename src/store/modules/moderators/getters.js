@@ -35,4 +35,10 @@ export default {
 	deleteFlairSuccessfully(state) {
 		return state.deleteFlairSuccessfully;
 	},
+
+	//////////////////////BAN////////////////////////
+
+	banUserSuccessfully(state) {
+		return state.banUserSuccessfully;
+	},
 };
