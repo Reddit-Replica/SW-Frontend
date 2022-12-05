@@ -1,4 +1,3 @@
-
 /**
  * @module PostsActions
  */
@@ -25,12 +24,12 @@ export default {
 			throw error;
 		}
 	},
-/**
-* Action for creating Post
- * @action createPost 
- * @param {Object} payload post data and base url.
- * @returns {void}
- */
+	/**
+	 * Action for creating Post
+	 * @action createPost
+	 * @param {Object} payload post data and base url.
+	 * @returns {void}
+	 */
 	async createPost(context, payload) {
 		const postInfo = {
 			kind: payload.kind,
@@ -64,11 +63,11 @@ export default {
 		}
 	},
 	/**
- * Action for checking if subreddit name is used before.
- * @action getAllsubreddits
- * @param {Object} payload base url.
- * @returns {void}
- */
+	 * Action for checking if subreddit name is used before.
+	 * @action getAllsubreddits
+	 * @param {Object} payload base url.
+	 * @returns {void}
+	 */
 	async getAllsubreddits(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/subredditName');
