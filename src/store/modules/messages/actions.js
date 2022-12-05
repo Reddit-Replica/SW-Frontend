@@ -1,4 +1,13 @@
+/**
+ * @module MessagesActions
+ */
 export default {
+	/**
+	 * Make a request to get inbox messages ,
+	 * @action loadInboxMessages=setInboxMessages
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/inbox', {
@@ -45,6 +54,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get unread messages ,
+	 * @action loadUnreadMessages=setUnreadMessages
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadUnreadMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/unread', {
@@ -91,6 +106,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get user mentions ,
+	 * @action loadUserMentions=setUserMentions
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/mentions', {
@@ -137,6 +158,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get user messages ,
+	 * @action loadUserMessages=setUserMessages
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/messages', {
@@ -180,6 +207,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get post replies ,
+	 * @action loadPostReplies=setPostReplies
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/post-reply', {
@@ -226,6 +259,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get sent messages ,
+	 * @action loadSentMessages=setSentMessages
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/message/sent', {
@@ -265,6 +304,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to send private message
+	 * @action sendMessage=sentSuccessfully
+	 * @param {object} payload An object contains baseurl, message info
+	 * @returns {integer} status code
+	 */
 	async sendMessage(context, payload) {
 		context.commit('sentSuccessfully', false);
 		const newMessage = {
@@ -334,6 +379,12 @@ export default {
 	// 	}
 	// },
 
+	/**
+	 * Make a request to block user
+	 * @action blockUser=blockSuccessfully
+	 * @param {object} payload An object contains baseurl, username
+	 * @returns {integer} status code
+	 */
 	async blockUser(context, payload) {
 		context.commit('blockSuccessfully', false);
 		const block = {
@@ -371,6 +422,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to delete user
+	 * @action deleteMessage=deleteMessageSuccessfully
+	 * @param {object} payload An object contains baseurl, message id, message type
+	 * @returns {integer} status code
+	 */
 	async deleteMessage(context, payload) {
 		context.commit('deleteMessageSuccessfully', false);
 		const del = {
@@ -409,6 +466,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to spam user
+	 * @action spamMessage=markSpamSuccessfully
+	 * @param {object} payload An object contains baseurl, message id, message type, reason
+	 * @returns {integer} status code
+	 */
 	async spamMessage(context, payload) {
 		context.commit('markSpamSuccessfully', false);
 		const spam = {
@@ -450,6 +513,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get suggested sender that can send message,
+	 * @action loadSuggestedSender=setSuggestedSender
+	 * @param {object} payload An object contains baseurl.
+	 * @returns {integer} return an object contains all its data
+	 */
 	async loadSuggestedSender(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/suggested-sender', {
@@ -484,6 +553,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to vote comment
+	 * @action voteComment=votedSuccessfully
+	 * @param {object} payload An object contains baseurl, vote id, message type, direction
+	 * @returns {integer} status code
+	 */
 	async voteComment(context, payload) {
 		context.commit('votedSuccessfully', false);
 		const vote = {
@@ -520,6 +595,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to vote comment
+	 * @action replyMessage=replyMessageSuccessfully
+	 * @param {object} payload An object contains text, senderUsername, receiverUsername
+	 * @returns {integer} status code
+	 */
 	async replyMessage(context, payload) {
 		context.commit('replyMessageSuccessfully', false);
 		const newReply = {

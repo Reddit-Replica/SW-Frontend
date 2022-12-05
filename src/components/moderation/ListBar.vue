@@ -41,16 +41,20 @@
 				>Save</base-button
 			>
 		</div>
-		<div class="bar" v-if="title == 'Post flair'">
-			<base-button class="button-white" id="post-flair-button"
+		<div class="bar" v-if="title == 'flair'">
+			<!-- <base-button class="button-white" id="post-flair-button"
 				>Post flair settings</base-button
-			>
+			> -->
 			<base-button
 				class="reorder-post-flair-button"
 				id="reorder-post-flair-button"
 				>Reorder</base-button
 			>
-			<base-button class="base-button" id="add-flair-button"
+			<base-button
+				class="base-button"
+				id="add-flair-button"
+				@click="showAddFlairFunction()"
+				:class="showAddFlair ? 'disable-button ' : ''"
 				>Add flair</base-button
 			>
 		</div>
@@ -69,7 +73,12 @@
 
 <script>
 export default {
-	emits: ['showAddRuleFunction', 'reorderRules', 'saveReorderRules'],
+	emits: [
+		'showAddRuleFunction',
+		'reorderRules',
+		'saveReorderRules',
+		'showAddFlairFunction',
+	],
 	props: {
 		// @vuese
 		// title to be written in bar
@@ -103,9 +112,14 @@ export default {
 			default: false,
 			required: true,
 		},
-	},
-	data() {
-		return {};
+		// @vuese
+		// if clicked on add flair or not
+		// @type string
+		showAddFlair: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
 	},
 	computed: {
 		barTitle() {
@@ -133,6 +147,12 @@ export default {
 		// @arg no argument
 		showAddRuleFunction() {
 			this.$emit('showAddRuleFunction', this.showAddRule);
+		},
+		// @vuese
+		// Used to show add flair
+		// @arg no argument
+		showAddFlairFunction() {
+			this.$emit('showAddFlairFunction');
 		},
 		// @vuese
 		// Used to handle re-order rules action

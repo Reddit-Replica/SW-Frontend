@@ -130,6 +130,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for Signup handle for sending Sign up request
+	 * @action  signuphandle
+	 * @param {Object} payload username, email and password .
+	 * @returns {void}
+	 */
 	async signuphandle(context, payload) {
 		const userInfo = {
 			username: payload.username,
@@ -167,6 +173,12 @@ export default {
 		// 	accessToken: responseData.split(' ')[1],
 		// });
 	},
+	/**
+	 * action for LogIn handle for sending Login request
+	 * @action  loginhandle
+	 * @param {Object} payload username and password .
+	 * @returns {void}
+	 */
 	async loginhandle(context, payload) {
 		const userInfo = {
 			username: payload.username,
@@ -201,6 +213,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for LogIn and signup with google and send request
+	 * @action  googleSign
+	 * @param {Object} payload type and id_token from google .
+	 * @returns {void}
+	 */
 	async googleSign(context, payload) {
 		const baseurl = payload.baseurl;
 		const userInfo = {
@@ -227,6 +245,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for checking if username is available
+	 * @action  available_user
+	 * @param {Object} payload username .
+	 * @returns {void}
+	 */
 	async available_user(context, payload) {
 		const baseurl = payload.baseurl;
 		// console.log(payload.username);
@@ -249,6 +273,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for checking if email is available
+	 * @action  available_email
+	 * @param {Object} payload email .
+	 * @returns {void}
+	 */
 	async available_email(context, payload) {
 		const baseurl = payload.baseurl;
 		// console.log(payload.username);
@@ -271,6 +301,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for logout
+	 * @action  logout_handle
+	 * @param {Object} payload username and accessToken .
+	 * @returns {void}
+	 */
 	logout_handle(context) {
 		localStorage.removeItem('userName');
 		localStorage.removeItem('accessToken');

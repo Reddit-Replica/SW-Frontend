@@ -32,6 +32,7 @@
 		"quill-vuejs": "^0.0.14",
 		"utils": "^0.3.1",
 		"vue": "^3.2.13",
+		"vue-color-kit": "^1.0.5",
 		"vue-draggable-next": "^2.1.1",
 		"vue-quill": "^1.5.1",
 		"vue-recaptcha": "^2.0.3",
