@@ -40,7 +40,19 @@ export default {
 		state.userData.followed = payload.followUnfollowData.follow;
 	},
 	blockUnblockUser(state, payload) {
+		if (payload.blockUnblockData.remove) {
+			let deleteIndex = -1;
+			state.blockedUsersData.children.forEach((element, index) => {
+				if (element.data.username === payload.blockUnblockData.username)
+					deleteIndex = index;
+				// console.log(deleteIndex, payload.blockUnblockData.username);
+			});
+			state.blockedUsersData.children.splice(deleteIndex, 1);
+		}
 		state.userData.blocked = payload.blockUnblockData.block;
+	},
+	SetListOfBlockedUsers(state, payload) {
+		state.blockedUsersData = payload.responseData;
 	},
 	getSocialLinkIcon(state, payload) {
 		console.log(11, payload.id);

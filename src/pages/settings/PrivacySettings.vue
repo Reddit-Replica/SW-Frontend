@@ -28,24 +28,32 @@
 						<button
 							id="Add-block-new-user-button"
 							:class="activeAddButton ? 'buttonActive' : 'buttonDisActive'"
+							@click="addBlockedUser"
 						>
 							ADD
 						</button>
 					</div>
 					<ul class="blocked-users">
 						<li
-							v-for="blockedUser in blockedUsers"
+							v-for="blockedUser in blockedUsersData.children"
 							:key="blockedUser.id"
-							:id="blockedUser.id"
 						>
 							<div class="blocked-container">
-								<a class="blocked-user-info">
-									<img :src="blockedUser.blockedPic" alt="" />
-									<span>{{ blockedUser.name }}</span>
-								</a>
-								<span>{{ blockedUser.blockedDate }}</span>
+								<router-link
+									:to="`/user/${blockedUser.data.username}`"
+									class="blocked-user-info"
+								>
+									<img :src="blockedUser.data.userPic" alt="" />
+									<span>{{ blockedUser.data.username }}</span>
+								</router-link>
+								<span>{{ getMoment(blockedUser.data.blockDate) }}</span>
 							</div>
-							<button :id="`remove-${blockedUser.id}`">REMOVE</button>
+							<button
+								:id="`remove-${blockedUser.id}`"
+								@click="removeBlockedUser(blockedUser.data.username)"
+							>
+								REMOVE
+							</button>
 						</li>
 					</ul>
 				</div>
@@ -206,6 +214,7 @@
 </template>
 
 <script>
+import * as moment from 'moment';
 export default {
 	data() {
 		return {
@@ -229,8 +238,58 @@ export default {
 			],
 		};
 	},
+	async created() {
+		this.loading = true;
+		const requestStatus = await this.RequestListOfBlockedUsersData();
+		this.loading = false;
+		if (requestStatus == 200) console.log('Sucessfully fetched data');
+		else if (requestStatus == 404) console.log('not found');
+		else if (requestStatus == 500) console.log(' internal server error');
+	},
 	methods: {
-		addBlockedUser() {},
+		getMoment(date) {
+			console.log(moment);
+			return moment(date).fromNow();
+		},
+		async RequestListOfBlockedUsersData() {
+			try {
+				await this.$store.dispatch('user/FetchListOfBlockedUsers', {
+					baseurl: this.$baseurl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async addBlockedUser() {
+			try {
+				await this.$store.dispatch('user/blockUnblockUser', {
+					baseurl: this.$baseurl,
+					blockUnblockData: {
+						username: this.BlockedNewUserName,
+						block: true,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.RequestListOfBlockedUsersData();
+			this.BlockedNewUserName = '';
+			this.focusInOut = 'focus-out';
+		},
+		async removeBlockedUser(blockUsername) {
+			try {
+				await this.$store.dispatch('user/blockUnblockUser', {
+					baseurl: this.$baseurl,
+					blockUnblockData: {
+						username: blockUsername,
+						block: false,
+						remove: true,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 		focusOut() {
 			if (this.BlockedNewUserName == '') {
 				this.focusInOut = 'focus-out';
@@ -245,6 +304,9 @@ export default {
 				return true;
 			}
 			return false;
+		},
+		blockedUsersData() {
+			return this.$store.getters['user/getBlockedUsersData'];
 		},
 	},
 };
@@ -398,6 +460,7 @@ a.blocked-user-info {
 	color: #1c1c1c;
 	align-items: center;
 	font-size: 16px;
+	cursor: pointer;
 }
 .blocked-user-info img {
 	width: 24px;

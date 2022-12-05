@@ -252,4 +252,28 @@ export default {
 		});
 		return response.status;
 	},
+	async FetchListOfBlockedUsers(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/blocked-users', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+		console.log(response.status);
+		console.log(responseData);
+		// if(response.status == 200)
+		context.commit('SetListOfBlockedUsers', {
+			responseData,
+		});
+		return response.status;
+	},
 };
