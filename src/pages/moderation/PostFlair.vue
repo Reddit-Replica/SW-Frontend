@@ -2,12 +2,13 @@
 	<div>
 		<list-bar
 			:title="'flair'"
-			:rules-count="listOfFlairs.length"
+			:flairs-count="listOfFlairs.length"
 			@show-add-flair-function="showAddFlairFunction()"
-			@reorder-flairs="reorderRules()"
-			@save-reorder-flairs="saveReorderRules()"
+			@reorder-flairs="reorderFlairs()"
+			@save-reorder-flairs="saveReorderFlairs()"
 			:subreddit-name="subredditName"
 			:show-add-flair="showAddFlair"
+			:drag-drop="dragDrop"
 		></list-bar>
 		<div class="content">
 			<div class="text">
@@ -118,7 +119,7 @@
 			</div> -->
 				<div class="first-section"></div>
 			</div>
-			<ul class="ul-items" v-if="!noFlairs">
+			<ul class="ul-items" v-if="!noFlairs && !dragDrop">
 				<flair-item
 					v-for="flair in listOfFlairs"
 					:key="flair"
@@ -148,12 +149,41 @@
 					Create post flair in your community today
 				</p>
 			</div>
+			<draggable
+				v-if="!noFlairs && dragDrop"
+				class="dragArea list-group w-full"
+				:list="listOfFlairs"
+				@change="log(listOfFlairs)"
+			>
+				<div
+					class="list-group-item bg-gray-300 m-1 p-3 rounded-md item drag-item"
+					v-for="flair in listOfFlairs"
+					:key="flair.flairName"
+				>
+					<div class="flair-text-box">
+						<span
+							class="flair-text"
+							:style="{
+								background: flair.backgroundColor,
+								color: flair.textColor,
+							}"
+							>{{ flair.flairName }}</span
+						>
+					</div>
+				</div>
+				<!-- <list-rules
+				class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+				v-for="rule in listOfRules"
+				:key="rule"
+				:rule="rule"
+			></list-rules> -->
+			</draggable>
 			<div class="add-flair" v-if="showAddFlair">
 				<add-flair
 					@done-successfully="doneSuccessfully('added')"
 					@exit="showAddFlairFunction()"
 					:flair-name-edit="''"
-					:background-color-edit="'#59c7f9'"
+					:background-color-edit="'#dadada'"
 					:text-color-edit="'black'"
 					:flair-id="''"
 					:edit="false"
@@ -178,17 +208,21 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import AddFlair from '../../components/moderation/AddFlair.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import FlairItem from '../../components/moderation/FlairItem.vue';
+import { VueDraggableNext } from 'vue-draggable-next';
 export default {
 	components: {
 		AddFlair,
 		SaveUnsavePopupMessage,
 		ListBar,
 		FlairItem,
+		draggable: VueDraggableNext,
 	},
 	data() {
 		return {
 			showAddFlair: false,
 			savedUnsavedPosts: [],
+			dragDrop: false,
+			newList: [],
 		};
 	},
 	// @vuese
@@ -306,6 +340,45 @@ export default {
 		// @arg no argument
 		showAddFlairFunction() {
 			this.showAddFlair = !this.showAddFlair;
+		},
+		// @vuese
+		// Used to handle re-order flairs action
+		// @arg no argument
+		reorderFlairs() {
+			this.dragDrop = !this.dragDrop;
+		},
+		// @vuese
+		// handle drag and drop action
+		// @arg The argument is the list of rules
+		log(listOfFlairs) {
+			const rules = [];
+			for (let i = 0; i < listOfFlairs.length; i++) {
+				const flair = {
+					flairId: listOfFlairs[i].FlairId,
+					flairOrder: i,
+				};
+				rules.push(flair);
+			}
+			this.newList = listOfFlairs;
+		},
+		// @vuese
+		// Used to handle save reorder rules action
+		// @arg no argument
+		async saveReorderFlairs() {
+			try {
+				await this.$store.dispatch('moderation/updateFlairsOrder', {
+					flairsOrder: this.newList,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/updateRulesSuccessfully']) {
+					this.dragDrop = false;
+					this.loadListOfFlairs();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 	},
 };
@@ -461,5 +534,28 @@ export default {
 	width: 100%;
 	display: flex;
 	flex-direction: column; */
+}
+.flair-text-box {
+	margin-left: 0;
+	width: 40rem;
+}
+.flair-text {
+	background-color: rgb(218, 218, 218);
+	color: rgb(0, 0, 0);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	border-radius: 2px;
+	display: inline-block;
+	margin-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: text-bottom;
+	white-space: pre;
+	word-break: normal;
+	padding: 0 4px;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 </style>
