@@ -188,6 +188,7 @@ export default {
 	data() {
 		return {
 			showAddFlair: false,
+			savedUnsavedPosts: [],
 		};
 	},
 	// @vuese
@@ -247,7 +248,7 @@ export default {
 			this.savedUnsavedPosts.push({
 				id: this.savedUnsavedPosts.length,
 				postid: '1',
-				type: 'Rule',
+				type: 'Flair',
 				state: title,
 			});
 			setTimeout(() => {
