@@ -41,13 +41,15 @@
 				>Save</base-button
 			>
 		</div>
-		<div class="bar" v-if="title == 'flair'">
+		<div class="bar" v-if="title == 'flair' && !dragDrop">
 			<!-- <base-button class="button-white" id="post-flair-button"
 				>Post flair settings</base-button
 			> -->
 			<base-button
-				class="reorder-post-flair-button"
-				id="reorder-post-flair-button"
+				class="reorder-button"
+				id="reorder-flairs-button"
+				:class="flairsCount > 1 ? '' : 'disable-button'"
+				@click="reorderFlairs()"
 				>Reorder</base-button
 			>
 			<base-button
@@ -56,6 +58,21 @@
 				@click="showAddFlairFunction()"
 				:class="showAddFlair ? 'disable-button ' : ''"
 				>Add flair</base-button
+			>
+		</div>
+
+		<div class="bar" v-if="title == 'flair' && dragDrop">
+			<base-button
+				class="button-white"
+				id="cancel-rules-button"
+				@click="reorderFlairs()"
+				>Cancel</base-button
+			>
+			<base-button
+				class="base-button"
+				id="save-rules-button"
+				@click="saveReorderFlairs()"
+				>Save</base-button
 			>
 		</div>
 		<!-- <div class="bar" v-if="title == 'Post flair'">
@@ -78,6 +95,8 @@ export default {
 		'reorderRules',
 		'saveReorderRules',
 		'showAddFlairFunction',
+		'reorderFlairs',
+		'savereorderFlairs',
 	],
 	props: {
 		// @vuese
@@ -120,6 +139,14 @@ export default {
 			default: false,
 			required: true,
 		},
+		// @vuese
+		// flairs count
+		// @type string
+		flairsCount: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
 	},
 	computed: {
 		barTitle() {
@@ -160,11 +187,25 @@ export default {
 		reorderRules() {
 			this.$emit('reorderRules');
 		},
+
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		reorderFlairs() {
+			this.$emit('reorderFlairs');
+		},
 		// @vuese
 		// Used to handle re-order rules action
 		// @arg no argument
 		saveReorderRules() {
 			this.$emit('saveReorderRules');
+		},
+
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		saveReorderFlairs() {
+			this.$emit('saveReorderFlairs');
 		},
 	},
 };
