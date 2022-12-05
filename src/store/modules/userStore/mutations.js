@@ -10,6 +10,7 @@
  * @mutator {object} followUnfollowUser=userData.followed sets follow Or unfollow user.
  * @mutator {object} blockUnblockUser=userData.blocked sets block Or unblock user .
  * @mutator {object} getSocialLinkIcon=socialLinkItems return icon of a certain social link.
+ * @mutator {object} SetListOfBlockedUsers=blockedUsersData sets the blocked users data
  */
 export default {
 	setUserData(state, payload) {
@@ -45,7 +46,6 @@ export default {
 			state.blockedUsersData.children.forEach((element, index) => {
 				if (element.data.username === payload.blockUnblockData.username)
 					deleteIndex = index;
-				// console.log(deleteIndex, payload.blockUnblockData.username);
 			});
 			state.blockedUsersData.children.splice(deleteIndex, 1);
 		}

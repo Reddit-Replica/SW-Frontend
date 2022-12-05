@@ -9,7 +9,8 @@ export default {
 	 * @type {object}
 	 * @property {Object} userData contain all user information DiasplayedName,about,banner.. .
 	 * @property {Array} SocialLinksItems contain array of static social links items data (picture,text,imgSrc,type).
-	 * @property {Object} numProp This property is a number.
+	 * @property {Object} blockedUsersData contain all blocked users Data.
+	 * @property {Object} commentsData contain all user comments Data.
 	 */
 	state() {
 		return {
