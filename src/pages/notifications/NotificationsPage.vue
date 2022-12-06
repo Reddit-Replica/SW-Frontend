@@ -14,5 +14,24 @@ export default {
 	components: {
 		NotificationsTop,
 	},
+	beforeMount() {
+		this.loadAllNotifications();
+	},
+	data() {
+		return {
+			notifications: [],
+		};
+	},
+	methods: {
+		async loadAllNotifications() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/getAllNotifications', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.notifications =
+				this.$store.getters['notifications/getNotifications'];
+		},
+	},
 };
 </script>
