@@ -43,7 +43,7 @@ export default {};
 
 <style scoped>
 .ntf-top {
-	height: 13rem;
+	/* height: 13rem; */
 	margin: 5rem auto 0rem auto;
 	width: 65rem;
 	font-family: Arial, Helvetica, sans-serif;
