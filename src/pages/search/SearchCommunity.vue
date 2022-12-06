@@ -27,25 +27,25 @@
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=comment" -->
-								<div class="search-nav" role="tablist">
-									<a
-										class="search-nav-button"
-										data-testid="tab_posts"
-										aria-selected="true"
-										role="tab"
-										href="/search/type=cm"
-										><button class="button-nav button-nav2">
-											Communities
-										</button></a
-									>
-								</div>
-								<!-- href="/search/?q=Query&amp;type=com" -->
 								<div class="search-nav now-page" role="tablist">
 									<a
 										class="search-nav-button"
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
+										><button class="button-nav button-nav2">
+											Communities
+										</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=com" -->
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										href="/search/type=user"
 										><button class="button-nav button-nav2">People</button></a
 									>
 								</div>
@@ -75,25 +75,33 @@
 												<div class="people-content">
 													<div class="people-content_release">
 														<h6 class="people-name">
-															u/{{ value.UserName }}&nbsp;
+															r/{{ value.ComName }}&nbsp;
 														</h6>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
-															>{{ value.karma }} Karma&nbsp;
+															>{{ value.members }} Members&nbsp;
 														</p>
 													</div>
-													<p class="p-details">{{ value.Pdetails }}&nbsp;</p>
+													<p class="p-details">{{ value.Cdetails }}&nbsp;</p>
 												</div>
-												<div class="follow" v-if="notFollowed" @click="toggle">
+												<div
+													class="follow"
+													v-if="value.notjoined"
+													@click="toggle"
+												>
 													<base-button
-														button-text="Follow"
+														button-text="Join"
 														class="follow-button"
 													></base-button>
 												</div>
-												<div class="follow" v-if="!notFollowed" @click="toggle">
+												<div
+													class="follow"
+													v-if="!value.notjoined"
+													@click="toggle"
+												>
 													<base-button
-														button-text="Unfollow"
+														button-text="Leave"
 														class="follow-button"
 													></base-button>
 												</div>
@@ -114,10 +122,14 @@ import BaseButton from '../../components/BaseComponents/BaseButton.vue';
 export default {
 	data() {
 		return {
-			notFollowed: true,
 			users: [
-				{ UserName: 'Abd', karma: '11k' },
-				{ UserName: 'Karim', karma: '11k', Pdetails: 'الحمد لله' },
+				{ ComName: 'Isalm', members: '11k', notjoined: true },
+				{
+					ComName: 'Boxing',
+					members: '11k',
+					Cdetails: 'Habib Nour Aldin',
+					notjoined: true,
+				},
 			],
 		};
 	},
