@@ -3,7 +3,7 @@
 		<list-bar
 			:title="'Moderators'"
 			:subreddit-name="subredditName"
-			@inviteMod="handleInviteMod()"
+			@invite-mod="handleInviteMod()"
 		></list-bar>
 		<div class="list-moderations">
 			<div class="text-moderation">
