@@ -21,13 +21,7 @@
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
-									v-if="
-										muted ||
-										approved ||
-										moderators ||
-										scheduledPosts ||
-										contentControls
-									"
+									v-if="muted || approved || scheduledPosts || contentControls"
 									:title="barTitle"
 									:subreddit-name="subredditName"
 								></list-bar>
