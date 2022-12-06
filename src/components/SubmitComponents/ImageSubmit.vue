@@ -344,6 +344,7 @@ export default {
 			link: null,
 			caption: null,
 			postType: 'image',
+			dropped: false,
 			// image: '',
 		};
 	},
@@ -370,12 +371,12 @@ export default {
 		},
 		removeImage() {
 			this.images.pop();
-			this.images.splice(this.images.length, 1);
+			//this.images.splice(this.images.length, 1);
 			console.log(this.images);
 			console.log(this.images.length);
 			console.log('after pop');
 			console.log(this.images.length);
-			this.selectedImage = this.images[this.images.length - 2];
+			this.selectedImage = this.images[this.images.length - 1];
 			console.log(this.images.length);
 		},
 		setSelected(img) {
@@ -386,6 +387,7 @@ export default {
 			console.log(file);
 			this.imageFiles.push(file);
 			this.images.push(URL.createObjectURL(file));
+			this.dropped = true;
 			if (this.images.length > 1)
 				this.selectedImage = this.images[this.images.length - 1];
 		},
@@ -435,6 +437,9 @@ export default {
 	border-radius: 5px;
 	position: relative;
 }
+.drop {
+	border: 1px dashed var(--bs-link-color);
+}
 .heading-3 {
 	color: var(--color-blue);
 }
@@ -458,7 +463,7 @@ export default {
 .images-preview {
 	display: inline-flex;
 	/*display: inline-flex;*/
-	overflow: auto;
+	overflow-x: auto;
 	width: 100%;
 
 	position: absolute;
