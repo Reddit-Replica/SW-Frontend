@@ -2,6 +2,9 @@ export default {
 	listOfModerators(state) {
 		return state.listOfModerators;
 	},
+	listOfInvitedModerators(state) {
+		return state.listOfInvitedModerators;
+	},
 
 	//////////////////////RULES////////////////////////
 
