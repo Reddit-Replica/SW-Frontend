@@ -450,6 +450,13 @@
       "nsfw": true,
       "category": "Learning",
       "id": 16
+    },
+    {
+      "subredditName": "wow",
+      "type": "Public",
+      "nsfw": false,
+      "category": "News",
+      "id": 17
     }
   ],
   "subreddit-name-available": [
