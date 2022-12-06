@@ -208,7 +208,7 @@ export default {
 			const rules = [];
 			for (let i = 0; i < listOfRules.length; i++) {
 				const rule = {
-					ruleId: listOfRules[i].ruleName,
+					ruleId: listOfRules[i].ruleId,
 					ruleOrder: i,
 				};
 				rules.push(rule);

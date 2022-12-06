@@ -19,6 +19,9 @@ export default {
 			addFlairSuccessfully: false,
 			updateFlairSuccessfully: false,
 			deleteFlairSuccessfully: false,
+
+			//////////////////////BAN////////////////////////
+			banUserSuccessfully: false,
 		};
 	},
 	mutations,

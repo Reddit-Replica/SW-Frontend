@@ -574,7 +574,8 @@ export default {
 		// Used to go to user page
 		// @arg no argument
 		goToUserPage() {
-			this.$router.push(`/user/${this.$store.getters.getUserName}`);
+			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
+			this.$router.push(`/user/${this.userName}`);
 		},
 		// @vuese
 		// Used handle logout action

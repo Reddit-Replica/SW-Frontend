@@ -3,7 +3,10 @@
 		<div
 			class="bar"
 			v-if="
-				title != 'Rules' && title != 'Post flair' && title != 'Content controls'
+				title != 'Rules' &&
+				title != 'Post flair' &&
+				title != 'Content controls' &&
+				title != 'banned'
 			"
 		>
 			<base-button class="button-white" v-if="isModeratorList"
@@ -11,6 +14,7 @@
 			>
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div>
+
 		<div class="bar" v-if="title == 'Rules' && !dragDrop">
 			<base-button
 				class="reorder-button"
@@ -41,13 +45,20 @@
 				>Save</base-button
 			>
 		</div>
-		<div class="bar" v-if="title == 'flair'">
+		<div class="bar" v-if="title == 'banned'">
+			<base-button class="base-button" @click="showBanUser()"
+				>Ban user</base-button
+			>
+		</div>
+		<div class="bar" v-if="title == 'flair' && !dragDrop">
 			<!-- <base-button class="button-white" id="post-flair-button"
 				>Post flair settings</base-button
 			> -->
 			<base-button
-				class="reorder-post-flair-button"
-				id="reorder-post-flair-button"
+				class="reorder-button"
+				id="reorder-flairs-button"
+				:class="flairsCount > 1 ? '' : 'disable-button'"
+				@click="reorderFlairs()"
 				>Reorder</base-button
 			>
 			<base-button
@@ -56,6 +67,21 @@
 				@click="showAddFlairFunction()"
 				:class="showAddFlair ? 'disable-button ' : ''"
 				>Add flair</base-button
+			>
+		</div>
+
+		<div class="bar" v-if="title == 'flair' && dragDrop">
+			<base-button
+				class="button-white"
+				id="cancel-rules-button"
+				@click="reorderFlairs()"
+				>Cancel</base-button
+			>
+			<base-button
+				class="base-button"
+				id="save-rules-button"
+				@click="saveReorderFlairs()"
+				>Save</base-button
 			>
 		</div>
 		<!-- <div class="bar" v-if="title == 'Post flair'">
@@ -78,6 +104,9 @@ export default {
 		'reorderRules',
 		'saveReorderRules',
 		'showAddFlairFunction',
+		'reorderFlairs',
+		'savereorderFlairs',
+		'showBanUser',
 	],
 	props: {
 		// @vuese
@@ -120,19 +149,23 @@ export default {
 			default: false,
 			required: true,
 		},
+		// @vuese
+		// flairs count
+		// @type string
+		flairsCount: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
 	},
 	computed: {
 		barTitle() {
-			if (this.title == 'Banned') {
-				return 'Ban user';
-			} else if (this.title == 'Muted') {
+			if (this.title == 'Muted') {
 				return 'Mute user';
 			} else if (this.title == 'Approved') {
 				return 'Approve user';
 			} else if (this.title == 'Moderators of t/' + this.subredditName) {
 				return 'Invite user as mod';
-			} else if (this.title == 'Rules') {
-				return 'Rules';
 			} else if (this.title == 'Schedule Post') {
 				return 'Schedule Post';
 			} else return '';
@@ -161,10 +194,30 @@ export default {
 			this.$emit('reorderRules');
 		},
 		// @vuese
+		// Used to show ban user
+		// @arg no argument
+		showBanUser() {
+			this.$emit('showBanUser');
+		},
+
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		reorderFlairs() {
+			this.$emit('reorderFlairs');
+		},
+		// @vuese
 		// Used to handle re-order rules action
 		// @arg no argument
 		saveReorderRules() {
 			this.$emit('saveReorderRules');
+		},
+
+		// @vuese
+		// Used to handle re-order rules action
+		// @arg no argument
+		saveReorderFlairs() {
+			this.$emit('saveReorderFlairs');
 		},
 	},
 };
