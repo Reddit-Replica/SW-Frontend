@@ -115,6 +115,7 @@ export default {
 		'savereorderFlairs',
 		'showBanUser',
 		'saveReorderFlairs',
+		'inviteMod',
 	],
 	props: {
 		// @vuese
