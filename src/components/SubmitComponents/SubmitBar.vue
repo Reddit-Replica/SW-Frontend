@@ -142,7 +142,7 @@
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import SubredditInfo from '../PostComponents/SubredditInfo.vue';
-import PostingtoReddit from '../PostComponents/PostingtoReddit.vue';
+import PostingtoReddit from './PostingtoReddit.vue';
 //import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 export default {
 	components: {
