@@ -371,12 +371,12 @@ export default {
 		},
 		removeImage() {
 			this.images.pop();
-			this.images.splice(this.images.length, 1);
+			//this.images.splice(this.images.length, 1);
 			console.log(this.images);
 			console.log(this.images.length);
 			console.log('after pop');
 			console.log(this.images.length);
-			this.selectedImage = this.images[this.images.length - 2];
+			this.selectedImage = this.images[this.images.length - 1];
 			console.log(this.images.length);
 		},
 		setSelected(img) {
@@ -463,7 +463,7 @@ export default {
 .images-preview {
 	display: inline-flex;
 	/*display: inline-flex;*/
-	overflow: auto;
+	overflow-x: auto;
 	width: 100%;
 
 	position: absolute;

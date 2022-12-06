@@ -23,10 +23,10 @@ export default {
 	 */
 	state() {
 		return {
+			title: null,
 			kind: null,
 			subreddit: null,
 			inSubreddit: null,
-			title: null,
 			content: null,
 			files: [{}],
 			nsfw: null,

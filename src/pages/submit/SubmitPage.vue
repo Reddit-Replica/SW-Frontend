@@ -129,7 +129,7 @@ export default {
 		// get the kind of the post
 
 		getKind() {
-			if (this.submitTypesActive[0]) this.kind = 'text';
+			if (this.submitTypesActive[0]) this.kind = 'hybrid';
 			else if (this.submitTypesActive[1]) this.kind = 'image';
 			else if (this.submitTypesActive[2]) this.kind = 'link';
 			console.log(this.kind);
@@ -181,21 +181,22 @@ export default {
 			//this.getFlairId();
 			this.getsendReplies();
 			this.getContent();
-			this.getSubreddit();
-
+			//this.getSubreddit();
+			this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
 			console.log(this.kind);
+			console.log(this.inSubreddit);
+			console.log(this.content);
 			console.log(this.spoiler);
 			console.log(this.nsfw);
 			console.log(this.sendReplies);
-			console.log(this.content);
-			console.log(this.subreddit);
+			//console.log(this.subreddit);
 
 			if (
 				this.title === null ||
 				this.kind === null ||
-				this.subreddit == null ||
+				// this.subreddit == null ||
 				this.content === '' ||
 				this.nsfw === null ||
 				this.spoiler === null ||
@@ -207,16 +208,14 @@ export default {
 			console.log('hello from hell');
 			this.disableButton = false;
 			const actionPayload = {
-				kind: this.kind,
-				subreddit: this.subreddit,
 				title: this.title,
+				kind: this.kind,
+				//subreddit: this.subreddit,
+				inSubreddit: this.inSubreddit,
 				content: this.content,
-				files: this.files,
 				nsfw: this.nsfw,
 				spoiler: this.spoiler,
-				flairId: this.flairId,
-				imageCaptions: this.imageCaptions,
-				imageLinks: this.imageLinks,
+				// flairId: this.flairId,
 				sendReplies: this.sendReplies,
 				baseurl: this.$baseurl,
 			};
@@ -227,6 +226,7 @@ export default {
 
 				if (response == 200) {
 					console.log(response);
+					console.log('الحمد لله زى الفل');
 					this.success = true;
 				}
 			} catch (err) {
