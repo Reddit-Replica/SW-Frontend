@@ -30,7 +30,6 @@ export default {
 			};
 			moderators.push(moderator);
 		}
-		console.log(moderators);
 		context.commit('setListOfModerators', moderators);
 	},
 
