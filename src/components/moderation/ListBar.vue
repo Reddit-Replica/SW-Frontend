@@ -107,6 +107,7 @@ export default {
 		'reorderFlairs',
 		'savereorderFlairs',
 		'showBanUser',
+		'saveReorderFlairs',
 	],
 	props: {
 		// @vuese
