@@ -1,4 +1,3 @@
-
 /**
  * The module 'UserStore' object.
  * @module UserGetters
