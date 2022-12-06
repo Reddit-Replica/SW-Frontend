@@ -237,7 +237,7 @@ export default {
 }
 </style> -->
 <template>
-	<div class="content" @dragover.prevent @drop.prevent>
+	<div class="content" @dragover.prevent @drop.prevent @drop="dragFile">
 		<!-- <div class="out"> -->
 		<div v-if="postType == 'video'">
 			<video width="800" height="500" controls>
@@ -315,7 +315,7 @@ export default {
 		<h3 class="heading-3" v-if="images.length === 0 && postType == 'image'">
 			Drag and drop images or
 		</h3>
-		<div v-if="images.length === 0 && postType == 'image'" @drop="dragFile">
+		<div v-if="images.length === 0 && postType == 'image'">
 			<input
 				id="image-input"
 				type="file"
@@ -386,6 +386,8 @@ export default {
 			console.log(file);
 			this.imageFiles.push(file);
 			this.images.push(URL.createObjectURL(file));
+			if (this.images.length > 1)
+				this.selectedImage = this.images[this.images.length - 1];
 		},
 	},
 	watch: {
@@ -399,8 +401,9 @@ export default {
 </script>
 
 <style scoped>
-* {
-}
+/* {
+	overflow: auto;
+}*/
 .content {
 	/*box-sizing: border-box;
 	width: 100%;
