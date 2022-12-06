@@ -443,4 +443,99 @@ export default {
 			throw error;
 		}
 	},
+
+	async updateFlairsOrder(context, payload) {
+		context.commit('updateFlairsSuccessfully', false);
+		const flairsOrder = [];
+
+		for (let i = 0; i < payload.flairsOrder.length; i++) {
+			const flair = {
+				flairId: payload.flairsOrder[i].flairId,
+				flairOrder: i,
+			};
+			flairsOrder.push(flair);
+		}
+		const baseurl = payload.baseurl;
+		const subredditName = payload.subredditName;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + '/r/' + subredditName + '/about/post-flairs-order',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify({ flairsOrder: flairsOrder }),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('updateFlairsSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	//////////////////////BAN////////////////////////
+
+	async banUser(context, payload) {
+		context.commit('banUserSuccessfully', false);
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		console.log(payload);
+		const bannedUser = {
+			userId: payload.userId,
+			subreddit: payload.subredditName,
+			banPeriod: payload.banPeriod,
+			reasonForBan: payload.reasonForBan,
+			modNote: payload.modNote,
+			noteInclude: payload.noteInclude,
+		};
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/ban`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(bannedUser),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('banUserSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
 };

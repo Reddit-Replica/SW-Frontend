@@ -22,7 +22,6 @@
 							<div>
 								<list-bar
 									v-if="
-										banned ||
 										muted ||
 										approved ||
 										moderators ||
@@ -66,7 +65,7 @@ export default {
 	// @vuese
 	//load moderators list and change document title
 	beforeMount() {
-		document.title = this.$store.state.subredditName;
+		document.title = this.$route.params.subredditName;
 		this.loadListOfModerators();
 	},
 	computed: {
@@ -234,12 +233,7 @@ export default {
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
-			if (this.$route.path === '/r/' + this.subredditName + '/about/banned') {
-				return 'Banned';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/muted'
-			) {
+			if (this.$route.path === '/r/' + this.subredditName + '/about/muted') {
 				return 'Muted';
 			} else if (
 				this.$route.path ===
@@ -251,16 +245,6 @@ export default {
 				'/r/' + this.subredditName + '/about/moderators'
 			) {
 				return 'Moderators of t/' + this.subredditName;
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/rules'
-			) {
-				return 'Rules';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/postflair'
-			) {
-				return 'Post flair';
 			} else if (
 				this.$route.path ===
 				'/r/' + this.subredditName + '/about/scheduledposts'

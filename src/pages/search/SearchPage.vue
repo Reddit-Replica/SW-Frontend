@@ -5,7 +5,7 @@
 				<div>
 					<div class="upper-nav">
 						<div class="searchin-nav">
-							<div class="search-nav" role="tablist">
+							<div class="search-nav now-page" role="tablist">
 								<a
 									class="search-nav-button"
 									data-testid="tab_posts"
@@ -42,6 +42,7 @@
 									data-testid="tab_posts"
 									aria-selected="true"
 									role="tab"
+									href="/search/type=user"
 									><button class="button-nav button-nav2">People</button></a
 								>
 							</div>
@@ -66,12 +67,12 @@
 										/>
 									</svg>
 								</span>
-								<subMenu
+								<MenuSearchVue
 									id="sub-menu-one"
 									:titles="['Relevance', 'Hot', 'New', 'Top', 'Most Comments']"
 									:display="ShowFirstitemChoice"
 									@change-title="changeFirstChoiceItem"
-									clicked-prop="Relevance"
+									clicked-prop="Sort"
 								/>
 							</div>
 						</div>
@@ -92,7 +93,7 @@
 										/>
 									</svg>
 								</span>
-								<subMenu
+								<MenuSearchVue
 									id="sub-menu-two"
 									:titles="[
 										'All Time',
@@ -122,8 +123,14 @@
 					</div>
 					<div class="side-bars">
 						<div class="search-result-sidebar">
-							<CommunitesNav></CommunitesNav>
-							<PostNav></PostNav>
+							<div>
+								<CommunitesNav
+									id="community-nav"
+									:commcontents="commcontent"
+									@change-joining="toggling"
+								></CommunitesNav>
+							</div>
+							<PeopleNav></PeopleNav>
 						</div>
 					</div>
 				</div>
@@ -132,28 +139,68 @@
 	</div>
 </template>
 <script>
-import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 import SearchPost from '../../components/SearchComponents/SearchPost.vue';
 import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
-import PostNav from '../../components/SearchComponents/PeopleNav.vue';
+import PeopleNav from '../../components/SearchComponents/PeopleNav.vue';
+import MenuSearchVue from '@/components/SearchComponents/MenuSearch.vue';
 export default {
 	data() {
 		return {
-			FirstitemChoice: 'Relevance',
+			commcontent: [
+				{
+					id: 1,
+					community: 'Salah',
+					members: '12k',
+					notjoined: true,
+				},
+				{
+					id: 2,
+					community: 'Mohammed',
+					members: '23k',
+					notjoined: true,
+				},
+				{
+					id: 3,
+					community: 'Karim',
+					members: '22k',
+					notjoined: false,
+				},
+				{
+					id: 4,
+					community: 'Medo',
+					members: '2k',
+					notjoined: true,
+				},
+				// {
+				// 	id: 5,
+				// 	community: 'Deiaa',
+				// 	members: '12k',
+				// },
+				// {
+				// 	id: 6,
+				// 	community: 'Ibrahim',
+				// 	members: '12k',
+				// },
+			],
+			FirstitemChoice: 'Sort',
 			ShowFirstitemChoice: false,
 			SecitemChoice: 'Time',
 			ShowSecitemChoice: false,
 			choiceRelevant: true,
 			Profile_Name: '',
+			// myIndex: 0,
+			// indexTrue: true,
 		};
 	},
 	methods: {
 		itemsMenuOneFunction() {
 			this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
+			this.ShowSecitemChoice = false;
 			if (
 				this.FirstitemChoice == 'Relevance' ||
 				this.FirstitemChoice == 'Top' ||
-				this.FirstitemChoice == 'Most Comments'
+				this.FirstitemChoice == 'Most Comments' ||
+				this.FirstitemChoice == 'Sort'
 			) {
 				this.choiceRelevant = true;
 			} else {
@@ -165,23 +212,27 @@ export default {
 		},
 		itemsMenuTwoFunction() {
 			this.ShowSecitemChoice = !this.ShowSecitemChoice;
+			this.ShowFirstitemChoice = false;
 		},
 		changeSecChoiceItem(item) {
 			this.SecitemChoice = item;
 		},
+		toggling(data) {
+			this.commcontent.notjoined = data;
+		},
 	},
 	components: {
-		SubMenu,
 		SearchPost,
 		CommunitesNav,
-		PostNav,
+		PeopleNav,
+		MenuSearchVue,
 	},
 };
 </script>
 
 <style scoped>
 .all {
-	height: 100vh;
+	height: 100%;
 	z-index: 3;
 	font-family: 'IBMPlexSans', sans-serif;
 	font-size: 14px;
@@ -219,12 +270,21 @@ a {
 	display: flex;
 	align-items: center;
 	margin-bottom: 24px;
+	margin-top: 24px;
 }
 .searchin-nav {
 	display: flex;
 }
 .search-nav {
 	display: flex;
+}
+.search-nav:hover {
+	border-radius: 9999px;
+	background-color: #ccc;
+}
+.now-page {
+	border-radius: 9999px;
+	background-color: #f6f7f8;
 }
 .search-nav-button {
 	position: relative;
@@ -263,18 +323,36 @@ a {
 	min-width: 32px;
 }
 .items-span {
-	font-size: 11.2px;
+	font-size: 12px;
 	font-weight: 700;
 	letter-spacing: 0.5px;
-	line-height: 24px;
-	text-transform: uppercase;
+	line-height: 16px;
+	min-height: 24px;
+	height: 24px;
+	padding-left: 12px;
+	padding-right: 8px;
 	border: none;
 	padding: 4px;
-	color: var(--color-blue);
+	color: var(--color-grey-dark-2);
+	font-family: Sans, Arial, sans-serif;
 }
 .items-meny-curser {
 	cursor: pointer;
 	position: relative;
+}
+.icon-caret-down {
+	vertical-align: middle;
+	margin-left: 4px;
+	font-size: 20px;
+	font-weight: 400;
+	height: 20px;
+	line-height: 20px;
+	width: 20px;
+}
+.icon-caret-down::before {
+	content: '\f13e';
+	-webkit-font-smoothing: antialiased;
+	font-family: redesignFont2020;
 }
 .sorting {
 	display: flex;

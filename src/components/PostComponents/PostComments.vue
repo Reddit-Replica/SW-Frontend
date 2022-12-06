@@ -745,7 +745,7 @@
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<subreddit-info subreddit-name="subredditName"></subreddit-info>
+							<subreddit-info :subreddit-name="subredditName"></subreddit-info>
 						</div>
 					</div>
 				</div>
@@ -855,6 +855,7 @@ export default {
 			this.commentsCount = postDetails.comments;
 			this.postedBy = postDetails.postedBy;
 			this.postedAt = postDetails.postedAt;
+			this.rules = postDetails.rules;
 		},
 		//@vuese
 		//adds new comment

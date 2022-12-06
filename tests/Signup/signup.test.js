@@ -65,7 +65,7 @@ describe('SignupPage.vue', () => {
 
 
 	});
-	//Testing wrong userName
+	//Testing wrong email
 	it('Testing clicking submit', () => {
 		const wrapper = mount(SignUpPage, {
 			props: {},

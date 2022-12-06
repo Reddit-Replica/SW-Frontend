@@ -67,10 +67,108 @@
 						</div>
 						<div class="comment-options">
 							<ul>
-								<li>Replay</li>
-								<li>Share</li>
-								<li>...</li>
+								<li class="underline">Replay</li>
+								<li class="underline">Share</li>
+								<li
+									class="post-option-item2"
+									style="position: relative"
+									@click="openOptionsBoxList"
+								>
+									<div class="post-options-icon three-dot-icon-box">
+										<i>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="20"
+												height="20"
+												fill="currentColor"
+												class="bi bi-three-dots"
+												viewBox="0 0 16 16"
+											>
+												<path
+													d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+												/>
+											</svg>
+										</i>
+									</div>
+									<div v-if="1 || showOptionsBoxList" class="options-box-list">
+										<ul>
+											<li @click="editPost" class="options-box-item">
+												<div class="options-box-icon">
+													<i
+														style="color: rgba(135, 138, 140)"
+														class="fa-solid fa-pen"
+													></i>
+												</div>
+												<div class="options-box-text">Edit Post</div>
+											</li>
+											<li @click="savePost" class="options-box-item">
+												<div class="options-box-icon">
+													<i
+														style="color: rgba(135, 138, 140)"
+														class="fa-regular fa-bookmark"
+													></i>
+												</div>
+												<div class="options-box-text">Save</div>
+											</li>
+											<li @click="deletePost" class="options-box-item">
+												<div class="options-box-icon">
+													<i
+														style="color: rgba(135, 138, 140)"
+														class="fa-solid fa-trash"
+													></i>
+												</div>
+												<div class="options-box-text">Delete</div>
+											</li>
+										</ul>
+									</div>
+								</li>
 							</ul>
+							<div class="post-options">
+								<ul class="comment-moderator-options">
+									<li
+										@click="approvePost"
+										:style="['aa' == '' ? 'color: #46d160' : '']"
+										class="post-option-item"
+									>
+										<div class="post-options-icon">
+											<i class="fa-solid fa-check"></i>
+										</div>
+										<div class="post-options-text">Approve</div>
+									</li>
+									<li
+										@click="removePost"
+										:style="[
+											'aa' == ''
+												? 'color: #ff585b'
+												: 'color: rgba(135, 138, 140)',
+										]"
+										class="post-option-item"
+									>
+										<div class="post-options-icon">
+											<i style="color: inherit" class="fa-solid fa-ban"></i>
+										</div>
+										<div class="post-options-text">
+											<p>Remove</p>
+										</div>
+									</li>
+									<li
+										@click="spamPost"
+										:style="[
+											'aa' == ''
+												? 'color: #ff585b'
+												: 'color: rgba(135, 138, 140)',
+										]"
+										class="post-option-item"
+									>
+										<div class="post-options-icon">
+											<i class="fa-regular fa-calendar-xmark"></i>
+										</div>
+										<div class="post-options-text">
+											<p>Spam</p>
+										</div>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -277,20 +375,165 @@ span.post-oc {
 	color: #878a8c;
 	margin-left: -4px;
 }
-.comment-options ul {
+.comment-options > ul {
 	list-style: none;
 	display: flex;
 	cursor: pointer;
 }
-.comment-options ul li {
+.comment-options > ul li {
 	margin: 4px;
 	transition: color 0.1s;
 }
-.comment-options ul li:not(:last-child):hover {
+.comment-options > ul li.underline:not(:last-child):hover {
 	text-decoration: underline;
 	color: #1c1c1c;
 }
-.comment-options ul li:last-child:hover {
+/* .comment-options ul li:last-child:hover {
+	background-color: rgba(26, 26, 27, 0.1);
+} */
+/* Post Options */
+.post-options ul li,
+.post-options ul li a {
+	color: inherit;
+	list-style: none;
+	text-decoration: none;
+	height: 36px;
+	min-width: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.post-options ul li.post-option-item {
+	/* padding: 8px; */
+	padding: 0 8px 0 8px;
+	margin-right: 4px;
+	border-radius: 2px;
+}
+.post-options ul li.post-option-item .post-options-icon {
+}
+.post-options ul li.post-option-item .post-options-text {
+	margin-left: 6px;
+}
+.post-options ul li.post-option-item p {
+	font-size: 12px;
+}
+.post-options ul li.post-option-item:hover {
 	background-color: rgba(26, 26, 27, 0.1);
 }
+.post-options-icon {
+	font-size: 20px;
+}
+.post-options {
+	margin-top: 8px;
+}
+.post-options ul {
+	display: flex;
+	flex-wrap: wrap;
+}
+.post-options ul li.post-option-item {
+	display: flex;
+}
+.three-dot-icon-box {
+	position: relative;
+	display: flex;
+	padding: 0 8px 0 8px;
+	margin-right: 4px;
+	border-radius: 2px;
+}
+.three-dot-icon-box:hover {
+	background-color: rgba(26, 26, 27, 0.1);
+}
+.options-box-list {
+	position: absolute;
+	top: 35px;
+	left: 0px;
+	z-index: 15;
+	border: 1px solid #edeff1;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
+	color: #1c1c1c;
+	overflow: hidden;
+	background-color: #ffffff;
+}
+.options-box-list ul {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+.options-box-list i input[type='checkbox'] {
+	width: 14px !important;
+	height: 14px !important;
+	display: flex !important;
+}
+.options-box-list .options-box-text label {
+	position: relative;
+	bottom: -0.4px;
+}
+.options-box-list ul li.options-box-item {
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	text-transform: capitalize;
+	white-space: nowrap;
+	color: #878a8c;
+	cursor: pointer;
+	padding: 8px 16px 8px 8px;
+	text-align: left;
+	width: 100%;
+}
+.options-box-list ul li.options-box-item:not(:first-child) {
+	border-top: 1px solid #edeff1;
+}
+.options-box-list ul li.options-box-item:hover {
+	color: #1c1c1c;
+	background-color: #e9f5fd;
+}
+.options-box-list ul li.options-box-item .options-box-icon {
+	margin-right: 10px;
+	font-size: 14px;
+	display: flex;
+}
+/* End post Options */
+/* tool tip  */
+.post-tooltip {
+	position: relative;
+	display: inline-block;
+	/* border-bottom: 1px dotted black; */
+}
+
+.post-tooltip .post-tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 10;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -60px;
+}
+
+.post-tooltip .post-tooltiptext::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
+}
+
+.post-tooltip:hover .post-tooltiptext {
+	visibility: visible;
+}
+/* */
 </style>
