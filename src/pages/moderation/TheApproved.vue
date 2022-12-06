@@ -68,7 +68,11 @@
 			</div>
 		</div>
 		<div id="create-rule-form">
-			<base-dialog :show="showAdd" title="Add approved user">
+			<base-dialog
+				:show="showAdd"
+				@close="ApproveUserFunction"
+				title="Add approved user"
+			>
 				<div class="rule-dialog flex-column">
 					<div class="rule-box flex-column">
 						<div class="rule-box-input flex-column">
