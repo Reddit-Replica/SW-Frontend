@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import authModule from './modules/authentication/index.js';
 import commModule from './modules/communities/index.js';
+import notificationsModule from './modules/notifications/index.js';
 import messageModule from './modules/messages/index.js';
 import moderatorsModule from './modules/moderators/index.js';
 import userModule from './modules/userStore/index.js';
@@ -12,6 +13,7 @@ const store = createStore({
 	modules: {
 		auth: authModule,
 		community: commModule,
+		notifications: notificationsModule,
 		messages: messageModule,
 		moderation: moderatorsModule,
 		user: userModule,
