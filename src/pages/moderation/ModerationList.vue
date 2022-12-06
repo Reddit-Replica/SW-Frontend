@@ -36,6 +36,7 @@
 				:moderator="moderator"
 				:search="search"
 				:index="index"
+				:invited-mod="false"
 			></list-item>
 		</ul>
 		<div class="no-items" v-else>
@@ -57,6 +58,18 @@
 				>See all</base-button
 			>
 		</div>
+		<div v-if="invitedMod && notSearch" class="invited-box">
+			<div class="invited-title">Invited moderators</div>
+			<ul class="ul-items">
+				<list-item
+					v-for="(invitedModerator, index) in listOfInvitedModerators"
+					:key="invitedModerator"
+					:moderator="invitedModerator"
+					:index="index"
+					:invited-mod="true"
+				></list-item>
+			</ul>
+		</div>
 	</div>
 </template>
 
@@ -73,6 +86,12 @@ export default {
 			return this.$store.getters['moderation/listOfModerators'];
 		},
 		// @vuese
+		//return list of invited moderators
+		// @type object
+		listOfInvitedModerators() {
+			return this.$store.getters['moderation/listOfInvitedModerators'];
+		},
+		// @vuese
 		//return subreddit name
 		// @type string
 		subredditName() {
@@ -85,12 +104,23 @@ export default {
 		title() {
 			return 'Moderators of r/' + this.subredditName;
 		},
+
+		// @vuese
+		//return true if there is no rules, false otherwise
+		// @type boolean
+		invitedMod() {
+			if (this.listOfInvitedModerators.length != 0) {
+				return true;
+			}
+			return false;
+		},
 	},
 	data() {
 		return {
 			search: '',
 			count: 0,
 			noItems: false,
+			notSearch: true,
 		};
 	},
 	methods: {
@@ -108,6 +138,19 @@ export default {
 			}
 		},
 		// @vuese
+		//load moderators invited list from the store
+		// @arg no argument
+		async loadListOfInvitedModerators() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfInvitedModerators', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
 		//access value of search
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
@@ -116,10 +159,16 @@ export default {
 				if (this.listOfModerators[i].username != input && input != '') {
 					this.count = this.count + 1;
 					this.noItems = false;
+					this.notSearch = false;
 				}
 			}
 			if (this.count == this.listOfModerators.length) {
 				this.noItems = true;
+				this.notSearch = false;
+			}
+			if (input == '') {
+				this.noItems = false;
+				this.notSearch = true;
 			}
 			this.count = 0;
 		},
@@ -170,5 +219,15 @@ export default {
 	color: var(--color-blue-2);
 	background-color: var(--color-white-1);
 	font-weight: bold;
+}
+.invited-title {
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	color: var(--color-dark-3);
+	margin-bottom: 8px;
+}
+.invited-box {
+	margin-top: 3.6rem;
 }
 </style>

@@ -2,6 +2,9 @@ export default {
 	setListOfModerators(state, payload) {
 		state.listOfModerators = payload;
 	},
+	setListOfInvitedModerators(state, payload) {
+		state.listOfInvitedModerators = payload;
+	},
 
 	//////////////RULES/////////////////
 
