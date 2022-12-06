@@ -13,21 +13,21 @@
 					<div class="post-release">
 						<div class="post-name-bar">
 							<div class="community-name">
-								<a class="comm-name"> r/Salah </a>
+								<a class="comm-name"> r/Salah &nbsp;</a>
 								<div class="aligning"></div>
 							</div>
-							<span class="point-center" role="presentation">•</span>
+							<span class="point-center" role="presentation">•&nbsp;</span>
 							<div class="posted-user">
 								<span class="posted-word" style="color: rgb(120, 124, 126)">
-									Posted by
+									&nbsp;Posted by&nbsp;
 								</span>
 								<div>
 									<a class="posted-username" style="color: rgb(120, 124, 126)"
-										>koora</a
+										>u/koora&nbsp;</a
 									>
 								</div>
 								<span class="time" style="color: rgb(120, 124, 126)"
-									>8 days ago</span
+									>8 days ago&nbsp;</span
 								>
 							</div>
 						</div>
@@ -43,7 +43,7 @@
 												<h3 class="header-3">
 													<span class="searched-word">Mohammed</span>
 													bin Salman gifts each Saudi Arabia player a
-													Rolls-Royce for the win over Argentina
+													Rolls-Royce for the win over Argentina&nbsp;
 												</h3>
 											</div></a
 										>
@@ -55,9 +55,9 @@
 							</div>
 						</div>
 						<div class="bottom-bar">
-							<span class="votes">11.2k upvotes</span
-							><span class="comments">342 comments</span
-							><span class="awards">26 awards</span>
+							<span class="votes">11.2k upvotes&nbsp;</span
+							><span class="comments">342 comments&nbsp;</span
+							><span class="awards">26 awards&nbsp;</span>
 						</div>
 					</div>
 				</div>
