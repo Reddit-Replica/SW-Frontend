@@ -15,8 +15,8 @@
 							</div>
 							<div class="people-content">
 								<div class="people-content-release">
-									<h6 class="people-name">u/{{ name }}</h6>
-									<p class="karma-number">{{ karma }} Karma</p>
+									<h6 class="people-name">u/{{ name }}&nbsp;</h6>
+									<p class="karma-number">{{ karma }} Karma&nbsp;</p>
 								</div>
 							</div>
 							<div class="follow" v-if="notFollowed" @click="toggle">
@@ -52,9 +52,7 @@ export default {
 		BaseButton,
 	},
 	methods: {
-		toggle() {
-			this.notFollowed = !this.notFollowed;
-		},
+		toggle() {},
 	},
 };
 </script>
