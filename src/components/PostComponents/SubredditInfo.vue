@@ -1,53 +1,71 @@
 <template>
-	<div class="main">
-		<div class="header"></div>
-		<div class="content">
-			<div class="image-name">
-				<div class="image">
-					<img :src="subreddit.picture" alt="" />
+	<div class="info">
+		<div class="main">
+			<div class="header"></div>
+			<div class="content">
+				<div class="image-name">
+					<div class="image">
+						<img :src="subreddit.picture" alt="" />
+					</div>
+					<div class="name">r/{{ subredditName }}</div>
 				</div>
-				<div class="name">r/{{ subredditName }}</div>
-			</div>
-			<p class="para-bold">{{ subreddit.description }}</p>
-			<div class="birth">
-				<font-awesome-icon icon="fa-solid fa-cake-candles" class="icon" />
-				Created {{ subreddit.dateOfCreation }}
-			</div>
-			<div class="numbers">
-				<div class="members">
-					<p class="para-bold">{{ numFormatter(subreddit.members) }}</p>
-					<p>Members</p>
+				<p class="para-bold">{{ subreddit.description }}</p>
+				<div class="birth">
+					<font-awesome-icon icon="fa-solid fa-cake-candles" class="icon" />
+					Created {{ subreddit.dateOfCreation }}
 				</div>
-				<div class="online">
-					<p class="para-bold">
-						<font-awesome-icon icon="fa-solid fa-circle" class="green-dot" />{{
-							subreddit.online
-						}}
-					</p>
-					<p>Online</p>
+				<div class="numbers">
+					<div class="members">
+						<p class="para-bold">{{ numFormatter(subreddit.members) }}</p>
+						<p>Members</p>
+					</div>
+					<div class="online">
+						<p class="para-bold">
+							<font-awesome-icon
+								icon="fa-solid fa-circle"
+								class="green-dot"
+							/>{{ subreddit.online }}
+						</p>
+						<p>Online</p>
+					</div>
 				</div>
+				<base-button
+					class="join-button pink-button"
+					@click="toogleJoin"
+					v-if="!isJoined"
+					id="join-button"
+					>Join</base-button
+				>
+				<base-button
+					class="join-button white-button"
+					@click="toogleJoin"
+					@mouseover="hoverJoin('Leave')"
+					@mouseleave="hoverJoin('Joined')"
+					v-if="isJoined"
+					id="leave-button"
+					>{{ hoverButtonText }}</base-button
+				>
 			</div>
-			<base-button
-				class="join-button pink-button"
-				@click="toogleJoin"
-				v-if="!isJoined"
-				id="join-button"
-				>Join</base-button
-			>
-			<base-button
-				class="join-button white-button"
-				@click="toogleJoin"
-				@mouseover="hoverJoin('Leave')"
-				@mouseleave="hoverJoin('Joined')"
-				v-if="isJoined"
-				id="leave-button"
-				>{{ hoverButtonText }}</base-button
-			>
+		</div>
+		<div class="rules">
+			<subreddit-rules
+				:rules="subreddit.rules"
+				:subreddit-name="subredditName"
+			></subreddit-rules>
+		</div>
+		<div class="moderators">
+			<subreddit-moderators :moderators="moderators" />
 		</div>
 	</div>
 </template>
 <script>
+import SubredditRules from './SubredditRules.vue';
+import SubredditModerators from './SubredditModerators.vue';
 export default {
+	components: {
+		SubredditRules,
+		SubredditModerators,
+	},
 	props: {
 		subredditName: {
 			type: String,
@@ -60,15 +78,37 @@ export default {
 			subreddit: {},
 			isJoined: false,
 			hoverButtonText: 'Join',
+			moderators: [
+				{
+					username: 'string',
+					nickname: 'string',
+					dateOfModeration: 'string',
+					permissions: [],
+				},
+			],
+			rules: [],
 		};
 	},
 	beforeMount() {
 		this.loadSubredditInfo();
+		//this.loadSubredditModerators();
 	},
 	methods: {
 		async loadSubredditInfo() {
 			try {
 				await this.$store.dispatch('comments/getSubreddit', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.subreddit = this.$store.getters['comments/getSubreddit'];
+			console.log(this.subreddit);
+		},
+		async loadSubredditModerators() {
+			try {
+				await this.$store.dispatch('comments/getSubredditModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
@@ -102,6 +142,10 @@ export default {
 };
 </script>
 <style scoped>
+.info {
+	display: flex;
+	flex-direction: column;
+}
 .main {
 	background-color: white;
 	border-radius: 5px;
