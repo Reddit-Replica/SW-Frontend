@@ -5,7 +5,7 @@
 				<div>
 					<div class="upper-nav">
 						<div class="searchin-nav">
-							<div class="search-nav" role="tablist">
+							<div class="search-nav now-page" role="tablist">
 								<a
 									class="search-nav-button"
 									data-testid="tab_posts"
@@ -42,6 +42,7 @@
 									data-testid="tab_posts"
 									aria-selected="true"
 									role="tab"
+									href="/search/type=user"
 									><button class="button-nav button-nav2">People</button></a
 								>
 							</div>
@@ -138,7 +139,6 @@
 	</div>
 </template>
 <script>
-// import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 import SearchPost from '../../components/SearchComponents/SearchPost.vue';
 import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
 import PeopleNav from '../../components/SearchComponents/PeopleNav.vue';
@@ -220,14 +220,8 @@ export default {
 		toggling(data) {
 			this.commcontent.notjoined = data;
 		},
-		// addIndex() {
-		// 	if (this.commcontent.length < 4) {
-		// 		this.myIndex = 3;
-		// 	}
-		// },
 	},
 	components: {
-		// SubMenu,
 		SearchPost,
 		CommunitesNav,
 		PeopleNav,
@@ -283,6 +277,14 @@ a {
 }
 .search-nav {
 	display: flex;
+}
+.search-nav:hover {
+	border-radius: 9999px;
+	background-color: #ccc;
+}
+.now-page {
+	border-radius: 9999px;
+	background-color: #f6f7f8;
 }
 .search-nav-button {
 	position: relative;

@@ -17,21 +17,21 @@
 								<base-button
 									button-text="Join"
 									class="join-button"
-									@click="clickedFunction(!value.commcontents.notjoined)"
+									@click="clickedFunction(false)"
 								></base-button>
 							</div>
 							<div class="join" v-if="!value.notjoined">
 								<base-button
 									button-text="Leave"
 									class="join-button"
-									@click="change"
+									@click="clickedFunction(true)"
 								></base-button>
 							</div></div
 					></a>
 				</div>
 			</div>
 		</div>
-		<a><p class="communities-go">See more communities</p></a>
+		<a><p class="communities-go" @click="doFunc">See more communities</p></a>
 	</div>
 </template>
 
@@ -63,6 +63,9 @@ export default {
 		clickedFunction(boolVal) {
 			this.$emit('change-joining', boolVal);
 			// this.$emit('change-joining');
+		},
+		doFunc() {
+			console.log(this.commcontents.length);
 		},
 	},
 };

@@ -69,6 +69,8 @@ import PostComments from './components/PostComponents/PostComments.vue';
 import NotificationsPage from './pages/notifications/NotificationsPage.vue';
 
 import Search from './pages/search/SearchPage.vue';
+import PostSearch from './pages/search/SearchPage.vue';
+import UserSearch from './pages/search/SearchUsers.vue';
 import GetHelp from './pages/forget/GetHelp.vue';
 
 const router = createRouter({
@@ -97,8 +99,17 @@ const router = createRouter({
 		{ path: '/signup', component: SignupPage },
 		{ path: '/logincomp', component: LoginComp },
 		{ path: '/signupcomp', component: SignupComp },
-		{ path: '/search', component: Search },
+		{ path: '/search/type=user', component: UserSearch },
 		{ path: '/help', component: GetHelp },
+		{
+			path: '/search',
+			name: 'search',
+			component: Search,
+			children: [
+				{ path: '/search/type=post', component: PostSearch },
+				// { path: '/search/type=user', component: UserSearch },
+			],
+		}, //render subreddit component
 
 		{
 			path: '/user/:userName',
