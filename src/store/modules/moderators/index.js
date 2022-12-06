@@ -7,6 +7,7 @@ export default {
 	state() {
 		return {
 			listOfModerators: [],
+			listOfInvitedModerators: [],
 			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],

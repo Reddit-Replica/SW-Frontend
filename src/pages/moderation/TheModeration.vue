@@ -7,7 +7,7 @@
 	<div>
 		<!-- ///////////change to !moderatorByMe/////////// -->
 		<unmoderator-view
-			v-if="moderatorByMe"
+			v-if="!moderatorByMe"
 			:list-of-moderators="listOfModerators"
 			:subreddit-name="subredditName"
 		></unmoderator-view>
@@ -21,13 +21,7 @@
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
-									v-if="
-										muted ||
-										approved ||
-										moderators ||
-										scheduledPosts ||
-										contentControls
-									"
+									v-if="muted || approved || scheduledPosts || contentControls"
 									:title="barTitle"
 									:subreddit-name="subredditName"
 								></list-bar>
@@ -67,6 +61,7 @@ export default {
 	beforeMount() {
 		document.title = this.$route.params.subredditName;
 		this.loadListOfModerators();
+		this.loadListOfInvitedModerators();
 	},
 	computed: {
 		// @vuese
@@ -81,6 +76,12 @@ export default {
 		// @type object
 		listOfModerators() {
 			return this.$store.getters['moderation/listOfModerators'];
+		},
+		// @vuese
+		//return list of invited moderators
+		// @type object
+		listOfInvitedModerators() {
+			return this.$store.getters['moderation/listOfInvitedModerators'];
 		},
 		// @vuese
 		//return user name
@@ -266,6 +267,19 @@ export default {
 		async loadListOfModerators() {
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		//load moderators invited list from the store
+		// @arg no argument
+		async loadListOfInvitedModerators() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfInvitedModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
