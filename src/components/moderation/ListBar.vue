@@ -6,13 +6,30 @@
 				title != 'Rules' &&
 				title != 'Post flair' &&
 				title != 'Content controls' &&
-				title != 'banned'
+				title != 'banned' &&
+				title != 'Moderators' &&
+				title != 'approved'
 			"
 		>
-			<base-button class="button-white" v-if="isModeratorList"
-				>Leave as mod</base-button
-			>
 			<base-button class="base-button">{{ barTitle }}</base-button>
+		</div>
+		<div class="bar" v-if="title == 'Moderators'">
+			<base-button class="button-white">Leave as mod</base-button>
+			<base-button
+				class="base-button"
+				id="save-rules-button"
+				@click="inviteMod()"
+				>Invite user as mod</base-button
+			>
+		</div>
+
+		<div class="bar" v-if="title == 'approved'">
+			<base-button
+				class="base-button"
+				id="approve-user-button"
+				@click="ApproveUser()"
+				>Approve user</base-button
+			>
 		</div>
 
 		<div class="bar" v-if="title == 'Rules' && !dragDrop">
@@ -107,6 +124,9 @@ export default {
 		'reorderFlairs',
 		'savereorderFlairs',
 		'showBanUser',
+		'saveReorderFlairs',
+		'inviteMod',
+		'ApproveUser',
 	],
 	props: {
 		// @vuese
@@ -162,10 +182,6 @@ export default {
 		barTitle() {
 			if (this.title == 'Muted') {
 				return 'Mute user';
-			} else if (this.title == 'Approved') {
-				return 'Approve user';
-			} else if (this.title == 'Moderators of t/' + this.subredditName) {
-				return 'Invite user as mod';
 			} else if (this.title == 'Schedule Post') {
 				return 'Schedule Post';
 			} else return '';
@@ -218,6 +234,18 @@ export default {
 		// @arg no argument
 		saveReorderFlairs() {
 			this.$emit('saveReorderFlairs');
+		},
+		// @vuese
+		// Used to handle invite moderator action
+		// @arg no argument
+		inviteMod() {
+			this.$emit('inviteMod');
+		},
+		// @vuese
+		// Used to handle approve user action
+		// @arg no argument
+		ApproveUser() {
+			this.$emit('ApproveUser');
 		},
 	},
 };

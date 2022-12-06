@@ -27,12 +27,12 @@
 						id="reason-input"
 					>
 						<option
-							v-for="reason of listOfRules"
-							:key="reason.ruleName"
-							:value="reason.ruleName"
-							:id="reason.ruleName"
+							v-for="reasonRule of listOfRules"
+							:key="reasonRule.ruleName"
+							:value="reasonRule.ruleName"
+							:id="reasonRule.ruleName"
 						>
-							{{ reason.ruleName }}
+							{{ reasonRule.ruleName }}
 						</option>
 					</select>
 				</div>

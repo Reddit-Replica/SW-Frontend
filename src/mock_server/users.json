@@ -387,7 +387,6 @@
 				}
 			],
 			"bans": [],
-			"moderators": [],
 			"isMember": true,
 			"banner": "string",
 			"picture": "https://play-lh.googleusercontent.com/9jnWEhWMGhsPnDN6DyzfNkv6DwxyzebUmKlUNtUVYTw3-ztghgR1Ph2OnVM3Xv5yHp2r",
@@ -1039,6 +1038,60 @@
 		}
 	],
 	"moderator-list": [
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "asmaa",
+					"nickname": "asmaa",
+					"dateOfModeration": "9 years ago",
+					"permissions": ["Everything"]
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "hoda",
+					"nickname": "hoda",
+					"dateOfModeration": "3 years ago",
+					"permissions": [
+						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+					]
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "mena",
+					"nickname": "mena",
+					"dateOfModeration": "1 year ago",
+					"permissions": [
+						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
+					]
+				}
+			]
+		},
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"username": "asmaaadel0",
+					"nickname": "asmaaadel0",
+					"dateOfModeration": "10 year ago",
+					"permissions": ["Everything"]
+				}
+			]
+		}
+	],
+  "invited-moderator-list": [
 		{
 			"before": "string",
 			"after": "string",
@@ -1793,7 +1846,7 @@
 				"id": "2",
 				"title": "string",
 				"link": "string",
-				"sendAt": "2022-10-30T11:13:39.069+00:00",
+				"sendAt": "2022-12-02T11:13:39.069+00:00",
 				"content": "content",
 				"isRead": false,
 				"smallIcon": "string",
