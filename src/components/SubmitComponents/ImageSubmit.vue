@@ -344,6 +344,7 @@ export default {
 			link: null,
 			caption: null,
 			postType: 'image',
+			dropped: false,
 			// image: '',
 		};
 	},
@@ -386,6 +387,7 @@ export default {
 			console.log(file);
 			this.imageFiles.push(file);
 			this.images.push(URL.createObjectURL(file));
+			this.dropped = true;
 			if (this.images.length > 1)
 				this.selectedImage = this.images[this.images.length - 1];
 		},
@@ -434,6 +436,9 @@ export default {
 	margin-top: 1.5rem;
 	border-radius: 5px;
 	position: relative;
+}
+.drop {
+	border: 1px dashed var(--bs-link-color);
 }
 .heading-3 {
 	color: var(--color-blue);
