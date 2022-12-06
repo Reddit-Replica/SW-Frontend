@@ -8,7 +8,11 @@
 					<div class="col-lg-6">
 						<div class="left-col">
 							<createpost-bar></createpost-bar>
-							<sortposts-bar @title="changeRoute"></sortposts-bar>
+							<sortposts-bar
+								@title="changeRoute"
+								@time="changeRouteQueryParam"
+								:initial-title="$route.params.title"
+							></sortposts-bar>
 							<base-post
 								v-for="post in posts"
 								:key="post.id"
@@ -179,6 +183,9 @@ export default {
 		changeRoute(title) {
 			this.$router.push('/main/' + title);
 		},
+		// changeRouteQueryParam(title) {
+
+		// },
 	},
 };
 </script>

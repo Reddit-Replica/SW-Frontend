@@ -321,6 +321,16 @@
       "type": "post",
       "direction": -1,
       "id": 5
+    },
+    {
+      "type": "post",
+      "direction": -1,
+      "id": 6
+    },
+    {
+      "type": "post",
+      "direction": 1,
+      "id": 7
     }
   ],
   "save": [
@@ -350,7 +360,24 @@
       "description": "it is a gaming subreddit",
       "dateOfCreation": "27/9/2001",
       "flairs": [],
-      "rules": [],
+      "rules": [
+        {
+          "ruleTitle": "ruleTitle1",
+          "ruleDescription": "ruleDescription1",
+          "questions": [
+            "string"
+          ],
+          "ruleFullDescription": "string"
+        },
+        {
+          "ruleTitle": "ruleTitle2",
+          "ruleDescription": "ruleDescription2",
+          "questions": [
+            "string"
+          ],
+          "ruleFullDescription": "string"
+        }
+      ],
       "bans": [],
       "moderators": [],
       "isMember": true,
@@ -450,13 +477,6 @@
       "nsfw": true,
       "category": "Learning",
       "id": 16
-    },
-    {
-      "subredditName": "wow",
-      "type": "Public",
-      "nsfw": false,
-      "category": "News",
-      "id": 17
     }
   ],
   "subreddit-name-available": [
@@ -1129,6 +1149,140 @@
       "block": true,
       "username": "/u/norhan_reda",
       "id": 2
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 3
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 4
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 5
+    },
+    {
+      "username": "medo",
+      "block": true,
+      "id": 6
+    },
+    {
+      "username": "medo",
+      "block": true,
+      "id": 7
+    },
+    {
+      "username": "medo",
+      "block": true,
+      "id": 8
+    },
+    {
+      "username": "jbhj",
+      "block": true,
+      "id": 9
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 10
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 11
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 12
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 13
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 14
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 15
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 16
+    },
+    {
+      "username": "",
+      "block": false,
+      "remove": true,
+      "id": 17
+    },
+    {
+      "username": "MedoEmad",
+      "block": false,
+      "remove": true,
+      "id": 18
+    },
+    {
+      "username": "KarimMohamed",
+      "block": false,
+      "remove": true,
+      "id": 19
+    },
+    {
+      "username": "Abdel-rahmeanAshraf",
+      "block": false,
+      "remove": true,
+      "id": 20
+    },
+    {
+      "username": "MedoEmad",
+      "block": false,
+      "remove": true,
+      "id": 21
+    },
+    {
+      "username": "KarimMohamed",
+      "block": false,
+      "remove": true,
+      "id": 22
+    },
+    {
+      "username": "Abdel-rahmeanAshraf",
+      "block": false,
+      "remove": true,
+      "id": 23
+    },
+    {
+      "username": "KarimMohamed",
+      "block": false,
+      "remove": true,
+      "id": 24
+    },
+    {
+      "username": "MedoEmad",
+      "block": false,
+      "remove": true,
+      "id": 25
     }
   ],
   "delete": [],
@@ -1216,6 +1370,86 @@
     "type": "Instagram",
     "displayText": "ukjy",
     "link": "https://www.instagram.com/ukjy"
+  },
+  "user-comments": {
+    "before": "string",
+    "after": "string",
+    "children": [
+      {
+        "id": "string",
+        "data": {
+          "subreddit": "subredditName",
+          "postedBy": "MedoEmad",
+          "title": "the Cars Lovesss",
+          "type": "text",
+          "content": "string",
+          "flair": {
+            "id": "string",
+            "flairName": "Cars lovers",
+            "order": 0,
+            "backgroundColor": "red",
+            "textColor": "#ffffff"
+          },
+          "nsfw": true,
+          "spoiler": true,
+          "comment": [
+            {
+              "commentId": "string",
+              "commentBy": "string",
+              "commentBody": "string",
+              "points": 0,
+              "editTime": "2019-08-24T14:15:22Z",
+              "publishTime": "2019-08-24T14:15:22Z",
+              "level": 0,
+              "inYourSubreddit": true,
+              "moderation": {
+                "approve": {
+                  "approvedBy": "string",
+                  "approvedDate": "2019-08-24T14:15:22Z"
+                },
+                "remove": {
+                  "removedBy": "string",
+                  "removedDate": "2019-08-24T14:15:22Z"
+                },
+                "spam": {
+                  "spamedBy": "string",
+                  "spamedDate": "2019-08-24T14:15:22Z"
+                },
+                "lock": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "blocked-users": {
+    "before": "string",
+    "after": "string",
+    "children": [
+      {
+        "id": "blocked0",
+        "data": {
+          "username": "KarimMohamed",
+          "blockDate": "2019-08-24T14:15:22Z",
+          "userPic": "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png"
+        }
+      },
+      {
+        "id": "blocked1",
+        "data": {
+          "username": "MedoEmad",
+          "blockDate": "2019-08-24T14:15:22Z"
+        }
+      },
+      {
+        "id": "blocked2",
+        "data": {
+          "username": "Abdel-rahmeanAshraf",
+          "blockDate": "2019-08-24T14:15:22Z"
+        }
+      }
+    ]
   },
   "user1": {
     "displayName": "Abdalhameed_Emad",

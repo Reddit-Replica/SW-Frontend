@@ -17,6 +17,11 @@ export default {
 			//////////////FLAIRS/////////////////
 			listOfFlairs: [],
 			addFlairSuccessfully: false,
+			updateFlairSuccessfully: false,
+			deleteFlairSuccessfully: false,
+
+			//////////////////////BAN////////////////////////
+			banUserSuccessfully: false,
 		};
 	},
 	mutations,

@@ -10,6 +10,7 @@
  * @mutator {object} followUnfollowUser=userData.followed sets follow Or unfollow user.
  * @mutator {object} blockUnblockUser=userData.blocked sets block Or unblock user .
  * @mutator {object} getSocialLinkIcon=socialLinkItems return icon of a certain social link.
+ * @mutator {object} SetListOfBlockedUsers=blockedUsersData sets the blocked users data
  */
 export default {
 	setUserData(state, payload) {
@@ -20,6 +21,11 @@ export default {
 	setUserPostData(state, payload) {
 		if (payload.responseStatus == 200)
 			Object.assign(state.postData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
+	setUserCommentsData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.commentsData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
 	addUserSocialLink(state, payload) {
@@ -35,7 +41,18 @@ export default {
 		state.userData.followed = payload.followUnfollowData.follow;
 	},
 	blockUnblockUser(state, payload) {
+		if (payload.blockUnblockData.remove) {
+			let deleteIndex = -1;
+			state.blockedUsersData.children.forEach((element, index) => {
+				if (element.data.username === payload.blockUnblockData.username)
+					deleteIndex = index;
+			});
+			state.blockedUsersData.children.splice(deleteIndex, 1);
+		}
 		state.userData.blocked = payload.blockUnblockData.block;
+	},
+	SetListOfBlockedUsers(state, payload) {
+		state.blockedUsersData = payload.responseData;
 	},
 	getSocialLinkIcon(state, payload) {
 		console.log(11, payload.id);
