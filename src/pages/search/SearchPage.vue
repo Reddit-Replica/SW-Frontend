@@ -140,6 +140,7 @@
 									></CommunitesNav>
 								</div>
 								<PeopleNav></PeopleNav>
+								<backtotop-button></backtotop-button>
 							</div>
 						</div>
 					</div>
@@ -153,6 +154,7 @@ import SearchPost from '../../components/SearchComponents/SearchPost.vue';
 import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
 import PeopleNav from '../../components/SearchComponents/PeopleNav.vue';
 import MenuSearchVue from '@/components/SearchComponents/MenuSearch.vue';
+import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 export default {
 	data() {
 		return {
@@ -236,6 +238,7 @@ export default {
 		CommunitesNav,
 		PeopleNav,
 		MenuSearchVue,
+		BacktotopButton,
 	},
 };
 </script>
