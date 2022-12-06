@@ -242,7 +242,11 @@
 											</div>
 										</router-link>
 									</li>
-									<li class="post-option-item" @click="sharePost">
+									<li
+										style="position: relative"
+										class="post-option-item-hover"
+										@click="sharePost"
+									>
 										<router-link to="">
 											<div class="post-options-icon">
 												<i
@@ -258,8 +262,31 @@
 												<p>share</p>
 											</div>
 										</router-link>
+										<div v-if="showShareOptions" class="options-box-list">
+											<ul>
+												<li @click="CopyPostLink" class="options-box-item">
+													<div class="options-box-icon">
+														<i
+															style="color: rgba(135, 138, 140)"
+															class="fa-solid fa-link"
+														></i>
+													</div>
+													<div class="options-box-text">Copy Link</div>
+												</li>
+												<li @click="Crosspost" class="options-box-item">
+													<div class="options-box-icon">
+														<i
+															style="color: rgba(135, 138, 140)"
+															class="fa-solid fa-shuffle"
+														></i>
+													</div>
+													<div class="options-box-text">Crosspost</div>
+												</li>
+											</ul>
+										</div>
 									</li>
 									<li
+										id="approve-user-post-button"
 										@click="approvePost"
 										:style="[
 											postData.moderation.approve.approvedBy != ''
@@ -274,6 +301,7 @@
 										<div class="post-options-text">Approve</div>
 									</li>
 									<li
+										id="remove-user-post-button"
 										@click="removePost"
 										:style="[
 											postData.moderation.remove.removedBy != ''
@@ -290,6 +318,7 @@
 										</div>
 									</li>
 									<li
+										id="spam-user-post-button"
 										@click="spamPost"
 										:style="[
 											postData.moderation.spam.spammedBy != ''
@@ -305,7 +334,11 @@
 											<p>Spam</p>
 										</div>
 									</li>
-									<li @click="insightsPost" class="post-option-item">
+									<li
+										id="insights-user-post-button"
+										@click="insightsPost"
+										class="post-option-item"
+									>
 										<div class="post-options-icon">
 											<i class="fa-solid fa-chart-simple"></i>
 										</div>
@@ -313,7 +346,7 @@
 											<p>Insights</p>
 										</div>
 									</li>
-									<li class="post-option-item" @click="leftClick">
+									<li id="shield-user-post-button" class="post-option-item">
 										<div class="post-options-icon">
 											<i
 												style="
@@ -565,6 +598,7 @@ export default {
 			],
 			lastLeftPic: 0,
 			lastRightPic: 0,
+			showShareOptions: false,
 			// icons: {
 			// 	expand: true,
 			// 	message: true,
@@ -615,7 +649,10 @@ export default {
 		},
 		sharePost() {
 			console.log('share');
+			this.showShareOptions = true;
 		},
+		CopyPostLink() {},
+		Crosspost() {},
 		editPost() {
 			console.log('edit');
 		},
@@ -897,6 +934,7 @@ div.vote-box {
 	height: 72px;
 	border-radius: 4px;
 	background-color: rgba(28, 28, 28, 0.03);
+	flex: none;
 }
 .post-pic-box::before {
 	font-family: 'Font Awesome 5 Free';
@@ -929,9 +967,19 @@ div.vote-box {
 	div.left-vote-box {
 		display: none !important;
 	}
-	.post-pic-box {
+	/* .post-pic-box {
 		position: absolute;
 		right: 16px;
+	} */
+	.main-box {
+		flex-direction: row-reverse;
+	}
+	#shield-user-post-button,
+	#insights-user-post-button,
+	#spam-user-post-button,
+	#remove-user-post-button,
+	#approve-user-post-button {
+		display: none;
 	}
 }
 @media (min-width: 640px) {
@@ -946,6 +994,7 @@ div.vote-box {
 .post-header {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 }
 span {
 	display: inline-block;
@@ -978,6 +1027,7 @@ span {
 .post-user-information {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 }
 .post-user-information div {
 	margin-right: 3px;
@@ -1033,15 +1083,16 @@ span.post-oc {
 	align-items: center;
 	justify-content: center;
 }
-.post-options ul li.post-option-item {
+.post-options ul li.post-option-item,
+.post-option-item-hover {
 	/* padding: 8px; */
 	padding: 0 8px 0 8px;
 	margin-right: 4px;
 	border-radius: 2px;
 }
-.post-options ul li.post-option-item .post-options-icon {
-}
-.post-options ul li.post-option-item .post-options-text {
+
+.post-options ul li.post-option-item .post-options-text,
+.post-option-item-hover .post-options-text {
 	margin-left: 6px;
 }
 @media (max-width: 800px) {
@@ -1049,10 +1100,12 @@ span.post-oc {
 		display: none;
 	}
 }
-.post-options ul li.post-option-item p {
+.post-options ul li.post-option-item p,
+.post-option-item-hover p {
 	font-size: 12px;
 }
-.post-options ul li.post-option-item:hover {
+.post-options ul li.post-option-item:hover,
+.post-option-item-hover:hover {
 	background-color: rgba(26, 26, 27, 0.1);
 }
 .post-options-icon {
@@ -1193,6 +1246,7 @@ span.post-oc {
 	position: absolute;
 	right: 16px;
 	top: 16px;
+	z-index: 5;
 }
 .post-picture .picture-container .pic-items ul {
 	width: 100%;
@@ -1284,4 +1338,6 @@ span.post-oc {
 .flair-box:hover {
 	opacity: 85%;
 }
+
+/* @media (max-width: 400px;); */
 </style>
