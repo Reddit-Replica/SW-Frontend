@@ -55,21 +55,18 @@ import TheBanned from './pages/moderation/TheBanned.vue';
 import TheMuted from './pages/moderation/TheMuted.vue';
 import TheApproved from './pages/moderation/TheApproved.vue';
 import ModerationList from './pages/moderation/ModerationList.vue';
-
 import PostFlair from './pages/moderation/PostFlair.vue';
-
 import TheRules from './pages/moderation/TheRules.vue';
 import ContentControls from './pages/moderation/ContentControls.vue';
-
 import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
-
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
-
 import TrafficStats from './pages/moderation/TrafficStats.vue';
 
 import NotFound from './pages/NotFound.vue';
 
 import PostComments from './components/PostComponents/PostComments.vue';
+
+import NotificationsPage from './pages/notifications/NotificationsPage.vue';
 
 import Search from './pages/search/SearchPage.vue';
 import GetHelp from './pages/forget/GetHelp.vue';
@@ -212,6 +209,12 @@ const router = createRouter({
 				{ path: '/message/mentions', component: UsernameMentions },
 				{ path: '/message/sent', component: SentMessages },
 			],
+		},
+
+		{
+			path: '/notifications',
+			name: 'notifications',
+			component: NotificationsPage,
 		},
 
 		{ path: '/:notFound(.*)', component: NotFound },
