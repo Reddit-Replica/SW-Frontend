@@ -237,9 +237,14 @@ export default {
 }
 </style> -->
 <template>
-	<div class="content">
+	<div class="content" @dragover.prevent @drop.prevent>
 		<!-- <div class="out"> -->
-		<div class="images-preview">
+		<div v-if="postType == 'video'">
+			<video width="800" height="500" controls>
+				<source :src="video" />
+			</video>
+		</div>
+		<div class="images-preview" v-if="postType == 'image'">
 			<span
 				class="one-image"
 				@click="setSelected(image)"
@@ -273,7 +278,7 @@ export default {
 			</button>
 		</div>
 		<!-- </div> -->
-		<div class="bottom-preview" v-if="images.length > 1">
+		<div class="bottom-preview" v-if="images.length > 1 && postType == 'image'">
 			<div class="big-image">
 				<img :src="selectedImage" alt="" />
 			</div>
@@ -307,10 +312,10 @@ export default {
 			</div>
 		</div>
 
-		<h3 class="heading-3" v-if="images.length === 0">
+		<h3 class="heading-3" v-if="images.length === 0 && postType == 'image'">
 			Drag and drop images or
 		</h3>
-		<div v-if="images.length === 0">
+		<div v-if="images.length === 0 && postType == 'image'" @drop="dragFile">
 			<input
 				id="image-input"
 				type="file"
@@ -331,34 +336,56 @@ export default {
 			imageCaptions: [],
 			imageLinks: [],
 			images: [],
-			videos: [],
+			video: null,
+			imageFiles: [],
+			videoFile: null,
 			inputCharCount: 0,
 			selectedImage: '',
 			link: null,
 			caption: null,
+			postType: 'image',
 			// image: '',
 		};
 	},
 	methods: {
 		fileChange(e) {
 			const file = e.target.files[0];
-			this.images.push(URL.createObjectURL(file));
-			console.log(this.images.length);
-			console.log('after push');
-			if (this.images.length > 1)
-				this.selectedImage = this.images[this.images.length - 1];
+			console.log(file.type);
+			console.log(file.type == 'image/jpeg');
+			//'video/mp4'
+			if (file.type == 'video/mp4') {
+				this.video = URL.createObjectURL(file);
+				this.videoFile = file;
+				this.postType = 'video';
+			} else {
+				this.postType = 'image';
+				this.imageFiles.push(file);
+				this.images.push(URL.createObjectURL(file));
+
+				console.log(this.images.length);
+				console.log('after push');
+				if (this.images.length > 1)
+					this.selectedImage = this.images[this.images.length - 1];
+			}
 		},
 		removeImage() {
 			this.images.pop();
+			this.images.splice(this.images.length, 1);
 			console.log(this.images);
 			console.log(this.images.length);
 			console.log('after pop');
 			console.log(this.images.length);
-			this.selectedImage = this.images[this.images.length - 1];
+			this.selectedImage = this.images[this.images.length - 2];
 			console.log(this.images.length);
 		},
 		setSelected(img) {
 			this.selectedImage = img;
+		},
+		dragFile(e) {
+			const file = e.dataTransfer.files[0];
+			console.log(file);
+			this.imageFiles.push(file);
+			this.images.push(URL.createObjectURL(file));
 		},
 	},
 	watch: {
@@ -428,7 +455,7 @@ export default {
 .images-preview {
 	display: inline-flex;
 	/*display: inline-flex;*/
-	overflow-x: auto;
+	overflow: auto;
 	width: 100%;
 
 	position: absolute;
@@ -490,11 +517,11 @@ export default {
 	align-items: center;
 	border: 1px dashed #d6d6d6;
 	border-radius: 4px;
-	display: -ms-flexbox;
-	display: flex;
+	/*display: -ms-flexbox;
+	display: flex;*/
 	height: 100px;
-	-ms-flex-pack: center;
-	justify-content: center;
+	/*-ms-flex-pack: center;
+	justify-content: center;*/
 	width: 100px;
 	background-color: white;
 	margin-left: 8px;
