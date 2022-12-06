@@ -321,6 +321,16 @@
       "type": "post",
       "direction": -1,
       "id": 5
+    },
+    {
+      "type": "post",
+      "direction": -1,
+      "id": 6
+    },
+    {
+      "type": "post",
+      "direction": 1,
+      "id": 7
     }
   ],
   "save": [
@@ -350,7 +360,24 @@
       "description": "it is a gaming subreddit",
       "dateOfCreation": "27/9/2001",
       "flairs": [],
-      "rules": [],
+      "rules": [
+        {
+          "ruleTitle": "ruleTitle1",
+          "ruleDescription": "ruleDescription1",
+          "questions": [
+            "string"
+          ],
+          "ruleFullDescription": "string"
+        },
+        {
+          "ruleTitle": "ruleTitle2",
+          "ruleDescription": "ruleDescription2",
+          "questions": [
+            "string"
+          ],
+          "ruleFullDescription": "string"
+        }
+      ],
       "bans": [],
       "moderators": [],
       "isMember": true,
@@ -450,6 +477,9 @@
       "nsfw": true,
       "category": "Learning",
       "id": 16
+    },
+    {
+      "id": 17
     }
   ],
   "subreddit-name-available": [
