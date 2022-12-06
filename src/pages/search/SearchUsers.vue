@@ -122,9 +122,7 @@ export default {
 		};
 	},
 	methods: {
-		toggle() {
-			this.notFollowed = !this.notFollowed;
-		},
+		toggle() {},
 	},
 	components: { BaseButton },
 };
