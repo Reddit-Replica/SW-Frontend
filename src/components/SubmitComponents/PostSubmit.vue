@@ -241,6 +241,26 @@
 							<span class="tool-tip-text strike">Add a video</span>
 							<button class="icon ql-video"></button>
 						</div>
+						<div class="icon" data-v-72dd2826="">
+							<svg
+								class="svg-inline--fa fa-ellipsis"
+								aria-hidden="true"
+								focusable="false"
+								data-prefix="fas"
+								data-icon="ellipsis"
+								role="img"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 448 512"
+								data-v-72dd2826=""
+							>
+								<path
+									class=""
+									fill="currentColor"
+									d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"
+								></path>
+							</svg>
+						</div>
+						<div></div>
 					</div>
 				</template>
 			</QuillEditor>
@@ -591,6 +611,7 @@ button {
 	resize: vertical;
 	color: #000;
 }
+
 /*@media (max-width: 1600px) {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(13),
 	.icons-box .tool-tip:last-of-type li:nth-of-type(14),
@@ -699,6 +720,14 @@ button {
 		display: flex;
 	}
 }
+@media (max-width: 820px) {
+	.icons-box div.tool-tip:nth-of-type(11) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(11) {
+		display: flex;
+	}
+}
 @media (max-width: 815px) {
 	.icons-box .space-in {
 		display: none;
@@ -769,6 +798,30 @@ button {
 		display: none;
 	}
 	.icons-box .tool-tip:last-of-type li:nth-of-type(3) {
+		display: flex;
+	}
+}
+@media (max-width: 510px) {
+	.icons-box div.tool-tip:nth-of-type(3) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(3) {
+		display: flex;
+	}
+}
+@media (max-width: 470px) {
+	.icons-box div.tool-tip:nth-of-type(2) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(2) {
+		display: flex;
+	}
+}
+@media (max-width: 400px) {
+	.icons-box div.tool-tip:nth-of-type(1) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
 		display: flex;
 	}
 }

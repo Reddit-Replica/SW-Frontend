@@ -49,11 +49,7 @@
 										>
 									</div>
 									<div class="image-class">
-										<img
-											alt=""
-											src="https://www.redditstatic.com/desktop2x/img/renderTimingPixel.png"
-											style="width: 1px; height: 1px"
-										/>
+										<img alt="" style="width: 1px; height: 1px" />
 									</div>
 								</div>
 							</div>

@@ -9,22 +9,25 @@
 							<div class="img-release">
 								<div class="img-holder">
 									<div class="img-div">
-										<img
-											class="people-img"
-											src="https://styles.redditmedia.com/t5_3d5irw/styles/profileIcon_snoo590500c4-7be0-4699-aa5f-21b87d02314e-headshot-f.png?width=256&amp;height=256&amp;frame=1&amp;crop=256:256,smart&amp;s=2a008cc76be58e70a13a7e5b22cbc98b5278b432"
-										/>
+										<img class="people-img" />
 									</div>
 								</div>
 							</div>
 							<div class="people-content">
 								<div class="people-content-release">
 									<h6 class="people-name">u/{{ name }}</h6>
-									<p class="karma-number">{{ karm }} Karma</p>
+									<p class="karma-number">{{ karma }} Karma</p>
 								</div>
 							</div>
-							<div class="follow">
+							<div class="follow" v-if="notFollowed" @click="toggle">
 								<base-button
 									button-text="Follow"
+									class="follow-button"
+								></base-button>
+							</div>
+							<div class="follow" v-if="!notFollowed" @click="toggle">
+								<base-button
+									button-text="Unfollow"
 									class="follow-button"
 								></base-button>
 							</div></div
@@ -42,10 +45,16 @@ export default {
 		return {
 			name: 'Salah',
 			karma: '124k',
+			notFollowed: true,
 		};
 	},
 	components: {
 		BaseButton,
+	},
+	methods: {
+		toggle() {
+			this.notFollowed = !this.notFollowed;
+		},
 	},
 };
 </script>
@@ -66,7 +75,7 @@ a {
 }
 p {
 	display: block;
-	margin-block-start: 1em;
+	margin-block-start: 0em;
 	margin-block-end: 1em;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
