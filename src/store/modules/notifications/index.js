@@ -7,6 +7,8 @@ export default {
 	state() {
 		return {
 			notifications: [],
+			allRead: false,
+			hiddenSuccessfully: false,
 		};
 	},
 	mutations,
