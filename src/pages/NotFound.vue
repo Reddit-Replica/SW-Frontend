@@ -5,6 +5,7 @@
 			<p>the page you requested does not exist</p>
 		</section>
 		<the-recaptcha @verify="verifyMethod"></the-recaptcha>
+		<the-spinner></the-spinner>
 	</div>
 </template>
 

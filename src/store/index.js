@@ -5,6 +5,7 @@ import notificationsModule from './modules/notifications/index.js';
 import messageModule from './modules/messages/index.js';
 import moderatorsModule from './modules/moderators/index.js';
 import userModule from './modules/userStore/index.js';
+import userpostsModule from './modules/userposts/index.js';
 import commentsModule from './modules/comments/index.js';
 import postCommentActionsModule from './modules/postCommentActions/index.js';
 import postsModule from './modules/posts/index.js';
@@ -21,6 +22,7 @@ const store = createStore({
 		postCommentActions: postCommentActionsModule,
 		posts: postsModule,
 		listing: listingModule,
+		userposts: userpostsModule,
 	},
 	state() {
 		return {

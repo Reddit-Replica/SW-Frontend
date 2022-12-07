@@ -78,9 +78,6 @@ export default {
 		'$route.params.userName'() {
 			location.reload();
 		},
-		$route() {
-			location.reload();
-		},
 	},
 	computed: {
 		/**
