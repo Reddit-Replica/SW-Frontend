@@ -30,28 +30,158 @@ export default {
 	 * @param {Object} payload post data and base url.
 	 * @returns {void}
 	 */
-	async createPost(context, payload) {
+	async createpostHybrid(context, payload) {
 		const postInfo = {
-			kind: payload.kind,
-			subreddit: payload.subreddit,
 			title: payload.title,
+			kind: payload.kind,
+			//subreddit: payload.subreddit,
+			inSubreddit: payload.inSubreddit,
 			content: payload.content,
-			files: payload.files,
+
 			nsfw: payload.nsfw,
 			spoiler: payload.spoiler,
-			flairId: payload.flairId,
-			imageCaptions: payload.imageCaptions,
-			imageLinks: payload.imageLinks,
+			// flairId: payload.flairId,
 			sendReplies: payload.sendReplies,
 		};
+		//const token = localStorage.getItem('accessToken');
+
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
 			body: JSON.stringify(postInfo),
 		});
 		const responseData = await response.json();
-		if (response.status == 200) {
+		if (response.status == 201) {
+			localStorage.setItem('response', response.status);
+			console.log(response);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
+	async createpostLink(context, payload) {
+		const postInfo = {
+			title: payload.title,
+			kind: payload.kind,
+			//subreddit: payload.subreddit,
+			inSubreddit: payload.inSubreddit,
+			link: payload.content,
+
+			nsfw: payload.nsfw,
+			spoiler: payload.spoiler,
+			// flairId: payload.flairId,
+			sendReplies: payload.sendReplies,
+		};
+		//const token = localStorage.getItem('accessToken');
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/submit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
+			localStorage.setItem('response', response.status);
+			console.log(response);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
+	async createpostImage(context, payload) {
+		// const postInfo = {
+		// 	title: payload.title,
+		// 	kind: payload.kind,
+		// 	//subreddit: payload.subreddit,
+		// 	inSubreddit: payload.inSubreddit,
+		//   images: payload.images,
+		// 	imageCaptions: payload.imageCaptions,
+		// 	imageLinks: payload.imageLinks,
+		// 	nsfw: payload.nsfw,
+		// 	spoiler: payload.spoiler,
+		// 	// flairId: payload.flairId,
+		// 	sendReplies: payload.sendReplies,
+
+		// };
+		const postInfo = new FormData();
+		postInfo.append('title', payload.title);
+		postInfo.append('kind', payload.kind);
+		postInfo.append('inSubreddit', payload.inSubreddit);
+		postInfo.append('images', JSON.stringify(payload.images));
+		postInfo.append('imageCaptions', JSON.stringify(payload.imageCaptions));
+		postInfo.append('imageLinks', JSON.stringify(payload.imageLinks));
+		postInfo.append('nsfw', payload.nsfw);
+		postInfo.append('spoiler', payload.spoiler);
+		postInfo.append('sendReplies', payload.sendReplies);
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/submit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'multipart/form-data; ',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: postInfo,
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
+			localStorage.setItem('response', response.status);
+			console.log(response);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
+	async createpostVideo(context, payload) {
+		// const postInfo = {
+		// 	title: payload.title,
+		// 	kind: payload.kind,
+		// 	//subreddit: payload.subreddit,
+		// 	inSubreddit: payload.inSubreddit,
+		//   images: payload.images,
+		// 	imageCaptions: payload.imageCaptions,
+		// 	imageLinks: payload.imageLinks,
+		// 	nsfw: payload.nsfw,
+		// 	spoiler: payload.spoiler,
+		// 	// flairId: payload.flairId,
+		// 	sendReplies: payload.sendReplies,
+
+		// };
+		const postInfo = new FormData();
+		postInfo.append('title', payload.title);
+		postInfo.append('kind', payload.kind);
+		postInfo.append('inSubreddit', payload.inSubreddit);
+		postInfo.append('video', payload.video);
+		postInfo.append('nsfw', payload.nsfw);
+		postInfo.append('spoiler', payload.spoiler);
+		postInfo.append('sendReplies', payload.sendReplies);
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/submit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'multipart/form-data; ',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: postInfo,
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
 			localStorage.setItem('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {

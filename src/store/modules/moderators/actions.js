@@ -33,6 +33,40 @@ export default {
 		context.commit('setListOfModerators', moderators);
 	},
 
+	async loadListOfInvitedModerators(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/invited-moderators`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+
+		const invitedModerators = [];
+
+		for (const key in responseData) {
+			const invitedModerator = {
+				before: responseData[key].before,
+				after: responseData[key].after,
+				username: responseData[key].children[0].username,
+				nickname: responseData[key].children[0].nickname,
+				dateOfModeration: responseData[key].children[0].dateOfModeration,
+				permissions: responseData[key].children[0].permissions,
+			};
+			invitedModerators.push(invitedModerator);
+		}
+		context.commit('setListOfInvitedModerators', invitedModerators);
+	},
+
 	//////////////////////RULES////////////////////////
 
 	async addRule(context, payload) {

@@ -23,19 +23,21 @@ export default {
 	 */
 	state() {
 		return {
+			title: null,
 			kind: null,
 			subreddit: null,
 			inSubreddit: null,
-			title: null,
 			content: null,
 			files: [{}],
-			nsfw: null,
-			spoiler: null,
+			nsfw: false,
+			spoiler: false,
 			flairId: null,
 			imageCaptions: [],
 			imageLinks: [],
 			images: [],
-			sendReplies: null,
+			video: null,
+			videoOrimage: null,
+			sendReplies: false,
 			allSubreddits: [],
 		};
 	},

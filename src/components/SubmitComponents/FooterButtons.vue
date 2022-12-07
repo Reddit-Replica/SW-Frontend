@@ -88,7 +88,7 @@ export default {
 		return {
 			nsfw: false,
 			spoiler: false,
-			flairId: 123,
+			flairId: null,
 		};
 	},
 	watch: {},
