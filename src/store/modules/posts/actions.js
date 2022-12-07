@@ -30,13 +30,49 @@ export default {
 	 * @param {Object} payload post data and base url.
 	 * @returns {void}
 	 */
-	async createPost(context, payload) {
+	async createpostHybrid(context, payload) {
 		const postInfo = {
 			title: payload.title,
 			kind: payload.kind,
 			//subreddit: payload.subreddit,
 			inSubreddit: payload.inSubreddit,
 			content: payload.content,
+
+			nsfw: payload.nsfw,
+			spoiler: payload.spoiler,
+			// flairId: payload.flairId,
+			sendReplies: payload.sendReplies,
+		};
+		//const token = localStorage.getItem('accessToken');
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/submit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
+			localStorage.setItem('response', response.status);
+			console.log(response);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
+	async createpostLink(context, payload) {
+		const postInfo = {
+			title: payload.title,
+			kind: payload.kind,
+			//subreddit: payload.subreddit,
+			inSubreddit: payload.inSubreddit,
+			link: payload.content,
 
 			nsfw: payload.nsfw,
 			spoiler: payload.spoiler,

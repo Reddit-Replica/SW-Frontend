@@ -229,10 +229,10 @@ export default {
 				};
 
 				try {
-					await this.$store.dispatch('posts/createPost', actionPayload);
+					await this.$store.dispatch('posts/createpostHybrid', actionPayload);
 					const response = localStorage.getItem('response');
 
-					if (response == 200) {
+					if (response == 201) {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
@@ -260,7 +260,35 @@ export default {
 					await this.$store.dispatch('posts/createPost', actionPayload);
 					const response = localStorage.getItem('response');
 
-					if (response == 200) {
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
+			} else if (this.kind == 'link') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					content: this.content,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('posts/createpostLink', actionPayload);
+					const response = localStorage.getItem('response');
+
+					if (response == 201) {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
