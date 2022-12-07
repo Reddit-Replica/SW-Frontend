@@ -238,11 +238,6 @@ export default {
 				return 'Muted';
 			} else if (
 				this.$route.path ===
-				'/r/' + this.subredditName + '/about/contributors'
-			) {
-				return 'Approved';
-			} else if (
-				this.$route.path ===
 				'/r/' + this.subredditName + '/about/moderators'
 			) {
 				return 'Moderators of t/' + this.subredditName;
