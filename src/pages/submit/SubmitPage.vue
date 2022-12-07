@@ -113,6 +113,7 @@ export default {
 			flairId: 123,
 			imageCaptions: [],
 			imageLinks: [],
+			video: null,
 			sendReplies: null,
 			choosen: null,
 		};
@@ -130,7 +131,8 @@ export default {
 
 		getKind() {
 			if (this.submitTypesActive[0]) this.kind = 'hybrid';
-			else if (this.submitTypesActive[1]) this.kind = 'image';
+			else if (this.submitTypesActive[1])
+				this.kind = this.$store.getters['posts/getvideoOrimage'];
 			else if (this.submitTypesActive[2]) this.kind = 'link';
 			console.log(this.kind);
 		},
@@ -170,6 +172,10 @@ export default {
 		getSubreddit() {
 			this.subreddit = this.$store.getters['posts/getSubreddit'];
 		},
+		getVideo() {
+			this.video = this.$store.getters['posts/getVideo'];
+		},
+
 		// @vuese
 		// dispatch createpost from the store
 
@@ -181,13 +187,14 @@ export default {
 			//this.getFlairId();
 			this.getsendReplies();
 			this.getContent();
+			this.getVideo();
 			//this.getSubreddit();
 			this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
 			console.log(this.kind);
 			console.log(this.inSubreddit);
-			console.log(this.content);
+			console.log(this.video);
 			console.log(this.spoiler);
 			console.log(this.nsfw);
 			console.log(this.sendReplies);
@@ -197,7 +204,7 @@ export default {
 				this.title === null ||
 				this.kind === null ||
 				// this.subreddit == null ||
-				this.content === '' ||
+				// this.content === '' ||
 				this.nsfw === null ||
 				this.spoiler === null ||
 				//this.flairId == null ||
@@ -207,32 +214,62 @@ export default {
 			}
 			console.log('hello from hell');
 			this.disableButton = false;
-			const actionPayload = {
-				title: this.title,
-				kind: this.kind,
-				//subreddit: this.subreddit,
-				inSubreddit: this.inSubreddit,
-				content: this.content,
-				nsfw: this.nsfw,
-				spoiler: this.spoiler,
-				// flairId: this.flairId,
-				sendReplies: this.sendReplies,
-				baseurl: this.$baseurl,
-			};
+			if (this.kind == 'hybrid') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					content: this.content,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
 
-			try {
-				await this.$store.dispatch('posts/createPost', actionPayload);
-				const response = localStorage.getItem('response');
+				try {
+					await this.$store.dispatch('posts/createPost', actionPayload);
+					const response = localStorage.getItem('response');
 
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-					this.success = true;
+					if (response == 200) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
 				}
-			} catch (err) {
-				this.error = err;
-				console.log(this.error);
-				this.success = false;
+			} else if (this.kind == 'video') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					video: this.video,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('posts/createPost', actionPayload);
+					const response = localStorage.getItem('response');
+
+					if (response == 200) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
 			}
 		},
 		selectPostType(e) {
