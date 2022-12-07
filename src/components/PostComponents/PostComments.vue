@@ -453,7 +453,7 @@
 								<div class="post-comments">
 									<my-comment
 										v-for="userComment in userComments"
-										:key="userComment.duration"
+										:key="userComment"
 										:comment="userComment"
 									></my-comment>
 									<nested-reply
