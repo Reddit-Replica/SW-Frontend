@@ -2,10 +2,7 @@
 	<li id="'ntf-msg-'+index" class="ntf-msg-li" :class="{ 'not-read': !isRead }">
 		<router-link to="link" class="ntf-msg-routerlink">
 			<span class="ntf-msg-1">
-				<img
-					src="https://www.redditstatic.com/notifications/default_inbox_avatar.png"
-					alt="image"
-				/>
+				<img src="../../../img/default_inbox_avatar.png" alt="image" />
 				<span class="circle"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
