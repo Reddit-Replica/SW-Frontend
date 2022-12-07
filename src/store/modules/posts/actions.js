@@ -47,6 +47,7 @@ export default {
 
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
+			// mode: 'no-cors',
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -60,9 +61,11 @@ export default {
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
+			console.log(error);
 			throw error;
 		} else {
 			const error = new Error('server error');
+			console.log(error);
 			throw error;
 		}
 	},

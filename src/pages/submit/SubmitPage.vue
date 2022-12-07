@@ -172,6 +172,9 @@ export default {
 		getSubreddit() {
 			this.subreddit = this.$store.getters['posts/getSubreddit'];
 		},
+		// @vuese
+		// get the video in the type of video post
+
 		getVideo() {
 			this.video = this.$store.getters['posts/getVideo'];
 		},
