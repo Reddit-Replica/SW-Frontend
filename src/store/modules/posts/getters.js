@@ -65,4 +65,8 @@ export default {
 		console.log('getters video');
 		return state.video;
 	},
+	getvideoOrimage(state) {
+		console.log('getters videoOrimage');
+		return state.videoOrimage;
+	},
 };

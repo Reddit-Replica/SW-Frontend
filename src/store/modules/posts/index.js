@@ -36,7 +36,7 @@ export default {
 			imageLinks: [],
 			images: [],
 			video: null,
-
+			videoOrimage: null,
 			sendReplies: false,
 			allSubreddits: [],
 		};

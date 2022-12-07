@@ -358,6 +358,10 @@ export default {
 				this.video = URL.createObjectURL(file);
 				this.videoFile = file;
 				this.postType = 'video';
+				this.setVideo(this.videoFile);
+				this.$store.commit('posts/setvideoOrimage', {
+					videoOrimage: this.postType,
+				});
 			} else {
 				this.postType = 'image';
 				this.imageFiles.push(file);
@@ -390,6 +394,11 @@ export default {
 			this.dropped = true;
 			if (this.images.length > 1)
 				this.selectedImage = this.images[this.images.length - 1];
+		},
+		setVideo(value) {
+			this.$store.commit('posts/setVideo', {
+				video: value,
+			});
 		},
 	},
 	watch: {
