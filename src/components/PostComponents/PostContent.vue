@@ -44,9 +44,7 @@
 			<h3>{{ post.title }}</h3>
 		</div>
 		<div class="post-text" v-if="post.kind == 'text'">
-			<p>
-				{{ post.content.substr(0, post.content.length * 0.7) }}
-			</p>
+			{{ post.content }}
 		</div>
 		<div class="post-post" v-else-if="post.kind == 'post'">
 			<post-content :post="post.sharedPostDetails"></post-content>
