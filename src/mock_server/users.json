@@ -1489,7 +1489,7 @@
 				"data": {
 					"username": "KarimMohamed",
 					"blockDate": "2019-08-24T14:15:22Z",
-					"userPic": "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png"
+					"userImage": "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png"
 				}
 			},
 			{
@@ -1507,6 +1507,12 @@
 				}
 			}
 		]
+	},
+	"post-insights": {
+		"totalViews": 45,
+		"upvoteRate": 90,
+		"communityKarma": 2,
+		"totalShares": 1
 	},
 	"user1": {
 		"displayName": "Abdalhameed_Emad",
@@ -1617,14 +1623,14 @@
 			}
 		}
 	],
-	"userpostdata": {
+	"userpostdata1": {
 		"after": "string",
 		"before": "string",
 		"children": [
 			{
-				"kind": "text",
+				"kind": "post",
 				"subreddit": "Cars",
-				"content": "Marcedes car is the best for ever",
+				"content": "<p>Marcedes car is the best for ever</p>",
 				"images": [
 					{
 						"path": "string",
@@ -1819,6 +1825,69 @@
 						"spammedDate": "2019-08-24T14:15:22Z"
 					},
 					"lock": true
+				}
+			}
+		]
+	},
+	"userpostdata": {
+		"after": "string",
+		"before": "string",
+		"children": [
+			{
+				"id": "1234",
+				"data": {
+					"kind": "link",
+					"title": "link post",
+					"subreddit": "medoemad",
+					"link": "www.google.com",
+					"images": [
+						{
+							"path": "string",
+							"caption": "string",
+							"link": "string"
+						}
+					],
+					"video": "string",
+					"content": {},
+					"nsfw": true,
+					"spoiler": true,
+					"sharePostId": "string",
+					"flair": {
+						"id": "string",
+						"flairName": "Cars lovers",
+						"order": 0,
+						"backgroundColor": "red",
+						"textColor": "#ffffff"
+					},
+					"comments": 100,
+					"votes": 20,
+					"postedAt": "",
+					"sendReplies": true,
+					"markedSpam": true,
+					"suggestedSort": "string",
+					"editedAt": "string",
+					"postedBy": "string",
+					"votingType": 1,
+					"saved": false,
+					"followed": false,
+					"hidden": false,
+					"spammed": false,
+					"inYourSubreddit": false,
+					"moderation": {
+						"approve": {
+							"approvedBy": "string",
+							"approvedDate": "2019-08-24T14:15:22Z"
+						},
+						"remove": {
+							"removedBy": "string",
+							"removedDate": "2019-08-24T14:15:22Z"
+						},
+						"spam": {
+							"spammedBy": "string",
+							"spammedDate": "2019-08-24T14:15:22Z"
+						},
+						"lock": true
+					}
 				}
 			}
 		]

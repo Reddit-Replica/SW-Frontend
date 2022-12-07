@@ -43,7 +43,7 @@
 									:to="`/user/${blockedUser.data.username}`"
 									class="blocked-user-info"
 								>
-									<img :src="blockedUser.data.userPic" alt="" />
+									<img :src="blockedUser.data.userImage" alt="" />
 									<span>{{ blockedUser.data.username }}</span>
 								</router-link>
 								<span>{{ getMoment(blockedUser.data.blockDate) }}</span>
