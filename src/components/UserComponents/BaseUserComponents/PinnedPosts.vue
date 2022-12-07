@@ -4,23 +4,108 @@
 	</header>
 	<div class="pinned-post-container">
 		<div class="pinned-post-item">
+			<div v-if="kind == 'image'">
+				<!-- <img src= alt="" /> -->
+			</div>
 			<div class="pinned-post-title">the first post</div>
-			<div class="post-info">r/medo emad</div>
+			<div class="post-info">
+				<div class="post-subreddit-icon">
+					<i></i>
+					<img src="" alt="" />
+				</div>
+				<router-link to=""> r/medo emad </router-link>
+			</div>
 			<div class="content-text" v-if="kind === 'text'"></div>
-			<div class="post-options"></div>
+			<div style="flex-grow: 1"></div>
+			<div class="post-options">
+				<post-options
+					:post-data="postData.children[0]"
+					pinnedPostFlag="true"
+				></post-options>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
+import postOptions from './PostComponents/PostOptions.vue';
 export default {
+	components: {
+		postOptions,
+	},
 	data() {
 		return {
 			kind: 'text',
+			postData: {
+				after: 'string',
+				before: 'string',
+				children: [
+					{
+						id: 'string',
+						data: {
+							kind: 'link',
+							title: 'string',
+							subreddit: 'string',
+							link: 'string',
+							images: [
+								{
+									path: 'string',
+									caption: 'string',
+									link: 'string',
+								},
+							],
+							video: 'string',
+							content: {},
+							nsfw: true,
+							spoiler: true,
+							sharePostId: 'string',
+							flair: {
+								id: 'string',
+								flairName: 'string',
+								order: 0,
+								backgroundColor: 'string',
+								textColor: 'string',
+							},
+							comments: 0,
+							votes: 0,
+							postedAt: 'string',
+							sendReplies: true,
+							markedSpam: true,
+							suggestedSort: 'string',
+							editedAt: 'string',
+							postedBy: 'string',
+							votingType: 1,
+							saved: false,
+							followed: false,
+							hidden: false,
+							spammed: false,
+							inYourSubreddit: false,
+							moderation: {
+								approve: {
+									approvedBy: 'string',
+									approvedDate: '2019-08-24T14:15:22Z',
+								},
+								remove: {
+									removedBy: 'string',
+									removedDate: '2019-08-24T14:15:22Z',
+								},
+								spam: {
+									spammedBy: 'string',
+									spammedDate: '2019-08-24T14:15:22Z',
+								},
+								lock: true,
+							},
+						},
+					},
+				],
+			},
 		};
 	},
 };
 </script>
 <style scoped>
+.bottom-vote-box {
+	display: block;
+}
 header.pinned-posts,
 header.pinned-posts h2 {
 	font-size: 16px;
@@ -54,7 +139,7 @@ header.pinned-posts h2 {
 	padding: 12px 12px 4px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 	align-items: flex-start;
 }
 .pinned-post-item:hover {
@@ -69,6 +154,26 @@ header.pinned-posts h2 {
 	padding-right: 5px;
 	word-wrap: break-word;
 }
-.content-text {
+.post-info {
+	margin: 4px 0;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	display: flex;
+	flex-flow: row nowrap;
+	position: relative;
+}
+.post-info a {
+	color: #7a7a7c;
+}
+.post-info a:hover {
+	text-decoration: underline;
+}
+.post-subreddit-icon {
+	width: 20px;
+	height: 20px;
+	background-color: #0079d3;
+	border-radius: 50%;
+	margin-right: 3px;
 }
 </style>

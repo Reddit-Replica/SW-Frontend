@@ -135,6 +135,13 @@
 										>
 									</div>
 									<div
+										v-if="postData.data.moderation.lock"
+										class="post-tooltip"
+									>
+										<i class="fa-solid fa-lock" style="color: #ffd635"></i>
+										<span class="post-tooltiptext">Comments are locked</span>
+									</div>
+									<div
 										v-if="
 											postData.data.moderation.remove &&
 											postData.data.moderation.remove.removedBy != ''
@@ -166,7 +173,13 @@
 								</div>
 							</div>
 							<div class="post-options">
-								<ul>
+								<post-options
+									:post-data="postData"
+									@insights-toggle="insightsPostToggle"
+									@expandPost="expandPostContent"
+									@collapsePost="collapsePostContent"
+								></post-options>
+								<!-- <ul>
 									<li class="bottom-vote-box">
 										<div
 											class="d-flex flex-row vote-box"
@@ -537,7 +550,7 @@
 											</ul>
 										</div>
 									</li>
-								</ul>
+								</ul> -->
 							</div>
 						</div>
 					</div>
@@ -651,7 +664,11 @@
 </template>
 
 <script>
+import PostOptions from './PostComponents/PostOptions.vue';
 export default {
+	components: {
+		PostOptions,
+	},
 	emits: ['showComments'],
 	props: {
 		postData: {
@@ -675,7 +692,7 @@ export default {
 			// saved: false,
 			/* medo */
 			showPostContent: false,
-			showOptionsBoxList: false,
+			// showOptionsBoxList: false,
 			images: [
 				{
 					imgUrl: '../../../assets/R.png',
@@ -692,7 +709,7 @@ export default {
 			],
 			lastLeftPic: 0,
 			lastRightPic: 0,
-			showShareOptions: false,
+			// showShareOptions: false,
 			insightActive: false,
 			insightsLoading: false,
 			PostHybridContent: '',
@@ -744,10 +761,10 @@ export default {
 		removePost() {
 			console.log('remove');
 		},
-		sharePost() {
-			console.log('share');
-			this.showShareOptions = true;
-		},
+		// sharePost() {
+		// 	console.log('share');
+		// 	this.showShareOptions = true;
+		// },
 		CopyPostLink() {},
 		Crosspost() {},
 		editPost() {
@@ -771,9 +788,7 @@ export default {
 		markAsNSFW() {
 			console.log('mark as nsfw');
 		},
-		approvePost() {
-			console.log('approve');
-		},
+
 		resizePost() {
 			console.log('resize');
 		},
@@ -795,9 +810,9 @@ export default {
 				ele.left = String(Number(ele.left) + 100);
 			});
 		},
-		openOptionsBoxList() {
-			this.showOptionsBoxList = true;
-		},
+		// openOptionsBoxList() {
+		// 	this.showOptionsBoxList = true;
+		// },
 		expandPostContent() {
 			this.setPostHybridContent();
 			this.showPostContent = true;
@@ -1082,11 +1097,11 @@ div.vote-box {
 		display: none;
 	}
 }
-@media (min-width: 640px) {
+/* @media (min-width: 640px) {
 	li.bottom-vote-box {
 		display: none !important;
 	}
-}
+} */
 .post-content {
 	margin-left: 8px;
 	/* overflow: hidden; */
@@ -1172,7 +1187,10 @@ span.post-oc {
 }
 
 /* Post-options  */
-.post-options ul li,
+.post-options {
+	margin-top: 8px;
+}
+/* .post-options ul li,
 .post-options ul li a {
 	color: inherit;
 	list-style: none;
@@ -1185,7 +1203,6 @@ span.post-oc {
 }
 .post-options ul li.post-option-item,
 .post-option-item-hover {
-	/* padding: 8px; */
 	padding: 0 8px 0 8px;
 	margin-right: 4px;
 	border-radius: 2px;
@@ -1210,9 +1227,6 @@ span.post-oc {
 }
 .post-options-icon {
 	font-size: 20px;
-}
-.post-options {
-	margin-top: 8px;
 }
 .post-options ul {
 	display: flex;
@@ -1284,7 +1298,7 @@ span.post-oc {
 	margin-right: 10px;
 	font-size: 14px;
 	display: flex;
-}
+} */
 /* end-post-options */
 
 /* Post picture */
