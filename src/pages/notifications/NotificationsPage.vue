@@ -10,6 +10,7 @@
 						v-for="(notification, index) in notifications"
 						:key="notification.id"
 						:index="index"
+						:id="notification.id"
 						:title="notification.title"
 						:link="notification.link"
 						:send-at="notification.sendAt"
