@@ -112,6 +112,50 @@ export default {
 			throw error;
 		}
 	},
+	async createpostVideo(context, payload) {
+		// const postInfo = {
+		// 	title: payload.title,
+		// 	kind: payload.kind,
+		// 	//subreddit: payload.subreddit,
+		// 	inSubreddit: payload.inSubreddit,
+		//   images: payload.images,
+		// 	imageCaptions: payload.imageCaptions,
+		// 	imageLinks: payload.imageLinks,
+		// 	nsfw: payload.nsfw,
+		// 	spoiler: payload.spoiler,
+		// 	// flairId: payload.flairId,
+		// 	sendReplies: payload.sendReplies,
+
+		// };
+		const postInfo = new FormData();
+		postInfo.append('title', payload.title);
+		postInfo.append('kind', payload.kind);
+		postInfo.append('inSubreddit', payload.inSubreddit);
+		postInfo.append('video', payload.video);
+		postInfo.append('nsfw', payload.nsfw);
+		postInfo.append('spoiler', payload.spoiler);
+		postInfo.append('sendReplies', payload.sendReplies);
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/submit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'multipart/form-data; ',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: postInfo,
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
+			localStorage.setItem('response', response.status);
+			console.log(response);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
 	/**
 	 * Action for checking if subreddit name is used before.
 	 * @action getAllsubreddits

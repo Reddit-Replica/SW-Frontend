@@ -65,4 +65,8 @@ export default {
 		console.log(payload);
 		state.imageLinks = payload.imageLinks;
 	},
+	setVideo(state, payload) {
+		console.log(payload);
+		state.video = payload.video;
+	},
 };

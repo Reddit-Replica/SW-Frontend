@@ -61,4 +61,8 @@ export default {
 		console.log('getters ImageLinks');
 		return state.imageLinks;
 	},
+	getVideo(state) {
+		console.log('getters video');
+		return state.video;
+	},
 };

@@ -29,13 +29,15 @@ export default {
 			inSubreddit: null,
 			content: null,
 			files: [{}],
-			nsfw: null,
-			spoiler: null,
+			nsfw: false,
+			spoiler: false,
 			flairId: null,
 			imageCaptions: [],
 			imageLinks: [],
 			images: [],
-			sendReplies: null,
+			video: null,
+
+			sendReplies: false,
 			allSubreddits: [],
 		};
 	},
