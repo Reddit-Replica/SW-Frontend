@@ -69,4 +69,8 @@ export default {
 		console.log(payload);
 		state.video = payload.video;
 	},
+	setvideoOrimage(state, payload) {
+		console.log(payload);
+		state.videoOrimage = payload.videoOrimage;
+	},
 };
