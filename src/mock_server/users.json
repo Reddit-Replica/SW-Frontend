@@ -1091,7 +1091,7 @@
 			]
 		}
 	],
-  "invited-moderator-list": [
+	"invited-moderator-list": [
 		{
 			"before": "string",
 			"after": "string",
@@ -1833,7 +1833,7 @@
 		"children": [
 			{
 				"id": "1",
-				"title": "u/hoda replied to your post",
+				"title": "u/hoda replied to your comment",
 				"link": "/r/subreddit",
 				"sendAt": "2022-12-02T11:13:39.069+00:00",
 				"content": "content",
@@ -1846,7 +1846,7 @@
 				"id": "2",
 				"title": "string",
 				"link": "string",
-				"sendAt": "2022-12-02T11:13:39.069+00:00",
+				"sendAt": "2022-10-18T11:13:39.069+00:00",
 				"content": "content",
 				"isRead": false,
 				"smallIcon": "string",
@@ -1854,5 +1854,7 @@
 				"data": {}
 			}
 		]
-	}
+	},
+	"hide-notification": [],
+	"mark-all-notifications-read": []
 }

@@ -12,7 +12,7 @@
 					>
 				</li>
 				<li>
-					<button>
+					<button @click="markAllRead">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -38,7 +38,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+	methods: {
+		async markAllRead() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/markAllRead', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+		},
+	},
+};
 </script>
 
 <style scoped>

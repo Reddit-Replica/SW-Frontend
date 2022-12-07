@@ -42,10 +42,30 @@
 								d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
 							/>
 						</svg>
-						<button v-if="buttonShown">{{ dotsButtonText }}</button>
+						<button v-if="buttonShown" @click.prevent="clickDotsButton">
+							{{ dotsButtonText }}
+						</button>
 					</span>
 				</div>
-				<div>{{ content }}</div>
+				<div>
+					{{ content }}
+					<base-button class="reply-back" v-if="replyBack" link to="link">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="currentColor"
+							class="bi bi-arrow-90deg-left"
+							viewBox="0 0 16 16"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"
+							/>
+						</svg>
+						<span>Reply Back</span></base-button
+					>
+				</div>
 			</span>
 		</router-link>
 	</li>
@@ -57,6 +77,10 @@ export default {
 		index: {
 			type: Number,
 			default: 0,
+		},
+		id: {
+			type: String,
+			default: '',
 		},
 		title: {
 			type: String,
@@ -106,6 +130,12 @@ export default {
 			} else {
 				return this.textHide;
 			}
+		},
+		toHide() {
+			return !this.title.includes('replied');
+		},
+		replyBack() {
+			return this.title.includes('replied to your comment');
 		},
 	},
 
@@ -171,6 +201,16 @@ export default {
 				duration.durationText = 's';
 			}
 			return duration.durationNumber + ' ' + duration.durationText;
+		},
+		async clickDotsButton() {
+			if (this.toHide) {
+				const accessToken = localStorage.getItem('accessToken');
+				await this.$store.dispatch('notifications/hideNotification', {
+					baseurl: this.$baseurl,
+					token: accessToken,
+					id: this.id,
+				});
+			}
 		},
 	},
 };
@@ -279,5 +319,18 @@ button:hover {
 .not-read {
 	color: red;
 	background-color: var(--color-baby-blue);
+}
+.reply-back {
+	background-color: var(--color-grey-light-2);
+	color: var(--color-blue-2);
+	fill: var(--color-blue-2);
+	margin-top: 8px;
+	padding: 4px 16px;
+	height: 36px;
+	width: fit-content;
+	display: block;
+}
+.bi-arrow-90deg-left {
+	margin-right: 8px;
 }
 </style>
