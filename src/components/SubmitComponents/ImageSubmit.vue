@@ -350,13 +350,15 @@ export default {
 	},
 	methods: {
 		fileChange(e) {
-			const file = e.target.files[0];
+			const file1 = e.target.files;
+			const file = file1[0];
+
 			console.log(file.type);
 			console.log(file.type == 'image/jpeg');
 			//'video/mp4'
 			if (file.type == 'video/mp4') {
 				this.video = URL.createObjectURL(file);
-				this.videoFile = file;
+				this.videoFile = file1;
 				this.postType = 'video';
 				this.setVideo(this.videoFile);
 				this.$store.commit('posts/setvideoOrimage', {
