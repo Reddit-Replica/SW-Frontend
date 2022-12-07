@@ -51,6 +51,26 @@ export default {
 	},
 	setinSubreddit(state, payload) {
 		console.log(payload);
-		state.sinSubreddit = payload.inSubreddit;
+		state.inSubreddit = payload.inSubreddit;
+	},
+	setImages(state, payload) {
+		console.log(payload);
+		state.images = payload.images;
+	},
+	setImageCaptions(state, payload) {
+		console.log(payload);
+		state.imageCaptions = payload.imageCaptions;
+	},
+	setImageLinks(state, payload) {
+		console.log(payload);
+		state.imageLinks = payload.imageLinks;
+	},
+	setVideo(state, payload) {
+		console.log(payload);
+		state.video = payload.video;
+	},
+	setvideoOrimage(state, payload) {
+		console.log(payload);
+		state.videoOrimage = payload.videoOrimage;
 	},
 };

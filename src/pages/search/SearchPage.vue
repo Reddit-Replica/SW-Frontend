@@ -1,136 +1,147 @@
 <template>
 	<div class="all">
-		<div class="page-release">
-			<div class="page">
-				<div>
-					<div class="upper-nav">
-						<div class="searchin-nav">
-							<div class="search-nav now-page" role="tablist">
-								<a
-									class="search-nav-button"
-									data-testid="tab_posts"
-									aria-selected="true"
-									role="tab"
-									><button class="button-nav button-nav2">Posts</button></a
-								>
+		<div class="after-all">
+			<the-header :header-title="'u/asmaaadel0'"></the-header>
+			<div class="page-release">
+				<div class="page">
+					<div>
+						<div class="upper-nav">
+							<div class="searchin-nav">
+								<div class="search-nav now-page" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										><button class="button-nav button-nav2">Posts</button></a
+									>
+								</div>
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										><button class="button-nav button-nav2">Comments</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=comment" -->
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										href="/search/type=cm"
+										><button class="button-nav button-nav2">
+											Communities
+										</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=com" -->
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										href="/search/type=user"
+										><button class="button-nav button-nav2">People</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=ppl" -->
 							</div>
-							<div class="search-nav" role="tablist">
-								<a
-									class="search-nav-button"
-									data-testid="tab_posts"
-									aria-selected="true"
-									role="tab"
-									><button class="button-nav button-nav2">Comments</button></a
-								>
+						</div>
+						<div class="sorting">
+							<div class="type-sorting">
+								<div class="items-meny-curser" @click="itemsMenuOneFunction">
+									<span class="items-span">{{ FirstitemChoice }}</span>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="16"
+											height="16"
+											fill="currentColor"
+											class="bi bi-caret-down-fill"
+											viewBox="0 0 16 16"
+										>
+											<path
+												d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+											/>
+										</svg>
+									</span>
+									<MenuSearchVue
+										id="sub-menu-one"
+										:titles="[
+											'Relevance',
+											'Hot',
+											'New',
+											'Top',
+											'Most Comments',
+										]"
+										:display="ShowFirstitemChoice"
+										@change-title="changeFirstChoiceItem"
+										clicked-prop="Sort"
+									/>
+								</div>
 							</div>
-							<!-- href="/search/?q=Query&amp;type=comment" -->
-							<div class="search-nav" role="tablist">
-								<a
-									class="search-nav-button"
-									data-testid="tab_posts"
-									aria-selected="true"
-									role="tab"
-									><button class="button-nav button-nav2">
-										Communities
-									</button></a
-								>
+							<div class="relevance-if" v-if="choiceRelevant">
+								<div class="items-meny-curser" @click="itemsMenuTwoFunction">
+									<span class="items-span">{{ SecitemChoice }}</span>
+									<span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="16"
+											height="16"
+											fill="currentColor"
+											class="bi bi-caret-down-fill"
+											viewBox="0 0 16 16"
+										>
+											<path
+												d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+											/>
+										</svg>
+									</span>
+									<MenuSearchVue
+										id="sub-menu-two"
+										:titles="[
+											'All Time',
+											'Last Year',
+											'Last Month',
+											'Last Week',
+											'Last 24 Horus',
+											'Last Hour',
+										]"
+										:display="ShowSecitemChoice"
+										@change-title="changeSecChoiceItem"
+										clicked-prop="Time"
+									/>
+								</div>
 							</div>
-							<!-- href="/search/?q=Query&amp;type=com" -->
-							<div class="search-nav" role="tablist">
-								<a
-									class="search-nav-button"
-									data-testid="tab_posts"
-									aria-selected="true"
-									role="tab"
-									href="/search/type=user"
-									><button class="button-nav button-nav2">People</button></a
-								>
-							</div>
-							<!-- href="/search/?q=Query&amp;type=ppl" -->
 						</div>
 					</div>
-					<div class="sorting">
-						<div class="type-sorting">
-							<div class="items-meny-curser" @click="itemsMenuOneFunction">
-								<span class="items-span">{{ FirstitemChoice }}</span>
-								<span>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-caret-down-fill"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-										/>
-									</svg>
-								</span>
-								<MenuSearchVue
-									id="sub-menu-one"
-									:titles="['Relevance', 'Hot', 'New', 'Top', 'Most Comments']"
-									:display="ShowFirstitemChoice"
-									@change-title="changeFirstChoiceItem"
-									clicked-prop="Sort"
+					<div class="search-results">
+						<div class="posts">
+							<div class="post-results">
+								<SearchPost
+									id="searched-posts"
+									:community="salah"
+									:profile="Hamada"
 								/>
 							</div>
 						</div>
-						<div class="relevance-if" v-if="choiceRelevant">
-							<div class="items-meny-curser" @click="itemsMenuTwoFunction">
-								<span class="items-span">{{ SecitemChoice }}</span>
-								<span>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										class="bi bi-caret-down-fill"
-										viewBox="0 0 16 16"
-									>
-										<path
-											d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-										/>
-									</svg>
-								</span>
-								<MenuSearchVue
-									id="sub-menu-two"
-									:titles="[
-										'All Time',
-										'Last Year',
-										'Last Month',
-										'Last Week',
-										'Last 24 Horus',
-										'Last Hour',
-									]"
-									:display="ShowSecitemChoice"
-									@change-title="changeSecChoiceItem"
-									clicked-prop="Time"
-								/>
+						<div class="side-bars">
+							<div class="search-result-sidebar">
+								<div>
+									<CommunitesNav
+										id="community-nav"
+										:commcontents="commcontent"
+										@change-joining="toggling"
+									></CommunitesNav>
+								</div>
+								<PeopleNav></PeopleNav>
+								<backtotop-button></backtotop-button>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="search-results">
-					<div class="posts">
-						<div class="post-results">
-							<SearchPost
-								id="searched-posts"
-								:community="salah"
-								:profile="Hamada"
-							/>
-						</div>
-					</div>
-					<div class="side-bars">
-						<div class="search-result-sidebar">
-							<div>
-								<CommunitesNav
-									id="community-nav"
-									:commcontents="commcontent"
-									@change-joining="toggling"
-								></CommunitesNav>
-							</div>
-							<PeopleNav></PeopleNav>
 						</div>
 					</div>
 				</div>
@@ -143,6 +154,7 @@ import SearchPost from '../../components/SearchComponents/SearchPost.vue';
 import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
 import PeopleNav from '../../components/SearchComponents/PeopleNav.vue';
 import MenuSearchVue from '@/components/SearchComponents/MenuSearch.vue';
+import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 export default {
 	data() {
 		return {
@@ -226,21 +238,20 @@ export default {
 		CommunitesNav,
 		PeopleNav,
 		MenuSearchVue,
+		BacktotopButton,
 	},
 };
 </script>
 
 <style scoped>
 .all {
-	height: 100%;
 	z-index: 3;
-	font-family: 'IBMPlexSans', sans-serif;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
+}
+.after-all {
+	max-width: 1024px;
 	display: flex;
-	flex-direction: column;
-	min-height: calc(100vh - 48px);
+	justify-content: center;
+	margin: 0 auto;
 }
 .page-release {
 	max-width: 1024px;
@@ -254,6 +265,7 @@ export default {
 	flex-direction: column;
 	max-width: 1024px;
 	flex-grow: 1;
+	margin-top: 18px;
 }
 div {
 	margin: 0;
