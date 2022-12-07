@@ -66,31 +66,42 @@ export default {
 			throw error;
 		}
 	},
-	async createPostimagevideo(context, payload) {
-		const postInfo = {
-			title: payload.title,
-			kind: payload.kind,
-			//subreddit: payload.subreddit,
-			inSubreddit: payload.inSubreddit,
+	async createpostImage(context, payload) {
+		// const postInfo = {
+		// 	title: payload.title,
+		// 	kind: payload.kind,
+		// 	//subreddit: payload.subreddit,
+		// 	inSubreddit: payload.inSubreddit,
+		//   images: payload.images,
+		// 	imageCaptions: payload.imageCaptions,
+		// 	imageLinks: payload.imageLinks,
+		// 	nsfw: payload.nsfw,
+		// 	spoiler: payload.spoiler,
+		// 	// flairId: payload.flairId,
+		// 	sendReplies: payload.sendReplies,
 
-			nsfw: payload.nsfw,
-			spoiler: payload.spoiler,
-			flairId: payload.flairId,
-			sendReplies: payload.sendReplies,
-			imageCaptions: payload.imageCaptions,
-			imageLinks: payload.imageLinks,
-		};
+		// };
+		const postInfo = new FormData();
+		postInfo.append('title', payload.title);
+		postInfo.append('kind', payload.kind);
+		postInfo.append('inSubreddit', payload.inSubreddit);
+		postInfo.append('images', JSON.stringify(payload.images));
+		postInfo.append('imageCaptions', JSON.stringify(payload.imageCaptions));
+		postInfo.append('imageLinks', JSON.stringify(payload.imageLinks));
+		postInfo.append('nsfw', payload.nsfw);
+		postInfo.append('spoiler', payload.spoiler);
+		postInfo.append('sendReplies', payload.sendReplies);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'multipart/form-data; ',
-				Authorization: 'Bearer ' + payload.token,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
-			body: JSON.stringify(postInfo),
+			body: postInfo,
 		});
 		const responseData = await response.json();
-		if (response.status == 200) {
+		if (response.status == 201) {
 			localStorage.setItem('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {
