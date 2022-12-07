@@ -126,7 +126,6 @@ export default {
 			this.$emit('newComment', write);
 			var element = document.getElementsByClassName('ql-editor');
 			while (element[0].firstChild) {
-				//element[0].removeChild(element[0].firstChild);
 				element[0].firstChild.remove();
 			}
 			try {
