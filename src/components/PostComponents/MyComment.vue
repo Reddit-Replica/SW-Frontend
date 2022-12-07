@@ -19,9 +19,7 @@
 					>
 					<span>. {{ comment.duration }} </span>
 				</div>
-				<div class="content" v-if="!editing">
-					<p>{{ newComment }}</p>
-				</div>
+				<div class="content" v-if="!editing" v-html="renderingHTML"></div>
 				<div class="services" v-if="!editing">
 					<ul>
 						<li :class="upClicked ? 'clicked' : ''">
@@ -309,38 +307,6 @@
 							>
 						</div>
 					</div>
-					<div class="big-box big-box-markdown-mode" v-else>
-						<div>
-							<textarea
-								class="text-area text-area-in-markdown-mode"
-								placeholder="What are your thoughts?"
-								id="text2"
-								v-model="edittedComment"
-							></textarea>
-						</div>
-						<div class="icons-box">
-							<div class="question-icon">
-								<font-awesome-icon icon="fa-regular fa-circle-question" />
-							</div>
-							<div
-								class="text-in-markdown-mode"
-								@click="switchMode"
-								id="switch-f-mode"
-							>
-								Switch to Fancy Pants Editor
-							</div>
-							<base-button class="mark-down" @click="cancelEditing" id="cancel2"
-								>Cancel</base-button
-							>
-							<base-button
-								@click="saveEditing"
-								class="comment-button"
-								:disable-button="noComment"
-								id="comment"
-								>Save Edits</base-button
-							>
-						</div>
-					</div>
 				</div>
 				<div class="replies">
 					<nested-reply
@@ -365,6 +331,22 @@ export default {
 		noComment() {
 			if (this.edittedComment == '') return true;
 			return false;
+		},
+		renderingHTML() {
+			var QuillDeltaToHtmlConverter =
+				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+
+			// TypeScript / ES6:
+			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+
+			var deltaOps = this.newComment.ops;
+
+			var cfg = {};
+
+			var converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+
+			var html = converter.convert();
+			return html;
 		},
 	},
 	props: {
@@ -436,7 +418,7 @@ export default {
 			try {
 				await this.$store.dispatch('comments/deleteComment', {
 					baseurl: this.$baseurl,
-					id: this.id,
+					//id: this.id,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
