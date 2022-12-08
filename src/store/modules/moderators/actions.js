@@ -12,6 +12,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
+		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;
@@ -19,18 +20,23 @@ export default {
 
 		const moderators = [];
 
-		for (const key in responseData) {
+		let before, after;
+		if (responseData.before) {
+			before = responseData.before;
+			after = responseData.after;
+		} else {
+			before = '';
+			after = '';
+		}
+		for (let i = 0; i < responseData.children.length; i++) {
 			const moderator = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				username: responseData[key].children[0].username,
-				nickname: responseData[key].children[0].nickname,
-				dateOfModeration: responseData[key].children[0].dateOfModeration,
-				permissions: responseData[key].children[0].permissions,
+				username: responseData.children[i].username,
+				dateOfModeration: responseData.children[i].dateOfModeration,
+				permissions: responseData.children[i].permissions,
 			};
 			moderators.push(moderator);
 		}
-		context.commit('setListOfModerators', moderators);
+		context.commit('setListOfModerators', moderators, before, after);
 	},
 
 	async loadListOfInvitedModerators(context, payload) {
