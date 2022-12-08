@@ -67,8 +67,6 @@ export default {
 			isTaken = true;
 		} else if (response.status == 200) {
 			isTaken = false;
-			const error = new Error(responseData.error || 'Bad Request');
-			throw error;
 		} else if (response.status == 400) {
 			isTaken = false;
 			const error = new Error(responseData.error || 'Bad Request');
