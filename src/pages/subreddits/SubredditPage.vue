@@ -63,7 +63,7 @@
 		</div>
 		<div id="first-time-subreddit">
 			<base-dialog
-				:show="this.firstTimeCreated && this.showFirstDialog"
+				:show="showDialog"
 				@close="hideFirstDialog"
 				title="Create your first post"
 			>
@@ -117,7 +117,6 @@ export default {
 		BacktotopButton,
 		BasePost,
 	},
-	emits: ['exit'],
 	props: {
 		subredditName: {
 			type: String,
@@ -159,13 +158,15 @@ export default {
 			isModerator: true,
 		};
 	},
-	async beforeMount() {
+	computed: {
+		showDialog() {
+			return this.firstTimeCreated && this.showFirstDialog;
+		},
+	},
+	beforeMount() {
 		//fetch subreddit details
 		this.firstTimeCreated =
 			this.$store.getters['community/createdSuccessfully'];
-
-		await this.$store.dispatch('community/changeFirstcreated', false);
-
 		this.getSubreddit();
 
 		//set listing as hot by default
@@ -180,7 +181,6 @@ export default {
 			},
 		},
 	},
-
 	methods: {
 		async getSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
@@ -193,9 +193,10 @@ export default {
 		},
 
 		hideFirstDialog() {
-			console.log('hide');
 			this.showFirstDialog = false;
-			this.$emit('exit');
+			console.log('hide');
+			console.log(this.firstTimeCreated, this.showFirstDialog);
+			console.log(this.showDialog);
 		},
 		createPost() {
 			this.hideFirstDialog();
