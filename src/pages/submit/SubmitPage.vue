@@ -116,6 +116,7 @@ export default {
 			video: null,
 			sendReplies: null,
 			choosen: null,
+			userName: '',
 		};
 	},
 	watch: {},
@@ -187,6 +188,9 @@ export default {
 		getImageLinks() {
 			this.imageLinks = this.$store.getters['posts/getImageLinks'];
 		},
+		getUsername() {
+			this.userName = localStorage.getItem('userName');
+		},
 
 		// @vuese
 		// dispatch createpost from the store
@@ -203,6 +207,7 @@ export default {
 			this.getImages();
 			this.getImageCaptions();
 			this.getImageLinks();
+			this.getUsername();
 			//this.getSubreddit();
 			this.inSubreddit = false;
 			console.log('print values');
@@ -254,6 +259,10 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
 					}
 				} catch (err) {
 					this.error = err;
@@ -282,6 +291,10 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
 					}
 				} catch (err) {
 					this.error = err;
@@ -310,6 +323,10 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
 					}
 				} catch (err) {
 					this.error = err;
@@ -340,6 +357,10 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
 					}
 				} catch (err) {
 					this.error = err;
