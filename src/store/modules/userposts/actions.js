@@ -81,22 +81,23 @@ export default {
 			body: JSON.stringify(ApprovePostOrCommentData),
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
 		console.log(response.status);
 		console.log(responseData);
-		// if(response.status == 200)
+		console.log('commit');
+		// if (response.status == 200)
 		context.commit('ApprovePostOrComment', {
 			ApprovePostOrCommentData,
 		});
 		return response.status;
 	},
 	async removePostOrComment(context, payload) {
-		const ApprovePostOrCommentData = payload.ApprovePostOrCommentData; // id ,type
+		const removePostOrCommentData = payload.removePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/remove', {
 			method: 'POST',
@@ -104,34 +105,46 @@ export default {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
-			body: JSON.stringify(ApprovePostOrCommentData),
+			body: JSON.stringify(removePostOrCommentData),
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
 		console.log(response.status);
 		console.log(responseData);
 		// if(response.status == 200)
-		context.commit('ApprovePostOrComment', {
-			ApprovePostOrCommentData,
+		context.commit('removePostOrComment', {
+			removePostOrCommentData,
 		});
 		return response.status;
 	},
-	async lockPostOrComment(context, payload) {
-		const ApprovePostOrCommentData = payload.ApprovePostOrCommentData; // id ,type
+	async lockUnLockPostOrComment(context, payload) {
+		const lockUnlockData = payload.lockUnlockData; // id ,type
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/lock', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-			body: JSON.stringify(ApprovePostOrCommentData),
-		});
+		let response;
+		if (payload.key == 'lock') {
+			response = await fetch(baseurl + '/lock', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(lockUnlockData),
+			});
+		} else {
+			response = await fetch(baseurl + '/unlock', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(lockUnlockData),
+			});
+		}
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -142,8 +155,9 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		// if(response.status == 200)
-		context.commit('ApprovePostOrComment', {
-			ApprovePostOrCommentData,
+		context.commit('lockUnLockPostOrComment', {
+			lockUnlockData,
+			key: payload.key,
 		});
 		return response.status;
 	},
@@ -225,24 +239,74 @@ export default {
 		});
 		return response.status;
 	},
-	async markPostAsNSFW(context, payload) {
-		const nsfwData = payload.spoilerData; // id of post
+	async markUnMarkPostAsSpoiler(context, payload) {
+		const spoilerData = payload.spoilerData; // id of post
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/mark-nsfw', {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-			body: JSON.stringify(nsfwData),
-		});
-		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
+		let response;
+		if (payload.spoilerData.type == 'mark') {
+			response = await fetch(baseurl + '/mark-spoiler', {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(spoilerData),
+			});
+		} else {
+			response = await fetch(baseurl + '/unmark-spoiler', {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(spoilerData),
+			});
 		}
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(response.status);
+		console.log(responseData);
+		// if(response.status == 200)
+		context.commit('markUnMarkPostAsSpoiler', {
+			spoilerData,
+		});
+		return response.status;
+	},
+	async markPostAsNSFW(context, payload) {
+		const nsfwData = payload.nsfwData; // id of post
+		const baseurl = payload.baseurl;
+		let response;
+		if (payload.nsfwData.type == 'mark') {
+			response = await fetch(baseurl + '/mark-nsfw', {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(nsfwData),
+			});
+		} else {
+			response = await fetch(baseurl + '/unmark-nsfw', {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(nsfwData),
+			});
+		}
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
 		console.log(response.status);
 		console.log(responseData);
 		// if(response.status == 200)
@@ -251,36 +315,10 @@ export default {
 		});
 		return response.status;
 	},
-	async unmarkPostAsNSFW(context, payload) {
-		const nsfwData = payload.spoilerData; // id of post
-		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/unmark-nsfw', {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-			body: JSON.stringify(nsfwData),
-		});
-		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
-		console.log(response.status);
-		console.log(responseData);
-		// if(response.status == 200)
-		context.commit('unmarkPostAsNSFW', {
-			nsfwData,
-		});
-		return response.status;
-	},
 	async pinUnpinPost(context, payload) {
 		const pinUnpinData = payload.pinUnpinData; // id of post pin boolean
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/unmark-nsfw', {
+		const response = await fetch(baseurl + '/pin-post', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -289,12 +327,12 @@ export default {
 			body: JSON.stringify(pinUnpinData),
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
 		console.log(response.status);
 		console.log(responseData);
 		// if(response.status == 200)
