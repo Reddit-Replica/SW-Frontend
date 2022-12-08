@@ -65,7 +65,7 @@ export default {
 			// this.$emit('change-joining');
 		},
 		doFunc() {
-			console.log(this.commcontents.length);
+			this.$router.push(`/search/type=cm`);
 		},
 	},
 };
