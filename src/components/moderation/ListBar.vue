@@ -4,10 +4,12 @@
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div> -->
 		<div class="bar" v-if="title == 'Moderators'">
-			<base-button class="button-white">Leave as mod</base-button>
+			<base-button class="button-white" id="leave-mod-button"
+				>Leave as mod</base-button
+			>
 			<base-button
 				class="base-button"
-				id="save-rules-button"
+				id="invite-user-mod-button"
 				@click="inviteMod()"
 				>Invite user as mod</base-button
 			>
@@ -47,19 +49,22 @@
 		<div class="bar" v-if="title == 'Rules' && dragDrop">
 			<base-button
 				class="button-white"
-				id="cancel-rules-button"
+				id="cancel-reorder-rules-button"
 				@click="reorderRules()"
 				>Cancel</base-button
 			>
 			<base-button
 				class="base-button"
-				id="save-rules-button"
+				id="save-reorder-rules-button"
 				@click="saveReorderRules()"
 				>Save</base-button
 			>
 		</div>
 		<div class="bar" v-if="title == 'banned'">
-			<base-button class="base-button" @click="showBanUser()"
+			<base-button
+				class="base-button"
+				id="ban-user-button"
+				@click="showBanUser()"
 				>Ban user</base-button
 			>
 		</div>
@@ -86,13 +91,13 @@
 		<div class="bar" v-if="title == 'flair' && dragDrop">
 			<base-button
 				class="button-white"
-				id="cancel-rules-button"
+				id="cancel-reorder-flairs-button"
 				@click="reorderFlairs()"
 				>Cancel</base-button
 			>
 			<base-button
 				class="base-button"
-				id="save-rules-button"
+				id="save-reorder-flairs-button"
 				@click="saveReorderFlairs()"
 				>Save</base-button
 			>
@@ -175,13 +180,13 @@ export default {
 			required: true,
 		},
 	},
-	computed: {
-		// barTitle() {
-		// 	if (this.title == 'Schedule Post') {
-		// 		return 'Schedule Post';
-		// 	} else return '';
-		// },
-	},
+	// computed: {
+	// barTitle() {
+	// 	if (this.title == 'Schedule Post') {
+	// 		return 'Schedule Post';
+	// 	} else return '';
+	// },
+	// },
 	methods: {
 		// @vuese
 		// Used to show add rule popup
@@ -215,14 +220,14 @@ export default {
 			this.$emit('reorderFlairs');
 		},
 		// @vuese
-		// Used to handle re-order rules action
+		// Used to handle saving re-order rules action
 		// @arg no argument
 		saveReorderRules() {
 			this.$emit('saveReorderRules');
 		},
 
 		// @vuese
-		// Used to handle re-order rules action
+		// Used to handle saving re-order rules action
 		// @arg no argument
 		saveReorderFlairs() {
 			this.$emit('saveReorderFlairs');
@@ -322,7 +327,7 @@ button {
 	fill: var(--color-grey-light-5);
 }
 .reorder-button:hover,
-.reorder-post-flair-button:hover {
+/* .reorder-post-flair-button:hover {
 	background-color: var(--color-grey-light-4);
 }
 .reorder-post-flair-button {
@@ -336,7 +341,7 @@ button {
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
 	background-color: transparent;
-}
+} */
 .content-controls-button {
 	min-width: 15rem;
 	cursor: not-allowed;

@@ -5,8 +5,8 @@
 			@close="hideSure()"
 			title="Delete post flair?"
 		>
-			<div class="rule-dialog flex-column">
-				<div class="rule-box-p flex-column">
+			<div class="delete-flair-dialog flex-column">
+				<div class="delete-flair-box-p flex-column">
 					<p class="sure-text">Do you wish to delete this post flair?</p>
 				</div>
 				<div class="rule-box box-buttons">
@@ -19,7 +19,7 @@
 					<base-button
 						@click="deleteFlair()"
 						class="button-blue"
-						id="create-rule-button"
+						id="delete-flair-button"
 						>Delete</base-button
 					>
 				</div>
@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style scoped>
-.rule-dialog {
+.delete-flair-dialog {
 	max-height: 100%;
 	max-width: 53.8rem;
 	min-width: 41rem;
@@ -107,7 +107,7 @@ export default {
 	line-height: 2.1rem;
 	display: block;
 }
-.rule-box-p {
+.delete-flair-box-p {
 	align-items: flex-start;
 	margin-top: 1.2rem;
 	margin-bottom: 3rem;
