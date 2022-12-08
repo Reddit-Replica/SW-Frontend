@@ -52,6 +52,7 @@
 							v-model.trim="communityName"
 							@blur="validateCommunityName"
 							@keyup="charCount()"
+							@click="resetName"
 							id="name-input"
 						/>
 						<div class="title-grey">
@@ -459,9 +460,18 @@ export default {
 			}
 		},
 		// @vuese
+		//Reset Validatation of  Subreddits Name.
+		//@arg no argument
+		resetName() {
+			this.communityNameValidity = true;
+			this.communityNameRequiredError = false;
+			this.communityNameCharError = false;
+			this.communityNameTakenError = false;
+		},
+		// @vuese
 		//Validate Subreddits Name (Name should be between 3:20 characters and include only letters, numbers and underscores).
 		//@arg no argument
-		validateCommunityName() {
+		async validateCommunityName() {
 			//check if name is empty
 			if (this.communityName === '') {
 				this.communityNameValidity = false;
@@ -483,12 +493,15 @@ export default {
 				this.communityNameCharError = false;
 			}
 			//check if name is taken by another subreddit
-			this.$store.dispatch('community/checkSubredditName', {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/checkSubredditName', {
 				subredditName: this.communityName,
 				baseurl: this.$baseurl,
+				token: accessToken,
 			});
 			this.communityNameTakenError =
 				this.$store.getters['community/subredditNameTaken'];
+
 			if (this.communityNameTakenError) {
 				this.communityNameRequiredError = false;
 				this.communityNameCharError = false;
