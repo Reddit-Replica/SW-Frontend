@@ -4,7 +4,10 @@ import getters from './getters.js';
 export default {
 	namespaced: true,
 	state() {
-		return {};
+		return {
+			subreddits: [],
+			users: [],
+		};
 	},
 	mutations,
 	actions,
