@@ -337,7 +337,8 @@ export default {
 			caption: '',
 			postType: 'image',
 			dropped: false,
-			remove: false,
+			selectedIndex: null,
+
 			// image: '',
 		};
 	},
@@ -404,6 +405,7 @@ export default {
 			this.selectedImage = img;
 			this.imageCaptions[i] = this.caption;
 			this.imageLinks[i] = this.link;
+			this.selectedIndex = i;
 
 			// }
 		},
@@ -456,7 +458,13 @@ export default {
 		caption(value) {
 			this.inputCharCount = this.caption.length;
 			this.caption = value;
+			this.imageCaptions[this.selectedIndex] = value;
+
 			return this.inputCharCount;
+		},
+		link(value) {
+			this.link = value;
+			this.imageLinks[this.selectedIndex] = this.link;
 		},
 	},
 };
