@@ -13,8 +13,8 @@
 				</h5>
 			</div>
 			<div class="time">
-				<!-- <span>{{ date }}</span> -->
-				<span>{{ moderator.dateOfModeration }}</span>
+				<span>{{ date }}</span>
+				<!-- <span>{{ moderator.dateOfModeration }}</span> -->
 			</div>
 			<div class="permissions">
 				<span
@@ -138,14 +138,28 @@ export default {
 		date() {
 			this.moderator.dateOfModeration;
 			var currentDate = new Date();
-			console.log(currentDate);
+			var dateOfModeration = new Date(this.moderator.dateOfModeration);
 
-			// var formatted_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
-			var formatted_date = this.moderator.dateOfModeration
-				.slice(0, 10)
-				.replace(/-/g, '/');
-			console.log(formatted_date);
-			return formatted_date;
+			if (currentDate.getFullYear() != dateOfModeration.getFullYear()) {
+				return dateOfModeration.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != dateOfModeration.getMonth()) {
+				return (
+					currentDate.getMonth() - dateOfModeration.getMonth() + ' Month ago'
+				);
+			} else if (currentDate.getDate() != dateOfModeration.getDate()) {
+				return currentDate.getDate() - dateOfModeration.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != dateOfModeration.getHours()) {
+				return (
+					currentDate.getHours() - dateOfModeration.getHours() + ' Hours ago'
+				);
+			} else if (currentDate.getMinutes() != dateOfModeration.getMinutes()) {
+				return (
+					currentDate.getMinutes() -
+					dateOfModeration.getMinutes() +
+					' Minutes ago'
+				);
+			}
+			return 'Just now';
 		},
 	},
 	methods: {
