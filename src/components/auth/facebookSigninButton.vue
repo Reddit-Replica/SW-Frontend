@@ -1,7 +1,7 @@
 <template>
 	<div id="facebook-login" class="log-google log-ag" @click="facebookLogin()">
 		<div><img src="../../../img/Facebook_f_logo_(2021).svg.png" alt="" /></div>
-		<div class="cont">continue with Google</div>
+		<div class="cont">continue with Facebook</div>
 	</div>
 	<!-- <facebook-login
 		class="button"

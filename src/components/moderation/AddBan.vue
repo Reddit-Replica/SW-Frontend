@@ -1,10 +1,10 @@
 <template>
-	<div id="create-rule-form">
+	<div id="create-ban-form">
 		<base-dialog :show="banShown" @close="hideBan" title="Ban a user:">
-			<div class="rule-dialog flex-column">
-				<div class="rule-box flex-column">
-					<div class="rule-box-input flex-column">
-						<label for="rule-input" class="title-black">Enter username</label>
+			<div class="ban-dialog flex-column">
+				<div class="ban-box flex-column">
+					<div class="ban-box-input flex-column">
+						<label for="ban-input" class="title-black">Enter username</label>
 						<input
 							class="input-name"
 							rows="5"
@@ -16,8 +16,8 @@
 						/>
 					</div>
 				</div>
-				<div class="rule-box-input flex-column">
-					<label for="rule-report" class="title-black"
+				<div class="ban-box-input flex-column">
+					<label for="ban-report" class="title-black"
 						><p>Reason for ban</p></label
 					>
 					<select
@@ -31,12 +31,21 @@
 							:key="reasonRule.ruleName"
 							:value="reasonRule.ruleName"
 							:id="reasonRule.ruleName"
+							class="options"
 						>
 							{{ reasonRule.ruleName }}
 						</option>
+						<option class="options">Spam</option>
+						<option class="options">
+							Personal And Confidential Information
+						</option>
+						<option class="options">
+							Threatening, Harassing, Or Incities Violence
+						</option>
+						<option class="options">Other</option>
 					</select>
 				</div>
-				<div class="rule-box-input flex-column">
+				<div class="ban-box-input flex-column">
 					<label for="description" class="title-black">Mod note</label>
 					<input
 						class="input-name"
@@ -55,9 +64,9 @@
 						{{ charRemainingNote }} Characters remaining
 					</div>
 				</div>
-				<div class="rule-box flex-column">
-					<div class="rule-box-input flex-column">
-						<label for="rule-input" class="title-black">How long?</label>
+				<div class="ban-box flex-column">
+					<div class="ban-box-input flex-column">
+						<label for="ban-input" class="title-black">How long?</label>
 						<div
 							class="long"
 							:class="checkPermanent == true ? 'disable-period' : ''"
@@ -88,7 +97,7 @@
 				</div>
 
 				<div class="footer">
-					<div class="rule-box-input flex-column">
+					<div class="ban-box-input flex-column">
 						<label for="reason-note" class="reason-note"
 							>Note to include in ban message</label
 						>
@@ -111,7 +120,7 @@
 					</div>
 					<div class="footer-buttons">
 						<div class="footer-p">Visible to banned user</div>
-						<div class="rule-box box-buttons">
+						<div class="ban-box box-buttons">
 							<base-button
 								@click="hideBan"
 								class="button-white"
@@ -131,30 +140,6 @@
 								id="delete-button"
 								>Ban user</base-button
 							>
-							<!-- <base-button
-						v-if="!edit"
-						@click="submitRule()"
-						class="button-blue"
-						:class="ruleName == '' || isNameTaken ? 'disabled' : ''"
-						id="create-rule-button"
-						>Add new rule
-					</base-button>
-					<base-button
-						v-else
-						@click="updateRule()"
-						class="button-blue"
-						:class="
-							(ruleName == ruleNameEdit &&
-								reportReason == reportReasonEdit &&
-								description == descriptionEdit &&
-								appliedType == appliesToEdit) ||
-							isNameTaken
-								? 'disabled'
-								: ''
-						"
-						id="save-button"
-						>Save</base-button
-					> -->
 						</div>
 					</div>
 				</div>
@@ -176,62 +161,6 @@ export default {
 		subredditName: {
 			type: String,
 			default: '',
-			required: true,
-		},
-		// @vuese
-		//return edited rule name
-		// @type string
-		ruleNameEdit: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return report reason edit
-		// @type string
-		reportReasonEdit: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return applies to edit
-		// @type string
-		appliesToEdit: {
-			type: String,
-			default: 'posts and comments',
-			required: true,
-		},
-		// @vuese
-		//return report description edit
-		// @type string
-		descriptionEdit: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return rule order
-		// @type string
-		ruleOrder: {
-			type: Number,
-			default: 0,
-			required: true,
-		},
-		// @vuese
-		//return rule id
-		// @type string
-		ruleId: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return if there is an edited rule
-		// @type string
-		edit: {
-			type: Boolean,
-			default: false,
 			required: true,
 		},
 	},
@@ -325,40 +254,11 @@ export default {
 				this.errorResponse = err;
 			}
 		},
-		//@vuese
-		//handle update rule
-		//@arg no argument
-		async updateRule() {
-			this.errorResponse = null;
-			if (this.reportReason == '') {
-				this.reportReason = this.ruleName;
-			}
-			try {
-				await this.$store.dispatch('moderation/updateRule', {
-					ruleName: this.ruleName,
-					ruleOrder: this.ruleOrder,
-					appliesTo: this.appliedType,
-					reportReason: this.reportReason,
-					description: this.description,
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-					ruleId: this.ruleId,
-				});
-				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
-					this.hideBan();
-					this.$emit('doneSuccessfully');
-				}
-			} catch (err) {
-				console.log(err);
-				this.errorResponse = err;
-			}
-		},
 
 		//@vuese
 		//handle delete rule
 		//@arg no argument
 		async deleteBan() {
-			this.$emit('clickedDelete');
 			this.hideBan();
 		},
 	},
@@ -366,15 +266,15 @@ export default {
 </script>
 
 <style scoped>
-.rule-dialog {
+.ban-dialog {
 	max-height: 100%;
 	max-width: 53.8rem;
 	min-width: 41rem;
 }
-.rule-box {
+.ban-box {
 	margin-bottom: 3rem;
 }
-.rule-box-title {
+.ban-box-title {
 	max-width: 100%;
 	margin-bottom: -4px;
 	margin-right: 8px;
@@ -395,7 +295,7 @@ export default {
 	font-size: 12px;
 	line-height: 16px;
 }
-.rule-box-input {
+.ban-box-input {
 	align-items: flex-start;
 	margin-top: 1.2rem;
 	margin-bottom: 3rem;
@@ -638,5 +538,14 @@ button:hover {
 .disable-period {
 	opacity: 0.6;
 	cursor: not-allowed;
+}
+.options {
+	color: var(--color-grey-dark-8);
+	cursor: pointer;
+	overflow: hidden;
+	padding: 8px 16px 8px 8px;
+	text-overflow: ellipsis;
+	border-top: 1px solid var(--color-grey-light-9);
+	border-bottom: none;
 }
 </style>

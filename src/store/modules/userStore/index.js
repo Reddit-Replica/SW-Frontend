@@ -357,7 +357,7 @@ export default {
 						data: {
 							username: 'string',
 							blockDate: '2019-08-24T14:15:22Z',
-							userPic:
+							userImage:
 								'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
 						},
 					},

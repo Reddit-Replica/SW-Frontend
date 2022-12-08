@@ -245,15 +245,10 @@ export default {
 			</video>
 		</div>
 		<div class="images-preview" v-if="postType == 'image'">
-			<span
-				class="one-image"
-				@click="setSelected(image)"
-				v-for="(image, i) in images"
-				:key="i"
-			>
-				<span class="dot" @click="removeImage"> X </span>
+			<span class="one-image" v-for="(image, i) in images" :key="i">
+				<span class="dot" @click="removeImage(i)">x</span>
 
-				<img :src="image" alt="" />
+				<img :src="image" alt="" @click="setSelected(image, i)" />
 			</span>
 			<button class="add-more" v-if="images.length > 0">
 				<input
@@ -291,11 +286,6 @@ export default {
 							class="image-caption"
 							rows="1"
 							v-model="caption"
-							style="
-								overflow-x: hidden;
-								overflow-wrap: break-word;
-								height: 39px;
-							"
 						>
 						</textarea>
 						<span class="char-count">{{ inputCharCount }}/180</span>
@@ -327,6 +317,8 @@ export default {
 			<label class="blue-button" for="image-input">Upload</label>
 		</div>
 	</div>
+	{{ link }}
+	{{ caption }}
 </template>
 
 <script>
@@ -341,16 +333,20 @@ export default {
 			videoFile: null,
 			inputCharCount: 0,
 			selectedImage: '',
-			link: null,
-			caption: null,
+			link: '',
+			caption: '',
 			postType: 'image',
 			dropped: false,
+			selectedIndex: null,
+
 			// image: '',
 		};
 	},
 	methods: {
 		fileChange(e) {
-			const file = e.target.files[0];
+			const file1 = e.target.files;
+			const file = file1[0];
+
 			console.log(file.type);
 			console.log(file.type == 'image/jpeg');
 			//'video/mp4'
@@ -366,34 +362,101 @@ export default {
 				this.postType = 'image';
 				this.imageFiles.push(file);
 				this.images.push(URL.createObjectURL(file));
-
+				this.imageCaptions.push(this.caption);
+				this.imageLinks.push(this.link);
 				console.log(this.images.length);
 				console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
+				// if (this.images.length == 1) {
+				// 	this.imageCaptions = [];
+				// 	this.imageLinks = [];
+				// }
+				this.$store.commit('posts/setvideoOrimage', {
+					videoOrimage: this.postType,
+				});
+
+				this.$store.commit('posts/setImages', {
+					images: this.imageFiles,
+				});
+				this.$store.commit('posts/setImageCaptions', {
+					imageCaptions: this.imageCaptions,
+				});
+				this.$store.commit('posts/setImageLinks', {
+					imageLinks: this.imageLinks,
+				});
 			}
 		},
-		removeImage() {
-			this.images.pop();
-			//this.images.splice(this.images.length, 1);
+		removeImage(i) {
+			// this.images.pop();
+			this.imageFiles.splice(i, 1);
+			this.images.splice(i, 1);
+			this.imageCaptions.splice(i, 1);
+			this.imageLinks.splice(i, 1);
 			console.log(this.images);
+			if (i != 0) this.setSelected(this.images[i - 1]);
+			// this.selectedImage =
+			else this.setSelected(this.images[i]);
+			// this.selectedImage = this.images[i];
+			this.remove = true;
 			console.log(this.images.length);
 			console.log('after pop');
 			console.log(this.images.length);
-			this.selectedImage = this.images[this.images.length - 1];
+
 			console.log(this.images.length);
 		},
-		setSelected(img) {
+		setSelected(img, i) {
+			// if (!this.remove) {
 			this.selectedImage = img;
+			this.imageCaptions[i] = this.caption;
+			this.imageLinks[i] = this.link;
+			this.selectedIndex = i;
+
+			// }
 		},
 		dragFile(e) {
-			const file = e.dataTransfer.files[0];
+			const file1 = e.dataTransfer.files;
+			const file = file1[0];
 			console.log(file);
-			this.imageFiles.push(file);
-			this.images.push(URL.createObjectURL(file));
 			this.dropped = true;
-			if (this.images.length > 1)
-				this.selectedImage = this.images[this.images.length - 1];
+
+			if (file.type == 'video/mp4') {
+				this.video = URL.createObjectURL(file);
+				this.videoFile = file;
+				this.postType = 'video';
+				this.setVideo(this.videoFile);
+				this.$store.commit('posts/setvideoOrimage', {
+					videoOrimage: this.postType,
+				});
+			} else {
+				this.postType = 'image';
+				this.imageFiles.push(file);
+				this.images.push(URL.createObjectURL(file));
+				this.imageCaptions.push(this.caption);
+				this.imageLinks.push(this.link);
+				console.log(this.images.length);
+				console.log('after push');
+				if (this.images.length > 1)
+					this.selectedImage = this.images[this.images.length - 1];
+				this.$store.commit('posts/setvideoOrimage', {
+					videoOrimage: this.postType,
+				});
+				// if (this.images.length == 1) {
+				// 	this.imageCaptions = [];
+				// 	this.imageLinks = [];
+				// }
+
+				this.$store.commit('posts/setImages', {
+					images: this.imageFiles,
+				});
+
+				this.$store.commit('posts/setImageCaptions', {
+					imageCaptions: this.imageCaptions,
+				});
+				this.$store.commit('posts/setImageLinks', {
+					imageLinks: this.imageLinks,
+				});
+			}
 		},
 		setVideo(value) {
 			this.$store.commit('posts/setVideo', {
@@ -405,7 +468,13 @@ export default {
 		caption(value) {
 			this.inputCharCount = this.caption.length;
 			this.caption = value;
+			this.imageCaptions[this.selectedIndex] = value;
+
 			return this.inputCharCount;
+		},
+		link(value) {
+			this.link = value;
+			this.imageLinks[this.selectedIndex] = this.link;
 		},
 	},
 };
@@ -491,7 +560,7 @@ export default {
 	width: 100%;
 }
 .one-image {
-	padding: 5px;
+	padding: 10px;
 	display: block;
 	box-sizing: border-box;
 	width: 100px;
@@ -509,24 +578,19 @@ export default {
 	border-radius: 5px;
 }
 
-.one-image .dot .x-button {
-	left: 95%;
-	top: 10%;
-	visibility: hidden;
-}
-
 .dot {
 	text-align: center;
-	padding: 1px;
-	height: 20px;
+	padding: 2px;
+	height: 15px;
 	color: white;
-	width: 20px;
+	width: 15px;
 	background-color: black;
 	border-radius: 50%;
 	display: inline-block;
 	position: absolute;
-	left: 70%;
-	top: 5%;
+	text-align: center;
+	left: 85%;
+	top: 0%;
 	z-index: 1;
 	cursor: pointer;
 }

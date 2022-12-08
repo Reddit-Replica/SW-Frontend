@@ -35,8 +35,8 @@ export default {
 	},
 	computed: {
 		getUserPostData() {
-			// console.log(this.$store.getters['user/getUserData']);
-			return this.$store.getters['user/getUserPostData'];
+			// console.log(this.$store.getters['userposts/getUserData']);
+			return this.$store.getters['userposts/getUserPostData'];
 		},
 	},
 	methods: {
@@ -46,7 +46,7 @@ export default {
 		},
 		async RequestUserPostData(sortType) {
 			try {
-				await this.$store.dispatch('user/getUserPostData', {
+				await this.$store.dispatch('userposts/getUserPostData', {
 					baseurl: this.$baseurl,
 					userName: this.$route.params.userName,
 					params: {

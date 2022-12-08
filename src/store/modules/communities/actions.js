@@ -50,7 +50,14 @@ export default {
 		const response = await fetch(
 			baseurl +
 				'/subreddit-name-available?subredditName=' +
-				payload.subredditName
+				payload.subredditName,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
 		);
 
 		const responseData = await response.json();
@@ -58,14 +65,17 @@ export default {
 		let isTaken = false;
 		if (response.status == 409) {
 			isTaken = true;
-		}
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		} else if (response.status == 200) {
+			isTaken = false;
+		} else if (response.status == 400) {
+			isTaken = false;
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			isTaken = false;
+			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		}
-
 		context.commit('checkSubredditName', isTaken);
 	},
 	/**
