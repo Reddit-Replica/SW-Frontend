@@ -1047,13 +1047,7 @@
 					"nickname": "asmaa",
 					"dateOfModeration": "9 years ago",
 					"permissions": ["Everything"]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
+				},
 				{
 					"username": "hoda",
 					"nickname": "hoda",
@@ -1061,13 +1055,7 @@
 					"permissions": [
 						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
 					]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
+				},
 				{
 					"username": "mena",
 					"nickname": "mena",
@@ -1075,13 +1063,7 @@
 					"permissions": [
 						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
 					]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
+				},
 				{
 					"username": "asmaaadel0",
 					"nickname": "asmaaadel0",
@@ -1101,13 +1083,7 @@
 					"nickname": "asmaa",
 					"dateOfModeration": "9 years ago",
 					"permissions": ["Everything"]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
+				},
 				{
 					"username": "hoda",
 					"nickname": "hoda",
@@ -1115,13 +1091,7 @@
 					"permissions": [
 						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
 					]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
+				},
 				{
 					"username": "mena",
 					"nickname": "mena",
@@ -1129,13 +1099,7 @@
 					"permissions": [
 						"Manage Wiki Pages, Manage Posts & Comments, Manage Users, Manage Flair"
 					]
-				}
-			]
-		},
-		{
-			"before": "string",
-			"after": "string",
-			"children": [
+				},
 				{
 					"username": "asmaaadel0",
 					"nickname": "asmaaadel0",

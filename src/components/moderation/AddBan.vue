@@ -31,9 +31,18 @@
 							:key="reasonRule.ruleName"
 							:value="reasonRule.ruleName"
 							:id="reasonRule.ruleName"
+							class="options"
 						>
 							{{ reasonRule.ruleName }}
 						</option>
+						<option class="options">Spam</option>
+						<option class="options">
+							Personal And Confidential Information
+						</option>
+						<option class="options">
+							Threatening, Harassing, Or Incities Violence
+						</option>
+						<option class="options">Other</option>
 					</select>
 				</div>
 				<div class="ban-box-input flex-column">
@@ -529,5 +538,14 @@ button:hover {
 .disable-period {
 	opacity: 0.6;
 	cursor: not-allowed;
+}
+.options {
+	color: var(--color-grey-dark-8);
+	cursor: pointer;
+	overflow: hidden;
+	padding: 8px 16px 8px 8px;
+	text-overflow: ellipsis;
+	border-top: 1px solid var(--color-grey-light-9);
+	border-bottom: none;
 }
 </style>
