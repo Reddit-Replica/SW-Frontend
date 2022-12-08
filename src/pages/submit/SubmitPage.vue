@@ -209,9 +209,9 @@ export default {
 			console.log(this.title);
 			console.log(this.kind);
 			console.log(this.inSubreddit);
-			console.log(this.images);
-			console.log(this.imageCaptions);
-			console.log(this.imageLinks);
+			console.log(JSON.stringify(this.images));
+			console.log(JSON.stringify(this.imageCaptions));
+			console.log(JSON.stringify(this.imageLinks));
 			// console.log(this.video);
 			console.log(this.spoiler);
 			console.log(this.nsfw);
@@ -275,7 +275,7 @@ export default {
 				};
 
 				try {
-					await this.$store.dispatch('posts/createPost', actionPayload);
+					await this.$store.dispatch('posts/createpostVideo', actionPayload);
 					const response = localStorage.getItem('response');
 
 					if (response == 201) {
