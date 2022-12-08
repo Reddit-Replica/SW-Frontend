@@ -28,24 +28,32 @@
 						<button
 							id="Add-block-new-user-button"
 							:class="activeAddButton ? 'buttonActive' : 'buttonDisActive'"
+							@click="addBlockedUser"
 						>
 							ADD
 						</button>
 					</div>
 					<ul class="blocked-users">
 						<li
-							v-for="blockedUser in blockedUsers"
+							v-for="blockedUser in blockedUsersData.children"
 							:key="blockedUser.id"
-							:id="blockedUser.id"
 						>
 							<div class="blocked-container">
-								<a class="blocked-user-info">
-									<img :src="blockedUser.blockedPic" alt="" />
-									<span>{{ blockedUser.name }}</span>
-								</a>
-								<span>{{ blockedUser.blockedDate }}</span>
+								<router-link
+									:to="`/user/${blockedUser.data.username}`"
+									class="blocked-user-info"
+								>
+									<img :src="blockedUser.data.userImage" alt="" />
+									<span>{{ blockedUser.data.username }}</span>
+								</router-link>
+								<span>{{ getMoment(blockedUser.data.blockDate) }}</span>
 							</div>
-							<button :id="`remove-${blockedUser.id}`">REMOVE</button>
+							<button
+								:id="`remove-${blockedUser.id}`"
+								@click="removeBlockedUser(blockedUser.data.username)"
+							>
+								REMOVE
+							</button>
 						</li>
 					</ul>
 				</div>
@@ -206,31 +214,130 @@
 </template>
 
 <script>
+import * as moment from 'moment';
 export default {
 	data() {
 		return {
 			BlockedNewUserName: '',
 			focusInOut: 'focus-out',
-			blockedUsers: [
-				{
-					id: 1,
-					name: 'Karimsaqer',
-					blockedDate: '5 hours ago',
-					blockedPic:
-						'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
-				},
-				{
-					id: 2,
-					name: 'KarimMohamed',
-					blockedDate: '10 hours ago',
-					blockedPic:
-						'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
-				},
-			],
+			// blockedUsers: [
+			// 	{
+			// 		id: 1,
+			// 		name: 'Karimsaqer',
+			// 		blockedDate: '5 hours ago',
+			// 		blockedPic:
+			// 			'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
+			// 	},
+			// 	{
+			// 		id: 2,
+			// 		name: 'KarimMohamed',
+			// 		blockedDate: '10 hours ago',
+			// 		blockedPic:
+			// 			'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
+			// 	},
+			// ],
 		};
 	},
+	/**
+	 * @vuese
+	 * at creation of the page we request blocked user data
+	 * @arg no arg
+	 */
+	async created() {
+		this.loading = true;
+		const requestStatus = await this.RequestListOfBlockedUsersData();
+		this.loading = false;
+		this.requestStatusHandler(requestStatus, 'ListOfBlockedUsersData');
+	},
 	methods: {
-		addBlockedUser() {},
+		/**
+		 * @vuese
+		 * handles the status code of requested data
+		 * @arg no arg
+		 */
+		requestStatusHandler(requestStatus, st) {
+			if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
+			else if (requestStatus == 404) console.log(`Not found  ${st} `);
+			else if (requestStatus == 500) console.log(' internal server error');
+			else if (requestStatus == 401) console.log(' access denied');
+			else console.log(`Error !!!!  ${st} !!!!!`);
+		},
+		/**
+		 * @vuese
+		 * convert the date to the moment from now
+		 * @arg no arg
+		 */
+		getMoment(date) {
+			return moment(date).fromNow();
+		},
+		/**
+		 * @vuese
+		 * make request to get blocked user data
+		 * @arg no arg
+		 */
+		async RequestListOfBlockedUsersData() {
+			let requestStatus = -1;
+			try {
+				requestStatus = await this.$store.dispatch(
+					'user/FetchListOfBlockedUsers',
+					{
+						baseurl: this.$baseurl,
+					}
+				);
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			return requestStatus;
+		},
+		/**
+		 * @vuese
+		 * make a request to block new user
+		 * @arg no arg
+		 */
+		async addBlockedUser() {
+			let requestStatus = -1;
+			try {
+				requestStatus = await this.$store.dispatch('user/blockUnblockUser', {
+					baseurl: this.$baseurl,
+					blockUnblockData: {
+						username: this.BlockedNewUserName,
+						block: true,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.RequestListOfBlockedUsersData();
+			this.BlockedNewUserName = '';
+			this.focusInOut = 'focus-out';
+			this.requestStatusHandler(requestStatus, 'blockUnblockUser');
+		},
+		/**
+		 * @vuese
+		 * make request to remove block from a user
+		 * @arg blockUsername  the name of the user that  want to remove the block from him
+		 */
+		async removeBlockedUser(blockUsername) {
+			let requestStatus = -1;
+			try {
+				requestStatus = await this.$store.dispatch('user/blockUnblockUser', {
+					baseurl: this.$baseurl,
+					blockUnblockData: {
+						username: blockUsername,
+						block: false,
+						remove: true,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.requestStatusHandler(requestStatus, 'removeBlockedUser');
+		},
+		/**
+		 * @vuese
+		 * change the state of the block user input text box
+		 * @arg no arg
+		 */
 		focusOut() {
 			if (this.BlockedNewUserName == '') {
 				this.focusInOut = 'focus-out';
@@ -240,11 +347,24 @@ export default {
 		},
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * active the add button in the block user text box
+		 * @arg no arg
+		 */
 		activeAddButton() {
 			if (this.BlockedNewUserName != '') {
 				return true;
 			}
 			return false;
+		},
+		/**
+		 * @vuese
+		 * get block users data
+		 * @arg no arg
+		 */
+		blockedUsersData() {
+			return this.$store.getters['user/getBlockedUsersData'];
 		},
 	},
 };
@@ -398,6 +518,7 @@ a.blocked-user-info {
 	color: #1c1c1c;
 	align-items: center;
 	font-size: 16px;
+	cursor: pointer;
 }
 .blocked-user-info img {
 	width: 24px;

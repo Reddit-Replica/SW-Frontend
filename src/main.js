@@ -11,7 +11,7 @@ import App from './App.vue';
 //import VueCookies from 'vue3-cookies';
 //import { useCookies } from "vue3-cookies";
 import GAuth from 'vue3-google-oauth2';
-
+import TheSpinner from './components/BaseComponents/TheSpinner.vue';
 import BaseButton from './components/BaseComponents/BaseButton.vue';
 import SwitchButton from './components/BaseComponents/SwitchButton.vue';
 import BaseDialog from './components/BaseComponents/BaseDialog.vue';
@@ -64,6 +64,7 @@ app.use(GAuth, {
 app.component('BaseButton', BaseButton);
 app.component('SwitchButton', SwitchButton);
 app.component('BaseDialog', BaseDialog);
+app.component('TheSpinner', TheSpinner);
 
 app.component('TheHeader', TheHeader);
 

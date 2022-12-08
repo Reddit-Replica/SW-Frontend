@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<list-bar
+			:title="'banned'"
+			@show-ban-user="showBanUserFunction()"
+			:subreddit-name="subredditName"
+		></list-bar>
 		<div class="text">
 			Banned users
 			<a
@@ -39,13 +44,43 @@
 				/>
 			</svg>
 		</no-list>
+		<add-ban
+			v-if="showBanUser"
+			:subreddit-name="subredditName"
+			@exit="showBanUserFunction()"
+			@done-successfully="doneSuccessfully('added')"
+		></add-ban>
 	</div>
 </template>
 
 <script>
 import NoList from '../../components/moderation/NoList.vue';
+import ListBar from '../../components/moderation/ListBar.vue';
+import AddBan from '../../components/moderation/AddBan.vue';
 export default {
-	components: { NoList },
+	components: { NoList, ListBar, AddBan },
+	data() {
+		return {
+			showBanUser: false,
+		};
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+	},
+	methods: {
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showBanUserFunction() {
+			this.showBanUser = !this.showBanUser;
+		},
+	},
 };
 </script>
 

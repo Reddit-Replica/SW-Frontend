@@ -344,11 +344,11 @@ export default {
 			required: true,
 		},
 	},
-	mounted() {
-		// this.userData = this.$store.getters['user/getUserData'];
-		// console.log(this.userData);
-		// this.uploadBanner();
-	},
+	// mounted() {
+	// 	this.userData = this.$store.getters['user/getUserData'];
+	// 	console.log(this.userData);
+	// 	this.uploadBanner();
+	// },
 	data() {
 		return {
 			showMoreOptions: false,
@@ -413,6 +413,12 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * it handles when you click on the profile options block  for example block user ...
+		 * @arg state this state to know if it is your profile page or other user page
+		 * @arg profileOption this profileOption to know which option you want to click
+		 */
 		profileOptionsClickHandler(state, profileOption) {
 			if (state != 'profile') {
 				if (profileOption.id == 1) {
@@ -421,6 +427,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * this methods handle a request for blocking a user
+		 * @arg no
+		 */
 		async blockUser() {
 			try {
 				await this.$store.dispatch('user/blockUnblockUser', {
@@ -434,6 +445,11 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		/**
+		 * @vuese
+		 * it handles profile option routing href(to)
+		 * @arg no
+		 */
 		profileOptionsToHandler(state, profileOption) {
 			if (state == 'profile') {
 				if (profileOption.id == 0) {

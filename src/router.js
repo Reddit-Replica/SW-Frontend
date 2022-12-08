@@ -55,23 +55,23 @@ import TheBanned from './pages/moderation/TheBanned.vue';
 import TheMuted from './pages/moderation/TheMuted.vue';
 import TheApproved from './pages/moderation/TheApproved.vue';
 import ModerationList from './pages/moderation/ModerationList.vue';
-
 import PostFlair from './pages/moderation/PostFlair.vue';
-
 import TheRules from './pages/moderation/TheRules.vue';
 import ContentControls from './pages/moderation/ContentControls.vue';
-
 import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
-
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
-
 import TrafficStats from './pages/moderation/TrafficStats.vue';
 
 import NotFound from './pages/NotFound.vue';
 
 import PostComments from './components/PostComponents/PostComments.vue';
 
+import NotificationsPage from './pages/notifications/NotificationsPage.vue';
+
 import Search from './pages/search/SearchPage.vue';
+import PostSearch from './pages/search/SearchPage.vue';
+import UserSearch from './pages/search/SearchUsers.vue';
+import SearchCommunity from './pages/search/SearchCommunity.vue';
 import GetHelp from './pages/forget/GetHelp.vue';
 
 const router = createRouter({
@@ -100,8 +100,18 @@ const router = createRouter({
 		{ path: '/signup', component: SignupPage },
 		{ path: '/logincomp', component: LoginComp },
 		{ path: '/signupcomp', component: SignupComp },
-		{ path: '/search', component: Search },
 		{ path: '/help', component: GetHelp },
+		{ path: '/search/type=user', component: UserSearch },
+		{ path: '/search/type=cm', component: SearchCommunity },
+		{
+			path: '/search',
+			name: 'search',
+			component: Search,
+			children: [
+				{ path: '/search/type=post', component: PostSearch },
+				// { path: '/search/type=user', component: UserSearch },
+			],
+		}, //render subreddit component
 
 		{
 			path: '/user/:userName',
@@ -212,6 +222,12 @@ const router = createRouter({
 				{ path: '/message/mentions', component: UsernameMentions },
 				{ path: '/message/sent', component: SentMessages },
 			],
+		},
+
+		{
+			path: '/notifications',
+			name: 'notifications',
+			component: NotificationsPage,
 		},
 
 		{ path: '/:notFound(.*)', component: NotFound },

@@ -5,7 +5,7 @@
 			@close="hidecreateCommunity"
 			title="Create a community"
 		>
-			<div class="community-dialog flex-column">
+			<div class="community-dialog flex-column" id="comm-create">
 				<div class="community-box flex-column">
 					<div class="community-box-title flex-column">
 						<h3 class="title-black">Name</h3>
@@ -52,6 +52,7 @@
 							v-model.trim="communityName"
 							@blur="validateCommunityName"
 							@keyup="charCount()"
+							@click="resetName"
 							id="name-input"
 						/>
 						<div class="title-grey">
@@ -64,12 +65,17 @@
 						>
 							A community name is required
 						</div>
-						<div v-if="communityNameTakenError" class="title-grey title-red">
+						<div
+							v-if="communityNameTakenError"
+							class="title-grey title-red"
+							id="taken-name"
+						>
 							Sorry, r/{{ communityName }} is taken. Try another.
 						</div>
 						<div
 							v-if="communityNameCharError"
 							class="title-grey name-error title-red"
+							id="name-symbols"
 						>
 							<p class="title-red">
 								Community names must be between 3–21 characters, and can only
@@ -148,6 +154,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-circle"
+								id="bi-circle-1"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen0"
 							>
@@ -161,6 +168,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
+								id="bi-record-circle-fill-1"
 								viewBox="0 0 16 16"
 								v-else
 							>
@@ -198,6 +206,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-circle"
+								id="bi-circle-2"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen1"
 							>
@@ -211,6 +220,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
+								id="bi-record-circle-fill-2"
 								viewBox="0 0 16 16"
 								v-else
 							>
@@ -249,6 +259,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-circle"
+								id="bi-circle-3"
 								viewBox="0 0 16 16"
 								v-if="!typeChosen2"
 							>
@@ -262,6 +273,7 @@
 								height="20"
 								fill="currentColor"
 								class="bi bi-record-circle-fill"
+								id="bi-record-circle-fill-3"
 								viewBox="0 0 16 16"
 								v-else
 							>
@@ -448,9 +460,18 @@ export default {
 			}
 		},
 		// @vuese
+		//Reset Validatation of  Subreddits Name.
+		//@arg no argument
+		resetName() {
+			this.communityNameValidity = true;
+			this.communityNameRequiredError = false;
+			this.communityNameCharError = false;
+			this.communityNameTakenError = false;
+		},
+		// @vuese
 		//Validate Subreddits Name (Name should be between 3:20 characters and include only letters, numbers and underscores).
 		//@arg no argument
-		validateCommunityName() {
+		async validateCommunityName() {
 			//check if name is empty
 			if (this.communityName === '') {
 				this.communityNameValidity = false;
@@ -472,12 +493,15 @@ export default {
 				this.communityNameCharError = false;
 			}
 			//check if name is taken by another subreddit
-			this.$store.dispatch('community/checkSubredditName', {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/checkSubredditName', {
 				subredditName: this.communityName,
 				baseurl: this.$baseurl,
+				token: accessToken,
 			});
 			this.communityNameTakenError =
 				this.$store.getters['community/subredditNameTaken'];
+
 			if (this.communityNameTakenError) {
 				this.communityNameRequiredError = false;
 				this.communityNameCharError = false;

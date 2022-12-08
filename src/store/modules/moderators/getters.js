@@ -2,6 +2,12 @@ export default {
 	listOfModerators(state) {
 		return state.listOfModerators;
 	},
+	listOfInvitedModerators(state) {
+		return state.listOfInvitedModerators;
+	},
+
+	//////////////////////RULES////////////////////////
+
 	addRuleSuccessfully(state) {
 		return state.addRuleSuccessfully;
 	},
@@ -16,5 +22,26 @@ export default {
 	},
 	updateRulesSuccessfully(state) {
 		return state.updateRulesSuccessfully;
+	},
+
+	//////////////////////FLAIR////////////////////////
+
+	listOfFlairs(state) {
+		return state.listOfFlairs;
+	},
+	addFlairSuccessfully(state) {
+		return state.addFlairSuccessfully;
+	},
+	updateFlairSuccessfully(state) {
+		return state.updateFlairSuccessfully;
+	},
+	deleteFlairSuccessfully(state) {
+		return state.deleteFlairSuccessfully;
+	},
+
+	//////////////////////BAN////////////////////////
+
+	banUserSuccessfully(state) {
+		return state.banUserSuccessfully;
 	},
 };
