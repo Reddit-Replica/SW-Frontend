@@ -106,20 +106,6 @@ export default {
 		}
 	},
 	async createpostImage(context, payload) {
-		// const postInfo = {
-		// 	title: payload.title,
-		// 	kind: payload.kind,
-		// 	//subreddit: payload.subreddit,
-		// 	inSubreddit: payload.inSubreddit,
-		//   images: payload.images,
-		// 	imageCaptions: payload.imageCaptions,
-		// 	imageLinks: payload.imageLinks,
-		// 	nsfw: payload.nsfw,
-		// 	spoiler: payload.spoiler,
-		// 	// flairId: payload.flairId,
-		// 	sendReplies: payload.sendReplies,
-
-		// };
 		const postInfo = new FormData();
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
@@ -130,6 +116,8 @@ export default {
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
 		postInfo.append('sendReplies', payload.sendReplies);
+		console.log(payload.kind);
+		console.log(payload.title);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',

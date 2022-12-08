@@ -107,10 +107,10 @@ export default {
 			inSubreddit: null,
 			title: null,
 			content: null,
-			files: [{}],
 			nsfw: null,
 			spoiler: null,
 			flairId: 123,
+			images: [],
 			imageCaptions: [],
 			imageLinks: [],
 			video: null,
@@ -178,6 +178,15 @@ export default {
 		getVideo() {
 			this.video = this.$store.getters['posts/getVideo'];
 		},
+		getImages() {
+			this.images = this.$store.getters['posts/getImages'];
+		},
+		getImageCaptions() {
+			this.imageCaptions = this.$store.getters['posts/getImageCaptions'];
+		},
+		getImageLinks() {
+			this.imageLinks = this.$store.getters['posts/getImageLinks'];
+		},
 
 		// @vuese
 		// dispatch createpost from the store
@@ -191,13 +200,19 @@ export default {
 			this.getsendReplies();
 			this.getContent();
 			this.getVideo();
+			this.getImages();
+			this.getImageCaptions();
+			this.getImageLinks();
 			//this.getSubreddit();
 			this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
 			console.log(this.kind);
 			console.log(this.inSubreddit);
-			console.log(this.video);
+			console.log(this.images);
+			console.log(this.imageCaptions);
+			console.log(this.imageLinks);
+			// console.log(this.video);
 			console.log(this.spoiler);
 			console.log(this.nsfw);
 			console.log(this.sendReplies);
@@ -289,6 +304,36 @@ export default {
 
 				try {
 					await this.$store.dispatch('posts/createpostLink', actionPayload);
+					const response = localStorage.getItem('response');
+
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
+			} else if (this.kind == 'image') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					images: this.images,
+					imageCaptions: this.imageCaptions,
+					imageLinks: this.imageLinks,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('posts/createpostImage', actionPayload);
 					const response = localStorage.getItem('response');
 
 					if (response == 201) {
