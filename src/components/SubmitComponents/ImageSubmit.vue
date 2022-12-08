@@ -389,6 +389,7 @@ export default {
 		},
 		removeImage(i) {
 			// this.images.pop();
+			this.imageFiles.splice(i, 1);
 			this.images.splice(i, 1);
 			this.imageCaptions.splice(i, 1);
 			this.imageLinks.splice(i, 1);
