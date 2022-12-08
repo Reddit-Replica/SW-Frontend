@@ -73,6 +73,27 @@ export default {
 		context.commit('setListOfInvitedModerators', invitedModerators);
 	},
 
+	handleTime(context, payload) {
+		var currentDate = new Date();
+		var returnValue = '';
+		var myTime = new Date(payload.time);
+		if (currentDate.getFullYear() != myTime.getFullYear()) {
+			returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+		} else if (currentDate.getMonth() != myTime.getMonth()) {
+			returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+		} else if (currentDate.getDate() != myTime.getDate()) {
+			returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+		} else if (currentDate.getHours() != myTime.getHours()) {
+			returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+		} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+			returnValue =
+				currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+		} else {
+			returnValue = 'Just now';
+		}
+		context.commit('setHandleTime', returnValue);
+	},
+
 	//////////////////////RULES////////////////////////
 
 	async addRule(context, payload) {

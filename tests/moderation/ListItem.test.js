@@ -11,7 +11,24 @@ describe ('ListItem.vue', () => {
     permissions: ['everything'],
   };
   const index = 0;
-  let date = '2 years ago';
+  let handleTime = '2 years ago';
+  //Mocking the store
+  const moderatorsActions = {
+    handleTime: vi.fn()
+  };
+  store = new Vuex.Store ({
+    modules: {
+      moderatorsModule: {
+        namespaced: true,
+        state: {
+          listOfModerators: [],
+          listOfInvitedModerators: [],
+          handleTime: '',
+        },
+        actions: moderatorsActions,
+      },
+    },
+  });
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
@@ -22,7 +39,7 @@ describe ('ListItem.vue', () => {
         index,
       },
       computed: {
-        date,
+        handleTime,
       },
       global: {
         // OR:
@@ -44,7 +61,7 @@ describe ('ListItem.vue', () => {
         index,
       },
       computed: {
-        date,
+        handleTime,
       },
       global: {
         // OR:
@@ -63,7 +80,7 @@ describe ('ListItem.vue', () => {
         index,
       },
       computed: {
-        date,
+        handleTime,
       },
       global: {
         // OR:
@@ -82,7 +99,7 @@ describe ('ListItem.vue', () => {
         index,
       },
       computed: {
-        date,
+        handleTime,
       },
       global: {
         // OR:

@@ -5,6 +5,9 @@ export default {
 	listOfInvitedModerators(state) {
 		return state.listOfInvitedModerators;
 	},
+	handleTime(state) {
+		return state.handleTime;
+	},
 
 	//////////////////////RULES////////////////////////
 
