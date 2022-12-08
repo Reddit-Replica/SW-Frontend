@@ -351,7 +351,7 @@ export default {
 			//'video/mp4'
 			if (file.type == 'video/mp4') {
 				this.video = URL.createObjectURL(file);
-				this.videoFile = file1;
+				this.videoFile = file;
 				this.postType = 'video';
 				this.setVideo(this.videoFile);
 				this.$store.commit('posts/setvideoOrimage', {
@@ -359,7 +359,7 @@ export default {
 				});
 			} else {
 				this.postType = 'image';
-				this.imageFiles.push(file1);
+				this.imageFiles.push(file);
 				this.images.push(URL.createObjectURL(file));
 				this.imageCaptions.push(this.caption);
 				this.imageLinks.push(this.link);
@@ -415,7 +415,7 @@ export default {
 
 			if (file.type == 'video/mp4') {
 				this.video = URL.createObjectURL(file);
-				this.videoFile = file1;
+				this.videoFile = file;
 				this.postType = 'video';
 				this.setVideo(this.videoFile);
 				this.$store.commit('posts/setvideoOrimage', {
@@ -423,7 +423,7 @@ export default {
 				});
 			} else {
 				this.postType = 'image';
-				this.imageFiles.push(file1);
+				this.imageFiles.push(file);
 				this.images.push(URL.createObjectURL(file));
 				this.imageCaptions.push(this.caption);
 				this.imageLinks.push(this.link);
