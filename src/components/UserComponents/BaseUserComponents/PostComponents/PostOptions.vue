@@ -409,6 +409,7 @@ export default {
 	props: {
 		postData: {
 			type: Object,
+			required: true,
 		},
 		pinnedPostFlag: {
 			type: Boolean,

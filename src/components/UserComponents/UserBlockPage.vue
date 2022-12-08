@@ -152,14 +152,14 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['continue-clicked', 'goback-clicked'],
+	emits: ['continueClicked', 'gobackClicked'],
 	methods: {
 		continueClicked() {
 			this.$emit('continueClicked');
 			console.log('continueClicked');
 		},
 		goBackClicked() {
-			this.$emit('goback-clicked');
+			this.$emit('gobackClicked');
 			console.log('gobackClicked');
 		},
 	},

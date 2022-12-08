@@ -121,10 +121,11 @@
 			</div>
 			<ul class="ul-items" v-if="!noFlairs && !dragDrop">
 				<flair-item
-					v-for="flair in listOfFlairs"
+					v-for="(flair, index) in listOfFlairs"
 					:key="flair"
 					:flair="flair"
 					@done-successfully="(title) => doneSuccessfully(title)"
+					:index="index"
 				></flair-item>
 			</ul>
 			<div class="center-box" v-if="noFlairs && !showAddFlair">
