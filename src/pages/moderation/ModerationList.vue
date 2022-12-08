@@ -4,6 +4,7 @@
 			:title="'Moderators'"
 			:subreddit-name="subredditName"
 			@invite-mod="handleInviteMod()"
+			@leave-mod="handleLeaveMod()"
 		></list-bar>
 		<div class="list-moderations">
 			<div class="text-moderation">
@@ -86,6 +87,40 @@
 			@exit="handleInviteMod()"
 			@done-successfully="doneSuccessfully('added')"
 		></invite-moderator>
+		<div id="sure-popup-form">
+			<base-dialog
+				:show="showLeaveMod"
+				@close="handleLeaveMod()"
+				title="Leave as mod"
+			>
+				<div class="rule-dialog flex-column">
+					<div class="rule-box-p flex-column">
+						<p class="sure-text">
+							Once you leave as a mod, you will lose mod permissions and will be
+							unable to access any mod tools for this community. Are you sure
+							you wish to leave as a mod of this community?
+						</p>
+					</div>
+					<div class="rule-box box-buttons">
+						<base-button
+							@click="handleLeaveMod()"
+							class="button-white"
+							id="cancel-button"
+							>Cancel</base-button
+						>
+						<base-button
+							@click="deleteRule()"
+							class="button-blue"
+							id="leave-button"
+							>Leave</base-button
+						>
+					</div>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
+				</div>
+			</base-dialog>
+		</div>
 	</div>
 </template>
 
@@ -140,6 +175,7 @@ export default {
 			noItems: false,
 			notSearch: true,
 			showInvitePopup: false,
+			showLeaveMod: false,
 		};
 	},
 	methods: {
@@ -198,14 +234,23 @@ export default {
 			this.search = '';
 			this.noItems = false;
 		},
+		// @vuese
+		//handle clicking invite mod
+		// @arg no argument
 		handleInviteMod() {
 			this.showInvitePopup = !this.showInvitePopup;
+		},
+		// @vuese
+		//handle clicking leave mod
+		// @arg no argument
+		handleLeaveMod() {
+			this.showLeaveMod = !this.showLeaveMod;
 		},
 	},
 };
 </script>
 
-<style>
+<style scoped>
 .list-moderations {
 	padding-top: 6.4rem;
 	border-radius: 0 0 4px 4px;
@@ -251,5 +296,111 @@ export default {
 }
 .invited-box {
 	margin-top: 3.6rem;
+}
+.rule-dialog {
+	max-height: 100%;
+	max-width: 53.8rem;
+	min-width: 41rem;
+}
+.sure-text {
+	line-height: 2.2rem;
+	margin: 1rem 0;
+	white-space: pre-wrap;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-weight: 400;
+	color: var(--color-dark-3);
+	font-size: 1.4rem;
+	line-height: 2.1rem;
+	display: block;
+}
+.rule-box-p {
+	align-items: flex-start;
+	margin-top: 1.2rem;
+	margin-bottom: 3rem;
+}
+.box {
+	margin-top: 1rem;
+	width: 15rem;
+	background-color: var(--color-dark-1);
+	color: var(--color-white-1);
+	font-size: 0.9rem;
+	padding: 1rem;
+	position: absolute;
+	border-radius: 0.4rem;
+	text-align: center;
+	pointer-events: none;
+	transform: translateX(-50%);
+	z-index: 100;
+	right: -16rem;
+}
+.box-buttons {
+	background-color: var(--color-grey-light-2);
+	padding: 16px;
+	margin: 16px -16px -16px;
+	display: flex;
+	justify-content: flex-end;
+	border-bottom-right-radius: 4px;
+	box-sizing: border-box;
+}
+button {
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	margin-left: 8px;
+	font-size: 14px;
+	font-weight: 700;
+}
+.button-blue:hover {
+	background-color: rgb(248, 89, 89);
+	border: 1px solid rgb(248, 89, 89);
+	padding: 0.4rem 1.6rem;
+}
+.button-white {
+	border: 1px solid var(--color-blue-2);
+	color: var(--color-blue-2);
+	padding: 0.4rem 1.6rem;
+}
+.button-white:hover {
+	border: 1px solid var(--color-grey-dark-8);
+	color: var(--color-grey-dark-8);
+	padding: 0.4rem 1.6rem;
+}
+.button-blue {
+	background-color: var(--color-blue-2);
+	border: 1px solid var(--color-blue-2);
+	color: var(--color-white-1);
+	padding: 0.4rem 1.6rem;
+}
+.disabled {
+	cursor: not-allowed;
+	filter: grayscale(1);
+	border: none;
+	color: rgba(255, 255, 255, 0.5);
+	fill: rgba(255, 255, 255, 0.5);
+	background-color: var(--color-grey-light-5);
+}
+input:focus {
+	outline: navajowhite;
+	border: var(--line-2);
+	background-color: var(--color-white-1);
+}
+.input-name {
+	border: 1px solid var(--color-grey-light-2);
+	max-height: 3.7rem;
+	padding: 0.4rem 1rem;
+	background-color: var(--color-white-1);
+	color: var(--color-dark-1);
+	box-sizing: border-box;
+	margin-bottom: 8px;
+	border-radius: 4px;
+	width: 100%;
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 2.1rem;
+	height: 5rem;
+}
+.no-messages {
+	margin-top: 2rem;
+	padding: 1rem;
 }
 </style>

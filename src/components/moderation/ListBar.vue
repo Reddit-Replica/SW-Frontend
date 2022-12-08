@@ -4,7 +4,10 @@
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div> -->
 		<div class="bar" v-if="title == 'Moderators'">
-			<base-button class="button-white" id="leave-mod-button"
+			<base-button
+				class="button-white"
+				id="leave-mod-button"
+				@click="leaveMod()"
 				>Leave as mod</base-button
 			>
 			<base-button
@@ -129,6 +132,7 @@ export default {
 		'inviteMod',
 		'ApproveUser',
 		'MuteUser',
+		'leaveMod',
 	],
 	props: {
 		// @vuese
@@ -249,6 +253,12 @@ export default {
 		// @arg no argument
 		MuteUser() {
 			this.$emit('MuteUser');
+		},
+		// @vuese
+		// Used to handle leave moderator action
+		// @arg no argument
+		leaveMod() {
+			this.$emit('leaveMod');
 		},
 	},
 };
