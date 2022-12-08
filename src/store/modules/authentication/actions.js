@@ -214,6 +214,27 @@ export default {
 		}
 	},
 	/**
+	 * action for Get RandomUsers request
+	 * @action  getRandomUsers
+	 * @param {Object} payload Count of users .
+	 * @returns {void}
+	 */
+	async getRandomUsers(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/random-username?count=5');
+		const responseData = await response.json();
+		if (response.status == 200) {
+			const RandUsers = [];
+			for (const key in responseData) {
+				RandUsers.push(responseData[key]);
+			}
+			context.commit('setRandom', RandUsers);
+		} else if (!response.ok) {
+			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
+	/**
 	 * action for LogIn and signup with google and send request
 	 * @action  googleSign
 	 * @param {Object} payload type and id_token from google .
