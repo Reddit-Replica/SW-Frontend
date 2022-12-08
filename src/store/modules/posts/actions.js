@@ -122,7 +122,7 @@ export default {
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'multipart/form-data; ',
+				'Content-Type': 'multipart/form-data;',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: postInfo,
@@ -163,10 +163,11 @@ export default {
 		postInfo.append('spoiler', payload.spoiler);
 		postInfo.append('sendReplies', payload.sendReplies);
 		const baseurl = payload.baseurl;
+		console.log(payload.video);
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'multipart/form-data; ',
+				'Content-Type': 'multipart/form-data',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: postInfo,

@@ -20,7 +20,7 @@
 			<div class="post-options">
 				<post-options
 					:post-data="postData.children[0]"
-					pinnedPostFlag="true"
+					pinned-post-flag="true"
 				></post-options>
 			</div>
 		</div>
