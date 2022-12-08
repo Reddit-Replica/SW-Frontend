@@ -7,8 +7,8 @@
 			<user-block-page
 				:username="$route.params.userName"
 				:pic="getUserData.userData.picture"
-				@continueClicked="blockedFlag = false"
-				@gobackClicked="$router.back"
+				@continue-clicked="blockedFlag = false"
+				@goback-clicked="$router.back"
 			></user-block-page>
 		</div>
 		<div v-else>
