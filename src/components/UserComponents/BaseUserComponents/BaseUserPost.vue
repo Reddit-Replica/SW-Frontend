@@ -176,8 +176,8 @@
 								<post-options
 									:post-data="postData"
 									@insights-toggle="insightsPostToggle"
-									@expandPost="expandPostContent"
-									@collapsePost="collapsePostContent"
+									@expand-post="expandPostContent"
+									@collapse-post="collapsePostContent"
 								></post-options>
 								<!-- <ul>
 									<li class="bottom-vote-box">

@@ -1,16 +1,6 @@
 <template>
 	<div>
-		<div
-			class="bar"
-			v-if="
-				title != 'Rules' &&
-				title != 'Post flair' &&
-				title != 'Content controls' &&
-				title != 'banned' &&
-				title != 'Moderators' &&
-				title != 'approved'
-			"
-		>
+		<div class="bar" v-if="barTitle == 'Schedule Post'">
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div>
 		<div class="bar" v-if="title == 'Moderators'">
@@ -29,6 +19,12 @@
 				id="approve-user-button"
 				@click="ApproveUser()"
 				>Approve user</base-button
+			>
+		</div>
+
+		<div class="bar" v-if="title == 'Muted'">
+			<base-button class="base-button" id="mute-user-button" @click="MuteUser()"
+				>Mute user</base-button
 			>
 		</div>
 
@@ -127,6 +123,7 @@ export default {
 		'saveReorderFlairs',
 		'inviteMod',
 		'ApproveUser',
+		'MuteUser',
 	],
 	props: {
 		// @vuese
@@ -180,9 +177,7 @@ export default {
 	},
 	computed: {
 		barTitle() {
-			if (this.title == 'Muted') {
-				return 'Mute user';
-			} else if (this.title == 'Schedule Post') {
+			if (this.title == 'Schedule Post') {
 				return 'Schedule Post';
 			} else return '';
 		},
@@ -246,6 +241,12 @@ export default {
 		// @arg no argument
 		ApproveUser() {
 			this.$emit('ApproveUser');
+		},
+		// @vuese
+		// Used to handle mute user action
+		// @arg no argument
+		MuteUser() {
+			this.$emit('MuteUser');
 		},
 	},
 };
