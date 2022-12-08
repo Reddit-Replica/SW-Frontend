@@ -5,6 +5,9 @@ export default {
 	setListOfInvitedModerators(state, payload) {
 		state.listOfInvitedModerators = payload;
 	},
+	setHandleTime(state, payload) {
+		state.handleTime = payload;
+	},
 
 	//////////////RULES/////////////////
 
