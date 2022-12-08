@@ -127,18 +127,29 @@
 		>
 			<postingto-reddit></postingto-reddit>
 		</div>
+		<!-- <div
+			:class="isSet & !inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
+		>
+			<profile-card
+				:user-name="userName"
+				:user-data="userData"
+				:state="state"
+			></profile-card>
+		</div> -->
 	</div>
 </template>
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import SubredditInfo from '../PostComponents/SubredditInfo.vue';
-import PostingtoReddit from '../../components/PostComponents/PostingtoReddit.vue';
+import PostingtoReddit from './PostingtoReddit.vue';
+//import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 export default {
 	components: {
 		CreateCommunity,
 		SubredditInfo,
 		PostingtoReddit,
+		//ProfileCard,
 	},
 	data() {
 		return {
@@ -152,6 +163,7 @@ export default {
 			inSubreddit: null,
 			isSet: false,
 			image: null,
+			userData: {},
 		};
 	},
 	methods: {

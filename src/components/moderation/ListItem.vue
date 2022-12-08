@@ -1,28 +1,78 @@
 <template>
-	<li class="item" v-if="show">
-		<div class="image" id="moderator">
-			<img
-				src="../../../img/user-img-2.png"
-				alt="img"
-				class="img"
-				:id="'moderator-img-' + index"
-			/>
-			<h5 class="heading-5" :id="'moderator-name-' + index">
-				{{ moderator.username }}
-			</h5>
+	<div>
+		<li class="item" v-if="show">
+			<div class="image" id="moderator">
+				<img
+					src="../../../img/user-img-2.png"
+					alt="img"
+					class="img"
+					:id="'moderator-img-' + index"
+				/>
+				<h5 class="heading-5" :id="'moderator-name-' + index">
+					{{ moderator.username }}
+				</h5>
+			</div>
+			<div class="time">
+				<!-- <span>{{ date }}</span> -->
+				<span>{{ moderator.dateOfModeration }}</span>
+			</div>
+			<div class="permissions">
+				<span
+					v-for="(permission, index1) in moderator.permissions"
+					:key="permission"
+					:id="'permission-' + index1"
+					>{{ permission }}</span
+				>
+				<svg
+					v-if="invitedMod"
+					@click="sureShownFunction()"
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-trash delete-icon"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+					/>
+					<path
+						fill-rule="evenodd"
+						d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+					/>
+				</svg>
+			</div>
+		</li>
+		<div id="create-rule-form">
+			<base-dialog :show="sureShown" title="Confirm">
+				<div class="rule-dialog flex-column">
+					<div class="rule-box-p flex-column">
+						<p class="sure-text">
+							Are you sure you want to rescind the moderator invite to
+							{{ moderator.username }}?
+						</p>
+					</div>
+					<div class="rule-box box-buttons">
+						<base-button
+							@click="sureShownFunction()"
+							class="button-white"
+							id="cancel-button"
+							>Cancel</base-button
+						>
+						<base-button
+							@click="removeInvitation()"
+							class="button-blue"
+							id="create-rule-button"
+							>Remove</base-button
+						>
+					</div>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
+				</div>
+			</base-dialog>
 		</div>
-		<div class="time">
-			<span>{{ moderator.dateOfModeration }}</span>
-		</div>
-		<div class="permissions">
-			<span
-				v-for="(permission, index1) in moderator.permissions"
-				:key="permission"
-				:id="'permission-' + index1"
-				>{{ permission }}</span
-			>
-		</div>
-	</li>
+	</div>
 </template>
 
 <script>
@@ -56,6 +106,19 @@ export default {
 			required: true,
 			default: 0,
 		},
+		// @vuese
+		//index to handle unique ids
+		// @type number
+		invitedMod: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
+	},
+	data() {
+		return {
+			sureShown: false,
+		};
 	},
 	computed: {
 		// @vuese
@@ -69,6 +132,34 @@ export default {
 			}
 			return true;
 		},
+		// @vuese
+		//handle display date
+		// @type boolean
+		date() {
+			this.moderator.dateOfModeration;
+			var currentDate = new Date();
+			console.log(currentDate);
+
+			// var formatted_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+			var formatted_date = this.moderator.dateOfModeration
+				.slice(0, 10)
+				.replace(/-/g, '/');
+			console.log(formatted_date);
+			return formatted_date;
+		},
+	},
+	methods: {
+		// @vuese
+		//used to show sure remove popup
+		// @arg no argument
+		sureShownFunction() {
+			this.sureShown = !this.sureShown;
+		},
+		// remove invitation request
+		// @vuese
+		//used to send remove invitation request
+		// @arg no argument
+		removeInvitation() {},
 	},
 };
 </script>
@@ -116,6 +207,96 @@ export default {
 }
 .heading-5 {
 	color: var(--color-dark-1);
+}
+.delete-icon {
+	margin-left: 1rem;
+	cursor: pointer;
+}
+.rule-dialog {
+	max-height: 100%;
+	max-width: 53.8rem;
+	min-width: 41rem;
+}
+.sure-text {
+	line-height: 2.2rem;
+	margin: 1rem 0;
+	white-space: pre-wrap;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-weight: 400;
+	color: var(--color-dark-3);
+	font-size: 1.4rem;
+	line-height: 2.1rem;
+	display: block;
+}
+.rule-box-p {
+	align-items: flex-start;
+	margin-top: 1.2rem;
+	margin-bottom: 3rem;
+}
+.box {
+	margin-top: 1rem;
+	width: 15rem;
+	background-color: var(--color-dark-1);
+	color: var(--color-white-1);
+	font-size: 0.9rem;
+	padding: 1rem;
+	position: absolute;
+	border-radius: 0.4rem;
+	text-align: center;
+	pointer-events: none;
+	transform: translateX(-50%);
+	z-index: 100;
+	right: -16rem;
+}
+.box-buttons {
+	background-color: var(--color-grey-light-2);
+	padding: 16px;
+	margin: 16px -16px -16px;
+	display: flex;
+	justify-content: flex-end;
+	border-bottom-right-radius: 4px;
+	box-sizing: border-box;
+}
+button {
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	margin-left: 8px;
+	font-size: 14px;
+	font-weight: 700;
+}
+.button-blue:hover {
+	background-color: rgb(248, 89, 89);
+	border: 1px solid rgb(248, 89, 89);
+	padding: 0.4rem 1.6rem;
+}
+.button-white {
+	border: 1px solid var(--color-blue-2);
+	color: var(--color-blue-2);
+	padding: 0.4rem 1.6rem;
+}
+.button-white:hover {
+	border: 1px solid var(--color-grey-dark-8);
+	color: var(--color-grey-dark-8);
+	padding: 0.4rem 1.6rem;
+}
+.button-blue {
+	background-color: var(--color-blue-2);
+	border: 1px solid var(--color-blue-2);
+	color: var(--color-white-1);
+	padding: 0.4rem 1.6rem;
+}
+.disabled {
+	cursor: not-allowed;
+	filter: grayscale(1);
+	border: none;
+	color: rgba(255, 255, 255, 0.5);
+	fill: rgba(255, 255, 255, 0.5);
+	background-color: var(--color-grey-light-5);
+}
+.no-messages {
+	margin-top: 2rem;
+	padding: 1rem;
 }
 /* 340px */
 @media only screen and (max-width: 21.25em) {

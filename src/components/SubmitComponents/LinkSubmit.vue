@@ -6,6 +6,7 @@
 				class="url-placeholder"
 				rows="1"
 				v-model="content"
+				id="title"
 			></textarea>
 		</form>
 	</div>

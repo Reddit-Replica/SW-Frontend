@@ -117,7 +117,7 @@ export default {
 	},
 	props: {
 		// @vuese
-		//details of moderator
+		//details of rule
 		// @type object
 		rule: {
 			type: Object,

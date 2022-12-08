@@ -5,6 +5,7 @@
  * @getter {object} getUserName=userName Returns The UserName That has logged In.
  * @getter {object} getAccessToken=accessToken Returns The access Token.
  * @getter {object} getResponse=response Returns response from API.
+ * @getter {object} getRandomUsers=RandomUsers Returns the random users.
  */
 export default {
 	getUserName(state) {
@@ -15,5 +16,9 @@ export default {
 	},
 	getResponse(state) {
 		return state.response;
+	},
+	getRandomUsers(state) {
+		console.log(state.RandomUsers);
+		return state.RandomUsers;
 	},
 };

@@ -55,7 +55,7 @@
 							</div>
 						</div>
 
-						<fieldset class="username-field field-pass-usr input-box">
+						<div class="username-field field-pass-usr input-box">
 							<!--Group of UserName Element -->
 
 							<input
@@ -81,9 +81,9 @@
 								{{ error_message }}
 							</div>
 							<!--Error Message Shown here -->
-						</fieldset>
+						</div>
 
-						<fieldset class="password-field field-pass-usr input-box">
+						<div class="username-field field-pass-usr input-box">
 							<!--Group of Password Element -->
 
 							<input
@@ -98,14 +98,11 @@
 								v-if="showSignPass"
 								:class="checkedPass ? 'correct-check' : 'wrong-check'"
 							></span>
+						</div>
 
-							<!-- <div class="username-error-message" v-if="messageErrorShowPass">
-							{{ error_message }}
-						</div> -->
-							<!--Error Message Shown here -->
-						</fieldset>
-
-						<button class="submit-login" type="submit">Log In</button>
+						<button id="login-button" class="submit-login" type="submit">
+							Log In
+						</button>
 						<div class="redirected-message" v-if="done_login">
 							{{ done_message }}
 						</div>
@@ -279,6 +276,12 @@ button {
 	position: relative;
 	width: 100%;
 }
+.input-box {
+	position: relative;
+	align-items: center;
+	width: min-content;
+	margin-bottom: 10px;
+}
 .input-box .blue-border {
 	border: 0.5px solid #0079d3;
 	border-color: #24a0ed;
@@ -408,16 +411,17 @@ button {
 .input-box .correct-check {
 	position: absolute;
 	z-index: 1;
-	right: 150px;
-	top: 50%;
+	right: 15px;
+	top: 22px;
 	height: 10px;
 	width: 12px;
 	background: url(https://www.redditstatic.com/accountmanager/d489caa9704588f7b7e1d7e1ea7b38b8.svg);
 }
 .input-box .wrong-check {
 	position: absolute;
-	right: 150px;
-	top: 28%;
+	z-index: 1;
+	right: 15px;
+	top: 22px;
 	height: 12px;
 	width: 2px;
 	background: url(https://www.redditstatic.com/accountmanager/90a416eeb64d4d6ecd46c53d4ee11975.svg);

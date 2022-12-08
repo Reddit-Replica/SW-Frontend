@@ -2,6 +2,12 @@ export default {
 	setListOfModerators(state, payload) {
 		state.listOfModerators = payload;
 	},
+	setListOfInvitedModerators(state, payload) {
+		state.listOfInvitedModerators = payload;
+	},
+
+	//////////////RULES/////////////////
+
 	addRuleSuccessfully(state, payload) {
 		state.addRuleSuccessfully = payload;
 	},
@@ -16,5 +22,26 @@ export default {
 	},
 	updateRulesSuccessfully(state, payload) {
 		state.updateRulesSuccessfully = payload;
+	},
+
+	//////////////FLAIRS/////////////////
+
+	setListOfFlairs(state, payload) {
+		state.listOfFlairs = payload;
+	},
+	addFlairSuccessfully(state, payload) {
+		state.addFlairSuccessfully = payload;
+	},
+	updateFlairSuccessfully(state, payload) {
+		state.updateFlairSuccessfully = payload;
+	},
+	deleteFlairSuccessfully(state, payload) {
+		state.deleteFlairSuccessfully = payload;
+	},
+
+	//////////////BAN/////////////////
+
+	banUserSuccessfully(state, payload) {
+		state.banUserSuccessfully = payload;
 	},
 };

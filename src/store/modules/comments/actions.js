@@ -49,7 +49,8 @@ export default {
 	},
 	async comment(_, payload) {
 		const newComment = {
-			text: payload.text,
+			content: payload.text,
+			postId: payload.postId,
 			parentId: payload.parentId,
 			parentType: payload.parentType,
 			level: payload.level,
@@ -57,7 +58,7 @@ export default {
 			haveSubreddit: payload.haveSubreddit,
 		};
 		const baseurl = payload.baseurl;
-
+		console.log(newComment);
 		const response = await fetch(baseurl + '/comment', {
 			method: 'POST',
 			headers: {
@@ -68,6 +69,7 @@ export default {
 		});
 
 		const responseData = await response.json();
+		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

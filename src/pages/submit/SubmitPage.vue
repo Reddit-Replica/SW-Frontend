@@ -107,14 +107,16 @@ export default {
 			inSubreddit: null,
 			title: null,
 			content: null,
-			files: [{}],
 			nsfw: null,
 			spoiler: null,
 			flairId: 123,
+			images: [],
 			imageCaptions: [],
 			imageLinks: [],
+			video: null,
 			sendReplies: null,
 			choosen: null,
+			userName: '',
 		};
 	},
 	watch: {},
@@ -129,8 +131,9 @@ export default {
 		// get the kind of the post
 
 		getKind() {
-			if (this.submitTypesActive[0]) this.kind = 'text';
-			else if (this.submitTypesActive[1]) this.kind = 'image';
+			if (this.submitTypesActive[0]) this.kind = 'hybrid';
+			else if (this.submitTypesActive[1])
+				this.kind = this.$store.getters['posts/getvideoOrimage'];
 			else if (this.submitTypesActive[2]) this.kind = 'link';
 			console.log(this.kind);
 		},
@@ -171,6 +174,25 @@ export default {
 			this.subreddit = this.$store.getters['posts/getSubreddit'];
 		},
 		// @vuese
+		// get the video in the type of video post
+
+		getVideo() {
+			this.video = this.$store.getters['posts/getVideo'];
+		},
+		getImages() {
+			this.images = this.$store.getters['posts/getImages'];
+		},
+		getImageCaptions() {
+			this.imageCaptions = this.$store.getters['posts/getImageCaptions'];
+		},
+		getImageLinks() {
+			this.imageLinks = this.$store.getters['posts/getImageLinks'];
+		},
+		getUsername() {
+			this.userName = localStorage.getItem('userName');
+		},
+
+		// @vuese
 		// dispatch createpost from the store
 
 		async handleSubmit() {
@@ -181,22 +203,31 @@ export default {
 			//this.getFlairId();
 			this.getsendReplies();
 			this.getContent();
-			this.getSubreddit();
-
+			this.getVideo();
+			this.getImages();
+			this.getImageCaptions();
+			this.getImageLinks();
+			this.getUsername();
+			//this.getSubreddit();
+			this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
 			console.log(this.kind);
+			console.log(this.inSubreddit);
+			console.log(JSON.stringify(this.images));
+			console.log(JSON.stringify(this.imageCaptions));
+			console.log(JSON.stringify(this.imageLinks));
+			// console.log(this.video);
 			console.log(this.spoiler);
 			console.log(this.nsfw);
 			console.log(this.sendReplies);
-			console.log(this.content);
-			console.log(this.subreddit);
+			//console.log(this.subreddit);
 
 			if (
 				this.title === null ||
 				this.kind === null ||
-				this.subreddit == null ||
-				this.content === '' ||
+				// this.subreddit == null ||
+				// this.content === '' ||
 				this.nsfw === null ||
 				this.spoiler === null ||
 				//this.flairId == null ||
@@ -206,33 +237,136 @@ export default {
 			}
 			console.log('hello from hell');
 			this.disableButton = false;
-			const actionPayload = {
-				kind: this.kind,
-				subreddit: this.subreddit,
-				title: this.title,
-				content: this.content,
-				files: this.files,
-				nsfw: this.nsfw,
-				spoiler: this.spoiler,
-				flairId: this.flairId,
-				imageCaptions: this.imageCaptions,
-				imageLinks: this.imageLinks,
-				sendReplies: this.sendReplies,
-				baseurl: this.$baseurl,
-			};
+			if (this.kind == 'hybrid') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					content: this.content,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
 
-			try {
-				await this.$store.dispatch('posts/createPost', actionPayload);
-				const response = localStorage.getItem('response');
+				try {
+					await this.$store.dispatch('posts/createpostHybrid', actionPayload);
+					const response = localStorage.getItem('response');
 
-				if (response == 200) {
-					console.log(response);
-					this.success = true;
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
 				}
-			} catch (err) {
-				this.error = err;
-				console.log(this.error);
-				this.success = false;
+			} else if (this.kind == 'video') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					video: this.video,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('posts/createpostVideo', actionPayload);
+					const response = localStorage.getItem('response');
+
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
+			} else if (this.kind == 'link') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					content: this.content,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('posts/createpostLink', actionPayload);
+					const response = localStorage.getItem('response');
+
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
+			} else if (this.kind == 'image') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					//subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					images: this.images,
+					imageCaptions: this.imageCaptions,
+					imageLinks: this.imageLinks,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					// flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					await this.$store.dispatch('posts/createpostImage', actionPayload);
+					const response = localStorage.getItem('response');
+
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+						setTimeout(
+							() => this.$router.replace('/user/' + this.userName),
+							1000
+						);
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
 			}
 		},
 		selectPostType(e) {

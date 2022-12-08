@@ -1,16 +1,38 @@
 <template>
 	<div>
-		<div
-			class="bar"
-			v-if="
-				title != 'Rules' && title != 'Post flair' && title != 'Content controls'
-			"
-		>
-			<base-button class="button-white" v-if="isModeratorList"
+		<!-- <div class="bar" v-if="barTitle == 'Schedule Post'">
+			<base-button class="base-button">{{ barTitle }}</base-button>
+		</div> -->
+		<div class="bar" v-if="title == 'Moderators'">
+			<base-button
+				class="button-white"
+				id="leave-mod-button"
+				@click="leaveMod()"
 				>Leave as mod</base-button
 			>
-			<base-button class="base-button">{{ barTitle }}</base-button>
+			<base-button
+				class="base-button"
+				id="invite-user-mod-button"
+				@click="inviteMod()"
+				>Invite user as mod</base-button
+			>
 		</div>
+
+		<div class="bar" v-if="title == 'approved'">
+			<base-button
+				class="base-button"
+				id="approve-user-button"
+				@click="ApproveUser()"
+				>Approve user</base-button
+			>
+		</div>
+
+		<div class="bar" v-if="title == 'muted'">
+			<base-button class="base-button" id="mute-user-button" @click="MuteUser()"
+				>Mute user</base-button
+			>
+		</div>
+
 		<div class="bar" v-if="title == 'Rules' && !dragDrop">
 			<base-button
 				class="reorder-button"
@@ -30,28 +52,57 @@
 		<div class="bar" v-if="title == 'Rules' && dragDrop">
 			<base-button
 				class="button-white"
-				id="cancel-rules-button"
+				id="cancel-reorder-rules-button"
 				@click="reorderRules()"
 				>Cancel</base-button
 			>
 			<base-button
 				class="base-button"
-				id="save-rules-button"
+				id="save-reorder-rules-button"
 				@click="saveReorderRules()"
 				>Save</base-button
 			>
 		</div>
-		<div class="bar" v-if="title == 'Post flair'">
-			<base-button class="button-white" id="post-flair-button"
-				>Post flair settings</base-button
-			>
+		<div class="bar" v-if="title == 'banned'">
 			<base-button
-				class="reorder-post-flair-button"
-				id="reorder-post-flair-button"
+				class="base-button"
+				id="ban-user-button"
+				@click="showBanUser()"
+				>Ban user</base-button
+			>
+		</div>
+		<div class="bar" v-if="title == 'flair' && !dragDrop">
+			<!-- <base-button class="button-white" id="post-flair-button"
+				>Post flair settings</base-button
+			> -->
+			<base-button
+				class="reorder-button"
+				id="reorder-flairs-button"
+				:class="flairsCount > 1 ? '' : 'disable-button'"
+				@click="reorderFlairs()"
 				>Reorder</base-button
 			>
-			<base-button class="base-button" id="add-flair-button"
+			<base-button
+				class="base-button"
+				id="add-flair-button"
+				@click="showAddFlairFunction()"
+				:class="showAddFlair ? 'disable-button ' : ''"
 				>Add flair</base-button
+			>
+		</div>
+
+		<div class="bar" v-if="title == 'flair' && dragDrop">
+			<base-button
+				class="button-white"
+				id="cancel-reorder-flairs-button"
+				@click="reorderFlairs()"
+				>Cancel</base-button
+			>
+			<base-button
+				class="base-button"
+				id="save-reorder-flairs-button"
+				@click="saveReorderFlairs()"
+				>Save</base-button
 			>
 		</div>
 		<!-- <div class="bar" v-if="title == 'Post flair'">
@@ -69,7 +120,20 @@
 
 <script>
 export default {
-	emits: ['showAddRuleFunction', 'reorderRules', 'saveReorderRules'],
+	emits: [
+		'showAddRuleFunction',
+		'reorderRules',
+		'saveReorderRules',
+		'showAddFlairFunction',
+		'reorderFlairs',
+		'savereorderFlairs',
+		'showBanUser',
+		'saveReorderFlairs',
+		'inviteMod',
+		'ApproveUser',
+		'MuteUser',
+		'leaveMod',
+	],
 	props: {
 		// @vuese
 		// title to be written in bar
@@ -103,30 +167,30 @@ export default {
 			default: false,
 			required: true,
 		},
-	},
-	data() {
-		return {};
-	},
-	computed: {
-		barTitle() {
-			if (this.title == 'Banned') {
-				return 'Ban user';
-			} else if (this.title == 'Muted') {
-				return 'Mute user';
-			} else if (this.title == 'Approved') {
-				return 'Approve user';
-			} else if (this.title == 'Moderators of t/' + this.subredditName) {
-				return 'Invite user as mod';
-			} else if (this.title == 'Rules') {
-				return 'Rules';
-			} else if (this.title == 'Schedule Post') {
-				return 'Schedule Post';
-			} else return '';
+		// @vuese
+		// if clicked on add flair or not
+		// @type string
+		showAddFlair: {
+			type: Boolean,
+			default: false,
+			required: true,
 		},
-		isModeratorList() {
-			return this.barTitle == 'Invite user as mod';
+		// @vuese
+		// flairs count
+		// @type string
+		flairsCount: {
+			type: Number,
+			default: 0,
+			required: true,
 		},
 	},
+	// computed: {
+	// barTitle() {
+	// 	if (this.title == 'Schedule Post') {
+	// 		return 'Schedule Post';
+	// 	} else return '';
+	// },
+	// },
 	methods: {
 		// @vuese
 		// Used to show add rule popup
@@ -135,16 +199,66 @@ export default {
 			this.$emit('showAddRuleFunction', this.showAddRule);
 		},
 		// @vuese
+		// Used to show add flair
+		// @arg no argument
+		showAddFlairFunction() {
+			this.$emit('showAddFlairFunction');
+		},
+		// @vuese
 		// Used to handle re-order rules action
 		// @arg no argument
 		reorderRules() {
 			this.$emit('reorderRules');
 		},
 		// @vuese
-		// Used to handle re-order rules action
+		// Used to show ban user
+		// @arg no argument
+		showBanUser() {
+			this.$emit('showBanUser');
+		},
+
+		// @vuese
+		// Used to handle re-order flairs action
+		// @arg no argument
+		reorderFlairs() {
+			this.$emit('reorderFlairs');
+		},
+		// @vuese
+		// Used to handle saving re-order rules action
 		// @arg no argument
 		saveReorderRules() {
 			this.$emit('saveReorderRules');
+		},
+
+		// @vuese
+		// Used to handle saving re-order rules action
+		// @arg no argument
+		saveReorderFlairs() {
+			this.$emit('saveReorderFlairs');
+		},
+		// @vuese
+		// Used to handle invite moderator action
+		// @arg no argument
+		inviteMod() {
+			this.$emit('inviteMod');
+		},
+		// @vuese
+		// Used to handle approve user action
+		// @arg no argument
+		ApproveUser() {
+			this.$emit('ApproveUser');
+		},
+		// @vuese
+		// Used to handle mute user action
+		// @arg no argument
+		MuteUser() {
+			this.$emit('MuteUser');
+		},
+		// @vuese
+		// Used to handle leave moderator action
+		// @arg no argument
+		leaveMod() {
+			this.$emit('leaveMod');
 		},
 	},
 };
@@ -223,7 +337,7 @@ button {
 	fill: var(--color-grey-light-5);
 }
 .reorder-button:hover,
-.reorder-post-flair-button:hover {
+/* .reorder-post-flair-button:hover {
 	background-color: var(--color-grey-light-4);
 }
 .reorder-post-flair-button {
@@ -237,7 +351,7 @@ button {
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
 	background-color: transparent;
-}
+} */
 .content-controls-button {
 	min-width: 15rem;
 	cursor: not-allowed;
