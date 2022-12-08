@@ -62,6 +62,7 @@
 								type="submit"
 								id="button-Continue"
 								@click.prevent="handleSubmit"
+								@click="doRandom"
 							>
 								Continue
 							</button>
@@ -149,10 +150,21 @@
 				<div class="username-generator" style="display: block">
 					<p>
 						Here are some username suggestions
-						<a href="#" class="Onboarding__usernameRefresh"></a>
+						<a
+							href="#"
+							class="Onboarding__usernameRefresh"
+							@click="doRandom"
+						></a>
 					</p>
 					<div class="suggestions">
-						<div class="usernames-data-gen"></div>
+						<div
+							class="usernames-data-gen"
+							v-for="Username in RandomUsers[0]"
+							:key="Username"
+							@click="doPutUserName(Username)"
+						>
+							{{ Username }}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -211,9 +223,18 @@ export default {
 			flag: false,
 		};
 	},
+	computed: {
+		// @vuese
+		//Get Random Names from store get
+		// @arg no argument
+		RandomUsers() {
+			return this.$store.getters['getRandomUsers'];
+		},
+	},
 	methods: {
 		// @vuese
 		//Validate Email for having (@(gmail).(com) in their domain)
+		// @arg email input
 		validatEmail(value) {
 			if (
 				/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value) ||
@@ -239,6 +260,7 @@ export default {
 		},
 		// @vuese
 		//Validate new password to users (not to short)
+		// @arg no argument
 		validatepass() {
 			if (this.password.length < 8) {
 				this.messageErrorShowPass = true;
@@ -258,6 +280,7 @@ export default {
 		},
 		// @vuese
 		//In SignUp page to show second Page
+		// @arg no argument
 		handleSubmit() {
 			// var flag = false;
 			if (!this.checkedEmail || this.email == '') {
@@ -269,6 +292,9 @@ export default {
 				this.togglepages();
 			}
 		},
+		// @vuese
+		//In SignUp page to show second Page or return to the first one
+		// @arg no argument
 		togglepages() {
 			this.page1 = !this.page1;
 			this.page2 = !this.page2;
@@ -276,6 +302,7 @@ export default {
 		},
 		// @vuese
 		//Validate User Input (Not too long or too Short)
+		// @arg no argument
 		validateUser(value) {
 			this.showSignuser = false;
 			this.messageErrorShowUser = false;
@@ -295,6 +322,7 @@ export default {
 		},
 		//@vuese
 		//Check if User is available or not
+		// @arg no argument
 		async usr_available() {
 			const actionPayload = {
 				username: this.username,
@@ -321,12 +349,16 @@ export default {
 				// this.error = err;
 			}
 		},
+		// @vuese
+		//Verify Do Recpatcha
+		// @arg no argument
 		verifyRec() {
 			console.log('verified 2');
 			this.buttonDisabled = false;
 		},
 		//@vuese
 		//Check if Email is available or not
+		// @arg no argument
 		async email_available() {
 			const actionPayload = {
 				email: this.email,
@@ -360,6 +392,7 @@ export default {
 		},
 		// @vuese
 		//post new user and email and password to server
+		// @arg no argument
 		async handleSignClick() {
 			if (this.username == '' || this.password == '') {
 				this.validateUser(this.username);
@@ -379,6 +412,27 @@ export default {
 					this.error = err;
 				}
 			}
+		},
+		// @vuese
+		//Get Request to get Random Names
+		// @arg no argument
+		async doRandom() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			try {
+				await this.$store.dispatch('getRandomUsers', actionPayload);
+				console.log(this.$store.getters['getRandomUsers']);
+				console.log('hassan');
+			} catch (err) {
+				this.error = err;
+			}
+		},
+		// @vuese
+		//Put username a Random Name that selected
+		// @arg Random UserName
+		doPutUserName(userRandom) {
+			this.username = userRandom;
 		},
 	},
 	components: { GoogleSigninButton, facebookSigninButton, TheRecaptcha },
@@ -656,7 +710,6 @@ button {
 .user-pass-box ~ .usr-pass-anmie::after {
 	display: none;
 }
-
 /*.animation-email::after {
 	content: '\2713';
 	display: inline-block;
@@ -789,6 +842,10 @@ button {
 	cursor: pointer;
 }
 
+.usernames-data-gen {
+	color: #24a0ed;
+	cursor: pointer;
+}
 .description {
 	margin-bottom: 20px;
 }
