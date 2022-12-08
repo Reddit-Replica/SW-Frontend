@@ -132,7 +132,7 @@
 				>Content controls</router-link
 			>
 		</div>
-		<div class="box">
+		<!-- <div class="box">
 			<div class="head">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +155,7 @@
 				id="scheduled-posts-button"
 				>Scheduled posts</router-link
 			>
-		</div>
+		</div> -->
 		<div class="box">
 			<div class="head">
 				<svg

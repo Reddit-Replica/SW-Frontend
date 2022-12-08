@@ -1,5 +1,5 @@
 <template>
-	<div id="create-rule-form">
+	<div id="sure-popup-form">
 		<base-dialog :show="sureShown" @close="hideSure()" title="Delete rule">
 			<div class="rule-dialog flex-column">
 				<div class="rule-box-p flex-column">
@@ -15,7 +15,7 @@
 					<base-button
 						@click="deleteRule()"
 						class="button-blue"
-						id="create-rule-button"
+						id="delete-button"
 						>Delete</base-button
 					>
 				</div>

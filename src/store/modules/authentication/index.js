@@ -11,12 +11,14 @@ export default {
 	 * @property {Object} userName contains User-Name logged In .
 	 * @property {Object} accessToken contains Access Token.
 	 * @property {Object} response This is the response from Server.
+	 * @property {Object} RandomUsers This is the RandomUsers from Sign-Up Page to sign up.
 	 */
 	state() {
 		return {
 			userName: '',
 			accessToken: '',
 			response: '',
+			RandomUsers: [],
 		};
 	},
 	mutations,

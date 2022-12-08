@@ -21,7 +21,7 @@
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
-									v-if="muted || approved || scheduledPosts || contentControls"
+									v-if="scheduledPosts || contentControls"
 									:title="barTitle"
 									:subreddit-name="subredditName"
 								></list-bar>
@@ -234,22 +234,19 @@ export default {
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
-			if (this.$route.path === '/r/' + this.subredditName + '/about/muted') {
-				return 'Muted';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/moderators'
-			) {
-				return 'Moderators of t/' + this.subredditName;
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/scheduledposts'
-			) {
-				return 'Schedule Post';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/settings'
-			) {
+			// if (
+			// 	this.$route.path ===
+			// 	'/r/' + this.subredditName + '/about/moderators'
+			// ) {
+			// 	return 'Moderators of t/' + this.subredditName;
+			// } else
+			// if (
+			// 	this.$route.path ===
+			// 	'/r/' + this.subredditName + '/about/scheduledposts'
+			// ) {
+			// 	return 'Schedule Post';
+			// } else
+			if (this.$route.path === '/r/' + this.subredditName + '/about/settings') {
 				return 'Content controls';
 			}
 			return '';
