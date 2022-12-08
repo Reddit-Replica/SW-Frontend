@@ -110,27 +110,27 @@ export default {
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
 		postInfo.append('inSubreddit', payload.inSubreddit);
-		// postInfo.append('images[]', JSON.stringify(payload.images));
+		// let arr1 = [' '];
+		// let arr2 = [' '];
 		for (let i = 0; i < payload.images.length; i++)
 			postInfo.append('images', payload.images[i]);
-		// postInfo.append('images', payload.images[1]);
-		// postInfo.append('imageCaptions[]', JSON.stringify(payload.imageCaptions));
 
-		// postInfo.append('imageCaptions', payload.imageCaptions[1]);
-		// postInfo.append('imageLinks[]', JSON.stringify(payload.imageLinks));
-		// if (payload.images.length > 1) {
 		for (let i = 0; i < payload.imageCaptions.length; i++)
 			postInfo.append('imageCaptions', payload.imageCaptions[i]);
 		for (let i = 0; i < payload.imageLinks.length; i++)
 			postInfo.append('imageLinks', payload.imageLinks[i]);
-		// }
 
-		// postInfo.append('imageLinks', payload.imageLinks[1]);
+		// postInfo.append('imageCaptions', arr1[0]);
+		// postInfo.append('imageLinks', arr2[0]);
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
 		postInfo.append('sendReplies', payload.sendReplies);
-		console.log(payload.images[0]);
-		console.log(payload.title);
+		console.log(payload.images);
+		console.log(payload.imageCaptions);
+		console.log(payload.imageLinks);
+		console.log(payload.images.length);
+		console.log(payload.imageCaptions.length);
+		console.log(payload.imageLinks.length);
 		console.log(postInfo);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
@@ -147,7 +147,7 @@ export default {
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
-			console.log(error);
+			console.log(responseData.body);
 			throw error;
 		} else {
 			console.log(error);
