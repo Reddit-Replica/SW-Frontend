@@ -110,14 +110,21 @@ export default {
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
 		postInfo.append('inSubreddit', payload.inSubreddit);
-		postInfo.append('images', JSON.stringify(payload.images));
-		postInfo.append('imageCaptions', JSON.stringify(payload.imageCaptions));
-		postInfo.append('imageLinks', JSON.stringify(payload.imageLinks));
+		// postInfo.append('images[]', JSON.stringify(payload.images));
+		postInfo.append('images', payload.images[0]);
+		postInfo.append('images', payload.images[1]);
+		// postInfo.append('imageCaptions[]', JSON.stringify(payload.imageCaptions));
+		postInfo.append('imageCaptions', payload.imageCaptions[0]);
+		postInfo.append('imageCaptions', payload.imageCaptions[1]);
+		// postInfo.append('imageLinks[]', JSON.stringify(payload.imageLinks));
+		postInfo.append('imageLinks', payload.imageLinks[0]);
+		postInfo.append('imageLinks', payload.imageLinks[1]);
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
 		postInfo.append('sendReplies', payload.sendReplies);
-		console.log(payload.images);
+		console.log(payload.images[0]);
 		console.log(payload.title);
+		console.log(postInfo);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
