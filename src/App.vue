@@ -74,6 +74,8 @@ export default {
 	--color-pink: #ff64ae;
 	--color-pink-2: #fff9fb;
 	--color-pink-3: #fcbcdc;
+	--color-pink-4: #f7f1f4;
+	--color-pink-5: #fbdeeb;
 
 	/* blue colors */
 	--color-blue: #6094fe;

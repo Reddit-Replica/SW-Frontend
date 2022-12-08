@@ -47,7 +47,7 @@ export default {
 			throw error;
 		}
 	},
-	async comment(_, payload) {
+	async comment(context, payload) {
 		const newComment = {
 			content: payload.text,
 			postId: payload.postId,
@@ -58,7 +58,6 @@ export default {
 			haveSubreddit: payload.haveSubreddit,
 		};
 		const baseurl = payload.baseurl;
-		console.log(newComment);
 		const response = await fetch(baseurl + '/comment', {
 			method: 'POST',
 			headers: {
@@ -76,5 +75,6 @@ export default {
 			);
 			throw error;
 		}
+		context.commit('setCommentID', responseData.id);
 	},
 };
