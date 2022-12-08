@@ -269,7 +269,8 @@
 		<!-- {{ content }} -->
 	</div>
 	<button @click="renderContent()">render</button>
-	<!-- {{ content }} -->
+	<!-- {{ content }}
+	<div >{{data}}</div> -->
 	<div v-html="data"></div>
 </template>
 

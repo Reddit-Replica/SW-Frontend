@@ -327,6 +327,8 @@ export default {
 			<label class="blue-button" for="image-input">Upload</label>
 		</div>
 	</div>
+	{{ link }}
+	{{ caption }}
 </template>
 
 <script>
@@ -341,8 +343,8 @@ export default {
 			videoFile: null,
 			inputCharCount: 0,
 			selectedImage: '',
-			link: null,
-			caption: null,
+			link: '',
+			caption: '',
 			postType: 'image',
 			dropped: false,
 			// image: '',
@@ -366,13 +368,27 @@ export default {
 				});
 			} else {
 				this.postType = 'image';
-				this.imageFiles.push(file);
+				this.imageFiles.push(file1);
 				this.images.push(URL.createObjectURL(file));
-
+				this.imageCaptions.push('caotion');
+				this.imageLinks.push('link');
 				console.log(this.images.length);
 				console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
+				this.$store.commit('posts/setvideoOrimage', {
+					videoOrimage: this.postType,
+				});
+
+				this.$store.commit('posts/setImages', {
+					images: this.imageFiles,
+				});
+				this.$store.commit('posts/setImageCaptions', {
+					imageCaptions: this.imageCaptions,
+				});
+				this.$store.commit('posts/setImageLinks', {
+					imageLinks: this.imageLinks,
+				});
 			}
 		},
 		removeImage() {
