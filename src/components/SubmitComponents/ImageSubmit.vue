@@ -368,6 +368,10 @@ export default {
 				console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
+				// if (this.images.length == 1) {
+				// 	this.imageCaptions = [];
+				// 	this.imageLinks = [];
+				// }
 				this.$store.commit('posts/setvideoOrimage', {
 					videoOrimage: this.postType,
 				});
@@ -436,10 +440,15 @@ export default {
 				this.$store.commit('posts/setvideoOrimage', {
 					videoOrimage: this.postType,
 				});
+				// if (this.images.length == 1) {
+				// 	this.imageCaptions = [];
+				// 	this.imageLinks = [];
+				// }
 
 				this.$store.commit('posts/setImages', {
 					images: this.imageFiles,
 				});
+
 				this.$store.commit('posts/setImageCaptions', {
 					imageCaptions: this.imageCaptions,
 				});

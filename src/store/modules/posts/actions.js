@@ -115,12 +115,16 @@ export default {
 			postInfo.append('images', payload.images[i]);
 		// postInfo.append('images', payload.images[1]);
 		// postInfo.append('imageCaptions[]', JSON.stringify(payload.imageCaptions));
-		for (let i = 0; i < payload.imageCaptions.length; i++)
-			postInfo.append('imageCaptions', payload.imageCaptions[i]);
+
 		// postInfo.append('imageCaptions', payload.imageCaptions[1]);
 		// postInfo.append('imageLinks[]', JSON.stringify(payload.imageLinks));
+		// if (payload.images.length > 1) {
+		for (let i = 0; i < payload.imageCaptions.length; i++)
+			postInfo.append('imageCaptions', payload.imageCaptions[i]);
 		for (let i = 0; i < payload.imageLinks.length; i++)
 			postInfo.append('imageLinks', payload.imageLinks[i]);
+		// }
+
 		// postInfo.append('imageLinks', payload.imageLinks[1]);
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
@@ -143,8 +147,10 @@ export default {
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
+			console.log(error);
 			throw error;
 		} else {
+			console.log(error);
 			const error = new Error('server error');
 			throw error;
 		}
