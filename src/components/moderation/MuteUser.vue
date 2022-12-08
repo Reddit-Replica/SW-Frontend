@@ -81,15 +81,6 @@ export default {
 			reasonNote: '',
 		};
 	},
-
-	computed: {
-		// @vuese
-		//return list of Rules
-		// @type object
-		listOfRules() {
-			return this.$store.getters['moderation/listOfRules'];
-		},
-	},
 	methods: {
 		//@vuese
 		//Hide dialog
@@ -144,21 +135,6 @@ export default {
 .mute-box {
 	margin-bottom: 3rem;
 }
-.mute-box-title {
-	max-width: 100%;
-	margin-bottom: -4px;
-	margin-right: 8px;
-}
-.title-black {
-	font-size: 1rem;
-	font-weight: 700;
-	letter-spacing: 0.5px;
-	line-height: 1.2rem;
-	text-transform: uppercase;
-	color: var(--color-grey-dark-8);
-	display: block;
-	margin-bottom: 0.8rem;
-}
 .title-grey {
 	font-weight: 400;
 	color: var(--color-grey-dark-2);
@@ -206,20 +182,6 @@ textarea:focus {
 	border: var(--line-2);
 	background-color: var(--color-white-1);
 }
-.type-item {
-	outline: 0 none;
-	align-items: flex-start;
-	margin-bottom: 16px;
-	display: flex;
-	flex-direction: row;
-	column-gap: 5px;
-}
-.bi {
-	color: var(--color-grey-dark-2);
-}
-.bi-record-circle-fill {
-	fill: var(--color-blue-2);
-}
 
 button {
 	min-height: 32px;
@@ -248,13 +210,6 @@ button:hover {
 	color: var(--color-white-1);
 	padding: 0.4rem 1.6rem;
 }
-.small-title {
-	color: var(--color-grey-light-5);
-	font-size: 1.2rem;
-	font-weight: 400;
-	line-height: 1.6rem;
-	display: block;
-}
 .zero-char {
 	color: #ea0027;
 }
@@ -271,79 +226,9 @@ button:hover {
 	fill: rgba(255, 255, 255, 0.5);
 	background-color: var(--color-grey-light-5);
 }
-.delete-button {
-	margin-right: auto;
-	color: var(--color-red-dark-1);
-	position: relative;
-	border: 1px solid transparent;
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 1.4rem;
-	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 1.7rem;
-	text-transform: unset;
-	min-height: 3.2rem;
-	min-width: 3.2rem;
-	padding: 0.4rem 1.6rem;
-}
-.delete-button:hover {
-	background-color: var(--color-grey-light-4);
-}
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
-}
-.permanent {
-	font-size: 1.4rem;
-	font-weight: 500;
-	line-height: 0.7rem;
-	color: var(--color-dark-3);
-	display: inline-block;
-	vertical-align: text-top;
-	margin-left: 4px;
-}
-.long {
-	display: flex;
-	flex-direction: row;
-}
-.input-1 {
-	background: var(--main-white-color);
-}
-.input-number {
-	background-color: var(--main-white-color);
-	border: 1px solid var(--color-grey-light-9);
-	border-radius: 4px 0 0 4px;
-	color: var(--color-dark-3);
-	display: inline-block;
-	width: 7.5rem;
-	box-sizing: border-box;
-	padding: 1.2rem;
-	outline: none;
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 1.4rem;
-	font-weight: 400;
-	line-height: 2.1rem;
-	height: 3.6rem;
-}
-.p-input-1 {
-	border: 1px solid var(--color-grey-light-9);
-	border-left: none;
-	border-radius: 0 4px 4px 0;
-	box-sizing: border-box;
-	display: inline-block;
-	height: 100%;
-	padding-left: 1.6rem;
-	padding-right: 1.6rem;
-	padding-top: 0.3rem;
-	vertical-align: top;
-	font-family: Noto Sans, Arial, sans-serif;
-	font-weight: 400;
-	color: var(--color-dark-3);
-	font-size: 1.4rem;
-	line-height: 2.1rem;
-}
-.input-2 {
-	margin: 9px 0 0 16px;
 }
 .reason-note {
 	margin-bottom: 8px;
@@ -363,22 +248,5 @@ button:hover {
 	justify-content: flex-end;
 	border-bottom-right-radius: 4px;
 	box-sizing: border-box;
-}
-button {
-	min-height: 32px;
-	min-width: 32px;
-	padding: 4px 16px;
-	margin-left: 8px;
-	font-size: 14px;
-	font-weight: 700;
-}
-button:hover {
-	opacity: 0.92;
-}
-.button-blue {
-	background-color: var(--color-blue-2);
-	border: none;
-	color: var(--color-white-1);
-	padding: 0.4rem 1.6rem;
 }
 </style>
