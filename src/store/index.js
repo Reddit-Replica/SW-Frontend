@@ -10,6 +10,7 @@ import commentsModule from './modules/comments/index.js';
 import postCommentActionsModule from './modules/postCommentActions/index.js';
 import postsModule from './modules/posts/index.js';
 import listingModule from './modules/Listing/index.js';
+import SearchingModule from './modules/search/index.js';
 const store = createStore({
 	modules: {
 		auth: authModule,
@@ -23,6 +24,7 @@ const store = createStore({
 		posts: postsModule,
 		listing: listingModule,
 		userposts: userpostsModule,
+		search: SearchingModule,
 	},
 	state() {
 		return {
