@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="bar" v-if="barTitle == 'Schedule Post'">
+		<!-- <div class="bar" v-if="barTitle == 'Schedule Post'">
 			<base-button class="base-button">{{ barTitle }}</base-button>
-		</div>
+		</div> -->
 		<div class="bar" v-if="title == 'Moderators'">
 			<base-button class="button-white">Leave as mod</base-button>
 			<base-button
@@ -22,7 +22,7 @@
 			>
 		</div>
 
-		<div class="bar" v-if="title == 'Muted'">
+		<div class="bar" v-if="title == 'muted'">
 			<base-button class="base-button" id="mute-user-button" @click="MuteUser()"
 				>Mute user</base-button
 			>
@@ -176,14 +176,11 @@ export default {
 		},
 	},
 	computed: {
-		barTitle() {
-			if (this.title == 'Schedule Post') {
-				return 'Schedule Post';
-			} else return '';
-		},
-		isModeratorList() {
-			return this.barTitle == 'Invite user as mod';
-		},
+		// barTitle() {
+		// 	if (this.title == 'Schedule Post') {
+		// 		return 'Schedule Post';
+		// 	} else return '';
+		// },
 	},
 	methods: {
 		// @vuese
@@ -212,7 +209,7 @@ export default {
 		},
 
 		// @vuese
-		// Used to handle re-order rules action
+		// Used to handle re-order flairs action
 		// @arg no argument
 		reorderFlairs() {
 			this.$emit('reorderFlairs');

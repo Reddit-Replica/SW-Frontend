@@ -1,10 +1,9 @@
 <template>
-	<div id="create-rule-form">
-		<base-dialog :show="muteShown" @close="hideMute" title="Ban a user:">
-			<div class="rule-dialog flex-column">
-				<div class="rule-box flex-column">
-					<div class="rule-box-input flex-column">
-						<label for="rule-input" class="title-black">Username to mute</label>
+	<div id="mute-user-form">
+		<base-dialog :show="muteShown" @close="hideMute" title="Mute user">
+			<div class="mute-dialog flex-column">
+				<div class="mute-box flex-column">
+					<div class="mute-box-input flex-column">
 						<input
 							class="input-name"
 							rows="5"
@@ -15,38 +14,23 @@
 						/>
 					</div>
 				</div>
-				<div class="rule-box-input flex-column">
-					<label for="rule-report" class="title-black"
-						><p>Reason for ban</p></label
-					>
-					<select
-						class="input-name"
-						v-model.trim="reason"
-						@blur="reason"
-						id="reason-input"
-					>
-						<option
-							v-for="reasonRule of listOfRules"
-							:key="reasonRule.ruleName"
-							:value="reasonRule.ruleName"
-							:id="reasonRule.ruleName"
-						>
-							{{ reasonRule.ruleName }}
-						</option>
-					</select>
-				</div>
-				<div class="rule-box-input flex-column">
-					<label for="description" class="title-black">Mod note</label>
-					<input
-						class="input-name"
+				<div class="mute-box-input flex-column">
+					<label for="description" class="reason-note"
+						>Note about why they are muted
+						<p class="title-grey">
+							Only visible to other moderators. Not visible to user
+						</p>
+					</label>
+					<textarea
+						class="input-name large-input"
 						maxlength="300"
 						type="text"
-						placeholder="Mod note"
-						v-model.trim="modNote"
-						@blur="modNote"
-						@keyup="charCount('note')"
-						id="note"
-					/>
+						placeholder="Reason they were muted"
+						v-model.trim="reasonNote"
+						@blur="reasonNote"
+						@keyup="charCount()"
+						id="reason-note"
+					></textarea>
 					<div
 						class="title-grey"
 						:class="charRemainingNote == 0 ? 'zero-char' : ''"
@@ -54,109 +38,19 @@
 						{{ charRemainingNote }} Characters remaining
 					</div>
 				</div>
-				<div class="rule-box flex-column">
-					<div class="rule-box-input flex-column">
-						<label for="rule-input" class="title-black">How long?</label>
-						<div
-							class="long"
-							:class="checkPermanent == true ? 'disable-period' : ''"
-						>
-							<div class="input-1">
-								<input
-									type="number"
-									min="0"
-									name="banPeriod"
-									id="banPeriod"
-									v-model.trim="banPeriod"
-									class="input-number"
-								/>
-								<p class="p-input-1">Days</p>
-							</div>
-							<div class="input-2">
-								<input
-									type="checkbox"
-									id="checkPermanent"
-									name="checkPermanent"
-									value="checkPermanent"
-									v-model.trim="checkPermanent"
-								/>
-								<label for="checkPermanent" class="permanent"> Permanent</label>
-							</div>
-						</div>
-					</div>
+				<div class="mute-box box-buttons">
+					<base-button @click="hideMute" class="button-white" id="cancel-button"
+						>Cancel</base-button
+					>
+					<base-button
+						@click="submitMute()"
+						class="button-blue"
+						:class="muteUserName == '' ? 'disabled' : ''"
+						id="mute-user-button"
+						>Mute user
+					</base-button>
 				</div>
 
-				<div class="footer">
-					<div class="rule-box-input flex-column">
-						<label for="reason-note" class="reason-note"
-							>Note to include in ban message</label
-						>
-						<textarea
-							class="input-name large-input"
-							maxlength="500"
-							type="text"
-							placeholder="Reason they were banned"
-							v-model.trim="reasonNote"
-							@blur="reasonNote"
-							@keyup="charCount('reasonNote')"
-							id="reason-note"
-						></textarea>
-						<div
-							class="title-grey"
-							:class="charRemainingReasonNote == 0 ? 'zero-char' : ''"
-						>
-							{{ charRemainingReasonNote }} Characters remaining
-						</div>
-					</div>
-					<div class="footer-buttons">
-						<div class="footer-p">Visible to banned user</div>
-						<div class="rule-box box-buttons">
-							<base-button
-								@click="hideMute"
-								class="button-white"
-								id="cancel-button"
-								>Cancel</base-button
-							>
-							<base-button
-								@click="submitBan()"
-								class="button-blue"
-								:class="
-									muteUserName == '' ||
-									reason == 'None' ||
-									(banPeriod == 0 && !checkPermanent)
-										? 'disabled'
-										: ''
-								"
-								id="delete-button"
-								>Mute user</base-button
-							>
-							<!-- <base-button
-						v-if="!edit"
-						@click="submitRule()"
-						class="button-blue"
-						:class="ruleName == '' || isNameTaken ? 'disabled' : ''"
-						id="create-rule-button"
-						>Add new rule
-					</base-button>
-					<base-button
-						v-else
-						@click="updateRule()"
-						class="button-blue"
-						:class="
-							(ruleName == ruleNameEdit &&
-								reportReason == reportReasonEdit &&
-								description == descriptionEdit &&
-								appliedType == appliesToEdit) ||
-							isNameTaken
-								? 'disabled'
-								: ''
-						"
-						id="save-button"
-						>Save</base-button
-					> -->
-						</div>
-					</div>
-				</div>
 				<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 			</div>
 		</base-dialog>
@@ -167,7 +61,7 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
-	emits: ['exit', 'doneSuccessfully', 'clickedDelete'],
+	emits: ['exit', 'doneSuccessfully'],
 	props: {
 		// @vuese
 		//return subreddit name
@@ -177,81 +71,15 @@ export default {
 			default: '',
 			required: true,
 		},
-		// @vuese
-		//return edited rule name
-		// @type string
-		ruleNameEdit: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return report reason edit
-		// @type string
-		reportReasonEdit: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return applies to edit
-		// @type string
-		appliesToEdit: {
-			type: String,
-			default: 'posts and comments',
-			required: true,
-		},
-		// @vuese
-		//return report description edit
-		// @type string
-		descriptionEdit: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return rule order
-		// @type string
-		ruleOrder: {
-			type: Number,
-			default: 0,
-			required: true,
-		},
-		// @vuese
-		//return rule id
-		// @type string
-		ruleId: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return if there is an edited rule
-		// @type string
-		edit: {
-			type: Boolean,
-			default: false,
-			required: true,
-		},
 	},
 	data() {
 		return {
 			muteShown: true,
 			muteUserName: '',
-			reason: 'None',
-			modNote: '',
 			charRemainingNote: 300,
 			errorResponse: null,
-			charRemainingReasonNote: 5000,
 			reasonNote: '',
-			checkPermanent: true,
-			banPeriod: '',
 		};
-	},
-	// @vuese
-	//load List of Rules before mount
-	beforeMount() {
-		this.loadListOfRules();
 	},
 
 	computed: {
@@ -274,106 +102,49 @@ export default {
 		//@vuese
 		//Decrease characters count while typing
 		//@arg no argument
-		charCount(title) {
-			if (title == 'note') {
-				this.charRemainingNote = 300 - this.modNote.length;
-			} else if (title == 'reasonNote') {
-				this.charRemainingReasonNote = 5000 - this.reasonNote.length;
-			}
-		},
-
-		// @vuese
-		//load Rules list from the store
-		// @arg no argument
-		async loadListOfRules() {
-			try {
-				await this.$store.dispatch('moderation/loadListOfRules', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
+		charCount() {
+			this.charRemainingNote = 300 - this.reasonNote.length;
 		},
 		//@vuese
 		//handle submit ban user
 		//@arg no argument
-		async submitBan() {
+		async submitMute() {
 			this.errorResponse = null;
-			if (this.checkPermanent) {
-				this.banPeriod = '';
-			}
-			try {
-				await this.$store.dispatch('moderation/banUser', {
-					//////userId not ban user name
-					userId: this.banUserName,
-					banPeriod: this.banPeriod,
-					//////not enum
-					reasonForBan: this.reason,
-					modNote: this.modNote,
-					noteInclude: this.reasonNote,
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-				});
-				if (this.$store.getters['moderation/banUserSuccessfully']) {
-					this.hideMute();
-					this.$emit('doneSuccessfully');
-				}
-			} catch (err) {
-				console.log(err);
-				this.errorResponse = err;
-			}
-		},
-		//@vuese
-		//handle update rule
-		//@arg no argument
-		async updateRule() {
-			this.errorResponse = null;
-			if (this.reportReason == '') {
-				this.reportReason = this.ruleName;
-			}
-			try {
-				await this.$store.dispatch('moderation/updateRule', {
-					ruleName: this.ruleName,
-					ruleOrder: this.ruleOrder,
-					appliesTo: this.appliedType,
-					reportReason: this.reportReason,
-					description: this.description,
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-					ruleId: this.ruleId,
-				});
-				if (this.$store.getters['moderation/updateRuleSuccessfully']) {
-					this.hideMute();
-					this.$emit('doneSuccessfully');
-				}
-			} catch (err) {
-				console.log(err);
-				this.errorResponse = err;
-			}
-		},
-
-		//@vuese
-		//handle delete rule
-		//@arg no argument
-		async deleteBan() {
-			this.$emit('clickedDelete');
-			this.hideMute();
+			// try {
+			// 	await this.$store.dispatch('moderation/muteUser', {
+			// 		//////userId not ban user name
+			// 		userId: this.banUserName,
+			// 		banPeriod: this.banPeriod,
+			// 		//////not enum
+			// 		reasonForBan: this.reason,
+			// 		modNote: this.modNote,
+			// 		noteInclude: this.reasonNote,
+			// 		baseurl: this.$baseurl,
+			// 		subredditName: this.subredditName,
+			// 	});
+			// 	if (this.$store.getters['moderation/banUserSuccessfully']) {
+			// 		this.hideMute();
+			// 		this.$emit('doneSuccessfully');
+			// 	}
+			// } catch (err) {
+			// 	console.log(err);
+			// 	this.errorResponse = err;
+			// }
 		},
 	},
 };
 </script>
 
 <style scoped>
-.rule-dialog {
+.mute-dialog {
 	max-height: 100%;
 	max-width: 53.8rem;
 	min-width: 41rem;
 }
-.rule-box {
+.mute-box {
 	margin-bottom: 3rem;
 }
-.rule-box-title {
+.mute-box-title {
 	max-width: 100%;
 	margin-bottom: -4px;
 	margin-right: 8px;
@@ -394,7 +165,7 @@ export default {
 	font-size: 12px;
 	line-height: 16px;
 }
-.rule-box-input {
+.mute-box-input {
 	align-items: flex-start;
 	margin-top: 1.2rem;
 	margin-bottom: 3rem;
@@ -584,57 +355,30 @@ button:hover {
 	line-height: 21px;
 	display: block;
 }
-.footer {
-	flex-flow: row wrap;
-	background-color: #edeff1;
-	border-top: 1px solid var(--color-grey-dark-5);
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-pack: end;
-	justify-content: flex-end;
-	padding: 16px;
-	border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
-	flex-direction: column;
-	margin: 0;
-	margin: 16px -16px -16px;
-}
-.footer-p {
-	margin-top: 6px;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
-	color: #1c1c1c;
-	display: inline-block;
-	vertical-align: text-top;
-}
 .box-buttons {
-	display: -ms-flexbox;
+	background-color: var(--color-grey-light-2);
+	padding: 16px;
+	margin: 16px -16px -16px;
 	display: flex;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	-ms-flex-align: center;
-	align-items: center;
-	margin-left: auto;
-}
-.footer-buttons {
-	margin-bottom: 0;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	margin-bottom: 8px;
-	width: 100%;
+	justify-content: flex-end;
+	border-bottom-right-radius: 4px;
 	box-sizing: border-box;
-	/* padding: 16px; */
-	/* margin: 16px -16px -16px 16px; */
-	/* display: flex; */
-	/* justify-content: flex-end; */
-	/* border-bottom-right-radius: 4px; */
-	/* box-sizing: border-box; */
 }
-.disable-period {
-	opacity: 0.6;
-	cursor: not-allowed;
+button {
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	margin-left: 8px;
+	font-size: 14px;
+	font-weight: 700;
+}
+button:hover {
+	opacity: 0.92;
+}
+.button-blue {
+	background-color: var(--color-blue-2);
+	border: none;
+	color: var(--color-white-1);
+	padding: 0.4rem 1.6rem;
 }
 </style>

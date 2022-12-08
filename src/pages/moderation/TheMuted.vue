@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<list-bar
-			:title="'Muted'"
+			:title="'muted'"
 			@mute-user="showMuteUserFunction()"
 			:subreddit-name="subredditName"
 		></list-bar>
@@ -56,8 +56,9 @@
 <script>
 import NoList from '../../components/moderation/NoList.vue';
 import MuteUser from '../../components/moderation/MuteUser.vue';
+import ListBar from '../../components/moderation/ListBar.vue';
 export default {
-	components: { NoList, MuteUser },
+	components: { NoList, MuteUser, ListBar },
 	data() {
 		return {
 			showMuteUser: false,
@@ -77,7 +78,6 @@ export default {
 		// Used to show add rule popup
 		// @arg no argument
 		showMuteUserFunction() {
-			console.log(this.showMuteUser);
 			this.showMuteUser = !this.showMuteUser;
 		},
 	},
