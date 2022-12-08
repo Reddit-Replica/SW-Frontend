@@ -117,6 +117,7 @@ export default {
 		BacktotopButton,
 		BasePost,
 	},
+	emits: ['exit'],
 	props: {
 		subredditName: {
 			type: String,
@@ -192,7 +193,9 @@ export default {
 		},
 
 		hideFirstDialog() {
+			console.log('hide');
 			this.showFirstDialog = false;
+			this.$emit('exit');
 		},
 		createPost() {
 			this.hideFirstDialog();

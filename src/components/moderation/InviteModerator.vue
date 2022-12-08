@@ -1,13 +1,13 @@
 <template>
-	<div id="create-rule-form">
+	<div id="invite-moderation-form">
 		<base-dialog
 			:show="addInviteShown"
 			@close="hideAddInvite"
 			title="Invite Moderators"
 		>
-			<div class="rule-dialog flex-column">
-				<div class="rule-box flex-column">
-					<div class="rule-box-input flex-column">
+			<div class="invite-moderation-dialog flex-column">
+				<div class="invite-moderation-box flex-column">
+					<div class="invite-moderation-box-input flex-column">
 						<input
 							class="input-name"
 							maxlength="100"
@@ -19,8 +19,8 @@
 						/>
 					</div>
 				</div>
-				<div class="rule-box flex-column">
-					<div class="rule-box-title">
+				<div class="invite-moderation-box flex-column">
+					<div class="invite-moderation-box-title">
 						<div class="title-black">Give them access to...</div>
 					</div>
 					<div class="box-1">
@@ -33,7 +33,7 @@
 					</p>
 				</div>
 				<hr class="border" />
-				<div class="rule-box box-buttons">
+				<div class="invite-moderation-box box-buttons">
 					<base-button
 						@click="hideAddInvite"
 						class="button-white"
@@ -44,7 +44,7 @@
 						@click="submitInvite()"
 						class="button-blue"
 						:class="userName == '' ? 'disabled' : ''"
-						id="create-rule-button"
+						id="invite-moderation-button"
 						>Invite
 					</base-button>
 				</div>
@@ -86,7 +86,7 @@ export default {
 			this.$emit('exit');
 		},
 		//@vuese
-		//handle submit adding rule
+		//handle submit inviting moderation
 		//@arg no argument
 		async submitInvite() {
 			this.errorResponse = null;
@@ -116,15 +116,15 @@ export default {
 </script>
 
 <style scoped>
-.rule-dialog {
+.invite-moderation-dialog {
 	max-height: 100%;
 	max-width: 53.8rem;
 	min-width: 41rem;
 }
-.rule-box {
+.invite-moderation-box {
 	margin-bottom: 3rem;
 }
-.rule-box-title {
+.invite-moderation-box-title {
 	max-width: 100%;
 	margin-bottom: -4px;
 	margin-right: 8px;
@@ -159,25 +159,10 @@ export default {
 	line-height: 0rem;
 	margin-left: 0.5rem;
 }
-.rule-box-input {
+.invite-moderation-box-input {
 	align-items: flex-start;
 	margin-top: 1.2rem;
 	margin-bottom: 3rem;
-}
-.box {
-	margin-top: 1rem;
-	width: 15rem;
-	background-color: var(--color-dark-1);
-	color: var(--color-white-1);
-	font-size: 0.9rem;
-	padding: 1rem;
-	position: absolute;
-	border-radius: 0.4rem;
-	text-align: center;
-	pointer-events: none;
-	transform: translateX(-50%);
-	z-index: 100;
-	right: -16rem;
 }
 .input-name {
 	border: 1px solid var(--color-grey-light-2);
@@ -198,20 +183,6 @@ input:focus {
 	outline: navajowhite;
 	border: var(--line-2);
 	background-color: var(--color-white-1);
-}
-.type-item {
-	outline: 0 none;
-	align-items: flex-start;
-	margin-bottom: 16px;
-	display: flex;
-	flex-direction: row;
-	column-gap: 5px;
-}
-.bi {
-	color: var(--color-grey-dark-2);
-}
-.bi-record-circle-fill {
-	fill: var(--color-blue-2);
 }
 .box-buttons {
 	background-color: var(--color-grey-light-2);
@@ -248,13 +219,6 @@ button:hover {
 	border: none;
 	color: var(--color-white-1);
 	padding: 0.4rem 1.6rem;
-}
-.small-title {
-	color: var(--color-grey-light-5);
-	font-size: 1.2rem;
-	font-weight: 400;
-	line-height: 1.6rem;
-	display: block;
 }
 .disabled {
 	cursor: not-allowed;

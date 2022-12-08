@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<list-bar
+			:title="'muted'"
+			@mute-user="showMuteUserFunction()"
+			:subreddit-name="subredditName"
+		></list-bar>
 		<div class="text">
 			Muted users
 			<a
@@ -39,13 +44,43 @@
 				/>
 			</svg>
 		</no-list>
+		<mute-user
+			v-if="showMuteUser"
+			:subreddit-name="subredditName"
+			@exit="showMuteUserFunction()"
+			@done-successfully="doneSuccessfully('added')"
+		></mute-user>
 	</div>
 </template>
 
 <script>
 import NoList from '../../components/moderation/NoList.vue';
+import MuteUser from '../../components/moderation/MuteUser.vue';
+import ListBar from '../../components/moderation/ListBar.vue';
 export default {
-	components: { NoList },
+	components: { NoList, MuteUser, ListBar },
+	data() {
+		return {
+			showMuteUser: false,
+		};
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+	},
+	methods: {
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showMuteUserFunction() {
+			this.showMuteUser = !this.showMuteUser;
+		},
+	},
 };
 </script>
 
