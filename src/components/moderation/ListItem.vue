@@ -13,6 +13,7 @@
 				</h5>
 			</div>
 			<div class="time">
+				<!-- <span>{{ date }}</span> -->
 				<span>{{ moderator.dateOfModeration }}</span>
 			</div>
 			<div class="permissions">
@@ -130,6 +131,21 @@ export default {
 				} else return false;
 			}
 			return true;
+		},
+		// @vuese
+		//handle display date
+		// @type boolean
+		date() {
+			this.moderator.dateOfModeration;
+			var currentDate = new Date();
+			console.log(currentDate);
+
+			// var formatted_date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+			var formatted_date = this.moderator.dateOfModeration
+				.slice(0, 10)
+				.replace(/-/g, '/');
+			console.log(formatted_date);
+			return formatted_date;
 		},
 	},
 	methods: {
