@@ -116,18 +116,18 @@ export default {
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
 		postInfo.append('sendReplies', payload.sendReplies);
-		console.log(payload.kind);
+		console.log(payload.images);
 		console.log(payload.title);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'multipart/form-data;',
+				// 'Content-Type': 'multipart/form-data',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: postInfo,
 		});
-		const responseData = await response.json();
+		const responseData = await response.text();
 		if (response.status == 201) {
 			localStorage.setItem('response', response.status);
 			console.log(response);
@@ -140,21 +140,9 @@ export default {
 		}
 	},
 	async createpostVideo(context, payload) {
-		// const postInfo = {
-		// 	title: payload.title,
-		// 	kind: payload.kind,
-		// 	//subreddit: payload.subreddit,
-		// 	inSubreddit: payload.inSubreddit,
-		//   images: payload.images,
-		// 	imageCaptions: payload.imageCaptions,
-		// 	imageLinks: payload.imageLinks,
-		// 	nsfw: payload.nsfw,
-		// 	spoiler: payload.spoiler,
-		// 	// flairId: payload.flairId,
-		// 	sendReplies: payload.sendReplies,
-
-		// };
 		const postInfo = new FormData();
+		let videos = [];
+		videos.push(payload.video);
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
 		postInfo.append('inSubreddit', payload.inSubreddit);
@@ -163,16 +151,16 @@ export default {
 		postInfo.append('spoiler', payload.spoiler);
 		postInfo.append('sendReplies', payload.sendReplies);
 		const baseurl = payload.baseurl;
-		console.log(payload.video);
+		console.log(videos[0]);
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'multipart/form-data',
+				// 'Content-Type': 'multipart/form-data',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: postInfo,
 		});
-		const responseData = await response.json();
+		const responseData = await response.text();
 		if (response.status == 201) {
 			localStorage.setItem('response', response.status);
 			console.log(response);
