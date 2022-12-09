@@ -35,6 +35,10 @@
 			<search-bar
 				@enter-search="(search) => enterSearch(search)"
 				:empty-input="search"
+				:before="before"
+				:after="after"
+				@fetch-before="loadListOfModerators('before')"
+				@fetch-after="loadListOfModerators('after')"
 			></search-bar>
 			<ul class="ul-items" v-if="!noItems">
 				<list-item
@@ -149,13 +153,13 @@ export default {
 		},
 		// @vuese
 		//return if there is moderators before
-		// @type object
+		// @type string
 		before() {
 			return this.$store.getters['moderation/before'];
 		},
 		// @vuese
 		//return if there is moderators after
-		// @type object
+		// @type string
 		after() {
 			return this.$store.getters['moderation/after'];
 		},
@@ -197,7 +201,14 @@ export default {
 		// @vuese
 		//load moderators list from the store
 		// @arg no argument
-		async loadListOfModerators() {
+		async loadListOfModerators(title) {
+			console.log(title);
+			// let beforeMod='', afterMod=''
+			// if (title=='before') {
+			// 	beforeMod = this.before;
+			// 	afterMod = '';
+			// }
+			// else if()
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
 					baseurl: this.$baseurl,
