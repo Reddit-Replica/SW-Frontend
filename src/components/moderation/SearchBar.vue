@@ -35,6 +35,7 @@
 				id="arrow-left"
 				v-if="before"
 				@click="fetchBefore()"
+				:class="!after ? 'more-margin' : ''"
 			>
 				<path
 					fill-rule="evenodd"
@@ -63,7 +64,7 @@
 
 <script>
 export default {
-	emits: ['enterSearch'],
+	emits: ['enterSearch', 'fetchBefore', 'fetchAfter'],
 	props: {
 		// @vuese
 		//if clicked in see all then value of searching should be ''
@@ -175,6 +176,9 @@ export default {
 .icon {
 	margin: 0.5rem;
 	cursor: pointer;
+}
+.more-margin {
+	margin-right: 3.1rem;
 }
 @media only screen and (max-width: 49.25em) {
 	.input {

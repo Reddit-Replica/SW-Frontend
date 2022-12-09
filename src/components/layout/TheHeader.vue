@@ -246,7 +246,7 @@
 				</li>
 			</ul>
 		</div>
-		<form action="#" class="search">
+		<form class="search">
 			<input
 				v-model="searchQuery"
 				type="text"
@@ -255,7 +255,6 @@
 				id="header-search"
 				@keyup.enter="searchgo"
 			/>
-			<!-- <span>{{ searchQuery }}</span> -->
 			<button
 				class="header-search-button"
 				id="header-search-button"
@@ -546,7 +545,14 @@ export default {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');
 		},
+		srchq() {
+			return this.$store.getters['GetQuery'];
+		},
 	},
+	// mounted() {
+	// 	this.searchQuery = this.srchq;
+	// 	console.log(this.srchq());
+	// },
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
@@ -590,9 +596,12 @@ export default {
 		// @arg no argument
 		searchgo() {
 			if (this.searchQuery) {
-				this.$router.push(`/search`);
+				this.$router.replace({
+					name: 'searchpost',
+					query: { q: this.searchQuery },
+				});
 			} else {
-				alert('No Search');
+				alert('Did not enter a word to Search');
 			}
 		},
 		// @vuese

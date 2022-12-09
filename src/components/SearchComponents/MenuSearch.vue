@@ -47,7 +47,27 @@ export default {
 		// @arg The argument is a string value representing choosen value from user
 		clickedFunction(title) {
 			this.clicked = title;
+			// this.$router.push({
+			// 	query: { q: this.$route.query.q, sort: this.clicked },
+			// });
 			this.$emit('change-title', title);
+		},
+		async secfunc() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+				q: this.$route.query.q,
+				sort: this.clicked,
+			};
+
+			try {
+				await this.$store.dispatch('sortAdd', actionPayload);
+				this.$router.push({ query: { sort: this.clicked } });
+				// setTimeout(() => this.$router.replace('/main'), 1000);
+				// if (response == 200) {
+				// }
+			} catch (err) {
+				this.error = err;
+			}
 		},
 	},
 };
