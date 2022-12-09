@@ -82,7 +82,7 @@
 				</div>
 			</div>
 			<div class="post">
-				<div class="container">
+				<div class="container bg-grey">
 					<div class="row justify-content-center">
 						<div class="col-lg-7">
 							<!-- section to display post information -->
@@ -420,12 +420,13 @@
 												>
 											</div>
 											<comment-submit
-												:details="{
-													type: 'comment',
-													parentId: this.$route.path.split('/')[4],
-													level: 0,
-												}"
+												type="comment"
+												parent-type="post"
+												:parent-id="this.$route.path.split('/')[4]"
+												:level="1"
 												@new-comment="newComment"
+												identifier="tool1"
+												:current-text="{ ops: [{ insert: '\n' }] }"
 											/>
 										</div>
 										<div class="sort-by" @click="displaySortByMenu" id="sort">
@@ -453,14 +454,9 @@
 								<div class="post-comments">
 									<my-comment
 										v-for="userComment in userComments"
-										:key="userComment"
+										:key="userComment.id"
 										:comment="userComment"
 									></my-comment>
-									<nested-reply
-										v-for="comment in comments"
-										:key="comment.userName + comment.duration"
-										:comment="comment"
-									></nested-reply>
 								</div>
 							</div>
 						</div>
@@ -475,14 +471,12 @@
 </template>
 <script>
 import SubMenu from '../BaseComponents/SubMenu.vue';
-import NestedReply from './NestedReply.vue';
 import SubredditInfo from './SubredditInfo.vue';
 import MyComment from './MyComment.vue';
 import CommentSubmit from './CommentSubmit.vue';
 export default {
 	components: {
 		SubMenu,
-		NestedReply,
 		SubredditInfo,
 		MyComment,
 		CommentSubmit,
@@ -507,34 +501,6 @@ export default {
 			menuIsDisplayed: false,
 			showSortByMenu: false,
 			sortByTitle: 'Best',
-			comments: [
-				{
-					userName: 'Consistent-Affect761',
-					duration: '2 hr',
-					content: 'Congrats! Which YouTubers did you watch and Udemy courses?',
-					replies: [
-						{
-							userName: 'mena',
-							duration: '1 hr',
-							content: 'Congrats!',
-							replies: [
-								{
-									userName: 'kAOStics69',
-									duration: '1 hr',
-									content:
-										'Also if you dont mind me asking what kind of questions did they ask? And how long did it take for them to contact you back.',
-								},
-							],
-						},
-					],
-				},
-				{
-					userName: 'Zealousideal_Code760',
-					duration: '5 hr',
-					content:
-						'Yoo! Congratulations deeply, I admire those who have the work ethic to do this self-taught, especially in such a short span of time. Do you mind if I ask what projects you had/have?',
-				},
-			],
 			userComments: [],
 		};
 	},
@@ -553,7 +519,6 @@ export default {
 	methods: {
 		newComment(comment) {
 			this.userComments.unshift(comment);
-			console.log(this.userComments);
 		},
 		//@vuese
 		//fetch posts according to type of sorting
@@ -648,7 +613,6 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log(this.$store.getters['comments/getIfFollowed']);
 			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
 		},
 		//@vuese
@@ -692,9 +656,6 @@ export default {
 };
 </script>
 <style scoped>
-nested-reply {
-	margin: 22px;
-}
 .popup {
 	position: absolute;
 	top: 0;
@@ -707,12 +668,17 @@ nested-reply {
 	align-items: center;
 	justify-content: center;
 }
+.popup-inner {
+	width: 100%;
+}
 .bg-black {
 	background-color: black;
 }
-.post {
+.bg-grey {
 	background-color: var(--color-grey-light-8);
 	padding-top: 22px;
+	height: 94vh;
+	overflow: auto;
 }
 .post-left {
 	background-color: white;

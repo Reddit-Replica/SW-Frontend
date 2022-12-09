@@ -8,6 +8,9 @@ export default {
 		return {
 			listOfModerators: [],
 			listOfInvitedModerators: [],
+			handleTime: '',
+			after: '',
+			before: '',
 			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],

@@ -14,6 +14,7 @@ export default {
 		return {
 			subreddit: {},
 			followedPosts: [],
+			commentID: '',
 		};
 	},
 	actions,

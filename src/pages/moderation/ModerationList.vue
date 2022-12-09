@@ -131,6 +131,9 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import InviteModerator from '../../components/moderation/InviteModerator.vue';
 export default {
 	components: { SearchBar, ListItem, ListBar, InviteModerator },
+	beforeMount() {
+		this.loadListOfModerators();
+	},
 	computed: {
 		// @vuese
 		//return list of moderators
@@ -143,6 +146,18 @@ export default {
 		// @type object
 		listOfInvitedModerators() {
 			return this.$store.getters['moderation/listOfInvitedModerators'];
+		},
+		// @vuese
+		//return if there is moderators before
+		// @type object
+		before() {
+			return this.$store.getters['moderation/before'];
+		},
+		// @vuese
+		//return if there is moderators after
+		// @type object
+		after() {
+			return this.$store.getters['moderation/after'];
 		},
 		// @vuese
 		//return subreddit name
@@ -210,6 +225,8 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
+			this.noItems = false;
+			this.notSearch = true;
 			for (let i = 0; i < this.listOfModerators.length; i++) {
 				if (this.listOfModerators[i].username != input && input != '') {
 					this.count = this.count + 1;

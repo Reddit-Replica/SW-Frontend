@@ -74,6 +74,8 @@ export default {
 			search: '',
 			count: 0,
 			noItems: false,
+			before: '',
+			after: '',
 		};
 	},
 	props: {
@@ -109,6 +111,10 @@ export default {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
+				this.before = this.$store.getters['moderation/before'];
+				this.after = this.$store.getters['moderation/after'];
+				console.log(this.before);
+				console.log(this.after);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
@@ -118,6 +124,7 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
+			this.noItems = false;
 			for (let i = 0; i < this.listOfModerators.length; i++) {
 				if (this.listOfModerators[i].username != input && input != '') {
 					this.count = this.count + 1;

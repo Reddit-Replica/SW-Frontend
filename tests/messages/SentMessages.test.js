@@ -16,11 +16,67 @@ describe ('SentMessages.vue', () => {
   };
   const index = 0;
   let count = 2;
+  let handleTime = '2 years ago';
+
+  const messagesAction = {
+    loadInboxMessages: vi.fn (),
+    loadUnreadMessages: vi.fn (),
+    loadUserMentions: vi.fn (),
+    loadPostReplies: vi.fn (),
+    loadSentMessages: vi.fn (),
+    sendMessage: vi.fn (),
+    blockUser: vi.fn (),
+    deleteMessage: vi.fn (),
+    spamMessage: vi.fn (),
+    loadSuggestedSender: vi.fn (),
+    voteComment: vi.fn (),
+    replyMessage: vi.fn (),
+    handleTime: vi.fn (),
+  };
+  //Mocking the store
+  store = new Vuex.Store ({
+    modules: {
+      messageModule: {
+        namespaced: true,
+        state: {
+          inboxMessages: [],
+          unreadMessages: [],
+          userMentions: [],
+          userMessages: [],
+          postReplies: [],
+          sentMessages: [],
+          suggestedSender: [],
+          sentSuccessfully: false,
+          deleteMessageSuccessfully: false,
+          markSpamSuccessfully: false,
+          blockSuccessfully: false,
+          votedSuccessfully: false,
+          replyMessageSuccessfully: false,
+          handleTime: '',
+        },
+        actions: messagesAction,
+      },
+    },
+  });
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
   it ('should render', () => {
-    const wrapper = mount (SentMessages);
+    const wrapper = mount (SentMessages, {
+      props: {
+        message,
+        index,
+      },
+      computed: {
+        handleTime,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
   });
 
   //--------------------------------------------------------
@@ -90,7 +146,7 @@ describe ('SentMessages.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
+    // expect (wrapper.find ('#time-0').text ()).contain ('2 years ago');
   });
 
   // it ('Testing the Permalink button text is correct', () => {

@@ -133,10 +133,11 @@ export default {
 	margin: 1rem;
 }
 .arrows {
-	margin: 2rem;
-	display: none;
+	margin: 1.5rem;
+	/* display: none; */
 }
 .icon {
+	margin: 0.5rem;
 	cursor: pointer;
 }
 @media only screen and (max-width: 49.25em) {
