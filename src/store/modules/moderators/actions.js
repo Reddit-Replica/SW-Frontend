@@ -106,25 +106,31 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
-			throw error;
-		}
 
 		const invitedModerators = [];
-
-		for (const key in responseData) {
-			const invitedModerator = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				username: responseData[key].children[0].username,
-				nickname: responseData[key].children[0].nickname,
-				dateOfModeration: responseData[key].children[0].dateOfModeration,
-				permissions: responseData[key].children[0].permissions,
-			};
-			invitedModerators.push(invitedModerator);
+		if (responseData.status == 200) {
+			for (const key in responseData) {
+				const invitedModerator = {
+					before: responseData[key].before,
+					after: responseData[key].after,
+					username: responseData[key].children[0].username,
+					nickname: responseData[key].children[0].nickname,
+					dateOfModeration: responseData[key].children[0].dateOfModeration,
+					permissions: responseData[key].children[0].permissions,
+				};
+				invitedModerators.push(invitedModerator);
+			}
+			context.commit('setListOfInvitedModerators', invitedModerators);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
 		}
-		context.commit('setListOfInvitedModerators', invitedModerators);
 	},
 
 	handleTime(context, payload) {
