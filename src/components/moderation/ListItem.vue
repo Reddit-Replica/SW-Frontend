@@ -126,7 +126,6 @@ export default {
 	data() {
 		return {
 			sureShown: false,
-			image: 'images\\2022-12-09T12-12-07.924Z-error.PNG',
 		};
 	},
 	beforeMount() {
