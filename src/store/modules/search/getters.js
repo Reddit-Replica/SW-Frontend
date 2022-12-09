@@ -4,10 +4,16 @@
  * @type {object}
  */
 export default {
-	subreddits(state) {
+	Getsubreddits(state) {
 		return state.subreddits;
 	},
-	users(state) {
+	Getusers(state) {
 		return state.users;
+	},
+	GetPosts(state) {
+		return state.posts;
+	},
+	GetQuery(state) {
+		return state.SearchQuery;
 	},
 };
