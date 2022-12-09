@@ -53,9 +53,7 @@
 							}}</a>
 						</span>
 					</span>
-					&nbsp;sent&nbsp;<time :id="'time-' + index">
-						{{ message.sendAt }}</time
-					>
+					&nbsp;sent&nbsp;<time :id="'time-' + index"> {{ handleTime }}</time>
 				</p>
 				<div v-if="expandAll">
 					<!-- <p class="md">{{ message.text }}</p> -->
@@ -238,6 +236,9 @@ export default {
 			showReplyBox: false,
 		};
 	},
+	beforeMount() {
+		this.calculateTime();
+	},
 	computed: {
 		// @vuese
 		//get username from store
@@ -251,8 +252,22 @@ export default {
 		ifMessageRecieved() {
 			return this.getUserName == this.message.receiverUsername;
 		},
+		// @vuese
+		//return handled time after calculated it
+		// @type object
+		handleTime() {
+			return this.$store.getters['moderation/handleTime'];
+		},
 	},
 	methods: {
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			this.$store.dispatch('moderation/handleTime', {
+				time: this.message.sendAt,
+			});
+		},
 		// @vuese
 		//handle delete action
 		// @arg The argument is a string value representing if user click ok

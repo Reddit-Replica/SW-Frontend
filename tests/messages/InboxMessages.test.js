@@ -22,20 +22,22 @@ describe ('AllinboxComponent.vue', () => {
   };
   const index = 0;
   let count = 2;
+  let handleTime = '2 years ago';
 
   const messagesAction = {
-    loadInboxMessages: vi.fn(),
-    loadUnreadMessages: vi.fn(),
-    loadUserMentions: vi.fn(),
-    loadPostReplies: vi.fn(),
-    loadSentMessages: vi.fn(),
-    sendMessage: vi.fn(),
-    blockUser: vi.fn(),
-    deleteMessage: vi.fn(),
-    spamMessage: vi.fn(),
-    loadSuggestedSender: vi.fn(),
-    voteComment: vi.fn(),
-    replyMessage: vi.fn()
+    loadInboxMessages: vi.fn (),
+    loadUnreadMessages: vi.fn (),
+    loadUserMentions: vi.fn (),
+    loadPostReplies: vi.fn (),
+    loadSentMessages: vi.fn (),
+    sendMessage: vi.fn (),
+    blockUser: vi.fn (),
+    deleteMessage: vi.fn (),
+    spamMessage: vi.fn (),
+    loadSuggestedSender: vi.fn (),
+    voteComment: vi.fn (),
+    replyMessage: vi.fn (),
+    handleTime: vi.fn (),
   };
 
   //Mocking the store
@@ -57,6 +59,7 @@ describe ('AllinboxComponent.vue', () => {
           blockSuccessfully: false,
           votedSuccessfully: false,
           replyMessageSuccessfully: false,
+          handleTime: '',
         },
         actions: messagesAction,
       },
@@ -66,7 +69,21 @@ describe ('AllinboxComponent.vue', () => {
   //                     Rendering
   //--------------------------------------------------------
   it ('should render', () => {
-    const wrapper = mount (AllinboxComponent);
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+      },
+      computed: {
+        handleTime,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
   });
 
   //--------------------------------------------------------
@@ -154,7 +171,7 @@ describe ('AllinboxComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
+    // expect (wrapper.find ('#time-0').text ()).contain ('2 years ago');
   });
 
   // it ('Testing the Permalink button text is correct', () => {

@@ -14,7 +14,7 @@
 							}}</a>
 						</span></span
 					><span>&nbsp;sent&nbsp;</span
-					><time :id="'time-' + index"> {{ message.sendAt }}</time>
+					><time :id="'time-' + index"> {{ handleTime }}</time>
 				</p>
 				<!-- <p class="md">{{ message.text }}</p> -->
 				<Markdown class="md" :source="message.text" />
@@ -56,7 +56,27 @@ export default {
 			default: 0,
 		},
 	},
-	methods: {},
+	beforeMount() {
+		this.calculateTime();
+	},
+	computed: {
+		// @vuese
+		//return handled time after calculated it
+		// @type object
+		handleTime() {
+			return this.$store.getters['moderation/handleTime'];
+		},
+	},
+	methods: {
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			this.$store.dispatch('moderation/handleTime', {
+				time: this.message.sendAt,
+			});
+		},
+	},
 };
 </script>
 
