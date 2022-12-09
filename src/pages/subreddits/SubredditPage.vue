@@ -3,7 +3,7 @@
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
 			:subreddit-name="subredditName"
-			:subreddit-image-url="''"
+			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
 			id="community-header"
 		></subreddit-top>
