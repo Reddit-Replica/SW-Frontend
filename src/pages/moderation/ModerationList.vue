@@ -137,6 +137,7 @@ export default {
 	components: { SearchBar, ListItem, ListBar, InviteModerator },
 	beforeMount() {
 		this.loadListOfModerators();
+		this.loadListOfInvitedModerators();
 	},
 	computed: {
 		// @vuese

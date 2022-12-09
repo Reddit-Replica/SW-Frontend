@@ -20,6 +20,7 @@ export default {
 					username: responseData.children[i].username,
 					dateOfModeration: responseData.children[i].dateOfModeration,
 					permissions: responseData.children[i].permissions,
+					avatar: responseData.children[i].avatar,
 				};
 				moderators.push(moderator);
 			}
@@ -75,6 +76,7 @@ export default {
 					username: responseData.children[i].username,
 					dateOfModeration: responseData.children[i].dateOfModeration,
 					permissions: responseData.children[i].permissions,
+					avatar: responseData.children[i].avatar,
 				};
 				moderators.push(moderator);
 			}
@@ -106,19 +108,16 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-
 		const invitedModerators = [];
-		if (responseData.status == 200) {
-			for (const key in responseData) {
-				const invitedModerator = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					username: responseData[key].children[0].username,
-					nickname: responseData[key].children[0].nickname,
-					dateOfModeration: responseData[key].children[0].dateOfModeration,
-					permissions: responseData[key].children[0].permissions,
+		if (response.status == 200) {
+			for (let i = 0; i < responseData.children.length; i++) {
+				const invitedmoderator = {
+					username: responseData.children[i].username,
+					dateOfModeration: responseData.children[i].dateOfModeration,
+					permissions: responseData.children[i].permissions,
+					avatar: responseData.children[i].avatar,
 				};
-				invitedModerators.push(invitedModerator);
+				invitedModerators.push(invitedmoderator);
 			}
 			context.commit('setListOfInvitedModerators', invitedModerators);
 		} else if (response.status == 401) {
