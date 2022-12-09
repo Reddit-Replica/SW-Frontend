@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="item" v-if="!showAddFlair">
+		<div class="item-flair" v-if="!showAddFlair">
 			<div class="flair-text-box">
 				<span
 					class="flair-text"
@@ -140,7 +140,7 @@ export default {
 </script>
 
 <style scoped>
-.item {
+.item-flair {
 	border-radius: 0 0 4px 4px;
 	font-family: Noto Sans, Arial, sans-serif;
 	font-size: 14px;
