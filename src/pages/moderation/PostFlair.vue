@@ -391,6 +391,12 @@ export default {
 	border-radius: 0 0 0.4rem 0.4rem;
 	overflow: hidden;
 }
+.ul-items {
+	list-style: none;
+	background-color: var(--color-white-1);
+	padding-left: 0rem;
+	margin-top: 0rem;
+}
 .text {
 	font-size: 1.8rem;
 	font-weight: 500;

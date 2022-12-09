@@ -12,4 +12,7 @@ export default {
 	getIfFollowedPosts(state) {
 		return state.followedPosts;
 	},
+	getCommentID(state) {
+		return state.commentID;
+	},
 };

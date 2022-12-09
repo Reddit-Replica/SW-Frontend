@@ -4,17 +4,17 @@
 			<QuillEditor
 				class="editor"
 				theme="snow"
-				toolbar="#my-toolbar"
+				:toolbar="'#' + identifier"
 				placeholder="what are you thought?"
 				style="color: black"
 				ref="myQuillEditor"
 				v-model:content="content"
 			>
 				<template #toolbar>
-					<div id="my-toolbar" class="icons-box">
+					<div :id="identifier" class="icons-box">
 						<!-- Add buttons as you would before -->
-						<div class="tool-tip" @click="click">
-							<span class="tool-tip-text-small">Bold{{ content }}</span>
+						<div class="tool-tip">
+							<span class="tool-tip-text-small">Bold</span>
 
 							<button class="icon ql-bold"></button>
 						</div>
@@ -82,11 +82,27 @@
 						</div>
 						<div class="comment-submit">
 							<base-button
-								:disabled="content.ops[0].insert == '\n'"
-								:button-text="details.type"
+								@click="cancelEditing"
+								class="cancel-button"
+								id="cancel1"
+								v-if="type == 'edit' || type == 'Reply'"
+								>Cancel</base-button
+							>
+							<base-button
+								:disable-button="content.ops[0].insert == '\n'"
+								:button-text="type"
 								class="comment-button"
 								@click="writeNewComment"
+								v-if="type == 'comment' || type == 'Reply'"
 							/>
+							<base-button
+								class="comment-button"
+								:disable-button="noComment"
+								id="comment-in-mark-down-mode"
+								@click="saveEditing"
+								v-if="type == 'edit'"
+								>Save Edits</base-button
+							>
 						</div>
 					</div>
 				</template>
@@ -100,16 +116,43 @@
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
-	emits: ['newComment'],
+	name: 'MYComment',
+	emits: ['newComment', 'saveEditing', 'cancelEditing'],
 	data() {
 		return {
-			content: { ops: [{ insert: '\n' }] },
+			content: this.currentText,
 		};
 	},
 	props: {
-		details: {
-			type: Object,
+		identifier: {
+			type: String,
+			default: '',
 			required: true,
+		},
+		type: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		parentId: {
+			type: String,
+			default: '',
+			required: false,
+		},
+		parentType: {
+			type: String,
+			default: '',
+			required: false,
+		},
+		level: {
+			type: Number,
+			default: 1,
+			required: false,
+		},
+		currentText: {
+			type: String,
+			default: '',
+			required: false,
 		},
 	},
 
@@ -122,8 +165,9 @@ export default {
 				duration: 'just now',
 				content: this.content,
 				replies: [],
+				id: '',
+				level: 0,
 			};
-			this.$emit('newComment', write);
 			var element = document.getElementsByClassName('ql-editor');
 			while (element[0].firstChild) {
 				element[0].firstChild.remove();
@@ -133,15 +177,25 @@ export default {
 					baseurl: this.$baseurl,
 					text: write.content,
 					postId: this.$route.path.split('/')[4],
-					parentId: this.details.parentId,
-					parentType: 'post',
-					level: this.details.level,
+					parentId: this.parentId,
+					parentType: this.parentType,
+					level: this.level,
 					subredditName: this.$route.path.split('/')[2],
 					haveSubreddit: this.$route.path.split('/')[1] == 'r',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			write.id = this.$store.getters['comments/getCommentID'];
+			write.level = this.level;
+			console.log(this.level);
+			this.$emit('newComment', write);
+		},
+		saveEditing() {
+			this.$emit('saveEditing', this.content);
+		},
+		cancelEditing() {
+			this.$emit('cancelEditing');
 		},
 	},
 	components: {
@@ -167,6 +221,30 @@ div {
 	border: 1px solid #edeff1;
 	border-radius: 4px;
 	position: relative;
+}
+.ql-snow.ql-toolbar button.comment-button {
+	width: 100px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	padding: 4px 8px;
+	color: white;
+	display: block;
+	margin-left: auto;
+	border-radius: 100px;
+}
+.ql-snow.ql-toolbar button.cancel-button {
+	width: 64px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	padding: 4px 8px;
+	color: var(--color-pink);
+	display: block;
+	margin-right: 22px;
+	border-radius: 100px;
 }
 .icons-box {
 	z-index: 8;
@@ -362,10 +440,6 @@ button {
 	padding: 4px 8px;
 	color: #0079d3;
 }
-.fancy:hover {
-	background-color: #dae0e6;
-}
-
 .temp {
 	height: 155px;
 	resize: vertical;
@@ -373,28 +447,43 @@ button {
 	display: flex;
 	flex-direction: column-reverse;
 }
-.ql-snow.ql-toolbar button.comment-button {
-	width: 100px;
-	font-family: 'Noto Sans', Arial, sans-serif;
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 16px;
-	padding: 4px 8px;
-	color: white;
-	display: block;
-	margin-left: auto;
-	border-radius: 100px;
-}
 .ql-snow.ql-toolbar button:hover,
 .ql-snow.ql-toolbar button.comment-button:disabled {
 	background-color: var(--color-grey-dark-4);
+}
+.ql-snow.ql-toolbar button.cancel-button:hover {
+	background-color: var(--color-pink-4);
+}
+.ql-snow.ql-toolbar button.cancel-button:active {
+	background-color: var(--color-pink-5);
+}
+.ql-snow.ql-toolbar button.comment-button:disabled {
+	cursor: not-allowed;
 }
 .comment-button:not(:disabled),
 .ql-snow.ql-toolbar button.comment-button:not(:disabled):hover {
 	background-color: var(--color-pink);
 }
+.mark-down {
+	width: max-content;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	padding: 4px 8px;
+	color: var(--color-pink);
+	background-color: var(--color-grey-light-9);
+	display: block;
+	margin-left: auto;
+}
 .comment-submit {
 	padding: 0px 24px;
+	width: 100%;
+	display: flex;
+}
+.comment-submit button {
+	display: inline-block;
+	margin-right: auto;
 }
 @media (max-width: 1287px) {
 	.icons-box .tool-tip:nth-of-type(15) {
