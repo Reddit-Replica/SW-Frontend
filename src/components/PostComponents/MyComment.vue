@@ -213,6 +213,9 @@ export default {
 		cancelEditing() {
 			this.editing = false;
 		},
+		cancelReplying() {
+			this.replying = false;
+		},
 		//@vuese
 		//save edittings done to comment
 		saveEditing(edittedComment) {
