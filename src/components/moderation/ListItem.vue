@@ -4,7 +4,7 @@
 			<div class="image" id="moderator">
 				<img
 					v-if="!moderator.avatar"
-					src="../../../img/user-img.png"
+					src="../../../img/default_inbox_avatar.png"
 					alt="img"
 					class="img"
 					:id="'moderator-img-' + index"
