@@ -7,6 +7,8 @@ export default {
 		return {
 			subreddits: [],
 			users: [],
+			posts: [],
+			SearchQuery: '',
 		};
 	},
 	mutations,

@@ -13,8 +13,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										href="/search/type=post"
-										><button class="button-nav button-nav2">Posts</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('posts')"
+										>
+											Posts
+										</button></a
 									>
 								</div>
 								<div class="search-nav" role="tablist">
@@ -23,7 +27,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										><button class="button-nav button-nav2">Comments</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('coms')"
+										>
+											Comments
+										</button></a
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=comment" -->
@@ -45,8 +54,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										href="/search/type=user"
-										><button class="button-nav button-nav2">People</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('people')"
+										>
+											People
+										</button></a
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=ppl" -->
@@ -83,7 +96,7 @@
 															>{{ value.members }} Members&nbsp;
 														</p>
 													</div>
-													<p class="p-details">{{ value.Cdetails }}&nbsp;</p>
+													<!-- <p class="p-details">{{ value.Cdetails }}&nbsp;</p> -->
 												</div>
 												<div
 													class="follow"
@@ -122,6 +135,7 @@ import BaseButton from '../../components/BaseComponents/BaseButton.vue';
 export default {
 	data() {
 		return {
+			q: '',
 			users: [
 				{ ComName: 'Isalm', members: '11k', notjoined: true },
 				{
@@ -133,8 +147,31 @@ export default {
 			],
 		};
 	},
+	computed: {
+		SearchedCms() {
+			return this.$store.getters['Getsubreddits'];
+		},
+	},
 	methods: {
 		toggle() {},
+		goSearch(value) {
+			if (value == 'posts') {
+				this.$router.replace({
+					name: 'searchpost',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'people') {
+				this.$router.replace({
+					name: 'searchuser',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'coms') {
+				// this.$router.replace({
+				// 	name: 'searchuser',
+				// 	query: { q: this.$route.query.q },
+				// });
+			}
+		},
 	},
 	components: { BaseButton },
 };
