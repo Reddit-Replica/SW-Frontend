@@ -41,11 +41,11 @@ export default {
 		const afterMod = payload.afterMod;
 		let mediaQuery;
 		if (beforeMod) {
-			mediaQuery = '?limit=2&before=' + beforeMod;
+			mediaQuery = '?limit=10&before=' + beforeMod;
 		} else if (afterMod) {
-			mediaQuery = '?limit=2&after=' + afterMod;
+			mediaQuery = '?limit=10&after=' + afterMod;
 		} else {
-			mediaQuery = '?limit=2';
+			mediaQuery = '?limit=10';
 		}
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/moderators${mediaQuery}`,
