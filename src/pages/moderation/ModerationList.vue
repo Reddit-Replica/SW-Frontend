@@ -131,6 +131,9 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import InviteModerator from '../../components/moderation/InviteModerator.vue';
 export default {
 	components: { SearchBar, ListItem, ListBar, InviteModerator },
+	beforeMount() {
+		this.loadListOfModerators();
+	},
 	computed: {
 		// @vuese
 		//return list of moderators
@@ -143,6 +146,18 @@ export default {
 		// @type object
 		listOfInvitedModerators() {
 			return this.$store.getters['moderation/listOfInvitedModerators'];
+		},
+		// @vuese
+		//return if there is moderators before
+		// @type object
+		before() {
+			return this.$store.getters['moderation/before'];
+		},
+		// @vuese
+		//return if there is moderators after
+		// @type object
+		after() {
+			return this.$store.getters['moderation/after'];
 		},
 		// @vuese
 		//return subreddit name

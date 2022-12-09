@@ -2,7 +2,7 @@ export default {
 	async loadListOfModerators(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/about/moderators`,
+			baseurl + `/r/${payload.subredditName}/about/moderators?limit=2`,
 			{
 				method: 'GET',
 				headers: {
@@ -12,31 +12,39 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console.log(responseData);
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
-			throw error;
-		}
 
 		const moderators = [];
-
-		let before, after;
-		if (responseData.before) {
-			before = responseData.before;
-			after = responseData.after;
-		} else {
+		if (response.status == 200) {
+			let before, after;
 			before = '';
 			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const moderator = {
+					username: responseData.children[i].username,
+					dateOfModeration: responseData.children[i].dateOfModeration,
+					permissions: responseData.children[i].permissions,
+				};
+				moderators.push(moderator);
+			}
+			context.commit('setListOfModerators', moderators, before, after);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
 		}
-		for (let i = 0; i < responseData.children.length; i++) {
-			const moderator = {
-				username: responseData.children[i].username,
-				dateOfModeration: responseData.children[i].dateOfModeration,
-				permissions: responseData.children[i].permissions,
-			};
-			moderators.push(moderator);
-		}
-		context.commit('setListOfModerators', moderators, before, after);
 	},
 
 	async loadListOfInvitedModerators(context, payload) {
