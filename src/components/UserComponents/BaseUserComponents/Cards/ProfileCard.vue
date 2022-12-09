@@ -494,40 +494,31 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		async loadProfilePic() {
-			const file = this.$refs.profileFile.files[0];
-			// console.log('loadprofilepic');
-			const reader = new FileReader();
-			reader.onload = () => {
-				const result = reader.result;
-				const img = new Image();
-				img.onload = async () => {
-					console.log(img.width, img.height);
-					// if (img.width > 1280 && img.height > 384 && file.size < 500) {
-					// const formData = new FormData();
-					// formData.append('ProfilePic', file, this.selectedFile.name);
-					// const imageUrl = await fetch(this.$baseurl + '/profile-picture', {
-					// 	method: 'POST',
-					// 	headers: {
-					// 		'Content-Type': 'application/json',
-					// 		Authorization: `Bearer ${localStorage.getItem('userName')}`,
-					// 	},
-					// 	body: formData,
-					// });
-					try {
-						await this.$store.dispatch('user/AddProfilePicture', {
-							baseurl: this.$baseurl,
-							// profilePictureUrl: imageUrl,
-						});
-					} catch (error) {
-						this.error = error.message || 'Something went wrong';
-					}
-					document.querySelector('#profile-picture').src = result;
-					// }
-				};
-				img.src = result;
-			};
-			reader.readAsDataURL(file);
+		async loadProfilePic(e) {
+			const file = e.target.files[0];
+			const postInfo = new FormData();
+			postInfo.append('avatar', file);
+			const baseurl = this.$baseurl;
+			const response = await fetch(baseurl + '/profile-picture', {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: postInfo,
+			});
+			const responseData = await response.text();
+			if (response.status == 200) {
+				localStorage.setItem('response', response.status);
+				console.log('زى الفل الحمد لله');
+			} else if (response.status == 400) {
+				const error = new Error(responseData);
+				console.log(responseData);
+				throw error;
+			} else {
+				console.log(error);
+				const error = new Error('server error');
+				throw error;
+			}
 		},
 		/**
 		 * @vuese
@@ -535,35 +526,31 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		loadCoverPic() {
-			const file = this.$refs.coverFile.files[0];
-			const reader = new FileReader();
-			reader.onload = async () => {
-				const result = reader.result;
-				// if (img.width > 1280 && img.height > 384 && file.size < 500) {
-				// const formData = new FormData();
-				// formData.append('ProfilePic', file, this.selectedFile.name);
-				// const imageUrl = await fetch(this.$baseurl + '/profile-picture', {
-				// 	method: 'POST',
-				// 	headers: {
-				// 		'Content-Type': 'application/json',
-				// 		Authorization: `Bearer ${localStorage.getItem('userName')}`,
-				// 	},
-				// 	body: formData,
-				// });
-				try {
-					await this.$store.dispatch('user/AddProfileBanner', {
-						baseurl: this.$baseurl,
-						// bannerImageUrl: imageUrl,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
-				document.querySelector(
-					'#cover-picture'
-				).style.backgroundImage = `url(${result})`;
-			};
-			reader.readAsDataURL(file);
+		async loadCoverPic(e) {
+			const file = e.target.files[0];
+			const postInfo = new FormData();
+			postInfo.append('banner', file);
+			const baseurl = this.$baseurl;
+			const response = await fetch(baseurl + '/banner-image', {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: postInfo,
+			});
+			const responseData = await response.text();
+			if (response.status == 200) {
+				localStorage.setItem('response', response.status);
+				console.log('زى الفل الحمد لله');
+			} else if (response.status == 400) {
+				const error = new Error(responseData);
+				console.log(responseData);
+				throw error;
+			} else {
+				console.log(error);
+				const error = new Error('server error');
+				throw error;
+			}
 		},
 		/**
 		 * @vuese
