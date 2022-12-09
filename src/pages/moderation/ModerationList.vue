@@ -210,6 +210,8 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
+			this.noItems = false;
+			this.notSearch = true;
 			for (let i = 0; i < this.listOfModerators.length; i++) {
 				if (this.listOfModerators[i].username != input && input != '') {
 					this.count = this.count + 1;
