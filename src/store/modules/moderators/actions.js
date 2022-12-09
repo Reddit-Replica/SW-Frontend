@@ -1,8 +1,54 @@
 export default {
-	async loadListOfModerators(context, payload) {
+	async loadListOfAllModerators(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/about/moderators?limit=2`,
+			baseurl + `/r/${payload.subredditName}/about/moderators`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+
+		const moderators = [];
+		if (response.status == 200) {
+			for (let i = 0; i < responseData.children.length; i++) {
+				const moderator = {
+					username: responseData.children[i].username,
+					dateOfModeration: responseData.children[i].dateOfModeration,
+					permissions: responseData.children[i].permissions,
+				};
+				moderators.push(moderator);
+			}
+			context.commit('setListOfAllModerators', moderators);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+	async loadListOfModerators(context, payload) {
+		const baseurl = payload.baseurl;
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?limit=2&before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?limit=2&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=2';
+		}
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/moderators${mediaQuery}`,
 			{
 				method: 'GET',
 				headers: {
@@ -32,7 +78,7 @@ export default {
 				};
 				moderators.push(moderator);
 			}
-			context.commit('setListOfModerators', moderators, before, after);
+			context.commit('setListOfModerators', moderators);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
 		} else if (response.status == 401) {
