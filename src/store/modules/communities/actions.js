@@ -255,7 +255,7 @@ export default {
 		}
 
 		if (response.status == 200) {
-			context.commit('setSubreddit', responseData['children']);
+			context.commit('setSubreddit', responseData);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -266,6 +266,7 @@ export default {
 			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
+		console.log(responseData);
 	},
 	/**
 	 * Action for changing value of new created subreddit boolean property.
