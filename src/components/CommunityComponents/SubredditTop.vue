@@ -8,7 +8,8 @@
 		<div class="white-top">
 			<div class="flex-start">
 				<div class="top flex-start">
-					<img :src="subredditImageUrl" alt="subredditImage" />
+					<!-- <img :src="subredditImageUrl" alt="subredditImage" /> -->
+					<img src="../../../img/user-image.jpg" alt="user-img" />
 					<div class="top-title-button">
 						<div class="top-title">
 							<h1 class="title-1">{{ subredditName }}</h1>

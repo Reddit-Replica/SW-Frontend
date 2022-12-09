@@ -2,6 +2,12 @@ export default {
 	setListOfModerators(state, payload) {
 		state.listOfModerators = payload;
 	},
+	setBefore(state, payload) {
+		state.before = payload;
+	},
+	setAfter(state, payload) {
+		state.after = payload;
+	},
 	setListOfInvitedModerators(state, payload) {
 		state.listOfInvitedModerators = payload;
 	},

@@ -8,6 +8,12 @@ export default {
 	handleTime(state) {
 		return state.handleTime;
 	},
+	before(state) {
+		return state.before;
+	},
+	after(state) {
+		return state.after;
+	},
 
 	//////////////////////RULES////////////////////////
 
