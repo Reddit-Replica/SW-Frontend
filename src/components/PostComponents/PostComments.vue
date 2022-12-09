@@ -57,7 +57,7 @@
 											d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"
 										/>
 									</svg>
-									{{ postName }}
+									{{ postDetails.title }}
 								</h4>
 							</div>
 						</div>
@@ -193,13 +193,25 @@
 										</div>
 										<div class="content">
 											<div class="post-name">
-												<h3>{{ postName }}</h3>
+												<h3>{{ postDetails.title }}</h3>
 											</div>
-											<div class="post-text">
-												<p>
-													{{ postDescription }}
-												</p>
-											</div>
+											<img
+												v-for="image in postDetails.images"
+												:key="image.id"
+												:src="this.$baseurl + '/' + image.path"
+												alt=""
+											/>
+											<video
+												width="800"
+												height="500"
+												controls
+												v-if="postDetails.kind == 'video'"
+											>
+												<source
+													:src="this.$baseurl + '/' + postDetails.video"
+												/>
+											</video>
+											<!-- <div class="post-text" v-html="renderingHTML"></div> -->
 										</div>
 										<div class="post-services">
 											<ul class="services">
@@ -483,12 +495,12 @@ export default {
 	},
 	data() {
 		return {
+			postDetails: {},
 			subredditName: this.$route.path.split('/')[2],
 			haveSubreddit: false,
 			upClicked: false,
 			downClicked: false,
 			counter: 22,
-			postName: '',
 			postDescription: '',
 			commentsCount: 22,
 			postedBy: 'dummy',
@@ -517,6 +529,22 @@ export default {
 		this.getPostDetails();
 	},
 	methods: {
+		renderingHTML() {
+			var QuillDeltaToHtmlConverter =
+				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+
+			// TypeScript / ES6:
+			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+
+			var deltaOps = this.postDetails.content.ops;
+
+			var cfg = {};
+
+			var converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+
+			var html = converter.convert();
+			return html;
+		},
 		newComment(comment) {
 			this.userComments.unshift(comment);
 		},
@@ -531,14 +559,11 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			const postDetails = this.$store.getters['listing/getPostDetails'];
-			this.counter = postDetails.votes;
-			this.postName = postDetails.title;
-			this.postDescription = postDetails.content;
-			this.commentsCount = postDetails.comments;
-			this.postedBy = postDetails.postedBy;
-			this.postedAt = postDetails.postedAt;
-			this.rules = postDetails.rules;
+			this.postDetails = this.$store.getters['listing/getPostDetails'];
+			this.counter = this.postDetails.votes;
+			this.commentsCount = this.postDetails.comments;
+			this.postedAt = this.postDetails.postedAt;
+			console.log(this.postDetails);
 		},
 		//@vuese
 		//change the order of comments listing according to parameter passed to it
@@ -820,7 +845,9 @@ export default {
 	fill: var(--color-orange);
 }
 .main,
-.content {
+.content,
+.content img,
+.content video {
 	width: 100%;
 }
 .post-name h3 {
