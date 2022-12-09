@@ -51,7 +51,7 @@
 							</span></span
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 						><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
-							{{ message.sendAt }}</time
+							{{ handleTime }}</time
 						>
 					</p>
 					<!-- <p class="md">{{ message.text }}</p> -->
@@ -244,8 +244,25 @@ export default {
 		if (this.index % 2 == 0) {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
+		this.calculateTime();
+	},
+	computed: {
+		// @vuese
+		//return handled time after calculated it
+		// @type object
+		handleTime() {
+			return this.$store.getters['moderation/handleTime'];
+		},
 	},
 	methods: {
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			this.$store.dispatch('moderation/handleTime', {
+				time: this.message.sendAt,
+			});
+		},
 		// @vuese
 		//toggle remove action
 		// @arg The argument is a string value representing if user click ok
