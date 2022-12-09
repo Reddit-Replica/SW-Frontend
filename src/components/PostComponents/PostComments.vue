@@ -201,6 +201,16 @@
 												:src="this.$baseurl + '/' + image.path"
 												alt=""
 											/>
+											<video
+												width="800"
+												height="500"
+												controls
+												v-if="postDetails.kind == 'video'"
+											>
+												<source
+													:src="this.$baseurl + '/' + postDetails.video"
+												/>
+											</video>
 											<!-- <div class="post-text" v-html="renderingHTML"></div> -->
 										</div>
 										<div class="post-services">
@@ -836,7 +846,8 @@ export default {
 }
 .main,
 .content,
-.content img {
+.content img,
+.content video {
 	width: 100%;
 }
 .post-name h3 {
