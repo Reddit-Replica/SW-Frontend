@@ -1,7 +1,15 @@
 <template>
 	<div class="content">
 		<img
-			src="../../../img/user-image.jpg"
+			v-if="!subreddit.picture"
+			src="../../../img/subreddit-img.jpg"
+			alt="img"
+			class="subreddit-img"
+			id="subreddit-img"
+		/>
+		<img
+			v-else
+			:src="$baseurl + '/' + subreddit.picture"
 			alt="img"
 			class="subreddit-img"
 			id="subreddit-img"
@@ -32,6 +40,28 @@ export default {
 		title: {
 			type: String,
 			default: 'moderator',
+		},
+	},
+	beforeMount() {
+		this.getSubreddit();
+	},
+	data() {
+		return {
+			subreddit: {},
+		};
+	},
+	methods: {
+		// @vuese
+		//load subreddit img
+		// @arg no argument
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
 	},
 };
@@ -68,8 +98,8 @@ export default {
 	z-index: 50;
 }
 .subreddit-img {
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 3rem;
+	height: 3rem;
 	border-radius: 50%;
 	margin-left: 2rem;
 	margin-right: 1rem;

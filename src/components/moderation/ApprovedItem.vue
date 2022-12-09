@@ -2,7 +2,15 @@
 	<li class="item" v-if="show">
 		<div class="image" id="moderator">
 			<img
-				src="../../../img/user-img-2.png"
+				v-if="!moderator.avatar"
+				src="../../../img/user-img.png"
+				alt="img"
+				class="img"
+				:id="'moderator-img-' + index"
+			/>
+			<img
+				v-else
+				:src="$baseurl + '/' + moderator.avatar"
 				alt="img"
 				class="img"
 				:id="'moderator-img-' + index"

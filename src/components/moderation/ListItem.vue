@@ -3,7 +3,15 @@
 		<li class="item" v-if="show">
 			<div class="image" id="moderator">
 				<img
-					src="../../../img/user-img-2.png"
+					v-if="!moderator.avatar"
+					src="../../../img/user-img.png"
+					alt="img"
+					class="img"
+					:id="'moderator-img-' + index"
+				/>
+				<img
+					v-else
+					:src="$baseurl + '/' + moderator.avatar"
 					alt="img"
 					class="img"
 					:id="'moderator-img-' + index"
@@ -118,6 +126,7 @@ export default {
 	data() {
 		return {
 			sureShown: false,
+			image: 'images\\2022-12-09T12-12-07.924Z-error.PNG',
 		};
 	},
 	beforeMount() {
