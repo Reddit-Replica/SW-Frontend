@@ -203,16 +203,19 @@ export default {
 		// @arg no argument
 		async loadListOfModerators(title) {
 			console.log(title);
-			// let beforeMod='', afterMod=''
-			// if (title=='before') {
-			// 	beforeMod = this.before;
-			// 	afterMod = '';
-			// }
-			// else if()
+			let beforeMod = '',
+				afterMod = '';
+			if (title == 'before') {
+				beforeMod = this.before;
+			} else if (title == 'after') {
+				afterMod = this.after;
+			}
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
+					beforeMod: beforeMod,
+					afterMod: afterMod,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
