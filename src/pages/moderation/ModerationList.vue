@@ -202,7 +202,6 @@ export default {
 		//load moderators list from the store
 		// @arg no argument
 		async loadListOfModerators(title) {
-			console.log(title);
 			let beforeMod = '',
 				afterMod = '';
 			if (title == 'before') {
