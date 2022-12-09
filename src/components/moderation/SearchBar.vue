@@ -64,7 +64,7 @@
 
 <script>
 export default {
-	emits: ['enterSearch'],
+	emits: ['enterSearch', 'fetchBefore', 'fetchAfter'],
 	props: {
 		// @vuese
 		//if clicked in see all then value of searching should be ''
