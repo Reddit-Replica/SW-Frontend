@@ -18,6 +18,12 @@ export default {
 		state.handleTime = payload;
 	},
 
+	//////////////LEAVE MOD/////////////
+
+	leaveModSuccessfully(state, payload) {
+		state.leaveModSuccessfully = payload;
+	},
+
 	//////////////SPAM/////////////////
 	setListOfSpams(state, payload) {
 		state.listOfSpams = payload;
