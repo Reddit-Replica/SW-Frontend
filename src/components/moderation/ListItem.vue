@@ -85,6 +85,7 @@
 
 <script>
 export default {
+	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
 		//details of moderator
@@ -94,7 +95,7 @@ export default {
 			required: true,
 			default: () => ({
 				username: '',
-				nickname: '',
+				avatar: '',
 				dateOfModeration: '',
 				permissions: [],
 			}),
@@ -143,6 +144,13 @@ export default {
 				} else return false;
 			}
 			return true;
+		},
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
 		},
 		// @vuese
 		//handle display date
@@ -218,7 +226,21 @@ export default {
 		// @vuese
 		//used to send remove invitation request
 		// @arg no argument
-		removeInvitation() {},
+		async removeInvitation() {
+			try {
+				await this.$store.dispatch('moderation/cancelInvitation', {
+					username: this.moderator.username,
+					baseurl: this.$baseurl,
+					subreddit: this.subredditName,
+				});
+				if (this.$store.getters['moderation/cancelSuccessfully']) {
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 	},
 };
 </script>

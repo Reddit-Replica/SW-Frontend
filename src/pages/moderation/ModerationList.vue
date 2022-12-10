@@ -81,6 +81,7 @@
 						:moderator="invitedModerator"
 						:index="index"
 						:invited-mod="true"
+						@done-successfully="doneSuccessfully('invited')"
 					></list-item>
 				</ul>
 			</div>
@@ -89,7 +90,7 @@
 			v-if="showInvitePopup"
 			:subreddit-name="subredditName"
 			@exit="handleInviteMod()"
-			@done-successfully="doneSuccessfully('Invited')"
+			@done-successfully="doneSuccessfully('cancel')"
 		></invite-moderator>
 		<div id="sure-popup-form">
 			<base-dialog

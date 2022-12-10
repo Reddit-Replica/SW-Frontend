@@ -29,6 +29,9 @@ export default {
 	inviteModSuccessfully(state, payload) {
 		state.inviteModSuccessfully = payload;
 	},
+	cancelSuccessfully(state, payload) {
+		state.cancelSuccessfully = payload;
+	},
 
 	//////////////SPAM/////////////////
 	setListOfSpams(state, payload) {
