@@ -318,7 +318,11 @@
 				>
 			</div>
 
-			<div class="header-user-nav-icon-box" id="notifications-icon-box">
+			<div
+				class="header-user-nav-icon-box"
+				id="notifications-icon-box"
+				@click="toggleNotificationsList"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -339,6 +343,10 @@
 					>2</span
 				>
 			</div>
+			<notifications-list
+				v-if="notificationsListShown"
+				class="sub-menu sub-menu-ntf"
+			></notifications-list>
 
 			<div
 				class="header-user-nav-icon-box"
@@ -521,7 +529,11 @@
 </template>
 
 <script>
+import NotificationsList from '../NotificationsComponents/NotificationsList.vue';
 export default {
+	components: {
+		NotificationsList,
+	},
 	props: {
 		// @vuese
 		//header title ex: Home, User Settings, u/username...
@@ -535,6 +547,7 @@ export default {
 			settingsSubMenuDisplay: false,
 			homeSubMenuDisplay: false,
 			searchQuery: '',
+			notificationsListShown: false,
 		};
 	},
 	computed: {
@@ -615,6 +628,12 @@ export default {
 				console.log('error');
 				// this.error = err;
 			}
+		},
+		// @vuese
+		// Show/Hide notifications list
+		// @arg no argument
+		toggleNotificationsList() {
+			this.notificationsListShown = !this.notificationsListShown;
 		},
 	},
 };
@@ -1028,6 +1047,17 @@ export default {
 
 .home {
 	fill: var(--color-dark-1) !important;
+}
+
+.sub-menu-ntf {
+	top: 4rem;
+	right: 40rem;
+	width: 45rem;
+	box-shadow: var(--shadow-menu);
+	height: 400px;
+	max-height: 400px;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 /* 1200px */
