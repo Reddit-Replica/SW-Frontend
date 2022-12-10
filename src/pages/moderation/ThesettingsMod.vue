@@ -46,7 +46,9 @@
 					style="outline: none"
 				></div>
 			</div>
-			&nbsp;<span style="margin-left: auto; margin-right: 2px">0/25</span></span
+			&nbsp;
+			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<span style="margin-left: auto; margin-right: 2px">0/25</span></span
 		>
 		<!-- <div class="_1oREjd5ToMFah-VfX5Zt1z">
 			<div class="_1PLoXiZH4WKzHTfmYIt34X qWs3cMcSjquK-OXl-9jH5">
@@ -398,6 +400,18 @@
 				</div>
 			</div>
 		</div>
+		<h3 class="medium-font">
+			<span
+				>18+ year old community
+				<div class="nsfw">NSFW</div></span
+			>
+		</h3>
+		<p class="description">
+			When your community is marked as an 18+ community, users must be flagged
+			as 18+ in their user settings
+
+			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+		</p>
 		<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
 		<h3 class="medium-font">Accepting requests to join</h3>
 
@@ -634,5 +648,16 @@ export default {};
 	padding-left: 4px;
 	/* color: var(--color-grey-dark-2); */
 	position: absolute;
+}
+.nsfw {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	border-radius: 2px;
+	color: #fff;
+	display: inline-block;
+	margin: 0 4px 0 8px;
+	padding: 0 4px;
+	background-color: #ff585b;
 }
 </style>
