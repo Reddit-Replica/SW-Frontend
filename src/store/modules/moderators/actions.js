@@ -852,9 +852,8 @@ export default {
 		context.commit('banUserSuccessfully', false);
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
-		console.log(payload);
 		const bannedUser = {
-			userId: payload.userId,
+			username: payload.username,
 			subreddit: payload.subredditName,
 			banPeriod: payload.banPeriod,
 			reasonForBan: payload.reasonForBan,

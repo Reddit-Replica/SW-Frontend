@@ -236,7 +236,7 @@ export default {
 			try {
 				await this.$store.dispatch('moderation/banUser', {
 					//////userId not ban user name
-					userId: this.banUserName,
+					username: this.banUserName,
 					banPeriod: this.banPeriod,
 					//////not enum
 					reasonForBan: this.reason,
