@@ -24,7 +24,13 @@
 						<div class="title-black">Give them access to...</div>
 					</div>
 					<div class="box-1">
-						<input type="checkbox" name="everything" id="everythig" />
+						<input
+							type="checkbox"
+							name="everything"
+							id="everythig"
+							v-model="permissionToEverything"
+							@change="customMethod('everything')"
+						/>
 						<span class="title-grey">Everything </span>
 					</div>
 					<p class="p-text">
@@ -33,6 +39,65 @@
 					</p>
 				</div>
 				<hr class="border" />
+				<div class="invite-moderation-box flex-column">
+					<div class="box-1">
+						<input
+							type="checkbox"
+							name="manage-users"
+							id="manage-users"
+							v-model="permissionToManageUsers"
+							@change="customMethod('manageUsers')"
+						/>
+						<span class="title-grey">Manage Users </span>
+					</div>
+					<p class="p-text">
+						Access mod notes, ban and mute users, and approve submitters*.
+					</p>
+				</div>
+				<div class="invite-moderation-box flex-column">
+					<div class="box-1">
+						<input
+							type="checkbox"
+							name="manage-settings"
+							id="manage-settings"
+							v-model="permissionToManageSettings"
+							@change="customMethod('manageSettings')"
+						/>
+						<span class="title-grey">Manage Settings </span>
+					</div>
+					<p class="p-text">
+						Manage community settings, appearance, emojis, rules, and AutoMod*.
+					</p>
+				</div>
+				<div class="invite-moderation-box flex-column">
+					<div class="box-1">
+						<input
+							type="checkbox"
+							name="manage-flair"
+							id="manage-flair"
+							v-model="permissionToManageFlair"
+							@change="customMethod('manageFlair')"
+						/>
+						<span class="title-grey">Manage Flair </span>
+					</div>
+					<p class="p-text">Create and manage user and post flair.</p>
+				</div>
+				<div class="invite-moderation-box flex-column">
+					<div class="box-1">
+						<input
+							type="checkbox"
+							name="manage-posts-comments"
+							id="manage-posts-comments"
+							v-model="permissionToManagePostsComments"
+							@change="customMethod('managePostsComments')"
+						/>
+						<span class="title-grey">Manage Posts & Comments </span>
+					</div>
+					<p class="p-text">
+						Access queues, take action on content, and manage collections and
+						events.
+					</p>
+				</div>
 				<div class="invite-moderation-box box-buttons">
 					<base-button
 						@click="hideAddInvite"
@@ -74,9 +139,24 @@ export default {
 			addInviteShown: true,
 			userName: '',
 			errorResponse: null,
+			permissionToEverything: true,
+			permissionToManageUsers: true,
+			permissionToManageSettings: true,
+			permissionToManageFlair: true,
+			permissionToManagePostsComments: true,
 		};
 	},
 	methods: {
+		customMethod(title) {
+			if (title == 'everything' && this.permissionToEverything == true) {
+				this.permissionToManageUsers = true;
+				this.permissionToManageSettings = true;
+				this.permissionToManageFlair = true;
+				this.permissionToManagePostsComments = true;
+			} else {
+				this.permissionToEverything = false;
+			}
+		},
 		//@vuese
 		//Hide dialog
 		//@arg no argument
@@ -90,21 +170,20 @@ export default {
 		//@arg no argument
 		async submitInvite() {
 			this.errorResponse = null;
-			if (this.reportReason == '') {
-				this.reportReason = this.ruleName;
-			}
 			try {
-				await this.$store.dispatch('moderation/addRule', {
-					ruleName: this.ruleName,
-					appliesTo: this.appliedType,
-					reportReason: this.reportReason,
-					description: this.description,
+				await this.$store.dispatch('moderation/inviteMod', {
+					username: this.userName,
+					subreddit: this.subredditName,
+					permissionToEverything: this.permissionToEverything,
+					permissionToManageUsers: this.permissionToManageUsers,
+					permissionToManageSettings: this.permissionToManageSettings,
+					permissionToManageFlair: this.permissionToManageFlair,
+					permissionToManagePostsComments: this.permissionToManagePostsComments,
 					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
 				});
-				if (this.$store.getters['moderation/addRuleSuccessfully']) {
-					this.hideAddInvite();
+				if (this.$store.getters['moderation/inviteModSuccessfully']) {
 					this.$emit('doneSuccessfully');
+					this.hideAddInvite();
 				}
 			} catch (err) {
 				console.log(err);
