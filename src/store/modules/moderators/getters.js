@@ -24,6 +24,12 @@ export default {
 		return state.leaveModSuccessfully;
 	},
 
+	/////////////////////INVITE MOD/////////////////////
+
+	inviteModSuccessfully(state) {
+		return state.inviteModSuccessfully;
+	},
+
 	//////////////////////SPAM////////////////////////
 
 	listOfSpams(state) {

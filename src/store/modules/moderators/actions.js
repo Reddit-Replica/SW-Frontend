@@ -193,6 +193,52 @@ export default {
 		}
 	},
 
+	/////////////////////INVITE MOD/////////////////////
+
+	async inviteMod(context, payload) {
+		context.commit('inviteModSuccessfully', false);
+		const mod = {
+			username: payload.username,
+			subreddit: payload.subreddit,
+			permissionToEverything: payload.permissionToEverything,
+			permissionToManageUsers: payload.permissionToManageUsers,
+			permissionToManageSettings: payload.permissionToManageSettings,
+			permissionToManageFlair: payload.permissionToManageFlair,
+			permissionToManagePostsComments: payload.permissionToManagePostsComments,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/moderator-invite`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(mod),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('inviteModSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
 	//////////////////////SPAM////////////////////////
 
 	async loadListOfSpams(context, payload) {

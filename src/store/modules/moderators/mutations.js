@@ -24,6 +24,12 @@ export default {
 		state.leaveModSuccessfully = payload;
 	},
 
+	//////////////INVITE MOD/////////////
+
+	inviteModSuccessfully(state, payload) {
+		state.inviteModSuccessfully = payload;
+	},
+
 	//////////////SPAM/////////////////
 	setListOfSpams(state, payload) {
 		state.listOfSpams = payload;

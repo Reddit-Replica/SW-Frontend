@@ -89,7 +89,7 @@
 			v-if="showInvitePopup"
 			:subreddit-name="subredditName"
 			@exit="handleInviteMod()"
-			@done-successfully="doneSuccessfully('added')"
+			@done-successfully="doneSuccessfully('Invited')"
 		></invite-moderator>
 		<div id="sure-popup-form">
 			<base-dialog
@@ -125,6 +125,16 @@
 				</div>
 			</base-dialog>
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -133,8 +143,15 @@ import SearchBar from '../../components/moderation/SearchBar.vue';
 import ListItem from '../../components/moderation/ListItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import InviteModerator from '../../components/moderation/InviteModerator.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
-	components: { SearchBar, ListItem, ListBar, InviteModerator },
+	components: {
+		SearchBar,
+		ListItem,
+		ListBar,
+		InviteModerator,
+		SaveUnsavePopupMessage,
+	},
 	beforeMount() {
 		this.loadListOfModerators();
 		this.loadListOfInvitedModerators();
@@ -197,9 +214,17 @@ export default {
 			showInvitePopup: false,
 			showLeaveMod: false,
 			errorResponse: '',
+			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
+		// @vuese
+		// handle load flairs instead of refreshing
+		// @arg no argument
+		doneSuccessfully(title) {
+			this.loadListOfInvitedModerators();
+			this.savePost(title);
+		},
 		// @vuese
 		//load moderators list from the store
 		// @arg no argument
@@ -245,7 +270,7 @@ export default {
 					subreddit: this.subredditName,
 				});
 				if (this.$store.getters['moderation/leaveModSuccessfully']) {
-					this.savePost();
+					this.savePost('Leaved');
 					window.location.reload();
 				}
 			} catch (err) {
@@ -256,11 +281,11 @@ export default {
 		// @vuese
 		// Used to show handle save action popup
 		// @arg the argument is the title used in show popup
-		savePost() {
+		savePost(title) {
 			this.savedUnsavedPosts.push({
 				id: this.savedUnsavedPosts.length,
 				postid: '1',
-				type: 'Leaved',
+				type: title,
 				state: '',
 			});
 			setTimeout(() => {
