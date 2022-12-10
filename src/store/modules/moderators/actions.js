@@ -20,6 +20,7 @@ export default {
 					username: responseData.children[i].username,
 					dateOfModeration: responseData.children[i].dateOfModeration,
 					permissions: responseData.children[i].permissions,
+					avatar: responseData.children[i].avatar,
 				};
 				moderators.push(moderator);
 			}
@@ -75,6 +76,7 @@ export default {
 					username: responseData.children[i].username,
 					dateOfModeration: responseData.children[i].dateOfModeration,
 					permissions: responseData.children[i].permissions,
+					avatar: responseData.children[i].avatar,
 				};
 				moderators.push(moderator);
 			}
@@ -106,25 +108,28 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
+		const invitedModerators = [];
+		if (response.status == 200) {
+			for (let i = 0; i < responseData.children.length; i++) {
+				const invitedmoderator = {
+					username: responseData.children[i].username,
+					dateOfModeration: responseData.children[i].dateOfModeration,
+					permissions: responseData.children[i].permissions,
+					avatar: responseData.children[i].avatar,
+				};
+				invitedModerators.push(invitedmoderator);
+			}
+			context.commit('setListOfInvitedModerators', invitedModerators);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
 			throw error;
 		}
-
-		const invitedModerators = [];
-
-		for (const key in responseData) {
-			const invitedModerator = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				username: responseData[key].children[0].username,
-				nickname: responseData[key].children[0].nickname,
-				dateOfModeration: responseData[key].children[0].dateOfModeration,
-				permissions: responseData[key].children[0].permissions,
-			};
-			invitedModerators.push(invitedModerator);
-		}
-		context.commit('setListOfInvitedModerators', invitedModerators);
 	},
 
 	handleTime(context, payload) {
