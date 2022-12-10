@@ -113,7 +113,7 @@ export default {
 			for (let i = 0; i < responseData.children.length; i++) {
 				const invitedmoderator = {
 					username: responseData.children[i].username,
-					dateOfModeration: responseData.children[i].dateOfModeration,
+					dateOfModeration: responseData.children[i].dateOfInvitation,
 					permissions: responseData.children[i].permissions,
 					avatar: responseData.children[i].avatar,
 				};
