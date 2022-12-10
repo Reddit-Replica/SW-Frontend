@@ -22,6 +22,9 @@ export default {
 	setListOfSpams(state, payload) {
 		state.listOfSpams = payload;
 	},
+	approveSuccessfully(state, payload) {
+		state.approveSuccessfully = payload;
+	},
 
 	//////////////RULES/////////////////
 

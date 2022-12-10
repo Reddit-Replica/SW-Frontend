@@ -232,7 +232,7 @@ export default {
 		},
 		async approveFunction() {
 			try {
-				await this.$store.dispatch('moderation/approve', {
+				await this.$store.dispatch('moderation/approvedSpam', {
 					subredditName: this.subredditName,
 					baseurl: this.$baseurl,
 					id: this.spam.id,
