@@ -74,7 +74,7 @@
 					/>
 				</div>
 			</div>
-			<div class="white-bar">
+			<!-- <div class="white-bar">
 				<div class="icon-white">
 					<div @click="showThirdMenuFunction" id="type-2">
 						<svg
@@ -114,7 +114,7 @@
 						/>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
