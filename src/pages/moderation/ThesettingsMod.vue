@@ -224,8 +224,9 @@
 						fill="inherit"
 						fill-rule="evenodd"
 						transform="translate(-4 -2)"
-					></path></svg
-			></label>
+					></path>
+				</svg>
+			</label>
 			<input
 				class="location-input"
 				name="location"
@@ -429,9 +430,6 @@ export default {};
 </script>
 
 <style scoped>
-* {
-	/*margin: 10px auto;*/
-}
 .box {
 	background-color: #ffffff;
 	border-radius: 4px;
