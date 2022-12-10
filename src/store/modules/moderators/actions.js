@@ -153,6 +153,75 @@ export default {
 		context.commit('setHandleTime', returnValue);
 	},
 
+	//////////////////////SPAM////////////////////////
+
+	async loadListOfSpams(context, payload) {
+		const baseurl = payload.baseurl;
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		const sortSpam = payload.sortSpam;
+		const only = payload.only;
+		let mediaQuery = '?limit=25';
+		if (beforeMod) {
+			mediaQuery.concat('&before=' + beforeMod);
+		}
+		if (afterMod) {
+			mediaQuery.concat('&after=' + afterMod);
+		}
+		if (sortSpam) {
+			mediaQuery.concat('&sort=' + sortSpam);
+		}
+		if (only) {
+			mediaQuery.concat('&only=' + only);
+		}
+		console.log(mediaQuery);
+		const response = await fetch(
+			//put mediaquery ${mediaQuery}
+			baseurl + `/r/${payload.subredditName}/about/spam`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		const spams = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			//update responseData
+			for (let i = 0; i < responseData[0].children.length; i++) {
+				const spam = {
+					id: responseData[0].children[i].id,
+					type: responseData[0].children[i].type,
+					data: responseData[0].children[i].data,
+				};
+				spams.push(spam);
+			}
+			console.log(spams);
+			context.commit('setListOfSpams', spams);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
 	//////////////////////RULES////////////////////////
 
 	async addRule(context, payload) {

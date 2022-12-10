@@ -12,6 +12,8 @@ export default {
 			handleTime: '',
 			after: '',
 			before: '',
+			//////////////SPAM/////////////////
+			listOfSpams: [],
 			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],

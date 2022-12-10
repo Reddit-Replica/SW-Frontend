@@ -50,23 +50,25 @@
 					</div>
 					<div class="subreddit-details">
 						<div class="subreddit-name">
-							<a href="#">r/fghjkxcvghjkl</a>
+							<a href="#">r/{{ spam.data.subreddit }}</a>
 						</div>
 						<span class="dot">•</span>
 						<span class="posted-by">Posted by</span>
 						<div class="poster">
-							<a href="#">u/asmaaadel0</a>
+							<a :href="'/user/' + spam.data.postedBy">{{
+								spam.data.postedBy
+							}}</a>
 						</div>
-						<span class="time">1 month ago</span>
+						<span class="time">{{ handleTime }}</span>
 					</div>
 				</div>
 				<div class="post-title">
-					<div class="title-box">fghj</div>
-					<div class="body-box">fghjkl;</div>
+					<div class="title-box">{{ spam.data.title }}</div>
+					<div class="body-box">{{ spam.data.content }}</div>
 				</div>
 				<p class="comments">0 comments</p>
 				<div class="footer">
-					<div class="removed-box">
+					<div class="removed-box" :class="approved ? 'approved-box' : ''">
 						<div>
 							<img
 								src="../../../img/default_inbox_avatar.png"
@@ -95,13 +97,14 @@
 						</div>
 					</div>
 					<div class="buttons">
-						<base-button>Add Removal Reason</base-button>
-						<base-button>Approve</base-button>
+						<!-- <base-button>Add Removal Reason</base-button> -->
+						<base-button @click="approveFunction()">Approve</base-button>
 						<base-button>Flair</base-button>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -111,12 +114,60 @@ export default {
 		return {
 			downClicked: false,
 			subreddit: {},
+			errorResponse: '',
+			approved: false,
 		};
 	},
 	beforeMount() {
 		this.getSubreddit();
+		this.calculateTime();
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+
+		// @vuese
+		//return handled time after calculated it
+		// @type object
+		handleTime() {
+			return this.$store.getters['moderation/handleTime'];
+		},
+	},
+	props: {
+		// @vuese
+		//details of spam
+		// @type object
+		spam: {
+			type: Object,
+			required: true,
+			default: () => ({
+				id: '',
+				type: '',
+				data: {},
+			}),
+		},
+		// @vuese
+		//index to handle unique ids
+		index: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
 	},
 	methods: {
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			this.$store.dispatch('moderation/handleTime', {
+				time: this.spam.data.publishTime,
+			});
+		},
 		// @vuese
 		//handle upvote action
 		// @arg no argument
@@ -178,6 +229,22 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+		},
+		async approveFunction() {
+			try {
+				await this.$store.dispatch('moderation/approve', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					id: this.spam.id,
+					type: this.spam.type,
+				});
+				if (this.$store.getters['moderation/approveSuccessfully']) {
+					this.approved = true;
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 	},
 };
@@ -449,6 +516,9 @@ button {
 }
 button:hover {
 	border: 1px solid var(--color-dark-3);
+}
+.approved-box {
+	background-color: rgba(70, 209, 96, 0.2);
 }
 @media (min-width: 64rem) {
 	.box {
