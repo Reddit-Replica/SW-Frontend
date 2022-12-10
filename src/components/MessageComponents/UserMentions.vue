@@ -285,7 +285,6 @@ export default {
 				type: '',
 				subredditName: '',
 				postID: '',
-				postID: '',
 				commentID: '',
 				numOfComments: '',
 			}),
