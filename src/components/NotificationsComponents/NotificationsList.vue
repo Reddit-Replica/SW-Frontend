@@ -28,7 +28,7 @@
 					</svg>
 				</span>
 			</nav>
-			<div class="ntf-list">
+			<div v-if="!noNotifications" class="ntf-list">
 				<ul>
 					<notification-message
 						v-for="(notification, index) in notifications"
@@ -46,9 +46,23 @@
 					></notification-message>
 				</ul>
 			</div>
-			<div class="see-all-ntf">
+			<div v-if="!noNotifications" class="see-all-ntf">
 				<router-link to="/notifications" class="see-all-link"
 					>See All</router-link
+				>
+			</div>
+			<div v-if="noNotifications" class="no-ntf ntf-list">
+				<img src="../../../img/default_avatar.png" alt="Avatar" />
+				<h1>You don’t have any activity yet</h1>
+				<p>
+					That’s ok, maybe you just need the right inspiration. Try posting in
+					r/<router-link to="subredditLink">{{
+						randomSubredditName
+					}}</router-link>
+					, a popular community for discussion.
+				</p>
+				<base-button link to="subredditLink" class="button-visit"
+					>Visit r/{{ randomSubredditName }}</base-button
 				>
 			</div>
 		</div>
@@ -67,7 +81,16 @@ export default {
 	data() {
 		return {
 			notifications: [],
+			randomSubredditName: 'subreddit_new',
 		};
+	},
+	computed: {
+		noNotifications() {
+			return this.notifications.length == 0;
+		},
+		subredditLink() {
+			return 'r/' + this.randomSubredditName;
+		},
 	},
 	methods: {
 		async loadAllNotifications() {
@@ -184,5 +207,51 @@ ul {
 	max-height: 307px;
 	overflow: hidden;
 	overflow-y: scroll;
+}
+.no-ntf {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	overflow-y: hidden;
+}
+img {
+	height: 128px;
+}
+h1 {
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 22px;
+	font-weight: 500;
+	margin-top: 5px;
+}
+p {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+	color: var(--color-grey-dark-10);
+	text-align: center;
+	margin: 0 40px;
+	margin-top: 5px;
+	width: 65%;
+}
+.button-visit {
+	font-style: normal;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 18px;
+
+	width: fit-content;
+	height: 40px;
+
+	color: var(--color-white-1);
+	background: var(--color-blue-2);
+	margin-top: 10px;
+	padding: 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 </style>
