@@ -312,6 +312,11 @@ export default {
 			this.showTimeMenu = !this.showTimeMenu;
 		},
 	},
+	watch: {
+		$route() {
+			console.log('rotechange');
+		},
+	},
 };
 </script>
 

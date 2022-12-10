@@ -135,7 +135,7 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="approve-user-post-button"
 			@click="approvePost(postData.id)"
 			:style="[
@@ -160,7 +160,7 @@
 			<div class="post-options-text">Approve</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="remove-user-post-button"
 			@click="removePost(postData.id)"
 			:style="[
@@ -187,9 +187,9 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="spam-user-post-button"
-			@click="spamPost"
+			@click="spamPost(postData.id)"
 			:style="[
 				postData.data.moderation &&
 				postData.data.moderation.spam &&
@@ -197,7 +197,14 @@
 					? 'color: #ff585b'
 					: 'color: rgba(135, 138, 140)',
 			]"
-			class="post-option-item post-option-item-hover2"
+			class="post-option-item"
+			:class="[
+				postData.data.moderation &&
+				postData.data.moderation.spam &&
+				postData.data.moderation.spammedBy != ''
+					? ''
+					: 'post-option-item-hover2',
+			]"
 		>
 			<div class="post-options-icon">
 				<i class="fa-regular fa-calendar-xmark"></i>
@@ -460,17 +467,25 @@ export default {
 		},
 		async approvePost(id) {
 			console.log('approve');
-			try {
-				await this.$store.dispatch('userposts/approvePostOrComment', {
-					baseurl: this.$baseurl,
-					ApprovePostOrCommentData: {
-						id: id,
-						type: 'post',
-						username: this.$route.params.userName,
-					},
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (
+				!(
+					this.postData.data.moderation &&
+					this.postData.data.moderation.approve &&
+					this.postData.data.moderation.approve.approvedBy != ''
+				)
+			) {
+				try {
+					await this.$store.dispatch('userposts/approvePostOrComment', {
+						baseurl: this.$baseurl,
+						ApprovePostOrCommentData: {
+							id: id,
+							type: 'post',
+							username: this.$route.params.userName,
+						},
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			}
 		},
 		async removePost(id) {
@@ -532,11 +547,11 @@ export default {
 			let key = 'unLock';
 			if (
 				!this.postData.data.moderation ||
-				!this.postData.data.moderation.lock ||
-				this.postData.data.moderation.lock == false
+				!this.postData.data.moderation.lock
 			) {
 				key = 'lock';
 			}
+			console.log('main', key);
 			try {
 				await this.$store.dispatch('userposts/lockUnLockPostOrComment', {
 					baseurl: this.$baseurl,
@@ -563,6 +578,21 @@ export default {
 						id: id,
 						pin: key, // mark UnMark
 					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async spamPost(id) {
+			try {
+				await this.$store.dispatch('userposts/markSpam', {
+					baseurl: this.$baseurl,
+					markSpamData: {
+						id: id,
+						type: 'post',
+						reason: '',
+					},
+					username: this.$route.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

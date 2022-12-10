@@ -1928,6 +1928,120 @@
 						"lock": true
 					}
 				}
+			},
+			{
+				"id": "12345",
+				"data": {
+					"kind": "video",
+					"title": "link post",
+					"subreddit": "medoemad",
+					"link": "www.google.com",
+					"images": [
+						{
+							"path": "string",
+							"caption": "string",
+							"link": "string"
+						}
+					],
+					"video": "string",
+					"content": {},
+					"nsfw": true,
+					"spoiler": true,
+					"sharePostId": "string",
+					"flair": {
+						"id": "string",
+						"flairName": "Cars lovers",
+						"order": 0,
+						"backgroundColor": "red",
+						"textColor": "#ffffff"
+					},
+					"comments": 100,
+					"votes": 20,
+					"postedAt": "",
+					"sendReplies": true,
+					"markedSpam": true,
+					"suggestedSort": "string",
+					"editedAt": "string",
+					"postedBy": "string",
+					"votingType": 1,
+					"saved": false,
+					"followed": false,
+					"hidden": false,
+					"spammed": false,
+					"inYourSubreddit": false,
+					"moderation": {
+						"approve": {
+							"approvedBy": "string",
+							"approvedDate": "2019-08-24T14:15:22Z"
+						},
+						"remove": {
+							"removedBy": "string",
+							"removedDate": "2019-08-24T14:15:22Z"
+						},
+						"spam": {
+							"spammedBy": "string",
+							"spammedDate": "2019-08-24T14:15:22Z"
+						},
+						"lock": true
+					}
+				}
+			},
+			{
+				"id": "12345",
+				"data": {
+					"kind": "image",
+					"title": "link post",
+					"subreddit": "medoemad",
+					"link": "www.google.com",
+					"images": [
+						{
+							"path": "string",
+							"caption": "string",
+							"link": "string"
+						}
+					],
+					"video": "string",
+					"content": {},
+					"nsfw": true,
+					"spoiler": true,
+					"sharePostId": "string",
+					"flair": {
+						"id": "string",
+						"flairName": "Cars lovers",
+						"order": 0,
+						"backgroundColor": "red",
+						"textColor": "#ffffff"
+					},
+					"comments": 100,
+					"votes": 20,
+					"postedAt": "",
+					"sendReplies": true,
+					"markedSpam": true,
+					"suggestedSort": "string",
+					"editedAt": "string",
+					"postedBy": "string",
+					"votingType": 1,
+					"saved": false,
+					"followed": false,
+					"hidden": false,
+					"spammed": false,
+					"inYourSubreddit": false,
+					"moderation": {
+						"approve": {
+							"approvedBy": "string",
+							"approvedDate": "2019-08-24T14:15:22Z"
+						},
+						"remove": {
+							"removedBy": "string",
+							"removedDate": "2019-08-24T14:15:22Z"
+						},
+						"spam": {
+							"spammedBy": "string",
+							"spammedDate": "2019-08-24T14:15:22Z"
+						},
+						"lock": true
+					}
+				}
 			}
 		]
 	},

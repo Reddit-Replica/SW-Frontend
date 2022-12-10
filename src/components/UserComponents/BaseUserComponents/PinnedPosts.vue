@@ -4,37 +4,47 @@
 	</header>
 	<div class="pinned-post-container">
 		<div class="pinned-post-item">
-			<div v-if="kind == 'image'">
+			<div class="picture-post" v-if="kind == 'image'">
+				<picture-post></picture-post>
 				<!-- <img src= alt="" /> -->
 			</div>
-			<div class="pinned-post-title">the first post</div>
-			<div class="post-info">
-				<div class="post-subreddit-icon">
-					<i></i>
-					<img src="" alt="" />
-				</div>
-				<router-link to=""> r/medo emad </router-link>
+			<div v-if="kind == 'video'" class="video-post">
+				<video-post></video-post>
 			</div>
-			<div class="content-text" v-if="kind === 'text'"></div>
-			<div style="flex-grow: 1"></div>
-			<div class="post-options">
-				<post-options
-					:post-data="postData.children[0]"
-					pinned-post-flag="true"
-				></post-options>
+			<div class="pinned-post-item2">
+				<div class="pinned-post-title">the first post</div>
+				<div class="post-info">
+					<div class="post-subreddit-icon">
+						<i></i>
+						<img src="" alt="" />
+					</div>
+					<router-link to=""> r/medo emad </router-link>
+				</div>
+				<div class="content-text" v-if="kind === 'text'"></div>
+				<div style="flex-grow: 1"></div>
+				<div class="post-options">
+					<post-options
+						:post-data="postData.children[0]"
+						pinned-post-flag="true"
+					></post-options>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import postOptions from './PostComponents/PostOptions.vue';
+import PicturePost from './PostComponents/PicturePost.vue';
+import VideoPost from './PostComponents/VideoPost.vue';
 export default {
 	components: {
 		postOptions,
+		PicturePost,
+		VideoPost,
 	},
 	data() {
 		return {
-			kind: 'text',
+			kind: 'video',
 			postData: {
 				after: 'string',
 				before: 'string',
@@ -136,11 +146,18 @@ header.pinned-posts h2 {
 	cursor: pointer;
 	fill: rgb(135, 138, 140);
 	background-color: #ffffff;
-	padding: 12px 12px 4px;
 	display: flex;
 	flex-direction: column;
 	/* justify-content: space-between; */
 	align-items: flex-start;
+}
+.pinned-post-item2 {
+	padding: 12px 12px 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	flex-grow: 1;
+	width: 100%;
 }
 .pinned-post-item:hover {
 	border: thin solid #1c1c1c;
@@ -175,5 +192,15 @@ header.pinned-posts h2 {
 	background-color: #0079d3;
 	border-radius: 50%;
 	margin-right: 3px;
+}
+.picture-post {
+	width: 100%;
+	overflow: hidden;
+	max-height: 176px;
+}
+.video-post {
+	width: 100%;
+	overflow: hidden;
+	max-height: 176px;
 }
 </style>

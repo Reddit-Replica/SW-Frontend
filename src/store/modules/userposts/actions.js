@@ -8,15 +8,15 @@ export default {
 	async getUserPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
-		// let params = {
-		// 	sort: `${payload.params.sort}`,
-		// 	time: `${payload.params.time}`,
-		// 	before: `${payload.params.before}`,
-		// 	after: `${payload.params.after}`,
-		// };
-		// Object.keys(params).forEach((key) =>
-		// 	url.searchParams.append(key, params[key])
-		// );
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		const response = await fetch(url, {
 			headers: {
@@ -32,8 +32,177 @@ export default {
 			throw error;
 		}
 		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserHistoryPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/history`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserUpVotedPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserDownVotedPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserHiddenPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserCommentsData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/user-comments`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
 		// if (response.status == 200)
-		context.commit('setUserPostData', {
+		context.commit('setUserCommentsData', {
 			responseData,
 			responseStatus: response.status,
 		});
@@ -48,14 +217,14 @@ export default {
 		Object.keys(params).forEach((key) =>
 			url.searchParams.append(key, params[key])
 		);
-		const response = await fetch(baseurl + `/post-insights`); // mock server
-		// const response = await fetch(url, {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-		// 	},
-		// }); // API
+		// const response = await fetch(baseurl + `/post-insights`); // mock server
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -116,14 +285,15 @@ export default {
 		// }
 		console.log(response.status);
 		console.log(responseData);
-		// if(response.status == 200)
-		context.commit('removePostOrComment', {
-			removePostOrCommentData,
-		});
+		if (response.status == 200)
+			context.commit('removePostOrComment', {
+				removePostOrCommentData,
+			});
 		return response.status;
 	},
 	async lockUnLockPostOrComment(context, payload) {
 		const lockUnlockData = payload.lockUnlockData; // id ,type
+		console.log(lockUnlockData);
 		const baseurl = payload.baseurl;
 		let response;
 		if (payload.key == 'lock') {
@@ -147,18 +317,18 @@ export default {
 		}
 		const responseData = await response.json();
 		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
+			// const error = new Error(
+			// 	responseData.message || 'Failed to send request.'
+			// );
+			// throw error;
 		}
 		console.log(response.status);
 		console.log(responseData);
-		// if(response.status == 200)
-		context.commit('lockUnLockPostOrComment', {
-			lockUnlockData,
-			key: payload.key,
-		});
+		if (response.status == 200)
+			context.commit('lockUnLockPostOrComment', {
+				lockUnlockData,
+				key: payload.key,
+			});
 		return response.status;
 	},
 	async unlockPostOrComment(context, payload) {
@@ -338,6 +508,65 @@ export default {
 		// if(response.status == 200)
 		context.commit('pinUnpinPost', {
 			pinUnpinData,
+		});
+		return response.status;
+	},
+	async markSpam(context, payload) {
+		const markSpamData = payload.markSpamData; // id of post pin boolean
+		console.log('markSpamActions', markSpamData);
+		const baseurl = payload.baseurl;
+		let response;
+		try {
+			response = await fetch(baseurl + '/mark-spam', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(markSpamData),
+			});
+		} catch (error) {
+			console.log(error);
+		}
+		// const responseData = await response.json();
+		if (!response.ok) {
+			// const error = new Error(
+			// 	responseData.message || 'Failed to send request.'
+			// );
+			// throw error;
+			// console.log(responseData);
+		}
+		// console.log(response.status);
+		// console.log(responseData);
+		// if(response.status == 200)
+		context.commit('markSpam', {
+			payload,
+		});
+		return response.status;
+	},
+	async unmarkSpam(context, payload) {
+		const unmarkSpamData = payload.unmarkSpamData; // id of post pin boolean
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/unmark-spam', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(unmarkSpamData),
+		});
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(response.status);
+		console.log(responseData);
+		// if(response.status == 200)
+		context.commit('unmarkSpam', {
+			payload,
 		});
 		return response.status;
 	},
