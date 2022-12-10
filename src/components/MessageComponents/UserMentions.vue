@@ -9,7 +9,7 @@
 		<li>
 			<p class="subject-text">
 				<span class="post-reply">username mention</span>
-				<span>{{ message.subject }}</span>
+				<span>{{ message.subredditName }}</span>
 			</p>
 			<div class="d-flex flex-row big-box">
 				<div class="d-flex flex-column vote-box">
@@ -59,7 +59,9 @@
 							<a href="" :id="'context-a-' + index">context</a>
 						</li>
 						<li :id="'full-comment-link-' + index">
-							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
+							<a href="" :id="'full-comment-a-' + index"
+								>Full Comments({{ message.numOfComments }})</a
+							>
 						</li>
 						<li :id="'spam-box-' + index">
 							<div v-if="!spammed">
@@ -277,15 +279,15 @@ export default {
 			default: () => ({
 				id: '',
 				text: '',
-				type: '',
 				senderUsername: '',
 				receiverUsername: '',
-				subredditName: '',
-				postTitle: '',
-				subject: '',
 				sendAt: '',
-				isReply: '',
-				isRead: '',
+				type: '',
+				subredditName: '',
+				postID: '',
+				postID: '',
+				commentID: '',
+				numOfComments: '',
 			}),
 		},
 		// @vuese
