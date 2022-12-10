@@ -48,8 +48,18 @@
 			v-if="showBanUser"
 			:subreddit-name="subredditName"
 			@exit="showBanUserFunction()"
-			@done-successfully="doneSuccessfully('added')"
+			@done-successfully="doneSuccessfully('banned')"
 		></add-ban>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -57,11 +67,13 @@
 import NoList from '../../components/moderation/NoList.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import AddBan from '../../components/moderation/AddBan.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
-	components: { NoList, ListBar, AddBan },
+	components: { NoList, ListBar, AddBan, SaveUnsavePopupMessage },
 	data() {
 		return {
 			showBanUser: false,
+			savedUnsavedPosts: [],
 		};
 	},
 	computed: {
@@ -74,6 +86,75 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		// handle load flairs instead of refreshing
+		// @arg no argument
+		doneSuccessfully(title) {
+			this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: title,
+				state: '',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
+		// @vuese
+		//access value of search
+		// @arg The argument is a string value representing search input
 		// @vuese
 		// Used to show add rule popup
 		// @arg no argument
