@@ -27,6 +27,7 @@ export default {
 			addFlairSuccessfully: false,
 			updateFlairSuccessfully: false,
 			deleteFlairSuccessfully: false,
+			updateFlairsSuccessfully: false,
 
 			//////////////////////BAN////////////////////////
 			banUserSuccessfully: false,
