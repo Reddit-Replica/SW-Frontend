@@ -16,6 +16,7 @@ export default {
 			leaveModSuccessfully: false,
 			//////////////INVITE MOD/////////////
 			inviteModSuccessfully: false,
+			cancelSuccessfully: false,
 			//////////////SPAM/////////////////
 			listOfSpams: [],
 			approveSuccessfully: [],

@@ -23,6 +23,9 @@ export default {
 	leaveModSuccessfully(state) {
 		return state.leaveModSuccessfully;
 	},
+	cancelSuccessfully(state) {
+		return state.cancelSuccessfully;
+	},
 
 	/////////////////////INVITE MOD/////////////////////
 
