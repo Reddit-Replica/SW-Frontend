@@ -233,6 +233,171 @@
 		</div>
 		<h3 class="secondary-title">COMMUNITY TYPE</h3>
 		<h3 class="medium-font">Type of Community</h3>
+		<div class="community-box flex-column">
+			<div class="community-box-title">
+				<h3 class="title-black">Community type</h3>
+			</div>
+			<div class="community-box-input flex-column" role="radiogroup">
+				<input type="hidden" />
+				<div
+					class="type-item"
+					role="radio"
+					value="public"
+					@click="chooseType(0)"
+					id="type-public"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-circle"
+						id="bi-circle-1"
+						viewBox="0 0 16 16"
+						v-if="!typeChosen0"
+					>
+						<path
+							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+						/>
+					</svg>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-record-circle-fill"
+						id="bi-record-circle-fill-1"
+						viewBox="0 0 16 16"
+						v-else
+					>
+						<path
+							d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+						/>
+					</svg>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-person-fill"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+						/>
+					</svg>
+					<div class="title-black">Public</div>
+					<div class="title-grey">
+						Anyone can view, post, and comment to this community
+					</div>
+				</div>
+				<div
+					class="type-item"
+					role="radio"
+					value="restricted"
+					@click="chooseType(1)"
+					id="type-restricted"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-circle"
+						id="bi-circle-2"
+						viewBox="0 0 16 16"
+						v-if="!typeChosen1"
+					>
+						<path
+							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+						/>
+					</svg>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-record-circle-fill"
+						id="bi-record-circle-fill-2"
+						viewBox="0 0 16 16"
+						v-else
+					>
+						<path
+							d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+						/>
+					</svg>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-eye-fill"
+						viewBox="0 0 16 16"
+					>
+						<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+						<path
+							d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+						/>
+					</svg>
+					<div class="title-black">Restricted</div>
+					<div class="title-grey">
+						Anyone can view this community, but only approved users can post
+					</div>
+				</div>
+				<div
+					class="type-item"
+					role="radio"
+					value="private"
+					@click="chooseType(2)"
+					id="type-private"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-circle"
+						id="bi-circle-3"
+						viewBox="0 0 16 16"
+						v-if="!typeChosen2"
+					>
+						<path
+							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+						/>
+					</svg>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-record-circle-fill"
+						id="bi-record-circle-fill-3"
+						viewBox="0 0 16 16"
+						v-else
+					>
+						<path
+							d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+						/>
+					</svg>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						fill="currentColor"
+						class="bi bi-lock-fill"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
+						/>
+					</svg>
+					<div class="title-black">Private</div>
+					<div class="title-grey">
+						Only approved users can view and submit to this community
+					</div>
+				</div>
+			</div>
+		</div>
 		<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
 		<h3 class="medium-font">Accepting requests to join</h3>
 
@@ -384,7 +549,7 @@ export default {};
 	position: absolute;
 	top: 30%;
 }
-/*.community-box-input {
+.community-box-input {
 	align-items: flex-start;
 	margin-top: 12px;
 }
@@ -436,5 +601,31 @@ export default {};
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 21px;
-}*/
+}
+.type-item {
+	/*outline: 0 none;
+	align-items: flex-start;*/
+	margin-bottom: 16px;
+	display: flex;
+	flex-direction: row;
+	/*column-gap: 1px;*/
+}
+.bi {
+	color: var(--color-grey-dark-2);
+}
+.bi-record-circle-fill {
+	fill: var(--color-blue-2);
+}
+.bi-check-square-fill {
+	fill: var(--color-blue-2);
+}
+.pointer-cursor {
+	cursor: pointer;
+	align-items: center;
+}
+.bi-info-circle {
+	padding-left: 4px;
+	/* color: var(--color-grey-dark-2); */
+	position: absolute;
+}
 </style>

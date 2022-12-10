@@ -569,7 +569,7 @@ export default {
 </script>
 
 <style scoped>
-.flex-cloumn {
+.flex-column {
 	display: flex;
 	flex-direction: column;
 }
