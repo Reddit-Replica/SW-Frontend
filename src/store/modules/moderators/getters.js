@@ -18,6 +18,12 @@ export default {
 		return state.after;
 	},
 
+	//////////////////////SPAM////////////////////////
+
+	listOfSpams(state) {
+		return state.listOfSpams;
+	},
+
 	//////////////////////RULES////////////////////////
 
 	addRuleSuccessfully(state) {

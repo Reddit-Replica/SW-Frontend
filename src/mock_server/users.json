@@ -1109,6 +1109,60 @@
 			]
 		}
 	],
+	"spam": [
+		{
+			"before": "string",
+			"after": "string",
+			"children": [
+				{
+					"id": "string",
+					"type": "Post",
+					"data": {
+						"subreddit": "subreddit",
+						"postedBy": "postedBy",
+						"commentedBy": "string",
+						"title": "title",
+						"content": "content",
+						"commentContent": "string",
+						"postUpVotes": 0,
+						"postDownVotes": 0,
+						"commentUpVotes": 0,
+						"commentDownVotes": 0,
+						"numberOfComments": 0,
+						"edited": true,
+						"editTime": "2019-08-24T14:15:22Z",
+						"publishTime": "2019-08-24T14:15:22Z",
+						"commentPublishTime": "2019-08-24T14:15:22Z",
+						"saved": true,
+						"vote": 1
+					}
+				},
+				{
+					"id": "string",
+					"type": "Post",
+					"data": {
+						"subreddit": "string",
+						"postedBy": "string",
+						"commentedBy": "string",
+						"title": "string",
+						"content": "string",
+						"commentContent": "string",
+						"postUpVotes": 0,
+						"postDownVotes": 0,
+						"commentUpVotes": 0,
+						"commentDownVotes": 0,
+						"numberOfComments": 0,
+						"edited": true,
+						"editTime": "2019-08-24T14:15:22Z",
+						"publishTime": "2019-08-24T14:15:22Z",
+						"commentPublishTime": "2019-08-24T14:15:22Z",
+						"saved": true,
+						"vote": 1
+					}
+				}
+			]
+		}
+	],
 	"addRule": [
 		{
 			"ruleName": "asmaa",
@@ -1130,6 +1184,27 @@
 			"reportReason": "",
 			"description": "",
 			"id": 3
+		}
+	],
+	"subreddit-details": [
+		{
+			"nsfw": true,
+			"type": "private",
+			"subredditId": "string",
+			"isFavorite": true,
+			"title": "string",
+			"nickname": "string",
+			"isModerator": true,
+			"category": "string",
+			"members": 0,
+			"description": "string",
+			"dateOfCreation": "string",
+			"isMember": true,
+			"banner": "string",
+			"picture": "string",
+			"views": 0,
+			"mainTopic": "string",
+			"subtopics": ["string"]
 		}
 	],
 	"rule": [

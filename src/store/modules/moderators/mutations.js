@@ -18,6 +18,11 @@ export default {
 		state.handleTime = payload;
 	},
 
+	//////////////SPAM/////////////////
+	setListOfSpams(state, payload) {
+		state.listOfSpams = payload;
+	},
+
 	//////////////RULES/////////////////
 
 	addRuleSuccessfully(state, payload) {

@@ -266,7 +266,7 @@ export default {
 			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-		console.log(responseData);
+		// console.log(responseData);
 	},
 	/**
 	 * Action for changing value of new created subreddit boolean property.

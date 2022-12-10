@@ -7,6 +7,7 @@
 	"/message/post-reply": "/post-reply",
 	"/message/sent": "/sent",
 	"/r/subredditName": "/subredditName",
+	"/r/asmaa/about/moderators?limit=10": "/moderator-list",
 	"/r/asmaa/about/moderators": "/moderator-list",
 	"/r/asmaa/about/invited-moderators": "/invited-moderator-list",
 	"r/subreddit/add-description": "/add-description",
@@ -15,5 +16,7 @@
 	"r/subreddit/toggle-favorite": "toggle-favorite",
 	"/r/subreddit": "/subreddit",
 	"/r/subreddit_new": "/subreddit_new",
-	"/r/asmaaSubredditName/about/rules": "/rule"
+	"/r/asmaaSubredditName/about/rules": "/rule",
+	"/r/asmaa/about/spam": "/spam",
+	"/r/asmaa": "/subreddit-details"
 }
