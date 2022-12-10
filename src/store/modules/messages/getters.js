@@ -57,4 +57,10 @@ export default {
 	replyMessageSuccessfully(state) {
 		return state.replyMessageSuccessfully;
 	},
+	before(state) {
+		return state.before;
+	},
+	after(state) {
+		return state.after;
+	},
 };
