@@ -405,7 +405,7 @@
 			Display a button on your private subreddit that allows users to request to
 			join. Users may still send your subreddit modmail whether this is on or
 			off.
-			<switch-button id="btn2"></switch-button>
+			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
 		</p>
 	</div>
 </template>
@@ -416,7 +416,7 @@ export default {};
 
 <style scoped>
 * {
-	margin: 10px auto;
+	/*margin: 10px auto;*/
 }
 .box {
 	background-color: #ffffff;
@@ -425,6 +425,7 @@ export default {};
 	max-width: 856px;
 	padding: 16px 24px;
 	display: block;
+	margin: 10px auto;
 }
 .main-title {
 	font-size: 18px;
@@ -432,6 +433,7 @@ export default {};
 	line-height: 22px;
 	color: #1c1c1c;
 	margin-bottom: 16px;
+	/*margin: 10px auto;*/
 }
 .secondary-title {
 	font-size: 10px;
@@ -451,7 +453,7 @@ export default {};
 	color: #1c1c1c;
 	display: -ms-flexbox;
 	display: flex;
-	margin-bottom: 4px;
+	margin-bottom: 10px;
 }
 .community-name-input {
 	background-color: #ffffff;
@@ -459,7 +461,7 @@ export default {};
 	color: #1c1c1c;
 	box-sizing: border-box;
 	height: 48px;
-	margin-bottom: 8px;
+	margin-bottom: 10px;
 	border-radius: 4px;
 	padding: 12px 24px 4px 12px;
 	width: 100%;
@@ -468,13 +470,14 @@ export default {};
 	font-weight: 400;
 	color: #7c7c7c;
 	padding-top: 5px;
-	margin: 1x;
+	margin-bottom: 10px;
 }
 .description {
 	display: flex;
 	font-weight: 400;
 	color: #7c7c7c;
 	padding-top: 5px;
+	margin: 10px;
 }
 .text-area {
 	background-color: #ffffff;
@@ -486,6 +489,7 @@ export default {};
 	width: 100%;
 	padding: 8px;
 	resize: vertical;
+	margin: 10px;
 }
 .language {
 	background-color: #ffffff;
@@ -498,6 +502,7 @@ export default {};
 	line-height: 21px;
 	padding: 5px 8px 5px 10px;
 	width: 100%;
+	margin: 10px;
 }
 .lang_ul {
 	background-color: #ffffff;
@@ -524,6 +529,7 @@ export default {};
 	font-size: 14px;
 	line-height: 24px;
 	padding: 8px 36px 8px 10px;
+	margin: 10px;
 }
 .lang_li2 {
 	direction: rtl;
@@ -542,6 +548,7 @@ export default {};
 	font-size: 14px;
 	padding: 5px 8px 5px 36px;
 	width: 100%;
+	margin-bottom: 20px;
 }
 .loc-icon {
 	left: 8px;
