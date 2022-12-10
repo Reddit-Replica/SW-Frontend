@@ -2,10 +2,10 @@
  * @module SearchActions
  */
 export default {
-	searchingQuery(context, payload) {
-		context.commit('setSearchQuery', payload);
-		console.log(payload);
-	},
+	// searchingQuery(context, payload) {
+	// 	context.commit('setSearchQuery', payload);
+	// 	console.log(payload);
+	// },
 	/**
 	 * action for Search for users
 	 * @action  Search for Users

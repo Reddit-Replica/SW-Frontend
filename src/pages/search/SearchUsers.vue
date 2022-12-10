@@ -66,13 +66,9 @@
 					</div>
 					<div class="search-results">
 						<div class="people">
-							<div
-								class="people-results"
-								v-for="value in users"
-								:key="value.UserName"
-							>
-								<div>
-									<div>
+							<div class="people-results">
+								<div v-if="!notfounded">
+									<div v-for="value in users" :key="value.UserName">
 										<a class="user-a"
 											><div class="user-div">
 												<div class="user-details">
@@ -112,6 +108,9 @@
 										</a>
 									</div>
 								</div>
+								<div v-if="notfounded">
+									<Notfound></Notfound>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -122,6 +121,7 @@
 </template>
 <script>
 import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	data() {
 		return {
@@ -131,6 +131,7 @@ export default {
 				{ username: 'Abd', karma: '11k' },
 				{ username: 'Karim', karma: '11k' },
 			],
+			notfounded: false,
 		};
 	},
 	computed: {
@@ -159,7 +160,7 @@ export default {
 			}
 		},
 	},
-	components: { BaseButton },
+	components: { BaseButton, Notfound },
 };
 </script>
 
