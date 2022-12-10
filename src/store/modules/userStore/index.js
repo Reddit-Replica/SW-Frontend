@@ -304,28 +304,70 @@ export default {
 					{
 						id: 'string',
 						data: {
-							subreddit: 'string',
-							postedBy: 'string',
-							title: 'string',
-							type: 'text',
-							content: 'string',
-							flair: {
-								flairId: 'string',
-								flairText: 'string',
-								backgroundColor: 'string',
-								textColor: 'string',
+							post: {
+								kind: 'link',
+								title: 'string',
+								subreddit: 'string',
+								link: 'string',
+								images: [
+									{
+										path: 'string',
+										caption: 'string',
+										link: 'string',
+									},
+								],
+								video: 'string',
+								content: {},
+								nsfw: true,
+								spoiler: true,
+								sharePostId: 'string',
+								flair: {
+									id: 'string',
+									flairName: 'string',
+									order: 0,
+									backgroundColor: 'string',
+									textColor: 'string',
+								},
+								comments: 0,
+								votes: 0,
+								postedAt: 'string',
+								sendReplies: true,
+								markedSpam: true,
+								suggestedSort: 'string',
+								editedAt: 'string',
+								postedBy: 'string',
+								votingType: 1,
+								saved: false,
+								followed: false,
+								hidden: false,
+								spammed: false,
+								inYourSubreddit: false,
+								moderation: {
+									approve: {
+										approvedBy: 'string',
+										approvedDate: '2019-08-24T14:15:22Z',
+									},
+									remove: {
+										removedBy: 'string',
+										removedDate: '2019-08-24T14:15:22Z',
+									},
+									spam: {
+										spammedBy: 'string',
+										spammedDate: '2019-08-24T14:15:22Z',
+									},
+									lock: true,
+								},
 							},
-							nsfw: true,
-							spoiler: true,
-							comment: [
+							comments: [
 								{
 									commentId: 'string',
-									commentBy: 'string',
-									commentBody: 'string',
+									commentedBy: 'string',
+									commentBody: null,
 									points: 0,
-									editTime: '2019-08-24T14:15:22Z',
 									publishTime: '2019-08-24T14:15:22Z',
-									level: 0,
+									editTime: '2019-08-24T14:15:22Z',
+									parent: 'string',
+									level: 2,
 									inYourSubreddit: true,
 									moderation: {
 										approve: {
@@ -337,8 +379,8 @@ export default {
 											removedDate: '2019-08-24T14:15:22Z',
 										},
 										spam: {
-											spamedBy: 'string',
-											spamedDate: '2019-08-24T14:15:22Z',
+											spammedBy: 'string',
+											spammedDate: '2019-08-24T14:15:22Z',
 										},
 										lock: true,
 									},

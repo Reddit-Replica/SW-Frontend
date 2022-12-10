@@ -89,7 +89,12 @@
 								<div class="post-status">
 									<router-link
 										v-if="postData.data.flair"
-										to=""
+										:to="`${$router.push({
+											path: `/r/${postData.data.subreddit}`,
+											query: {
+												f: `flair_name ${postData.data.flair.flairName}`,
+											},
+										})}`"
 										class="flair-box"
 										:style="`background-color :${postData.data.flair.backgroundColor};
 										color : ${postData.data.flair.textColor};
@@ -116,7 +121,7 @@
 									</a>
 								</div>
 								<div v-if="postData.data.moderation">
-									{{ postData.data.postedAt }}
+									{{ getMoment(postData.data.postedAt) }}
 									<div
 										v-if="
 											postData.data.moderation.spam &&
@@ -140,6 +145,10 @@
 									>
 										<i class="fa-solid fa-lock" style="color: #ffd635"></i>
 										<span class="post-tooltiptext">Comments are locked</span>
+									</div>
+									<div v-if="postData.data.pin" class="post-tooltip">
+										<i class="fa-solid fa-thumbtack" style="color: #46d160"></i>
+										<span class="post-tooltiptext">post are Pinned</span>
 									</div>
 									<div
 										v-if="
@@ -175,7 +184,7 @@
 							<div class="post-options">
 								<post-options
 									:post-data="postData"
-									@insights-toggle="insightsPostToggle"
+									@insights-toggle="insightsPostToggle(postData.id)"
 									@expand-post="expandPostContent"
 									@collapse-post="collapsePostContent"
 								></post-options>
@@ -559,7 +568,13 @@
 						style="overflow: hidden"
 						v-if="showPostContent"
 					>
-						<div class="post-picture" v-if="postData.data.kind == 'image'">
+						<div
+							class="post-picture-container"
+							v-if="postData.data.kind == 'image'"
+						>
+							<picture-post></picture-post>
+						</div>
+						<!-- <div class="post-picture" v-if="postData.data.kind == 'image'">
 							<div class="picture-container">
 								<span
 									v-if="lastRightPic != 0"
@@ -589,7 +604,7 @@
 								</div>
 							</div>
 							<div class="post-footer"></div>
-						</div>
+						</div> -->
 						<div
 							class="paragraph-post"
 							v-else-if="postData.data.kind == 'hybrid'"
@@ -597,7 +612,7 @@
 							<div class="post-kind-post" v-html="PostHybridContent"></div>
 						</div>
 						<div class="video" v-else-if="postData.data.kind == 'video'">
-							<video
+							<!-- <video
 								controls
 								style="
 									background-color: rgb(0, 0, 0);
@@ -609,7 +624,8 @@
 									src="../../../../video/userPostTest.mp4"
 									type="video/mp4"
 								/>
-							</video>
+							</video> -->
+							<video-post :video-src="postData.data.video"></video-post>
 						</div>
 					</div>
 					<div class="post-insight" v-else-if="insightActive">
@@ -664,10 +680,15 @@
 </template>
 
 <script>
+import * as moment from 'moment';
 import PostOptions from './PostComponents/PostOptions.vue';
+import VideoPost from './PostComponents/VideoPost.vue';
+import PicturePost from './PostComponents/PicturePost.vue';
 export default {
 	components: {
 		PostOptions,
+		VideoPost,
+		PicturePost,
 	},
 	emits: ['showComments'],
 	props: {
@@ -726,6 +747,9 @@ export default {
 		},
 	},
 	methods: {
+		getMoment(date) {
+			return moment(date).fromNow();
+		},
 		setPostHybridContent() {
 			let QuillDeltaToHtmlConverter =
 				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
@@ -1302,10 +1326,13 @@ span.post-oc {
 /* end-post-options */
 
 /* Post picture */
-.post-picture {
+/* .post-picture {
+	width: 100%;
+} */
+.post-picture-container {
 	width: 100%;
 }
-.post-picture .picture-container {
+/* .post-picture .picture-container {
 	width: 100%;
 	height: 256px;
 	position: relative;
@@ -1367,7 +1394,6 @@ span.post-oc {
 	height: 100%;
 	position: relative;
 	justify-content: center;
-	/* overflow: hidden; */
 }
 .post-picture .picture-container .pic-items li {
 	width: 100%;
@@ -1383,7 +1409,7 @@ span.post-oc {
 	display: flex;
 	width: 100%;
 	align-items: center;
-}
+} */
 /* end post picture  */
 
 /* tool tip  */

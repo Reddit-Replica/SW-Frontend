@@ -36,6 +36,12 @@ export default {
 				payload.ApprovePostOrCommentData.username;
 			state.postData.children[fIndex].data.moderation.approve.approvedDate =
 				'now';
+			if (state.postData.children[fIndex].data.moderation.remove) {
+				delete state.postData.children[fIndex].data.moderation.remove;
+			}
+			if (state.postData.children[fIndex].data.moderation.spam) {
+				delete state.postData.children[fIndex].data.moderation.spam;
+			}
 			console.log('mut approved');
 		}
 	},
@@ -63,6 +69,12 @@ export default {
 				payload.removePostOrCommentData.username;
 			state.postData.children[fIndex].data.moderation.remove.removedDate =
 				'now';
+			if (state.postData.children[fIndex].data.moderation.approve) {
+				delete state.postData.children[fIndex].data.moderation.approve;
+			}
+			if (state.postData.children[fIndex].data.moderation.spam) {
+				delete state.postData.children[fIndex].data.moderation.spam;
+			}
 			console.log('bo');
 		}
 	},
@@ -147,6 +159,41 @@ export default {
 			state.postData.children[fIndex].data.pin = payload.pinUnpinData.pin;
 			console.log('bo');
 			console.log(state.postData, payload.pinUnpinData.pin);
+		}
+	},
+	markSpam(state, payload) {
+		console.log('st', payload);
+		console.log('st', payload.payload.markSpamData);
+		let fIndex = -1;
+		if (payload.payload.markSpamData.type == 'post') {
+			console.log('st', payload);
+			state.postData.children.forEach((element, index) => {
+				// console.log(element);
+				if (element.id == payload.payload.markSpamData.id) {
+					fIndex = index;
+				}
+			});
+			if (fIndex != -1) {
+				console.log(fIndex);
+				console.log(state.postData);
+				state.postData.children[fIndex].data.moderation =
+					state.postData.children[fIndex].data.moderation || {};
+
+				state.postData.children[fIndex].data.moderation.spam =
+					state.postData.children[fIndex].data.moderation.spam || {};
+
+				state.postData.children[fIndex].data.moderation.spam.spammedBy =
+					payload.payload.username;
+				state.postData.children[fIndex].data.moderation.remove.spammedDate =
+					'now';
+				if (state.postData.children[fIndex].data.moderation.approve) {
+					delete state.postData.children[fIndex].data.moderation.approve;
+				}
+				if (state.postData.children[fIndex].data.moderation.remove) {
+					delete state.postData.children[fIndex].data.moderation.remove;
+				}
+				console.log('bo');
+			}
 		}
 	},
 };

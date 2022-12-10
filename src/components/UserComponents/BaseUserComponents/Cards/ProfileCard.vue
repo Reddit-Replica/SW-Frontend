@@ -6,7 +6,7 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url(${userData.banner}) `"
+				:style="`background-image: url( ${$baseurl + '/' + userData.banner}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span
@@ -104,7 +104,7 @@
 					>
 						<img
 							v-if="userData.picture != ''"
-							:src="userData.picture"
+							:src="$baseurl + '/' + userData.picture"
 							alt=""
 							id="profile-picture"
 						/>
@@ -494,30 +494,17 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		async loadProfilePic(e) {
-			const file = e.target.files[0];
-			const postInfo = new FormData();
-			postInfo.append('avatar', file);
-			const baseurl = this.$baseurl;
-			const response = await fetch(baseurl + '/profile-picture', {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-				body: postInfo,
-			});
-			const responseData = await response.text();
-			if (response.status == 200) {
-				localStorage.setItem('response', response.status);
-				console.log('زى الفل الحمد لله');
-			} else if (response.status == 400) {
-				const error = new Error(responseData);
-				console.log(responseData);
-				throw error;
-			} else {
-				console.log(error);
-				const error = new Error('server error');
-				throw error;
+		async loadProfilePic() {
+			const file = this.$refs.profileFile.files[0];
+			const profilePictureUrl = URL.createObjectURL(file);
+			try {
+				await this.$store.dispatch('user/AddProfilePicture', {
+					baseurl: this.$baseurl,
+					file,
+					profilePictureUrl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		/**
@@ -526,31 +513,20 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		async loadCoverPic(e) {
-			const file = e.target.files[0];
-			const postInfo = new FormData();
-			postInfo.append('banner', file);
-			const baseurl = this.$baseurl;
-			const response = await fetch(baseurl + '/banner-image', {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-				body: postInfo,
-			});
-			const responseData = await response.text();
-			if (response.status == 200) {
-				localStorage.setItem('response', response.status);
-				console.log('زى الفل الحمد لله');
-			} else if (response.status == 400) {
-				const error = new Error(responseData);
-				console.log(responseData);
-				throw error;
-			} else {
-				console.log(error);
-				const error = new Error('server error');
-				throw error;
+		async loadCoverPic() {
+			const file = this.$refs.coverFile.files[0];
+			const bannerImageUrl = URL.createObjectURL(file);
+			let responseStatus;
+			try {
+				responseStatus = await this.$store.dispatch('user/AddProfileBanner', {
+					baseurl: this.$baseurl,
+					file,
+					bannerImageUrl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
+			console.log(responseStatus);
 		},
 		/**
 		 * @vuese

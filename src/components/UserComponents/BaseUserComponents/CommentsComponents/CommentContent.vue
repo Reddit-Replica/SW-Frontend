@@ -1,225 +1,157 @@
 <template>
-	<div id="commentId" class="comment-container">
-		<header>
-			<div class="content">
-				<div class="comment-icon">
-					<i
-						style="
-							stroke-width: 35px;
-							stroke: rgb(135, 138, 140);
-							color: transparent;
-						"
-						class="fa-solid fa-message"
-					></i>
+	<div class="comment-body">
+		<div class="comment-body-container">
+			<div class="comment-box">
+				<div class="nested-comment-order">
+					<div v-for="i in commentContent.level + 1" :key="i"></div>
+					<!-- <div></div> -->
 				</div>
-				<div class="title-container">
-					<span class="user-comment-name">
-						<router-link to=""> {{ this.$route.params.userName }}</router-link>
-					</span>
-					<span class="post-title-content">
-						<p>
-							commented on
-							<span class="post-title-name">{{
-								' ' + commentData.data.post.title
-							}}</span>
-						</p>
-					</span>
-					<span class="post-status">
-						<router-link
-							to=""
-							class="flair-box"
-							:style="`background-color :${commentData.data.post.flair.backgroundColor};
-										color : ${commentData.data.post.flair.textColor};
-										`"
-							>{{ commentData.data.post.flair.flairName }}</router-link
+				<div class="comment-content">
+					<div class="comment-body-title">
+						<router-link :to="'/user/' + $route.params.userName">
+							{{ $route.params.userName }}</router-link
 						>
-						<span v-if="commentData.data.post.spoiler" class="post-spoiler"
-							><p>spoiler</p></span
-						>
-						<span v-if="commentData.data.post.nsfw" class="post-nsfw"
-							><p>nsfw</p></span
-						>
-						<span class="post-oc"><p>OC</p></span>
-					</span>
-					<span class="subreddit-name">
-						&nbsp;.&nbsp;
-						<router-link to="">
-							{{ 'r/' + commentData.data.post.subreddit }}</router-link
-						>
-					</span>
-					<span class="posted-by">
-						posted by&nbsp;
-						<router-link to="">{{
-							commentData.data.post.postedBy
+						<span class="comment-op">op</span>
+						<p>{{ commentContent.points }} point</p>
+						<router-link class="comment-date" to="">{{
+							getMoment(commentContent.publishTime)
 						}}</router-link>
-					</span>
-				</div>
-			</div>
-		</header>
-		<!-- <div class="comment-body">
-			<div class="comment-body-container">
-				<div class="comment-box">
-					<div class="nested-comment-order">
-						<div></div>
-						<div></div>
-					</div> -->
-		<comment-content
-			v-for="commentContent in commentData.data.comments"
-			:key="commentContent.id"
-			:comment-content="commentContent"
-		></comment-content>
-		<comment-content
-			v-for="commentContent in commentData.data.comments"
-			:key="commentContent.id"
-			:comment-content="commentContent"
-		></comment-content>
-		<!-- <div class="comment-content">
-						<div class="comment-body-title">
-							<router-link to="">
-								{{ this.$route.params.userName }}</router-link
+					</div>
+					<div class="comment-content-data">
+						<p>
+							{{ commentContent.commentBody }} fdkjbfjhg skjdfnskd sjdnfksjd
+						</p>
+					</div>
+					<div class="comment-options">
+						<ul>
+							<li class="underline">Replay</li>
+							<li class="underline">Share</li>
+							<li
+								class="post-option-item2"
+								style="position: relative"
+								@click="openOptionsBoxList"
 							>
-							<span class="comment-op">op</span>
-							<p>1 point</p>
-							<router-link class="comment-date" to="">2 day ago</router-link>
-						</div>
-						<div class="comment-content-data">
-							<p>fdkjbfjhg skjdfnskd sjdnfksjd</p>
-						</div>
-						<div class="comment-options">
-							<ul>
-								<li class="underline">Replay</li>
-								<li class="underline">Share</li>
+								<div class="post-options-icon three-dot-icon-box">
+									<i>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="20"
+											height="20"
+											fill="currentColor"
+											class="bi bi-three-dots"
+											viewBox="0 0 16 16"
+										>
+											<path
+												d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+											/>
+										</svg>
+									</i>
+								</div>
+								<div v-if="showOptionsBoxList" class="options-box-list">
+									<ul>
+										<li @click="editPost" class="options-box-item">
+											<div class="options-box-icon">
+												<i
+													style="color: rgba(135, 138, 140)"
+													class="fa-solid fa-pen"
+												></i>
+											</div>
+											<div class="options-box-text">Edit Post</div>
+										</li>
+										<li @click="savePost" class="options-box-item">
+											<div class="options-box-icon">
+												<i
+													style="color: rgba(135, 138, 140)"
+													class="fa-regular fa-bookmark"
+												></i>
+											</div>
+											<div class="options-box-text">Save</div>
+										</li>
+										<li @click="deletePost" class="options-box-item">
+											<div class="options-box-icon">
+												<i
+													style="color: rgba(135, 138, 140)"
+													class="fa-solid fa-trash"
+												></i>
+											</div>
+											<div class="options-box-text">Delete</div>
+										</li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+						<div v-if="commentContent.inYourSubreddit" class="post-options">
+							<ul class="comment-moderator-options">
 								<li
-									class="post-option-item2"
-									style="position: relative"
-									@click="openOptionsBoxList"
+									@click="approvePost"
+									:style="['aa' == '' ? 'color: #46d160' : '']"
+									class="post-option-item"
 								>
-									<div class="post-options-icon three-dot-icon-box">
-										<i>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="20"
-												height="20"
-												fill="currentColor"
-												class="bi bi-three-dots"
-												viewBox="0 0 16 16"
-											>
-												<path
-													d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-												/>
-											</svg>
-										</i>
+									<div class="post-options-icon">
+										<i class="fa-solid fa-check"></i>
 									</div>
-									<div v-if="showOptionsBoxList" class="options-box-list">
-										<ul>
-											<li @click="editPost" class="options-box-item">
-												<div class="options-box-icon">
-													<i
-														style="color: rgba(135, 138, 140)"
-														class="fa-solid fa-pen"
-													></i>
-												</div>
-												<div class="options-box-text">Edit Post</div>
-											</li>
-											<li @click="savePost" class="options-box-item">
-												<div class="options-box-icon">
-													<i
-														style="color: rgba(135, 138, 140)"
-														class="fa-regular fa-bookmark"
-													></i>
-												</div>
-												<div class="options-box-text">Save</div>
-											</li>
-											<li @click="deletePost" class="options-box-item">
-												<div class="options-box-icon">
-													<i
-														style="color: rgba(135, 138, 140)"
-														class="fa-solid fa-trash"
-													></i>
-												</div>
-												<div class="options-box-text">Delete</div>
-											</li>
-										</ul>
+									<div class="post-options-text">Approve</div>
+								</li>
+								<li
+									@click="removePost"
+									:style="[
+										'aa' == ''
+											? 'color: #ff585b'
+											: 'color: rgba(135, 138, 140)',
+									]"
+									class="post-option-item"
+								>
+									<div class="post-options-icon">
+										<i style="color: inherit" class="fa-solid fa-ban"></i>
+									</div>
+									<div class="post-options-text">
+										<p>Remove</p>
+									</div>
+								</li>
+								<li
+									@click="spamPost"
+									:style="[
+										'aa' == ''
+											? 'color: #ff585b'
+											: 'color: rgba(135, 138, 140)',
+									]"
+									class="post-option-item"
+								>
+									<div class="post-options-icon">
+										<i class="fa-regular fa-calendar-xmark"></i>
+									</div>
+									<div class="post-options-text">
+										<p>Spam</p>
 									</div>
 								</li>
 							</ul>
-							<div class="post-options">
-								<ul class="comment-moderator-options">
-									<li
-										@click="approvePost"
-										:style="['aa' == '' ? 'color: #46d160' : '']"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i class="fa-solid fa-check"></i>
-										</div>
-										<div class="post-options-text">Approve</div>
-									</li>
-									<li
-										@click="removePost"
-										:style="[
-											'aa' == ''
-												? 'color: #ff585b'
-												: 'color: rgba(135, 138, 140)',
-										]"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i style="color: inherit" class="fa-solid fa-ban"></i>
-										</div>
-										<div class="post-options-text">
-											<p>Remove</p>
-										</div>
-									</li>
-									<li
-										@click="spamPost"
-										:style="[
-											'aa' == ''
-												? 'color: #ff585b'
-												: 'color: rgba(135, 138, 140)',
-										]"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i class="fa-regular fa-calendar-xmark"></i>
-										</div>
-										<div class="post-options-text">
-											<p>Spam</p>
-										</div>
-									</li>
-								</ul>
-							</div>
 						</div>
-					</div> -->
-		<!-- </div>
+					</div>
+				</div>
 			</div>
-		</div> -->
+		</div>
 	</div>
 </template>
 <script>
-import CommentContent from './CommentsComponents/CommentContent.vue';
+import * as moment from 'moment';
 export default {
+	props: {
+		commentContent: {
+			type: Object,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			showOptionsBoxList: false,
 		};
 	},
-	components: {
-		CommentContent,
-	},
-	props: {
-		commentData: {
-			type: Object,
-			required: true,
-		},
-		id: {
-			type: String,
-			required: true,
-		},
-	},
 	methods: {
 		openOptionsBoxList() {
 			this.showOptionsBoxList = !this.showOptionsBoxList;
+		},
+		getMoment(date) {
+			return moment(date).fromNow();
 		},
 	},
 };
@@ -570,6 +502,5 @@ span.post-oc {
 
 .post-tooltip:hover .post-tooltiptext {
 	visibility: visible;
-}
-/* */
+} /* End post Options */
 </style>
