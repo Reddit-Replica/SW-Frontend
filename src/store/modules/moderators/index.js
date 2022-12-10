@@ -14,6 +14,7 @@ export default {
 			before: '',
 			//////////////SPAM/////////////////
 			listOfSpams: [],
+			approveSuccessfully: [],
 			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],

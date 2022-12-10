@@ -23,6 +23,9 @@ export default {
 	listOfSpams(state) {
 		return state.listOfSpams;
 	},
+	approveSuccessfully(state) {
+		return state.approveSuccessfully;
+	},
 
 	//////////////////////RULES////////////////////////
 
