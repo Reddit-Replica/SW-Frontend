@@ -7,7 +7,7 @@
 	<div>
 		<!-- ///////////change to !moderatorByMe/////////// -->
 		<unmoderator-view
-			v-if="!moderatorByMe"
+			v-if="moderatorByMe"
 			:subreddit-name="subredditName"
 		></unmoderator-view>
 		<div v-else>
