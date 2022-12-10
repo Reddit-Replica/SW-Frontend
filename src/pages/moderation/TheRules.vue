@@ -228,6 +228,7 @@ export default {
 				if (this.$store.getters['moderation/updateRulesSuccessfully']) {
 					this.dragDrop = false;
 					this.loadListOfRules();
+					this.savePost('Reorder Saved');
 				}
 			} catch (err) {
 				console.log(err);

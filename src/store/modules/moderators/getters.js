@@ -59,6 +59,9 @@ export default {
 	deleteFlairSuccessfully(state) {
 		return state.deleteFlairSuccessfully;
 	},
+	updateFlairsSuccessfully(state) {
+		return state.updateFlairsSuccessfully;
+	},
 
 	//////////////////////BAN////////////////////////
 
