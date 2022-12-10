@@ -12,6 +12,8 @@ export default {
 			handleTime: '',
 			after: '',
 			before: '',
+			//////////////LEAVE MOD/////////////
+			leaveModSuccessfully: false,
 			//////////////SPAM/////////////////
 			listOfSpams: [],
 			approveSuccessfully: [],

@@ -18,6 +18,12 @@ export default {
 		return state.after;
 	},
 
+	/////////////////////LEAVE MOD/////////////////////
+
+	leaveModSuccessfully(state) {
+		return state.leaveModSuccessfully;
+	},
+
 	//////////////////////SPAM////////////////////////
 
 	listOfSpams(state) {

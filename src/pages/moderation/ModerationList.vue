@@ -113,7 +113,7 @@
 							>Cancel</base-button
 						>
 						<base-button
-							@click="deleteRule()"
+							@click="leaveModFunction()"
 							class="button-blue"
 							id="leave-button"
 							>Leave</base-button
@@ -196,6 +196,7 @@ export default {
 			notSearch: true,
 			showInvitePopup: false,
 			showLeaveMod: false,
+			errorResponse: '',
 		};
 	},
 	methods: {
@@ -232,6 +233,84 @@ export default {
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		// Used to handle save reorder rules action
+		// @arg no argument
+		async leaveModFunction() {
+			try {
+				await this.$store.dispatch('moderation/leaveMod', {
+					baseurl: this.$baseurl,
+					subreddit: this.subredditName,
+				});
+				if (this.$store.getters['moderation/leaveModSuccessfully']) {
+					this.savePost();
+					window.location.reload();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'Leaved',
+				state: '',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			}
 		},
 		// @vuese
@@ -433,5 +512,6 @@ input:focus {
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
+	color: red;
 }
 </style>
