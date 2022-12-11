@@ -51,6 +51,12 @@
 export default {
 	props: {
 		//@vuese
+		//Subreddit ID
+		subredditId: {
+			type: String,
+			default: '',
+		},
+		//@vuese
 		//Subreddit name
 		subredditName: {
 			type: String,
@@ -95,17 +101,11 @@ export default {
 
 			this.$store.dispatch('community/joinSubreddit', {
 				message: this.message,
-				subredditId: this.subredditName,
+				subredditId: this.subredditId,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
 		},
-		// //@vuese
-		// //Toogle Joining and leaving a subreddit button
-		// //@arg no argument
-		// toogleJoin() {
-		// 	this.isJoined = !this.isJoined;
-		// },
 	},
 };
 </script>

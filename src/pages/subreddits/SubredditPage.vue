@@ -6,6 +6,7 @@
 			:subreddit-nickname="nickname"
 			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
+			:subreddit-id="subreddit.subredditId"
 			id="community-header"
 		></subreddit-top>
 		<div class="subreddit-page">
