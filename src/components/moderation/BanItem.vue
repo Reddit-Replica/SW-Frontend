@@ -26,7 +26,12 @@
 				<!-- <span>{{ moderator.dateOfModeration }}</span> -->
 			</div>
 			<div class="permissions">
-				<base-button class="button-ban" id="button-edit">Edit</base-button>
+				<base-button
+					class="button-ban"
+					id="button-edit"
+					@click="showAddBanFunction()"
+					>Edit</base-button
+				>
 				<base-button
 					class="button-ban"
 					id="button-more-details"
@@ -64,11 +69,25 @@
 			<div class="banned-for">Banned For:</div>
 			<div class="reason">reason</div>
 		</div>
+		<div class="add-ban" v-if="showAddBan">
+			<add-ban
+				@done-successfully="doneSuccessfully('updated')"
+				@exit="showAddBanFunction()"
+				:ban-name-edit="ban.username"
+				:ban-period-edit="ban.banPeriod"
+				:ban-mod-note-edit="ban.modNote"
+				:ban-note-include-edit="ban.noteInclude"
+				:ban-reason-for-edit="ban.reasonForBan"
+				:edited="true"
+			></add-ban>
+		</div>
 	</div>
 </template>
 
 <script>
+import AddBan from '../../components/moderation/AddBan.vue';
 export default {
+	components: { AddBan },
 	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
@@ -111,6 +130,7 @@ export default {
 		return {
 			sureShown: false,
 			viewDetails: false,
+			showAddBan: false,
 		};
 	},
 	computed: {
@@ -137,6 +157,12 @@ export default {
 	methods: {
 		viewDetailsFunction() {
 			this.viewDetails = !this.viewDetails;
+		},
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showAddBanFunction() {
+			this.showAddBan = !this.showAddBan;
 		},
 	},
 };

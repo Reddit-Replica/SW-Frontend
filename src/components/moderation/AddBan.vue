@@ -1,9 +1,9 @@
 <template>
 	<div id="create-ban-form">
-		<base-dialog :show="banShown" @close="hideBan" title="Ban a user:">
+		<base-dialog :show="banShown" @close="hideBan" :title="title">
 			<div class="ban-dialog flex-column">
 				<div class="ban-box flex-column">
-					<div class="ban-box-input flex-column">
+					<div class="ban-box-input flex-column" v-if="!edited">
 						<label for="ban-input" class="title-black">Enter username</label>
 						<input
 							class="input-name"
@@ -119,7 +119,14 @@
 						</div>
 					</div>
 					<div class="footer-buttons">
-						<div class="footer-p">Visible to banned user</div>
+						<div class="footer-p" v-if="!edited">Visible to banned user</div>
+						<base-button
+							v-if="edited"
+							@click="unbanUser()"
+							class="delete-button"
+							id="delete-button"
+							>UnBan</base-button
+						>
 						<div class="ban-box box-buttons">
 							<base-button
 								@click="hideBan"
@@ -163,19 +170,67 @@ export default {
 			default: '',
 			required: true,
 		},
+		// @vuese
+		//return edited ban name
+		// @type string
+		banNameEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban period edit
+		// @type string
+		banPeriodEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban mod note to edit
+		// @type string
+		banModNoteEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban note include tiedit
+		// @type string
+		banNoteIncludeEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban reason For to edit
+		// @type string
+		banReasonForEdit: {
+			type: String,
+			default: 'None',
+			required: true,
+		},
+		// @vuese
+		//return if there is an edited rule
+		// @type string
+		edited: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
 	},
 	data() {
 		return {
 			banShown: true,
 			banUserName: '',
-			reason: 'None',
-			modNote: '',
+			reason: this.banReasonForEdit,
+			modNote: this.banModNoteEdit,
 			charRemainingNote: 300,
 			errorResponse: null,
 			charRemainingReasonNote: 5000,
-			reasonNote: '',
+			reasonNote: this.banNoteIncludeEdit,
 			checkPermanent: true,
-			banPeriod: '',
+			banPeriod: this.banPeriodEdit,
 		};
 	},
 	// @vuese
@@ -190,6 +245,16 @@ export default {
 		// @type object
 		listOfRules() {
 			return this.$store.getters['moderation/listOfRules'];
+		},
+		// @vuese
+		//return title of popup
+		// @type object
+		title() {
+			if (this.edited) {
+				return 'Edit ban for:' + this.banNameEdit;
+			} else {
+				return 'Ban a user:';
+			}
 		},
 	},
 	methods: {
@@ -547,5 +612,23 @@ button:hover {
 	text-overflow: ellipsis;
 	border-top: 1px solid var(--color-grey-light-9);
 	border-bottom: none;
+}
+.delete-button {
+	margin-right: auto;
+	color: var(--color-red-dark-1);
+	position: relative;
+	border: 1px solid transparent;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
+}
+.delete-button:hover {
+	background-color: var(--color-grey-light-4);
 }
 </style>
