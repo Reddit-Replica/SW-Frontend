@@ -30,7 +30,8 @@
 				</svg>
 			</a>
 		</div>
-		<no-list :title="'Banned users'">
+
+		<no-list :title="'Banned users'" v-if="false">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"
@@ -44,6 +45,45 @@
 				/>
 			</svg>
 		</no-list>
+
+		<search-bar
+			v-if="true"
+			@enter-search="(search) => enterSearch(search)"
+			:empty-input="search"
+			:before="before"
+			:after="after"
+			@fetch-before="loadListOfBanned('before')"
+			@fetch-after="loadListOfBanned('after')"
+		></search-bar>
+		<ul class="ul-items" v-if="!noItems && !noBanned">
+			<ban-item
+				v-for="(ban, index) in listOfBanned"
+				:key="ban"
+				:ban="ban"
+				:search="search"
+				:index="index"
+			></ban-item>
+		</ul>
+
+		<div class="no-items" v-if="noItems">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				fill="currentColor"
+				class="bi bi-search icon-search"
+				viewBox="0 0 16 16"
+				id="search-icon"
+			>
+				<path
+					d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+				/>
+			</svg>
+			<span>No results for u/{{ search }}</span>
+			<base-button class="see-all-button" id="see-all-button" @click="seeAll()"
+				>See all</base-button
+			>
+		</div>
 		<add-ban
 			v-if="showBanUser"
 			:subreddit-name="subredditName"
@@ -64,17 +104,33 @@
 </template>
 
 <script>
+import SearchBar from '../../components/moderation/SearchBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import AddBan from '../../components/moderation/AddBan.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import BanItem from '../../components/moderation/BanItem.vue';
 export default {
-	components: { NoList, ListBar, AddBan, SaveUnsavePopupMessage },
+	components: {
+		NoList,
+		ListBar,
+		AddBan,
+		SaveUnsavePopupMessage,
+		BanItem,
+		SearchBar,
+	},
 	data() {
 		return {
 			showBanUser: false,
 			savedUnsavedPosts: [],
+			search: '',
+			count: 0,
+			noItems: false,
+			errorResponse: '',
 		};
+	},
+	beforeMount() {
+		this.loadListOfBanned();
 	},
 	computed: {
 		// @vuese
@@ -83,6 +139,33 @@ export default {
 		subredditName() {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
+		},
+		// @vuese
+		//return list of moderators
+		// @type object
+		listOfBanned() {
+			return this.$store.getters['moderation/listOfModerators'];
+		},
+		// @vuese
+		//return true if there is no banned, false otherwise
+		// @type boolean
+		noBanned() {
+			if (this.listOfBanned.length != 0) {
+				return false;
+			}
+			return true;
+		},
+		// @vuese
+		//return if there is banned before
+		// @type string
+		before() {
+			return this.$store.getters['moderation/before'];
+		},
+		// @vuese
+		//return if there is banned after
+		// @type string
+		after() {
+			return this.$store.getters['moderation/after'];
 		},
 	},
 	methods: {
@@ -155,6 +238,59 @@ export default {
 		// @vuese
 		//access value of search
 		// @arg The argument is a string value representing search input
+		enterSearch(input) {
+			this.search = input;
+			this.noItems = false;
+			this.notSearch = true;
+			for (let i = 0; i < this.listOfBanned.length; i++) {
+				if (this.listOfBanned[i].username != input && input != '') {
+					this.count = this.count + 1;
+					this.noItems = false;
+					this.notSearch = false;
+				}
+			}
+			if (this.count == this.listOfBanned.length) {
+				this.noItems = true;
+				this.notSearch = false;
+			}
+			if (input == '') {
+				this.noItems = false;
+				this.notSearch = true;
+			}
+			this.count = 0;
+		},
+		// @vuese
+		//show all list of moderators
+		// @arg no argument
+		seeAll() {
+			this.search = '';
+			this.noItems = false;
+		},
+		// @vuese
+		//load moderators list from the store
+		// @arg no argument
+		async loadListOfBanned(title) {
+			let beforeMod = '',
+				afterMod = '';
+			if (title == 'before') {
+				beforeMod = this.before;
+			} else if (title == 'after') {
+				afterMod = this.after;
+			}
+			try {
+				await this.$store.dispatch('moderation/listOfModerators', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					beforeMod: beforeMod,
+					afterMod: afterMod,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		//access value of search
+		// @arg The argument is a string value representing search input
 		// @vuese
 		// Used to show add rule popup
 		// @arg no argument
@@ -178,5 +314,20 @@ export default {
 	line-height: 2.2rem;
 	color: var(--color-dark-2);
 	padding-top: 9rem;
+}
+.ul-items {
+	list-style: none;
+	background-color: var(--color-white-1);
+	padding-left: 0rem;
+}
+.no-items {
+	background-color: var(--color-white-1);
+	height: 25rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	font-weight: bold;
 }
 </style>
