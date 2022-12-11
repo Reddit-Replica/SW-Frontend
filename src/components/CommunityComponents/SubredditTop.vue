@@ -20,7 +20,7 @@
 					/>
 					<div class="top-title-button">
 						<div class="top-title">
-							<h1 class="title-1">{{ subredditName }}</h1>
+							<h1 class="title-1">{{ subredditNickname }}</h1>
 							<h2 class="title-2">r/{{ subredditName }}</h2>
 						</div>
 						<div>
@@ -53,6 +53,12 @@ export default {
 		//@vuese
 		//Subreddit name
 		subredditName: {
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//Subreddit nickname
+		subredditNickname: {
 			type: String,
 			default: '',
 		},
