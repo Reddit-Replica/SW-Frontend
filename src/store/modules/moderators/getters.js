@@ -83,4 +83,7 @@ export default {
 	banUserSuccessfully(state) {
 		return state.banUserSuccessfully;
 	},
+	unBanUserSuccessfully(state) {
+		return state.unBanUserSuccessfully;
+	},
 };

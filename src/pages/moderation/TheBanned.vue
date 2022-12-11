@@ -62,6 +62,7 @@
 				:ban="ban"
 				:search="search"
 				:index="index"
+				@done-successfully="doneSuccessfully()"
 			></ban-item>
 		</ul>
 
@@ -173,7 +174,11 @@ export default {
 		// handle load flairs instead of refreshing
 		// @arg no argument
 		doneSuccessfully(title) {
-			this.savePost(title);
+			if (!title) {
+				this.savePost('Done');
+			} else {
+				this.savePost(title);
+			}
 		},
 		// @vuese
 		// Used to show handle save action popup
