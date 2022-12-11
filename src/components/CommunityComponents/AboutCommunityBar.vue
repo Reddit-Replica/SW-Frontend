@@ -4,7 +4,7 @@
 			<div class="about-title"><h2 class="about-h2">About Community</h2></div>
 			<div class="about-options">
 				<router-link
-					:to="'/r/' + subredditName + '/about/'"
+					:to="'/r/' + subredditName + '/about/moderators'"
 					class="mod-tools"
 					id="mod-tools"
 				>
