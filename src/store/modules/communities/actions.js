@@ -266,7 +266,6 @@ export default {
 			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-		// console.log(responseData);
 	},
 	/**
 	 * Action for changing value of new created subreddit boolean property.
@@ -301,10 +300,16 @@ export default {
 
 		const responseData = await response.json();
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},
