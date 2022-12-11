@@ -2,7 +2,8 @@
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
-			:subreddit-name="subredditName"
+			:subreddit-name="subreddit.title"
+			:subreddit-nickname="nickname"
 			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
 			id="community-header"
@@ -161,6 +162,10 @@ export default {
 	computed: {
 		showDialog() {
 			return this.firstTimeCreated && this.showFirstDialog;
+		},
+		nickname() {
+			if (!this.subreddit.nickname) return this.subreddit.title;
+			else return this.subreddit.nickname;
 		},
 	},
 	beforeMount() {
