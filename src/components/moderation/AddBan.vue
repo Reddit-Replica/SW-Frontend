@@ -163,14 +163,6 @@ export default {
 	emits: ['exit', 'doneSuccessfully', 'clickedDelete'],
 	props: {
 		// @vuese
-		//return subreddit name
-		// @type string
-		subredditName: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
 		//return edited ban name
 		// @type string
 		banNameEdit: {
@@ -240,6 +232,13 @@ export default {
 	},
 
 	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
 		// @vuese
 		//return list of Rules
 		// @type object
@@ -319,7 +318,27 @@ export default {
 				this.errorResponse = err;
 			}
 		},
-
+		//@vuese
+		//handle submit ban user
+		//@arg no argument
+		async unbanUser() {
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('moderation/unBanUser', {
+					//////userId not ban user name
+					username: this.banUserName,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/unBanUserSuccessfully']) {
+					this.hideBan();
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 		//@vuese
 		//handle delete rule
 		//@arg no argument

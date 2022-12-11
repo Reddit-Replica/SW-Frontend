@@ -36,6 +36,7 @@ export default {
 
 			//////////////////////BAN////////////////////////
 			banUserSuccessfully: false,
+			unBanUserSuccessfully: false,
 		};
 	},
 	mutations,
