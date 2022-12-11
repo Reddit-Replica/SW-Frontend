@@ -82,4 +82,7 @@ export default {
 	banUserSuccessfully(state, payload) {
 		state.banUserSuccessfully = payload;
 	},
+	unBanUserSuccessfully(state, payload) {
+		state.unBanUserSuccessfully = payload;
+	},
 };

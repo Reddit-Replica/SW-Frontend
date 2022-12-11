@@ -71,7 +71,7 @@
 		</div>
 		<div class="add-ban" v-if="showAddBan">
 			<add-ban
-				@done-successfully="doneSuccessfully('updated')"
+				@done-successfully="doneSuccessfully()"
 				@exit="showAddBanFunction()"
 				:ban-name-edit="ban.username"
 				:ban-period-edit="ban.banPeriod"
@@ -155,6 +155,9 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		// Used to show view Details
+		// @arg no argument
 		viewDetailsFunction() {
 			this.viewDetails = !this.viewDetails;
 		},
@@ -163,6 +166,12 @@ export default {
 		// @arg no argument
 		showAddBanFunction() {
 			this.showAddBan = !this.showAddBan;
+		},
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
 		},
 	},
 };
