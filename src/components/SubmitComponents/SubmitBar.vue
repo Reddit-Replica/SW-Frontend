@@ -12,7 +12,12 @@
 				<div class="choose-post-community-3" @click="setFocused">
 					<span v-if="!inputFocused & !isSet" class="dashed-circle"></span>
 					<img :src="image" alt="image" class="img-profile" v-if="isSet" />
-
+					<!-- <img
+						src="../../../img/default_subreddit_image.png"
+						alt="image"
+						class="img-profile"
+						v-if="isSet"
+					/> -->
 					<svg
 						v-if="inputFocused & !isSet"
 						xmlns="http://www.w3.org/2000/svg"
@@ -54,22 +59,17 @@
 				<div class="input-drop-down-box-1" v-if="inputFocused">
 					<div class="input-drop-down-box-2">
 						<div class="title title-profile">YOUR PROFILE</div>
-						<div class="section-box" @click="getUserdata()">
+						<div class="section-box">
 							<div class="image-box">
 								<img
-									src="https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030"
+									:src="this.$baseurl + '/' + this.userData.picture"
 									alt="image"
 									class="img-profile"
 								/>
 							</div>
 							<div
 								class="name-box"
-								@click="
-									setName(
-										userName,
-										'https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030'
-									)
-								"
+								@click="setName(userName, this.userData.picture)"
 							>
 								<span class="name"> u/{{ userName }}</span>
 							</div>
@@ -202,15 +202,8 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
-
-			this.getSubreddits();
-			for (let i = 0; i < this.subreddits.length; i++) {
-				if (this.subreddits[i].picture) console.log('picture is found ');
-				else console.log('picture is not found ');
-			}
-
 			this.getUserdata();
-			console.log(this.userData);
+			this.getSubreddits();
 		},
 		// @vuese
 		// Used to show create community popup
@@ -237,6 +230,7 @@ export default {
 			this.isSet = true;
 			if (image) this.image = image;
 			else this.image = '../../../img/default_subreddit_image.png';
+
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
 			});
@@ -245,19 +239,23 @@ export default {
 		// Used to  set the choosen subreddit that is profile
 		// @arg a string value representing subreddit name which is user name
 		setName(name, image) {
+			console.log(image);
 			this.inSubreddit = false;
 			this.subredditTitle = name;
 			this.communityName = name;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
+			this.image = this.$baseurl + '/' + this.userData.picture;
+		},
+		setUser(image) {
+			this.isSet = true;
+			this.inSubreddit = false;
+			this.inputFocused = !this.inputFocused;
 			this.image = image;
-			this.$store.commit('posts/setSubreddit', {
-				subreddit: name,
-			});
 		},
 		async getUserdata() {
 			const actionPayload = {
-				userName: 'mohamed',
+				userName: this.userName,
 				baseurl: this.$baseurl,
 			};
 			console.log('enter get user data');
@@ -275,8 +273,6 @@ export default {
 				console.log(this.err);
 			}
 			this.userData = this.$store.getters['user/getUserData'].userData;
-			this.isSet = true;
-			this.inSubreddit = false;
 		},
 	},
 	computed: {
