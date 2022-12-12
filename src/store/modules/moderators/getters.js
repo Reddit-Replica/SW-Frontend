@@ -31,6 +31,9 @@ export default {
 	listOfMuted(state) {
 		return state.listOfMuted;
 	},
+	muteUserSuccessfully(state) {
+		return state.muteUserSuccessfully;
+	},
 
 	/////////////////////LEAVE MOD/////////////////////
 
