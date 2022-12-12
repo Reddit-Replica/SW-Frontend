@@ -138,18 +138,18 @@
 					id="comm-date"
 					@mouseover="toogleDateBox"
 					@mouseleave="toogleDateBox"
-					>Created {{ communityDate }}</span
+					>Created {{ communityCreationDate }}</span
 				>
 				<div
 					class="box arrow-top box-arrow-1"
 					v-if="dateBoxShown"
 					id="date-hover"
 				>
-					10 days ago.
+					{{ communityDate }}
 				</div>
 			</div>
 
-			<div class="box-body" id="created-type">
+			<div class="box-body" id="created-type" v-if="isPrivate">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -181,7 +181,7 @@
 						@mouseover="toogleMembersCountBox"
 						@mouseleave="toogleMembersCountBox"
 					>
-						{{ membersCount }}
+						{{ calculateMembers(membersCount) }}
 					</div>
 					<div class="text-grey">Members</div>
 					<div
@@ -194,23 +194,14 @@
 				</div>
 				<div id="online-members-num" class="relative-flex">
 					<div>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="currentColor"
-							class="bi bi-dot"
-							viewBox="0 0 16 16"
-						>
-							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-						</svg>
+						<div class="point-green"></div>
 						<span
 							class="text-bold"
 							id="comm-online-mem"
 							@mouseover="toogleOnlineMembersCountBox"
 							@mouseleave="toogleOnlineMembersCountBox"
-							>{{ onlineMembersCount }}</span
-						>
+							>{{ calculateMembers(onlineMembersCount) }}
+						</span>
 					</div>
 					<div class="text-grey">Online</div>
 					<div
@@ -514,7 +505,8 @@ export default {
 	},
 	computed: {
 		emptyDescription() {
-			return this.communityDescription === '';
+			// return this.communityDescription === '';
+			return !this.communityDescription || this.communityDescription === '';
 		},
 		communityDescription() {
 			return this.communityDescriptionProp;
@@ -523,7 +515,8 @@ export default {
 			return this.communityTopicProp.topicTitle;
 		},
 		topicChosen() {
-			return this.communityTopic !== '';
+			// return this.communityTopic !== '';
+			return this.communityTopic;
 		},
 		communitySubtopics() {
 			return this.communityTopicProp.subtopics;
@@ -537,6 +530,34 @@ export default {
 		favouriteText() {
 			if (!this.isFavorite) return 'Add To Favorites';
 			else return 'Remove From Favorites';
+		},
+		communityCreationDate() {
+			//extract year
+			let year = this.communityDate.substring(0, 4);
+
+			//extract month and write its name
+			let month = this.communityDate.substring(5, 7);
+			if (month == '01') month = 'Jan';
+			else if (month == '02') month = 'Feb';
+			else if (month == '03') month = 'Mar';
+			else if (month == '04') month = 'Apr';
+			else if (month == '05') month = 'May';
+			else if (month == '06') month = 'Jan';
+			else if (month == '07') month = 'Jul';
+			else if (month == '08') month = 'Aug';
+			else if (month == '09') month = 'Sep';
+			else if (month == '10') month = 'Oct';
+			else if (month == '11') month = 'Nov';
+			else if (month == '12') month = 'Dec';
+
+			//extract day
+			let day = this.communityDate.substring(8, 10);
+			if (day[0] == '0') day = day[1];
+
+			return month + ' ' + day + ', ' + year;
+		},
+		isPrivate() {
+			return this.communityType == 'Private';
 		},
 	},
 	methods: {
@@ -738,6 +759,18 @@ export default {
 		//@arg no argument
 		toogleNew() {
 			this.isNew = !this.isNew;
+		},
+		//@vuese
+		//calculate members count of subreddit
+		//@arg no argument
+		calculateMembers(count) {
+			if (count >= 1000000) {
+				return parseFloat((count / 1000000).toFixed(1)) + ' M';
+			} else if (count >= 1000) {
+				return parseFloat((count / 1000).toFixed(1)) + ' K';
+			} else {
+				return count;
+			}
 		},
 	},
 };
@@ -1106,5 +1139,13 @@ input {
 .box-arrow-4:after {
 	right: 45% !important;
 	border-bottom: 15px solid var(--color-blue-2) !important;
+}
+.point-green {
+	background-color: var(--color-green);
+	display: inline-block;
+	border-radius: 50%;
+	width: 4px;
+	height: 4px;
+	margin-right: 2px;
 }
 </style>
