@@ -1,7 +1,7 @@
 <template>
 	<div class="settings-page" style="overflow-y: scroll">
 		<div class="settings-block">
-			<div>
+			<!-- <div>
 				<h2 class="h2-main-title">Manage Emails</h2>
 				<h3 class="h3-main-title">messages</h3>
 
@@ -18,12 +18,12 @@
 						<switch-button id="btn2"></switch-button>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
-			<div>
+			<div style="margin-top: 30px">
 				<h3 class="h3-main-title">ACTIVITY</h3>
 
-				<div class="box-con">
+				<!-- <div class="box-con">
 					<h3 class="h3-title">New user welcome</h3>
 					<div class="box-switch-button">
 						<switch-button id="btn3"></switch-button>
@@ -63,7 +63,7 @@
 					<div class="box-switch-button">
 						<switch-button id="btn8"></switch-button>
 					</div>
-				</div>
+				</div> -->
 				<div class="box-con">
 					<h3 class="h3-title">New followers</h3>
 
@@ -71,7 +71,7 @@
 						<switch-button id="btn9"></switch-button>
 					</div>
 				</div>
-				<h3 class="h3-main-title">NEWSLETTERS</h3>
+				<!-- <h3 class="h3-main-title">NEWSLETTERS</h3>
 
 				<div class="box-con">
 					<h3 class="h3-title">Daily Digest</h3>
@@ -92,7 +92,7 @@
 					<div class="box-switch-button">
 						<switch-button id="btn12"></switch-button>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div>
 				<h3 class="h3-main-title"></h3>
@@ -112,11 +112,31 @@
 export default {
 	data() {
 		return {
+			newFollowerEmail: false,
 			unsubscribeFromEmails: false,
 		};
 	},
 	methods: {
-		changeEmailsetting() {},
+		async changeEmailsetting() {
+			const actionPayload = {
+				newFollowerEmail: this.newFollowerEmail,
+				unsubscribeFromEmails: this.unsubscribeFromEmails,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeEmailsetting',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
 	},
 };
 </script>
