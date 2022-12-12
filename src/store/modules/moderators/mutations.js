@@ -23,6 +23,9 @@ export default {
 	setListOfApproved(state, payload) {
 		state.listOfApproved = payload;
 	},
+	approveUserSuccessfully(state, payload) {
+		state.approveUserSuccessfully = payload;
+	},
 
 	//////////////APPROVED/////////////
 
