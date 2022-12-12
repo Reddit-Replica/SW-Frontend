@@ -112,11 +112,34 @@ export default {
 	 * @param {Object} contains base url
 	 * @returns {void}
 	 */
-	async ToggleFavourite(_, payload) {
+	async addToFavourite(_, payload) {
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/toggle-favorite`,
+			baseurl + `/r/${payload.subredditName}/make-favorite`,
+			{
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async removeFromFavourite(_, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/remove-favorite`,
 			{
 				method: 'PATCH',
 				headers: {

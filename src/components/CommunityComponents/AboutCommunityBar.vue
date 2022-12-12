@@ -46,7 +46,7 @@
 					</button>
 					<button
 						class="button-option"
-						@click="addToFavourite"
+						@click="toogleFavourite"
 						id="add-to-favourite"
 					>
 						{{ favouriteText }}
@@ -485,25 +485,21 @@ export default {
 			type: Object,
 			default: () => ({ mainTopic: '', subtopics: [] }),
 		},
+		isFavorite: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
 			dotsClicked: false,
 			addedToCustomFeed: false,
-			addedToFavourite: false,
-			favouriteText: 'Add To Favourites',
 			charRemaining: 500,
 			textareaShown: false,
-			// communityDescription: this.communityDescriptionProp,
 			description: '',
-			// communityTopic: {},
-			// topicChosen: false,
 			topicsShown: false,
 			subtopicsShown: false,
-			// communitySubtopics: [],
 			savedCommunitySubtopics: [],
-			// subtopicChosen: false,
-			// subtopicsCount: 0,
 			saveDialogShown: false,
 			isSubtopicsSaved: false,
 			isNew: true,
@@ -538,6 +534,10 @@ export default {
 		subtopicsCount() {
 			return this.communitySubtopics.length;
 		},
+		favouriteText() {
+			if (!this.isFavorite) return 'Add To Favorites';
+			else return 'Remove From Favorites';
+		},
 	},
 	methods: {
 		//@vuese
@@ -555,25 +555,25 @@ export default {
 		//@vuese
 		//Mark subreddit added to favourites
 		//@arg no argument
-		addToFavourite() {
-			//toggle add to favourite data
-			this.addedToFavourite = !this.addedToFavourite;
-
-			//change button text
-			this.favouriteText = this.addedToFavourite
-				? 'Remove From Favourites'
-				: 'Add To Favourites';
+		toogleFavourite() {
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			if (this.isFavorite) {
+				this.$store.dispatch('community/removeFromFavourite', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			} else {
+				this.$store.dispatch('community/addToFavourite', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			}
 
 			//hide list
 			this.dotsClick();
-
-			//send request
-			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/ToggleFavourite', {
-				subredditName: this.subredditName,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
 		},
 		//@vuese
 		//Decrease characters count while typing
