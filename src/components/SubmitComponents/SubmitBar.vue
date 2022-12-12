@@ -128,22 +128,23 @@
 			<postingto-reddit></postingto-reddit>
 		</div>
 
-		<!-- <div
+		<div
 			:class="isSet & !inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
 		>
 			<profile-card
 				:user-name="userName"
 				:user-data="userData"
+				v-if="userData.cakeDate != null"
 				state="profile"
 			></profile-card>
-		</div> -->
+		</div>
 	</div>
 </template>
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import SubredditInfo from '../PostComponents/SubredditInfo.vue';
-// import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
+import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
 
 export default {
@@ -151,7 +152,7 @@ export default {
 		CreateCommunity,
 		SubredditInfo,
 		PostingtoReddit,
-		// ProfileCard,
+		ProfileCard,
 	},
 	data() {
 		return {
@@ -192,7 +193,7 @@ export default {
 
 			this.getSubreddits();
 
-			// this.getUserdata();
+			this.getUserdata();
 			console.log(this.userData);
 		},
 		// @vuese
@@ -237,7 +238,7 @@ export default {
 		},
 		async getUserdata() {
 			const actionPayload = {
-				userName: this.userName,
+				userName: 'mohamed',
 				baseurl: this.$baseurl,
 			};
 			console.log('enter get user data');

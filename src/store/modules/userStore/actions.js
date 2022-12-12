@@ -114,7 +114,7 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(newSocialLink),
 		});
@@ -123,12 +123,13 @@ export default {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
 			);
-			throw error;
+			// throw error;
+			console.log(error);
 		}
-		// if (response.status == 200)
-		context.commit('addUserSocialLink', {
-			newSocialLink,
-		});
+		if (response.status == 201)
+			context.commit('addUserSocialLink', {
+				newSocialLink,
+			});
 		return response.status;
 	},
 	/**
@@ -138,7 +139,7 @@ export default {
 	 * @returns {integer} status code
 	 */
 	async AddProfilePicture(context, payload) {
-		const profilePictureUrl = payload.profilePictureUrl;
+		// const profilePictureUrl = payload.profilePictureUrl;
 		const file = payload.file;
 		const baseurl = payload.baseurl;
 		const postInfo = new FormData();
@@ -164,9 +165,9 @@ export default {
 			throw error;
 		}
 		// if(response.status == 200)
-		context.commit('addUserProfilePicture', {
-			profilePictureUrl,
-		});
+		// context.commit('addUserProfilePicture', {
+		// 	profilePictureUrl,
+		// });
 		return response.status;
 	},
 	/**
@@ -178,7 +179,7 @@ export default {
 	async AddProfileBanner(context, payload) {
 		const file = payload.file;
 		const baseurl = payload.baseurl;
-		const bannerImageUrl = payload.bannerImageUrl;
+		// const bannerImageUrl = payload.bannerImageUrl;
 		const postInfo = new FormData();
 		postInfo.append('banner', file);
 		const response = await fetch(baseurl + '/banner-image', {
@@ -207,10 +208,10 @@ export default {
 			);
 			throw error;
 		}
-		if (response.status == 200)
-			context.commit('addUserProfileBannerImageUrl', {
-				bannerImageUrl,
-			});
+		// if (response.status == 200)
+		// 	context.commit('addUserProfileBannerImageUrl', {
+		// 		bannerImageUrl,
+		// 	});
 		return response.status;
 	},
 	/**

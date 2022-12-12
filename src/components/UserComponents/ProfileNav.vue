@@ -59,6 +59,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	data() {
 		return {
@@ -125,6 +129,32 @@ export default {
 					active: false,
 				},
 			],
+			userLinks: [
+				{
+					id: '1',
+					linkName: 'overview',
+					path: '/',
+					active: false,
+				},
+				{
+					id: '2',
+					linkName: 'Posts',
+					path: '/submitted',
+					active: false,
+				},
+				{
+					id: '3',
+					linkName: 'Comments',
+					path: '/comments',
+					active: false,
+				},
+				{
+					id: '9',
+					linkName: 'awards received',
+					path: '/gilded',
+					active: false,
+				},
+			],
 			viewedLinks: [],
 			hiddenLinks: [],
 			windowWidths: window.innerWidth,
@@ -136,7 +166,8 @@ export default {
 	 * @arg no arg
 	 */
 	mounted() {
-		this.viewedLinks = this.profileLinks;
+		if (this.state == 'profile') this.viewedLinks = this.profileLinks;
+		else this.viewedLinks = this.userLinks;
 		this.onResize();
 		this.$nextTick(() => {
 			window.addEventListener('resize', this.onResize);
@@ -162,10 +193,16 @@ export default {
 			this.windowWidths = window.innerWidth;
 			const x = ++this.windowWidths / 100;
 			if (this.windowWidths < 1000) {
-				this.viewedLinks = this.profileLinks.slice(0, x);
-				this.hiddenLinks = this.profileLinks.slice(x, this.profileLinks.length);
+				if (this.state == 'profile') {
+					this.viewedLinks = this.profileLinks.slice(0, x);
+					this.hiddenLinks = this.profileLinks.slice(
+						x,
+						this.profileLinks.length
+					);
+				}
 			} else {
-				this.viewedLinks = this.profileLinks;
+				if (this.state == 'profile') this.viewedLinks = this.profileLinks;
+				else this.viewedLinks = this.userLinks;
 			}
 		},
 	},
