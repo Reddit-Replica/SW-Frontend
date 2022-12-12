@@ -23,8 +23,10 @@ export default {
 	// @vuese
 	//change title name and load mentions
 	beforeMount() {
-		document.title = 'messages: mentions';
-		this.loadUserMentions();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: mentions';
+			this.loadUserMentions();
+		}
 	},
 	data() {
 		return {

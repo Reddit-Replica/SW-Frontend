@@ -45,13 +45,22 @@
 						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 					/>
 				</svg>
-				<img
-					src="../../../img/user-image.jpg"
-					alt="img"
-					class="header-user-nav-user-photo"
-					v-else
-					id="header-icon-user-image"
-				/>
+				<div v-else>
+					<img
+						v-if="!getUserData.userData.picture"
+						src="../../../img/default_inbox_avatar.png"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+					<img
+						v-else
+						:src="$baseurl + '/' + moderator.avatar"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+				</div>
 				<span>{{ headerTitle }}</span>
 			</div>
 
@@ -393,10 +402,18 @@
 				id="show-settings-submenu"
 			>
 				<img
-					src="../../../img/user-image.jpg"
-					alt="user photo"
-					class="header-user-nav-user-photo"
-					id="user-icon-settings-submenu"
+					v-if="!getUserData.userData.picture"
+					src="../../../img/default_inbox_avatar.png"
+					alt="img"
+					class="img header-user-nav-user-photo"
+					:id="'header-user-img-' + index"
+				/>
+				<img
+					v-else
+					:src="$baseurl + '/' + moderator.avatar"
+					alt="img"
+					class="img header-user-nav-user-photo"
+					:id="'header-user-img-' + index"
 				/>
 				<span class="header-user-nav-online" />
 
@@ -557,6 +574,9 @@ export default {
 		userName() {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');
+		},
+		getUserData() {
+			return this.$store.getters['user/getUserData'];
 		},
 		srchq() {
 			return this.$store.getters['GetQuery'];
