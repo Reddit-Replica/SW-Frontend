@@ -3,10 +3,13 @@
 		<div class="header"></div>
 		<div class="content">
 			<div class="image-name">
-				<div class="image">
+				<div class="image" v-if="subreddit.picture">
 					<img :src="subreddit.picture" alt="" />
 				</div>
-				<div class="name">r/{{ subredditName }}</div>
+				<div class="image">
+					<img src="../../../img/default_subreddit_image.png" alt="" />
+				</div>
+				<div class="name">r/{{ subreddit.title }}</div>
 			</div>
 			<p class="para-bold">{{ subreddit.description }}</p>
 			<div class="birth">

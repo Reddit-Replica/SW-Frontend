@@ -46,14 +46,14 @@ export default {
 	methods: {
 		async loadSubredditInfo() {
 			try {
-				await this.$store.dispatch('comments/getSubreddit', {
+				await this.$store.dispatch('community/getSubreddit', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.subreddit = this.$store.getters['comments/getSubreddit'];
+			this.subreddit = this.$store.getters['community/getSubreddit'];
 			console.log(this.subreddit);
 		},
 		async loadSubredditModerators() {
