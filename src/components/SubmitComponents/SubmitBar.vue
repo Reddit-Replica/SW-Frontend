@@ -98,7 +98,14 @@
 						>
 							<div class="image-box">
 								<img
+									v-if="subreddit.picture"
 									:src="subreddit.picture"
+									alt="image"
+									class="img-community"
+								/>
+								<img
+									v-else
+									src="../../../img/default_subreddit_image.png"
 									alt="image"
 									class="img-community"
 								/>
@@ -123,11 +130,13 @@
 			></subreddit-info>
 		</div>
 		<div
+			v-if="inSubreddit"
 			:class="isSet & inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
 		>
 			<postingto-reddit></postingto-reddit>
 		</div>
 		<div
+			v-if="!inSubreddit"
 			:class="isSet & !inSubreddit ? 'col-lg-3 posting3' : 'col-lg-3 posting2'"
 		>
 			<postingto-reddit></postingto-reddit>
@@ -135,7 +144,7 @@
 
 		<div class="col-lg-3 subreddit-info">
 			<profile-card
-				v-if="userData.cakeDate != null"
+				v-if="isSet & !inSubreddit & (userData.cakeDate != null)"
 				:user-name="userName"
 				:user-data="userData"
 				state="profile"
@@ -195,6 +204,10 @@ export default {
 			}
 
 			this.getSubreddits();
+			for (let i = 0; i < this.subreddits.length; i++) {
+				if (this.subreddits[i].picture) console.log('picture is found ');
+				else console.log('picture is not found ');
+			}
 
 			// this.getUserdata();
 			console.log(this.userData);
@@ -215,6 +228,7 @@ export default {
 		// Used to  set the choosen subreddit
 		// @arg a string value representing subreddit name
 		setsubreddit(title, image) {
+			console.log(image);
 			this.inSubreddit = true;
 			this.subredditTitle = title;
 			this.communityName = title;
@@ -256,9 +270,7 @@ export default {
 					console.log('    user data الحمد لله زى الفل');
 				}
 			} catch (err) {
-				this.error = err;
-				console.log(this.error);
-				this.success = false;
+				console.log(this.err);
 			}
 			this.userData = this.$store.getters['user/getUserData'].userData;
 			this.isSet = true;
