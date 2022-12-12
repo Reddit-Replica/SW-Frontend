@@ -58,9 +58,14 @@ export default {
 	// @vuese
 	//load moderators list and change document title
 	beforeMount() {
-		document.title = this.$route.params.subredditName;
-		this.loadListOfAllModerators();
-		this.loadListOfInvitedModerators();
+		if (!localStorage.getItem('accessToken')) {
+			this.$router.push('/login');
+			document.title = 'reddit';
+		} else {
+			document.title = this.$route.params.subredditName;
+			this.loadListOfAllModerators();
+			this.loadListOfInvitedModerators();
+		}
 	},
 	computed: {
 		// @vuese
