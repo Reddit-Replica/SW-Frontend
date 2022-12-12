@@ -31,6 +31,9 @@ export default {
 	listOfMuted(state) {
 		return state.listOfMuted;
 	},
+	muteUserSuccessfully(state) {
+		return state.muteUserSuccessfully;
+	},
 
 	/////////////////////LEAVE MOD/////////////////////
 
@@ -99,5 +102,8 @@ export default {
 	},
 	unBanUserSuccessfully(state) {
 		return state.unBanUserSuccessfully;
+	},
+	listOfBanned(state) {
+		return state.listOfBanned;
 	},
 };

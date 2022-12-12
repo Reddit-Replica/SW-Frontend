@@ -11,13 +11,19 @@
 			<div class="choose-post-community-2">
 				<div class="choose-post-community-3" @click="setFocused">
 					<span v-if="!inputFocused & !isSet" class="dashed-circle"></span>
-					<img :src="image" alt="image" class="img-profile" v-if="isSet" />
-					<!-- <img
+					<img
+						:src="image"
+						alt="image"
+						class="img-profile"
+						v-if="isSet && !path"
+					/>
+
+					<img
 						src="../../../img/default_subreddit_image.png"
 						alt="image"
 						class="img-profile"
-						v-if="isSet"
-					/> -->
+						v-if="isSet && path"
+					/>
 					<svg
 						v-if="inputFocused & !isSet"
 						xmlns="http://www.w3.org/2000/svg"
@@ -124,10 +130,14 @@
 		<!-- {{ subreddits }} -->
 		<!-- <subreddit-info class="subreddit-info"> </subreddit-info> -->
 		<div class="col-lg-3 subreddit-info">
-			<subreddit-info
-				:subreddit-name="subredditTitle"
+			<!-- <subreddit-card
+				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
-			></subreddit-info>
+			></subreddit-card> -->
+			<subreddit-card
+				:subreddit="subreddit"
+				v-if="isSet & inSubreddit"
+			></subreddit-card>
 		</div>
 		<div
 			v-if="inSubreddit"
@@ -155,16 +165,20 @@
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
-import SubredditInfo from '../PostComponents/SubredditInfo.vue';
+// import SubredditInfo from '../PostComponents/SubredditInfo.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
+import SubredditCard from '../PostComponents/SubredditCard.vue';
+// import SubredditRules from './SubredditRules.vue';
 
 export default {
 	components: {
 		CreateCommunity,
-		SubredditInfo,
+		// SubredditInfo,
 		PostingtoReddit,
 		ProfileCard,
+		SubredditCard,
+		// SubredditRules,
 	},
 	data() {
 		return {
@@ -179,6 +193,8 @@ export default {
 			isSet: false,
 			image: null,
 			userData: {},
+			path: null,
+			subreddit: null,
 		};
 	},
 	methods: {
@@ -228,8 +244,14 @@ export default {
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
-			if (image) this.image = image;
-			else this.image = '../../../img/default_subreddit_image.png';
+			this.loadSubredditInfo();
+			console.log(this.subreddit);
+			if (image) {
+				this.image = image;
+				this.path = false;
+			} else {
+				this.path = true;
+			}
 
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
@@ -246,6 +268,7 @@ export default {
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
+			this.path = false;
 		},
 		setUser(image) {
 			this.isSet = true;
@@ -273,6 +296,19 @@ export default {
 				console.log(this.err);
 			}
 			this.userData = this.$store.getters['user/getUserData'].userData;
+		},
+		async loadSubredditInfo() {
+			console.log('hello');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditTitle,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log(this.subreddit);
 		},
 	},
 	computed: {

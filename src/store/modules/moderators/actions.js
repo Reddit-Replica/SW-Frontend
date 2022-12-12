@@ -277,7 +277,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-
+		console.log(responseData);
 		const muted = [];
 		if (response.status == 200) {
 			let before, after;
@@ -293,7 +293,8 @@ export default {
 				const mute = {
 					username: responseData.children[i].username,
 					avatar: responseData.children[i].avatar,
-					dateOfApprove: responseData.children[i].dateOfApprove,
+					dateOfMute: responseData.children[i].dateOfMute,
+					muteReason: responseData.children[i].muteReason,
 				};
 				muted.push(mute);
 			}
@@ -308,6 +309,55 @@ export default {
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+
+	async muteUser(context, payload) {
+		context.commit('muteUserSuccessfully', false);
+		let mute = {};
+		if (payload.muteReason) {
+			mute = {
+				username: payload.username,
+				muteReason: payload.muteReason,
+			};
+		} else {
+			mute = {
+				username: payload.username,
+			};
+		}
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/mute-user`,
+			{
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify(mute),
+			}
+		);
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('muteUserSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},
@@ -1086,6 +1136,69 @@ export default {
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async loadListOfBanned(context, payload) {
+		const baseurl = payload.baseurl;
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?limit=10&before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?limit=10&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=10';
+		}
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/banned${mediaQuery}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		const banned = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const ban = {
+					username: responseData.children[i].username,
+					userId: responseData.children[i].userId,
+					avatar: responseData.children[i].avatar,
+					bannedAt: responseData.children[i].bannedAt,
+					banPeriod: responseData.children[i].banPeriod,
+					modNote: responseData.children[i].modNote,
+					noteInclude: responseData.children[i].noteInclude,
+					reasonForBan: responseData.children[i].reasonForBan,
+				};
+				banned.push(ban);
+			}
+			console.log(banned);
+			context.commit('setListOfBanned', banned);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
 			throw error;
 		}
 	},
