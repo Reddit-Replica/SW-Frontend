@@ -127,14 +127,17 @@
 		>
 			<postingto-reddit></postingto-reddit>
 		</div>
-
 		<div
-			:class="isSet & !inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
+			:class="isSet & !inSubreddit ? 'col-lg-3 posting3' : 'col-lg-3 posting2'"
 		>
+			<postingto-reddit></postingto-reddit>
+		</div>
+
+		<div class="col-lg-3 subreddit-info">
 			<profile-card
+				v-if="userData.cakeDate != null"
 				:user-name="userName"
 				:user-data="userData"
-				v-if="userData.cakeDate != null"
 				state="profile"
 			></profile-card>
 		</div>
@@ -531,6 +534,13 @@ button {
 	width: 300px;
 	top: 0;
 }
+.posting3 {
+	position: absolute;
+	left: 103%;
+	width: 300px;
+	top: 400px;
+}
+
 .big-box {
 	position: relative;
 }

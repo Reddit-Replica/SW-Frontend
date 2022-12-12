@@ -49,13 +49,13 @@
 				></about-community-read-only>
 
 				<!-- for testing about community bar if the current user not moderator -->
-				<!-- <about-community-read-only
+				<about-community-read-only
 					:subreddit-name="subredditName"
 					:members-count="subreddit.members"
 					:online-members-count="subreddit.online"
 					:community-date="subreddit.dateOfCreation"
 					:community-description="subreddit.description"
-				></about-community-read-only> -->
+				></about-community-read-only>
 
 				<moderators-bar
 					:moderators="subreddit.moderators"
