@@ -50,14 +50,14 @@
 				:empty-input="search"
 				:before="before"
 				:after="after"
-				@fetch-before="loadListOfApproved('before')"
-				@fetch-after="loadListOfApproved('after')"
+				@fetch-before="loadListOfMuted('before')"
+				@fetch-after="loadListOfMuted('after')"
 			></search-bar>
 			<ul class="ul-items" v-if="!noItems">
 				<mute-item
-					v-for="(approve, index) in listOfApproved"
-					:key="approve"
-					:approve="approve"
+					v-for="(mute, index) in listOfMuted"
+					:key="mute"
+					:mute="mute"
 					:search="search"
 					:index="index"
 				></mute-item>
@@ -99,8 +99,9 @@ import NoList from '../../components/moderation/NoList.vue';
 import MuteUser from '../../components/moderation/MuteUser.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import MuteItem from '../../components/moderation/MuteItem.vue';
+import SearchBar from '../../components/moderation/SearchBar.vue';
 export default {
-	components: { NoList, MuteUser, ListBar, MuteItem },
+	components: { NoList, MuteUser, ListBar, MuteItem, SearchBar },
 	data() {
 		return {
 			showMuteUser: false,
@@ -108,6 +109,9 @@ export default {
 			count: 0,
 			noItems: false,
 		};
+	},
+	beforeMount() {
+		this.loadListOfMuted();
 	},
 	computed: {
 		// @vuese
@@ -164,6 +168,7 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
+			this.noItems = false;
 			for (let i = 0; i < this.listOfMuted.length; i++) {
 				if (this.listOfMuted[i].username != input && input != '') {
 					this.count = this.count + 1;
@@ -172,6 +177,9 @@ export default {
 			}
 			if (this.count == this.listOfMuted.length) {
 				this.noItems = true;
+			}
+			if (input == '') {
+				this.noItems = false;
 			}
 			this.count = 0;
 		},
@@ -205,5 +213,20 @@ export default {
 	line-height: 2.2rem;
 	color: var(--color-dark-2);
 	padding-top: 9rem;
+}
+.ul-items {
+	list-style: none;
+	background-color: var(--color-white-1);
+	padding-left: 0rem;
+}
+.no-items {
+	background-color: var(--color-white-1);
+	height: 25rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	font-weight: bold;
 }
 </style>

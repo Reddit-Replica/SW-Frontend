@@ -148,6 +148,9 @@ export default {
 			errorResponse: null,
 		};
 	},
+	beforeMount() {
+		this.loadListOfApproved();
+	},
 	computed: {
 		// @vuese
 		//return list of moderators
@@ -209,6 +212,7 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
+			this.noItems = false;
 			for (let i = 0; i < this.listOfApproved.length; i++) {
 				if (this.listOfApproved[i].username != input && input != '') {
 					this.count = this.count + 1;
@@ -217,6 +221,9 @@ export default {
 			}
 			if (this.count == this.listOfApproved.length) {
 				this.noItems = true;
+			}
+			if (input == '') {
+				this.noItems = false;
 			}
 			this.count = 0;
 		},

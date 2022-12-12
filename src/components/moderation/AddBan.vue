@@ -9,7 +9,7 @@
 							class="input-name"
 							rows="5"
 							type="text"
-							placeholder="u/username"
+							placeholder="username"
 							v-model.trim="banUserName"
 							@keyup="charCount('name')"
 							id="user-name"
@@ -138,7 +138,7 @@
 								@click="submitBan()"
 								class="button-blue"
 								:class="
-									banUserName == '' ||
+									(!edited && banUserName == '') ||
 									reason == 'None' ||
 									(banPeriod == 0 && !checkPermanent)
 										? 'disabled'
@@ -214,7 +214,7 @@ export default {
 	data() {
 		return {
 			banShown: true,
-			banUserName: '',
+			banUserName: this.banNameEdit,
 			reason: this.banReasonForEdit,
 			modNote: this.banModNoteEdit,
 			charRemainingNote: 300,
@@ -229,6 +229,9 @@ export default {
 	//load List of Rules before mount
 	beforeMount() {
 		this.loadListOfRules();
+		if (this.banPeriodEdit) {
+			this.checkPermanent = false;
+		}
 	},
 
 	computed: {

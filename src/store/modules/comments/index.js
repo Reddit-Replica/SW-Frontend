@@ -15,6 +15,8 @@ export default {
 			subreddit: {},
 			followedPosts: [],
 			commentID: '',
+			listOfComments: [],
+			listOfReplies: [],
 		};
 	},
 	actions,

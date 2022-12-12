@@ -15,4 +15,10 @@ export default {
 	getCommentID(state) {
 		return state.commentID;
 	},
+	getListOfComments(state) {
+		return state.listOfComments;
+	},
+	getListOfReplies(state) {
+		return state.listOfReplies;
+	},
 };

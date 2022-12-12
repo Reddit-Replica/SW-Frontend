@@ -4,7 +4,7 @@
 		<li class="item" v-if="show">
 			<div class="image" id="ban">
 				<img
-					v-if="!mute.userPhoto"
+					v-if="!mute.avatar"
 					src="../../../img/default_inbox_avatar.png"
 					alt="img"
 					class="img"
@@ -22,7 +22,7 @@
 				</h5>
 			</div>
 			<div class="time">
-				<span> 1 day ago (Permanent)•hjkb</span>
+				<span> {{ handleTime }}</span>
 				<!-- <span>{{ moderator.dateOfModeration }}</span> -->
 			</div>
 			<div class="permissions">
@@ -67,30 +67,49 @@
 		</li>
 		<div class="show-more" v-if="viewDetails">
 			<div v-if="muteReason"><div class="banned-for">No mod note.</div></div>
-			<div>
+			<div v-if="muteReason">
 				<div class="banned-for">Mod note:</div>
 				<div class="reason">{{ muteReason }}</div>
 			</div>
+			<div v-else>
+				<div class="banned-for">No mod note.</div>
+			</div>
 		</div>
-		<div class="add-ban" v-if="showAddBan">
-			<add-ban
-				@done-successfully="doneSuccessfully()"
-				@exit="showAddBanFunction()"
-				:ban-name-edit="ban.username"
-				:ban-period-edit="ban.banPeriod"
-				:ban-mod-note-edit="ban.modNote"
-				:ban-note-include-edit="ban.noteInclude"
-				:ban-reason-for-edit="ban.reasonForBan"
-				:edited="true"
-			></add-ban>
+		<div id="sure-popup-form">
+			<base-dialog
+				:show="showUnMute"
+				@close="showUnMuteFunction()"
+				title="Confirm"
+			>
+				<div class="rule-dialog flex-column">
+					<div class="rule-box-p flex-column">
+						<p class="sure-text">Are you sure you want to unmute mute?</p>
+					</div>
+					<div class="rule-box box-buttons">
+						<base-button
+							@click="showUnMuteFunction()"
+							class="button-white"
+							id="cancel-button"
+							>Cancel</base-button
+						>
+						<base-button
+							@click="Unmute()"
+							class="button-blue"
+							id="delete-button"
+							>Unmute</base-button
+						>
+					</div>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
+				</div>
+			</base-dialog>
 		</div>
 	</div>
 </template>
 
 <script>
-import AddBan from '../../components/moderation/AddBan.vue';
 export default {
-	components: { AddBan },
 	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
@@ -100,9 +119,9 @@ export default {
 			type: Object,
 			required: true,
 			default: () => ({
-				username: 'string',
+				username: '',
 				avatar: '',
-				dateOfMute: '2019-08-24T14:15:22Z',
+				dateOfMute: '',
 				muteReason: '',
 			}),
 		},
@@ -124,11 +143,15 @@ export default {
 	},
 	data() {
 		return {
-			sureShown: false,
 			viewDetails: false,
 			showAddBan: false,
 			showUnMute: false,
+			handleTime: '',
+			errorResponse: null,
 		};
+	},
+	beforeMount() {
+		this.calculateTime();
 	},
 	computed: {
 		// @vuese
@@ -136,7 +159,7 @@ export default {
 		// @type boolean
 		show() {
 			if (this.search != '') {
-				if (this.search == this.ban.username) {
+				if (this.search == this.mute.username) {
 					return true;
 				} else return false;
 			}
@@ -170,9 +193,41 @@ export default {
 		doneSuccessfully() {
 			this.$emit('doneSuccessfully');
 		},
+		// @vuese
+		//used to show sure unmute popup
+		// @arg no argument
 		showUnMuteFunction() {
 			this.showUnMute = !this.showUnMute;
 		},
+		calculateTime() {
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.moderator.dateOfModeration,
+			// });
+
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.mute.dateOfMute);
+			console.log(this.mute);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
+		},
+		// @vuese
+		//used to handle unmute request
+		// @arg no argument
+		Unmute() {},
 	},
 };
 </script>
@@ -214,7 +269,6 @@ export default {
 	white-space: nowrap;
 	flex: 1 0 100px;
 	line-height: normal;
-	font-size: 1.5rem;
 }
 .permissions {
 	margin-right: 2rem;

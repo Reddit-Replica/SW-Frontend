@@ -27,10 +27,13 @@ export default {
 		state.approveUserSuccessfully = payload;
 	},
 
-	//////////////APPROVED/////////////
+	//////////////MUTED/////////////
 
 	setListOfMuted(state, payload) {
 		state.listOfMuted = payload;
+	},
+	muteUserSuccessfully(state, payload) {
+		state.muteUserSuccessfully = payload;
 	},
 
 	//////////////LEAVE MOD/////////////
@@ -99,5 +102,8 @@ export default {
 	},
 	unBanUserSuccessfully(state, payload) {
 		state.unBanUserSuccessfully = payload;
+	},
+	setListOfBanned(state, payload) {
+		state.listOfBanned = payload;
 	},
 };
