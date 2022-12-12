@@ -9,7 +9,7 @@
 							class="input-name"
 							rows="5"
 							type="text"
-							placeholder="u/username"
+							placeholder="username"
 							v-model.trim="banUserName"
 							@keyup="charCount('name')"
 							id="user-name"

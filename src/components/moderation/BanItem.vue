@@ -22,7 +22,12 @@
 				</h5>
 			</div>
 			<div class="time">
-				<span> 1 day ago (Permanent)•hjkb</span>
+				<span v-if="ban.banPeriod">
+					{{ handleTime }} (for {{ ban.banPeriod }} days)•{{
+						ban.reasonForBan
+					}}</span
+				>
+				<span v-else> {{ handleTime }} (Permanent)•{{ ban.reasonForBan }}</span>
 				<!-- <span>{{ moderator.dateOfModeration }}</span> -->
 			</div>
 			<div class="permissions">
@@ -67,7 +72,7 @@
 		</li>
 		<div class="show-more" v-if="viewDetails">
 			<div class="banned-for">Banned For:</div>
-			<div class="reason">reason</div>
+			<div class="reason">{{ ban.reasonForBan }}</div>
 		</div>
 		<div class="add-ban" v-if="showAddBan">
 			<add-ban
@@ -89,6 +94,9 @@ import AddBan from '../../components/moderation/AddBan.vue';
 export default {
 	components: { AddBan },
 	emits: ['doneSuccessfully'],
+	beforeMount() {
+		this.calculateTime();
+	},
 	props: {
 		// @vuese
 		//details of moderator
@@ -128,6 +136,7 @@ export default {
 			sureShown: false,
 			viewDetails: false,
 			showAddBan: false,
+			handleTime: '',
 		};
 	},
 	computed: {
@@ -170,6 +179,33 @@ export default {
 		doneSuccessfully() {
 			this.$emit('doneSuccessfully');
 		},
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.moderator.dateOfModeration,
+			// });
+
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.ban.bannedAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
+		},
 	},
 };
 </script>
@@ -211,7 +247,7 @@ export default {
 	white-space: nowrap;
 	flex: 1 0 100px;
 	line-height: normal;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 }
 .permissions {
 	margin-right: 2rem;
