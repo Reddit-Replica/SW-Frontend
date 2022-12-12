@@ -127,13 +127,14 @@
 		>
 			<postingto-reddit></postingto-reddit>
 		</div>
+
 		<!-- <div
 			:class="isSet & !inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
 		>
 			<profile-card
 				:user-name="userName"
 				:user-data="userData"
-				:state="state"
+				state="profile"
 			></profile-card>
 		</div> -->
 	</div>
@@ -142,14 +143,15 @@
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import SubredditInfo from '../PostComponents/SubredditInfo.vue';
+// import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
-//import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
+
 export default {
 	components: {
 		CreateCommunity,
 		SubredditInfo,
 		PostingtoReddit,
-		//ProfileCard,
+		// ProfileCard,
 	},
 	data() {
 		return {
@@ -174,8 +176,23 @@ export default {
 			const actionPayload = {
 				baseurl: this.$baseurl,
 			};
-			await this.$store.dispatch('posts/getAllsubreddits', actionPayload);
-			this.getSubreddit();
+			try {
+				const response = await this.$store.dispatch(
+					'posts/getAllsubreddits',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+
+			this.getSubreddits();
+
+			// this.getUserdata();
 		},
 		// @vuese
 		// Used to show create community popup
@@ -186,7 +203,7 @@ export default {
 		// @vuese
 		// Used to  get all Subreddits
 		// @arg no argument
-		getSubreddit() {
+		getSubreddits() {
 			this.subreddits = this.$store.getters['posts/getallSubreddits'];
 		},
 		// @vuese
@@ -216,6 +233,28 @@ export default {
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: name,
 			});
+		},
+		async getUserdata() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+
+			try {
+				const response = await this.$store.dispatch(
+					'user/getUserData',
+					actionPayload
+				);
+
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(this.error);
+				this.success = false;
+			}
+			this.userData = this.$store.getters['user/getUserData'].userData;
 		},
 	},
 	computed: {
