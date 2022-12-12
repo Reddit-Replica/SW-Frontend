@@ -18,10 +18,28 @@ export default {
 		return state.after;
 	},
 
+	/////////////////////LEAVE MOD/////////////////////
+
+	leaveModSuccessfully(state) {
+		return state.leaveModSuccessfully;
+	},
+	cancelSuccessfully(state) {
+		return state.cancelSuccessfully;
+	},
+
+	/////////////////////INVITE MOD/////////////////////
+
+	inviteModSuccessfully(state) {
+		return state.inviteModSuccessfully;
+	},
+
 	//////////////////////SPAM////////////////////////
 
 	listOfSpams(state) {
 		return state.listOfSpams;
+	},
+	approveSuccessfully(state) {
+		return state.approveSuccessfully;
 	},
 
 	//////////////////////RULES////////////////////////
@@ -56,10 +74,16 @@ export default {
 	deleteFlairSuccessfully(state) {
 		return state.deleteFlairSuccessfully;
 	},
+	updateFlairsSuccessfully(state) {
+		return state.updateFlairsSuccessfully;
+	},
 
 	//////////////////////BAN////////////////////////
 
 	banUserSuccessfully(state) {
 		return state.banUserSuccessfully;
+	},
+	unBanUserSuccessfully(state) {
+		return state.unBanUserSuccessfully;
 	},
 };

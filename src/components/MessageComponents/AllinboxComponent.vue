@@ -204,6 +204,7 @@ export default {
 			isRead: this.message.isRead,
 			errorResponse: null,
 			showReplyBox: false,
+			handleTime: '',
 		};
 	},
 	// @vuese
@@ -218,18 +219,36 @@ export default {
 		// @vuese
 		//return handled time after calculated it
 		// @type object
-		handleTime() {
-			return this.$store.getters['moderation/handleTime'];
-		},
+		// handleTime() {
+		// 	return this.$store.getters['moderation/handleTime'];
+		// },
 	},
 	methods: {
 		// @vuese
 		//calculate time
 		// @type object
 		calculateTime() {
-			this.$store.dispatch('moderation/handleTime', {
-				time: this.message.sendAt,
-			});
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.message.sendAt,
+			// });
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.message.sendAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
 		},
 		// @vuese
 		//handle delete action

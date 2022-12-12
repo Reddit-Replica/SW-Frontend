@@ -179,7 +179,7 @@
 				:rule="rule"
 			></list-rules> -->
 			</draggable>
-			<div class="add-flair" v-if="showAddFlair">
+			<div class="add-flair" v-if="showAddFlair && !dragDrop">
 				<add-flair
 					@done-successfully="doneSuccessfully('added')"
 					@exit="showAddFlairFunction()"
@@ -372,9 +372,10 @@ export default {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
-				if (this.$store.getters['moderation/updateRulesSuccessfully']) {
+				if (this.$store.getters['moderation/updateFlairsSuccessfully']) {
 					this.dragDrop = false;
 					this.loadListOfFlairs();
+					this.savePost('Reorder Saved');
 				}
 			} catch (err) {
 				console.log(err);
