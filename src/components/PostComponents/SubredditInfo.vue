@@ -41,7 +41,7 @@ export default {
 	beforeMount() {
 		this.loadSubredditInfo();
 		this.loadListOfRules();
-		//this.loadSubredditModerators();
+		this.loadSubredditModerators();
 	},
 	methods: {
 		async loadSubredditInfo() {
@@ -58,14 +58,14 @@ export default {
 		},
 		async loadSubredditModerators() {
 			try {
-				await this.$store.dispatch('comments/getSubredditModerators', {
+				await this.$store.dispatch('moderation/loadListOfModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.subreddit = this.$store.getters['comments/getSubreddit'];
+			this.subreddit = this.$store.getters['moderation/listOfModerators'];
 		},
 		// @vuese
 		//load Rules list from the store

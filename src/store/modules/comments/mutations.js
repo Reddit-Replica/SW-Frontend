@@ -13,4 +13,12 @@ export default {
 		console.log(payload);
 		state.commentID = payload;
 	},
+	setListOfComments(state, payload) {
+		console.log(payload);
+		state.listOfComments = payload;
+	},
+	setListOfReplies(state, payload) {
+		console.log(payload);
+		state.listOfReplies = payload;
+	},
 };
