@@ -2,7 +2,7 @@
 	<div class="content">
 		<img
 			v-if="!subreddit.picture"
-			src="../../../img/subreddit-img3.png"
+			src="../../../img/default_subreddit_image.png"
 			alt="img"
 			class="subreddit-img"
 			id="subreddit-img"
