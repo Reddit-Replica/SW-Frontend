@@ -1,68 +1,24 @@
 <template>
 	<div class="info">
-		<div class="main">
-			<div class="header"></div>
-			<div class="content">
-				<div class="image-name">
-					<div class="image">
-						<img :src="subreddit.picture" alt="" />
-					</div>
-					<div class="name">r/{{ subredditName }}</div>
-				</div>
-				<p class="para-bold">{{ subreddit.description }}</p>
-				<div class="birth">
-					<font-awesome-icon icon="fa-solid fa-cake-candles" class="icon" />
-					Created {{ subreddit.dateOfCreation }}
-				</div>
-				<div class="numbers">
-					<div class="members">
-						<p class="para-bold">{{ numFormatter(subreddit.members) }}</p>
-						<p>Members</p>
-					</div>
-					<div class="online">
-						<p class="para-bold">
-							<font-awesome-icon
-								icon="fa-solid fa-circle"
-								class="green-dot"
-							/>{{ subreddit.online }}
-						</p>
-						<p>Online</p>
-					</div>
-				</div>
-				<base-button
-					class="join-button pink-button"
-					@click="toogleJoin"
-					v-if="!isJoined"
-					id="join-button"
-					>Join</base-button
-				>
-				<base-button
-					class="join-button white-button"
-					@click="toogleJoin"
-					@mouseover="hoverJoin('Leave')"
-					@mouseleave="hoverJoin('Joined')"
-					v-if="isJoined"
-					id="leave-button"
-					>{{ hoverButtonText }}</base-button
-				>
-			</div>
-		</div>
-		<div class="rules">
+		<subreddit-card :subreddit="subreddit"></subreddit-card>
+		<div class="rules" v-if="rules.length != 0">
 			<subreddit-rules
 				:rules="subreddit.rules"
 				:subreddit-name="subredditName"
 			></subreddit-rules>
 		</div>
-		<div class="moderators">
+		<div class="moderators" v-if="moderators.length != 0">
 			<subreddit-moderators :moderators="moderators" />
 		</div>
 	</div>
 </template>
 <script>
+import SubredditCard from './SubredditCard.vue';
 import SubredditRules from './SubredditRules.vue';
 import SubredditModerators from './SubredditModerators.vue';
 export default {
 	components: {
+		SubredditCard,
 		SubredditRules,
 		SubredditModerators,
 	},
@@ -91,6 +47,7 @@ export default {
 	},
 	beforeMount() {
 		this.loadSubredditInfo();
+		this.loadListOfRules();
 		//this.loadSubredditModerators();
 	},
 	methods: {
@@ -117,26 +74,19 @@ export default {
 			}
 			this.subreddit = this.$store.getters['comments/getSubreddit'];
 		},
-		numFormatter(num) {
-			if (num > 999 && num < 1000000) {
-				return parseFloat((num / 1000).toFixed(1)) + 'K'; // convert to K for number from > 1000 < 1 million
-			} else if (num > 1000000) {
-				return parseFloat((num / 1000000).toFixed(1)) + 'M'; // convert to M for number from > 1 million
-			} else {
-				return num; // if value < 1000, nothing to do
+		// @vuese
+		//load Rules list from the store
+		// @arg no argument
+		async loadListOfRules() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfRules', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
-		},
-		//@vuese
-		//Toogle Joining and leaving a subreddit button
-		//@arg no argument
-		toogleJoin() {
-			this.isJoined = !this.isJoined;
-		},
-		//@vuese
-		//Change button text from Joined to Leave when hovering on button
-		//@arg text to be written inside button
-		hoverJoin(text) {
-			this.hoverButtonText = text;
+			this.rules = this.$store.getters['moderation/listOfRules'];
 		},
 	},
 };
@@ -145,82 +95,5 @@ export default {
 .info {
 	display: flex;
 	flex-direction: column;
-}
-.main {
-	background-color: white;
-	border-radius: 5px;
-}
-.header {
-	background-color: var(--color-green-2);
-	height: 34px;
-	border-radius: 5px 5px 0 0;
-}
-.image-name {
-	display: flex;
-	align-items: center;
-}
-.image img {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	margin-right: 5px;
-}
-.name {
-	font-weight: bold;
-	color: black;
-	font-size: 12px;
-	line-height: 65px;
-}
-.content {
-	padding: 10px;
-}
-.para-bold {
-	color: black;
-	font-size: 12px;
-}
-.birth {
-	font-size: 12px;
-	border-bottom: 1px solid var(--color-grey-light-8);
-	padding: 5px 0;
-}
-.birth .icon {
-	margin-right: 5px;
-}
-.numbers {
-	display: flex;
-	border-bottom: 1px solid var(--color-grey-light-8);
-	padding: 10px 0;
-}
-.members {
-	margin-right: 60px;
-}
-.green-dot {
-	border-radius: 50%;
-	color: var(--color-green-2);
-	font-size: 5px;
-	margin-right: 2px;
-}
-p {
-	margin: 0;
-}
-.join-button {
-	width: 100%;
-	height: 32px;
-	margin: 10px 0;
-	border: 1px solid var(--color-pink);
-	color: var(--color-pink);
-	font-weight: bold;
-	font-size: 14px;
-	background-color: white;
-}
-.pink-button {
-	background-color: var(--color-pink);
-	color: white;
-}
-.white-button:hover {
-	background-color: var(--color-pink-2);
-}
-.white-button:focus {
-	background-color: var(--color-pink-3);
 }
 </style>
