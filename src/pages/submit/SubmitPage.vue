@@ -252,8 +252,10 @@ export default {
 				};
 
 				try {
-					await this.$store.dispatch('posts/createpostHybrid', actionPayload);
-					const response = localStorage.getItem('response');
+					const response = await this.$store.dispatch(
+						'posts/createpostHybrid',
+						actionPayload
+					);
 
 					if (response == 201) {
 						console.log(response);
@@ -284,8 +286,10 @@ export default {
 				};
 
 				try {
-					await this.$store.dispatch('posts/createpostVideo', actionPayload);
-					const response = localStorage.getItem('response');
+					const response = await this.$store.dispatch(
+						'posts/createpostVideo',
+						actionPayload
+					);
 
 					if (response == 201) {
 						console.log(response);
@@ -316,8 +320,10 @@ export default {
 				};
 
 				try {
-					await this.$store.dispatch('posts/createpostLink', actionPayload);
-					const response = localStorage.getItem('response');
+					const response = await this.$store.dispatch(
+						'posts/createpostLink',
+						actionPayload
+					);
 
 					if (response == 201) {
 						console.log(response);
@@ -350,8 +356,10 @@ export default {
 				};
 
 				try {
-					await this.$store.dispatch('posts/createpostImage', actionPayload);
-					const response = localStorage.getItem('response');
+					const response = await this.$store.dispatch(
+						'posts/createpostImage',
+						actionPayload
+					);
 
 					if (response == 201) {
 						console.log(response);
