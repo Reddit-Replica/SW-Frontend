@@ -234,7 +234,8 @@ export default {
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
-			this.image = image;
+			if (image) this.image = image;
+			else this.image = '../../../img/default_subreddit_image.png';
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
 			});

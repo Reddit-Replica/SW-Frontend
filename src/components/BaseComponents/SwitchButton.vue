@@ -1,6 +1,15 @@
 <template>
-	<input type="checkbox" />
+	<input type="checkbox" v-model="value" />
 </template>
+<script>
+export default {
+	data() {
+		return {
+			value: false,
+		};
+	},
+};
+</script>
 <style scoped>
 input[type='checkbox'] {
 	appearance: none;

@@ -1,5 +1,5 @@
 <template>
-	<div class="settings-page" style="overflow-y: scroll">
+	<div class="settings-page">
 		<div class="settings-block">
 			<!-- <div>
 				<h2 class="h2-main-title">Manage Emails</h2>
