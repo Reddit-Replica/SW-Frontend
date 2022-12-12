@@ -6,7 +6,10 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url(${$baseurl}/${userData['banner']}) `"
+				:style="`background-image: url(${$baseurl}/${userData['banner'].replace(
+					/\\/g,
+					`/`
+				)}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span

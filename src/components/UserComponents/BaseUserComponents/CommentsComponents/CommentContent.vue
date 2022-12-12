@@ -1,6 +1,11 @@
 <template>
-	<div class="comment-body">
-		<div class="comment-body-container">
+	<div class="comment-body" :class="[commentType ? '' : 'comment-body-hover']">
+		<div
+			class="comment-body-container"
+			:style="[
+				commentType ? 'padding: 0px 0 0px 0px;' : 'padding: 10px 0 8px 8px;',
+			]"
+		>
 			<div class="comment-box">
 				<div class="nested-comment-order">
 					<div v-for="i in commentContent.level + 1" :key="i"></div>
@@ -140,6 +145,10 @@ export default {
 			type: Object,
 			required: true,
 		},
+		commentType: {
+			type: String,
+			required: true,
+		},
 	},
 	data() {
 		return {
@@ -274,7 +283,7 @@ span.post-oc {
 .comment-body {
 	width: 100%;
 }
-.comment-body:hover {
+.comment-body-hove:hover {
 	border: thin solid #898989;
 }
 .comment-body-container {
