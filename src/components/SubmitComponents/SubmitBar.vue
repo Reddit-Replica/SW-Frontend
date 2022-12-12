@@ -12,6 +12,7 @@
 				<div class="choose-post-community-3" @click="setFocused">
 					<span v-if="!inputFocused & !isSet" class="dashed-circle"></span>
 					<img :src="image" alt="image" class="img-profile" v-if="isSet" />
+
 					<!-- <img
 						src="../../../img/default_subreddit_image.png"
 						alt="image"
@@ -229,7 +230,11 @@ export default {
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
 			if (image) this.image = image;
-			else this.image = '../../../img/default_subreddit_image.png';
+			else {
+				//this.image = '../../../img/default_subreddit_image.png';
+				this.image = '../../../img/default_subreddit_image.png';
+				console.log(this.image);
+			}
 
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
