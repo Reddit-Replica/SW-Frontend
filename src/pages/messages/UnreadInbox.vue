@@ -23,8 +23,10 @@ export default {
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: unread';
-		this.loadUnreadMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: unread';
+			this.loadUnreadMessages();
+		}
 	},
 	data() {
 		return {

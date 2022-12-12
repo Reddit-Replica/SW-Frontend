@@ -40,8 +40,10 @@ export default {
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: inbox';
-		this.loadInboxMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: inbox';
+			this.loadInboxMessages();
+		}
 	},
 	data() {
 		return {

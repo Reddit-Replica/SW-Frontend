@@ -178,8 +178,10 @@ export default {
 	// @vuese
 	//change title name
 	beforeMount() {
-		document.title = 'messages: compose';
-		this.loadSuggestedSender();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: compose';
+			this.loadSuggestedSender();
+		}
 	},
 	computed: {
 		// @vuese

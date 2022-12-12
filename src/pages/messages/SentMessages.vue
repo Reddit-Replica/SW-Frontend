@@ -24,8 +24,10 @@ export default {
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: sent';
-		this.loadSentMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: sent';
+			this.loadSentMessages();
+		}
 	},
 	data() {
 		return {
