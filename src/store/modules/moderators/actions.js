@@ -153,6 +153,65 @@ export default {
 		context.commit('setHandleTime', returnValue);
 	},
 
+	/////////////////////APPROVED/////////////////////
+	async loadListOfApproved(context, payload) {
+		const baseurl = payload.baseurl;
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?limit=10&before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?limit=10&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=10';
+		}
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/approved${mediaQuery}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+
+		const approved = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const approve = {
+					username: responseData.children[i].username,
+					avatar: responseData.children[i].avatar,
+					dateOfApprove: responseData.children[i].dateOfApprove,
+				};
+				approved.push(approve);
+			}
+			context.commit('setListOfApproved', approved);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+
 	/////////////////////LEAVE MOD/////////////////////
 
 	async leaveMod(context, payload) {

@@ -17,6 +17,11 @@ export default {
 	after(state) {
 		return state.after;
 	},
+	/////////////////////APPROVED/////////////////////
+
+	listOfApproved(state) {
+		return state.listOfApproved;
+	},
 
 	/////////////////////LEAVE MOD/////////////////////
 

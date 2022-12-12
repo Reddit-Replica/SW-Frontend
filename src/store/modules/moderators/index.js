@@ -12,6 +12,8 @@ export default {
 			handleTime: '',
 			after: '',
 			before: '',
+			//////////////APPROVED/////////////
+			listOfApproved: [],
 			//////////////LEAVE MOD/////////////
 			leaveModSuccessfully: false,
 			//////////////INVITE MOD/////////////
