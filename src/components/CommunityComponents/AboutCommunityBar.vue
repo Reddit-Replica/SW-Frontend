@@ -616,8 +616,6 @@ export default {
 		//Save subreddit added description
 		//@arg no argument
 		async saveDescription() {
-			//save description
-			this.isSubtopicsSaved = true;
 			//hide text area
 			this.hideTextarea();
 
@@ -635,21 +633,23 @@ export default {
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
 		//@arg chosen topic to be saved
-		setTopic(topic) {
+		async setTopic(topic) {
 			//set topic
 			this.communityTopic = topic;
+
 			//mark topic is chosen
 			this.topicChosen = true;
 			//hide topics list
 			this.toogleTopicsList();
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddMainTopic', {
-				topic: this.communityTopic,
+			await this.$store.dispatch('community/AddMainTopic', {
+				title: this.communityTopic,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.$emit('reload');
 		},
 		//@vuese
 		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
