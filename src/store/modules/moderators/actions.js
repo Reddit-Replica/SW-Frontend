@@ -177,7 +177,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		
+
 		const approved = [];
 		if (response.status == 200) {
 			let before, after;
