@@ -23,8 +23,10 @@ export default {
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: messages';
-		this.loadUserMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: messages';
+			this.loadUserMessages();
+		}
 	},
 	data() {
 		return {
