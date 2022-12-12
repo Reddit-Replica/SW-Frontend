@@ -130,8 +130,12 @@
 		<!-- {{ subreddits }} -->
 		<!-- <subreddit-info class="subreddit-info"> </subreddit-info> -->
 		<div class="col-lg-3 subreddit-info">
+			<!-- <subreddit-card
+				:subreddit="subreddit"
+				v-if="isSet & inSubreddit"
+			></subreddit-card> -->
 			<subreddit-card
-				:subreddit-name="subredditTitle"
+				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
 			></subreddit-card>
 		</div>
@@ -190,6 +194,7 @@ export default {
 			image: null,
 			userData: {},
 			path: null,
+			subreddit: null,
 		};
 	},
 	methods: {
@@ -239,6 +244,8 @@ export default {
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
+			this.loadSubredditInfo();
+			console.log(this.subreddit);
 			if (image) {
 				this.image = image;
 				this.path = false;
@@ -289,6 +296,19 @@ export default {
 				console.log(this.err);
 			}
 			this.userData = this.$store.getters['user/getUserData'].userData;
+		},
+		async loadSubredditInfo() {
+			console.log('hello');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditTitle,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log(this.subreddit);
 		},
 	},
 	computed: {
