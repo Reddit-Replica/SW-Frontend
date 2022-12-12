@@ -1,5 +1,5 @@
 <template>
-	<div class="settings-page">
+	<div class="settings-page" style="overflow-y: scroll">
 		<div class="settings-block">
 			<div>
 				<h2 class="h2-main-title">Manage Emails</h2>
@@ -109,7 +109,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			unsubscribeFromEmails: false,
+		};
+	},
+	methods: {
+		changeEmailsetting() {},
+	},
+};
 </script>
 
 <style scoped>
