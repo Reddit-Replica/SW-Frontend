@@ -246,12 +246,10 @@ export default {
 		enterSearch(input) {
 			this.search = input;
 			this.noItems = false;
-			this.notSearch = true;
 			for (let i = 0; i < this.listOfBanned.length; i++) {
 				if (this.listOfBanned[i].username != input && input != '') {
 					this.count = this.count + 1;
 					this.noItems = false;
-					this.notSearch = false;
 				}
 			}
 			if (this.count == this.listOfBanned.length) {
@@ -260,7 +258,6 @@ export default {
 			}
 			if (input == '') {
 				this.noItems = false;
-				this.notSearch = true;
 			}
 			this.count = 0;
 		},
