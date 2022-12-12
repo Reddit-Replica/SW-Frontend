@@ -1,12 +1,17 @@
 <template>
-	<input type="checkbox" v-model="value" />
+	<input type="checkbox" v-model="value" @click="onChecked" />
 </template>
 <script>
 export default {
 	data() {
 		return {
-			value: false,
+			value: true,
 		};
+	},
+	methods: {
+		onChecked() {
+			this.$emit('checked', this.value);
+		},
 	},
 };
 </script>
