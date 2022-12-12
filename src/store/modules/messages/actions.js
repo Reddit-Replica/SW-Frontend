@@ -362,7 +362,6 @@ export default {
 			// 'Authorization' :`Bearer ${jwToken}`
 			body: JSON.stringify(newMessage),
 		});
-		console.log(newMessage);
 		const responseData = await response.json();
 		if (response.status == 201) {
 			context.commit('sentSuccessfully', true);
@@ -551,7 +550,7 @@ export default {
 	 */
 	async loadSuggestedSender(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/suggested-sender', {
+		const response = await fetch(baseurl + '/moderated-subreddits', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -562,9 +561,11 @@ export default {
 		if (response.status == 200) {
 			const suggests = [];
 
-			for (const key in responseData) {
+			for (let i = 0; i < responseData.children.length; i++) {
 				const suggest = {
-					text: responseData[key].children[0].text,
+					title: responseData.children[i].title,
+					picture: responseData.children[i].picture,
+					members: responseData.children[i].members,
 				};
 				suggests.push(suggest);
 			}
