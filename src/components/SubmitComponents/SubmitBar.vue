@@ -243,14 +243,7 @@ export default {
 				this.image = image;
 				this.path = false;
 			} else {
-				//this.image = '../../../img/default_subreddit_image.png';
-				// const pet = 'default_subreddit_image';
-				// var images = require.context('../../../img/', false, /\.png$/);
-				// this.image = images('../../../img/' + pet + '.png');
-				// const path = `default_subreddit_image`;
-				this.image = `../../../img/default_subreddit_image.png`;
 				this.path = true;
-				console.log(this.image);
 			}
 
 			this.$store.commit('posts/setSubreddit', {
