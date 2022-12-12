@@ -6,7 +6,7 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url( ${$baseurl + '/' + userData.banner}) `"
+				:style="`background-image: url(${$baseurl}/${userData['banner']}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span
@@ -106,7 +106,7 @@
 							v-if="userData.picture != ''"
 							:src="$baseurl + '/' + userData.picture"
 							alt=""
-							id="profile-picture"
+							id="profile-picture_user"
 						/>
 					</div>
 
@@ -218,7 +218,7 @@
 				</span>
 				<span class="i cake-day">
 					<h5>Cake day</h5>
-					<span>
+					<span v-if="userData.cakeDate != null">
 						<p id="birth-date">
 							<span><i class="fa-solid fa-cake-candles" /></span
 							>{{ getMonthName(userData.cakeDate.slice(5, 7)) }}
@@ -494,14 +494,20 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		async loadProfilePic() {
-			const file = this.$refs.profileFile.files[0];
-			const profilePictureUrl = URL.createObjectURL(file);
+		async loadProfilePic(e) {
+			// const file2 = await e.target.files[0];
+			const file1 = e.target.files;
+			const file = file1[0];
+
+			// const file = await this.$refs.profileFile.files[0];
+			const profilePictureUrl = await URL.createObjectURL(file);
+			console.log(profilePictureUrl);
+			document.querySelector('#profile-picture_user').src = profilePictureUrl;
 			try {
 				await this.$store.dispatch('user/AddProfilePicture', {
 					baseurl: this.$baseurl,
 					file,
-					profilePictureUrl,
+					profilePictureUrl: this.$baseurl + profilePictureUrl,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -513,9 +519,14 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		async loadCoverPic() {
-			const file = this.$refs.coverFile.files[0];
-			const bannerImageUrl = URL.createObjectURL(file);
+		async loadCoverPic(e) {
+			const file = e.target.files[0];
+			const file2 = this.$refs.coverFile.files[0];
+			const bannerImageUrl = URL.createObjectURL(file2);
+			// const bannerImageUrl = URL.createObjectURL(file);
+			document.querySelector(
+				'#cover-picture'
+			).style.backgroundImage = `url(${bannerImageUrl})`;
 			let responseStatus;
 			try {
 				responseStatus = await this.$store.dispatch('user/AddProfileBanner', {

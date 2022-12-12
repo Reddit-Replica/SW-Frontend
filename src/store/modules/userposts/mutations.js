@@ -11,6 +11,11 @@ export default {
 			Object.assign(state.postData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserPinnedPostData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.pinnedPostData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
 	setInsightsData(state, payload) {
 		Object.assign(state.insightsData, payload.responseData); // assign data to user Data
 	},

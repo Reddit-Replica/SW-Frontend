@@ -13,26 +13,40 @@
 			<div class="pic-items">
 				<ul class="images">
 					<li
-						v-for="(image, index) in images"
+						v-for="(image, index) in imagesShown"
 						:key="index"
 						:style="{ left: image.left + '%' }"
 					>
-						<img src="../../../../assets/R.png" alt="" />
+						<img :src="image.imgUrl" alt="" />
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="post-footer"></div>
+		<div class="post-footer">Caption</div>
 	</div>
 </template>
 <script>
 export default {
+	props: {
+		images: {
+			type: Array,
+			required: true,
+		},
+	},
 	created() {
 		this.lastLeftPic = this.images.length - 1;
+		for (let i = 0; i < this.images.length; i++) {
+			const obj = {
+				left: i * 100,
+				imgUrl: this.$baseurl + '/' + this.images[i].path,
+			};
+			// eslint-disable-next-line
+			this.imagesShown.push(obj);
+		}
 	},
 	data() {
 		return {
-			images: [
+			images1: [
 				{
 					imgUrl: '../../../../assets/R.png',
 					left: '0',
@@ -46,6 +60,7 @@ export default {
 					left: '200',
 				},
 			],
+			imagesShown: [],
 			lastLeftPic: 0,
 			lastRightPic: 0,
 		};
@@ -55,7 +70,7 @@ export default {
 			this.lastLeftPic--;
 			this.lastRightPic++;
 			console.log('clicked');
-			this.images.forEach((ele) => {
+			this.imagesShown.forEach((ele) => {
 				console.log(Number(ele.left) - 100);
 				ele.left = String(Number(ele.left) - 100);
 			});
@@ -64,15 +79,32 @@ export default {
 			this.lastRightPic--;
 			this.lastLeftPic++;
 			console.log('clicked');
-			this.images.forEach((ele) => {
+			this.imagesShown.forEach((ele) => {
 				console.log(Number(ele.left) + 100);
 				ele.left = String(Number(ele.left) + 100);
 			});
 		},
 	},
+	computed: {
+		imageShowHandler() {
+			for (let i = 0; i < this.images.length; i++) {
+				const obj = {
+					left: i * 100,
+					imgUrl: this.$baseurl + this.images[i].path,
+				};
+				// eslint-disable-next-line
+				this.imagesShown.push(obj);
+			}
+			return this.imagesShown;
+		},
+	},
 };
 </script>
 <style scoped>
+img {
+	max-width: 100%;
+	max-height: 255px;
+}
 /* .post-picture {
 	width: 100%;
 }

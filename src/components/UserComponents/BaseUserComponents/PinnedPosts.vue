@@ -2,117 +2,152 @@
 	<header class="pinned-posts">
 		<h2>Pinned Posts</h2>
 	</header>
-	<div class="pinned-post-container">
+	<!-- <div class="pinned-post-container">
 		<div class="pinned-post-item">
-			<div class="picture-post" v-if="kind == 'image'">
+			<div class="picture-post" v-if="pinnedPost.kind == 'image'">
 				<picture-post></picture-post>
-				<!-- <img src= alt="" /> -->
+				
 			</div>
-			<div v-if="kind == 'video'" class="video-post">
+			<div v-if="pinnedPost.kind == 'video'" class="video-post">
 				<video-post></video-post>
 			</div>
 			<div class="pinned-post-item2">
-				<div class="pinned-post-title">the first post</div>
+				<div class="pinned-post-title">{{ pinnedPost.title }}</div>
 				<div class="post-info">
 					<div class="post-subreddit-icon">
 						<i></i>
 						<img src="" alt="" />
 					</div>
-					<router-link to=""> r/medo emad </router-link>
+					<router-link to=""> {{ 'r/' + pinnedPost.subreddit }} </router-link>
 				</div>
-				<div class="content-text" v-if="kind === 'text'"></div>
+				<div class="content-text" v-if="pinnedPost.kind === 'text'">
+					{{ pinnedPost.content }}
+				</div>
+				<div
+					class="content-text content-text-link"
+					v-if="pinnedPost.kind === 'link'"
+				>
+					<a href="">{{ pinnedPost.link }}</a>
+				</div>
 				<div style="flex-grow: 1"></div>
 				<div class="post-options">
 					<post-options
-						:post-data="postData.children[0]"
+						:post-data="{ data: pinnedPost }"
 						pinned-post-flag="true"
 					></post-options>
 				</div>
 			</div>
 		</div>
+	</div> -->
+	<div class="pinned-post-container">
+		<pinned-post-content
+			v-for="pinnedPost in pinnedPostsData"
+			:key="pinnedPost._id"
+			:pinned-post="pinnedPost"
+		></pinned-post-content>
 	</div>
 </template>
 <script>
-import postOptions from './PostComponents/PostOptions.vue';
-import PicturePost from './PostComponents/PicturePost.vue';
-import VideoPost from './PostComponents/VideoPost.vue';
+import PinnedPostContent from './PostComponents/PinnedPostContent.vue';
 export default {
 	components: {
-		postOptions,
-		PicturePost,
-		VideoPost,
+		PinnedPostContent,
+	},
+	props: {
+		pinnedPost: {
+			type: Object,
+			required: true,
+		},
+		pinnedPostsData: {
+			type: Object,
+			required: true,
+		},
 	},
 	data() {
 		return {
-			kind: 'video',
-			postData: {
-				after: 'string',
-				before: 'string',
-				children: [
-					{
-						id: 'string',
-						data: {
-							kind: 'link',
-							title: 'string',
-							subreddit: 'string',
-							link: 'string',
-							images: [
-								{
-									path: 'string',
-									caption: 'string',
-									link: 'string',
-								},
-							],
-							video: 'string',
-							content: {},
-							nsfw: true,
-							spoiler: true,
-							sharePostId: 'string',
-							flair: {
-								id: 'string',
-								flairName: 'string',
-								order: 0,
-								backgroundColor: 'string',
-								textColor: 'string',
-							},
-							comments: 0,
-							votes: 0,
-							postedAt: 'string',
-							sendReplies: true,
-							markedSpam: true,
-							suggestedSort: 'string',
-							editedAt: 'string',
-							postedBy: 'string',
-							votingType: 1,
-							saved: false,
-							followed: false,
-							hidden: false,
-							spammed: false,
-							inYourSubreddit: false,
-							moderation: {
-								approve: {
-									approvedBy: 'string',
-									approvedDate: '2019-08-24T14:15:22Z',
-								},
-								remove: {
-									removedBy: 'string',
-									removedDate: '2019-08-24T14:15:22Z',
-								},
-								spam: {
-									spammedBy: 'string',
-									spammedDate: '2019-08-24T14:15:22Z',
-								},
-								lock: true,
-							},
-						},
-					},
-				],
-			},
+			// kind: 'link',
+			// postData: {
+			// 	after: 'string',
+			// 	before: 'string',
+			// 	children: [
+			// 		{
+			// 			id: 'string',
+			// 			data: {
+			// 				kind: 'link',
+			// 				title: 'string',
+			// 				subreddit: 'string',
+			// 				link: 'string',
+			// 				images: [
+			// 					{
+			// 						path: 'string',
+			// 						caption: 'string',
+			// 						link: 'string',
+			// 					},
+			// 				],
+			// 				video: 'string',
+			// 				content: {},
+			// 				nsfw: true,
+			// 				spoiler: true,
+			// 				sharePostId: 'string',
+			// 				flair: {
+			// 					id: 'string',
+			// 					flairName: 'string',
+			// 					order: 0,
+			// 					backgroundColor: 'string',
+			// 					textColor: 'string',
+			// 				},
+			// 				comments: 0,
+			// 				votes: 0,
+			// 				postedAt: 'string',
+			// 				sendReplies: true,
+			// 				markedSpam: true,
+			// 				suggestedSort: 'string',
+			// 				editedAt: 'string',
+			// 				postedBy: 'string',
+			// 				votingType: 1,
+			// 				saved: false,
+			// 				followed: false,
+			// 				hidden: false,
+			// 				spammed: false,
+			// 				inYourSubreddit: false,
+			// 				moderation: {
+			// 					approve: {
+			// 						approvedBy: 'string',
+			// 						approvedDate: '2019-08-24T14:15:22Z',
+			// 					},
+			// 					remove: {
+			// 						removedBy: 'string',
+			// 						removedDate: '2019-08-24T14:15:22Z',
+			// 					},
+			// 					spam: {
+			// 						spammedBy: 'string',
+			// 						spammedDate: '2019-08-24T14:15:22Z',
+			// 					},
+			// 					lock: true,
+			// 				},
+			// 			},
+			// 		},
+			// 	],
+			// },
 		};
 	},
+
+	methods: {},
 };
 </script>
 <style scoped>
+.content-text {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 21px;
+}
+.content-text-link a {
+	text-decoration: underline;
+	color: #0079d3;
+}
+.content-text a:hover {
+	color: #0079d3;
+}
 .bottom-vote-box {
 	display: block;
 }

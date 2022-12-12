@@ -174,6 +174,40 @@ export default {
 					},
 				],
 			},
+			pinnedPostData: {
+				Pinned_posts: [
+					{
+						id: 'The Post Title',
+						kind: 'link',
+						subreddit: 'medo_emad',
+						link: 'www.google.com',
+						images: [
+							{
+								path: 'string',
+								caption: 'string',
+								link: 'string',
+							},
+						],
+						video: 'string',
+						content: {},
+						nsfw: true,
+						spoiler: true,
+						title: 'The Post Title',
+						sharePostId: 'string',
+						flair: {
+							id: 'string',
+							flairName: 'string',
+							order: 0,
+							backgroundColor: 'string',
+							textColor: 'string',
+						},
+						comments: 100,
+						votes: 100,
+						postedAt: 'string',
+						postedBy: 'Abdel-hameed Emad',
+					},
+				],
+			},
 		};
 	},
 	mutations,

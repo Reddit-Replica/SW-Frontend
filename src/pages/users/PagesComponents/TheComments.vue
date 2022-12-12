@@ -9,10 +9,11 @@
 		<empty-page
 			:page-title="`hmm... u/${this.$route.params.userName} hasn't commented on anything`"
 			v-else-if="
-				errorLoading ||
-				!getUserCommentsData.commentsData ||
-				!getUserCommentsData.commentsData.children ||
-				getUserCommentsData.commentsData.children.length == 0
+				0 &&
+				(errorLoading ||
+					!getUserCommentsData.commentsData ||
+					!getUserCommentsData.commentsData.children ||
+					getUserCommentsData.commentsData.children.length == 0)
 			"
 		></empty-page>
 		<div v-else>

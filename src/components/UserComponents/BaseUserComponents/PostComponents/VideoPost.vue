@@ -1,7 +1,7 @@
 <template>
 	<video controls>
-		<source src="../../../../../video/userPostTest.mp4" type="video/mp4" />
-		<!-- <source :src="videoSrc" type="video/mp4" /> -->
+		<!-- <source src="../../../../../video/userPostTest.mp4" type="video/mp4" /> -->
+		<source :src="$baseurl + '/' + videoSrc" type="video/mp4" />
 	</video>
 </template>
 <script>

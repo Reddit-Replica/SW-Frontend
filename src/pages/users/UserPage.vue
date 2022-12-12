@@ -154,8 +154,8 @@ export default {
 			else if (requestStatus == 404) console.log('not found');
 			else if (requestStatus == 500) console.log(' internal server error');
 			this.blockedFlag = true;
-			// console.log(this.$store.getters['user/getUserData']);
-			console.log(this.$store.getters['user/getStaticSocialLinks']);
+			console.log(this.$store.getters['user/getUserData']);
+			// console.log(this.$store.getters['user/getStaticSocialLinks']);
 			this.userData = this.$store.getters['user/getUserData'];
 			// console.log(this.userData);
 			// this.checkInOverviewPage;

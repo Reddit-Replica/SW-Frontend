@@ -42,200 +42,175 @@ export default {
 			socialLinkItems: [
 				{
 					text: 'Custom URL',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/custom.png',
+					imgSrc: require('../../../../img/sociallinks/custom.png'),
 					alt: 'custom url',
 					type: 'link' /* link or username */,
 					baseurl: '',
 				},
 				{
 					text: 'Reddit',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
+					imgSrc: require('../../../../img/sociallinks/reddit.png'),
 					alt: 'Reddit',
 					type: 'username',
 					baseUrl: 'https://www.reddit.com/',
 				},
 				{
 					text: 'Instagram',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/instagram.png',
+					imgSrc: require('../../../../img/sociallinks/instagram.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://www.instagram.com/',
 				},
 				{
 					text: 'Twitter',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/twitter.png',
+					imgSrc: require('../../../../img/sociallinks/twitter.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://twitter.com/',
 				},
 				{
 					text: 'TikTok',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/tiktok.png',
+					imgSrc: require('../../../../img/sociallinks/tiktok.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://www.tiktok.com/@',
 				},
 				{
 					text: 'Twitch',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/twitch.png',
+					imgSrc: require('../../../../img/sociallinks/twitch.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://www.twitch.tv/',
 				},
 				{
 					text: 'Facebook',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/facebook.png',
+					imgSrc: require('../../../../img/sociallinks/facebook.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'YouTube',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/youtube.png',
+					imgSrc: require('../../../../img/sociallinks/youtube.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Tumblr',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/tumblr.png',
+					imgSrc: require('../../../../img/sociallinks/tumblr.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Spotify',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/spotify.png',
+					imgSrc: require('../../../../img/sociallinks/spotify.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'SoundCloud',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/soundcloud.png',
+					imgSrc: require('../../../../img/sociallinks/soundcloud.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Beacons',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/beacons.png',
+					imgSrc: require('../../../../img/sociallinks/beacons.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Linktree',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/linktree.png',
+					imgSrc: require('../../../../img/sociallinks/linktree.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Discord',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/discord.png',
+					imgSrc: require('../../../../img/sociallinks/discord.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Venmo',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/venmo.png',
+					imgSrc: require('../../../../img/sociallinks/venmo.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Cash App',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/cash_app.png',
+					imgSrc: require('../../../../img/sociallinks/cash_app.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Patreon',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/patreon.png',
+					imgSrc: require('../../../../img/sociallinks/patreon.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Kofi',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/kofi.png',
+					imgSrc: require('../../../../img/sociallinks/kofi.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'PayPal',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/paypal.png',
+					imgSrc: require('../../../../img/sociallinks/paypal.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Cameo',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/cameo.png',
+					imgSrc: require('../../../../img/sociallinks/cameo.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'OnlyFans',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/onlyfans.png',
+					imgSrc: require('../../../../img/sociallinks/onlyfans.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Substack',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/substack.png',
+					imgSrc: require('../../../../img/sociallinks/substack.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Kickstarter',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/kickstarter.png',
+					imgSrc: require('../../../../img/sociallinks/kickstarter.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Buy Me a Coffee',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/buy_me_a_coffee.png',
+					imgSrc: require('../../../../img/sociallinks/buy_me_a_coffee.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Shopify',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/shopify.png',
+					imgSrc: require('../../../../img/sociallinks/shopify.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',

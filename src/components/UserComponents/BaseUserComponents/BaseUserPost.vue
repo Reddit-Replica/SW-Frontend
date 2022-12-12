@@ -6,10 +6,7 @@
 				<div class="vote-box left-vote-box">
 					<div class="d-flex flex-column vote-box">
 						<div class="upvote" @click="upvote">
-							<svg
-								class="icon icon-arrow-down p-1 up-clicked"
-								v-if="postData.data.votingType == '1'"
-							>
+							<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 								<use xlink:href="../../../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
 							<svg class="icon icon-shift" v-else>
@@ -22,13 +19,13 @@
 								upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''
 							"
 						>
-							{{ postData.data.votes }}
+							{{ getAbbreviationsOfNumber(counter) }}
 						</div>
 						<div class="downvote" @click="downvote">
 							<svg
 								class="icon icon-arrow-down p-1"
 								:class="downClicked ? 'down-clicked' : ''"
-								v-if="postData.data.votingType == '2'"
+								v-if="downClicked"
 							>
 								<use
 									xlink:href="../../../../img/vote.svg#icon-arrow-down"
@@ -112,7 +109,18 @@
 							</div>
 							<div class="post-user-information">
 								<div class="post-user-name">
-									<a>{{ postData.data.subreddit }}</a>
+									<router-link
+										:to="
+											postData.data.subreddit == null
+												? `u/${$route.params.userName}`
+												: `r/${$postData.data.subreddit}`
+										"
+										>{{
+											postData.data.subreddit == null
+												? `u/${$route.params.userName}`
+												: `r/${$postData.data.subreddit}`
+										}}</router-link
+									>
 								</div>
 								<div class="posted-by">
 									posted by
@@ -572,7 +580,7 @@
 							class="post-picture-container"
 							v-if="postData.data.kind == 'image'"
 						>
-							<picture-post></picture-post>
+							<picture-post :images="postData.data.images"></picture-post>
 						</div>
 						<!-- <div class="post-picture" v-if="postData.data.kind == 'image'">
 							<div class="picture-container">
@@ -606,8 +614,8 @@
 							<div class="post-footer"></div>
 						</div> -->
 						<div
-							class="paragraph-post"
 							v-else-if="postData.data.kind == 'hybrid'"
+							class="paragraph-post"
 						>
 							<div class="post-kind-post" v-html="PostHybridContent"></div>
 						</div>
@@ -703,10 +711,11 @@ export default {
 	},
 	data() {
 		return {
-			// id: '1',
-			// counter: this.postData.data.votes,
-			upClicked: false,
-			downClicked: false,
+			counter: this.postData.data.votes,
+			upClicked: this.postData.data.votingType == 1 ? true : false,
+			downClicked: this.postData.data.votingType == -1 ? true : false,
+			// saved: this.post.saved,
+			postHidden: false,
 			// subMenuDisplay: false,
 			// shareSubMenuDisplay: false,
 			// postHidden: false,
@@ -750,15 +759,22 @@ export default {
 		getMoment(date) {
 			return moment(date).fromNow();
 		},
+		getAbbreviationsOfNumber(num) {
+			var abbreviate = require('number-abbreviate');
+			console.log(num);
+			return abbreviate(num, 2); // => 1k
+		},
 		setPostHybridContent() {
-			let QuillDeltaToHtmlConverter =
-				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-			console.log(this.postData.data.content);
-			let deltaOps = this.postData.data.content.ops;
-			let cfg = {};
-			let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-			console.log(converter.convert());
-			this.PostHybridContent = converter.convert();
+			if (this.postData.data.kind == 'hybrid') {
+				let QuillDeltaToHtmlConverter =
+					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+				console.log(this.postData.data.content);
+				let deltaOps = this.postData.data.content.ops;
+				let cfg = {};
+				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+				console.log(converter.convert());
+				this.PostHybridContent = converter.convert();
+			}
 		},
 		async insightsPostToggle(id) {
 			this.insightsLoading = true;
@@ -850,49 +866,49 @@ export default {
 		// 	this.$emit('showComments');
 		// },
 		async upvote() {
-			if (this.upClicked == false) {
-				this.upClicked = true;
-				this.counter++;
-				// try {
-				// 	await this.$store.dispatch('postCommentActions/vote', {
-				// 		baseurl: this.$baseurl,
-				// 		id: this.id,
-				// 		type: 'post',
-				// 		direction: 1,
-				// 	});
-				// } catch (error) {
-				// 	this.error = error.message || 'Something went wrong';
-				// }
-			} else {
-				this.upClicked = false;
-				this.counter--;
-			}
 			if (this.downClicked) {
 				this.downClicked = false;
 				this.counter++;
 			}
+			if (this.upClicked == false) {
+				this.upClicked = true;
+				this.counter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postData.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.upClicked = false;
+				this.counter--;
+			}
 		},
 		async downvote() {
-			if (this.downClicked == false) {
-				this.downClicked = true;
-				this.counter--;
-				// try {
-				// 	await this.$store.dispatch('postCommentActions/vote', {
-				// 		baseurl: this.$baseurl,
-				// 		id: this.id,
-				// 		type: 'post',
-				// 		direction: -1,
-				// 	});
-				// } catch (error) {
-				// 	this.error = error.message || 'Something went wrong';
-				// }
-			} else {
-				this.downClicked = false;
-				this.counter++;
-			}
 			if (this.upClicked) {
 				this.upClicked = false;
 				this.counter--;
+			}
+			if (this.downClicked == false) {
+				this.downClicked = true;
+				this.counter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postData.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.downClicked = false;
+				this.counter++;
 			}
 		},
 		// showSubMenu() {
