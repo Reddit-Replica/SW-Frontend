@@ -88,7 +88,7 @@ export default {
 	},
 };
 </script>
-<style>
+<style scoped>
 .main {
 	background-color: white;
 	border-radius: 5px;

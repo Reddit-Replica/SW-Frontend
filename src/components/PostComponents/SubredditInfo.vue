@@ -34,14 +34,7 @@ export default {
 			subreddit: {},
 			isJoined: false,
 			hoverButtonText: 'Join',
-			moderators: [
-				{
-					username: 'string',
-					nickname: 'string',
-					dateOfModeration: 'string',
-					permissions: [],
-				},
-			],
+			moderators: [],
 			rules: [],
 		};
 	},
