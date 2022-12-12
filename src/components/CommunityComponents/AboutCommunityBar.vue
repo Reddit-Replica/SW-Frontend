@@ -105,7 +105,7 @@
 				@click="showTextarea"
 				id="add-description-3"
 			>
-				{{ communityDescription }}
+				{{ communityDescriptionProp }}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -200,7 +200,7 @@
 							id="comm-online-mem"
 							@mouseover="toogleOnlineMembersCountBox"
 							@mouseleave="toogleOnlineMembersCountBox"
-							>{{ calculateMembers(onlineMembersCount) }}
+							>{{ calculateMembers(membersCount) }}
 						</span>
 					</div>
 					<div class="text-grey">Online</div>
@@ -209,7 +209,7 @@
 						id="comm-online-mem-hover"
 						v-if="onlineMembersCountBoxShown"
 					>
-						{{ onlineMembersCount }} Online
+						{{ membersCount }} Online
 					</div>
 				</div>
 				<div></div>
@@ -267,7 +267,7 @@
 					@click="toogleTopicsList"
 					v-if="topicChosen"
 					id="topic-added"
-					>{{ communityTopic }}</span
+					>{{ communityTopicProp }}</span
 				>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -427,6 +427,7 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
+	emits: ['reload'],
 	props: {
 		//@vuese
 		//Array of Subreddit suggested topics
@@ -471,10 +472,16 @@ export default {
 			default: '',
 		},
 		//@vuese
-		//Subreddit main topic and array of subtopics
+		//Subreddit main topic
 		communityTopicProp: {
-			type: Object,
-			default: () => ({ mainTopic: '', subtopics: [] }),
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//Subreddit array of subtopics
+		communitySubtopicsProp: {
+			type: Array,
+			default: () => [],
 		},
 		isFavorite: {
 			type: Boolean,
@@ -505,27 +512,18 @@ export default {
 	},
 	computed: {
 		emptyDescription() {
-			// return this.communityDescription === '';
-			return !this.communityDescription || this.communityDescription === '';
-		},
-		communityDescription() {
-			return this.communityDescriptionProp;
-		},
-		communityTopic() {
-			return this.communityTopicProp.topicTitle;
+			return (
+				!this.communityDescriptionProp || this.communityDescriptionProp === ''
+			);
 		},
 		topicChosen() {
-			// return this.communityTopic !== '';
-			return this.communityTopic;
-		},
-		communitySubtopics() {
-			return this.communityTopicProp.subtopics;
+			return this.communityTopicProp;
 		},
 		subtopicChosen() {
-			return this.communitySubtopics.length !== 0;
+			return this.communitySubtopicsProp.length !== 0;
 		},
 		subtopicsCount() {
-			return this.communitySubtopics.length;
+			return this.communitySubtopicsProp.length;
 		},
 		favouriteText() {
 			if (!this.isFavorite) return 'Add To Favorites';
@@ -617,7 +615,7 @@ export default {
 		//@vuese
 		//Save subreddit added description
 		//@arg no argument
-		saveDescription() {
+		async saveDescription() {
 			//save description
 			this.isSubtopicsSaved = true;
 			//hide text area
@@ -625,12 +623,13 @@ export default {
 
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddDescription', {
+			await this.$store.dispatch('community/AddDescription', {
 				description: this.description,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.$emit('reload');
 			// }
 		},
 		//@vuese
