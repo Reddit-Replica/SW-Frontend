@@ -21,14 +21,14 @@
 					<p class="para-bold">{{ numFormatter(subreddit.members) }}</p>
 					<p>Members</p>
 				</div>
-				<div class="online">
+				<!-- <div class="online">
 					<p class="para-bold">
 						<font-awesome-icon icon="fa-solid fa-circle" class="green-dot" />{{
 							subreddit.online
 						}}
 					</p>
 					<p>Online</p>
-				</div>
+				</div> -->
 			</div>
 			<base-button
 				class="join-button pink-button"
