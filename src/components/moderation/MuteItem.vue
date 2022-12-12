@@ -75,25 +75,41 @@
 				<div class="banned-for">No mod note.</div>
 			</div>
 		</div>
-		<div class="add-ban" v-if="showAddBan">
-			<add-ban
-				@done-successfully="doneSuccessfully()"
-				@exit="showAddBanFunction()"
-				:ban-name-edit="ban.username"
-				:ban-period-edit="ban.banPeriod"
-				:ban-mod-note-edit="ban.modNote"
-				:ban-note-include-edit="ban.noteInclude"
-				:ban-reason-for-edit="ban.reasonForBan"
-				:edited="true"
-			></add-ban>
+		<div id="sure-popup-form">
+			<base-dialog
+				:show="showUnMute"
+				@close="showUnMuteFunction()"
+				title="Confirm"
+			>
+				<div class="rule-dialog flex-column">
+					<div class="rule-box-p flex-column">
+						<p class="sure-text">Are you sure you want to unmute mute?</p>
+					</div>
+					<div class="rule-box box-buttons">
+						<base-button
+							@click="showUnMuteFunction()"
+							class="button-white"
+							id="cancel-button"
+							>Cancel</base-button
+						>
+						<base-button
+							@click="Unmute()"
+							class="button-blue"
+							id="delete-button"
+							>Unmute</base-button
+						>
+					</div>
+					<div class="no-messages" v-if="errorResponse">
+						{{ errorResponse }}
+					</div>
+				</div>
+			</base-dialog>
 		</div>
 	</div>
 </template>
 
 <script>
-import AddBan from '../../components/moderation/AddBan.vue';
 export default {
-	components: { AddBan },
 	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
@@ -127,11 +143,11 @@ export default {
 	},
 	data() {
 		return {
-			sureShown: false,
 			viewDetails: false,
 			showAddBan: false,
 			showUnMute: false,
 			handleTime: '',
+			errorResponse: null,
 		};
 	},
 	beforeMount() {
@@ -177,6 +193,9 @@ export default {
 		doneSuccessfully() {
 			this.$emit('doneSuccessfully');
 		},
+		// @vuese
+		//used to show sure unmute popup
+		// @arg no argument
 		showUnMuteFunction() {
 			this.showUnMute = !this.showUnMute;
 		},
@@ -205,6 +224,10 @@ export default {
 			}
 			this.handleTime = returnValue;
 		},
+		// @vuese
+		//used to handle unmute request
+		// @arg no argument
+		Unmute() {},
 	},
 };
 </script>
