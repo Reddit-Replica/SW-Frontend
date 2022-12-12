@@ -69,7 +69,7 @@ export default {
 	},
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		let url = new URL(baseurl + `/user/${payload.username}/comments`);
 		let params = {
 			sort: `${payload.params.sort}`,
 			time: `${payload.params.time}`,
@@ -79,15 +79,21 @@ export default {
 		Object.keys(params).forEach((key) =>
 			url.searchParams.append(key, params[key])
 		);
-		const response = await fetch(baseurl + `/user-comments`); // mock server
-		// const response = await fetch(url); // API
+		// const response = await fetch(baseurl + `/user-comments`); // mock server
+		let response;
+		try {
+			response = await fetch(url); // API
+		} catch (error) {
+			console.log(error);
+		}
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to fetch User Data!'
 			);
-			throw error;
+			console.log(error);
 		}
+		console.log(responseData.message);
 		// if (response.status == 200)
 		context.commit('setUserCommentsData', {
 			responseData,
@@ -108,7 +114,7 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(newSocialLink),
 		});
@@ -117,12 +123,13 @@ export default {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
 			);
-			throw error;
+			// throw error;
+			console.log(error);
 		}
-		// if (response.status == 200)
-		context.commit('addUserSocialLink', {
-			newSocialLink,
-		});
+		if (response.status == 201)
+			context.commit('addUserSocialLink', {
+				newSocialLink,
+			});
 		return response.status;
 	},
 	/**
@@ -132,27 +139,35 @@ export default {
 	 * @returns {integer} status code
 	 */
 	async AddProfilePicture(context, payload) {
-		const profilePictureUrl = payload.profilePictureUrl;
+		// const profilePictureUrl = payload.profilePictureUrl;
+		const file = payload.file;
 		const baseurl = payload.baseurl;
+		const postInfo = new FormData();
+		postInfo.append('avatar', file);
 		const response = await fetch(baseurl + '/profile-picture', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
-			body: JSON.stringify(profilePictureUrl),
+			body: postInfo,
 		});
-		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		const responseData = await response.text();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+			console.log('زى الفل الحمد لله');
+		} else if (response.status == 400) {
+			const error = new Error(responseData);
+			console.log(responseData);
+			throw error;
+		} else {
+			console.log(error);
+			const error = new Error('server error');
 			throw error;
 		}
 		// if(response.status == 200)
-		context.commit('addUserProfilePicture', {
-			profilePictureUrl,
-		});
+		// context.commit('addUserProfilePicture', {
+		// 	profilePictureUrl,
+		// });
 		return response.status;
 	},
 	/**
@@ -162,27 +177,41 @@ export default {
 	 * @returns {integer} status code
 	 */
 	async AddProfileBanner(context, payload) {
-		const bannerImageUrl = payload.bannerImageUrl;
+		const file = payload.file;
 		const baseurl = payload.baseurl;
+		// const bannerImageUrl = payload.bannerImageUrl;
+		const postInfo = new FormData();
+		postInfo.append('banner', file);
 		const response = await fetch(baseurl + '/banner-image', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
-			body: JSON.stringify(bannerImageUrl),
+			body: postInfo,
 		});
-		const responseData = await response.json();
+		const responseData = await response.text();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+			console.log('زى الفل الحمد لله');
+		} else if (response.status == 400) {
+			const error = new Error(responseData);
+			console.log(responseData);
+			throw error;
+		} else {
+			console.log(error);
+			const error = new Error('server error');
+			throw error;
+		}
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
 			);
 			throw error;
 		}
-		// if(response.status == 200)
-		context.commit('addUserProfileBannerImageUrl', {
-			bannerImageUrl,
-		});
+		// if (response.status == 200)
+		// 	context.commit('addUserProfileBannerImageUrl', {
+		// 		bannerImageUrl,
+		// 	});
 		return response.status;
 	},
 	/**

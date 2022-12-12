@@ -23,8 +23,10 @@ export default {
 	// @vuese
 	//change title name and load replies
 	beforeMount() {
-		document.title = 'messages: selfreply';
-		this.loadPostReplies();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: selfreply';
+			this.loadPostReplies();
+		}
 	},
 	data() {
 		return {

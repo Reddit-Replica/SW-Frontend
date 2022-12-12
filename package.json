@@ -30,6 +30,7 @@
 		"fontawesome": "^5.6.3",
 		"jsdoc-vuex-plugin": "^1.0.0",
 		"moment": "^2.29.4",
+		"number-abbreviate": "^2.0.0",
 		"quill-delta-to-html": "^0.12.1",
 		"quill-vuejs": "^0.0.14",
 		"quilljs-renderer": "^0.0.8",
