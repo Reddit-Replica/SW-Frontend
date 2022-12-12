@@ -31,40 +31,60 @@
 					</svg>
 				</a>
 			</div>
-			<search-bar
-				@enter-search="(search) => enterSearch(search)"
-				:empty-input="search"
-			></search-bar>
-			<ul class="ul-items" v-if="!noItems">
-				<approved-item
-					v-for="(moderator, index) in listOfModerators"
-					:key="moderator"
-					:moderator="moderator"
-					:search="search"
-					:index="index"
-				></approved-item>
-			</ul>
-			<div class="no-items" v-else>
+			<no-list :title="'approved users'" v-if="noApproved">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
 					fill="currentColor"
-					class="bi bi-search icon-search"
+					class="bi bi-pen"
 					viewBox="0 0 16 16"
-					id="search-icon"
 				>
 					<path
-						d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+						d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
 					/>
 				</svg>
-				<span>No results for u/{{ search }}</span>
-				<base-button
-					class="see-all-button"
-					id="see-all-button"
-					@click="seeAll()"
-					>See all</base-button
-				>
+			</no-list>
+			<div v-else>
+				<search-bar
+					@enter-search="(search) => enterSearch(search)"
+					:empty-input="search"
+					:before="before"
+					:after="after"
+					@fetch-before="loadListOfApproved('before')"
+					@fetch-after="loadListOfApproved('after')"
+				></search-bar>
+				<ul class="ul-items" v-if="!noItems">
+					<approved-item
+						v-for="(approve, index) in listOfApproved"
+						:key="approve"
+						:approve="approve"
+						:search="search"
+						:index="index"
+					></approved-item>
+				</ul>
+				<div class="no-items" v-else>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-search icon-search"
+						viewBox="0 0 16 16"
+						id="search-icon"
+					>
+						<path
+							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+						/>
+					</svg>
+					<span>No results for u/{{ search }}</span>
+					<base-button
+						class="see-all-button"
+						id="see-all-button"
+						@click="seeAll()"
+						>See all</base-button
+					>
+				</div>
 			</div>
 		</div>
 		<div id="create-rule-form">
@@ -114,14 +134,15 @@
 import SearchBar from '../../components/moderation/SearchBar.vue';
 import ApprovedItem from '../../components/moderation/ApprovedItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
+import NoList from '../../components/moderation/NoList.vue';
 export default {
-	components: { SearchBar, ApprovedItem, ListBar },
+	components: { SearchBar, ApprovedItem, ListBar, NoList },
 	computed: {
 		// @vuese
 		//return list of moderators
 		// @type object
-		listOfModerators() {
-			return this.$store.getters['moderation/listOfModerators'];
+		listOfApproved() {
+			return this.$store.getters['moderation/listOfApproved'];
 		},
 		// @vuese
 		//return subreddit name
@@ -136,6 +157,27 @@ export default {
 		title() {
 			return 'Approved users';
 		},
+		// @vuese
+		//return true if there is no approved, false otherwise
+		// @type boolean
+		noApproved() {
+			if (this.listOfApproved.length != 0) {
+				return false;
+			}
+			return true;
+		},
+		// @vuese
+		//return if there is approved before
+		// @type string
+		before() {
+			return this.$store.getters['moderation/before'];
+		},
+		// @vuese
+		//return if there is approved after
+		// @type string
+		after() {
+			return this.$store.getters['moderation/after'];
+		},
 	},
 	data() {
 		return {
@@ -147,11 +189,11 @@ export default {
 	},
 	methods: {
 		// @vuese
-		//load moderators list from the store
+		//load approved list from the store
 		// @arg no argument
-		async loadListOfModerators() {
+		async loadListOfApproved() {
 			try {
-				await this.$store.dispatch('moderation/loadListOfModerators', {
+				await this.$store.dispatch('moderation/loadListOfApproved', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});
@@ -164,13 +206,13 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
-			for (let i = 0; i < this.listOfModerators.length; i++) {
-				if (this.listOfModerators[i].username != input && input != '') {
+			for (let i = 0; i < this.listOfApproved.length; i++) {
+				if (this.listOfApproved[i].username != input && input != '') {
 					this.count = this.count + 1;
 					this.noItems = false;
 				}
 			}
-			if (this.count == this.listOfModerators.length) {
+			if (this.count == this.listOfApproved.length) {
 				this.noItems = true;
 			}
 			this.count = 0;
