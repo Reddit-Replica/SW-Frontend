@@ -49,6 +49,7 @@
 
 <script>
 export default {
+	emits: ['reload'],
 	props: {
 		//@vuese
 		//Subreddit ID
@@ -94,17 +95,19 @@ export default {
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
-		joinsubreddit() {
+		async joinsubreddit() {
 			// this.toogleJoin();
 
 			const accessToken = localStorage.getItem('accessToken');
 
-			this.$store.dispatch('community/joinSubreddit', {
+			await this.$store.dispatch('community/joinSubreddit', {
 				message: this.message,
 				subredditId: this.subredditId,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+
+			this.$emit('reload');
 		},
 	},
 };
