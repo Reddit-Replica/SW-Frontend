@@ -2,6 +2,7 @@
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
+			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
 			:subreddit-nickname="nickname"
 			:subreddit-image-url="subreddit.picture"
@@ -27,16 +28,17 @@
 			<div class="subreddit-page-right">
 				<about-community-bar
 					v-if="isModerator"
+					@reload="reloadPage"
 					id="abot-comm-comp"
-					:subreddit-name="subredditName"
+					:subreddit-name="subreddit.title"
 					:is-favourite="subreddit.isFavorite"
 					:topics="topics"
 					:members-count="subreddit.members"
-					:online-members-count="subreddit.online"
 					:community-date="subreddit.dateOfCreation"
 					:community-type="subreddit.type"
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
+					:community-subtopics-prop="subreddit.subtopics"
 				></about-community-bar>
 				<about-community-read-only
 					v-else
@@ -49,13 +51,13 @@
 				></about-community-read-only>
 
 				<!-- for testing about community bar if the current user not moderator -->
-				<about-community-read-only
+				<!-- <about-community-read-only
 					:subreddit-name="subredditName"
 					:members-count="subreddit.members"
 					:online-members-count="subreddit.online"
 					:community-date="subreddit.dateOfCreation"
 					:community-description="subreddit.description"
-				></about-community-read-only>
+				></about-community-read-only> -->
 
 				<moderators-bar
 					:moderators="subreddit.moderators"
@@ -198,7 +200,9 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
-
+		reloadPage() {
+			this.getSubreddit();
+		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
 			console.log('hide');

@@ -179,7 +179,7 @@ export default {
 				body: JSON.stringify(description),
 			}
 		);
-
+		console.log(payload.description);
 		const responseData = await response.json();
 
 		if (!response.ok) {
@@ -196,7 +196,7 @@ export default {
 	 * @returns {void}
 	 */
 	async AddMainTopic(_, payload) {
-		const title = { title: payload.topic };
+		const title = { title: payload.title };
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
@@ -211,6 +211,7 @@ export default {
 			}
 		);
 
+		console.log(title);
 		const responseData = await response.json();
 
 		if (!response.ok) {
