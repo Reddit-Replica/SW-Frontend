@@ -113,7 +113,7 @@ export default {
 			for (let i = 0; i < responseData.children.length; i++) {
 				const invitedmoderator = {
 					username: responseData.children[i].username,
-					dateOfModeration: responseData.children[i].dateOfModeration,
+					dateOfModeration: responseData.children[i].dateOfInvitation,
 					permissions: responseData.children[i].permissions,
 					avatar: responseData.children[i].avatar,
 				};
@@ -151,6 +151,131 @@ export default {
 			returnValue = 'Just now';
 		}
 		context.commit('setHandleTime', returnValue);
+	},
+
+	/////////////////////LEAVE MOD/////////////////////
+
+	async leaveMod(context, payload) {
+		context.commit('leaveModSuccessfully', false);
+		const mod = {
+			subreddit: payload.subreddit,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/leave-moderator`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(mod),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('leaveModSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	/////////////////////INVITE MOD/////////////////////
+
+	async inviteMod(context, payload) {
+		context.commit('inviteModSuccessfully', false);
+		const mod = {
+			username: payload.username,
+			subreddit: payload.subreddit,
+			permissionToEverything: payload.permissionToEverything,
+			permissionToManageUsers: payload.permissionToManageUsers,
+			permissionToManageSettings: payload.permissionToManageSettings,
+			permissionToManageFlair: payload.permissionToManageFlair,
+			permissionToManagePostsComments: payload.permissionToManagePostsComments,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/moderator-invite`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(mod),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('inviteModSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async cancelInvitation(context, payload) {
+		context.commit('cancelSuccessfully', false);
+		const cancel = {
+			username: payload.username,
+			subreddit: payload.subreddit,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/cancel-invitation`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(cancel),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('cancelSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
 	},
 
 	//////////////////////SPAM////////////////////////
@@ -219,6 +344,45 @@ export default {
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+
+	async approvedSpam(context, payload) {
+		context.commit('approveSuccessfully', false);
+		const spam = {
+			id: payload.id,
+			type: payload.type,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/approve`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(spam),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('approveSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},
@@ -688,9 +852,8 @@ export default {
 		context.commit('banUserSuccessfully', false);
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
-		console.log(payload);
 		const bannedUser = {
-			userId: payload.userId,
+			username: payload.username,
 			subreddit: payload.subredditName,
 			banPeriod: payload.banPeriod,
 			reasonForBan: payload.reasonForBan,
@@ -711,6 +874,46 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			context.commit('banUserSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async unBanUser(context, payload) {
+		context.commit('unBanUserSuccessfully', false);
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		const bannedUser = {
+			username: payload.username,
+			// username: 'asmaa',
+			subreddit: payload.subredditName,
+		};
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/unban`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(bannedUser),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('unBanUserSuccessfully', true);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;

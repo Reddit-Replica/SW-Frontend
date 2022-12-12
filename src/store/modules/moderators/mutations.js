@@ -18,9 +18,27 @@ export default {
 		state.handleTime = payload;
 	},
 
+	//////////////LEAVE MOD/////////////
+
+	leaveModSuccessfully(state, payload) {
+		state.leaveModSuccessfully = payload;
+	},
+
+	//////////////INVITE MOD/////////////
+
+	inviteModSuccessfully(state, payload) {
+		state.inviteModSuccessfully = payload;
+	},
+	cancelSuccessfully(state, payload) {
+		state.cancelSuccessfully = payload;
+	},
+
 	//////////////SPAM/////////////////
 	setListOfSpams(state, payload) {
 		state.listOfSpams = payload;
+	},
+	approveSuccessfully(state, payload) {
+		state.approveSuccessfully = payload;
 	},
 
 	//////////////RULES/////////////////
@@ -55,10 +73,16 @@ export default {
 	deleteFlairSuccessfully(state, payload) {
 		state.deleteFlairSuccessfully = payload;
 	},
+	updateFlairsSuccessfully(state, payload) {
+		state.updateFlairsSuccessfully = payload;
+	},
 
 	//////////////BAN/////////////////
 
 	banUserSuccessfully(state, payload) {
 		state.banUserSuccessfully = payload;
+	},
+	unBanUserSuccessfully(state, payload) {
+		state.unBanUserSuccessfully = payload;
 	},
 };

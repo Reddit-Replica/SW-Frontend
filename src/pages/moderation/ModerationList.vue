@@ -81,6 +81,7 @@
 						:moderator="invitedModerator"
 						:index="index"
 						:invited-mod="true"
+						@done-successfully="doneSuccessfully('invited')"
 					></list-item>
 				</ul>
 			</div>
@@ -89,7 +90,7 @@
 			v-if="showInvitePopup"
 			:subreddit-name="subredditName"
 			@exit="handleInviteMod()"
-			@done-successfully="doneSuccessfully('added')"
+			@done-successfully="doneSuccessfully('cancel')"
 		></invite-moderator>
 		<div id="sure-popup-form">
 			<base-dialog
@@ -113,7 +114,7 @@
 							>Cancel</base-button
 						>
 						<base-button
-							@click="deleteRule()"
+							@click="leaveModFunction()"
 							class="button-blue"
 							id="leave-button"
 							>Leave</base-button
@@ -125,6 +126,16 @@
 				</div>
 			</base-dialog>
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -133,8 +144,15 @@ import SearchBar from '../../components/moderation/SearchBar.vue';
 import ListItem from '../../components/moderation/ListItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import InviteModerator from '../../components/moderation/InviteModerator.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
-	components: { SearchBar, ListItem, ListBar, InviteModerator },
+	components: {
+		SearchBar,
+		ListItem,
+		ListBar,
+		InviteModerator,
+		SaveUnsavePopupMessage,
+	},
 	beforeMount() {
 		this.loadListOfModerators();
 		this.loadListOfInvitedModerators();
@@ -196,9 +214,18 @@ export default {
 			notSearch: true,
 			showInvitePopup: false,
 			showLeaveMod: false,
+			errorResponse: '',
+			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
+		// @vuese
+		// handle load flairs instead of refreshing
+		// @arg no argument
+		doneSuccessfully(title) {
+			this.loadListOfInvitedModerators();
+			this.savePost(title);
+		},
 		// @vuese
 		//load moderators list from the store
 		// @arg no argument
@@ -232,6 +259,84 @@ export default {
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		// Used to handle save reorder rules action
+		// @arg no argument
+		async leaveModFunction() {
+			try {
+				await this.$store.dispatch('moderation/leaveMod', {
+					baseurl: this.$baseurl,
+					subreddit: this.subredditName,
+				});
+				if (this.$store.getters['moderation/leaveModSuccessfully']) {
+					this.savePost('Leaved');
+					window.location.reload();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: title,
+				state: '',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			}
 		},
 		// @vuese
@@ -433,5 +538,6 @@ input:focus {
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
+	color: red;
 }
 </style>

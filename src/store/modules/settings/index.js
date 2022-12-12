@@ -4,7 +4,9 @@ import getters from './getters.js';
 
 export default {
 	state() {
-		return {};
+		return {
+			unsubscribeFromEmails: false,
+		};
 	},
 	mutations,
 	actions,

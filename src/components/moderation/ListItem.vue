@@ -85,6 +85,7 @@
 
 <script>
 export default {
+	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
 		//details of moderator
@@ -94,7 +95,7 @@ export default {
 			required: true,
 			default: () => ({
 				username: '',
-				nickname: '',
+				avatar: '',
 				dateOfModeration: '',
 				permissions: [],
 			}),
@@ -126,6 +127,7 @@ export default {
 	data() {
 		return {
 			sureShown: false,
+			handleTime: '',
 		};
 	},
 	beforeMount() {
@@ -142,6 +144,13 @@ export default {
 				} else return false;
 			}
 			return true;
+		},
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
 		},
 		// @vuese
 		//handle display date
@@ -175,18 +184,37 @@ export default {
 		// @vuese
 		//return handled time after calculated it
 		// @type object
-		handleTime() {
-			return this.$store.getters['moderation/handleTime'];
-		},
+		// handleTime() {
+		// 	return this.$store.getters['moderation/handleTime'];
+		// },
 	},
 	methods: {
 		// @vuese
 		//calculate time
 		// @type object
 		calculateTime() {
-			this.$store.dispatch('moderation/handleTime', {
-				time: this.moderator.dateOfModeration,
-			});
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.moderator.dateOfModeration,
+			// });
+
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.moderator.dateOfModeration);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
 		},
 		// @vuese
 		//used to show sure remove popup
@@ -198,7 +226,21 @@ export default {
 		// @vuese
 		//used to send remove invitation request
 		// @arg no argument
-		removeInvitation() {},
+		async removeInvitation() {
+			try {
+				await this.$store.dispatch('moderation/cancelInvitation', {
+					username: this.moderator.username,
+					baseurl: this.$baseurl,
+					subreddit: this.subredditName,
+				});
+				if (this.$store.getters['moderation/cancelSuccessfully']) {
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 	},
 };
 </script>

@@ -33,7 +33,9 @@
 				<div>
 					<label for="message-to" class="heading-3"
 						>to
-						<span>(username, or /r/name for that subreddit's moderators)</span>
+						<span
+							>(/u/username, or /r/name for that subreddit's moderators)</span
+						>
 					</label>
 					<input
 						type="text"
@@ -153,7 +155,7 @@
 				<span class="delivered" v-if="delivered"
 					>your message has been delivered</span
 				>
-				<span class="delivered" v-if="errorResponse">{{ errorResponse }}</span>
+				<span class="error" v-if="errorResponse">{{ errorResponse }}</span>
 			</form>
 		</div>
 	</div>
@@ -226,17 +228,22 @@ export default {
 					subject: this.subject,
 					baseurl: this.$baseurl,
 				});
+				console.log('if success');
 				if (this.$store.getters['messages/sentSuccessfully']) {
 					this.receiverUsername = '';
 					this.subject = '';
 					this.text = '';
 					this.delivered = true;
+					console.log('success');
+				} else {
+					this.errorResponse = 'some thing wrong';
 				}
 			} catch (err) {
 				console.log(err);
 				this.errorResponse = err;
 				this.delivered = false;
 			}
+			console.log(this.errorResponse);
 		},
 		// @vuese
 		//change title to formatting or hide

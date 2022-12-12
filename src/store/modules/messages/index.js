@@ -36,6 +36,8 @@ export default {
 			blockSuccessfully: false,
 			votedSuccessfully: false,
 			replyMessageSuccessfully: false,
+			after: '',
+			before: '',
 		};
 	},
 	mutations,
