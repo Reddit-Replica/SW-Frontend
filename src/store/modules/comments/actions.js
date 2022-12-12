@@ -1,9 +1,5 @@
 export default {
 	/**
- * Action for getting subreddit details
- * @action getSubreddit 
- * @param {Object} contains An object parameter has baseurl and subredditName
- * @returns {void}
  * Action for following a post 
  * @action followPost
  * @param {Object} contains An object parameter has baseurl and post id .
@@ -14,17 +10,6 @@ export default {
  * @returns {void}
  
  */
-	async getSubreddit(context, payload) {
-		const baseurl = payload.baseurl;
-		const subredditName = payload.subredditName;
-		const response = await fetch(baseurl + '/r/' + subredditName);
-		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(responseData.message || 'Failed to fetch!');
-			throw error;
-		}
-		context.commit('setSubredditInfo', responseData[0]);
-	},
 	async followPost(context, payload) {
 		const postInfo = {
 			follow: payload.follow,
@@ -79,5 +64,79 @@ export default {
 			throw error;
 		}
 		context.commit('setCommentID', responseData.id);
+	},
+	async fetchPostComments(context, payload) {
+		const baseurl = payload.baseurl;
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?after=' + afterMod;
+		} else {
+			mediaQuery = '';
+		}
+		const response = await fetch(
+			baseurl + `/comments/${payload.id}${mediaQuery}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('setListOfComments', responseData);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+	async fetchPostReplies(context, payload) {
+		const baseurl = payload.baseurl;
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?after=' + afterMod;
+		} else {
+			mediaQuery = '';
+		}
+		const response = await fetch(
+			baseurl + `/comments/${payload.postId}/${payload.commentId}${mediaQuery}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('setListOfReplies', responseData);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
 	},
 };
