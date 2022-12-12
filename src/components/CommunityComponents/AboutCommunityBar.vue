@@ -298,7 +298,7 @@
 
 				<div
 					class="sub-topic"
-					v-if="!subtopicChosen && topicChosen && addSubtopicShown"
+					v-if="!subtopicChosen && topicChosen"
 					id="subtopic-box-1"
 				>
 					<base-button class="button-subtopic" id="subtopic-box-2">
@@ -321,13 +321,13 @@
 
 				<div
 					class="blue-border description-1 box-topic"
-					v-if="subtopicsBoxShown || subtopicChosen"
+					v-if="subtopicChosen"
 					id="subtopic-box-3"
 				>
-					<input v-if="!subtopicChosen" id="subtopic-box-4" />
+					<!-- <input v-if="subtopicChosen" id="subtopic-box-4" /> -->
 					<div v-if="subtopicChosen" @click="showBoth">
 						<base-button
-							v-for="(subtopic, index) in communitySubtopics"
+							v-for="(subtopic, index) in subtopicsToShow"
 							:key="subtopic.id"
 							class="subtopic text"
 							@click="deleteSubtopic(subtopic)"
@@ -347,6 +347,7 @@
 							</svg>
 						</base-button>
 					</div>
+					<input v-if="subtopicChosen" id="subtopic-box-4" />
 					<div class="flex">
 						<span class="span-char" id="subtopic-box-count"
 							>{{ subtopicsCount }}/25</span
@@ -508,6 +509,8 @@ export default {
 			addSubtopicShown: true,
 			subtopicsBoxShown: false,
 			subtopicsListShown: false,
+
+			subtopicsToShow: this.communitySubtopicsProp,
 		};
 	},
 	computed: {
@@ -520,10 +523,13 @@ export default {
 			return this.communityTopicProp;
 		},
 		subtopicChosen() {
-			return this.communitySubtopicsProp.length !== 0;
+			return (
+				this.subtopicsToShow.length !== 0 ||
+				(this.subtopicsToShow.length === 0 && this.isSubtopicsSaved === false)
+			);
 		},
 		subtopicsCount() {
-			return this.communitySubtopicsProp.length;
+			return this.subtopicsToShow.length;
 		},
 		favouriteText() {
 			if (!this.isFavorite) return 'Add To Favorites';
@@ -628,7 +634,6 @@ export default {
 				token: accessToken,
 			});
 			this.$emit('reload');
-			// }
 		},
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
@@ -655,15 +660,15 @@ export default {
 		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
 		//@arg chosen subtopic to be added to list
 		setSubtopic(subtopic) {
+			this.isSubtopicsSaved = false;
 			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
-				const index = this.communitySubtopics.findIndex(
+				const index = this.subtopicsToShow.findIndex(
 					(topic) => topic === subtopic
 				);
 				//check if subreddit chosen before
 				if (index === -1) {
-					this.communitySubtopics.push(subtopic);
-					this.subtopicsCount++;
+					this.subtopicsToShow.push(subtopic);
 				}
 			}
 		},
@@ -683,34 +688,36 @@ export default {
 		//Delete subtopics from chosen subtopics list
 		//@arg no argument
 		deleteSubtopic(subtopic) {
-			const index = this.communitySubtopics.findIndex(
-				(topic) => topic.id === subtopic.id
-			);
-			this.communitySubtopics.splice(index, 1);
-			this.subtopicsCount--;
+			this.subtopicsListShown = false;
+			const index = this.subtopicsToShow.indexOf(subtopic);
+			this.subtopicsToShow.splice(index, 1);
 		},
 		//@vuese
 		//save chosen subtopics list
 		//@arg no argument
-		saveSubtopics() {
+		async saveSubtopics() {
 			this.subtopicsListShown = false;
 			//mark sub topics as saved
-			// this.isSubtopicsSaved = true;
+			this.isSubtopicsSaved = true;
 			//set subtopics list
 			// this.savedCommunitySubtopics = this.communitySubtopics;
 			//send request
+
+			console.log(this.subtopicsToShow);
 			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddSubTopic', {
-				subtopics: this.communitySubtopics,
+			await this.$store.dispatch('community/AddSubTopic', {
+				subtopics: this.subtopicsToShow,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.$emit('reload');
 		},
 		//@vuese
 		//Hide add subtopic button and show subtopics list and input area
 		//@arg no argument
 		showBoth() {
+			this.isSubtopicsSaved = false;
 			this.addSubtopicShown = false;
 			this.subtopicsBoxShown = true;
 			this.subtopicsListShown = !this.subtopicsListShown;

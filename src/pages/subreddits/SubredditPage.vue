@@ -38,7 +38,7 @@
 					:community-type="subreddit.type"
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
-					:community-subtopics-prop="subreddit.subtopics"
+					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
 				<about-community-read-only
 					v-else
@@ -126,14 +126,6 @@ export default {
 	data() {
 		return {
 			topics: [
-				// { id: 0, name: 'Art' },
-				// { id: 1, name: 'Anime' },
-				// { id: 2, name: 'Beauty' },
-				// { id: 3, name: 'Cars' },
-				// { id: 4, name: 'Fashion' },
-				// { id: 5, name: 'Music' },
-				// { id: 6, name: 'Sports' },
-				// { id: 7, name: 'Travel' },
 				'Art',
 				'Anime',
 				'Beauty',
