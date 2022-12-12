@@ -54,7 +54,7 @@
 				<div class="input-drop-down-box-1" v-if="inputFocused">
 					<div class="input-drop-down-box-2">
 						<div class="title title-profile">YOUR PROFILE</div>
-						<div class="section-box">
+						<div class="section-box" @click="getUserdata()">
 							<div class="image-box">
 								<img
 									src="https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030"
@@ -193,6 +193,7 @@ export default {
 			this.getSubreddits();
 
 			// this.getUserdata();
+			console.log(this.userData);
 		},
 		// @vuese
 		// Used to show create community popup
@@ -236,9 +237,10 @@ export default {
 		},
 		async getUserdata() {
 			const actionPayload = {
+				userName: this.userName,
 				baseurl: this.$baseurl,
 			};
-
+			console.log('enter get user data');
 			try {
 				const response = await this.$store.dispatch(
 					'user/getUserData',
@@ -247,7 +249,7 @@ export default {
 
 				if (response == 200) {
 					console.log(response);
-					console.log('الحمد لله زى الفل');
+					console.log('    user data الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -255,6 +257,8 @@ export default {
 				this.success = false;
 			}
 			this.userData = this.$store.getters['user/getUserData'].userData;
+			this.isSet = true;
+			this.inSubreddit = false;
 		},
 	},
 	computed: {
