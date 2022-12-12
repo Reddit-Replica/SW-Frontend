@@ -55,7 +55,7 @@
 					/>
 					<img
 						v-else
-						:src="$baseurl + '/' + moderator.avatar"
+						:src="$baseurl + '/' + getUserData.userData.picture"
 						alt="img"
 						class="img header-user-nav-user-photo"
 						:id="'header-user-img-' + index"
@@ -410,7 +410,7 @@
 				/>
 				<img
 					v-else
-					:src="$baseurl + '/' + moderator.avatar"
+					:src="$baseurl + '/' + getUserData.userData.picture"
 					alt="img"
 					class="img header-user-nav-user-photo"
 					:id="'header-user-img-' + index"

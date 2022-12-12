@@ -607,6 +607,7 @@ export default {
 			this.counter = this.postDetails.votes;
 			this.commentsCount = this.postDetails.comments;
 			this.postedAt = this.postDetails.postedAt;
+			this.isFollowed = this.postDetails.followed;
 			console.log(this.postDetails);
 		},
 		//@vuese
@@ -673,16 +674,17 @@ export default {
 		},
 		//@vuese
 		//follow post
-		async followPost() {
+		async follow() {
 			try {
 				await this.$store.dispatch('comments/followPost', {
 					baseurl: this.$baseurl,
-					id: this.id,
+					id: this.$route.path.split('/')[4],
+					follow: !this.isFollowed,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
+			this.isFollowed = !this.isFollowed;
 		},
 		//@vuese
 		//show services submenu of post
