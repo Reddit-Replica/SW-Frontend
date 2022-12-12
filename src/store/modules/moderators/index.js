@@ -14,6 +14,8 @@ export default {
 			before: '',
 			//////////////APPROVED/////////////
 			listOfApproved: [],
+			//////////////MUTED/////////////
+			listOfMuted: [],
 			//////////////LEAVE MOD/////////////
 			leaveModSuccessfully: false,
 			//////////////INVITE MOD/////////////
