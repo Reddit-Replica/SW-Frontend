@@ -125,12 +125,12 @@
 				id="rules-button"
 				>Rules</router-link
 			>
-			<router-link
+			<!-- <router-link
 				:to="'/r/' + subredditName + '/about/settings'"
 				class="options"
 				id="content-controls-button"
 				>Content controls</router-link
-			>
+			> -->
 		</div>
 		<!-- <div class="box">
 			<div class="head">

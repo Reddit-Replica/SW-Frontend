@@ -27,7 +27,6 @@
 						type="text"
 						placeholder="Reason they were muted"
 						v-model.trim="reasonNote"
-						@blur="reasonNote"
 						@keyup="charCount()"
 						id="reason-note"
 					></textarea>
@@ -101,26 +100,21 @@ export default {
 		//@arg no argument
 		async submitMute() {
 			this.errorResponse = null;
-			// try {
-			// 	await this.$store.dispatch('moderation/muteUser', {
-			// 		//////userId not ban user name
-			// 		userId: this.banUserName,
-			// 		banPeriod: this.banPeriod,
-			// 		//////not enum
-			// 		reasonForBan: this.reason,
-			// 		modNote: this.modNote,
-			// 		noteInclude: this.reasonNote,
-			// 		baseurl: this.$baseurl,
-			// 		subredditName: this.subredditName,
-			// 	});
-			// 	if (this.$store.getters['moderation/banUserSuccessfully']) {
-			// 		this.hideMute();
-			// 		this.$emit('doneSuccessfully');
-			// 	}
-			// } catch (err) {
-			// 	console.log(err);
-			// 	this.errorResponse = err;
-			// }
+			try {
+				await this.$store.dispatch('moderation/muteUser', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					username: this.muteUserName,
+					muteReason: this.reasonNote,
+				});
+				if (this.$store.getters['moderation/muteUserSuccessfully']) {
+					this.hideMute();
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 	},
 };
