@@ -29,6 +29,7 @@
 					v-if="isModerator"
 					id="abot-comm-comp"
 					:subreddit-name="subredditName"
+					:is-favourite="subreddit.isFavorite"
 					:topics="topics"
 					:members-count="subreddit.members"
 					:online-members-count="subreddit.online"
