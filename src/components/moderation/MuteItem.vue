@@ -269,7 +269,6 @@ export default {
 	white-space: nowrap;
 	flex: 1 0 100px;
 	line-height: normal;
-	font-size: 1.5rem;
 }
 .permissions {
 	margin-right: 2rem;
