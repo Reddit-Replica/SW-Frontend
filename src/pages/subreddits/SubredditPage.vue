@@ -27,7 +27,7 @@
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
-					v-if="isModerator"
+					v-if="subreddit.isModerator"
 					@reload="reloadPage"
 					id="abot-comm-comp"
 					:subreddit-name="subreddit.title"
@@ -49,15 +49,6 @@
 					:community-date="subreddit.dateOfCreation"
 					:community-description-prop="subreddit.description"
 				></about-community-read-only>
-
-				<!-- for testing about community bar if the current user not moderator -->
-				<!-- <about-community-read-only
-					:subreddit-name="subredditName"
-					:members-count="subreddit.members"
-					:online-members-count="subreddit.online"
-					:community-date="subreddit.dateOfCreation"
-					:community-description="subreddit.description"
-				></about-community-read-only> -->
 
 				<moderators-bar
 					:moderators="subreddit.moderators"

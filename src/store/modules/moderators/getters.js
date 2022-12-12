@@ -22,6 +22,9 @@ export default {
 	listOfApproved(state) {
 		return state.listOfApproved;
 	},
+	approveUserSuccessfully(state) {
+		return state.approveUserSuccessfully;
+	},
 
 	/////////////////////MUTED/////////////////////
 

@@ -3,7 +3,7 @@
 		<list-bar
 			:title="'approved'"
 			:subreddit-name="subredditName"
-			@approve-user="ApproveUserFunction()"
+			@approve-user="approveUserFunction()"
 		></list-bar>
 		<div class="list-moderations">
 			<div class="text-moderation">
@@ -90,7 +90,7 @@
 		<div id="create-rule-form">
 			<base-dialog
 				:show="showAdd"
-				@close="ApproveUserFunction"
+				@close="approveUserFunction"
 				title="Add approved user"
 			>
 				<div class="rule-dialog flex-column">
@@ -109,7 +109,7 @@
 					</div>
 					<div class="rule-box box-buttons">
 						<base-button
-							@click="ApproveUserFunction()"
+							@click="approveUserFunction()"
 							class="button-white"
 							id="cancel-button"
 							>Cancel</base-button
@@ -118,6 +118,7 @@
 							@click="approveUser()"
 							class="button-blue"
 							id="create-rule-button"
+							:class="userName != '' ? '' : 'disable-button'"
 							>Add user</base-button
 						>
 					</div>
@@ -137,6 +138,19 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
 export default {
 	components: { SearchBar, ApprovedItem, ListBar, NoList },
+	data() {
+		return {
+			userName: '',
+			search: '',
+			count: 0,
+			noItems: false,
+			showAdd: false,
+			errorResponse: null,
+		};
+	},
+	beforeMount() {
+		this.loadListOfApproved();
+	},
 	computed: {
 		// @vuese
 		//return list of moderators
@@ -179,14 +193,6 @@ export default {
 			return this.$store.getters['moderation/after'];
 		},
 	},
-	data() {
-		return {
-			search: '',
-			count: 0,
-			noItems: false,
-			showAdd: false,
-		};
-	},
 	methods: {
 		// @vuese
 		//load approved list from the store
@@ -206,6 +212,7 @@ export default {
 		// @arg The argument is a string value representing search input
 		enterSearch(input) {
 			this.search = input;
+			this.noItems = false;
 			for (let i = 0; i < this.listOfApproved.length; i++) {
 				if (this.listOfApproved[i].username != input && input != '') {
 					this.count = this.count + 1;
@@ -214,6 +221,9 @@ export default {
 			}
 			if (this.count == this.listOfApproved.length) {
 				this.noItems = true;
+			}
+			if (input == '') {
+				this.noItems = false;
 			}
 			this.count = 0;
 		},
@@ -227,8 +237,28 @@ export default {
 		// @vuese
 		//used to show add approve user popup
 		// @arg no argument
-		ApproveUserFunction() {
+		approveUserFunction() {
 			this.showAdd = !this.showAdd;
+		},
+		//@vuese
+		//handle approve user
+		//@arg no argument
+		async approveUser() {
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('moderation/approveUser', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					username: this.userName,
+				});
+				if (this.$store.getters['moderation/approveUserSuccessfully']) {
+					this.approveUserFunction();
+					this.loadListOfApproved();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 	},
 };
@@ -376,5 +406,11 @@ input:focus {
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
+}
+.disable-button {
+	filter: grayscale(1);
+	cursor: not-allowed;
+	color: var(--color-grey-light-5);
+	fill: var(--color-grey-light-5);
 }
 </style>
