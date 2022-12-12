@@ -18,6 +18,12 @@ export default {
 		state.handleTime = payload;
 	},
 
+	//////////////APPROVED/////////////
+
+	setListOfApproved(state, payload) {
+		state.listOfApproved = payload;
+	},
+
 	//////////////LEAVE MOD/////////////
 
 	leaveModSuccessfully(state, payload) {
