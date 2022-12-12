@@ -75,7 +75,7 @@ export default {
 		// @type boolean
 		show() {
 			if (this.search != '') {
-				if (this.search == this.moderator.username) {
+				if (this.search == this.approve.username) {
 					return true;
 				} else return false;
 			}
@@ -99,7 +99,7 @@ export default {
 
 			var currentDate = new Date();
 			var returnValue = '';
-			var myTime = new Date(this.moderator.dateOfModeration);
+			var myTime = new Date(this.approve.dateOfApprove);
 			if (currentDate.getFullYear() != myTime.getFullYear()) {
 				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
 			} else if (currentDate.getMonth() != myTime.getMonth()) {
