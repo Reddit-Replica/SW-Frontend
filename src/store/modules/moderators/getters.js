@@ -23,6 +23,12 @@ export default {
 		return state.listOfApproved;
 	},
 
+	/////////////////////MUTED/////////////////////
+
+	listOfMuted(state) {
+		return state.listOfMuted;
+	},
+
 	/////////////////////LEAVE MOD/////////////////////
 
 	leaveModSuccessfully(state) {

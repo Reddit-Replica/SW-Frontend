@@ -24,6 +24,12 @@ export default {
 		state.listOfApproved = payload;
 	},
 
+	//////////////APPROVED/////////////
+
+	setListOfMuted(state, payload) {
+		state.listOfMuted = payload;
+	},
+
 	//////////////LEAVE MOD/////////////
 
 	leaveModSuccessfully(state, payload) {
