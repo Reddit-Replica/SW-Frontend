@@ -1187,6 +1187,7 @@ export default {
 				};
 				banned.push(ban);
 			}
+			console.log(banned);
 			context.commit('setListOfBanned', banned);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
