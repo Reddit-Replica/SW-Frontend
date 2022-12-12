@@ -214,7 +214,15 @@
 											<!-- <div class="post-text" v-html="renderingHTML"></div> -->
 										</div>
 										<div class="post-services">
-											<ul class="services">
+											<ul
+												class="services"
+												v-if="
+													(!postDetails.inYourSubreddit &&
+														postDetails.subreddit != '') ||
+													(postDetails.subreddit == '' &&
+														postDetails.postedBy != getuserName)
+												"
+											>
 												<li>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -416,6 +424,14 @@
 													</ul>
 												</li>
 											</ul>
+											<post-options
+												v-else-if="
+													postDetails.subreddit == '' &&
+													postDetails.postedBy == getuserName
+												"
+												:post-data="{ data: postDetails }"
+												:pinned-post-flag="false"
+											></post-options>
 										</div>
 										<div class="comment-submit">
 											<div class="comment-as-name">
@@ -473,7 +489,16 @@
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<subreddit-info :subreddit-name="subredditName"></subreddit-info>
+							<subreddit-info
+								:subreddit-name="subredditName"
+								v-if="(postDetails.subreddit = '')"
+							></subreddit-info>
+							<profile-card
+								v-else-if="userData.cakeDate != null"
+								:user-data="userData"
+								:state="'profile'"
+								:user-name="'menna'"
+							></profile-card>
 						</div>
 					</div>
 				</div>
@@ -486,12 +511,16 @@ import SubMenu from '../BaseComponents/SubMenu.vue';
 import SubredditInfo from './SubredditInfo.vue';
 import MyComment from './MyComment.vue';
 import CommentSubmit from './CommentSubmit.vue';
+import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
+import PostOptions from '../UserComponents/BaseUserComponents/PostComponents/PostOptions.vue';
 export default {
 	components: {
 		SubMenu,
 		SubredditInfo,
 		MyComment,
 		CommentSubmit,
+		ProfileCard,
+		PostOptions,
 	},
 	data() {
 		return {
@@ -522,13 +551,28 @@ export default {
 		getuserName() {
 			return localStorage.getItem('userName');
 		},
+		userData() {
+			// console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserData'].userData;
+		},
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
-	beforeMount() {
+	created() {
 		this.getPostDetails();
+		this.RequestUserData();
 	},
 	methods: {
+		async RequestUserData() {
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.getuserName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
 				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
@@ -675,7 +719,7 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			this.$router.push('/main');
+			this.$router.back();
 		},
 	},
 };

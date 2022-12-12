@@ -61,7 +61,7 @@ export default {
 	data() {
 		return {
 			state: '' /* profile or user */,
-			// userData: Array,
+			// userData: Array,getUserData
 			loading: false,
 			blockedFlag: false,
 		};
