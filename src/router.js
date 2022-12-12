@@ -143,6 +143,10 @@ const router = createRouter({
 				{ path: '/user/:userName/downvoted', component: TheDownvoted },
 				{ path: '/user/:userName/gilded', component: AwardsReceived },
 				{ path: '/user/:userName/gilded/given', component: AwardsGiven },
+				{
+					path: '/user/:userName/comments/:postId/:postTitle',
+					component: PostComments,
+				},
 			],
 			props: true,
 		}, //render user component
