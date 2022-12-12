@@ -277,7 +277,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-
+		console.log(responseData);
 		const muted = [];
 		if (response.status == 200) {
 			let before, after;
@@ -293,7 +293,8 @@ export default {
 				const mute = {
 					username: responseData.children[i].username,
 					avatar: responseData.children[i].avatar,
-					dateOfApprove: responseData.children[i].dateOfApprove,
+					dateOfMute: responseData.children[i].dateOfMute,
+					muteReason: responseData.children[i].muteReason,
 				};
 				muted.push(mute);
 			}
