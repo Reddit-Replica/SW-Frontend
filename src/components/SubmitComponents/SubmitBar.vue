@@ -231,6 +231,7 @@ export default {
 			console.log(image);
 			this.inSubreddit = true;
 			this.subredditTitle = title;
+			console.log(this.subredditTitle);
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
