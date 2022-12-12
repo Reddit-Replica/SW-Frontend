@@ -482,8 +482,9 @@
 								<div class="post-comments">
 									<my-comment
 										v-for="userComment in userComments"
-										:key="userComment.id"
+										:key="userComment.commentId"
 										:comment="userComment"
+										:post-id="$route.path.split('/')[4]"
 									></my-comment>
 								</div>
 							</div>
@@ -561,8 +562,24 @@ export default {
 	created() {
 		this.getPostDetails();
 		this.RequestUserData();
+		this.fetchPostComments();
 	},
 	methods: {
+		async fetchPostComments() {
+			try {
+				await this.$store.dispatch('comments/fetchPostComments', {
+					baseurl: this.$baseurl,
+					id: this.$route.path.split('/')[4],
+					beforeMod: '',
+					afterMod: '',
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.userComments =
+				this.$store.getters['comments/getListOfComments'].children;
+			console.log(this.userComments);
+		},
 		async RequestUserData() {
 			try {
 				await this.$store.dispatch('user/getUserData', {
@@ -591,6 +608,7 @@ export default {
 		},
 		newComment(comment) {
 			this.userComments.unshift(comment);
+			console.log(comment);
 		},
 		//@vuese
 		//fetch posts according to type of sorting
