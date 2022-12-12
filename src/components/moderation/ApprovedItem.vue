@@ -2,7 +2,7 @@
 	<li class="item" v-if="show">
 		<div class="image" id="moderator">
 			<img
-				v-if="!moderator.avatar"
+				v-if="!approve.avatar"
 				src="../../../img/default_inbox_avatar.png"
 				alt="img"
 				class="img"
@@ -10,13 +10,13 @@
 			/>
 			<img
 				v-else
-				:src="$baseurl + '/' + moderator.avatar"
+				:src="$baseurl + '/' + approve.avatar"
 				alt="img"
 				class="img"
 				:id="'moderator-img-' + index"
 			/>
 			<h5 class="heading-5" :id="'moderator-name-' + index">
-				{{ moderator.username }}
+				{{ approve.username }}
 			</h5>
 		</div>
 		<div class="time">
@@ -37,16 +37,15 @@ export default {
 	},
 	props: {
 		// @vuese
-		//details of moderator
+		//details of approve
 		// @type object
-		moderator: {
+		approve: {
 			type: Object,
 			required: true,
 			default: () => ({
 				username: '',
-				nickname: '',
-				dateOfModeration: '',
-				permissions: [],
+				avatar: '',
+				dateOfApprove: '',
 			}),
 		},
 		// @vuese
