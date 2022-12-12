@@ -1,11 +1,9 @@
 <template>
-	<ul class="post-list">
+	<ul class="post-list" :style="[pinnedPostFlag ? 'flex-wrap:nowrap' : '']">
 		<li
 			class="bottom-vote-box"
 			:style="[
-				pinnedPostFlag
-					? 'display:block !important;     margin-right: 10px'
-					: '',
+				pinnedPostFlag ? 'display:block !important;     margin-right: 0px' : '',
 			]"
 		>
 			<div
@@ -135,21 +133,21 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="approve-user-post-button"
 			@click="approvePost(postData.id)"
 			:style="[
-				postData.data.moderation &&
-				postData.data.moderation.approve &&
-				postData.data.moderation.approve.approvedBy != ''
+				postData.data.moderation != null &&
+				postData.data.moderation.approve != null &&
+				postData.data.moderation.approve.approvedBy != null
 					? 'color: #46d160'
 					: '',
 			]"
 			class="post-option-item"
 			:class="[
-				postData.data.moderation &&
-				postData.data.moderation.approve &&
-				postData.data.moderation.approvedBy != ''
+				postData.data.moderation != null &&
+				postData.data.moderation.approve != null &&
+				postData.data.moderation.approvedBy != null
 					? ''
 					: 'post-option-item-hover2',
 			]"
@@ -160,21 +158,21 @@
 			<div class="post-options-text">Approve</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="remove-user-post-button"
 			@click="removePost(postData.id)"
 			:style="[
-				postData.data.moderation &&
-				postData.data.moderation.remove &&
-				postData.data.moderation.remove.removedBy != ''
+				postData.data.moderation != null &&
+				postData.data.moderation.remove != null &&
+				postData.data.moderation.remove.removedBy != null
 					? 'color: #ff585b'
 					: 'color: rgba(135, 138, 140)',
 			]"
 			class="post-option-item"
 			:class="[
-				postData.data.moderation &&
-				postData.data.moderation.remove &&
-				postData.data.moderation.removedBy != ''
+				postData.data.moderation != null &&
+				postData.data.moderation.remove != null &&
+				postData.data.moderation.removedBy != null
 					? ''
 					: 'post-option-item-hover2',
 			]"
@@ -187,17 +185,24 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="spam-user-post-button"
-			@click="spamPost"
+			@click="spamPost(postData.id)"
 			:style="[
-				postData.data.moderation &&
-				postData.data.moderation.spam &&
-				postData.data.moderation.spam.spammedBy != ''
+				postData.data.moderation != null &&
+				postData.data.moderation.spam != null &&
+				postData.data.moderation.spam.spammedBy != null
 					? 'color: #ff585b'
 					: 'color: rgba(135, 138, 140)',
 			]"
-			class="post-option-item post-option-item-hover2"
+			class="post-option-item"
+			:class="[
+				postData.data.moderation != null &&
+				postData.data.moderation.spam != null &&
+				postData.data.moderation.spammedBy != null
+					? ''
+					: 'post-option-item-hover2',
+			]"
 		>
 			<div class="post-options-icon">
 				<i class="fa-regular fa-calendar-xmark"></i>
@@ -309,7 +314,7 @@
 							{{ postData.data.pin ? 'unpin' : 'pin' }} Post to Profile
 						</div>
 					</li>
-					<li @click="hidePost" class="options-box-item">
+					<li @click="hidePost(postData.id)" class="options-box-item">
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
@@ -460,17 +465,25 @@ export default {
 		},
 		async approvePost(id) {
 			console.log('approve');
-			try {
-				await this.$store.dispatch('userposts/approvePostOrComment', {
-					baseurl: this.$baseurl,
-					ApprovePostOrCommentData: {
-						id: id,
-						type: 'post',
-						username: this.$route.params.userName,
-					},
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (
+				!(
+					this.postData.data.moderation != null &&
+					this.postData.data.moderation.approve != null &&
+					this.postData.data.moderation.approve.approvedBy != null
+				)
+			) {
+				try {
+					await this.$store.dispatch('userposts/approvePostOrComment', {
+						baseurl: this.$baseurl,
+						ApprovePostOrCommentData: {
+							id: id,
+							type: 'post',
+							username: this.$route.params.userName,
+						},
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			}
 		},
 		async removePost(id) {
@@ -532,11 +545,11 @@ export default {
 			let key = 'unLock';
 			if (
 				!this.postData.data.moderation ||
-				!this.postData.data.moderation.lock ||
-				this.postData.data.moderation.lock == false
+				!this.postData.data.moderation.lock
 			) {
 				key = 'lock';
 			}
+			console.log('main', key);
 			try {
 				await this.$store.dispatch('userposts/lockUnLockPostOrComment', {
 					baseurl: this.$baseurl,
@@ -567,6 +580,24 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		async spamPost(id) {
+			try {
+				await this.$store.dispatch('userposts/markSpam', {
+					baseurl: this.$baseurl,
+					markSpamData: {
+						id: id,
+						type: 'post',
+						reason: '',
+					},
+					username: this.$route.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async hidePost(id) {
+			console.log(id);
 		},
 	},
 };

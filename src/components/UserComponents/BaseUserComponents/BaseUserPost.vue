@@ -6,10 +6,7 @@
 				<div class="vote-box left-vote-box">
 					<div class="d-flex flex-column vote-box">
 						<div class="upvote" @click="upvote">
-							<svg
-								class="icon icon-arrow-down p-1 up-clicked"
-								v-if="postData.data.votingType == '1'"
-							>
+							<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 								<use xlink:href="../../../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
 							<svg class="icon icon-shift" v-else>
@@ -22,13 +19,13 @@
 								upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''
 							"
 						>
-							{{ postData.data.votes }}
+							{{ getAbbreviationsOfNumber(counter) }}
 						</div>
 						<div class="downvote" @click="downvote">
 							<svg
 								class="icon icon-arrow-down p-1"
 								:class="downClicked ? 'down-clicked' : ''"
-								v-if="postData.data.votingType == '2'"
+								v-if="downClicked"
 							>
 								<use
 									xlink:href="../../../../img/vote.svg#icon-arrow-down"
@@ -89,7 +86,12 @@
 								<div class="post-status">
 									<router-link
 										v-if="postData.data.flair"
-										to=""
+										:to="`${$router.push({
+											path: `/r/${postData.data.subreddit}`,
+											query: {
+												f: `flair_name ${postData.data.flair.flairName}`,
+											},
+										})}`"
 										class="flair-box"
 										:style="`background-color :${postData.data.flair.backgroundColor};
 										color : ${postData.data.flair.textColor};
@@ -107,7 +109,18 @@
 							</div>
 							<div class="post-user-information">
 								<div class="post-user-name">
-									<a>{{ postData.data.subreddit }}</a>
+									<router-link
+										:to="
+											postData.data.subreddit == null
+												? `u/${$route.params.userName}`
+												: `r/${$postData.data.subreddit}`
+										"
+										>{{
+											postData.data.subreddit == null
+												? `u/${$route.params.userName}`
+												: `r/${$postData.data.subreddit}`
+										}}</router-link
+									>
 								</div>
 								<div class="posted-by">
 									posted by
@@ -116,7 +129,7 @@
 									</a>
 								</div>
 								<div v-if="postData.data.moderation">
-									{{ postData.data.postedAt }}
+									{{ getMoment(postData.data.postedAt) }}
 									<div
 										v-if="
 											postData.data.moderation.spam &&
@@ -140,6 +153,10 @@
 									>
 										<i class="fa-solid fa-lock" style="color: #ffd635"></i>
 										<span class="post-tooltiptext">Comments are locked</span>
+									</div>
+									<div v-if="postData.data.pin" class="post-tooltip">
+										<i class="fa-solid fa-thumbtack" style="color: #46d160"></i>
+										<span class="post-tooltiptext">post are Pinned</span>
 									</div>
 									<div
 										v-if="
@@ -175,7 +192,7 @@
 							<div class="post-options">
 								<post-options
 									:post-data="postData"
-									@insights-toggle="insightsPostToggle"
+									@insights-toggle="insightsPostToggle(postData.id)"
 									@expand-post="expandPostContent"
 									@collapse-post="collapsePostContent"
 								></post-options>
@@ -559,7 +576,13 @@
 						style="overflow: hidden"
 						v-if="showPostContent"
 					>
-						<div class="post-picture" v-if="postData.data.kind == 'image'">
+						<div
+							class="post-picture-container"
+							v-if="postData.data.kind == 'image'"
+						>
+							<picture-post :images="postData.data.images"></picture-post>
+						</div>
+						<!-- <div class="post-picture" v-if="postData.data.kind == 'image'">
 							<div class="picture-container">
 								<span
 									v-if="lastRightPic != 0"
@@ -589,15 +612,15 @@
 								</div>
 							</div>
 							<div class="post-footer"></div>
-						</div>
+						</div> -->
 						<div
-							class="paragraph-post"
 							v-else-if="postData.data.kind == 'hybrid'"
+							class="paragraph-post"
 						>
 							<div class="post-kind-post" v-html="PostHybridContent"></div>
 						</div>
 						<div class="video" v-else-if="postData.data.kind == 'video'">
-							<video
+							<!-- <video
 								controls
 								style="
 									background-color: rgb(0, 0, 0);
@@ -609,7 +632,8 @@
 									src="../../../../video/userPostTest.mp4"
 									type="video/mp4"
 								/>
-							</video>
+							</video> -->
+							<video-post :video-src="postData.data.video"></video-post>
 						</div>
 					</div>
 					<div class="post-insight" v-else-if="insightActive">
@@ -664,10 +688,15 @@
 </template>
 
 <script>
+import * as moment from 'moment';
 import PostOptions from './PostComponents/PostOptions.vue';
+import VideoPost from './PostComponents/VideoPost.vue';
+import PicturePost from './PostComponents/PicturePost.vue';
 export default {
 	components: {
 		PostOptions,
+		VideoPost,
+		PicturePost,
 	},
 	emits: ['showComments'],
 	props: {
@@ -682,10 +711,11 @@ export default {
 	},
 	data() {
 		return {
-			// id: '1',
-			// counter: this.postData.data.votes,
-			upClicked: false,
-			downClicked: false,
+			counter: this.postData.data.votes,
+			upClicked: this.postData.data.votingType == 1 ? true : false,
+			downClicked: this.postData.data.votingType == -1 ? true : false,
+			// saved: this.post.saved,
+			postHidden: false,
 			// subMenuDisplay: false,
 			// shareSubMenuDisplay: false,
 			// postHidden: false,
@@ -726,15 +756,25 @@ export default {
 		},
 	},
 	methods: {
+		getMoment(date) {
+			return moment(date).fromNow();
+		},
+		getAbbreviationsOfNumber(num) {
+			var abbreviate = require('number-abbreviate');
+			console.log(num);
+			return abbreviate(num, 2); // => 1k
+		},
 		setPostHybridContent() {
-			let QuillDeltaToHtmlConverter =
-				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-			console.log(this.postData.data.content);
-			let deltaOps = this.postData.data.content.ops;
-			let cfg = {};
-			let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-			console.log(converter.convert());
-			this.PostHybridContent = converter.convert();
+			if (this.postData.data.kind == 'hybrid') {
+				let QuillDeltaToHtmlConverter =
+					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+				console.log(this.postData.data.content);
+				let deltaOps = this.postData.data.content.ops;
+				let cfg = {};
+				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+				console.log(converter.convert());
+				this.PostHybridContent = converter.convert();
+			}
 		},
 		async insightsPostToggle(id) {
 			this.insightsLoading = true;
@@ -826,49 +866,49 @@ export default {
 		// 	this.$emit('showComments');
 		// },
 		async upvote() {
-			if (this.upClicked == false) {
-				this.upClicked = true;
-				this.counter++;
-				// try {
-				// 	await this.$store.dispatch('postCommentActions/vote', {
-				// 		baseurl: this.$baseurl,
-				// 		id: this.id,
-				// 		type: 'post',
-				// 		direction: 1,
-				// 	});
-				// } catch (error) {
-				// 	this.error = error.message || 'Something went wrong';
-				// }
-			} else {
-				this.upClicked = false;
-				this.counter--;
-			}
 			if (this.downClicked) {
 				this.downClicked = false;
 				this.counter++;
 			}
+			if (this.upClicked == false) {
+				this.upClicked = true;
+				this.counter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postData.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.upClicked = false;
+				this.counter--;
+			}
 		},
 		async downvote() {
-			if (this.downClicked == false) {
-				this.downClicked = true;
-				this.counter--;
-				// try {
-				// 	await this.$store.dispatch('postCommentActions/vote', {
-				// 		baseurl: this.$baseurl,
-				// 		id: this.id,
-				// 		type: 'post',
-				// 		direction: -1,
-				// 	});
-				// } catch (error) {
-				// 	this.error = error.message || 'Something went wrong';
-				// }
-			} else {
-				this.downClicked = false;
-				this.counter++;
-			}
 			if (this.upClicked) {
 				this.upClicked = false;
 				this.counter--;
+			}
+			if (this.downClicked == false) {
+				this.downClicked = true;
+				this.counter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postData.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.downClicked = false;
+				this.counter++;
 			}
 		},
 		// showSubMenu() {
@@ -1302,10 +1342,13 @@ span.post-oc {
 /* end-post-options */
 
 /* Post picture */
-.post-picture {
+/* .post-picture {
+	width: 100%;
+} */
+.post-picture-container {
 	width: 100%;
 }
-.post-picture .picture-container {
+/* .post-picture .picture-container {
 	width: 100%;
 	height: 256px;
 	position: relative;
@@ -1367,7 +1410,6 @@ span.post-oc {
 	height: 100%;
 	position: relative;
 	justify-content: center;
-	/* overflow: hidden; */
 }
 .post-picture .picture-container .pic-items li {
 	width: 100%;
@@ -1383,7 +1425,7 @@ span.post-oc {
 	display: flex;
 	width: 100%;
 	align-items: center;
-}
+} */
 /* end post picture  */
 
 /* tool tip  */

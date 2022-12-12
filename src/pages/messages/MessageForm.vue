@@ -18,12 +18,12 @@
 							{{ '/u/' + userName }}
 						</option>
 						<option
-							v-for="username in suggestedSender"
-							:id="'message-from-options-' + username.text"
-							:key="username.text"
-							:value="username.text"
+							v-for="subreddit in suggestedSender"
+							:id="'message-from-options-' + subreddit.title"
+							:key="subreddit.title"
+							:value="subreddit.title"
 						>
-							{{ 'r/' + username.text }}
+							{{ '/r/' + subreddit.title }}
 						</option>
 					</select>
 					<p class="error" v-if="error == 'messageFrom'">
@@ -178,8 +178,10 @@ export default {
 	// @vuese
 	//change title name
 	beforeMount() {
-		document.title = 'messages: compose';
-		this.loadSuggestedSender();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: compose';
+			this.loadSuggestedSender();
+		}
 	},
 	computed: {
 		// @vuese
@@ -221,20 +223,23 @@ export default {
 			this.delivered = false;
 			this.errorResponse = null;
 			try {
+				if (this.senderUsername == this.userName) {
+					this.senderUsername = '/u/' + this.senderUsername;
+				} else {
+					this.senderUsername = '/r/' + this.senderUsername;
+				}
 				await this.$store.dispatch('messages/sendMessage', {
 					text: this.text,
-					senderUsername: '/u/' + this.senderUsername,
+					senderUsername: this.senderUsername,
 					receiverUsername: this.receiverUsername,
 					subject: this.subject,
 					baseurl: this.$baseurl,
 				});
-				console.log('if success');
 				if (this.$store.getters['messages/sentSuccessfully']) {
 					this.receiverUsername = '';
 					this.subject = '';
 					this.text = '';
 					this.delivered = true;
-					console.log('success');
 				} else {
 					this.errorResponse = 'some thing wrong';
 				}

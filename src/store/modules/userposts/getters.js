@@ -10,6 +10,11 @@ export default {
 			postData: state.postData,
 		};
 	},
+	getUserPinnedPostData(state) {
+		return {
+			pinnedPostData: state.pinnedPostData.pinnedPosts,
+		};
+	},
 	getInsightsData(state) {
 		return {
 			insightsData: state.insightsData,

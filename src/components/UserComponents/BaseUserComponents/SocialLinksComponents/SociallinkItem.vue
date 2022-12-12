@@ -1,7 +1,7 @@
 <template>
 	<!-- this Component for item (Button) Social Link  -->
 	<div :id="`link-item-${text}`" class="link-item">
-		<img :src="imgSrc" alt="" />
+		<img :src="`${imgSrc}`" alt="" />
 		{{ text }}
 	</div>
 </template>

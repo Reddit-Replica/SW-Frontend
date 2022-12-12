@@ -209,7 +209,7 @@ export default {
 				else console.log('picture is not found ');
 			}
 
-			// this.getUserdata();
+			this.getUserdata();
 			console.log(this.userData);
 		},
 		// @vuese
@@ -255,7 +255,7 @@ export default {
 		},
 		async getUserdata() {
 			const actionPayload = {
-				userName: this.userName,
+				userName: 'mohamed',
 				baseurl: this.$baseurl,
 			};
 			console.log('enter get user data');
