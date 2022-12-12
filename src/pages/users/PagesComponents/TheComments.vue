@@ -1,7 +1,7 @@
 <template>
 	<div style="position: relative">
 		<sortposts-bar @title="sortBarClicked"></sortposts-bar>
-		<div v-if="loading">
+		<div v-if="0 && loading">
 			<the-spinner
 				style="position: absolute; left: 50%; top: 53%; top: 188px"
 			></the-spinner>
@@ -57,12 +57,13 @@ export default {
 		this.loading = true;
 		let reqStatus = -1;
 		try {
-			reqStatus = await this.RequestUserCommentsData(sortType);
+			// reqStatus = await this.RequestUserCommentsData(sortType);
 		} catch (error) {
 			console.log(error);
 		}
 		this.requestStatusHandler(reqStatus, `user ${sortType} comments`);
 		this.loading = false;
+
 		// if (requestStatus == 200) console.log('Successfully fetched data');
 		// else if (requestStatus == 404) console.log('not found');
 		// else if (requestStatus == 500) console.log(' internal server error');

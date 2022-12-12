@@ -3,16 +3,19 @@
 		:pinned-posts-data="getUserPinnedPostData.pinnedPostData"
 	></pinned-posts>
 	<sortposts-bar @title="sortBarClicked"></sortposts-bar>
+	<comments-overview-page></comments-overview-page>
 </template>
 
 <script>
 import SortpostsBar from '../../../components/bars/SortpostsBar.vue';
 import PinnedPosts from '../../../components/UserComponents/BaseUserComponents/PinnedPosts.vue';
+import CommentsOverviewPage from '@/components/UserComponents/BaseUserComponents/CommentsComponents/CommentsOverviewPage.vue';
 // import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
 		SortpostsBar,
 		PinnedPosts,
+		CommentsOverviewPage,
 		// BasePost,
 	},
 	data() {
