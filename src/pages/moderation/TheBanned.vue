@@ -145,7 +145,7 @@ export default {
 		//return list of moderators
 		// @type object
 		listOfBanned() {
-			return this.$store.getters['moderation/listOfModerators'];
+			return this.$store.getters['moderation/listOfBanned'];
 		},
 		// @vuese
 		//return true if there is no banned, false otherwise
@@ -272,7 +272,7 @@ export default {
 			this.noItems = false;
 		},
 		// @vuese
-		//load moderators list from the store
+		//load banned list from the store
 		// @arg no argument
 		async loadListOfBanned(title) {
 			let beforeMod = '',
@@ -283,7 +283,7 @@ export default {
 				afterMod = this.after;
 			}
 			try {
-				await this.$store.dispatch('moderation/listOfModerators', {
+				await this.$store.dispatch('moderation/loadListOfBanned', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 					beforeMod: beforeMod,

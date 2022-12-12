@@ -103,4 +103,7 @@ export default {
 	unBanUserSuccessfully(state, payload) {
 		state.unBanUserSuccessfully = payload;
 	},
+	setListOfBanned(state, payload) {
+		state.listOfBanned = payload;
+	},
 };

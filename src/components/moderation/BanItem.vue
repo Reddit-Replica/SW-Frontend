@@ -4,7 +4,7 @@
 		<li class="item" v-if="show">
 			<div class="image" id="ban">
 				<img
-					v-if="!ban.userPhoto"
+					v-if="!ban.avatar"
 					src="../../../img/default_inbox_avatar.png"
 					alt="img"
 					class="img"
@@ -97,17 +97,14 @@ export default {
 			type: Object,
 			required: true,
 			default: () => ({
-				// username: '',
-				// avatar: '',
-				// dateOfModeration: '',
-				// permissions: [],
-				username: 'string',
-				userPhoto: 'string',
-				bannedAt: '2019-08-24T14:15:22Z',
+				username: '',
+				userId: '',
+				avatar: '',
+				bannedAt: '',
 				banPeriod: 0,
-				modNote: 'string',
-				noteInclude: 'string',
-				reasonForBan: 'Spam',
+				modNote: '',
+				noteInclude: '',
+				reasonForBan: '',
 			}),
 		},
 		// @vuese

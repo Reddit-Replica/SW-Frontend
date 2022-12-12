@@ -103,4 +103,7 @@ export default {
 	unBanUserSuccessfully(state) {
 		return state.unBanUserSuccessfully;
 	},
+	listOfBanned(state) {
+		return state.listOfBanned;
+	},
 };
