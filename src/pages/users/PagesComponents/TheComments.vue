@@ -9,11 +9,10 @@
 		<empty-page
 			:page-title="`hmm... u/${this.$route.params.userName} hasn't commented on anything`"
 			v-else-if="
-				0 &&
-				(errorLoading ||
-					!getUserCommentsData.commentsData ||
-					!getUserCommentsData.commentsData.children ||
-					getUserCommentsData.commentsData.children.length == 0)
+				errorLoading ||
+				!getUserCommentsData.commentsData ||
+				!getUserCommentsData.commentsData.children ||
+				getUserCommentsData.commentsData.children.length == 0
 			"
 		></empty-page>
 		<div v-else>
@@ -57,12 +56,13 @@ export default {
 		this.loading = true;
 		let reqStatus = -1;
 		try {
-			// reqStatus = await this.RequestUserCommentsData(sortType);
+			reqStatus = await this.RequestUserCommentsData(sortType);
 		} catch (error) {
 			console.log(error);
 		}
 		this.requestStatusHandler(reqStatus, `user ${sortType} comments`);
 		this.loading = false;
+		console.log(this.getUserCommentsData);
 
 		// if (requestStatus == 200) console.log('Successfully fetched data');
 		// else if (requestStatus == 404) console.log('not found');

@@ -33,7 +33,7 @@ describe('SocialLink.vue', () => {
 			global: {
 				// OR:
 				mocks: {
-					$store: store,
+					// $store: store,
 					$route: {
 						params: {
 							userName: 'medo',
@@ -42,7 +42,9 @@ describe('SocialLink.vue', () => {
 				},
 			},
 		});
-		const byId = await wrapper.find('#viewed-profile-link-overview');  
-		await expect(wrapper.html().includes('id="viewed-profile-link-overview"')).toBe(true);
+		const byId = await wrapper.find('#viewed-profile-link-overview');
+		await expect(
+			wrapper.html().includes('id="viewed-profile-link-overview"')
+		).toBe(true);
 	});
 });

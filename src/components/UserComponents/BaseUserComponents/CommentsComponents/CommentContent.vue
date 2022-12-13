@@ -3,15 +3,23 @@
 		<div
 			class="comment-body-container"
 			:style="[
-				commentType ? 'padding: 0px 0 0px 0px;' : 'padding: 10px 0 8px 8px;',
+				commentType && 1
+					? 'padding: 0px 0px 0px 8px;'
+					: 'padding: 10px 0 8px 8px;',
 			]"
 		>
 			<div class="comment-box">
-				<div class="nested-comment-order">
-					<div v-for="i in commentContent.level + 1" :key="i"></div>
+				<div
+					class="nested-comment-order"
+					:class="[commentType ? 'nested-comment-order-ov' : '']"
+				>
+					<div v-for="i in commentContent.level" :key="i"></div>
 					<!-- <div></div> -->
 				</div>
-				<div class="comment-content">
+				<div
+					class="comment-content"
+					:class="[commentType ? 'comment-overview-content' : '']"
+				>
 					<div class="comment-body-title">
 						<router-link :to="'/user/' + $route.params.userName">
 							{{ $route.params.userName }}</router-link
@@ -22,14 +30,11 @@
 							getMoment(commentContent.publishTime)
 						}}</router-link>
 					</div>
-					<div class="comment-content-data">
-						<p>
-							{{ commentContent.commentBody }} fdkjbfjhg skjdfnskd sjdnfksjd
-						</p>
-					</div>
+					<div class="comment-content-data" v-html="PostHybridContent"></div>
+					<!-- <p>{{ PostHybridContent }} fdkjbfjhg skjdfnskd sjdnfksjd</p> -->
 					<div class="comment-options">
 						<ul>
-							<li class="underline">Replay</li>
+							<li @click="ReplyCommentHandler" class="underline">Replay</li>
 							<li class="underline">Share</li>
 							<li
 								class="post-option-item2"
@@ -149,18 +154,58 @@ export default {
 			type: String,
 			required: true,
 		},
+		postId: {
+			type: String,
+			required: true,
+		},
+		postTitle: {
+			type: String,
+			required: true,
+		},
 	},
 	data() {
 		return {
 			showOptionsBoxList: false,
+			PostHybridContent: '',
 		};
 	},
+	mounted() {
+		this.setPostHybridContent();
+	},
 	methods: {
+		ReplyCommentHandler() {
+			console.log('reply clicked', this.postId);
+			if (!this.commentContent.subreddit) {
+				this.$router.push(
+					`/user/${this.$route.params.userName}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+				);
+			} else {
+				this.$router.push(
+					`/r/${this.commentContent.subreddit}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+				);
+			}
+		},
 		openOptionsBoxList() {
 			this.showOptionsBoxList = !this.showOptionsBoxList;
 		},
 		getMoment(date) {
 			return moment(date).fromNow();
+		},
+		setPostHybridContent() {
+			// if (this.postData.data.kind == 'hybrid') {
+			if (this.commentContent.commentBody) {
+				let QuillDeltaToHtmlConverter =
+					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+				console.log('comment body', this.commentContent.commentBody);
+
+				let deltaOps = this.commentContent.commentBody.ops;
+
+				let cfg = {};
+				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+				console.log('converter', converter.convert());
+				this.PostHybridContent = converter.convert();
+			}
+			// }
 		},
 	},
 };
@@ -283,7 +328,10 @@ span.post-oc {
 .comment-body {
 	width: 100%;
 }
-.comment-body-hove:hover {
+.comment-body:hover {
+	border: unset;
+}
+.comment-body-hover:hover {
 	border: thin solid #898989;
 }
 .comment-body-container {
@@ -301,6 +349,12 @@ span.post-oc {
 	border-left: 2px dashed #edeff1;
 	margin-right: 16px;
 	align-self: stretch;
+}
+.nested-comment-order div:first-child {
+	margin-left: 8px;
+}
+.nested-comment-order-ov div:last-child {
+	margin-top: 8px;
 }
 .comment-body-title {
 	display: flex;
@@ -512,4 +566,11 @@ span.post-oc {
 .post-tooltip:hover .post-tooltiptext {
 	visibility: visible;
 } /* End post Options */
+.comment-overview-content {
+	flex: 1;
+	background-color: rgba(0, 121, 211, 0.05);
+	padding: 4px 8px;
+	margin-top: 8px;
+	margin-right: 8px;
+}
 </style>

@@ -515,6 +515,14 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			// try {
+			// 	await this.$store.dispatch('user/getUserData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.$route.params.userName,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
 		},
 		/**
 		 * @vuese
