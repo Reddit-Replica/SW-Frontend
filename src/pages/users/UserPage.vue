@@ -1,43 +1,58 @@
 <template>
 	<!-- header component -->
-	<div v-if="loading">Loading</div>
-	<div>
-		<the-header :header-title="'u/asmaaadel0'"></the-header>
-		<div v-if="blockedFlag && getUserData.userData.blocked && state === 'user'">
-			<user-block-page
-				:username="$route.params.userName"
-				:pic="getUserData.userData.picture"
-				@continue-clicked="blockedFlag = false"
-				@goback-clicked="$router.back"
-			></user-block-page>
+	<div style="position: relative">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 53%; top: 270px"
+			></the-spinner>
 		</div>
 		<div v-else>
-			<profile-nav
-				:user-name="getUserName"
-				:state="state"
-				:check-in-overview-page="checkInOverviewPage"
-			/>
-			<base-container>
-				<div id="main-profile-box" class="profilebox">
-					<main
-						:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
-					>
-						<!-- <sortposts-bar></sortposts-bar> -->
-						<router-view></router-view>
-					</main>
-					<aside id="profile-aside">
-						<profile-card
-							:user-name="getUserName"
-							:state="state"
-							:user-data="getUserData.userData"
-						/>
-						<user-moderators-card
-							v-if="getUserData.userModeratorData.length != 0"
-							:user-moderators="getUserData.userModeratorData"
-						></user-moderators-card>
-					</aside>
-				</div>
-			</base-container>
+			<the-header
+				:header-title="`u/${this.$route.params.userName}`"
+			></the-header>
+			<div v-if="notFound">
+				<not-found-user-page></not-found-user-page>
+			</div>
+			<div
+				v-else-if="
+					blockedFlag && getUserData.userData.blocked && state === 'user'
+				"
+			>
+				<user-block-page
+					:username="$route.params.userName"
+					:pic="getUserData.userData.picture"
+					@continue-clicked="blockedFlag = false"
+					@goback-clicked="$router.back"
+				></user-block-page>
+			</div>
+			<div v-else>
+				<profile-nav
+					:user-name="getUserName"
+					:state="state"
+					:check-in-overview-page="checkInOverviewPage"
+				/>
+				<base-container>
+					<div id="main-profile-box" class="profilebox">
+						<main
+							:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
+						>
+							<!-- <sortposts-bar></sortposts-bar> -->
+							<router-view></router-view>
+						</main>
+						<aside id="profile-aside">
+							<profile-card
+								:user-name="getUserName"
+								:state="state"
+								:user-data="getUserData.userData"
+							/>
+							<user-moderators-card
+								v-if="getUserData.userModeratorData.length != 0"
+								:user-moderators="getUserData.userModeratorData"
+							></user-moderators-card>
+						</aside>
+					</div>
+				</base-container>
+			</div>
 		</div>
 	</div>
 </template>
@@ -48,6 +63,8 @@ import BaseContainer from '../../components/BaseComponents/BaseContainer.vue';
 import profileNav from '../../components/UserComponents/ProfileNav.vue';
 import UserModeratorsCard from '../../components/UserComponents/BaseUserComponents/Cards/UserModeratorsCard.vue';
 import UserBlockPage from '../../components/UserComponents/UserBlockPage';
+import NotFoundUserPage from './PagesComponents/NotFoundUserPage.vue';
+import TheSpinner from '@/components/BaseComponents/TheSpinner.vue';
 
 export default {
 	props: {},
@@ -57,6 +74,8 @@ export default {
 		profileNav,
 		UserModeratorsCard,
 		UserBlockPage,
+		NotFoundUserPage,
+		TheSpinner,
 	},
 	data() {
 		return {
@@ -64,6 +83,7 @@ export default {
 			// userData: Array,getUserData
 			loading: false,
 			blockedFlag: false,
+			notFound: false,
 		};
 	},
 	beforeMount() {
@@ -120,14 +140,16 @@ export default {
 		 * @arg no arg
 		 */
 		async RequestUserData() {
+			let responseStatus;
 			try {
-				await this.$store.dispatch('user/getUserData', {
+				responseStatus = await this.$store.dispatch('user/getUserData', {
 					baseurl: this.$baseurl,
 					userName: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			return responseStatus;
 		},
 	},
 	/**
@@ -157,10 +179,13 @@ export default {
 			/* after that we fetch data fetch user data */
 			document.title = this.$store.state.userName + ' - Reddit';
 			const requestStatus = await this.RequestUserData();
+			console.log(requestStatus);
 			this.loading = false;
 			if (requestStatus == 200) console.log('Sucessfully fetched data');
-			else if (requestStatus == 404) console.log('not found');
-			else if (requestStatus == 500) console.log(' internal server error');
+			else if (requestStatus == 404) {
+				console.log('not found');
+				this.notFound = true;
+			} else if (requestStatus == 500) console.log(' internal server error');
 			this.blockedFlag = true;
 			console.log(this.$store.getters['user/getUserData']);
 			// console.log(this.$store.getters['user/getStaticSocialLinks']);
