@@ -59,8 +59,10 @@
 		></v-select>
 		<v-select
 			class=""
+			style="margin: 10px; height: 50px"
 			:options="topics"
 			v-model="subTopics"
+			multiple
 			@click="getsuggestedTopics()"
 		></v-select>
 		<!-- <div class="_1oREjd5ToMFah-VfX5Zt1z">
