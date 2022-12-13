@@ -153,8 +153,8 @@
 			:class="[
 				postData.data.moderation != null &&
 				postData.data.moderation.approve != null &&
-				postData.data.moderation.approvedBy != null
-					? ''
+				postData.data.moderation.approve.approvedBy != null
+					? 'post-option-item-unhover'
 					: 'post-option-item-hover2',
 			]"
 		>
@@ -163,6 +163,56 @@
 			</div>
 			<div class="post-options-text">Approve</div>
 		</li>
+		<li
+			v-if="!postData.data.inYourSubreddit && !pinnedPostFlag"
+			id="savepost-ann-user-user-post-button"
+			@click="savePost(postData.id)"
+			class="post-option-item post-option-item-hover2"
+		>
+			<div class="post-options-icon">
+				<i
+					v-if="!postData.data.saved"
+					style="color: rgba(135, 138, 140); font-size: 20px"
+					class="fa-regular fa-bookmark"
+				></i>
+				<i v-else>
+					<svg
+						style="color: rgba(135, 138, 140); width: 20px"
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-bookmarks"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"
+						/>
+						<path
+							d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"
+						/>
+					</svg>
+				</i>
+			</div>
+			<div class="post-options-text" style="font-size: 12px">
+				{{ !postData.data.saved ? 'Save' : 'Unsaved' }}
+			</div>
+		</li>
+		<li
+			v-if="!postData.data.inYourSubreddit && !pinnedPostFlag"
+			id="savepost-ann-user-user-post-button"
+			@click="hidePost(postData.id)"
+			class="post-option-item post-option-item-hover2"
+		>
+			<div class="post-options-icon">
+				<i
+					style="color: rgba(135, 138, 140); font-size: 20px"
+					class="fa-regular fa-eye-slash"
+				></i>
+			</div>
+			<div style="font-size: 12px" class="post-options-text">Hide</div>
+		</li>
+
 		<li
 			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="remove-user-post-button"
@@ -178,7 +228,7 @@
 			:class="[
 				postData.data.moderation != null &&
 				postData.data.moderation.remove != null &&
-				postData.data.moderation.removedBy != null
+				postData.data.moderation.remove.removedBy != null
 					? ''
 					: 'post-option-item-hover2',
 			]"
@@ -205,7 +255,7 @@
 			:class="[
 				postData.data.moderation != null &&
 				postData.data.moderation.spam != null &&
-				postData.data.moderation.spammedBy != null
+				postData.data.moderation.spam.spammedBy != null
 					? ''
 					: 'post-option-item-hover2',
 			]"
@@ -218,7 +268,7 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag"
+			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
 			id="insights-user-post-button"
 			@click="insightsPostToggle"
 			class="post-option-item post-option-item-hover2"
@@ -231,6 +281,7 @@
 			</div>
 		</li>
 		<li
+			v-if="postData.data.inYourSubreddit"
 			@click="safetyClicked"
 			id="shield-user-post-button"
 			class="post-option-item post-option-item-hover2"
@@ -272,7 +323,10 @@
 			style="position: relative"
 			@click="openOptionsBoxList"
 		>
-			<div class="post-options-icon three-dot-icon-box">
+			<div
+				class="post-options-icon three-dot-icon-box"
+				v-if="postData.data.inYourSubreddit"
+			>
 				<i>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -290,7 +344,7 @@
 			</div>
 			<div
 				id="show-dots-options-BoxList"
-				v-if="showOptionsBoxList"
+				v-if="showOptionsBoxList && postData.data.inYourSubreddit"
 				class="options-box-list"
 			>
 				<ul>
@@ -303,11 +357,32 @@
 					<li @click="savePost" class="options-box-item">
 						<div class="options-box-icon">
 							<i
+								v-if="!postData.data.saved"
 								style="color: rgba(135, 138, 140)"
 								class="fa-regular fa-bookmark"
 							></i>
+							<i v-else>
+								<svg
+									style="color: rgba(135, 138, 140)"
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									fill="currentColor"
+									class="bi bi-bookmarks"
+									viewBox="0 0 16 16"
+								>
+									<path
+										d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"
+									/>
+									<path
+										d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"
+									/>
+								</svg>
+							</i>
 						</div>
-						<div class="options-box-text">Save</div>
+						<div class="options-box-text">
+							{{ !postData.data.saved ? 'Save' : 'Unsaved' }}
+						</div>
 					</li>
 					<li @click="pinPostToProfile(postData.id)" class="options-box-item">
 						<div class="options-box-icon">
@@ -383,14 +458,17 @@
 							<label for="mark-as-nsfw">Mark As NSFW</label>
 						</div>
 					</li>
-					<li class="options-box-item">
+					<li
+						@click="markUnMarkSendMeReply(postData.id)"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i>
 								<input
 									type="checkbox"
 									id="send-me-notifications"
 									name="send-me-notifications"
-									v-model="sendMeNotificationCheckBox"
+									:checked="postData.data.sendReplies"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -433,7 +511,16 @@ export default {
 	unmounted() {
 		window.removeEventListener('click', this.clicked);
 	},
-	emits: ['insightsToggle', 'expandPost', 'collapsePost'],
+	emits: [
+		'insightsToggle',
+		'expandPost',
+		'collapsePost',
+		'hidePost',
+		'deletePost',
+		'savePost',
+		'sharePost',
+		'editPost',
+	],
 	methods: {
 		// clicked(event) {
 		// if (this.showOptionsBoxList) {
@@ -454,12 +541,27 @@ export default {
 		insightsPostToggle() {
 			this.$emit('insightsToggle');
 		},
+		deletePost() {
+			this.$emit('deletePost');
+		},
+		hidePost() {
+			this.$emit('hidePost');
+		},
 		sharePost() {
 			console.log('share');
-			this.showShareOptions = true;
+			this.$emit('sharePost');
+			this.showShareOptions = !this.showShareOptions;
+		},
+		savePost() {
+			console.log('save');
+			this.$emit('savePost');
+		},
+		editPost() {
+			console.log('edit');
+			this.$emit('editPost');
 		},
 		openOptionsBoxList() {
-			this.showOptionsBoxList = true;
+			this.showOptionsBoxList = !this.showOptionsBoxList;
 		},
 		expandPostContent() {
 			this.showPostContent = true;
@@ -508,7 +610,6 @@ export default {
 			}
 		},
 		async markUnMarkAsNSFW(id) {
-			// console.log('MarkUnMArk', this.nsfwCheckBox);
 			let type = 'unMark';
 			if (!this.postData.data.nsfw) {
 				type = 'mark';
@@ -543,8 +644,27 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		async markUnMarkSendMeReply(id) {
+			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			let state = false;
+			if (!this.postData.data.sendReplies) {
+				state = true;
+			}
+			try {
+				await this.$store.dispatch('userposts/markUnMarkSendMeReply', {
+					baseurl: this.$baseurl,
+					sendReplyData: {
+						id: id,
+						type: `post`, // mark UnMark
+						state,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 		safetyClicked() {
-			this.showSafetyOptions = true;
+			this.showSafetyOptions = !this.showSafetyOptions;
 		},
 		async lockUnLockComments(id) {
 			console.log('lock un lock clicked');
@@ -596,14 +716,11 @@ export default {
 						type: 'post',
 						reason: '',
 					},
-					username: this.$route.userName,
+					username: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-		},
-		async hidePost(id) {
-			console.log(id);
 		},
 	},
 };
@@ -655,6 +772,9 @@ ul.post-list li.post-option-item p,
 ul.post-list li.post-option-item-hover2:hover,
 .post-option-item-hover:hover {
 	background-color: rgba(26, 26, 27, 0.1);
+}
+li.post-option-item-unhover {
+	background-color: unset;
 }
 .post-options-icon {
 	font-size: 20px;
@@ -734,7 +854,7 @@ ul.post-list li.post-option-item {
 	display: flex;
 }
 /* end-post-options */
-.post-link-href {
+.post-link-href a {
 	color: #ffffff;
 }
 a.post-link-href:hover {
