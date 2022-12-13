@@ -21,6 +21,7 @@ export default {
 			subreddit: {},
 			posts: [],
 			createdSuccessfully: false,
+			topics: [],
 		};
 	},
 	mutations,

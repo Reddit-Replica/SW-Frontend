@@ -24,4 +24,7 @@ export default {
 	createdSuccessfully(state, payload) {
 		state.createdSuccessfully = payload;
 	},
+	setTopics(state, payload) {
+		state.topics = payload;
+	},
 };

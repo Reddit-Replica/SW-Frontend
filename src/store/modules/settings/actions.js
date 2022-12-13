@@ -1,4 +1,5 @@
 export default {
+	//////////////email setting///////////////////
 	async changenewFollowerEmail(context, payload) {
 		const setting = {
 			newFollowerEmail: payload.newFollowerEmail,
@@ -97,6 +98,7 @@ export default {
 		}
 		return response.status;
 	},
+	/////////////////////account setting ///////////////////////////
 	async changeCountry(context, payload) {
 		const setting = {
 			country: payload.country,
