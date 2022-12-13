@@ -48,7 +48,7 @@
 				></div>
 			</div>
 			&nbsp;
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+
 			<span style="margin-left: auto; margin-right: 2px">0/25</span></span
 		>
 		<v-select
@@ -89,9 +89,45 @@
 		></textarea>
 		<div class="Characters-remaining">500 Characters remaining</div>
 		<h3 class="medium-font">Send welcome message to new members</h3>
-		<!-- <p class="description">
-			This is how new members come to understand your community.
-		</p> -->
+		<span class="description"
+			>Create a custom welcome message to greet people the instant they join
+			your community. New community members will see this in a direct message 1
+			hour after joining.&nbsp;<a
+				href=""
+				rel="noopener nofollow ugc"
+				target="_blank"
+				class="_13svhQIUZqD9PVzFcLwOKT styled-outbound-link _2Tzl9XrmQzUn94gYHRUYMI"
+				original_target=""
+				waprocessedid="a53wog"
+				waprocessedanchor="true"
+				style="display: inline-block"
+				>Learn more.</a
+			>
+			<div
+				mcafee_wa_ann=""
+				waprocessedid="a53wog"
+				style="
+					cursor: default;
+					display: inline-block;
+					float: none;
+					padding: 0px 0px 0px 4px;
+					position: relative;
+					top: 2px;
+					z-index: 1;
+				"
+			>
+				<div
+					id="0DE9E47C-871A-4F90-8440-B190C216800A_11"
+					class="mcafee_ok"
+					onselectstart="return false;"
+					oncontextmenu="return false;"
+					tabindex="0"
+					style="outline: none"
+				></div>
+			</div>
+			&nbsp;
+			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+		</span>
 		<h3 class="secondary-title">COMMUNITY LOCATION AND MAIN LANGUAGE</h3>
 		<p class="description">
 			Adding a location helps your community show up in search results and
