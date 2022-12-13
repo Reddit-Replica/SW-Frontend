@@ -61,7 +61,7 @@ export default {
 		const setting = {
 			communityName: payload.communityName,
 			mainTopic: payload.mainTopic,
-			sunTopics: payload.sunTopics,
+			subTopics: payload.subTopics,
 			communityDescription: payload.communityDescription,
 			sendWelcomeMessage: payload.sendWelcomeMessage,
 			welcomeMessage: payload.welcomeMessage,

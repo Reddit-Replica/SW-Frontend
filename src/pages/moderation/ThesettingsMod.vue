@@ -51,6 +51,12 @@
 			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
 			<span style="margin-left: auto; margin-right: 2px">0/25</span></span
 		>
+		<v-select
+			style="margin: 10px; width: max-content; color: #0079d3; fill: #0079d3"
+			:options="mainTopics"
+			v-model="mainTopic"
+		></v-select>
+		<v-select class="" :options="subTopicsview" v-model="subTopics"></v-select>
 		<!-- <div class="_1oREjd5ToMFah-VfX5Zt1z">
 			<div class="_1PLoXiZH4WKzHTfmYIt34X qWs3cMcSjquK-OXl-9jH5">
 				<button class="apk_M-7ks6NcaiMN8cotM qWs3cMcSjquK-OXl-9jH5" role="menu">
@@ -125,7 +131,7 @@
 		<v-select
 			class="land-drop"
 			:options="languages"
-			v-model="selectedLanguage"
+			v-model="language"
 		></v-select>
 		<!-- <div class="parent-language">
 			<ul
@@ -448,8 +454,10 @@ export default {
 	},
 	data() {
 		return {
-			selectedLanguage: '',
+			language: '',
 			communityName: '',
+			mainTopic: '',
+			subTopics: [],
 			languages: [
 				'Afrikaans',
 				'Azərbaycan',
@@ -535,6 +543,8 @@ export default {
 				'中文 (香港)',
 				'日本語',
 			],
+			mainTopics: ['Activism', 'Addiction Support'],
+			subTopicsview: [],
 		};
 	},
 };
