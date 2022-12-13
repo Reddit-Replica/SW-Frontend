@@ -68,7 +68,7 @@
 						<div class="people">
 							<div class="people-results">
 								<div v-if="!notfounded">
-									<div v-for="value in users" :key="value.UserName">
+									<div v-for="value in SearchedUsers" :key="value.username">
 										<a class="user-a"
 											><div class="user-div">
 												<div class="user-details">
@@ -82,7 +82,7 @@
 												<div class="people-content">
 													<div class="people-content_release">
 														<h6 class="people-name">
-															u/{{ value.UserName }}&nbsp;
+															u/{{ value.username }}&nbsp;
 														</h6>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
@@ -92,13 +92,21 @@
 													</div>
 													<!-- <p class="p-details">{{ value.Pdetails }}&nbsp;</p> -->
 												</div>
-												<div class="follow" v-if="notFollowed" @click="toggle">
+												<div
+													class="follow"
+													v-if="notFollowed"
+													@click="toggle(value.id)"
+												>
 													<base-button
 														button-text="Follow"
 														class="follow-button"
 													></base-button>
 												</div>
-												<div class="follow" v-if="!notFollowed" @click="toggle">
+												<div
+													class="follow"
+													v-if="!notFollowed"
+													@click="toggle(value.id)"
+												>
 													<base-button
 														button-text="Unfollow"
 														class="follow-button"
@@ -136,11 +144,27 @@ export default {
 	},
 	computed: {
 		SearchedUsers() {
-			return this.$store.getters['Getusers'];
+			return this.$store.getters['search/Getusers'];
+		},
+	},
+	watch: {
+		SearchedUsers() {
+			console.log(this.notfounded);
+			if (this.SearchedUsers().length == 0) {
+				this.notfounded = true;
+				console.log(this.SearchedUsers());
+			}
 		},
 	},
 	methods: {
-		toggle() {},
+		//not true just writing what will it been do in action
+		toggle(id) {
+			for (let i = 0; i < this.SearchedUsers().length; i++) {
+				if (this.SearchedUsers()[i].id == id) {
+					this.SearchedUsers()[i].joined = !this.SearchedUsers()[i].joined;
+				}
+			}
+		},
 		goSearch(value) {
 			if (value == 'cm') {
 				this.$router.replace({

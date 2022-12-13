@@ -10,55 +10,59 @@
 				"
 			>
 				<div class="hole-post-2">
-					<div class="post-release">
-						<div class="post-name-bar">
-							<div class="community-name">
-								<a class="comm-name"> r/Salah &nbsp;</a>
-								<div class="aligning"></div>
-							</div>
-							<span class="point-center" role="presentation">•&nbsp;</span>
-							<div class="posted-user">
-								<span class="posted-word" style="color: rgb(120, 124, 126)">
-									&nbsp;Posted by&nbsp;
-								</span>
-								<div>
-									<a class="posted-username" style="color: rgb(120, 124, 126)"
-										>u/koora&nbsp;</a
+					<div v-if="not_Found">
+						<div class="post-release" v-for="value in posts" :key="value.id">
+							<div class="post-name-bar">
+								<div class="community-name">
+									<a class="comm-name"> r/{{ value.subreddit }} &nbsp;</a>
+									<div class="aligning"></div>
+								</div>
+								<span class="point-center" role="presentation">•&nbsp;</span>
+								<div class="posted-user">
+									<span class="posted-word" style="color: rgb(120, 124, 126)">
+										&nbsp;Posted by&nbsp;
+									</span>
+									<div>
+										<a class="posted-username" style="color: rgb(120, 124, 126)"
+											>u/{{ value.postedBy }}&nbsp;</a
+										>
+									</div>
+									<span class="time" style="color: rgb(120, 124, 126)"
+										>{{ value.postedAt }}&nbsp;</span
 									>
 								</div>
-								<span class="time" style="color: rgb(120, 124, 126)"
-									>8 days ago&nbsp;</span
+							</div>
+							<div class="written-post">
+								<div>
+									<div class="posts-words">
+										<div class="author">
+											<a class="main-post"
+												><div
+													class="inside-post"
+													style="--posttitletextcolor: #1a1a1b"
+												>
+													<h3 class="header-3">
+														{{ value.content }}
+													</h3>
+												</div></a
+											>
+										</div>
+										<div class="image-class">
+											<img alt="" style="width: 1px; height: 1px" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="bottom-bar">
+								<span class="votes">{{ value.votes }} upvotes&nbsp;</span
+								><span class="comments"
+									>{{ value.components }} comments&nbsp;</span
 								>
 							</div>
 						</div>
-						<div class="written-post">
-							<div>
-								<div class="posts-words">
-									<div class="author">
-										<a class="main-post"
-											><div
-												class="inside-post"
-												style="--posttitletextcolor: #1a1a1b"
-											>
-												<h3 class="header-3">
-													<span class="searched-word">Mohammed</span>
-													bin Salman gifts each Saudi Arabia player a
-													Rolls-Royce for the win over Argentina&nbsp;
-												</h3>
-											</div></a
-										>
-									</div>
-									<div class="image-class">
-										<img alt="" style="width: 1px; height: 1px" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="bottom-bar">
-							<span class="votes">11.2k upvotes&nbsp;</span
-							><span class="comments">342 comments&nbsp;</span
-							><span class="awards">26 awards&nbsp;</span>
-						</div>
+					</div>
+					<div class="not-div" v-else>
+						<Notfound></Notfound>
 					</div>
 				</div>
 			</div>
@@ -68,22 +72,23 @@
 
 <script>
 // import PostContent from '../PostComponents/PostContent.vue';
+import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	props: {
-		community: {
-			type: String,
-			required: true,
-		},
-		profile: {
-			type: String,
+		posts: {
+			type: Object,
 			required: true,
 		},
 	},
-	data() {},
+	data() {
+		return {
+			not_Found: false,
+		};
+	},
 	methods: {},
-	// components: {
-	// 	PostContent,
-	// },
+	components: {
+		Notfound,
+	},
 };
 </script>
 
@@ -219,5 +224,11 @@ div {
 	line-height: 16px;
 	color: #ccc;
 	display: flex;
+}
+.not-div {
+	align-items: center;
+	width: 70rem;
+	display: flex;
+	flex-direction: column;
 }
 </style>

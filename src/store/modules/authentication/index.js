@@ -19,6 +19,7 @@ export default {
 			accessToken: '',
 			response: '',
 			RandomUsers: [],
+			type: '',
 		};
 	},
 	mutations,
