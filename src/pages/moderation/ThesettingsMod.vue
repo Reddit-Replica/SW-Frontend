@@ -7,7 +7,8 @@
 			maxlength="100"
 			type="text"
 			class="community-name-input"
-			value="nono58"
+			v-model="communityName"
+			:placeholder="subredditName"
 		/>
 		<div class="Characters-remaining">93 Characters remaining</div>
 		<h3 class="medium-font">Community topics</h3>
@@ -436,12 +437,19 @@
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
+	computed: {
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+	},
 	components: {
 		vSelect,
 	},
 	data() {
 		return {
 			selectedLanguage: '',
+			communityName: '',
 			languages: [
 				'Afrikaans',
 				'Azərbaycan',
