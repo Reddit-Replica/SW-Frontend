@@ -285,7 +285,6 @@ export default {
 					});
 					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
 						this.disappear = true;
-						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -299,20 +298,21 @@ export default {
 		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			let name = '';
-			if (this.senderUsername == localStorage.getItem('userName')) {
-				name = this.receiverUsername;
+			if (this.sendByMe) {
+				name = this.message.receiverUsername;
 			} else {
-				name = this.senderUsername;
+				name = this.message.senderUsername;
 			}
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/blockUser', {
+					await this.$store.dispatch('messages/blockUser', {
 						block: true,
 						username: name,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
