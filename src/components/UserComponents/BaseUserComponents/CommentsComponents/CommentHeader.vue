@@ -13,7 +13,9 @@
 			</div>
 			<div class="title-container">
 				<span class="user-comment-name">
-					<router-link to=""> {{ this.$route.params.userName }}</router-link>
+					<router-link :to="`/user/${$route.params.userName}`">
+						{{ $route.params.userName }}</router-link
+					>
 				</span>
 				<span class="post-title-content">
 					<p>
@@ -25,6 +27,7 @@
 				</span>
 				<span class="post-status">
 					<router-link
+						v-if="commentData.data.post.flair != null"
 						to=""
 						class="flair-box"
 						:style="`background-color :${commentData.data.post.flair.backgroundColor};
@@ -42,13 +45,25 @@
 				</span>
 				<span class="subreddit-name">
 					&nbsp;.&nbsp;
-					<router-link to="">
-						{{ 'r/' + commentData.data.post.subreddit }}</router-link
+					<router-link
+						:to="
+							commentData.data.post.subreddit != null
+								? `r/${commentData.data.post.subreddit}`
+								: `user/${this.$route.params.userName}`
+						"
+					>
+						{{
+							commentData.data.post.subreddit != null
+								? `r/${commentData.data.post.subreddit}`
+								: `u/${this.$route.params.userName}`
+						}}</router-link
 					>
 				</span>
 				<span class="posted-by">
 					posted by&nbsp;
-					<router-link to="">{{ commentData.data.post.postedBy }}</router-link>
+					<router-link :to="`user/${commentData.data.post.postedBy}`">{{
+						commentData.data.post.postedBy
+					}}</router-link>
 				</span>
 			</div>
 		</div>

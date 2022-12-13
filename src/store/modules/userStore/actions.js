@@ -67,6 +67,7 @@ export default {
 		});
 		return response.status;
 	},
+
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.username}/comments`);
@@ -99,6 +100,42 @@ export default {
 			responseData,
 			responseStatus: response.status,
 		});
+		return response.status;
+	},
+	async getUserOverviewData(context, payload) {
+		console.log('overvie Actions');
+
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log('overvie Actions', responseData);
+		if (response.status == 200)
+			context.commit('setUserOverviewData', {
+				responseData,
+				responseStatus: response.status,
+			});
 		return response.status;
 	},
 	/**
@@ -151,7 +188,7 @@ export default {
 			},
 			body: postInfo,
 		});
-		const responseData = await response.text();
+		const responseData = await response.json();
 		if (response.status == 200) {
 			localStorage.setItem('response', response.status);
 			console.log('زى الفل الحمد لله');
@@ -164,10 +201,12 @@ export default {
 			const error = new Error('server error');
 			throw error;
 		}
-		// if(response.status == 200)
-		// context.commit('addUserProfilePicture', {
-		// 	profilePictureUrl,
-		// });
+		let profilePictureUrl = responseData.path;
+		console.log(profilePictureUrl);
+		if (response.status == 200)
+			context.commit('addUserProfilePicture', {
+				profilePictureUrl,
+			});
 		return response.status;
 	},
 	/**
