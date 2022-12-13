@@ -55,19 +55,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'sub3',
 				numOfMembers: 10,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
@@ -92,19 +92,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'sub3',
 				numOfMembers: 10,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
@@ -129,19 +129,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'sub3',
 				numOfMembers: 80,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
@@ -166,19 +166,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'sub3',
 				numOfMembers: 10,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
@@ -203,19 +203,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'subi',
 				numOfMembers: 10,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
@@ -240,19 +240,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'subi',
 				numOfMembers: 10,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
@@ -277,19 +277,19 @@ describe('SocialLink.vue', () => {
 				subredditName: 'sub1',
 				numOfMembers: 10,
 				nsfw: true,
-				joined: true,
+				followed: true,
 			},
 			{
 				subredditName: 'sub2',
 				numOfMembers: 110,
 				nsfw: true,
-				joined: false,
+				followed: false,
 			},
 			{
 				subredditName: 'subi',
 				numOfMembers: 10,
 				nsfw: false,
-				joined: true,
+				followed: true,
 			},
 		];
 		const wrapper = shallowMount(UserModerator, {
