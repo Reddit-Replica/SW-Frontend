@@ -10,7 +10,7 @@
 			<p class="subject-text">
 				<span>{{ message.subject }}:</span>
 			</p>
-			<div>
+			<div :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
 					<span>from&nbsp;</span>
 					<span class="sender"
@@ -26,7 +26,9 @@
 							:id="'message-sender-' + index"
 							>/r/{{ message.senderUsername }}</a
 						>
-						<span v-if="message.receiverUsername != ''"
+						<span
+							v-if="message.receiverUsername != ''"
+							:class="!isRead ? 'unread' : ''"
 							><span>&nbsp;via&nbsp;</span>
 							<a
 								v-if="message.isReceiverUser"
@@ -40,8 +42,10 @@
 								>/r/{{ message.receiverUsername }}</a
 							>
 						</span></span
-					><span>&nbsp;sent&nbsp;</span
-					><time :id="'time-' + index"> {{ handleTime }}</time>
+					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
+					><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
+						{{ handleTime }}</time
+					>
 				</p>
 
 				<Markdown class="md" id="md" :source="message.text" />
@@ -150,7 +154,7 @@
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" :id="'unread-' + index">
+					<li @click="unreadAction()" :id="'unread-' + index" v-if="isRead">
 						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 					</li>
 					<li :id="'reply-box-' + index">
@@ -226,6 +230,7 @@ export default {
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
+			isRead: true,
 		};
 	},
 	// @vuese
@@ -285,7 +290,6 @@ export default {
 					});
 					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
 						this.disappear = true;
-						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -299,20 +303,21 @@ export default {
 		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			let name = '';
-			if (this.senderUsername == localStorage.getItem('userName')) {
-				name = this.receiverUsername;
+			if (this.sendByMe) {
+				name = this.message.receiverUsername;
 			} else {
-				name = this.senderUsername;
+				name = this.message.senderUsername;
 			}
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/blockUser', {
+					await this.$store.dispatch('messages/blockUser', {
 						block: true,
 						username: name,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;

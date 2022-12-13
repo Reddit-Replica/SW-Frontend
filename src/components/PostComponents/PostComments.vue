@@ -755,7 +755,8 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			this.$router.back();
+			if (this.$route.path.split('/')[1] == 'r') this.$router.push('/main');
+			else this.$router.back();
 		},
 	},
 };

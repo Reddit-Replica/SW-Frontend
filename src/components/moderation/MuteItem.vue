@@ -227,7 +227,23 @@ export default {
 		// @vuese
 		//used to handle unmute request
 		// @arg no argument
-		Unmute() {},
+		async Unmute() {
+			console.log('unmute');
+			try {
+				await this.$store.dispatch('moderation/unmuteUser', {
+					username: this.mute.username,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/unmuteUserSuccessfully']) {
+					this.$emit('doneSuccessfully');
+					this.showUnMuteFunction();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 	},
 };
 </script>
