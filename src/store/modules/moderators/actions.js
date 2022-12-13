@@ -316,7 +316,6 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console.log(responseData);
 		const muted = [];
 		if (response.status == 200) {
 			let before, after;
@@ -384,6 +383,47 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			context.commit('muteUserSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async unmuteUser(context, payload) {
+		context.commit('unmuteUserSuccessfully', false);
+		const approve = {
+			username: payload.username,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		const response = await fetch(
+			baseurl +
+				`/r/${payload.subredditName}/unmute-user
+			`,
+			{
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify(approve),
+			}
+		);
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('unmuteUserSuccessfully', true);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -547,7 +587,6 @@ export default {
 		if (only) {
 			mediaQuery.concat('&only=' + only);
 		}
-		console.log(mediaQuery);
 		const response = await fetch(
 			//put mediaquery ${mediaQuery}
 			baseurl + `/r/${payload.subredditName}/about/spam`,
@@ -580,7 +619,6 @@ export default {
 				};
 				spams.push(spam);
 			}
-			console.log(spams);
 			context.commit('setListOfSpams', spams);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
@@ -820,7 +858,6 @@ export default {
 			};
 			rulesOrder.push(rule);
 		}
-		console.log();
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;
 		const accessToken = localStorage.getItem('accessToken');
@@ -1226,7 +1263,6 @@ export default {
 				};
 				banned.push(ban);
 			}
-			console.log(banned);
 			context.commit('setListOfBanned', banned);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);

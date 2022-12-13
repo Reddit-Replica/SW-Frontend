@@ -27,8 +27,28 @@ export default {
 			allCommunities: [],
 		};
 	},
-	beforeMount() {
-		this.getAllCommunities();
+	watch: {
+		'$route.params.category': {
+			handler: function () {
+				if (this.$route.params.category == null) this.getAllCommunities();
+				else this.getCategoryCommunities(this.$route.params.category);
+			},
+		},
+		// $route: {
+		// 	handler: function () {
+		// 		if (this.$route == '/subreddit/leaderboard') this.getAllCommunities();
+		// 	},
+		// },
+	},
+	created() {
+		let category = this.$route.params.category;
+		console.log(category);
+		if (!category) {
+			// category = 'Sports';
+			console.log('hi null');
+			// this.getCategoryCommunities(category);
+			this.getAllCommunities();
+		}
 	},
 
 	methods: {
@@ -40,7 +60,17 @@ export default {
 			});
 			this.allCommunities =
 				this.$store.getters['topCommunity/getAllCommunities'];
-			console.log(this.allCommunities);
+			console.log('--->', this.allCommunities);
+		},
+		async getCategoryCommunities(category) {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('topCommunity/getCategoryCommunities', {
+				category: category,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.allCommunities =
+				this.$store.getters['topCommunity/getCategoryCommunities'];
 		},
 	},
 };

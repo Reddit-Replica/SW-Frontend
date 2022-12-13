@@ -267,6 +267,7 @@ const router = createRouter({
 					path: '/subreddits/leaderboard/:category',
 					component: TopCommunitiesPage,
 				},
+				{ path: '', component: TopCommunitiesPage },
 			],
 		},
 

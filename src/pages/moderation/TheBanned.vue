@@ -174,8 +174,8 @@ export default {
 	},
 	methods: {
 		// @vuese
-		// handle load flairs instead of refreshing
-		// @arg no argument
+		// handle load banned list instead of refreshing
+		// @arg the argument is the title used in show popup
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');
@@ -335,5 +335,15 @@ export default {
 	justify-content: center;
 	font-size: 2rem;
 	font-weight: bold;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>

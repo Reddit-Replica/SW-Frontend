@@ -38,6 +38,9 @@ export default {
 	muteUserSuccessfully(state, payload) {
 		state.muteUserSuccessfully = payload;
 	},
+	unmuteUserSuccessfully(state, payload) {
+		state.unmuteUserSuccessfully = payload;
+	},
 
 	//////////////LEAVE MOD/////////////
 

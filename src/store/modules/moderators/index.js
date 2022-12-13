@@ -19,6 +19,7 @@ export default {
 			//////////////MUTED/////////////
 			listOfMuted: [],
 			muteUserSuccessfully: false,
+			unmuteUserSuccessfully: false,
 			//////////////LEAVE MOD/////////////
 			leaveModSuccessfully: false,
 			//////////////INVITE MOD/////////////
