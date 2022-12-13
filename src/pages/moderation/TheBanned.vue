@@ -31,7 +31,7 @@
 			</a>
 		</div>
 
-		<no-list :title="'Banned users'" v-if="false">
+		<no-list :title="'Banned users'" v-if="noBanned">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"
@@ -46,44 +46,47 @@
 			</svg>
 		</no-list>
 
-		<search-bar
-			v-if="true"
-			@enter-search="(search) => enterSearch(search)"
-			:empty-input="search"
-			:before="before"
-			:after="after"
-			@fetch-before="loadListOfBanned('before')"
-			@fetch-after="loadListOfBanned('after')"
-		></search-bar>
-		<ul class="ul-items" v-if="!noItems && !noBanned">
-			<ban-item
-				v-for="(ban, index) in listOfBanned"
-				:key="ban"
-				:ban="ban"
-				:search="search"
-				:index="index"
-				@done-successfully="doneSuccessfully()"
-			></ban-item>
-		</ul>
-
-		<div class="no-items" v-if="noItems">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="16"
-				height="16"
-				fill="currentColor"
-				class="bi bi-search icon-search"
-				viewBox="0 0 16 16"
-				id="search-icon"
-			>
-				<path
-					d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-				/>
-			</svg>
-			<span>No results for u/{{ search }}</span>
-			<base-button class="see-all-button" id="see-all-button" @click="seeAll()"
-				>See all</base-button
-			>
+		<div v-else>
+			<search-bar
+				@enter-search="(search) => enterSearch(search)"
+				:empty-input="search"
+				:before="before"
+				:after="after"
+				@fetch-before="loadListOfBanned('before')"
+				@fetch-after="loadListOfBanned('after')"
+			></search-bar>
+			<ul class="ul-items" v-if="!noItems && !noBanned">
+				<ban-item
+					v-for="(ban, index) in listOfBanned"
+					:key="ban"
+					:ban="ban"
+					:search="search"
+					:index="index"
+					@done-successfully="doneSuccessfully()"
+				></ban-item>
+			</ul>
+			<div class="no-items" v-if="noItems">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-search icon-search"
+					viewBox="0 0 16 16"
+					id="search-icon"
+				>
+					<path
+						d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+					/>
+				</svg>
+				<span>No results for u/{{ search }}</span>
+				<base-button
+					class="see-all-button"
+					id="see-all-button"
+					@click="seeAll()"
+					>See all</base-button
+				>
+			</div>
 		</div>
 		<add-ban
 			v-if="showBanUser"
@@ -179,6 +182,7 @@ export default {
 			} else {
 				this.savePost(title);
 			}
+			this.loadListOfBanned();
 		},
 		// @vuese
 		// Used to show handle save action popup
