@@ -207,7 +207,6 @@ export default {
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.mute.dateOfMute);
-			console.log(this.mute);
 			if (currentDate.getFullYear() != myTime.getFullYear()) {
 				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
 			} else if (currentDate.getMonth() != myTime.getMonth()) {
@@ -228,7 +227,6 @@ export default {
 		//used to handle unmute request
 		// @arg no argument
 		async Unmute() {
-			console.log('unmute');
 			try {
 				await this.$store.dispatch('moderation/unmuteUser', {
 					username: this.mute.username,

@@ -316,7 +316,6 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console.log(responseData);
 		const muted = [];
 		if (response.status == 200) {
 			let before, after;
@@ -588,7 +587,6 @@ export default {
 		if (only) {
 			mediaQuery.concat('&only=' + only);
 		}
-		console.log(mediaQuery);
 		const response = await fetch(
 			//put mediaquery ${mediaQuery}
 			baseurl + `/r/${payload.subredditName}/about/spam`,
@@ -621,7 +619,6 @@ export default {
 				};
 				spams.push(spam);
 			}
-			console.log(spams);
 			context.commit('setListOfSpams', spams);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
@@ -861,7 +858,6 @@ export default {
 			};
 			rulesOrder.push(rule);
 		}
-		console.log();
 		const baseurl = payload.baseurl;
 		const subredditName = payload.subredditName;
 		const accessToken = localStorage.getItem('accessToken');
@@ -1267,7 +1263,6 @@ export default {
 				};
 				banned.push(ban);
 			}
-			console.log(banned);
 			context.commit('setListOfBanned', banned);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
