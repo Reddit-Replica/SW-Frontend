@@ -550,28 +550,54 @@
 		:show="deleting"
 		title="Delete account"
 		@close="cancelDelete"
-		dialog-class="delete"
+		dialog-class="delete-account"
 	>
-		<p>We're sorry to see you go</p>
-		<p>
-			Once you delete your account, your profile and username are permanently
-			removed from Reddit and your posts, comments, and messages are
-			disassociated (not deleted) from your account unless you delete them
-			beforehand.<router-link
-				to="https://www.reddithelp.com/hc/en-us/articles/360043047932-If-I-deactivate-my-account-what-happens-to-my-username-posts-and-comments-"
-				>Learn more</router-link
-			>
-		</p>
-		<p>HELP IMPROVE REDDIT (OPTIONAL)</p>
-		<input type="text" placeholder="Let us know why you're leaving" />
-		<p>HELP IMPROVE REDDIT (OPTIONAL)</p>
-		<input type="text" placeholder="USERNAME" />
-		<input type="text" placeholder="PASSWORD" />
-		<input type="checkbox" /> I understand that deleted accounts aren't
-		recoverable
-		<div class="buttons">
-			<base-button button-text="CANCEL" @click="cancelDelete" />
-			<base-button button-text="DELETE" @click="deleteAccount" />
+		<div class="body">
+			<p>We're sorry to see you go</p>
+			<p>
+				Once you delete your account, your profile and username are permanently
+				removed from Reddit and your posts, comments, and messages are
+				disassociated (not deleted) from your account unless you delete them
+				beforehand.<router-link
+					to="https://www.reddithelp.com/hc/en-us/articles/360043047932-If-I-deactivate-my-account-what-happens-to-my-username-posts-and-comments-"
+					>Learn more</router-link
+				>
+			</p>
+			<p>HELP IMPROVE REDDIT (OPTIONAL)</p>
+			<textarea type="text" placeholder="Let us know why you're leaving" />
+			<p>HELP IMPROVE REDDIT (OPTIONAL)</p>
+			<input type="text" placeholder="USERNAME" v-model="userName" />
+			<input type="password" placeholder="PASSWORD" v-model="password" />
+			<p>
+				<input type="checkbox" id="checkbox" v-model="agreement" /> I understand
+				that deleted accounts aren't recoverable
+			</p>
+			<div class="buttons">
+				<base-button button-text="CANCEL" @click="cancelDelete" />
+				<base-button
+					button-text="DELETE"
+					@click="confirmAccountDeletion"
+					:disable-button="enableDelete"
+				/>
+			</div>
+		</div>
+	</base-dialog>
+	<base-dialog
+		:show="confirmDeletion"
+		title="Delete account"
+		@close="cancelDelete"
+		dialog-class="delete-account"
+	>
+		<div class="body">
+			<p>Be absolutely sure before deleting your account</p>
+			<p>
+				Deleting your account removes it from Reddit and our administrators
+				won’t be able to bring it back for you.
+			</p>
+			<div class="buttons">
+				<base-button button-text="CANCEL" @click="cancelDelete" />
+				<base-button button-text="DELETE" @click="deleteAccount" />
+			</div>
 		</div>
 	</base-dialog>
 </template>
@@ -593,14 +619,23 @@ export default {
 			connectedToFacebook: false,
 			connectedToGoogle: false,
 			deleting: false,
+			confirmDeletion: false,
+			userName: '',
+			password: '',
+			agreement: false,
 		};
 	},
 	created() {
 		this.fetchAccountSettings();
 	},
 	methods: {
+		confirmAccountDeletion() {
+			this.deleting = false;
+			this.confirmDeletion = true;
+		},
 		cancelDelete() {
 			this.deleting = false;
+			this.confirmDeletion = false;
 		},
 		async connectToGoogle() {
 			this.connectedToGoogle = !this.connectedToGoogle;
@@ -692,13 +727,15 @@ export default {
 			this.deleting = true;
 		},
 		async deleteAccount() {
+			this.confirmDeletion = false;
 			const payload = {
 				username: localStorage.getItem('userName'),
+				password: localStorage.getItem('Password'),
 				baseurl: this.$baseurl,
 			};
 			try {
 				const response = await this.$store.dispatch(
-					'setting/changeGender',
+					'setting/deleteAccount',
 					payload
 				);
 				if (response == 200) {
@@ -708,6 +745,13 @@ export default {
 			} catch (err) {
 				this.error = err;
 				console.log(err);
+			}
+			try {
+				await this.$store.dispatch('logout_handle');
+				location.reload();
+			} catch (error) {
+				console.log('error');
+				// this.error = err;
 			}
 		},
 		async changeCountry() {
@@ -732,6 +776,15 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
+		},
+	},
+	computed: {
+		enableDelete() {
+			return !(
+				this.userName == localStorage.getItem('userName') &&
+				this.password == localStorage.getItem('Password') &&
+				this.agreement
+			);
 		},
 	},
 };
@@ -912,5 +965,62 @@ button.disconnect-button:hover {
 	margin-right: 4px;
 	width: 20px;
 	fill: #fc4e4f;
+}
+.delete-account .body {
+	max-width: 445px;
+}
+.delete-account p {
+	font-size: 14px;
+}
+.delete-account p:nth-of-type(3),
+.delete-account p:nth-of-type(4) {
+	font-size: 7px;
+	color: var(--color-grey-dark-2);
+}
+.delete-account textarea {
+	height: 70px;
+	width: 100%;
+	border: 1px solid var(--color-grey-dark-2);
+	font-size: 12px;
+	padding: 5px;
+}
+.delete-account input[type='text']::placeholder,
+.delete-account input[type='password']::placeholder {
+	font-size: 8px;
+	font-weight: bold;
+}
+.delete-account input[type='text'],
+.delete-account input[type='password'] {
+	height: 40px;
+	width: 100%;
+	border: 1px solid var(--color-grey-dark-2);
+	font-size: 14px;
+	padding: 2px;
+	margin-bottom: 5px;
+}
+.delete-account .buttons {
+	display: flex;
+	justify-content: end;
+	margin-top: 30px;
+}
+.delete-account .buttons button {
+	font-weight: bolder;
+	height: 50px;
+	width: 100px;
+	font-size: 14px;
+}
+.delete-account .buttons button:first-of-type {
+	border: 1px solid var(--color-blue-2);
+	background-color: white;
+	color: var(--color-blue-2);
+}
+.delete-account .buttons button:last-of-type {
+	border: 2px solid white;
+	background-color: var(--button-color);
+	color: white;
+	margin-left: 5px;
+}
+.delete-account .buttons button:last-of-type:disabled {
+	background-color: var(--color-grey-dark-4);
 }
 </style>

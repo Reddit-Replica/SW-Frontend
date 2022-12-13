@@ -63,9 +63,10 @@
 			>
 			<ul class="ul-items">
 				<list-rules
-					v-for="rule in listOfRules"
+					v-for="(rule, index) in listOfRules"
 					:key="rule"
 					:rule="rule"
+					:index="index"
 					:list-of-rules="listOfRules"
 					@done-successfully="(title) => doneSuccessfully(title)"
 				></list-rules>

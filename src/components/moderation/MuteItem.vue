@@ -17,7 +17,7 @@
 					class="img"
 					:id="'moderator-img-' + index"
 				/>
-				<h5 class="heading-5" :id="'ban-name-' + index">
+				<h5 class="heading-5" :id="'mute-name-' + index">
 					{{ mute.username }}
 				</h5>
 			</div>
@@ -28,13 +28,13 @@
 			<div class="permissions">
 				<base-button
 					class="button-ban"
-					id="button-edit"
+					:id="'unmute-button' + index"
 					@click="showUnMuteFunction()"
 					>Unmute</base-button
 				>
 				<base-button
 					class="button-ban"
-					id="button-more-details"
+					:id="'button-more-details-' + index"
 					@click="viewDetailsFunction()"
 					>More Details<svg
 						v-if="!viewDetails"
@@ -89,13 +89,13 @@
 						<base-button
 							@click="showUnMuteFunction()"
 							class="button-white"
-							id="cancel-button"
+							:id="'cancel-button' + index"
 							>Cancel</base-button
 						>
 						<base-button
 							@click="Unmute()"
 							class="button-blue"
-							id="delete-button"
+							:id="'unmute-button-final-' + index"
 							>Unmute</base-button
 						>
 					</div>
