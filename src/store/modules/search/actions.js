@@ -30,7 +30,7 @@ export default {
 		);
 		console.log(response);
 		const responseData = await response.json();
-		if (response.status) {
+		if (response.status == 200) {
 			const posts = [];
 
 			let before, after;
@@ -92,7 +92,7 @@ export default {
 			baseurl + '/search?type=user' + '?q=' + payload.q
 		);
 		const responseData = await response.json();
-		if (response.status) {
+		if (response.status == 200) {
 			const users = [];
 
 			let before, after;
@@ -137,7 +137,7 @@ export default {
 			baseurl + '/search?type=subreddit' + '?q=' + payload.q
 		);
 		const responseData = await response.json();
-		if (response.status == 200 || response.status == 400) {
+		if (response.status == 200) {
 			const subreddits = [];
 
 			let before, after;
