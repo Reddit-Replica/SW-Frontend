@@ -44,7 +44,6 @@
 										: 'blue-border'
 								"
 								required="required"
-								@focusout="email_available"
 							/>
 							<span class="animation-email">Email</span>
 							<span
@@ -61,8 +60,10 @@
 								class="submit-signup continue-button"
 								type="submit"
 								id="button-Continue"
-								@click.prevent="handleSubmit"
-								@click="doRandom"
+								@click.prevent="
+									handleSubmit();
+									doRandom();
+								"
 							>
 								Continue
 							</button>
@@ -105,7 +106,6 @@
 							type="text"
 							v-model="username"
 							required="required"
-							@focusout="usr_available"
 						/>
 						<span class="animation-email usr-pass-anmie"
 							>Choose A username</span
@@ -440,10 +440,12 @@ export default {
 		email(value) {
 			this.email = value;
 			this.validatEmail(value);
+			this.email_available();
 		},
 		username(value) {
 			this.username = value;
 			this.validateUser(value);
+			this.usr_available();
 		},
 		password(value) {
 			this.password = value;

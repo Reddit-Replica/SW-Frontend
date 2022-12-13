@@ -262,12 +262,18 @@
 				class="header-search-input"
 				placeholder="Search Reddit"
 				id="header-search"
-				@keyup.enter="searchgo"
+				@keyup.enter="
+					searchSub();
+					searchUsers();
+				"
 			/>
 			<button
 				class="header-search-button"
 				id="header-search-button"
-				@click="searchgo"
+				@click="
+					searchSub();
+					searchUsers();
+				"
 			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
@@ -625,17 +631,52 @@ export default {
 			this.$router.push(`/user/${this.userName}`);
 		},
 		// @vuese
-		// Used to go to Search page
+		// Used to go to Request to Search for Users
 		// @arg no argument
-		searchgo() {
+		async searchUsers() {
 			if (this.searchQuery) {
-				this.$router.replace({
-					name: 'searchpost',
-					query: { q: this.searchQuery },
-				});
+				let quer = this.searchQuery;
+				try {
+					await this.$store.dispatch('search/SearchUser', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+				} catch (err) {
+					console.log(err);
+				}
+			}
+		},
+		// @vuese
+		// Used to go to Request to Search for Subreddits
+		// @arg no argument
+		async searchSub() {
+			if (this.searchQuery) {
+				let quer = this.searchQuery;
+				try {
+					await this.$store.dispatch('search/SearchSubreddit', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+				} catch (err) {
+					console.log(err);
+				}
 			} else {
 				alert('Did not enter a word to Search');
 			}
+		},
+		// @vuese
+		// Used to go to go to Search page
+		// @arg no argument
+		gotosearch() {
+			// console.log('waiting');
+			setTimeout(
+				() =>
+					this.$router.push({
+						name: 'searchpost',
+						query: { q: this.searchQuery },
+					}),
+				1000
+			);
 		},
 		// @vuese
 		// Used handle logout action

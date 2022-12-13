@@ -9,6 +9,8 @@ export default {
 			users: [],
 			posts: [],
 			SearchQuery: '',
+			after: '',
+			before: '',
 		};
 	},
 	mutations,
