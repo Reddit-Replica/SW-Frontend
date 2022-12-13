@@ -65,6 +65,31 @@ export default {
 		}
 		context.commit('setCommentID', responseData.id);
 	},
+	async editUserText(context, payload) {
+		const newComment = {
+			content: payload.content,
+			id: payload.id,
+		};
+		console.log(newComment);
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/edit-user-text', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(newComment),
+		});
+
+		const responseData = await response.json();
+		console.log(responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 	async fetchPostComments(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;

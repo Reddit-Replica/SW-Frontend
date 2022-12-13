@@ -69,7 +69,13 @@
 						</li>
 						<li>Share</li>
 						<li>Save</li>
-						<li @click="edit" id="edit">Edit</li>
+						<li
+							@click="edit"
+							id="edit"
+							v-if="comment.commentedBy == getuserName"
+						>
+							Edit
+						</li>
 						<li>Follow</li>
 						<li @click="displaySubmenu" id="dots">
 							<font-awesome-icon icon="fa-solid fa-ellipsis" />
@@ -131,6 +137,11 @@ export default {
 		CommentSubmit,
 	},
 	computed: {
+		//@vuese
+		//get userName
+		getuserName() {
+			return localStorage.getItem('userName');
+		},
 		handleTime() {
 			var currentDate = new Date();
 			var returnValue = '';
@@ -164,7 +175,7 @@ export default {
 			// TypeScript / ES6:
 			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 
-			var deltaOps = this.comment.commentBody.ops;
+			var deltaOps = this.newComment.ops;
 
 			var cfg = {};
 
@@ -267,9 +278,19 @@ export default {
 		},
 		//@vuese
 		//save edittings done to comment
-		saveEditing(edittedComment) {
+		async saveEditing(edittedComment) {
 			this.editing = false;
 			this.newComment = edittedComment;
+			console.log(edittedComment);
+			try {
+				await this.$store.dispatch('comments/editUserText', {
+					baseurl: this.$baseurl,
+					content: edittedComment,
+					id: this.comment.commentId,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		addReply() {
 			this.replying = !this.replying;

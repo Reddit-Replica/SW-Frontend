@@ -7,6 +7,7 @@ export default {
 	state() {
 		return {
 			unsubscribeFromEmails: false,
+			accountSettings: {},
 		};
 	},
 	mutations,
