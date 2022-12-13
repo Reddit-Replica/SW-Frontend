@@ -522,7 +522,7 @@ export default {
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(baseurl + '/spam-message', {
-			method: 'POST',
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

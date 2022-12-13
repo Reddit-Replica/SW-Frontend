@@ -183,4 +183,60 @@ export default {
 		context.commit('setAccountSettings', responseData);
 		return response.status;
 	},
+	async connect(_, payload) {
+		const baseurl = payload.baseurl;
+		const body = {
+			accessToken: payload.accessToken,
+			password: payload.password,
+		};
+		const response = await fetch(baseurl + '/connect/' + payload.type, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(body),
+		});
+		const responseData = await response.json();
+		console.log(responseData);
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+	async disconnect(_, payload) {
+		const baseurl = payload.baseurl;
+		const body = {
+			password: payload.password,
+		};
+		const response = await fetch(baseurl + '/disconnect/' + payload.type, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(body),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
 };

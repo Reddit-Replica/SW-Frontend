@@ -61,6 +61,7 @@
 						:approve="approve"
 						:search="search"
 						:index="index"
+						@done-successfully="doneSuccessfully()"
 					></approved-item>
 				</ul>
 				<div class="no-items" v-else>
@@ -259,6 +260,13 @@ export default {
 				console.log(err);
 				this.errorResponse = err;
 			}
+		},
+		// @vuese
+		// handle load flairs instead of refreshing
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadListOfApproved();
+			// this.savePost(title);
 		},
 	},
 };

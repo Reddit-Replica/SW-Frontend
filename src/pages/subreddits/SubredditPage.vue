@@ -167,7 +167,7 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
-			console.log(this.subreddit);
+			console.log(this.subreddit.isFavorite);
 		},
 		async getModerators() {
 			const accessToken = localStorage.getItem('accessToken');
@@ -177,7 +177,6 @@ export default {
 				token: accessToken,
 			});
 			this.moderators = this.$store.getters['moderation/listOfModerators'];
-			console.log(this.moderators);
 		},
 		reloadPage() {
 			this.getSubreddit();

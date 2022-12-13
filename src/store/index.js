@@ -12,6 +12,8 @@ import postsModule from './modules/posts/index.js';
 import listingModule from './modules/Listing/index.js';
 import searchingModule from './modules/search/index.js';
 import settingModule from './modules/settings/index.js';
+import topCommModule from './modules/topCommunities/index.js';
+
 const store = createStore({
 	modules: {
 		auth: authModule,
@@ -27,6 +29,7 @@ const store = createStore({
 		userposts: userpostsModule,
 		search: searchingModule,
 		setting: settingModule,
+		topCommunity: topCommModule,
 	},
 	state() {
 		return {
