@@ -15,6 +15,7 @@ export default {
 			//////////////APPROVED/////////////
 			listOfApproved: [],
 			approveUserSuccessfully: false,
+			removeApproveSuccessfully: false,
 			//////////////MUTED/////////////
 			listOfMuted: [],
 			muteUserSuccessfully: false,
