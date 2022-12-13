@@ -61,7 +61,7 @@
 						:approve="approve"
 						:search="search"
 						:index="index"
-						@done-successfully="doneSuccessfully()"
+						@done-successfully="doneSuccessfully('removed')"
 					></approved-item>
 				</ul>
 				<div class="no-items" v-else>
@@ -129,6 +129,16 @@
 				</div>
 			</base-dialog>
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -137,8 +147,15 @@ import SearchBar from '../../components/moderation/SearchBar.vue';
 import ApprovedItem from '../../components/moderation/ApprovedItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
-	components: { SearchBar, ApprovedItem, ListBar, NoList },
+	components: {
+		SearchBar,
+		ApprovedItem,
+		ListBar,
+		NoList,
+		SaveUnsavePopupMessage,
+	},
 	data() {
 		return {
 			userName: '',
@@ -147,6 +164,7 @@ export default {
 			noItems: false,
 			showAdd: false,
 			errorResponse: null,
+			savedUnsavedPosts: [],
 		};
 	},
 	beforeMount() {
@@ -254,7 +272,7 @@ export default {
 				});
 				if (this.$store.getters['moderation/approveUserSuccessfully']) {
 					this.approveUserFunction();
-					this.loadListOfApproved();
+					this.doneSuccessfully('approved');
 				}
 			} catch (err) {
 				console.log(err);
@@ -264,9 +282,73 @@ export default {
 		// @vuese
 		// handle load flairs instead of refreshing
 		// @arg no argument
-		doneSuccessfully() {
+		doneSuccessfully(title) {
+			if (!title) {
+				this.savePost('Done');
+			} else {
+				this.savePost(title);
+			}
 			this.loadListOfApproved();
-			// this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: title,
+				state: '',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 	},
 };
@@ -420,5 +502,15 @@ input:focus {
 	cursor: not-allowed;
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>
