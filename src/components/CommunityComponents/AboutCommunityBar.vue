@@ -151,7 +151,7 @@
 				</div>
 			</div>
 
-			<div class="box-body" id="created-type" v-if="isPrivate">
+			<div class="box-body" id="created-type" v-if="notPublic">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -565,8 +565,8 @@ export default {
 
 			return month + ' ' + day + ', ' + year;
 		},
-		isPrivate() {
-			return this.communityType == 'Private';
+		notPublic() {
+			return this.communityType !== 'Public';
 		},
 	},
 	methods: {
