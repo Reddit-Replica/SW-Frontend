@@ -134,10 +134,10 @@
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
 			></subreddit-card> -->
-			<subreddit-card
+			<!-- <subreddit-card
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
-			></subreddit-card>
+			></subreddit-card> -->
 		</div>
 		<div
 			v-if="inSubreddit"
@@ -168,7 +168,7 @@ import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 // import SubredditInfo from '../PostComponents/SubredditInfo.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
-import SubredditCard from '../PostComponents/SubredditCard.vue';
+// import SubredditCard from '../PostComponents/SubredditCard.vue';
 // import SubredditRules from './SubredditRules.vue';
 
 export default {
@@ -177,7 +177,7 @@ export default {
 		// SubredditInfo,
 		PostingtoReddit,
 		ProfileCard,
-		SubredditCard,
+		// SubredditCard,
 		// SubredditRules,
 	},
 	data() {
@@ -256,6 +256,9 @@ export default {
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
 			});
+			this.$store.commit('posts/setinSubreddit', {
+				inSubreddit: this.inSubreddit,
+			});
 		},
 		// @vuese
 		// Used to  set the choosen subreddit that is profile
@@ -269,6 +272,9 @@ export default {
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
 			this.path = false;
+			this.$store.commit('posts/setinSubreddit', {
+				inSubreddit: this.inSubreddit,
+			});
 		},
 		setUser(image) {
 			this.isSet = true;

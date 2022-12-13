@@ -324,25 +324,25 @@ describe ('PostreplyComponent.vue', () => {
     expect (wrapper.find ('#block-user-0').text ()).contain ('Block User');
   });
 
-  it ('Testing the mark un read button text is correct', () => {
-    const wrapper = mount (PostReplies, {
-      props: {
-        message,
-        index,
-        count,
-      },
-      computed: {
-        handleTime,
-      },
-      global: {
-        // OR:
-        mocks: {
-          $store: store,
-        },
-      },
-    });
-    expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
-  });
+  // it ('Testing the mark un read button text is correct', () => {
+  //   const wrapper = mount (PostReplies, {
+  //     props: {
+  //       message,
+  //       index,
+  //       count,
+  //     },
+  //     computed: {
+  //       handleTime,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
+  // });
 
   it ('Testing the mark un read button text is correct', () => {
     const wrapper = mount (PostReplies, {

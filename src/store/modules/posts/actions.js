@@ -34,7 +34,7 @@ export default {
 		const postInfo = {
 			title: payload.title,
 			kind: payload.kind,
-			//subreddit: payload.subreddit,
+			subreddit: payload.subreddit,
 			inSubreddit: payload.inSubreddit,
 			content: payload.content,
 
@@ -73,7 +73,7 @@ export default {
 		const postInfo = {
 			title: payload.title,
 			kind: payload.kind,
-			//subreddit: payload.subreddit,
+			subreddit: payload.subreddit,
 			inSubreddit: payload.inSubreddit,
 			link: payload.content,
 
@@ -110,6 +110,7 @@ export default {
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
 		postInfo.append('inSubreddit', payload.inSubreddit);
+		postInfo.append('subreddit', payload.subreddit);
 		// let arr1 = [' '];
 		// let arr2 = [' '];
 		for (let i = 0; i < payload.images.length; i++)
@@ -161,6 +162,7 @@ export default {
 		videos.push(payload.video);
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
+		postInfo.append('subreddit', payload.subreddit);
 		postInfo.append('inSubreddit', payload.inSubreddit);
 		postInfo.append('video', payload.video);
 		postInfo.append('nsfw', payload.nsfw);

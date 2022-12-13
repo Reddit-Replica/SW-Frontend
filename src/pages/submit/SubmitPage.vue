@@ -191,7 +191,9 @@ export default {
 		getUsername() {
 			this.userName = localStorage.getItem('userName');
 		},
-
+		getInSubreddit() {
+			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
+		},
 		// @vuese
 		// dispatch createpost from the store
 
@@ -208,8 +210,9 @@ export default {
 			this.getImageCaptions();
 			this.getImageLinks();
 			this.getUsername();
-			//this.getSubreddit();
-			this.inSubreddit = false;
+			this.getSubreddit();
+			this.getInSubreddit();
+			// this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
 			console.log(this.kind);
@@ -221,6 +224,8 @@ export default {
 			console.log(this.spoiler);
 			console.log(this.nsfw);
 			console.log(this.sendReplies);
+			console.log(this.subreddit);
+			console.log(this.inSubreddit);
 			//console.log(this.subreddit);
 
 			if (
@@ -241,7 +246,7 @@ export default {
 				const actionPayload = {
 					title: this.title,
 					kind: this.kind,
-					//subreddit: this.subreddit,
+					subreddit: this.subreddit,
 					inSubreddit: this.inSubreddit,
 					content: this.content,
 					nsfw: this.nsfw,
@@ -275,7 +280,7 @@ export default {
 				const actionPayload = {
 					title: this.title,
 					kind: this.kind,
-					//subreddit: this.subreddit,
+					subreddit: this.subreddit,
 					inSubreddit: this.inSubreddit,
 					video: this.video,
 					nsfw: this.nsfw,
@@ -309,7 +314,7 @@ export default {
 				const actionPayload = {
 					title: this.title,
 					kind: this.kind,
-					//subreddit: this.subreddit,
+					subreddit: this.subreddit,
 					inSubreddit: this.inSubreddit,
 					content: this.content,
 					nsfw: this.nsfw,
@@ -343,7 +348,7 @@ export default {
 				const actionPayload = {
 					title: this.title,
 					kind: this.kind,
-					//subreddit: this.subreddit,
+					subreddit: this.subreddit,
 					inSubreddit: this.inSubreddit,
 					images: this.images,
 					imageCaptions: this.imageCaptions,
