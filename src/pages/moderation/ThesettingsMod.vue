@@ -551,7 +551,12 @@ export default {
 				'中文 (香港)',
 				'日本語',
 			],
+
 			topics: [],
+			typeChosen0: true,
+			typeChosen1: false,
+			typeChosen2: false,
+			communityType: 'Public',
 		};
 	},
 	methods: {
@@ -565,6 +570,24 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.topics = this.$store.getters['community/getTopics'];
+		},
+		chooseType(index) {
+			if (index == 2) {
+				this.typeChosen2 = true;
+				this.typeChosen1 = false;
+				this.typeChosen0 = false;
+				this.communityType = 'Private';
+			} else if (index == 1) {
+				this.typeChosen1 = true;
+				this.typeChosen2 = false;
+				this.typeChosen0 = false;
+				this.communityType = 'Restricted';
+			} else {
+				this.typeChosen0 = true;
+				this.typeChosen1 = false;
+				this.typeChosen2 = false;
+				this.communityType = 'Public';
+			}
 		},
 	},
 };
