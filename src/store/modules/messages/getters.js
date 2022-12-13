@@ -43,7 +43,6 @@ export default {
 		return state.sentSuccessfully;
 	},
 	deleteMessageSuccessfully(state) {
-		console.log(state.deleteMessageSuccessfully);
 		return state.deleteMessageSuccessfully;
 	},
 	markSpamSuccessfully(state) {

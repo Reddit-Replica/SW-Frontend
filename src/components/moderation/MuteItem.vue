@@ -207,7 +207,6 @@ export default {
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.mute.dateOfMute);
-			console.log(this.mute);
 			if (currentDate.getFullYear() != myTime.getFullYear()) {
 				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
 			} else if (currentDate.getMonth() != myTime.getMonth()) {
@@ -227,7 +226,22 @@ export default {
 		// @vuese
 		//used to handle unmute request
 		// @arg no argument
-		Unmute() {},
+		async Unmute() {
+			try {
+				await this.$store.dispatch('moderation/unmuteUser', {
+					username: this.mute.username,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/unmuteUserSuccessfully']) {
+					this.$emit('doneSuccessfully');
+					this.showUnMuteFunction();
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 	},
 };
 </script>

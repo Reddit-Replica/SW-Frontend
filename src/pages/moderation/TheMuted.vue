@@ -60,6 +60,7 @@
 					:mute="mute"
 					:search="search"
 					:index="index"
+					@doneSuccessfully="doneSuccessfully('unmuted')"
 				></mute-item>
 			</ul>
 			<div class="no-items" v-else>
@@ -91,6 +92,16 @@
 			@exit="showMuteUserFunction()"
 			@done-successfully="doneSuccessfully('added')"
 		></mute-user>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
@@ -100,13 +111,22 @@ import MuteUser from '../../components/moderation/MuteUser.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import MuteItem from '../../components/moderation/MuteItem.vue';
 import SearchBar from '../../components/moderation/SearchBar.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
-	components: { NoList, MuteUser, ListBar, MuteItem, SearchBar },
+	components: {
+		NoList,
+		MuteUser,
+		ListBar,
+		MuteItem,
+		SearchBar,
+		SaveUnsavePopupMessage,
+	},
 	data() {
 		return {
 			showMuteUser: false,
 			search: '',
 			count: 0,
+			savedUnsavedPosts: [],
 			noItems: false,
 		};
 	},
@@ -196,6 +216,77 @@ export default {
 		showMuteUserFunction() {
 			this.showMuteUser = !this.showMuteUser;
 		},
+		// @vuese
+		// handle load muted list instead of refreshing
+		// @arg no argument
+		doneSuccessfully(title) {
+			if (!title) {
+				this.savePost('Done');
+			} else {
+				this.savePost(title);
+			}
+			this.loadListOfMuted();
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: title,
+				state: '',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle undo save action popup
+		// @arg no argument
+		async undoSaveUnsave(state, typeid) {
+			if (state == 'saved') {
+				this.unsavePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = false;
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.savePost(typeid);
+				this.$store.state.latestSavedUnsavedPost.id = typeid;
+				this.$store.state.latestSavedUnsavedPost.saved = true;
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: typeid,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
 	},
 };
 </script>
@@ -228,5 +319,15 @@ export default {
 	justify-content: center;
 	font-size: 2rem;
 	font-weight: bold;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>
