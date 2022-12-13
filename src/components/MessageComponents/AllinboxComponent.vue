@@ -10,23 +10,38 @@
 			<p class="subject-text">
 				<span>{{ message.subject }}</span>
 			</p>
-			<div :class="!isRead ? 'box-unread' : ''">
+			<div>
 				<p class="md-details">
-					<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
+					<span>from&nbsp;</span>
 					<span class="sender"
-						><a href="" :id="'message-sender-' + index">{{
-							message.senderUsername
-						}}</a>
+						><a
+							v-if="message.isSenderUser"
+							:href="'/user/' + message.senderUsername"
+							:id="'message-sender-' + index"
+							>{{ message.senderUsername }}</a
+						>
+						<a
+							v-else
+							:href="'/r/' + message.senderUsername"
+							:id="'message-sender-' + index"
+							>/r/{{ message.senderUsername }}</a
+						>
 						<span v-if="message.receiverUsername != ''"
-							><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
-							<a href="" :id="'message-receiver-' + index">{{
-								message.receiverUsername
-							}}</a>
+							><span>&nbsp;via&nbsp;</span>
+							<a
+								v-if="message.isReceiverUser"
+								:href="'/user/' + message.receiverUsername"
+								:id="'message-receiver-' + index"
+								>{{ message.receiverUsername }}</a
+							><a
+								v-else
+								:href="'/r/' + message.receiverUsername"
+								:id="'message-receiver-' + index"
+								>/r/{{ message.receiverUsername }}</a
+							>
 						</span></span
-					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
-					><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
-						{{ handleTime }}</time
-					>
+					><span>&nbsp;sent&nbsp;</span
+					><time :id="'time-' + index"> {{ handleTime }}</time>
 				</p>
 
 				<Markdown class="md" id="md" :source="message.text" />
@@ -174,15 +189,19 @@ export default {
 			default: () => ({
 				id: '',
 				text: '',
-				type: '',
 				senderUsername: '',
 				receiverUsername: '',
-				subredditName: '',
-				postTitle: '',
-				subject: '',
 				sendAt: '',
-				isReply: '',
-				isRead: '',
+				subject: '',
+				type: '',
+				subredditName: '',
+				isModerator: '',
+				postTitle: '',
+				postID: '',
+				commentID: '',
+				numOfComments: '',
+				isSenderUser: '',
+				isReceiverUser: '',
 			}),
 		},
 		// @vuese
@@ -201,7 +220,6 @@ export default {
 			backcolor: 'grey',
 			disappear: false,
 			spammed: false,
-			isRead: this.message.isRead,
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
