@@ -33,6 +33,9 @@ import UsernameMentions from './pages/messages/UsernameMentions.vue';
 import SentMessages from './pages/messages/SentMessages.vue';
 
 import SubredditPage from './pages/subreddits/SubredditPage.vue';
+import TopCommunitiesPage from './pages/subreddits/TopCommunitiesPage.vue';
+
+import NotificationsPage from './pages/notifications/NotificationsPage.vue';
 
 import TheOverview from './pages/users/PagesComponents/TheOverview.vue';
 import AwardsGiven from './pages/users/PagesComponents/AwardsGive.vue';
@@ -60,13 +63,12 @@ import TheRules from './pages/moderation/TheRules.vue';
 import ContentControls from './pages/moderation/ContentControls.vue';
 import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
-import TrafficStats from './pages/moderation/TrafficStats.vue';
+import PostandCommentsettings from './pages/moderation/PostandCommentsettings.vue';
+// import TrafficStats from './pages/moderation/TrafficStats.vue';
 
 import NotFound from './pages/NotFound.vue';
 
 import PostComments from './components/PostComponents/PostComments.vue';
-
-import NotificationsPage from './pages/notifications/NotificationsPage.vue';
 
 import Search from './pages/search/SearchPage.vue';
 import PostSearch from './pages/search/SearchPage.vue';
@@ -86,7 +88,7 @@ const router = createRouter({
 			children: [
 				{
 					name: 'comments',
-					path: '/r/:subredditName/comments/:postId/:postName/', //$route.path.split('/')[2: for subredditname , 4: for post id]
+					path: '/r/:subredditName/comments/:postId/:postName',
 					component: PostComments,
 				},
 			],
@@ -101,17 +103,32 @@ const router = createRouter({
 		{ path: '/logincomp', component: LoginComp },
 		{ path: '/signupcomp', component: SignupComp },
 		{ path: '/help', component: GetHelp },
-		{ path: '/search/type=user', component: UserSearch },
-		{ path: '/search/type=cm', component: SearchCommunity },
+		{
+			path: '/search/type=user',
+			name: 'searchuser',
+			component: UserSearch,
+			props: true,
+		},
+		{
+			path: '/search/type=cm',
+			name: 'searchcm',
+			component: SearchCommunity,
+			props: true,
+		},
 		{
 			path: '/search',
 			name: 'search',
 			component: Search,
 			children: [
-				{ path: '/search/type=post', component: PostSearch },
+				{
+					path: '/search/type=post',
+					name: 'searchpost',
+					component: PostSearch,
+				},
 				// { path: '/search/type=user', component: UserSearch },
 			],
-		}, //render subreddit component
+			props: true,
+		},
 
 		{
 			path: '/user/:userName',
@@ -128,6 +145,10 @@ const router = createRouter({
 				{ path: '/user/:userName/downvoted', component: TheDownvoted },
 				{ path: '/user/:userName/gilded', component: AwardsReceived },
 				{ path: '/user/:userName/gilded/given', component: AwardsGiven },
+				{
+					path: '/user/:userName/comments/:postId/:postTitle',
+					component: PostComments,
+				},
 			],
 			props: true,
 		}, //render user component
@@ -177,9 +198,16 @@ const router = createRouter({
 					path: '/r/:subredditName/about/scheduledposts',
 					component: ScheduledPosts,
 				},
-				{ path: '/r/:subredditName/about/edit', component: ThesettingsMod },
+				{
+					path: '/r/:subredditName/about/edit/community',
+					component: ThesettingsMod,
+				},
+				{
+					path: '/r/:subredditName/about/edit/postsandcomments',
+					component: PostandCommentsettings,
+				},
 				// //?page=community ?page=posts ?page=notifications
-				{ path: '/r/:subredditName/about/traffic', component: TrafficStats },
+				// { path: '/r/:subredditName/about/traffic', component: TrafficStats },
 				// { path: '/hc/en-us', component: TheHistory },
 				// { path: '/reddithelp', component: TheHistory },
 				// { path: '/policies/moderator-guidelines', component: TheHistory },
@@ -228,6 +256,19 @@ const router = createRouter({
 			path: '/notifications',
 			name: 'notifications',
 			component: NotificationsPage,
+		},
+
+		{
+			path: '/subreddits/leaderboard',
+			name: 'leaderboard',
+			component: TopCommunitiesPage,
+			children: [
+				{
+					path: '/subreddits/leaderboard/:category',
+					component: TopCommunitiesPage,
+				},
+				{ path: '', component: TopCommunitiesPage },
+			],
 		},
 
 		{ path: '/:notFound(.*)', component: NotFound },

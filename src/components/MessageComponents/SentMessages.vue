@@ -62,19 +62,61 @@ export default {
 	computed: {
 		// @vuese
 		//return handled time after calculated it
-		// @type object
-		handleTime() {
-			return this.$store.getters['moderation/handleTime'];
-		},
+		// @type string
+		// handleTime() {
+		// 	return this.$store.getters['moderation/handleTime'];
+		// },
+	},
+	data() {
+		return { handleTime: '' };
 	},
 	methods: {
 		// @vuese
 		//calculate time
 		// @type object
 		calculateTime() {
-			this.$store.dispatch('moderation/handleTime', {
-				time: this.message.sendAt,
-			});
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.message.sendAt,
+			// });
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.message.sendAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
+
+			// this.time
+			// let myTime = this.message.sendAt;
+			// var currentDate = new Date();
+			// if (currentDate.getFullYear() != myTime.getFullYear()) {
+			// 	this.returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			// } else if (currentDate.getMonth() != myTime.getMonth()) {
+			// 	this.returnValue =
+			// 		currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			// } else if (currentDate.getDate() != myTime.getDate()) {
+			// 	this.returnValue =
+			// 		currentDate.getDate() - myTime.getDate() + ' Days ago';
+			// } else if (currentDate.getHours() != myTime.getHours()) {
+			// 	this.returnValue =
+			// 		currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			// } else if (currentDate.getMinutes() != myTime.getMinutes()) {
+			// 	this.returnValue =
+			// 		currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			// } else {
+			// 	this.returnValue = 'Just now';
+			// }
 		},
 	},
 };

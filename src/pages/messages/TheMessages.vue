@@ -29,6 +29,12 @@ export default {
 		InboxBar,
 		MessagesFooter,
 	},
+	beforeMount() {
+		if (!localStorage.getItem('accessToken')) {
+			this.$router.push('/login');
+			document.title = 'reddit';
+		}
+	},
 	computed: {
 		// @vuese
 		//return if bath not sent bath or compose

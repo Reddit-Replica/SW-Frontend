@@ -112,11 +112,34 @@ export default {
 	 * @param {Object} contains base url
 	 * @returns {void}
 	 */
-	async ToggleFavourite(_, payload) {
+	async addToFavourite(_, payload) {
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/toggle-favorite`,
+			baseurl + `/r/${payload.subredditName}/make-favorite`,
+			{
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async removeFromFavourite(_, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/remove-favorite`,
 			{
 				method: 'PATCH',
 				headers: {
@@ -156,7 +179,7 @@ export default {
 				body: JSON.stringify(description),
 			}
 		);
-
+		console.log(payload.description);
 		const responseData = await response.json();
 
 		if (!response.ok) {
@@ -173,7 +196,7 @@ export default {
 	 * @returns {void}
 	 */
 	async AddMainTopic(_, payload) {
-		const title = { title: payload.topic };
+		const title = { title: payload.title };
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
@@ -204,7 +227,7 @@ export default {
 	 * @returns {void}
 	 */
 	async AddSubTopic(_, payload) {
-		const title = { subtopics: payload.subtopics };
+		const title = { title: payload.subtopics };
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
@@ -218,13 +241,18 @@ export default {
 				body: JSON.stringify(title),
 			}
 		);
-
 		const responseData = await response.json();
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 403) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		}
 	},
@@ -266,7 +294,6 @@ export default {
 			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
-		console.log(responseData);
 	},
 	/**
 	 * Action for changing value of new created subreddit boolean property.
@@ -280,7 +307,7 @@ export default {
 	/**
 	 * Action for joining a specific subreddit.
 	 * @action joinSubreddit
-	 * @param {Object} contains message if it is a private subreddit and base url.
+	 * @param {Object} contains message if it is a private subreddit, subreddit id and base url.
 	 * @returns {void}
 	 */
 	async joinSubreddit(_, payload) {
@@ -301,10 +328,49 @@ export default {
 
 		const responseData = await response.json();
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	/**
+	 * Action for leaving a specific subreddit.
+	 * @action leaveSubreddit
+	 * @param {Object} contains subreddit name and base url.
+	 * @returns {void}
+	 */
+	async leaveSubreddit(_, payload) {
+		const leaveInfo = {
+			subredditName: payload.subredditName,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/leave-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+			body: JSON.stringify(leaveInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},
@@ -373,5 +439,30 @@ export default {
 			posts.push(post);
 		}
 		context.commit('setPosts', posts);
+	},
+	///////////////// moderation community norhan //////////////////
+	async getsuggestedTopics(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/suggested-topics`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('setTopics', responseData.communityTopics);
+			console.log(responseData.children);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+		return response.status;
 	},
 };

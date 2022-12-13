@@ -8,7 +8,6 @@
 		<!-- ///////////change to !moderatorByMe/////////// -->
 		<unmoderator-view
 			v-if="!moderatorByMe"
-			:list-of-moderators="listOfModerators"
 			:subreddit-name="subredditName"
 		></unmoderator-view>
 		<div v-else>
@@ -60,9 +59,14 @@ export default {
 	// @vuese
 	//load moderators list and change document title
 	beforeMount() {
-		document.title = this.$route.params.subredditName;
-		this.loadListOfModerators();
-		this.loadListOfInvitedModerators();
+		if (!localStorage.getItem('accessToken')) {
+			this.$router.push('/login');
+			document.title = 'reddit';
+		} else {
+			document.title = this.$route.params.subredditName;
+			this.loadListOfAllModerators();
+			this.loadListOfInvitedModerators();
+		}
 	},
 	computed: {
 		// @vuese
@@ -75,8 +79,8 @@ export default {
 		// @vuese
 		//return list of moderators
 		// @type object
-		listOfModerators() {
-			return this.$store.getters['moderation/listOfModerators'];
+		listOfAllModerators() {
+			return this.$store.getters['moderation/listOfAllModerators'];
 		},
 		// @vuese
 		//return list of invited moderators
@@ -94,8 +98,8 @@ export default {
 		//return if i'm a moderator in this subreddit or not
 		// @type boolean
 		moderatorByMe() {
-			for (let i = 0; i < this.listOfModerators.length; i++) {
-				if (this.listOfModerators[i].username == this.getUserName) {
+			for (let i = 0; i < this.listOfAllModerators.length; i++) {
+				if (this.listOfAllModerators[i].username == this.getUserName) {
 					return true;
 				}
 			}
@@ -257,9 +261,9 @@ export default {
 		// @vuese
 		//load moderators list from the store
 		// @arg no argument
-		async loadListOfModerators() {
+		async loadListOfAllModerators() {
 			try {
-				await this.$store.dispatch('moderation/loadListOfModerators', {
+				await this.$store.dispatch('moderation/loadListOfAllModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});

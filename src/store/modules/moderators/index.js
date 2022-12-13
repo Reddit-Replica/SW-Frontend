@@ -7,10 +7,27 @@ export default {
 	state() {
 		return {
 			listOfModerators: [],
+			listOfAllModerators: [],
 			listOfInvitedModerators: [],
 			handleTime: '',
 			after: '',
 			before: '',
+			//////////////APPROVED/////////////
+			listOfApproved: [],
+			approveUserSuccessfully: false,
+			removeApproveSuccessfully: false,
+			//////////////MUTED/////////////
+			listOfMuted: [],
+			muteUserSuccessfully: false,
+			unmuteUserSuccessfully: false,
+			//////////////LEAVE MOD/////////////
+			leaveModSuccessfully: false,
+			//////////////INVITE MOD/////////////
+			inviteModSuccessfully: false,
+			cancelSuccessfully: false,
+			//////////////SPAM/////////////////
+			listOfSpams: [],
+			approveSuccessfully: [],
 			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],
@@ -23,9 +40,12 @@ export default {
 			addFlairSuccessfully: false,
 			updateFlairSuccessfully: false,
 			deleteFlairSuccessfully: false,
+			updateFlairsSuccessfully: false,
 
 			//////////////////////BAN////////////////////////
 			banUserSuccessfully: false,
+			unBanUserSuccessfully: false,
+			listOfBanned: [],
 		};
 	},
 	mutations,

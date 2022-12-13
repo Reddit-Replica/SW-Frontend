@@ -336,8 +336,7 @@ button {
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
 }
-.reorder-button:hover,
-/* .reorder-post-flair-button:hover {
+.reorder-button:hover {
 	background-color: var(--color-grey-light-4);
 }
 .reorder-post-flair-button {
@@ -351,7 +350,7 @@ button {
 	color: var(--color-grey-light-5);
 	fill: var(--color-grey-light-5);
 	background-color: transparent;
-} */
+}
 .content-controls-button {
 	min-width: 15rem;
 	cursor: not-allowed;

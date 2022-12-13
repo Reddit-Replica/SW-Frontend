@@ -1,14 +1,22 @@
 <template>
 	<div class="content">
 		<img
-			src="../../../img/user-image.jpg"
+			v-if="!subreddit.picture"
+			src="../../../img/default_subreddit_image.png"
 			alt="img"
 			class="subreddit-img"
-			id="subreddit-img"
+			:id="'subreddit-img' + index"
+		/>
+		<img
+			v-else
+			:src="$baseurl + '/' + subreddit.picture"
+			alt="img"
+			class="subreddit-img"
+			:id="'subreddit-img' + index"
 		/>
 		<h5 class="subreddit-title">
-			<a href="#">
-				<span class="subreddit-link" id="subreddit-link"
+			<a href="#" :id="'subreddit-link' + index">
+				<span class="subreddit-link" :id="'subreddit-link' + index"
 					>r/{{ subredditName }}</span
 				></a
 			>
@@ -32,6 +40,35 @@ export default {
 		title: {
 			type: String,
 			default: 'moderator',
+		},
+		// @vuese
+		//index of the item
+		// @type string
+		index: {
+			type: Number,
+			default: 0,
+		},
+	},
+	beforeMount() {
+		this.getSubreddit();
+	},
+	data() {
+		return {
+			subreddit: {},
+		};
+	},
+	methods: {
+		// @vuese
+		//load subreddit img
+		// @arg no argument
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
 	},
 };
@@ -68,8 +105,8 @@ export default {
 	z-index: 50;
 }
 .subreddit-img {
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 3rem;
+	height: 3rem;
 	border-radius: 50%;
 	margin-left: 2rem;
 	margin-right: 1rem;

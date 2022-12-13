@@ -1,7 +1,7 @@
 <template>
 	<div class="settings-page">
 		<div class="settings-block">
-			<div>
+			<!-- <div>
 				<h2 class="h2-main-title">Manage Emails</h2>
 				<h3 class="h3-main-title">messages</h3>
 
@@ -18,12 +18,12 @@
 						<switch-button id="btn2"></switch-button>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
-			<div>
+			<div style="margin-top: 30px">
 				<h3 class="h3-main-title">ACTIVITY</h3>
 
-				<div class="box-con">
+				<!-- <div class="box-con">
 					<h3 class="h3-title">New user welcome</h3>
 					<div class="box-switch-button">
 						<switch-button id="btn3"></switch-button>
@@ -63,15 +63,18 @@
 					<div class="box-switch-button">
 						<switch-button id="btn8"></switch-button>
 					</div>
-				</div>
+				</div> -->
 				<div class="box-con">
 					<h3 class="h3-title">New followers</h3>
 
 					<div class="box-switch-button">
-						<switch-button id="btn9"></switch-button>
+						<switch-button
+							id="btn9"
+							@checked="getnewFollowerEmail"
+						></switch-button>
 					</div>
 				</div>
-				<h3 class="h3-main-title">NEWSLETTERS</h3>
+				<!-- <h3 class="h3-main-title">NEWSLETTERS</h3>
 
 				<div class="box-con">
 					<h3 class="h3-title">Daily Digest</h3>
@@ -92,7 +95,7 @@
 					<div class="box-switch-button">
 						<switch-button id="btn12"></switch-button>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div>
 				<h3 class="h3-main-title"></h3>
@@ -100,7 +103,10 @@
 				<div class="box-con">
 					<h3 class="h3-title">Unsubscribe from all emails</h3>
 					<div class="box-switch-button">
-						<switch-button id="btn13"></switch-button>
+						<switch-button
+							id="btn13"
+							@checked="getunsubscribeFromEmails"
+						></switch-button>
 					</div>
 				</div>
 			</div>
@@ -109,7 +115,68 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			newFollowerEmail: false,
+			unsubscribeFromEmails: false,
+		};
+	},
+	// emits: ['checked'],
+	methods: {
+		getnewFollowerEmail(value) {
+			this.newFollowerEmail = value;
+			console.log('this.newFollowerEmail');
+			console.log(this.newFollowerEmail);
+			this.changenewFollowerEmail();
+		},
+		getunsubscribeFromEmails(value) {
+			this.unsubscribeFromEmails = value;
+			console.log('this.unsubscribeFromEmails');
+			console.log(this.unsubscribeFromEmails);
+			this.changeunsubscribeFromEmails();
+		},
+		async changenewFollowerEmail() {
+			const actionPayload = {
+				newFollowerEmail: this.newFollowerEmail,
+
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changenewFollowerEmail',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+		async changeunsubscribeFromEmails() {
+			const actionPayload = {
+				unsubscribeFromEmails: this.unsubscribeFromEmails,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeunsubscribeFromEmails',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+	},
+};
 </script>
 
 <style scoped>

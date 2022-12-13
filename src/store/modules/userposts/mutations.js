@@ -11,6 +11,11 @@ export default {
 			Object.assign(state.postData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserPinnedPostData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.pinnedPostData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
 	setInsightsData(state, payload) {
 		Object.assign(state.insightsData, payload.responseData); // assign data to user Data
 	},
@@ -36,6 +41,12 @@ export default {
 				payload.ApprovePostOrCommentData.username;
 			state.postData.children[fIndex].data.moderation.approve.approvedDate =
 				'now';
+			if (state.postData.children[fIndex].data.moderation.remove) {
+				delete state.postData.children[fIndex].data.moderation.remove;
+			}
+			if (state.postData.children[fIndex].data.moderation.spam) {
+				delete state.postData.children[fIndex].data.moderation.spam;
+			}
 			console.log('mut approved');
 		}
 	},
@@ -63,6 +74,12 @@ export default {
 				payload.removePostOrCommentData.username;
 			state.postData.children[fIndex].data.moderation.remove.removedDate =
 				'now';
+			if (state.postData.children[fIndex].data.moderation.approve) {
+				delete state.postData.children[fIndex].data.moderation.approve;
+			}
+			if (state.postData.children[fIndex].data.moderation.spam) {
+				delete state.postData.children[fIndex].data.moderation.spam;
+			}
 			console.log('bo');
 		}
 	},
@@ -103,6 +120,26 @@ export default {
 			if (payload.spoilerData.type == 'mark')
 				state.postData.children[fIndex].data.spoiler = true;
 			else state.postData.children[fIndex].data.spoiler = false;
+			console.log('bo');
+		}
+	},
+	markUnMarkSendMeReply(state, payload) {
+		console.log('st', payload.sendReplyData.id);
+		let fIndex = -1;
+		state.postData.children.forEach((element, index) => {
+			// console.log(element);
+			if (element.id == payload.sendReplyData.id) {
+				fIndex = index;
+			}
+		});
+		if (fIndex != -1) {
+			console.log(fIndex);
+			console.log(state.postData);
+			state.postData.children[fIndex].data.sendReplies =
+				state.postData.children[fIndex].data.sendReplies || {};
+			if (payload.sendReplyData.state == 1)
+				state.postData.children[fIndex].data.sendReplies = true;
+			else state.postData.children[fIndex].data.sendReplies = false;
 			console.log('bo');
 		}
 	},
@@ -147,6 +184,41 @@ export default {
 			state.postData.children[fIndex].data.pin = payload.pinUnpinData.pin;
 			console.log('bo');
 			console.log(state.postData, payload.pinUnpinData.pin);
+		}
+	},
+	markSpam(state, payload) {
+		console.log('st', payload);
+		console.log('st', payload.payload.markSpamData);
+		let fIndex = -1;
+		if (payload.payload.markSpamData.type == 'post') {
+			console.log('st', payload);
+			state.postData.children.forEach((element, index) => {
+				// console.log(element);
+				if (element.id == payload.payload.markSpamData.id) {
+					fIndex = index;
+				}
+			});
+			if (fIndex != -1) {
+				console.log(fIndex);
+				console.log(state.postData);
+				state.postData.children[fIndex].data.moderation =
+					state.postData.children[fIndex].data.moderation || {};
+
+				state.postData.children[fIndex].data.moderation.spam =
+					state.postData.children[fIndex].data.moderation.spam || {};
+
+				state.postData.children[fIndex].data.moderation.spam.spammedBy =
+					payload.payload.username;
+				state.postData.children[fIndex].data.moderation.spam.spammedDate =
+					'now';
+				if (state.postData.children[fIndex].data.moderation.approve) {
+					delete state.postData.children[fIndex].data.moderation.approve;
+				}
+				if (state.postData.children[fIndex].data.moderation.remove) {
+					delete state.postData.children[fIndex].data.moderation.remove;
+				}
+				console.log('bo');
+			}
 		}
 	},
 };

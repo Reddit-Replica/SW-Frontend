@@ -125,12 +125,12 @@
 				id="rules-button"
 				>Rules</router-link
 			>
-			<router-link
+			<!-- <router-link
 				:to="'/r/' + subredditName + '/about/settings'"
 				class="options"
 				id="content-controls-button"
 				>Content controls</router-link
-			>
+			> -->
 		</div>
 		<!-- <div class="box">
 			<div class="head">
@@ -176,10 +176,20 @@
 				Other
 			</div>
 			<router-link
-				:to="'/r/' + subredditName + '/about/edit'"
+				:to="'/r/' + subredditName + '/about/edit/community'"
 				class="options"
 				id="community-settings-button"
 				>Community settings
+				<div class="new">New</div>
+				<svg class="icon-mod icon-arrow icon-right">
+					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
+				</svg>
+			</router-link>
+			<router-link
+				:to="'/r/' + subredditName + '/about/edit/postsandcomments'"
+				class="options"
+				id="postsandcomments-button"
+				>Posts and Comments settings
 				<div class="new">New</div>
 				<svg class="icon-mod icon-arrow icon-right">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
@@ -224,7 +234,7 @@
 				</svg>
 			</a>
 		</div> -->
-		<div class="box">
+		<!-- <div class="box">
 			<div class="head">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +256,7 @@
 				id="traffic-stats-button"
 				>Traffic stats</router-link
 			>
-		</div>
+		</div> -->
 		<!-- Mod Help -->
 		<!-- <div class="box">
 			<div class="head">

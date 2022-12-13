@@ -4,7 +4,7 @@
 			<div class="left">
 				<div class="image">
 					<router-link
-						:to="{ name: 'user', params: { userName: comment.userName } }"
+						:to="{ name: 'user', params: { userName: comment.commentedBy } }"
 						><img src="../../../img/user-image.jpg" alt="" id="user"
 					/></router-link>
 				</div>
@@ -13,11 +13,11 @@
 			<div class="right">
 				<div class="user-name">
 					<router-link
-						:to="{ name: 'user', params: { userName: comment.userName } }"
+						:to="{ name: 'user', params: { userName: comment.commentedBy } }"
 						id="userName"
-						>{{ comment.userName }}</router-link
+						>{{ comment.commentedBy }}</router-link
 					>
-					<span>. {{ comment.duration }} </span>
+					<span>. {{ handleTime }} </span>
 				</div>
 				<div class="content" v-if="!editing" v-html="renderingHTML"></div>
 				<div class="services" v-if="!editing">
@@ -62,19 +62,32 @@
 							</svg>
 						</li>
 						<li @click="addReply">
-							<font-awesome-icon icon="fa-regular fa-message" />Reply
+							<font-awesome-icon icon="fa-regular fa-message" /><span
+								class="reply"
+								>Reply</span
+							>
 						</li>
 						<li>Share</li>
 						<li>Save</li>
-						<li @click="edit" id="edit">Edit</li>
+						<li
+							@click="edit"
+							id="edit"
+							v-if="comment.commentedBy == getuserName"
+						>
+							Edit
+						</li>
 						<li>Follow</li>
-						<li @click="displaySubmenu" id="dots">
+						<li
+							@click="displaySubmenu"
+							id="dots"
+							v-if="comment.commentedBy == getuserName"
+						>
 							<font-awesome-icon icon="fa-solid fa-ellipsis" />
 							<ul class="sub-menu" v-if="display">
 								<li
 									class="icon-box"
 									id="sub-menu-delete"
-									@click="deleteComment"
+									@click="deletingComment"
 								>
 									<font-awesome-icon
 										icon="fa-regular fa-trash-can"
@@ -90,7 +103,7 @@
 					v-if="editing"
 					:parent-id="this.$route.path.split('/')[4]"
 					:level="1"
-					:identifier="'edit' + comment.id"
+					:identifier="'edit' + comment.commentId"
 					:current-text="newComment"
 					@save-editing="saveEditing"
 					@cancel-editing="cancelEditing"
@@ -98,10 +111,10 @@
 				<comment-submit
 					type="Reply"
 					v-if="replying"
-					:parent-id="comment.id"
+					:parent-id="comment.commentId"
 					parent-type="comment"
 					:level="comment.level + 1"
-					:identifier="'reply' + comment.id"
+					:identifier="'reply' + comment.commentId"
 					:current-text="{ ops: [{ insert: '\n' }] }"
 					@new-comment="newReply"
 					@cancel-editing="cancelReplying"
@@ -109,25 +122,64 @@
 				<div class="replies">
 					<my-comment
 						v-for="reply in replies"
-						:key="reply.id"
+						:key="reply.commentId"
 						:comment="reply"
-						:parent-id="comment.id"
+						:post-id="postId"
 					></my-comment>
 				</div>
 			</div>
 		</div>
 	</div>
+	<base-dialog
+		:show="deleting"
+		title="Delete comment"
+		@close="cancelDelete"
+		dialog-class="delete"
+	>
+		<div class="body">Are you sure you want to delete your comment?</div>
+		<div class="buttons">
+			<base-button button-text="Keep" @click="cancelDelete" />
+			<base-button button-text="Delete" @click="deleteComment" />
+		</div>
+	</base-dialog>
 </template>
 <script>
 //import NestedReply from './NestedReply.vue';
 import CommentSubmit from './CommentSubmit.vue';
+import BaseDialog from '../BaseComponents/BaseDialog.vue';
 export default {
 	name: 'MyComment',
 	components: {
 		//NestedReply,
 		CommentSubmit,
+		BaseDialog,
 	},
 	computed: {
+		//@vuese
+		//get userName
+		getuserName() {
+			return localStorage.getItem('userName');
+		},
+		handleTime() {
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.comment.publishTime);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			return returnValue;
+		},
 		//@vuese
 		//chceks if there is a written text in text area or not to edit the comment
 		noComment() {
@@ -161,22 +213,49 @@ export default {
 				return {};
 			},
 		},
+		postId: {
+			type: String,
+			required: true,
+			default: '',
+		},
 	},
 	data() {
 		return {
 			upClicked: true,
 			downClicked: false,
 			voteCounter: 1,
-			newComment: this.comment.content,
-			replies: this.comment.replies,
+			newComment: this.comment.commentBody,
+			replies: [],
 			edittedComment: '',
 			editing: false,
 			replying: false,
 			display: false,
 			deleted: false,
+			deleting: false,
 		};
 	},
+	//@vuese
+	//before mount fetch posts according to type of sorting
+	created() {
+		if (this.comment.numberofChildren != 0) this.fetchPostComments();
+	},
 	methods: {
+		async fetchPostComments() {
+			try {
+				await this.$store.dispatch('comments/fetchPostReplies', {
+					baseurl: this.$baseurl,
+					postId: this.$route.path.split('/')[4],
+					commentId: this.comment.commentId,
+					beforeMod: '',
+					afterMod: '',
+					sort: this.$route.query.sort,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.replies = this.$store.getters['comments/getListOfReplies'].children;
+			console.log(this.replies);
+		},
 		newReply(reply) {
 			this.replies.unshift(reply);
 			this.replying = false;
@@ -213,27 +292,48 @@ export default {
 		cancelEditing() {
 			this.editing = false;
 		},
+		cancelReplying() {
+			this.replying = false;
+		},
 		//@vuese
 		//save edittings done to comment
-		saveEditing(edittedComment) {
+		async saveEditing(edittedComment) {
 			this.editing = false;
 			this.newComment = edittedComment;
-		},
-		addReply() {
-			this.replying = !this.replying;
-		},
-		//@vuese
-		//delete comment
-		async deleteComment() {
-			this.deleted = true;
+			console.log(edittedComment);
 			try {
-				await this.$store.dispatch('comments/deleteComment', {
+				await this.$store.dispatch('comments/editUserText', {
 					baseurl: this.$baseurl,
-					//id: this.id,
+					content: edittedComment,
+					id: this.comment.commentId,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		addReply() {
+			this.replying = !this.replying;
+		},
+		deletingComment() {
+			this.deleting = true;
+		},
+		//@vuese
+		//delete comment
+		async deleteComment() {
+			this.deleting = false;
+			this.deleted = true;
+			try {
+				await this.$store.dispatch('comments/deleteComment', {
+					baseurl: this.$baseurl,
+					id: this.comment.commentId,
+					type: 'comment',
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		cancelDelete() {
+			this.deleting = false;
 		},
 	},
 };
@@ -282,7 +382,7 @@ export default {
 	color: var(--color-grey-light-5);
 	margin-left: 2px;
 }
-.content p {
+.content {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 21px;
@@ -382,5 +482,33 @@ export default {
 }
 .services > ul > li:last-of-type {
 	position: relative;
+}
+.reply {
+	margin-left: 2px;
+}
+.delete .body {
+	font-size: 12px;
+	width: 360px;
+}
+.delete .buttons {
+	display: flex;
+	justify-content: end;
+	margin-top: 30px;
+}
+.delete .buttons button {
+	font-weight: bolder;
+	height: 30px;
+	width: 90px;
+	font-size: 14px;
+}
+.delete .buttons button:first-of-type {
+	border: 1px solid var(--color-blue-2);
+	background-color: white;
+	color: var(--color-blue-2);
+}
+.delete .buttons button:last-of-type {
+	border: 2px solid white;
+	background-color: var(--color-blue-2);
+	color: white;
 }
 </style>

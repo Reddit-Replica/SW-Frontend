@@ -23,7 +23,10 @@
 											data-testid="tab_posts"
 											aria-selected="true"
 											role="tab"
-											><button class="button-nav button-nav2">
+											><button
+												class="button-nav button-nav2"
+												@click="goSearch('Comments')"
+											>
 												Comments
 											</button></a
 										>
@@ -35,8 +38,10 @@
 											data-testid="tab_posts"
 											aria-selected="true"
 											role="tab"
-											href="/search/type=cm"
-											><button class="button-nav button-nav2">
+											><button
+												class="button-nav button-nav2"
+												@click="goSearch('cm')"
+											>
 												Communities
 											</button></a
 										>
@@ -48,8 +53,12 @@
 											data-testid="tab_posts"
 											aria-selected="true"
 											role="tab"
-											href="/search/type=user"
-											><button class="button-nav button-nav2">People</button></a
+											><button
+												class="button-nav button-nav2"
+												@click="goSearch('people')"
+											>
+												People
+											</button></a
 										>
 									</div>
 									<!-- href="/search/?q=Query&amp;type=ppl" -->
@@ -126,11 +135,7 @@
 						<div class="search-results">
 							<div class="posts">
 								<div class="post-results">
-									<SearchPost
-										id="searched-posts"
-										:community="salah"
-										:profile="Hamada"
-									/>
+									<SearchPost id="searched-posts" :posts="SearchedPosts" />
 								</div>
 							</div>
 							<div class="side-bars">
@@ -236,6 +241,24 @@ export default {
 		toggling(data) {
 			this.commcontent.notjoined = data;
 		},
+		goSearch(value) {
+			if (value == 'cm') {
+				this.$router.replace({
+					name: 'searchcm',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'people') {
+				this.$router.replace({
+					name: 'searchuser',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'coms') {
+				// this.$router.replace({
+				// 	name: 'searchuser',
+				// 	query: { q: this.$route.query.q },
+				// });
+			}
+		},
 	},
 	components: {
 		SearchPost,
@@ -243,6 +266,20 @@ export default {
 		PeopleNav,
 		MenuSearchVue,
 		BacktotopButton,
+	},
+	computed: {
+		SearchedPosts() {
+			return this.$store.getters['search/GetPosts'];
+		},
+	},
+	watch: {
+		SearchedPosts() {
+			console.log(this.notFound);
+			if (this.SearchedPosts().length == 0) {
+				this.notFound = true;
+				console.log(this.SearchedPosts());
+			}
+		},
 	},
 };
 </script>

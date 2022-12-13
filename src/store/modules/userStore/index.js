@@ -1,6 +1,7 @@
 import mutations from './mutations.js';
 import actions from './actions.js';
 import getters from './getters.js';
+import img1 from '../../../../img/sociallinks/custom.png';
 export default {
 	namespaced: true,
 	/**
@@ -42,200 +43,175 @@ export default {
 			socialLinkItems: [
 				{
 					text: 'Custom URL',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/custom.png',
+					imgSrc: img1,
 					alt: 'custom url',
 					type: 'link' /* link or username */,
 					baseurl: '',
 				},
 				{
 					text: 'Reddit',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
+					imgSrc: require('../../../../img/sociallinks/reddit.png'),
 					alt: 'Reddit',
 					type: 'username',
 					baseUrl: 'https://www.reddit.com/',
 				},
 				{
 					text: 'Instagram',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/instagram.png',
+					imgSrc: require('../../../../img/sociallinks/instagram.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://www.instagram.com/',
 				},
 				{
 					text: 'Twitter',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/twitter.png',
+					imgSrc: require('../../../../img/sociallinks/twitter.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://twitter.com/',
 				},
 				{
 					text: 'TikTok',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/tiktok.png',
+					imgSrc: require('../../../../img/sociallinks/tiktok.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://www.tiktok.com/@',
 				},
 				{
 					text: 'Twitch',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/twitch.png',
+					imgSrc: require('../../../../img/sociallinks/twitch.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: 'https://www.twitch.tv/',
 				},
 				{
 					text: 'Facebook',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/facebook.png',
+					imgSrc: require('../../../../img/sociallinks/facebook.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'YouTube',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/youtube.png',
+					imgSrc: require('../../../../img/sociallinks/youtube.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Tumblr',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/tumblr.png',
+					imgSrc: require('../../../../img/sociallinks/tumblr.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Spotify',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/spotify.png',
+					imgSrc: require('../../../../img/sociallinks/spotify.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'SoundCloud',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/soundcloud.png',
+					imgSrc: require('../../../../img/sociallinks/soundcloud.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Beacons',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/beacons.png',
+					imgSrc: require('../../../../img/sociallinks/beacons.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Linktree',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/linktree.png',
+					imgSrc: require('../../../../img/sociallinks/linktree.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Discord',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/discord.png',
+					imgSrc: require('../../../../img/sociallinks/discord.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Venmo',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/venmo.png',
+					imgSrc: require('../../../../img/sociallinks/venmo.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Cash App',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/cash_app.png',
+					imgSrc: require('../../../../img/sociallinks/cash_app.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Patreon',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/patreon.png',
+					imgSrc: require('../../../../img/sociallinks/patreon.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Kofi',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/kofi.png',
+					imgSrc: require('../../../../img/sociallinks/kofi.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'PayPal',
-					imgSrc:
-						'https://www.redditstatic.com/desktop2x/img/social-links/paypal.png',
+					imgSrc: require('../../../../img/sociallinks/paypal.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Cameo',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/cameo.png',
+					imgSrc: require('../../../../img/sociallinks/cameo.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'OnlyFans',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/onlyfans.png',
+					imgSrc: require('../../../../img/sociallinks/onlyfans.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Substack',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/substack.png',
+					imgSrc: require('../../../../img/sociallinks/substack.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Kickstarter',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/kickstarter.png',
+					imgSrc: require('../../../../img/sociallinks/kickstarter.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
 				},
 				{
 					text: 'Buy Me a Coffee',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/buy_me_a_coffee.png',
+					imgSrc: require('../../../../img/sociallinks/buy_me_a_coffee.png'),
 					alt: '',
 					type: 'username',
 					baseUrl: '',
 				},
 				{
 					text: 'Shopify',
-					imgSrc:
-						'	https://www.redditstatic.com/desktop2x/img/social-links/shopify.png',
+					imgSrc: require('../../../../img/sociallinks/shopify.png'),
 					alt: '',
 					type: 'link',
 					baseUrl: '',
@@ -304,28 +280,70 @@ export default {
 					{
 						id: 'string',
 						data: {
-							subreddit: 'string',
-							postedBy: 'string',
-							title: 'string',
-							type: 'text',
-							content: 'string',
-							flair: {
-								flairId: 'string',
-								flairText: 'string',
-								backgroundColor: 'string',
-								textColor: 'string',
+							post: {
+								kind: 'link',
+								title: 'string',
+								subreddit: 'string',
+								link: 'string',
+								images: [
+									{
+										path: 'string',
+										caption: 'string',
+										link: 'string',
+									},
+								],
+								video: 'string',
+								content: {},
+								nsfw: true,
+								spoiler: true,
+								sharePostId: 'string',
+								flair: {
+									id: 'string',
+									flairName: 'string',
+									order: 0,
+									backgroundColor: 'string',
+									textColor: 'string',
+								},
+								comments: 0,
+								votes: 0,
+								postedAt: 'string',
+								sendReplies: true,
+								markedSpam: true,
+								suggestedSort: 'string',
+								editedAt: 'string',
+								postedBy: 'string',
+								votingType: 1,
+								saved: false,
+								followed: false,
+								hidden: false,
+								spammed: false,
+								inYourSubreddit: false,
+								moderation: {
+									approve: {
+										approvedBy: 'string',
+										approvedDate: '2019-08-24T14:15:22Z',
+									},
+									remove: {
+										removedBy: 'string',
+										removedDate: '2019-08-24T14:15:22Z',
+									},
+									spam: {
+										spammedBy: 'string',
+										spammedDate: '2019-08-24T14:15:22Z',
+									},
+									lock: true,
+								},
 							},
-							nsfw: true,
-							spoiler: true,
-							comment: [
+							comments: [
 								{
 									commentId: 'string',
-									commentBy: 'string',
-									commentBody: 'string',
+									commentedBy: 'string',
+									commentBody: null,
 									points: 0,
-									editTime: '2019-08-24T14:15:22Z',
 									publishTime: '2019-08-24T14:15:22Z',
-									level: 0,
+									editTime: '2019-08-24T14:15:22Z',
+									parent: 'string',
+									level: 2,
 									inYourSubreddit: true,
 									moderation: {
 										approve: {
@@ -337,8 +355,8 @@ export default {
 											removedDate: '2019-08-24T14:15:22Z',
 										},
 										spam: {
-											spamedBy: 'string',
-											spamedDate: '2019-08-24T14:15:22Z',
+											spammedBy: 'string',
+											spammedDate: '2019-08-24T14:15:22Z',
 										},
 										lock: true,
 									},
@@ -359,6 +377,108 @@ export default {
 							blockDate: '2019-08-24T14:15:22Z',
 							userImage:
 								'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
+						},
+					},
+				],
+			},
+			overviewData: {
+				before: 'string',
+				after: 'string',
+				children: [
+					{
+						id: 'string',
+						type: 'fullPost',
+						data: {
+							post: {
+								id: 'string',
+								kind: 'link',
+								title: 'string',
+								subreddit: 'string',
+								link: 'string',
+								images: [
+									{
+										path: 'string',
+										caption: 'string',
+										link: 'string',
+									},
+								],
+								video: 'string',
+								content: {},
+								nsfw: true,
+								spoiler: true,
+								sharePostId: 'string',
+								flair: {
+									id: 'string',
+									flairName: 'string',
+									order: 0,
+									backgroundColor: 'string',
+									textColor: 'string',
+								},
+								comments: 0,
+								votes: 0,
+								postedAt: 'string',
+								sendReplies: true,
+								markedSpam: true,
+								suggestedSort: 'string',
+								editedAt: 'string',
+								postedBy: 'string',
+								votingType: 1,
+								saved: false,
+								followed: false,
+								hidden: false,
+								spammed: false,
+								inYourSubreddit: false,
+								moderation: {
+									approve: {
+										approvedBy: 'string',
+										approvedDate: '2019-08-24T14:15:22Z',
+									},
+									remove: {
+										removedBy: 'string',
+										removedDate: '2019-08-24T14:15:22Z',
+									},
+									spam: {
+										spammedBy: 'string',
+										spammedDate: '2019-08-24T14:15:22Z',
+									},
+									lock: true,
+								},
+							},
+							comments: [
+								{
+									commentId: 'string',
+									commentedBy: 'string',
+									commentBody: null,
+									points: 0,
+									publishTime: '2019-08-24T14:15:22Z',
+									editTime: '2019-08-24T14:15:22Z',
+									parent: {
+										commentId: 'string',
+										commentedBy: 'string',
+										commentBody: null,
+										points: 0,
+										publishTime: '2019-08-24T14:15:22Z',
+										editTime: '2019-08-24T14:15:22Z',
+									},
+									level: 0,
+									inYourSubreddit: true,
+									moderation: {
+										approve: {
+											approvedBy: 'string',
+											approvedDate: '2019-08-24T14:15:22Z',
+										},
+										remove: {
+											removedBy: 'string',
+											removedDate: '2019-08-24T14:15:22Z',
+										},
+										spam: {
+											spammedBy: 'string',
+											spammedDate: '2019-08-24T14:15:22Z',
+										},
+										lock: true,
+									},
+								},
+							],
 						},
 					},
 				],

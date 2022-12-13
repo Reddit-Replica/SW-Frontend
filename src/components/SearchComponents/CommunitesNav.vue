@@ -65,7 +65,10 @@ export default {
 			// this.$emit('change-joining');
 		},
 		doFunc() {
-			this.$router.push(`/search/type=cm`);
+			this.$router.replace({
+				name: 'searchcm',
+				query: { q: this.$route.query.q },
+			});
 		},
 	},
 };

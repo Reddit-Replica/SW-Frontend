@@ -1,15 +1,15 @@
 <template>
 	<div id="create-ban-form">
-		<base-dialog :show="banShown" @close="hideBan" title="Ban a user:">
+		<base-dialog :show="banShown" @close="hideBan" :title="title">
 			<div class="ban-dialog flex-column">
 				<div class="ban-box flex-column">
-					<div class="ban-box-input flex-column">
+					<div class="ban-box-input flex-column" v-if="!edited">
 						<label for="ban-input" class="title-black">Enter username</label>
 						<input
 							class="input-name"
 							rows="5"
 							type="text"
-							placeholder="u/username"
+							placeholder="username"
 							v-model.trim="banUserName"
 							@keyup="charCount('name')"
 							id="user-name"
@@ -35,14 +35,14 @@
 						>
 							{{ reasonRule.ruleName }}
 						</option>
-						<option class="options">Spam</option>
-						<option class="options">
+						<option class="options" id="spam">Spam</option>
+						<option class="options" id="personal-and-confidential">
 							Personal And Confidential Information
 						</option>
-						<option class="options">
+						<option class="options" id="threatening-harassing">
 							Threatening, Harassing, Or Incities Violence
 						</option>
-						<option class="options">Other</option>
+						<option class="options" id="other">Other</option>
 					</select>
 				</div>
 				<div class="ban-box-input flex-column">
@@ -119,7 +119,14 @@
 						</div>
 					</div>
 					<div class="footer-buttons">
-						<div class="footer-p">Visible to banned user</div>
+						<div class="footer-p" v-if="!edited">Visible to banned user</div>
+						<base-button
+							v-if="edited"
+							@click="unbanUser()"
+							class="delete-button"
+							id="delete-button"
+							>UnBan</base-button
+						>
 						<div class="ban-box box-buttons">
 							<base-button
 								@click="hideBan"
@@ -131,13 +138,13 @@
 								@click="submitBan()"
 								class="button-blue"
 								:class="
-									banUserName == '' ||
+									(!edited && banUserName == '') ||
 									reason == 'None' ||
 									(banPeriod == 0 && !checkPermanent)
 										? 'disabled'
 										: ''
 								"
-								id="delete-button"
+								id="ban-button"
 								>Ban user</base-button
 							>
 						</div>
@@ -156,40 +163,100 @@ export default {
 	emits: ['exit', 'doneSuccessfully', 'clickedDelete'],
 	props: {
 		// @vuese
-		//return subreddit name
+		//return edited ban name
 		// @type string
-		subredditName: {
+		banNameEdit: {
 			type: String,
 			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban period edit
+		// @type string
+		banPeriodEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban mod note to edit
+		// @type string
+		banModNoteEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban note include tiedit
+		// @type string
+		banNoteIncludeEdit: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return ban reason For to edit
+		// @type string
+		banReasonForEdit: {
+			type: String,
+			default: 'None',
+			required: true,
+		},
+		// @vuese
+		//return if there is an edited rule
+		// @type string
+		edited: {
+			type: Boolean,
+			default: false,
 			required: true,
 		},
 	},
 	data() {
 		return {
 			banShown: true,
-			banUserName: '',
-			reason: 'None',
-			modNote: '',
+			banUserName: this.banNameEdit,
+			reason: this.banReasonForEdit,
+			modNote: this.banModNoteEdit,
 			charRemainingNote: 300,
 			errorResponse: null,
 			charRemainingReasonNote: 5000,
-			reasonNote: '',
+			reasonNote: this.banNoteIncludeEdit,
 			checkPermanent: true,
-			banPeriod: '',
+			banPeriod: this.banPeriodEdit,
 		};
 	},
 	// @vuese
 	//load List of Rules before mount
 	beforeMount() {
 		this.loadListOfRules();
+		if (this.banPeriodEdit) {
+			this.checkPermanent = false;
+		}
 	},
 
 	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
 		// @vuese
 		//return list of Rules
 		// @type object
 		listOfRules() {
 			return this.$store.getters['moderation/listOfRules'];
+		},
+		// @vuese
+		//return title of popup
+		// @type object
+		title() {
+			if (this.edited) {
+				return 'Edit ban for:' + this.banNameEdit;
+			} else {
+				return 'Ban a user:';
+			}
 		},
 	},
 	methods: {
@@ -236,7 +303,7 @@ export default {
 			try {
 				await this.$store.dispatch('moderation/banUser', {
 					//////userId not ban user name
-					userId: this.banUserName,
+					username: this.banUserName,
 					banPeriod: this.banPeriod,
 					//////not enum
 					reasonForBan: this.reason,
@@ -254,7 +321,27 @@ export default {
 				this.errorResponse = err;
 			}
 		},
-
+		//@vuese
+		//handle submit ban user
+		//@arg no argument
+		async unbanUser() {
+			this.errorResponse = null;
+			try {
+				await this.$store.dispatch('moderation/unBanUser', {
+					//////userId not ban user name
+					username: this.banUserName,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/unBanUserSuccessfully']) {
+					this.hideBan();
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 		//@vuese
 		//handle delete rule
 		//@arg no argument
@@ -547,5 +634,23 @@ button:hover {
 	text-overflow: ellipsis;
 	border-top: 1px solid var(--color-grey-light-9);
 	border-bottom: none;
+}
+.delete-button {
+	margin-right: auto;
+	color: var(--color-red-dark-1);
+	position: relative;
+	border: 1px solid transparent;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
+}
+.delete-button:hover {
+	background-color: var(--color-grey-light-4);
 }
 </style>

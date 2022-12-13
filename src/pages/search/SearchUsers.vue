@@ -13,8 +13,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										href="/search/type=post"
-										><button class="button-nav button-nav2">Posts</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('posts')"
+										>
+											Posts
+										</button></a
 									>
 								</div>
 								<div class="search-nav" role="tablist">
@@ -23,7 +27,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										><button class="button-nav button-nav2">Comments</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('coms')"
+										>
+											Comments
+										</button></a
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=comment" -->
@@ -33,8 +42,10 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										href="/search/type=cm"
-										><button class="button-nav button-nav2">
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('cm')"
+										>
 											Communities
 										</button></a
 									>
@@ -55,13 +66,9 @@
 					</div>
 					<div class="search-results">
 						<div class="people">
-							<div
-								class="people-results"
-								v-for="value in users"
-								:key="value.UserName"
-							>
-								<div>
-									<div>
+							<div class="people-results">
+								<div v-if="!notfounded">
+									<div v-for="value in SearchedUsers" :key="value.username">
 										<a class="user-a"
 											><div class="user-div">
 												<div class="user-details">
@@ -75,7 +82,7 @@
 												<div class="people-content">
 													<div class="people-content_release">
 														<h6 class="people-name">
-															u/{{ value.UserName }}&nbsp;
+															u/{{ value.username }}&nbsp;
 														</h6>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
@@ -83,15 +90,23 @@
 															>{{ value.karma }} Karma&nbsp;
 														</p>
 													</div>
-													<p class="p-details">{{ value.Pdetails }}&nbsp;</p>
+													<!-- <p class="p-details">{{ value.Pdetails }}&nbsp;</p> -->
 												</div>
-												<div class="follow" v-if="notFollowed" @click="toggle">
+												<div
+													class="follow"
+													v-if="notFollowed"
+													@click="toggle(value.id)"
+												>
 													<base-button
 														button-text="Follow"
 														class="follow-button"
 													></base-button>
 												</div>
-												<div class="follow" v-if="!notFollowed" @click="toggle">
+												<div
+													class="follow"
+													v-if="!notFollowed"
+													@click="toggle(value.id)"
+												>
 													<base-button
 														button-text="Unfollow"
 														class="follow-button"
@@ -100,6 +115,9 @@
 											</div>
 										</a>
 									</div>
+								</div>
+								<div v-if="notfounded">
+									<Notfound></Notfound>
 								</div>
 							</div>
 						</div>
@@ -111,20 +129,62 @@
 </template>
 <script>
 import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	data() {
 		return {
+			q: '',
 			notFollowed: true,
 			users: [
-				{ UserName: 'Abd', karma: '11k' },
-				{ UserName: 'Karim', karma: '11k', Pdetails: 'الحمد لله' },
+				{ username: 'Abd', karma: '11k' },
+				{ username: 'Karim', karma: '11k' },
 			],
+			notfounded: false,
 		};
 	},
-	methods: {
-		toggle() {},
+	computed: {
+		SearchedUsers() {
+			return this.$store.getters['search/Getusers'];
+		},
 	},
-	components: { BaseButton },
+	watch: {
+		SearchedUsers() {
+			console.log(this.notfounded);
+			if (this.SearchedUsers().length == 0) {
+				this.notfounded = true;
+				console.log(this.SearchedUsers());
+			}
+		},
+	},
+	methods: {
+		//not true just writing what will it been do in action
+		toggle(id) {
+			for (let i = 0; i < this.SearchedUsers().length; i++) {
+				if (this.SearchedUsers()[i].id == id) {
+					this.SearchedUsers()[i].joined = !this.SearchedUsers()[i].joined;
+				}
+			}
+		},
+		goSearch(value) {
+			if (value == 'cm') {
+				this.$router.replace({
+					name: 'searchcm',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'posts') {
+				this.$router.replace({
+					name: 'searchpost',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'coms') {
+				// this.$router.replace({
+				// 	name: 'searchuser',
+				// 	query: { q: this.$route.query.q },
+				// });
+			}
+		},
+	},
+	components: { BaseButton, Notfound },
 };
 </script>
 

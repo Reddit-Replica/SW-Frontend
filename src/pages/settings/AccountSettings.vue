@@ -6,7 +6,7 @@
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Email address</h3>
-					<p class="p-title-description">menna.said00@eng-st.cu.edu.eg</p>
+					<p class="p-title-description">{{ email }}</p>
 				</div>
 				<div>
 					<base-button class="blue-button" button-text="Change" id="change" />
@@ -46,11 +46,11 @@
 						]"
 						:display="genderMenuDisplayed"
 						@change-title="changeGender"
-						clicked-prop=""
+						:clicked-prop="gender"
 					/>
 				</div>
 			</div>
-			<div class="section">
+			<!-- <div class="section">
 				<div>
 					<h3 class="h3-title">Display language <span>(beta)</span></h3>
 					<p class="p-title-description">
@@ -84,7 +84,7 @@
 						/>
 					</svg>
 				</div>
-			</div>
+			</div> -->
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Country</h3>
@@ -96,7 +96,7 @@
 					</p>
 				</div>
 				<div>
-					<select id="country">
+					<select id="select1" @change="changeCountry()" :value="country">
 						<option value="xx">No country identified</option>
 						<option value="Afghanistan">Afghanistan</option>
 						<option value="Åland Islands">Åland Islands</option>
@@ -408,7 +408,7 @@
 				</div>
 			</div>
 			<h3 class="h3-main-title">CONNECTED ACCOUNTS</h3>
-			<div class="section">
+			<!-- <div class="section">
 				<div>
 					<h3 class="h3-title">Connect to Twitter</h3>
 					<p class="p-title-description">
@@ -448,41 +448,59 @@
 				<div>
 					<switch-button disabled id="sb-4" />
 				</div>
-			</div>
+			</div> -->
 			<div class="section">
 				<div>
-					<h3 class="h3-title">Connect to Apple</h3>
-					<div>Connect account to log in to Reddit with Apple</div>
+					<h3 class="h3-title">Connect to Facebook</h3>
+					<div>
+						<p class="p-title-description">
+							Connect account to log in to Reddit with Facebook
+						</p>
+					</div>
 				</div>
 				<div>
-					<base-button button-text="Connect to Apple" id="apple">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="currentColor"
-							class="bi bi-apple"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43Zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282Z"
-							/>
-							<path
-								d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43Zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282Z"
-							/>
-						</svg>
+					<base-button
+						button-text="Connect to Facebook"
+						id="apple"
+						v-if="!connectedToFacebook"
+						class="connect-button"
+						@click="connectToFacebook"
+					>
+						<font-awesome-icon icon="fa-brands fa-facebook-f" />
 					</base-button>
+					<base-button
+						button-text="(disconnect)"
+						id="google"
+						class="disconnect-button"
+						@click="connectToFacebook"
+						v-else
+					/>
 				</div>
 			</div>
 			<div class="section">
 				<div>
-					<h3 class="h3-title">Connected to Google</h3>
+					<h3 class="h3-title">Connect to Google</h3>
 					<p class="p-title-description">
 						Connect account to log in to Reddit with Google
 					</p>
 				</div>
 				<div>
-					<base-button button-text="(disconnect)" id="google" />
+					<base-button
+						button-text="Connect to Google"
+						id="apple"
+						v-if="!connectedToGoogle"
+						class="connect-button"
+						@click="connectToGoogle"
+					>
+						<font-awesome-icon icon="fa-brands fa-google" />
+					</base-button>
+					<base-button
+						button-text="(disconnect)"
+						id="google"
+						class="disconnect-button"
+						@click="disconnectToGoogle"
+						v-else
+					/>
 				</div>
 			</div>
 			<h3 class="h3-main-title">BETA TESTS</h3>
@@ -510,7 +528,7 @@
 			</div>
 			<h3 class="h3-main-title">DELETE ACCOUNT</h3>
 			<div class="section">
-				<div id="delete-account">
+				<div id="delete-account" @click="deletingAccount">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -528,21 +546,155 @@
 			</div>
 		</div>
 	</div>
+	<base-dialog
+		:show="deleting"
+		title="Delete account"
+		@close="cancelDelete"
+		dialog-class="delete-account"
+	>
+		<div class="body">
+			<p>We're sorry to see you go</p>
+			<p>
+				Once you delete your account, your profile and username are permanently
+				removed from Reddit and your posts, comments, and messages are
+				disassociated (not deleted) from your account unless you delete them
+				beforehand.<router-link
+					to="https://www.reddithelp.com/hc/en-us/articles/360043047932-If-I-deactivate-my-account-what-happens-to-my-username-posts-and-comments-"
+					>Learn more</router-link
+				>
+			</p>
+			<p>HELP IMPROVE REDDIT (OPTIONAL)</p>
+			<textarea type="text" placeholder="Let us know why you're leaving" />
+			<p>HELP IMPROVE REDDIT (OPTIONAL)</p>
+			<input type="text" placeholder="USERNAME" v-model="userName" />
+			<input type="password" placeholder="PASSWORD" v-model="password" />
+			<p>
+				<input type="checkbox" id="checkbox" v-model="agreement" /> I understand
+				that deleted accounts aren't recoverable
+			</p>
+			<div class="buttons">
+				<base-button button-text="CANCEL" @click="cancelDelete" />
+				<base-button
+					button-text="DELETE"
+					@click="confirmAccountDeletion"
+					:disable-button="enableDelete"
+				/>
+			</div>
+		</div>
+	</base-dialog>
+	<base-dialog
+		:show="confirmDeletion"
+		title="Delete account"
+		@close="cancelDelete"
+		dialog-class="delete-account"
+	>
+		<div class="body">
+			<p>Be absolutely sure before deleting your account</p>
+			<p>
+				Deleting your account removes it from Reddit and our administrators
+				won’t be able to bring it back for you.
+			</p>
+			<div class="buttons">
+				<base-button button-text="CANCEL" @click="cancelDelete" />
+				<base-button button-text="DELETE" @click="deleteAccount" />
+			</div>
+		</div>
+	</base-dialog>
 </template>
 
 <script>
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
+import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
 export default {
 	components: {
 		SubMenu,
+		BaseDialog,
 	},
 	data() {
 		return {
 			gender: 'select gender',
 			genderMenuDisplayed: false,
+			country: '',
+			email: '',
+			connectedToFacebook: false,
+			connectedToGoogle: false,
+			deleting: false,
+			confirmDeletion: false,
+			userName: '',
+			password: '',
+			agreement: false,
 		};
 	},
+	created() {
+		this.fetchAccountSettings();
+	},
 	methods: {
+		confirmAccountDeletion() {
+			this.deleting = false;
+			this.confirmDeletion = true;
+		},
+		cancelDelete() {
+			this.deleting = false;
+			this.confirmDeletion = false;
+		},
+		async connectToGoogle() {
+			this.connectedToGoogle = !this.connectedToGoogle;
+			try {
+				const googleUser = await this.$gAuth.signIn();
+				console.log(localStorage.getItem('Password'));
+				await this.$store.dispatch('setting/connect', {
+					baseurl: this.$baseurl,
+					type: 'google',
+					accessToken: googleUser.Bc.id_token,
+					password: localStorage.getItem('Password'),
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async disconnectToGoogle() {
+			this.connectedToGoogle = !this.connectedToGoogle;
+			try {
+				const googleUser = await this.$gAuth.signIn();
+				console.log(localStorage.getItem('Password'));
+				await this.$store.dispatch('setting/disconnect', {
+					baseurl: this.$baseurl,
+					type: 'google',
+					accessToken: googleUser.Bc.id_token,
+					password: localStorage.getItem('Password'),
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async connectToFacebook() {
+			this.connectedToFacebook = !this.connectedToFacebook;
+			try {
+				await this.$store.dispatch('setting/connect', {
+					baseurl: this.$baseurl,
+					type: 'facebook',
+					accessToken: '',
+					password: '',
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async fetchAccountSettings() {
+			try {
+				const accessToken = localStorage.getItem('accessToken');
+				await this.$store.dispatch('setting/fetchAccountSettings', {
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something failed!';
+			}
+			const accountSettings = this.$store.getters['setting/getAccountSettings'];
+			this.country = accountSettings.country;
+			this.gender = accountSettings.gender;
+			this.email = accountSettings.email;
+		},
 		//@vuese
 		//show gender menu
 		showGenderMenu() {
@@ -550,8 +702,89 @@ export default {
 		},
 		//@vuese
 		//change gender
-		changeGender(gender) {
+		async changeGender(gender) {
 			this.gender = gender;
+			console.log(gender);
+			const actionPayload = {
+				gender: this.gender,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeGender',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+		deletingAccount() {
+			this.deleting = true;
+		},
+		async deleteAccount() {
+			this.confirmDeletion = false;
+			const payload = {
+				username: localStorage.getItem('userName'),
+				password: localStorage.getItem('Password'),
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/deleteAccount',
+					payload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			try {
+				await this.$store.dispatch('logout_handle');
+				location.reload();
+			} catch (error) {
+				console.log('error');
+				// this.error = err;
+			}
+		},
+		async changeCountry() {
+			const selectElement = document.querySelector('#select1');
+			const value = selectElement.options[selectElement.selectedIndex].value;
+			this.country = value;
+			console.log(value);
+			const actionPayload = {
+				country: this.country,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeCountry',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+	},
+	computed: {
+		enableDelete() {
+			return !(
+				this.userName == localStorage.getItem('userName') &&
+				this.password == localStorage.getItem('Password') &&
+				this.agreement
+			);
 		},
 	},
 };
@@ -565,7 +798,7 @@ export default {
 	justify-content: space-between;
 }
 .section div:first-of-type {
-	max-width: 80%;
+	max-width: 100%;
 }
 .section div:first-of-type h3 span {
 	color: #ff2c00;
@@ -634,6 +867,7 @@ export default {
 .section:nth-of-type(3) div:last-of-type,
 .section:nth-of-type(4) div:last-of-type {
 	position: relative;
+	cursor: pointer;
 }
 .section:nth-of-type(3) div:last-of-type::before,
 .section:nth-of-type(4) div:last-of-type::before {
@@ -648,27 +882,23 @@ export default {
 	opacity: 0;
 	pointer-events: none;
 }
-.section:nth-of-type(3) div:last-of-type:hover::before,
-.section:nth-of-type(4) div:last-of-type:hover::before {
+.section:nth-of-type(3) div:last-of-type:hover::before {
 	opacity: 0.1;
 }
-.section:nth-of-type(3) div:last-of-type:active::before,
-.section:nth-of-type(4) div:last-of-type:active::before {
+.section:nth-of-type(3) div:last-of-type:active::before {
 	opacity: 0.3;
 }
-.section:nth-of-type(3) div:last-of-type,
-.section:nth-of-type(4) div:last-of-type,
-.section:nth-of-type(6) div:first-of-type {
+.section:nth-of-type(3) div:last-of-type {
 	margin-left: 32px;
 }
-.section:nth-of-type(4) div:last-of-type {
+.section:nth-of-type(3) div:last-of-type {
 	width: 362px;
 }
-.section:nth-of-type(4) div:last-of-type select {
+.section:nth-of-type(3) div:last-of-type select {
 	padding-right: 0px;
 	width: 340px;
 }
-.section:nth-of-type(4) {
+.section:nth-of-type(3) {
 	flex-direction: column;
 }
 .section:nth-of-type(5) div:first-of-type {
@@ -681,25 +911,25 @@ export default {
 .section:nth-of-type(5) div:last-of-type {
 	margin-left: auto;
 }
-.section:nth-of-type(5) button {
+/* button.disconnect-button {
 	background-color: #00a4f3;
 	color: white;
 	fill: white;
 	border: none;
 }
-.section:nth-of-type(5) button:hover {
+button.disconnect-button:hover {
 	background-color: #14abf4;
-}
+} */
 .section button svg {
 	margin: 0px 8px 0px 0px;
 }
-.section:nth-of-type(6) {
+/* .section:nth-of-type(6) {
 	opacity: 0.4;
-}
+} */
 .section:nth-of-type(7) {
 	max-width: 100%;
 }
-.section:nth-of-type(7) button {
+button.connect-button {
 	background-color: black;
 	color: white;
 	fill: white;
@@ -708,9 +938,10 @@ export default {
 	font-size: 14px;
 	font-weight: 700;
 	height: 32px;
+	width: 195px;
 	padding: 4px 16px;
 }
-.section:nth-of-type(8) button {
+button.disconnect-button {
 	color: var(--color-blue);
 	border: none;
 	padding: 0px;
@@ -719,10 +950,10 @@ export default {
 	background-color: white;
 	height: 22px;
 }
-.section:nth-of-type(8) button:hover {
+button.disconnect-button:hover {
 	background-color: #f5fafd;
 }
-.section:nth-of-type(11) {
+.section:last-of-type {
 	justify-content: flex-end;
 	color: #fc4e4f;
 	font-size: 12px;
@@ -730,9 +961,66 @@ export default {
 	letter-spacing: 0.5px;
 	cursor: pointer;
 }
-.section:nth-of-type(11) svg {
+.section:last-of-type svg {
 	margin-right: 4px;
 	width: 20px;
 	fill: #fc4e4f;
+}
+.delete-account .body {
+	max-width: 445px;
+}
+.delete-account p {
+	font-size: 14px;
+}
+.delete-account p:nth-of-type(3),
+.delete-account p:nth-of-type(4) {
+	font-size: 7px;
+	color: var(--color-grey-dark-2);
+}
+.delete-account textarea {
+	height: 70px;
+	width: 100%;
+	border: 1px solid var(--color-grey-dark-2);
+	font-size: 12px;
+	padding: 5px;
+}
+.delete-account input[type='text']::placeholder,
+.delete-account input[type='password']::placeholder {
+	font-size: 8px;
+	font-weight: bold;
+}
+.delete-account input[type='text'],
+.delete-account input[type='password'] {
+	height: 40px;
+	width: 100%;
+	border: 1px solid var(--color-grey-dark-2);
+	font-size: 14px;
+	padding: 2px;
+	margin-bottom: 5px;
+}
+.delete-account .buttons {
+	display: flex;
+	justify-content: end;
+	margin-top: 30px;
+}
+.delete-account .buttons button {
+	font-weight: bolder;
+	height: 50px;
+	width: 100px;
+	font-size: 14px;
+}
+.delete-account .buttons button:first-of-type {
+	border: 1px solid var(--color-blue-2);
+	background-color: white;
+	color: var(--color-blue-2);
+}
+.delete-account .buttons button:last-of-type {
+	border: 2px solid white;
+	background-color: var(--button-color);
+	color: white;
+	margin-left: 5px;
+}
+.delete-account .buttons button:last-of-type:disabled {
+	background-color: var(--color-grey-dark-4);
 }
 </style>

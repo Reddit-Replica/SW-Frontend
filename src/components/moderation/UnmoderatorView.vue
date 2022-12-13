@@ -28,6 +28,10 @@
 		<search-bar
 			@enter-search="(search) => enterSearch(search)"
 			:empty-input="search"
+			:before="before"
+			:after="after"
+			@fetch-before="loadListOfModerators('before')"
+			@fetch-after="loadListOfModerators('after')"
 		></search-bar>
 		<ul class="ul-items" v-if="!noItems">
 			<list-item
@@ -74,24 +78,12 @@ export default {
 			search: '',
 			count: 0,
 			noItems: false,
-			before: '',
-			after: '',
 		};
 	},
+	beforeMount() {
+		this.loadListOfModerators();
+	},
 	props: {
-		// @vuese
-		//details of moderators
-		//@type object
-		listOfModerators: {
-			type: Object,
-			required: true,
-			default: () => ({
-				username: '',
-				nickname: '',
-				dateOfModeration: '',
-				permissions: '',
-			}),
-		},
 		// @vuese
 		//subreddit name
 		//@type string
@@ -101,20 +93,45 @@ export default {
 			default: '',
 		},
 	},
+	computed: {
+		// @vuese
+		//return list of moderators
+		// @type object
+		listOfModerators() {
+			return this.$store.getters['moderation/listOfModerators'];
+		},
+		// @vuese
+		//return if there is moderators before
+		// @type string
+		before() {
+			return this.$store.getters['moderation/before'];
+		},
+		// @vuese
+		//return if there is moderators after
+		// @type string
+		after() {
+			return this.$store.getters['moderation/after'];
+		},
+	},
 	methods: {
 		// @vuese
 		//load moderators list from the store
 		// @arg no argument
-		async loadListOfModerators() {
+		async loadListOfModerators(title) {
+			let beforeMod = '',
+				afterMod = '';
+			if (title == 'before') {
+				beforeMod = this.before;
+			} else if (title == 'after') {
+				afterMod = this.after;
+			}
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
+					beforeMod: beforeMod,
+					afterMod: afterMod,
 				});
-				this.before = this.$store.getters['moderation/before'];
-				this.after = this.$store.getters['moderation/after'];
-				console.log(this.before);
-				console.log(this.after);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}

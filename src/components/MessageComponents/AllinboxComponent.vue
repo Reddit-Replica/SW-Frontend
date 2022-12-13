@@ -8,20 +8,39 @@
 	>
 		<li>
 			<p class="subject-text">
-				<span>{{ message.subject }}</span>
+				<span>{{ message.subject }}:</span>
 			</p>
 			<div :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
-					<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
+					<span>from&nbsp;</span>
 					<span class="sender"
-						><a href="" :id="'message-sender-' + index">{{
-							message.senderUsername
-						}}</a>
-						<span v-if="message.receiverUsername != ''"
-							><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
-							<a href="" :id="'message-receiver-' + index">{{
-								message.receiverUsername
-							}}</a>
+						><a
+							v-if="message.isSenderUser"
+							:href="'/user/' + message.senderUsername"
+							:id="'message-sender-' + index"
+							>{{ message.senderUsername }}</a
+						>
+						<a
+							v-else
+							:href="'/r/' + message.senderUsername"
+							:id="'message-sender-' + index"
+							>/r/{{ message.senderUsername }}</a
+						>
+						<span
+							v-if="message.receiverUsername != ''"
+							:class="!isRead ? 'unread' : ''"
+							><span>&nbsp;via&nbsp;</span>
+							<a
+								v-if="message.isReceiverUser"
+								:href="'/user/' + message.receiverUsername"
+								:id="'message-receiver-' + index"
+								>{{ message.receiverUsername }}</a
+							><a
+								v-else
+								:href="'/r/' + message.receiverUsername"
+								:id="'message-receiver-' + index"
+								>/r/{{ message.receiverUsername }}</a
+							>
 						</span></span
 					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 					><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
@@ -31,7 +50,10 @@
 
 				<Markdown class="md" id="md" :source="message.text" />
 				<!-- <p class="md">{{ message.text }}</p> -->
-				<ul class="flat-list ul-messages">
+				<ul
+					class="flat-list ul-messages"
+					v-if="message.isSenderUser && !sendByMe"
+				>
 					<!-- <li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li> -->
@@ -132,7 +154,7 @@
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
+					<li @click="unreadAction()" :id="'unread-' + index" v-if="isRead">
 						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 					</li>
 					<li :id="'reply-box-' + index">
@@ -174,15 +196,19 @@ export default {
 			default: () => ({
 				id: '',
 				text: '',
-				type: '',
 				senderUsername: '',
 				receiverUsername: '',
-				subredditName: '',
-				postTitle: '',
-				subject: '',
 				sendAt: '',
-				isReply: '',
-				isRead: '',
+				subject: '',
+				type: '',
+				subredditName: '',
+				isModerator: '',
+				postTitle: '',
+				postID: '',
+				commentID: '',
+				numOfComments: '',
+				isSenderUser: '',
+				isReceiverUser: '',
 			}),
 		},
 		// @vuese
@@ -201,9 +227,10 @@ export default {
 			backcolor: 'grey',
 			disappear: false,
 			spammed: false,
-			isRead: this.message.isRead,
 			errorResponse: null,
 			showReplyBox: false,
+			handleTime: '',
+			isRead: true,
 		};
 	},
 	// @vuese
@@ -218,8 +245,8 @@ export default {
 		// @vuese
 		//return handled time after calculated it
 		// @type object
-		handleTime() {
-			return this.$store.getters['moderation/handleTime'];
+		sendByMe() {
+			return this.message.senderUsername == localStorage.getItem('userName');
 		},
 	},
 	methods: {
@@ -227,9 +254,27 @@ export default {
 		//calculate time
 		// @type object
 		calculateTime() {
-			this.$store.dispatch('moderation/handleTime', {
-				time: this.message.sendAt,
-			});
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.message.sendAt,
+			// });
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.message.sendAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
 		},
 		// @vuese
 		//handle delete action
@@ -238,7 +283,7 @@ export default {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/deleteMessage', {
+					await this.$store.dispatch('messages/deleteMessage', {
 						id: this.message.id,
 						type: 'message',
 						baseurl: this.$baseurl,
@@ -257,15 +302,22 @@ export default {
 		// @arg The argument is a string value representing if user click ok
 		async blockAction(action) {
 			this.blockUser = !this.blockUser;
+			let name = '';
+			if (this.sendByMe) {
+				name = this.message.receiverUsername;
+			} else {
+				name = this.message.senderUsername;
+			}
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/blockUser', {
+					await this.$store.dispatch('messages/blockUser', {
 						block: true,
-						username: this.message.senderUsername,
+						username: name,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -286,14 +338,13 @@ export default {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/spamMessage', {
+					await this.$store.dispatch('messages/spamMessage', {
 						id: this.message.id,
-						type: 'message',
-						reason: '',
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/markSpamSuccessfully']) {
 						this.spammed = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -319,5 +370,8 @@ export default {
 a:hover,
 .link:hover {
 	text-decoration: underline;
+}
+.hide-message {
+	display: none;
 }
 </style>

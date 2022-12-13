@@ -45,13 +45,22 @@
 						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 					/>
 				</svg>
-				<img
-					src="../../../img/user-image.jpg"
-					alt="img"
-					class="header-user-nav-user-photo"
-					v-else
-					id="header-icon-user-image"
-				/>
+				<div v-else>
+					<img
+						v-if="!getUserData.userData.picture"
+						src="../../../img/default_inbox_avatar.png"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+					<img
+						v-else
+						:src="$baseurl + '/' + getUserData.userData.picture"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+				</div>
 				<span>{{ headerTitle }}</span>
 			</div>
 
@@ -246,20 +255,22 @@
 				</li>
 			</ul>
 		</div>
-		<form action="#" class="search">
+		<form class="search">
 			<input
 				v-model="searchQuery"
 				type="text"
 				class="header-search-input"
 				placeholder="Search Reddit"
 				id="header-search"
-				@keyup.enter="searchgo"
+				@keyup.enter="
+					searchSub();
+					searchUsers();
+				"
 			/>
-			<!-- <span>{{ searchQuery }}</span> -->
 			<button
 				class="header-search-button"
 				id="header-search-button"
-				@click="searchgo"
+				@click="searchSub()"
 			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
@@ -319,7 +330,11 @@
 				>
 			</div>
 
-			<div class="header-user-nav-icon-box" id="notifications-icon-box">
+			<div
+				class="header-user-nav-icon-box"
+				id="notifications-icon-box"
+				@click="toggleNotificationsList"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -340,6 +355,10 @@
 					>2</span
 				>
 			</div>
+			<notifications-list
+				v-if="notificationsListShown"
+				class="sub-menu sub-menu-ntf"
+			></notifications-list>
 
 			<div
 				class="header-user-nav-icon-box"
@@ -386,10 +405,18 @@
 				id="show-settings-submenu"
 			>
 				<img
-					src="../../../img/user-image.jpg"
-					alt="user photo"
-					class="header-user-nav-user-photo"
-					id="user-icon-settings-submenu"
+					v-if="!getUserData.userData.picture"
+					src="../../../img/default_inbox_avatar.png"
+					alt="img"
+					class="img header-user-nav-user-photo"
+					:id="'header-user-img-' + index"
+				/>
+				<img
+					v-else
+					:src="$baseurl + '/' + getUserData.userData.picture"
+					alt="img"
+					class="img header-user-nav-user-photo"
+					:id="'header-user-img-' + index"
 				/>
 				<span class="header-user-nav-online" />
 
@@ -522,7 +549,11 @@
 </template>
 
 <script>
+import NotificationsList from '../NotificationsComponents/NotificationsList.vue';
 export default {
+	components: {
+		NotificationsList,
+	},
 	props: {
 		// @vuese
 		//header title ex: Home, User Settings, u/username...
@@ -536,6 +567,7 @@ export default {
 			settingsSubMenuDisplay: false,
 			homeSubMenuDisplay: false,
 			searchQuery: '',
+			notificationsListShown: false,
 		};
 	},
 	computed: {
@@ -546,7 +578,17 @@ export default {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');
 		},
+		getUserData() {
+			return this.$store.getters['user/getUserData'];
+		},
+		srchq() {
+			return this.$store.getters['GetQuery'];
+		},
 	},
+	// mounted() {
+	// 	this.searchQuery = this.srchq;
+	// 	console.log(this.srchq());
+	// },
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
@@ -586,15 +628,53 @@ export default {
 			this.$router.push(`/user/${this.userName}`);
 		},
 		// @vuese
-		// Used to go to Search page
+		// Used to go to Request to Search for Users
 		// @arg no argument
-		searchgo() {
+		async searchUsers() {
 			if (this.searchQuery) {
-				this.$router.push(`/search`);
-			} else {
-				alert('No Search');
+				let quer = this.searchQuery;
+				try {
+					await this.$store.dispatch('search/SearchUser', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+				} catch (err) {
+					console.log(err);
+				}
 			}
 		},
+		// @vuese
+		// Used to go to Request to Search for Subreddits
+		// @arg no argument
+		async searchSub() {
+			if (this.searchQuery) {
+				let quer = this.searchQuery;
+				try {
+					await this.$store.dispatch('search/SearchSubreddit', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+				} catch (err) {
+					console.log(err);
+				}
+			} else {
+				alert('Did not enter a word to Search');
+			}
+		},
+		// @vuese
+		// Used to go to go to Search page
+		// @arg no argument
+		// gotosearch() {
+		// 	// console.log('waiting');
+		// 	setTimeout(
+		// 		() =>
+		// 			this.$router.push({
+		// 				name: 'searchpost',
+		// 				query: { q: this.searchQuery },
+		// 			}),
+		// 		1000
+		// 	);
+		// },
 		// @vuese
 		// Used handle logout action
 		// @arg no argument
@@ -606,6 +686,12 @@ export default {
 				console.log('error');
 				// this.error = err;
 			}
+		},
+		// @vuese
+		// Show/Hide notifications list
+		// @arg no argument
+		toggleNotificationsList() {
+			this.notificationsListShown = !this.notificationsListShown;
 		},
 	},
 };
@@ -1019,6 +1105,17 @@ export default {
 
 .home {
 	fill: var(--color-dark-1) !important;
+}
+
+.sub-menu-ntf {
+	top: 4rem;
+	right: 40rem;
+	width: 45rem;
+	box-shadow: var(--shadow-menu);
+	height: 400px;
+	max-height: 400px;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 /* 1200px */

@@ -36,21 +36,21 @@
 					<ul class="blocked-users">
 						<li
 							v-for="blockedUser in blockedUsersData.children"
-							:key="blockedUser.id"
+							:key="blockedUser.userId"
 						>
 							<div class="blocked-container">
 								<router-link
-									:to="`/user/${blockedUser.data.username}`"
+									:to="`/user/${blockedUser.username}`"
 									class="blocked-user-info"
 								>
-									<img :src="blockedUser.data.userImage" alt="" />
-									<span>{{ blockedUser.data.username }}</span>
+									<img :src="$baseurl + '/' + blockedUser.avatar" alt="" />
+									<span>{{ blockedUser.username }}</span>
 								</router-link>
-								<span>{{ getMoment(blockedUser.data.blockDate) }}</span>
+								<span>{{ getMoment(blockedUser.blockDate) }}</span>
 							</div>
 							<button
 								:id="`remove-${blockedUser.id}`"
-								@click="removeBlockedUser(blockedUser.data.username)"
+								@click="removeBlockedUser(blockedUser.username)"
 							>
 								REMOVE
 							</button>
@@ -325,7 +325,6 @@ export default {
 					blockUnblockData: {
 						username: blockUsername,
 						block: false,
-						remove: true,
 					},
 				});
 			} catch (error) {

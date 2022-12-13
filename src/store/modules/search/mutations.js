@@ -10,4 +10,16 @@ export default {
 	setSubreddits(state, payload) {
 		state.subreddits = payload;
 	},
+	setPosts(state, payload) {
+		state.posts = payload;
+	},
+	setSearchQuery(state, payload) {
+		state.SearchQuery = payload;
+	},
+	setBefore(state, payload) {
+		state.before = payload;
+	},
+	setAfter(state, payload) {
+		state.after = payload;
+	},
 };

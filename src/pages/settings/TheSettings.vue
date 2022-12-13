@@ -40,6 +40,7 @@ export default {
 .settings {
 	background-color: white;
 	border-top: 1px solid #eceff1;
+	overflow-y: scroll;
 }
 .settings-bar {
 	margin-top: 5rem;

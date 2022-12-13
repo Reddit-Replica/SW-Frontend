@@ -18,12 +18,12 @@
 							{{ '/u/' + userName }}
 						</option>
 						<option
-							v-for="username in suggestedSender"
-							:id="'message-from-options-' + username.text"
-							:key="username.text"
-							:value="username.text"
+							v-for="subreddit in suggestedSender"
+							:id="'message-from-options-' + subreddit.title"
+							:key="subreddit.title"
+							:value="subreddit.title"
 						>
-							{{ 'r/' + username.text }}
+							{{ '/r/' + subreddit.title }}
 						</option>
 					</select>
 					<p class="error" v-if="error == 'messageFrom'">
@@ -33,7 +33,9 @@
 				<div>
 					<label for="message-to" class="heading-3"
 						>to
-						<span>(username, or /r/name for that subreddit's moderators)</span>
+						<span
+							>(/u/username, or /r/name for that subreddit's moderators)</span
+						>
 					</label>
 					<input
 						type="text"
@@ -153,7 +155,7 @@
 				<span class="delivered" v-if="delivered"
 					>your message has been delivered</span
 				>
-				<span class="delivered" v-if="errorResponse">{{ errorResponse }}</span>
+				<span class="error" v-if="errorResponse">{{ errorResponse }}</span>
 			</form>
 		</div>
 	</div>
@@ -176,8 +178,10 @@ export default {
 	// @vuese
 	//change title name
 	beforeMount() {
-		document.title = 'messages: compose';
-		this.loadSuggestedSender();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: compose';
+			this.loadSuggestedSender();
+		}
 	},
 	computed: {
 		// @vuese
@@ -219,9 +223,14 @@ export default {
 			this.delivered = false;
 			this.errorResponse = null;
 			try {
+				if (this.senderUsername == this.userName) {
+					this.senderUsername = '/u/' + this.senderUsername;
+				} else {
+					this.senderUsername = '/r/' + this.senderUsername;
+				}
 				await this.$store.dispatch('messages/sendMessage', {
 					text: this.text,
-					senderUsername: '/u/' + this.senderUsername,
+					senderUsername: this.senderUsername,
 					receiverUsername: this.receiverUsername,
 					subject: this.subject,
 					baseurl: this.$baseurl,
@@ -231,12 +240,15 @@ export default {
 					this.subject = '';
 					this.text = '';
 					this.delivered = true;
+				} else {
+					this.errorResponse = 'some thing wrong';
 				}
 			} catch (err) {
 				console.log(err);
 				this.errorResponse = err;
 				this.delivered = false;
 			}
+			console.log(this.errorResponse);
 		},
 		// @vuese
 		//change title to formatting or hide
