@@ -49,13 +49,13 @@
 						<base-button
 							@click="showApproveFunction()"
 							class="button-white"
-							id="cancel-button"
+							:id="'cancel-button' + index"
 							>Cancel</base-button
 						>
 						<base-button
 							@click="removeFunction()"
 							class="button-blue"
-							id="delete-button"
+							:id="'remove-button' + index"
 							>Remove</base-button
 						>
 					</div>

@@ -5,18 +5,18 @@
 			src="../../../img/default_subreddit_image.png"
 			alt="img"
 			class="subreddit-img"
-			id="subreddit-img"
+			:id="'subreddit-img' + index"
 		/>
 		<img
 			v-else
 			:src="$baseurl + '/' + subreddit.picture"
 			alt="img"
 			class="subreddit-img"
-			id="subreddit-img"
+			:id="'subreddit-img' + index"
 		/>
 		<h5 class="subreddit-title">
-			<a href="#">
-				<span class="subreddit-link" id="subreddit-link"
+			<a href="#" :id="'subreddit-link' + index">
+				<span class="subreddit-link" :id="'subreddit-link' + index"
 					>r/{{ subredditName }}</span
 				></a
 			>
@@ -40,6 +40,13 @@ export default {
 		title: {
 			type: String,
 			default: 'moderator',
+		},
+		// @vuese
+		//index of the item
+		// @type string
+		index: {
+			type: Number,
+			default: 0,
 		},
 	},
 	beforeMount() {
