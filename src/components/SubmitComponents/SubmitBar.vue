@@ -256,6 +256,9 @@ export default {
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
 			});
+			this.$store.commit('posts/setinSubreddit', {
+				inSubreddit: this.inSubreddit,
+			});
 		},
 		// @vuese
 		// Used to  set the choosen subreddit that is profile
@@ -269,6 +272,9 @@ export default {
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
 			this.path = false;
+			this.$store.commit('posts/setinSubreddit', {
+				inSubreddit: this.inSubreddit,
+			});
 		},
 		setUser(image) {
 			this.isSet = true;

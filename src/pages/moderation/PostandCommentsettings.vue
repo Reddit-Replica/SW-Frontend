@@ -53,6 +53,7 @@ export default {
 			buttonDisabled: false,
 			suggestedSort: '',
 			suggestedSortoptions: ['none', 'best', 'top', 'new', 'old'],
+			enableSpoiler: '',
 		};
 	},
 	methods: {
