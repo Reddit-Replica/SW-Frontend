@@ -1,7 +1,7 @@
 <template>
 	<div class="catg-bar-1">
 		<div class="catg-bar-2"><h2>Categories</h2></div>
-		<ul :class="{ 'small-ul': smallList, 'large-ul': largeList }">
+		<ul :class="{ 'small-ul': smallList, 'large-ul': !smallList }">
 			<li>
 				<router-link
 					to="/subreddits/leaderboard/"
