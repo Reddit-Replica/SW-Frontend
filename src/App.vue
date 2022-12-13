@@ -187,6 +187,7 @@ body {
 	background-repeat: no-repeat;
 
 	min-height: 100vh;
+	/*overflow: auto;*/
 }
 
 /* router animation */

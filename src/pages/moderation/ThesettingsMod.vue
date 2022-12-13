@@ -1,5 +1,13 @@
 <template>
 	<div class="box">
+		<p style="text-align: right">
+			<base-button
+				button-text="Save Changes"
+				:disable-button="buttonDisabled"
+				class="save-button"
+				@click="saveChanges"
+			></base-button>
+		</p>
 		<h3 class="main-title">Community settings</h3>
 		<h3 class="secondary-title">COMMUNITY PROFILE</h3>
 		<h3 class="medium-font">Community name</h3>
@@ -48,7 +56,7 @@
 				></div>
 			</div>
 			&nbsp;
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+
 			<span style="margin-left: auto; margin-right: 2px">0/25</span></span
 		>
 		<v-select
@@ -86,47 +94,73 @@
 			rows="2"
 			class="text-area"
 			style="margin-bottom: 0px"
+			v-model="communityDescription"
 		></textarea>
 		<div class="Characters-remaining">500 Characters remaining</div>
 		<h3 class="medium-font">Send welcome message to new members</h3>
-		<!-- <p class="description">
-			This is how new members come to understand your community.
-		</p> -->
+		<span class="description"
+			>Create a custom welcome message to greet people the instant they join
+			your community. New community members will see this in a direct message 1
+			hour after joining.&nbsp;<a
+				href=""
+				rel="noopener nofollow ugc"
+				target="_blank"
+				class="_13svhQIUZqD9PVzFcLwOKT styled-outbound-link _2Tzl9XrmQzUn94gYHRUYMI"
+				original_target=""
+				waprocessedid="a53wog"
+				waprocessedanchor="true"
+				style="display: inline-block"
+				>Learn more.</a
+			>
+			<div
+				mcafee_wa_ann=""
+				waprocessedid="a53wog"
+				style="
+					cursor: default;
+					display: inline-block;
+					float: none;
+					padding: 0px 0px 0px 4px;
+					position: relative;
+					top: 2px;
+					z-index: 1;
+				"
+			>
+				<div
+					id="0DE9E47C-871A-4F90-8440-B190C216800A_11"
+					class="mcafee_ok"
+					onselectstart="return false;"
+					oncontextmenu="return false;"
+					tabindex="0"
+					style="outline: none"
+				></div>
+			</div>
+			&nbsp;
+			<switch-button
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getSendmessage"
+			></switch-button>
+		</span>
+		<textarea
+			v-if="sendWelcomeMessage"
+			maxlength="50000"
+			rows="5"
+			class="text-area"
+			style="
+				margin: 10px auto;
+				padding: 15px;
+				font-size: 15px;
+				font-weight: 100;
+			"
+			v-model="welcomeMessage"
+			placeholder="Welcome to our community! We’re here to discuss our passion for all things related to grated cheese. (Heads up—we’re a text-only community, so sorry no image posts.) Get started by introducing yourself in our post for newbies, then check out our rules to learn more and dive in."
+		></textarea>
 		<h3 class="secondary-title">COMMUNITY LOCATION AND MAIN LANGUAGE</h3>
 		<p class="description">
 			Adding a location helps your community show up in search results and
 			recommendations and helps local redditors find it easier.
 		</p>
-		<!-- <div class="community-box flex-column">
-			<div class="community-box-title">
-				<h3 class="title-black">Community category</h3>
-			</div>
-			<div class="community-box-input flex-column">
-				<select
-					class="input-name"
-					v-model.trim="communityCategory"
-					@blur="validateCommunityCategory"
-					@click="validateCommunityCategory"
-					id="category-input"
-				>
-					<option
-						v-for="category of categories"
-						:key="category.name"
-						:value="category.name"
-						:id="category.name"
-					>
-						{{ category.name }}
-					</option>
-				</select>
-				<div
-					v-if="communityCategoryRequiredError"
-					class="title-grey title-red"
-					id="required-category"
-				>
-					A community category is required
-				</div>
-			</div>
-		</div> -->
+
 		<h3 class="medium-font">Language</h3>
 		<!-- <input
 			id="1"
@@ -253,7 +287,7 @@
 				class="location-input"
 				name="location"
 				placeholder="Add location"
-				value=""
+				v-model="Region"
 			/>
 		</div>
 		<h3 class="secondary-title">COMMUNITY TYPE</h3>
@@ -433,21 +467,73 @@
 			When your community is marked as an 18+ community, users must be flagged
 			as 18+ in their user settings
 
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<switch-button
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getNsfw"
+			></switch-button>
 		</p>
-		<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
-		<h3 class="medium-font">Accepting requests to join</h3>
+		<div v-if="communityType == 'Private'">
+			<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
+			<h3 class="medium-font">Accepting requests to join</h3>
 
-		<p class="description">
-			Display a button on your private subreddit that allows users to request to
-			join. Users may still send your subreddit modmail whether this is on or
-			off.
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
-		</p>
+			<p class="description">
+				Display a button on your private subreddit that allows users to request
+				to join. Users may still send your subreddit modmail whether this is on
+				or off.
+				<switch-button
+					id="btn2"
+					style="margin-left: 15px"
+					@checked="getRequesttojoin"
+				></switch-button>
+			</p>
+		</div>
+		<div v-if="communityType == 'Restricted'">
+			<h3 class="secondary-title">RESTRICTED COMMUNITY SETTINGS</h3>
+			<h3 class="medium-font">
+				Approved users have the ability to
+				<!-- <p style="text-align: right"> -->
+				<v-select
+					class=""
+					style="margin-left: 50px"
+					:options="approvedUsers"
+					v-model="approvedUsersHaveTheAbilityTo"
+				></v-select>
+				<!-- </p> -->
+			</h3>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'POST ONLY (DEFAULT)'"
+			>
+				Only approved users can post. Anyone can comment
+			</p>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'COMMENT ONLY'"
+			>
+				Only approved users can comment. Anyone can post.
+			</p>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'POST & COMMENT'"
+			>
+				Only approved users can post and comment.
+			</p>
+
+			<h3 class="medium-font">
+				Accepting new requests to post
+				<switch-button
+					id="btn2"
+					style="margin-left: 15px"
+					@checked="getRequeststopost"
+				></switch-button>
+			</h3>
+		</div>
 	</div>
 </template>
 
 <script>
+import BaseButton from '@/components/BaseComponents/BaseButton.vue';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
@@ -459,13 +545,22 @@ export default {
 	},
 	components: {
 		vSelect,
+		BaseButton,
 	},
 	data() {
 		return {
-			language: '',
 			communityName: '',
 			mainTopic: '',
 			subTopics: [],
+			communityDescription: '',
+			sendWelcomeMessage: false,
+			welcomeMessage: '',
+			language: 'English',
+			Region: '',
+			nsfw: false,
+			acceptingRequestsToJoin: false,
+			acceptingRequestsToPost: false,
+			approvedUsersHaveTheAbilityTo: 'Post only',
 			languages: [
 				'Afrikaans',
 				'Azərbaycan',
@@ -551,12 +646,13 @@ export default {
 				'中文 (香港)',
 				'日本語',
 			],
-
+			approvedUsers: ['Post only', 'Comment only', 'Post & Comment'],
 			topics: [],
 			typeChosen0: true,
 			typeChosen1: false,
 			typeChosen2: false,
 			communityType: 'Public',
+			buttonDisabled: false,
 		};
 	},
 	methods: {
@@ -589,6 +685,58 @@ export default {
 				this.communityType = 'Public';
 			}
 		},
+		getSendmessage(value) {
+			this.sendWelcomeMessage = value;
+			console.log('this.sendWelcomeMessage');
+			console.log(this.this.sendWelcomeMessage);
+		},
+		getNsfw(value) {
+			this.nsfw = value;
+			console.log('this.NSFW');
+			console.log(this.this.NSFW);
+		},
+		getRequesttojoin(value) {
+			this.acceptingRequestsToJoin = value;
+			console.log('this.acceptingRequestsToJoin');
+			console.log(this.acceptingRequestsToJoin);
+		},
+		getRequeststopost(value) {
+			this.acceptingRequestsToPost = value;
+			console.log('this.acceptingRequestsToPost');
+			console.log(this.acceptingRequestsToPost);
+		},
+		async saveChanges() {
+			const actionPayload = {
+				communityName: this.communityName,
+				mainTopic: this.mainTopic,
+				subTopics: this.subTopics,
+				communityDescription: this.communityDescription,
+				sendWelcomeMessage: this.sendWelcomeMessage,
+				welcomeMessage: this.welcomeMessage,
+				language: this.language,
+				Region: this.Region,
+				Type: this.communityType,
+				NSFW: this.nsfw,
+				acceptingRequestsToJoin: this.acceptingRequestsToJoin,
+				acceptingRequestsToPost: this.acceptingRequestsToPost,
+				approvedUsersHaveTheAbilityTo: this.approvedUsersHaveTheAbilityTo,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/communitySettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
 	},
 };
 </script>
@@ -602,6 +750,8 @@ export default {
 	padding: 16px 24px;
 	display: block;
 	margin: 10px auto;
+	height: max-content;
+	overflow-y: auto;
 }
 .main-title {
 	font-size: 18px;
@@ -839,5 +989,13 @@ ol {
 	margin: 0 4px 0 8px;
 	padding: 0 4px;
 	background-color: #ff585b;
+}
+.save-button {
+	width: max-content;
+	height: 30px;
+	background-color: #0079d3;
+	color: white;
+	padding: 10px;
+	font-size: medium;
 }
 </style>
