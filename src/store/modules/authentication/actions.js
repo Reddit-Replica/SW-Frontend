@@ -163,7 +163,7 @@ export default {
 					accessToken: responseData.token,
 					response: response,
 				});
-				context.commit('type', 'normal');
+				context.commit('settype', 'normal');
 			}
 		}
 		if (!response.ok) {
@@ -210,7 +210,7 @@ export default {
 					accessToken: responseData.token,
 					response: response.status,
 				});
-				context.commit('type', 'normal');
+				context.commit('settype', 'normal');
 			}
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
@@ -265,7 +265,7 @@ export default {
 				accessToken: responseData.token,
 				response: response.status,
 			});
-			context.commit('type', 'google');
+			context.commit('settype', 'google');
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;
