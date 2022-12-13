@@ -33,6 +33,9 @@ import UsernameMentions from './pages/messages/UsernameMentions.vue';
 import SentMessages from './pages/messages/SentMessages.vue';
 
 import SubredditPage from './pages/subreddits/SubredditPage.vue';
+import TopCommunitiesPage from './pages/subreddits/TopCommunitiesPage.vue';
+
+import NotificationsPage from './pages/notifications/NotificationsPage.vue';
 
 import TheOverview from './pages/users/PagesComponents/TheOverview.vue';
 import AwardsGiven from './pages/users/PagesComponents/AwardsGive.vue';
@@ -65,8 +68,6 @@ import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
 import NotFound from './pages/NotFound.vue';
 
 import PostComments from './components/PostComponents/PostComments.vue';
-
-import NotificationsPage from './pages/notifications/NotificationsPage.vue';
 
 import Search from './pages/search/SearchPage.vue';
 import PostSearch from './pages/search/SearchPage.vue';
@@ -247,6 +248,18 @@ const router = createRouter({
 			path: '/notifications',
 			name: 'notifications',
 			component: NotificationsPage,
+		},
+
+		{
+			path: '/subreddits/leaderboard',
+			name: 'leaderboard',
+			component: TopCommunitiesPage,
+			children: [
+				{
+					path: '/subreddits/leaderboard/:category',
+					component: TopCommunitiesPage,
+				},
+			],
 		},
 
 		{ path: '/:notFound(.*)', component: NotFound },
