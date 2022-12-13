@@ -24,4 +24,8 @@ export default {
 		state.RandomUsers = payload;
 		console.log(state.RandomUsers);
 	},
+	settype(state, payload) {
+		console.log(payload);
+		state.type = payload;
+	},
 };

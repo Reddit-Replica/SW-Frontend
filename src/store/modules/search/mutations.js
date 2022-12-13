@@ -16,4 +16,10 @@ export default {
 	setSearchQuery(state, payload) {
 		state.SearchQuery = payload;
 	},
+	setBefore(state, payload) {
+		state.before = payload;
+	},
+	setAfter(state, payload) {
+		state.after = payload;
+	},
 };

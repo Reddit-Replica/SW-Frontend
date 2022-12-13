@@ -135,11 +135,7 @@
 						<div class="search-results">
 							<div class="posts">
 								<div class="post-results">
-									<SearchPost
-										id="searched-posts"
-										:community="salah"
-										:profile="Hamada"
-									/>
+									<SearchPost id="searched-posts" :posts="SearchedPosts" />
 								</div>
 							</div>
 							<div class="side-bars">
@@ -270,6 +266,20 @@ export default {
 		PeopleNav,
 		MenuSearchVue,
 		BacktotopButton,
+	},
+	computed: {
+		SearchedPosts() {
+			return this.$store.getters['search/GetPosts'];
+		},
+	},
+	watch: {
+		SearchedPosts() {
+			console.log(this.notFound);
+			if (this.SearchedPosts().length == 0) {
+				this.notFound = true;
+				console.log(this.SearchedPosts());
+			}
+		},
 	},
 };
 </script>

@@ -21,4 +21,7 @@ export default {
 		console.log(state.RandomUsers);
 		return state.RandomUsers;
 	},
+	gettype(state) {
+		return state.type;
+	},
 };
