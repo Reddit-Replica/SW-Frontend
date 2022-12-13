@@ -166,4 +166,29 @@ export default {
 			throw error;
 		}
 	},
+	async deleteComment(context, payload) {
+		const comment = {
+			id: payload.id,
+			type: payload.type,
+		};
+		console.log(comment);
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/delete', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(comment),
+		});
+
+		const responseData = await response.json();
+		console.log(responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };
