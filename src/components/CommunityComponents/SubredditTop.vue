@@ -8,17 +8,25 @@
 		<div class="white-top">
 			<div class="flex-start">
 				<div class="top flex-start">
-					<!-- <img :src="subredditImageUrl" alt="subredditImage" /> -->
-					<img src="../../../img/user-image.jpg" alt="user-img" />
+					<img
+						:src="subredditImageUrl"
+						alt="subredditImage"
+						v-if="subredditImageUrl"
+					/>
+					<img
+						src="../../../img/default_subreddit_image.png"
+						alt="user-img"
+						v-else
+					/>
 					<div class="top-title-button">
 						<div class="top-title">
-							<h1 class="title-1">{{ subredditName }}</h1>
+							<h1 class="title-1">{{ subredditNickname }}</h1>
 							<h2 class="title-2">r/{{ subredditName }}</h2>
 						</div>
 						<div>
 							<base-button
 								class="button blue-button"
-								@click="joinsubreddit"
+								@click="joinSubreddit"
 								v-if="!joined"
 								id="join-button"
 								>Join</base-button
@@ -27,6 +35,7 @@
 								class="button white-button"
 								@mouseover="hoverJoin('Leave')"
 								@mouseleave="hoverJoin('Joined')"
+								@click="leaveSubreddit"
 								v-if="joined"
 								id="leave-button"
 								>{{ hoverButtonText }}</base-button
@@ -41,10 +50,23 @@
 
 <script>
 export default {
+	emits: ['reload'],
 	props: {
+		//@vuese
+		//Subreddit ID
+		subredditId: {
+			type: String,
+			default: '',
+		},
 		//@vuese
 		//Subreddit name
 		subredditName: {
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//Subreddit nickname
+		subredditNickname: {
 			type: String,
 			default: '',
 		},
@@ -74,24 +96,29 @@ export default {
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
-		joinsubreddit() {
-			// this.toogleJoin();
-
+		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			this.$store.dispatch('community/joinSubreddit', {
+			await this.$store.dispatch('community/joinSubreddit', {
 				message: this.message,
-				subredditId: this.subredditName,
+				subredditId: this.subredditId,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+
+			this.$emit('reload');
 		},
-		// //@vuese
-		// //Toogle Joining and leaving a subreddit button
-		// //@arg no argument
-		// toogleJoin() {
-		// 	this.isJoined = !this.isJoined;
-		// },
+		async leaveSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+
+			await this.$store.dispatch('community/leaveSubreddit', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+
+			this.$emit('reload');
+		},
 	},
 };
 </script>

@@ -115,7 +115,7 @@
 			<img
 				v-if="pic != ''"
 				style="z-index: 3; position: relative"
-				:src="pic"
+				:src="$baseurl + '/' + pic"
 				alt=""
 			/>
 			<div style="z-index: 5" class="blocked-pic-icon">

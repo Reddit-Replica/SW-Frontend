@@ -1,6 +1,5 @@
 <template>
 	<div class="content">
-		<queue-bar :title="title"></queue-bar>
 		<div class="clean">
 			<div class="img"></div>
 			<div class="text-clean">The queue is clean!</div>
@@ -10,18 +9,8 @@
 </template>
 
 <script>
-import QueueBar from './QueueBar.vue';
 export default {
-	components: { QueueBar },
-	props: {
-		// @vuese
-		// title for bar
-		// @type string
-		title: {
-			type: String,
-			default: '',
-		},
-	},
+	components: {},
 };
 </script>
 

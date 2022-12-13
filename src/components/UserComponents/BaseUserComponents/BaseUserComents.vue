@@ -1,6 +1,7 @@
 <template>
 	<div id="commentId" class="comment-container">
-		<header>
+		<comment-header :comment-data="commentData"></comment-header>
+		<!-- <header>
 			<div class="content">
 				<div class="comment-icon">
 					<i
@@ -14,50 +15,67 @@
 				</div>
 				<div class="title-container">
 					<span class="user-comment-name">
-						<router-link to=""> Key_Excitement_3075</router-link>
+						<router-link to=""> {{ this.$route.params.userName }}</router-link>
 					</span>
 					<span class="post-title-content">
 						<p>
 							commented on
-							<span class="post-title-name">{{ ' ' + commentData.title }}</span>
+							<span class="post-title-name">{{
+								' ' + commentData.data.post.title
+							}}</span>
 						</p>
 					</span>
 					<span class="post-status">
 						<router-link
 							to=""
 							class="flair-box"
-							:style="`background-color :${commentData.flair.backgroundColor};
-										color : ${commentData.flair.textColor};
+							:style="`background-color :${commentData.data.post.flair.backgroundColor};
+										color : ${commentData.data.post.flair.textColor};
 										`"
-							>{{ commentData.flair.flairName }}</router-link
+							>{{ commentData.data.post.flair.flairName }}</router-link
 						>
-						<span v-if="commentData.spoiler" class="post-spoiler"
+						<span v-if="commentData.data.post.spoiler" class="post-spoiler"
 							><p>spoiler</p></span
 						>
-						<span v-if="commentData.nsfw" class="post-nsfw"><p>nsfw</p></span>
+						<span v-if="commentData.data.post.nsfw" class="post-nsfw"
+							><p>nsfw</p></span
+						>
 						<span class="post-oc"><p>OC</p></span>
 					</span>
 					<span class="subreddit-name">
 						&nbsp;.&nbsp;
-						<router-link to=""> {{ 'r/' + commentData.subreddit }}</router-link>
+						<router-link to="">
+							{{ 'r/' + commentData.data.post.subreddit }}</router-link
+						>
 					</span>
 					<span class="posted-by">
 						posted by&nbsp;
-						<router-link to="">{{ commentData.postedBy }}</router-link>
+						<router-link to="">{{
+							commentData.data.post.postedBy
+						}}</router-link>
 					</span>
 				</div>
 			</div>
-		</header>
-		<div class="comment-body">
+		</header> -->
+		<!-- <div class="comment-body">
 			<div class="comment-body-container">
 				<div class="comment-box">
 					<div class="nested-comment-order">
 						<div></div>
 						<div></div>
-					</div>
-					<div class="comment-content">
+					</div> -->
+		<comment-content
+			v-for="(commentContent, index) in commentData.data.comments"
+			:key="index"
+			:post-id="commentData.id"
+			:post-title="commentData.data.post.title"
+			:comment-content="commentContent"
+		></comment-content>
+		<!-- <div class="comment-content">
 						<div class="comment-body-title">
-							<router-link to=""> Key_Excitement_3075</router-link>
+							<router-link to="">
+								{{ this.$route.params.userName }}</router-link
+							>
 							<span class="comment-op">op</span>
 							<p>1 point</p>
 							<router-link class="comment-date" to="">2 day ago</router-link>
@@ -90,7 +108,7 @@
 											</svg>
 										</i>
 									</div>
-									<div v-if="1 || showOptionsBoxList" class="options-box-list">
+									<div v-if="showOptionsBoxList" class="options-box-list">
 										<ul>
 											<li @click="editPost" class="options-box-item">
 												<div class="options-box-icon">
@@ -170,15 +188,25 @@
 								</ul>
 							</div>
 						</div>
-					</div>
-				</div>
+					</div> -->
+		<!-- </div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </template>
 <script>
+import CommentContent from './CommentsComponents/CommentContent.vue';
+import CommentHeader from './CommentsComponents/CommentHeader.vue';
 export default {
-	data() {},
+	data() {
+		return {
+			showOptionsBoxList: false,
+		};
+	},
+	components: {
+		CommentContent,
+		CommentHeader,
+	},
 	props: {
 		commentData: {
 			type: Object,
@@ -187,6 +215,11 @@ export default {
 		id: {
 			type: String,
 			required: true,
+		},
+	},
+	methods: {
+		openOptionsBoxList() {
+			this.showOptionsBoxList = !this.showOptionsBoxList;
 		},
 	},
 };
@@ -202,6 +235,7 @@ li {
 .comment-container {
 	width: 100%;
 	background-color: #ffffff;
+	/* padding-bottom: 8px; */
 }
 .comment-container header {
 	border: thin solid #edeff1;
@@ -374,11 +408,13 @@ span.post-oc {
 	line-height: 16px;
 	color: #878a8c;
 	margin-left: -4px;
+	margin-top: 8px;
 }
 .comment-options > ul {
 	list-style: none;
 	display: flex;
 	cursor: pointer;
+	align-items: center;
 }
 .comment-options > ul li {
 	margin: 4px;
@@ -424,11 +460,12 @@ span.post-oc {
 	font-size: 20px;
 }
 .post-options {
-	margin-top: 8px;
+	/* margin-top: 8px; */
 }
 .post-options ul {
 	display: flex;
 	flex-wrap: wrap;
+	cursor: pointer;
 }
 .post-options ul li.post-option-item {
 	display: flex;
@@ -535,5 +572,6 @@ span.post-oc {
 .post-tooltip:hover .post-tooltiptext {
 	visibility: visible;
 }
+
 /* */
 </style>

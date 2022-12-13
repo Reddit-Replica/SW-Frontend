@@ -61,12 +61,13 @@ export default {
 	data() {
 		return {
 			state: '' /* profile or user */,
-			// userData: Array,
+			// userData: Array,getUserData
 			loading: false,
 			blockedFlag: false,
 		};
 	},
-	mounted() {
+	beforeMount() {
+		// location.reload();
 		// this.checkInOverviewPage;
 	},
 	watch: {
@@ -140,8 +141,15 @@ export default {
 	async created() {
 		if (this.$route.params.userName) {
 			this.loading = true;
-			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
-			if (this.$route.params.userName == this.$store.getters.getUserName)
+			if (
+				!localStorage.getItem('userName') ||
+				localStorage.getItem('userName') == ''
+			) {
+				this.state = 'unAuth';
+			} else if (
+				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+				this.$route.params.userName == localStorage.getItem('userName')
+			)
 				this.state = 'profile';
 			/* means same authenticated user */ else
 				this.state = 'user'; /* means other user */
@@ -154,9 +162,9 @@ export default {
 			else if (requestStatus == 404) console.log('not found');
 			else if (requestStatus == 500) console.log(' internal server error');
 			this.blockedFlag = true;
-			// console.log(this.$store.getters['user/getUserData']);
+			console.log(this.$store.getters['user/getUserData']);
 			// console.log(this.$store.getters['user/getStaticSocialLinks']);
-			// this.userData = this.$store.getters['user/getUserData'];
+			this.userData = this.$store.getters['user/getUserData'];
 			// console.log(this.userData);
 			// this.checkInOverviewPage;
 		}

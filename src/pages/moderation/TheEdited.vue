@@ -1,13 +1,15 @@
 <template>
 	<div>
-		<clean-queue :title="'Edited'"></clean-queue>
+		<queue-bar :title="'Edited'"></queue-bar>
+		<clean-queue></clean-queue>
 	</div>
 </template>
 
 <script>
 import CleanQueue from '../../components/moderation/CleanQueue.vue';
+import QueueBar from '../../components/moderation/QueueBar.vue';
 export default {
-	components: { CleanQueue },
+	components: { CleanQueue, QueueBar },
 };
 </script>
 

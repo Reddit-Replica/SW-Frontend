@@ -2,7 +2,7 @@
 	<!-- header component -->
 	<div>
 		<div :class="showPostComments ? 'back' : ''">
-			<the-header :header-title="'Home'"></the-header>
+			<the-header :header-title="userName"></the-header>
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6">
@@ -90,6 +90,13 @@ export default {
 		showPostComments() {
 			if (this.$route.path.split('/')[3] == 'comments') return true;
 			return false;
+		},
+		// @vuese
+		// Get usename
+		// @type string
+		userName() {
+			// return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 	},
 	created() {

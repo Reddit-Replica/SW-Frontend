@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div>
 			<user-mentions
 				v-for="(message, index) in userMentions"
@@ -8,9 +11,7 @@
 				:index="index"
 			></user-mentions>
 		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
-		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -23,12 +24,15 @@ export default {
 	// @vuese
 	//change title name and load mentions
 	beforeMount() {
-		document.title = 'messages: mentions';
-		this.loadUserMentions();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: mentions';
+			this.loadUserMentions();
+		}
 	},
 	data() {
 		return {
 			noMessages: false,
+			errorResponse: null,
 		};
 	},
 	computed: {

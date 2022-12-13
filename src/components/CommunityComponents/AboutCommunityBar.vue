@@ -4,9 +4,10 @@
 			<div class="about-title"><h2 class="about-h2">About Community</h2></div>
 			<div class="about-options">
 				<router-link
-					:to="'/r/' + subredditName + '/about/'"
+					:to="'/r/' + subredditName + '/about/moderators'"
 					class="mod-tools"
 					id="mod-tools"
+					v-if="isModerator"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +47,7 @@
 					</button>
 					<button
 						class="button-option"
-						@click="addToFavourite"
+						@click="toogleFavourite"
 						id="add-to-favourite"
 					>
 						{{ favouriteText }}
@@ -59,7 +60,7 @@
 			<div
 				class="description-1"
 				@click="showTextarea"
-				v-if="!textareaShown && emptyDescription"
+				v-if="!textareaShown && emptyDescription && isModerator"
 				id="add-description-1"
 			>
 				<div class="description-1-text" id="add-desc">Add description</div>
@@ -68,7 +69,7 @@
 			<div
 				class="description-1 blue-border"
 				id="add-description-2"
-				v-else-if="textareaShown"
+				v-else-if="textareaShown && isModerator"
 			>
 				<textarea
 					placeholder="Tell us about your community"
@@ -105,7 +106,7 @@
 				@click="showTextarea"
 				id="add-description-3"
 			>
-				{{ communityDescription }}
+				{{ communityDescriptionProp }}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -113,6 +114,7 @@
 					fill="currentColor"
 					class="bi bi-pencil"
 					viewBox="0 0 16 16"
+					v-if="isModerator"
 				>
 					<path
 						d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
@@ -138,18 +140,18 @@
 					id="comm-date"
 					@mouseover="toogleDateBox"
 					@mouseleave="toogleDateBox"
-					>Created {{ communityDate }}</span
+					>Created {{ communityCreationDate }}</span
 				>
 				<div
 					class="box arrow-top box-arrow-1"
 					v-if="dateBoxShown"
 					id="date-hover"
 				>
-					10 days ago.
+					{{ communityDate }}
 				</div>
 			</div>
 
-			<div class="box-body" id="created-type">
+			<div class="box-body" id="created-type" v-if="notPublic">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -181,7 +183,7 @@
 						@mouseover="toogleMembersCountBox"
 						@mouseleave="toogleMembersCountBox"
 					>
-						{{ membersCount }}
+						{{ calculateMembers(membersCount) }}
 					</div>
 					<div class="text-grey">Members</div>
 					<div
@@ -194,23 +196,14 @@
 				</div>
 				<div id="online-members-num" class="relative-flex">
 					<div>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="currentColor"
-							class="bi bi-dot"
-							viewBox="0 0 16 16"
-						>
-							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-						</svg>
+						<div class="point-green"></div>
 						<span
 							class="text-bold"
 							id="comm-online-mem"
 							@mouseover="toogleOnlineMembersCountBox"
 							@mouseleave="toogleOnlineMembersCountBox"
-							>{{ onlineMembersCount }}</span
-						>
+							>{{ calculateMembers(membersCount) }}
+						</span>
 					</div>
 					<div class="text-grey">Online</div>
 					<div
@@ -218,7 +211,7 @@
 						id="comm-online-mem-hover"
 						v-if="onlineMembersCountBoxShown"
 					>
-						{{ onlineMembersCount }} Online
+						{{ membersCount }} Online
 					</div>
 				</div>
 				<div></div>
@@ -227,7 +220,7 @@
 
 			<div class="line"></div>
 
-			<div class="box-body">
+			<div class="box-body" v-if="isModerator">
 				<span class="span-new" v-if="isNew" id="new-comm">NEW</span>
 				<span
 					class="text-bold"
@@ -263,7 +256,7 @@
 				</div>
 			</div>
 
-			<div class="box-body box-topic">
+			<div class="box-body box-topic" v-if="isModerator">
 				<span
 					class="text-bold span-save"
 					@click="toogleTopicsList"
@@ -276,7 +269,7 @@
 					@click="toogleTopicsList"
 					v-if="topicChosen"
 					id="topic-added"
-					>{{ communityTopic }}</span
+					>{{ communityTopicProp }}</span
 				>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -307,7 +300,7 @@
 
 				<div
 					class="sub-topic"
-					v-if="!subtopicChosen && topicChosen && addSubtopicShown"
+					v-if="!subtopicChosen && topicChosen"
 					id="subtopic-box-1"
 				>
 					<base-button class="button-subtopic" id="subtopic-box-2">
@@ -330,13 +323,12 @@
 
 				<div
 					class="blue-border description-1 box-topic"
-					v-if="subtopicsBoxShown || subtopicChosen"
+					v-if="subtopicChosen"
 					id="subtopic-box-3"
 				>
-					<input v-if="!subtopicChosen" id="subtopic-box-4" />
 					<div v-if="subtopicChosen" @click="showBoth">
 						<base-button
-							v-for="(subtopic, index) in communitySubtopics"
+							v-for="(subtopic, index) in subtopicsToShow"
 							:key="subtopic.id"
 							class="subtopic text"
 							@click="deleteSubtopic(subtopic)"
@@ -356,6 +348,7 @@
 							</svg>
 						</base-button>
 					</div>
+					<input v-if="subtopicChosen" id="subtopic-box-4" />
 					<div class="flex">
 						<span class="span-char" id="subtopic-box-count"
 							>{{ subtopicsCount }}/25</span
@@ -408,7 +401,7 @@
 							>
 							<base-button
 								class="button-blue-2 text"
-								@click="saveSubtopics"
+								@click="saveSubtopicsInDialog"
 								id="dialog-save"
 								>Save</base-button
 							>
@@ -417,7 +410,7 @@
 				</div>
 			</div>
 
-			<div class="line"></div>
+			<div class="line" v-if="isModerator"></div>
 
 			<div class="box-body">
 				<base-button
@@ -436,6 +429,7 @@
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { BaseButton },
+	emits: ['reload'],
 	props: {
 		//@vuese
 		//Array of Subreddit suggested topics
@@ -480,32 +474,38 @@ export default {
 			default: '',
 		},
 		//@vuese
-		//Subreddit main topic and array of subtopics
+		//Subreddit main topic
 		communityTopicProp: {
-			type: Object,
-			default: () => ({ mainTopic: '', subtopics: [] }),
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//Subreddit array of subtopics
+		communitySubtopicsProp: {
+			type: Array,
+			default: () => [],
+		},
+		isFavourite: {
+			type: Boolean,
+			default: false,
+		},
+		isModerator: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
 		return {
 			dotsClicked: false,
 			addedToCustomFeed: false,
-			addedToFavourite: false,
-			favouriteText: 'Add To Favourites',
 			charRemaining: 500,
 			textareaShown: false,
-			// communityDescription: this.communityDescriptionProp,
 			description: '',
-			// communityTopic: {},
-			// topicChosen: false,
 			topicsShown: false,
 			subtopicsShown: false,
-			// communitySubtopics: [],
 			savedCommunitySubtopics: [],
-			// subtopicChosen: false,
-			// subtopicsCount: 0,
 			saveDialogShown: false,
-			isSubtopicsSaved: false,
+			isSubtopicsSaved: true,
 			isNew: true,
 			dateBoxShown: false,
 			MembersCountBoxShown: false,
@@ -514,29 +514,59 @@ export default {
 			addSubtopicShown: true,
 			subtopicsBoxShown: false,
 			subtopicsListShown: false,
+
+			subtopicsToShow: this.communitySubtopicsProp,
 		};
 	},
 	computed: {
 		emptyDescription() {
-			return this.communityDescription === '';
-		},
-		communityDescription() {
-			return this.communityDescriptionProp;
-		},
-		communityTopic() {
-			return this.communityTopicProp.topicTitle;
+			return (
+				!this.communityDescriptionProp || this.communityDescriptionProp === ''
+			);
 		},
 		topicChosen() {
-			return this.communityTopic !== '';
-		},
-		communitySubtopics() {
-			return this.communityTopicProp.subtopics;
+			return this.communityTopicProp;
 		},
 		subtopicChosen() {
-			return this.communitySubtopics.length !== 0;
+			return (
+				this.subtopicsToShow.length !== 0 ||
+				(this.subtopicsToShow.length === 0 && this.isSubtopicsSaved === false)
+			);
 		},
 		subtopicsCount() {
-			return this.communitySubtopics.length;
+			return this.subtopicsToShow.length;
+		},
+		favouriteText() {
+			if (!this.isFavourite) return 'Add To Favorites';
+			else return 'Remove From Favorites';
+		},
+		communityCreationDate() {
+			//extract year
+			let year = this.communityDate.substring(0, 4);
+
+			//extract month and write its name
+			let month = this.communityDate.substring(5, 7);
+			if (month == '01') month = 'Jan';
+			else if (month == '02') month = 'Feb';
+			else if (month == '03') month = 'Mar';
+			else if (month == '04') month = 'Apr';
+			else if (month == '05') month = 'May';
+			else if (month == '06') month = 'Jan';
+			else if (month == '07') month = 'Jul';
+			else if (month == '08') month = 'Aug';
+			else if (month == '09') month = 'Sep';
+			else if (month == '10') month = 'Oct';
+			else if (month == '11') month = 'Nov';
+			else if (month == '12') month = 'Dec';
+
+			//extract day
+			let day = this.communityDate.substring(8, 10);
+			if (day[0] == '0') day = day[1];
+
+			return month + ' ' + day + ', ' + year;
+		},
+		notPublic() {
+			return this.communityType !== 'Public';
 		},
 	},
 	methods: {
@@ -555,25 +585,27 @@ export default {
 		//@vuese
 		//Mark subreddit added to favourites
 		//@arg no argument
-		addToFavourite() {
-			//toggle add to favourite data
-			this.addedToFavourite = !this.addedToFavourite;
+		async toogleFavourite() {
+			//send request
+			const accessToken = localStorage.getItem('accessToken');
+			if (this.isFavourite) {
+				await this.$store.dispatch('community/removeFromFavourite', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			} else {
+				await this.$store.dispatch('community/addToFavourite', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			}
 
-			//change button text
-			this.favouriteText = this.addedToFavourite
-				? 'Remove From Favourites'
-				: 'Add To Favourites';
+			this.$emit('reload');
 
 			//hide list
 			this.dotsClick();
-
-			//send request
-			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/ToggleFavourite', {
-				subredditName: this.subredditName,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
 		},
 		//@vuese
 		//Decrease characters count while typing
@@ -596,54 +628,54 @@ export default {
 		//@vuese
 		//Save subreddit added description
 		//@arg no argument
-		saveDescription() {
-			//save description
-			this.isSubtopicsSaved = true;
+		async saveDescription() {
 			//hide text area
 			this.hideTextarea();
 
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddDescription', {
+			await this.$store.dispatch('community/AddDescription', {
 				description: this.description,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
-			// }
+			this.$emit('reload');
 		},
 		//@vuese
 		//Save subreddit chosen topic and hide topic list
 		//@arg chosen topic to be saved
-		setTopic(topic) {
+		async setTopic(topic) {
 			//set topic
 			this.communityTopic = topic;
+
 			//mark topic is chosen
 			this.topicChosen = true;
 			//hide topics list
 			this.toogleTopicsList();
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddMainTopic', {
-				topic: this.communityTopic,
+			await this.$store.dispatch('community/AddMainTopic', {
+				title: this.communityTopic,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.$emit('reload');
 		},
 		//@vuese
 		//Add subreddit subtopic if it isn't already chosen and number of chosen subtopics is less than 25
 		//@arg chosen subtopic to be added to list
 		setSubtopic(subtopic) {
+			this.isSubtopicsSaved = false;
 			//check on nimber of added subtopics
 			if (this.subtopicsCount < 25) {
-				const index = this.communitySubtopics.findIndex(
+				const index = this.subtopicsToShow.findIndex(
 					(topic) => topic === subtopic
 				);
 				//check if subreddit chosen before
 				if (index === -1) {
-					this.communitySubtopics.push(subtopic);
-					this.subtopicsCount++;
+					this.subtopicsToShow.push(subtopic);
 				}
 			}
 		},
@@ -663,34 +695,36 @@ export default {
 		//Delete subtopics from chosen subtopics list
 		//@arg no argument
 		deleteSubtopic(subtopic) {
-			const index = this.communitySubtopics.findIndex(
-				(topic) => topic.id === subtopic.id
-			);
-			this.communitySubtopics.splice(index, 1);
-			this.subtopicsCount--;
+			this.subtopicsListShown = false;
+			const index = this.subtopicsToShow.indexOf(subtopic);
+			this.subtopicsToShow.splice(index, 1);
 		},
 		//@vuese
 		//save chosen subtopics list
 		//@arg no argument
-		saveSubtopics() {
+		async saveSubtopics() {
 			this.subtopicsListShown = false;
 			//mark sub topics as saved
-			// this.isSubtopicsSaved = true;
+			this.isSubtopicsSaved = true;
 			//set subtopics list
 			// this.savedCommunitySubtopics = this.communitySubtopics;
 			//send request
+
+			console.log(this.subtopicsToShow);
 			const accessToken = localStorage.getItem('accessToken');
-			this.$store.dispatch('community/AddSubTopic', {
-				subtopics: this.communitySubtopics,
+			await this.$store.dispatch('community/AddSubTopic', {
+				subtopics: this.subtopicsToShow,
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.$emit('reload');
 		},
 		//@vuese
 		//Hide add subtopic button and show subtopics list and input area
 		//@arg no argument
 		showBoth() {
+			this.isSubtopicsSaved = false;
 			this.addSubtopicShown = false;
 			this.subtopicsBoxShown = true;
 			this.subtopicsListShown = !this.subtopicsListShown;
@@ -709,6 +743,10 @@ export default {
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
+		},
+		saveSubtopicsInDialog() {
+			this.saveSubtopics();
+			this.toogleSaveDialog();
 		},
 		//@vuese
 		//Show/Hide date box while hovering on subreddit creation date
@@ -738,6 +776,18 @@ export default {
 		//@arg no argument
 		toogleNew() {
 			this.isNew = !this.isNew;
+		},
+		//@vuese
+		//calculate members count of subreddit
+		//@arg no argument
+		calculateMembers(count) {
+			if (count >= 1000000) {
+				return parseFloat((count / 1000000).toFixed(1)) + ' M';
+			} else if (count >= 1000) {
+				return parseFloat((count / 1000).toFixed(1)) + ' K';
+			} else {
+				return count;
+			}
 		},
 	},
 };
@@ -1106,5 +1156,13 @@ input {
 .box-arrow-4:after {
 	right: 45% !important;
 	border-bottom: 15px solid var(--color-blue-2) !important;
+}
+.point-green {
+	background-color: var(--color-green);
+	display: inline-block;
+	border-radius: 50%;
+	width: 4px;
+	height: 4px;
+	margin-right: 2px;
 }
 </style>

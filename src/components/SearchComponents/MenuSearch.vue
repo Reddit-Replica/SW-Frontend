@@ -35,7 +35,7 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['change-title'],
+	emits: ['change-title', 'change-sort', 'change-time'],
 	data() {
 		return {
 			clicked: this.clickedProp,
@@ -47,7 +47,67 @@ export default {
 		// @arg The argument is a string value representing choosen value from user
 		clickedFunction(title) {
 			this.clicked = title;
+			// this.$router.push({
+			// 	query: { q: this.$route.query.q, sort: this.clicked },
+			// });
 			this.$emit('change-title', title);
+		},
+		async secfunc() {
+			// this.clicked = title;
+			const actionPayload = {
+				baseurl: this.$baseurl,
+				q: this.$route.query.q,
+				sort: this.clicked,
+			};
+
+			try {
+				await this.$store.dispatch('sortAdd', actionPayload);
+				this.$router.push({ query: { sort: this.clicked } });
+				this.$emit('change-sort', this.clicked);
+				// setTimeout(() => this.$router.replace('/main'), 1000);
+				// if (response == 200) {
+				// }
+			} catch (err) {
+				this.error = err;
+			}
+		},
+		async timefunc() {
+			if (this.$route.query.sort) {
+				const actionPayload = {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+					sort: this.this.$route.query.sort,
+					time: this.clicked,
+					isSorted: true,
+				};
+				try {
+					await this.$store.dispatch('timeAdd', actionPayload);
+					this.$router.push({ query: { time: this.clicked } });
+					// setTimeout(() => this.$router.replace('/main'), 1000);
+					// if (response == 200) {
+					// }
+					this.$emit('change-time', this.clicked);
+				} catch (err) {
+					this.error = err;
+				}
+			} else {
+				const actionPayload = {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+					time: this.clicked,
+					isSorted: false,
+				};
+				try {
+					await this.$store.dispatch('timeAdd', actionPayload);
+					this.$router.push({ query: { time: this.clicked } });
+					// setTimeout(() => this.$router.replace('/main'), 1000);
+					// if (response == 200) {
+					// }
+					this.$emit('change-time', this.clicked);
+				} catch (err) {
+					this.error = err;
+				}
+			}
 		},
 	},
 };

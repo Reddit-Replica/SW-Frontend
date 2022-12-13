@@ -13,8 +13,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										href="/search/type=post"
-										><button class="button-nav button-nav2">Posts</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('posts')"
+										>
+											Posts
+										</button></a
 									>
 								</div>
 								<div class="search-nav" role="tablist">
@@ -23,7 +27,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										><button class="button-nav button-nav2">Comments</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('coms')"
+										>
+											Comments
+										</button></a
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=comment" -->
@@ -45,8 +54,12 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										href="/search/type=user"
-										><button class="button-nav button-nav2">People</button></a
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('people')"
+										>
+											People
+										</button></a
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=ppl" -->
@@ -55,13 +68,9 @@
 					</div>
 					<div class="search-results">
 						<div class="people">
-							<div
-								class="people-results"
-								v-for="value in users"
-								:key="value.UserName"
-							>
-								<div>
-									<div>
+							<div>
+								<div v-if="!(SearchedCms && SearchedCms.length == 0)">
+									<div v-for="value in SearchedCms" :key="value.id">
 										<a class="user-a"
 											><div class="user-div">
 												<div class="user-details">
@@ -75,20 +84,20 @@
 												<div class="people-content">
 													<div class="people-content_release">
 														<h6 class="people-name">
-															r/{{ value.ComName }}&nbsp;
+															r/{{ value.subredditName }}&nbsp;
 														</h6>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
-															>{{ value.members }} Members&nbsp;
+															>{{ value.numberOfMembers }} Members&nbsp;
 														</p>
 													</div>
-													<p class="p-details">{{ value.Cdetails }}&nbsp;</p>
+													<p class="p-details">{{ value.description }}&nbsp;</p>
 												</div>
 												<div
 													class="follow"
 													v-if="value.notjoined"
-													@click="toggle"
+													@click="toggle(value.id)"
 												>
 													<base-button
 														button-text="Join"
@@ -98,7 +107,7 @@
 												<div
 													class="follow"
 													v-if="!value.notjoined"
-													@click="toggle"
+													@click="toggle(value.id)"
 												>
 													<base-button
 														button-text="Leave"
@@ -107,6 +116,11 @@
 												</div>
 											</div>
 										</a>
+									</div>
+								</div>
+								<div class="not-found-back" v-else>
+									<div>
+										<Notfound></Notfound>
 									</div>
 								</div>
 							</div>
@@ -119,24 +133,55 @@
 </template>
 <script>
 import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	data() {
 		return {
-			users: [
-				{ ComName: 'Isalm', members: '11k', notjoined: true },
-				{
-					ComName: 'Boxing',
-					members: '11k',
-					Cdetails: 'Habib Nour Aldin',
-					notjoined: true,
-				},
-			],
+			q: '',
+			notFound: true,
 		};
 	},
-	methods: {
-		toggle() {},
+	computed: {
+		SearchedCms() {
+			console.log(this.$store.getters['search/Getsubreddits']);
+			return this.$store.getters['search/Getsubreddits'];
+		},
 	},
-	components: { BaseButton },
+	// created() {
+	// 	console.log(this.notFound);
+	// 	if (this.SearchedCms().length == 0) {
+	// 		this.notFound = true;
+	// 		console.log(this.SearchedCms());
+	// 	}
+	// },
+	methods: {
+		toggle(id) {
+			for (let i = 0; i < this.SearchedCms.length; i++) {
+				if (this.SearchedCms[i].id == id) {
+					this.SearchedCms[i].joined = !this.SearchedCms[i].joined;
+				}
+			}
+		},
+		goSearch(value) {
+			if (value == 'posts') {
+				this.$router.replace({
+					name: 'searchpost',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'people') {
+				this.$router.replace({
+					name: 'searchuser',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'coms') {
+				// this.$router.replace({
+				// 	name: 'searchuser',
+				// 	query: { q: this.$route.query.q },
+				// });
+			}
+		},
+	},
+	components: { BaseButton, Notfound },
 };
 </script>
 
@@ -316,5 +361,12 @@ a {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
+}
+.not-found-back {
+	background: #fff;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px 0 rgb(0 0 0 / 6%);
+	max-width: 100%;
+	width: 100%;
 }
 </style>

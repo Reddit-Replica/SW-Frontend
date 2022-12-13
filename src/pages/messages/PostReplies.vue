@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div>
 			<postreply-component
 				v-for="(message, index) in postReplies"
@@ -8,9 +11,7 @@
 				:index="index"
 			></postreply-component>
 		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
-		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -23,8 +24,10 @@ export default {
 	// @vuese
 	//change title name and load replies
 	beforeMount() {
-		document.title = 'messages: selfreply';
-		this.loadPostReplies();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: selfreply';
+			this.loadPostReplies();
+		}
 	},
 	data() {
 		return {

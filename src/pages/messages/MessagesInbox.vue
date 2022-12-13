@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div>
 			<messages-component
 				v-for="(message, index) in userMessages"
@@ -8,9 +11,7 @@
 				:index="index"
 			></messages-component>
 		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
-		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -23,8 +24,10 @@ export default {
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: messages';
-		this.loadUserMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: messages';
+			this.loadUserMessages();
+		}
 	},
 	data() {
 		return {

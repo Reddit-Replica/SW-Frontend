@@ -512,6 +512,7 @@ export default {
 		//Decrease characters count while typing
 		//@arg no argument
 		charCount() {
+			this.validateCommunityName();
 			this.charRemaining = 21 - this.communityName.length;
 			this.communityNameRequiredError = false;
 			this.communityNameCharError = false;
@@ -569,7 +570,7 @@ export default {
 </script>
 
 <style scoped>
-.flex-cloumn {
+.flex-column {
 	display: flex;
 	flex-direction: column;
 }

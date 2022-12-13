@@ -157,11 +157,13 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
+				localStorage.setItem('Password', payload.password);
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
 					response: response,
 				});
+				context.commit('settype', 'normal');
 			}
 		}
 		if (!response.ok) {
@@ -201,12 +203,14 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
+				localStorage.setItem('Password', payload.password);
 				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
 					response: response.status,
 				});
+				context.commit('settype', 'normal');
 			}
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
@@ -261,6 +265,7 @@ export default {
 				accessToken: responseData.token,
 				response: response.status,
 			});
+			context.commit('settype', 'google');
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
 			throw error;

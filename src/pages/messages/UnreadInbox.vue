@@ -1,34 +1,38 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div>
-			<allinbox-component
+			<unread-message
 				v-for="(message, index) in unreadMessages"
 				:key="message"
 				:message="message"
 				:index="index"
-			></allinbox-component>
+			></unread-message>
 		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
-		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
 <script>
-import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
+import UnreadMessage from '../../components/MessageComponents/UnreadMessage.vue';
 export default {
 	components: {
-		AllinboxComponent,
+		UnreadMessage,
 	},
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: unread';
-		this.loadUnreadMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: unread';
+			this.loadUnreadMessages();
+		}
 	},
 	data() {
 		return {
 			noMessages: false,
+			errorResponse: null,
 		};
 	},
 	computed: {

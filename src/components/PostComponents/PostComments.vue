@@ -2,7 +2,7 @@
 	<div class="popup">
 		<div class="popup-inner">
 			<div class="comments">
-				<div class="container bg-black">
+				<div class="container bg-black" id="test">
 					<div class="row justify-content-center align-items-center">
 						<div class="col-7 d-flex">
 							<div class="vote-box">
@@ -57,7 +57,7 @@
 											d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"
 										/>
 									</svg>
-									{{ postName }}
+									{{ postDetails.title }}
 								</h4>
 							</div>
 						</div>
@@ -193,16 +193,36 @@
 										</div>
 										<div class="content">
 											<div class="post-name">
-												<h3>{{ postName }}</h3>
+												<h3>{{ postDetails.title }}</h3>
 											</div>
-											<div class="post-text">
-												<p>
-													{{ postDescription }}
-												</p>
-											</div>
+											<img
+												v-for="image in postDetails.images"
+												:key="image.id"
+												:src="this.$baseurl + '/' + image.path"
+												alt=""
+											/>
+											<video
+												width="800"
+												height="500"
+												controls
+												v-if="postDetails.kind == 'video'"
+											>
+												<source
+													:src="this.$baseurl + '/' + postDetails.video"
+												/>
+											</video>
+											<!-- <div class="post-text" v-html="renderingHTML"></div> -->
 										</div>
 										<div class="post-services">
-											<ul class="services">
+											<ul
+												class="services"
+												v-if="
+													(!postDetails.inYourSubreddit &&
+														postDetails.subreddit != '') ||
+													(postDetails.subreddit == '' &&
+														postDetails.postedBy != getuserName)
+												"
+											>
 												<li>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -404,6 +424,14 @@
 													</ul>
 												</li>
 											</ul>
+											<post-options
+												v-else-if="
+													postDetails.subreddit == '' &&
+													postDetails.postedBy == getuserName
+												"
+												:post-data="{ data: postDetails }"
+												:pinned-post-flag="false"
+											></post-options>
 										</div>
 										<div class="comment-submit">
 											<div class="comment-as-name">
@@ -431,22 +459,15 @@
 										</div>
 										<div class="sort-by" @click="displaySortByMenu" id="sort">
 											<span class="title"
-												>Sort By:{{ sortByTitle }}
+												>Sort By:{{ currentSortType }}
 												<font-awesome-icon icon="fa-solid fa-caret-down"
 											/></span>
 											<subMenu
-												:titles="[
-													'Best',
-													'Top',
-													'New',
-													'Controversial',
-													'Old',
-													'Q&A',
-												]"
+												:titles="['best', 'top', 'new', 'old']"
 												class="sort-by-sub-menu"
 												:display="showSortByMenu"
 												@change-title="changeSortByTitle"
-												clicked-prop="Best"
+												:clicked-prop="currentSortType"
 											/>
 										</div>
 									</div>
@@ -454,14 +475,24 @@
 								<div class="post-comments">
 									<my-comment
 										v-for="userComment in userComments"
-										:key="userComment.id"
+										:key="userComment.commentId"
 										:comment="userComment"
+										:post-id="$route.path.split('/')[4]"
 									></my-comment>
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<subreddit-info :subreddit-name="subredditName"></subreddit-info>
+							<subreddit-info
+								:subreddit-name="subredditName"
+								v-if="(postDetails.subreddit = '')"
+							></subreddit-info>
+							<profile-card
+								v-else-if="userData.cakeDate != null"
+								:user-data="userData"
+								:state="'profile'"
+								:user-name="'menna'"
+							></profile-card>
 						</div>
 					</div>
 				</div>
@@ -474,21 +505,25 @@ import SubMenu from '../BaseComponents/SubMenu.vue';
 import SubredditInfo from './SubredditInfo.vue';
 import MyComment from './MyComment.vue';
 import CommentSubmit from './CommentSubmit.vue';
+import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
+import PostOptions from '../UserComponents/BaseUserComponents/PostComponents/PostOptions.vue';
 export default {
 	components: {
 		SubMenu,
 		SubredditInfo,
 		MyComment,
 		CommentSubmit,
+		ProfileCard,
+		PostOptions,
 	},
 	data() {
 		return {
+			postDetails: {},
 			subredditName: this.$route.path.split('/')[2],
 			haveSubreddit: false,
 			upClicked: false,
 			downClicked: false,
 			counter: 22,
-			postName: '',
 			postDescription: '',
 			commentsCount: 22,
 			postedBy: 'dummy',
@@ -510,15 +545,82 @@ export default {
 		getuserName() {
 			return localStorage.getItem('userName');
 		},
+		userData() {
+			// console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserData'].userData;
+		},
+		currentSortType() {
+			if (this.$route.query.sort) return this.$route.query.sort;
+			else return 'best';
+		},
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
-	beforeMount() {
+	created() {
 		this.getPostDetails();
+		this.RequestUserData();
+		this.fetchPostComments();
+		// document.getElementById('test').addEventListener('scroll', () => {
+		// 	console.log('scroll');
+		// });
 	},
 	methods: {
+		click() {
+			console.log('scrolled');
+		},
+		handleScroll: function () {
+			console.log('scroll' + window.scrollY);
+			if (window.scrollY > 50) {
+				this.fetchPostComments();
+			}
+			//return window.scrollY > 100;
+		},
+		async fetchPostComments() {
+			console.log(this.$route.query.sort);
+			try {
+				await this.$store.dispatch('comments/fetchPostComments', {
+					baseurl: this.$baseurl,
+					id: this.$route.path.split('/')[4],
+					beforeMod: '',
+					afterMod: '',
+					sort: this.sortByTitle.toLowerCase(),
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.userComments =
+				this.$store.getters['comments/getListOfComments'].children;
+			console.log(this.userComments);
+		},
+		async RequestUserData() {
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.getuserName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		renderingHTML() {
+			var QuillDeltaToHtmlConverter =
+				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+
+			// TypeScript / ES6:
+			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+
+			var deltaOps = this.postDetails.content.ops;
+
+			var cfg = {};
+
+			var converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+
+			var html = converter.convert();
+			return html;
+		},
 		newComment(comment) {
 			this.userComments.unshift(comment);
+			console.log(comment);
 		},
 		//@vuese
 		//fetch posts according to type of sorting
@@ -531,21 +633,23 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			const postDetails = this.$store.getters['listing/getPostDetails'];
-			this.counter = postDetails.votes;
-			this.postName = postDetails.title;
-			this.postDescription = postDetails.content;
-			this.commentsCount = postDetails.comments;
-			this.postedBy = postDetails.postedBy;
-			this.postedAt = postDetails.postedAt;
-			this.rules = postDetails.rules;
+			this.postDetails = this.$store.getters['listing/getPostDetails'];
+			this.counter = this.postDetails.votes;
+			this.commentsCount = this.postDetails.comments;
+			this.postedAt = this.postDetails.postedAt;
+			this.isFollowed = this.postDetails.followed;
+			console.log(this.postDetails);
 		},
 		//@vuese
 		//change the order of comments listing according to parameter passed to it
 		// @arg The argument is a string value representing sort type
-		changeSortByTitle(title) {
+		async changeSortByTitle(title) {
 			this.sortByTitle = title;
-			this.$router.push('/comments/' + title);
+			await this.$router.push({
+				path: this.$route.fullPath,
+				query: { sort: this.sortByTitle.toLowerCase() },
+			});
+			this.fetchPostComments();
 		},
 		//@vuese
 		//opens the sorting menu of comments
@@ -604,16 +708,17 @@ export default {
 		},
 		//@vuese
 		//follow post
-		async followPost() {
+		async follow() {
 			try {
 				await this.$store.dispatch('comments/followPost', {
 					baseurl: this.$baseurl,
-					id: this.id,
+					id: this.$route.path.split('/')[4],
+					follow: !this.isFollowed,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
+			this.isFollowed = !this.isFollowed;
 		},
 		//@vuese
 		//show services submenu of post
@@ -650,7 +755,8 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			this.$router.push('/main');
+			if (this.$route.path.split('/')[1] == 'r') this.$router.push('/main');
+			else this.$router.back();
 		},
 	},
 };
@@ -820,7 +926,9 @@ export default {
 	fill: var(--color-orange);
 }
 .main,
-.content {
+.content,
+.content img,
+.content video {
 	width: 100%;
 }
 .post-name h3 {

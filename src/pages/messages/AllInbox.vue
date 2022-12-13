@@ -1,9 +1,13 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div
 			v-for="(message, index) in inboxMessages"
 			:key="message"
 			:message="message"
+			@done-successfully="doneSuccessfully()"
 		>
 			<allinbox-component
 				v-if="message.type == 'Messages'"
@@ -21,9 +25,7 @@
 				:index="index"
 			></user-mentions>
 		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
-		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -40,12 +42,15 @@ export default {
 	// @vuese
 	//change title name and load messages
 	beforeMount() {
-		document.title = 'messages: inbox';
-		this.loadInboxMessages();
+		if (localStorage.getItem('accessToken')) {
+			document.title = 'messages: inbox';
+			this.loadInboxMessages();
+		}
 	},
 	data() {
 		return {
 			noMessages: false,
+			errorResponse: null,
 		};
 	},
 	computed: {
@@ -76,6 +81,12 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		// @vuese
+		//reload compose messages from the store
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadInboxMessages();
 		},
 	},
 };

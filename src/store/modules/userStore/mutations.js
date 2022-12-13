@@ -63,4 +63,9 @@ export default {
 		});
 		return -1;
 	},
+	setUserOverviewData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.overviewData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
 };

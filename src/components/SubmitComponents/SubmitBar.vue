@@ -11,8 +11,19 @@
 			<div class="choose-post-community-2">
 				<div class="choose-post-community-3" @click="setFocused">
 					<span v-if="!inputFocused & !isSet" class="dashed-circle"></span>
-					<img :src="image" alt="image" class="img-profile" v-if="isSet" />
+					<img
+						:src="image"
+						alt="image"
+						class="img-profile"
+						v-if="isSet && !path"
+					/>
 
+					<img
+						src="../../../img/default_subreddit_image.png"
+						alt="image"
+						class="img-profile"
+						v-if="isSet && path"
+					/>
 					<svg
 						v-if="inputFocused & !isSet"
 						xmlns="http://www.w3.org/2000/svg"
@@ -57,19 +68,14 @@
 						<div class="section-box">
 							<div class="image-box">
 								<img
-									src="https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030"
+									:src="this.$baseurl + '/' + this.userData.picture"
 									alt="image"
 									class="img-profile"
 								/>
 							</div>
 							<div
 								class="name-box"
-								@click="
-									setName(
-										userName,
-										'https://camo.githubusercontent.com/549191c618ad8d5cd41e403e89bd080b10b9fb5c9fc3d6c260c4ce52cd86b40c/68747470733a2f2f696d672e6672656570696b2e636f6d2f667265652d766563746f722f666c61742d64657369676e2d796f756e672d6769726c2d70726f6772616d6d65722d776f726b696e675f32332d323134383236373135362e6a70673f773d32303030'
-									)
-								"
+								@click="setName(userName, this.userData.picture)"
 							>
 								<span class="name"> u/{{ userName }}</span>
 							</div>
@@ -98,7 +104,14 @@
 						>
 							<div class="image-box">
 								<img
+									v-if="subreddit.picture"
 									:src="subreddit.picture"
+									alt="image"
+									class="img-community"
+								/>
+								<img
+									v-else
+									src="../../../img/default_subreddit_image.png"
 									alt="image"
 									class="img-community"
 								/>
@@ -117,39 +130,55 @@
 		<!-- {{ subreddits }} -->
 		<!-- <subreddit-info class="subreddit-info"> </subreddit-info> -->
 		<div class="col-lg-3 subreddit-info">
-			<subreddit-info
-				subreddit-name="subredditName"
+			<!-- <subreddit-card
+				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
-			></subreddit-info>
+			></subreddit-card> -->
+			<!-- <subreddit-card
+				:subreddit="subreddit"
+				v-if="isSet & inSubreddit"
+			></subreddit-card> -->
 		</div>
 		<div
+			v-if="inSubreddit"
 			:class="isSet & inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
 		>
 			<postingto-reddit></postingto-reddit>
 		</div>
-		<!-- <div
-			:class="isSet & !inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
+		<div
+			v-if="!inSubreddit"
+			:class="isSet & !inSubreddit ? 'col-lg-3 posting3' : 'col-lg-3 posting2'"
 		>
+			<postingto-reddit></postingto-reddit>
+		</div>
+
+		<div class="col-lg-3 subreddit-info">
 			<profile-card
+				v-if="isSet & !inSubreddit & (userData.cakeDate != null)"
 				:user-name="userName"
 				:user-data="userData"
-				:state="state"
+				state="profile"
 			></profile-card>
-		</div> -->
+		</div>
 	</div>
 </template>
 
 <script>
 import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
-import SubredditInfo from '../PostComponents/SubredditInfo.vue';
+// import SubredditInfo from '../PostComponents/SubredditInfo.vue';
+import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
-//import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
+// import SubredditCard from '../PostComponents/SubredditCard.vue';
+// import SubredditRules from './SubredditRules.vue';
+
 export default {
 	components: {
 		CreateCommunity,
-		SubredditInfo,
+		// SubredditInfo,
 		PostingtoReddit,
-		//ProfileCard,
+		ProfileCard,
+		// SubredditCard,
+		// SubredditRules,
 	},
 	data() {
 		return {
@@ -164,6 +193,8 @@ export default {
 			isSet: false,
 			image: null,
 			userData: {},
+			path: null,
+			subreddit: null,
 		};
 	},
 	methods: {
@@ -174,8 +205,21 @@ export default {
 			const actionPayload = {
 				baseurl: this.$baseurl,
 			};
-			await this.$store.dispatch('posts/getAllsubreddits', actionPayload);
-			this.getSubreddit();
+			try {
+				const response = await this.$store.dispatch(
+					'posts/getAllsubreddits',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.getUserdata();
+			this.getSubreddits();
 		},
 		// @vuese
 		// Used to show create community popup
@@ -186,36 +230,91 @@ export default {
 		// @vuese
 		// Used to  get all Subreddits
 		// @arg no argument
-		getSubreddit() {
+		getSubreddits() {
 			this.subreddits = this.$store.getters['posts/getallSubreddits'];
 		},
 		// @vuese
 		// Used to  set the choosen subreddit
 		// @arg a string value representing subreddit name
 		setsubreddit(title, image) {
+			console.log(image);
 			this.inSubreddit = true;
 			this.subredditTitle = title;
+			console.log(this.subredditTitle);
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
-			this.image = image;
+			this.loadSubredditInfo();
+			console.log(this.subreddit);
+			if (image) {
+				this.image = image;
+				this.path = false;
+			} else {
+				this.path = true;
+			}
+
 			this.$store.commit('posts/setSubreddit', {
 				subreddit: title,
+			});
+			this.$store.commit('posts/setinSubreddit', {
+				inSubreddit: this.inSubreddit,
 			});
 		},
 		// @vuese
 		// Used to  set the choosen subreddit that is profile
 		// @arg a string value representing subreddit name which is user name
 		setName(name, image) {
+			console.log(image);
 			this.inSubreddit = false;
 			this.subredditTitle = name;
 			this.communityName = name;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
-			this.image = image;
-			this.$store.commit('posts/setSubreddit', {
-				subreddit: name,
+			this.image = this.$baseurl + '/' + this.userData.picture;
+			this.path = false;
+			this.$store.commit('posts/setinSubreddit', {
+				inSubreddit: this.inSubreddit,
 			});
+		},
+		setUser(image) {
+			this.isSet = true;
+			this.inSubreddit = false;
+			this.inputFocused = !this.inputFocused;
+			this.image = image;
+		},
+		async getUserdata() {
+			const actionPayload = {
+				userName: this.userName,
+				baseurl: this.$baseurl,
+			};
+			console.log('enter get user data');
+			try {
+				const response = await this.$store.dispatch(
+					'user/getUserData',
+					actionPayload
+				);
+
+				if (response == 200) {
+					console.log(response);
+					console.log('    user data الحمد لله زى الفل');
+				}
+			} catch (err) {
+				console.log(this.err);
+			}
+			this.userData = this.$store.getters['user/getUserData'].userData;
+		},
+		async loadSubredditInfo() {
+			console.log('hello');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditTitle,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log(this.subreddit);
 		},
 	},
 	computed: {
@@ -487,6 +586,13 @@ button {
 	width: 300px;
 	top: 0;
 }
+.posting3 {
+	position: absolute;
+	left: 103%;
+	width: 300px;
+	top: 400px;
+}
+
 .big-box {
 	position: relative;
 }

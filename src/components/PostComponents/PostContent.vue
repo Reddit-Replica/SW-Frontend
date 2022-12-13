@@ -29,7 +29,7 @@
 			>&nbsp;{{ post.postedAt }} ago
 		</span>
 	</div>
-	<router-link
+	<!-- <router-link
 		:to="{
 			name: 'comments',
 			params: {
@@ -39,17 +39,26 @@
 			},
 		}"
 		id="post-router"
-	>
-		<div class="post-title">
-			<h3>{{ post.title }}</h3>
-		</div>
-		<div class="post-text" v-if="post.kind == 'text'">
-			{{ post.content }}
-		</div>
-		<div class="post-post" v-else-if="post.kind == 'post'">
-			<post-content :post="post.sharedPostDetails"></post-content>
-		</div>
-	</router-link>
+	> -->
+	<div class="post-title">
+		<h3>{{ post.title }}</h3>
+	</div>
+	<div class="post-text" v-if="post.kind == 'text'">
+		{{ post.content }}
+	</div>
+	<div class="post-post" v-else-if="post.kind == 'post'">
+		<post-content :post="post.sharedPostDetails"></post-content>
+	</div>
+	<img
+		v-for="image in post.images"
+		:key="image.id"
+		:src="this.$baseurl + '/' + image.path"
+		alt=""
+	/>
+	<video width="800" height="500" controls v-if="post.kind == 'video'">
+		<source :src="this.$baseurl + '/' + postDetails.video" />
+	</video>
+	<!-- </router-link> -->
 </template>
 <script>
 export default {

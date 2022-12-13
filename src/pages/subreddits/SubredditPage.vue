@@ -2,9 +2,12 @@
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
-			:subreddit-name="subredditName"
+			@reload="reloadPage"
+			:subreddit-name="subreddit.title"
+			:subreddit-nickname="subreddit.nickname"
 			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
+			:subreddit-id="subreddit.subredditId"
 			id="community-header"
 		></subreddit-top>
 		<div class="subreddit-page">
@@ -24,39 +27,22 @@
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
-					v-if="isModerator"
+					@reload="reloadPage"
 					id="abot-comm-comp"
-					:subreddit-name="subredditName"
+					:subreddit-name="subreddit.title"
+					:is-moderator="subreddit.isModerator"
+					:is-favourite="subreddit.isFavorite"
 					:topics="topics"
 					:members-count="subreddit.members"
-					:online-members-count="subreddit.online"
 					:community-date="subreddit.dateOfCreation"
 					:community-type="subreddit.type"
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
+					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
-				<about-community-read-only
-					v-else
-					id="abot-comm-comp"
-					:subreddit-name="subredditName"
-					:members-count="subreddit.members"
-					:online-members-count="subreddit.online"
-					:community-date="subreddit.dateOfCreation"
-					:community-description-prop="subreddit.description"
-				></about-community-read-only>
-
-				<!-- for testing about community bar if the current user not moderator -->
-				<!-- <about-community-read-only
-					:subreddit-name="subredditName"
-					:members-count="subreddit.members"
-					:online-members-count="subreddit.online"
-					:community-date="subreddit.dateOfCreation"
-					:community-description="subreddit.description"
-				></about-community-read-only> -->
-
 				<moderators-bar
-					:moderators="subreddit.moderators"
-					:subreddit-name="subredditName"
+					:moderators="moderators"
+					:subreddit-name="subreddit.title"
 				></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
@@ -97,7 +83,6 @@ import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue'
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
-import AboutCommunityReadOnly from '../../components/CommunityComponents/AboutCommunityReadOnly.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
@@ -110,7 +95,6 @@ export default {
 		CreatepostBar,
 		SortBarSubreddit,
 		AboutCommunityBar,
-		AboutCommunityReadOnly,
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
@@ -130,14 +114,6 @@ export default {
 	data() {
 		return {
 			topics: [
-				// { id: 0, name: 'Art' },
-				// { id: 1, name: 'Anime' },
-				// { id: 2, name: 'Beauty' },
-				// { id: 3, name: 'Cars' },
-				// { id: 4, name: 'Fashion' },
-				// { id: 5, name: 'Music' },
-				// { id: 6, name: 'Sports' },
-				// { id: 7, name: 'Travel' },
 				'Art',
 				'Anime',
 				'Beauty',
@@ -147,20 +123,20 @@ export default {
 				'Sports',
 				'Travel',
 			],
-			moderators: [
-				{ id: 0, name: 'HodaGamal' },
-				{ id: 1, name: 'AsmaaAdel' },
-			],
 			showFirstDialog: true,
 			firstTimeCreated: false,
 			subreddit: {},
+			moderators: [],
 			posts: [],
-			isModerator: true,
 		};
 	},
 	computed: {
 		showDialog() {
 			return this.firstTimeCreated && this.showFirstDialog;
+		},
+		nickname() {
+			if (!this.subreddit.nickname) return this.subreddit.title;
+			else return this.subreddit.nickname;
 		},
 	},
 	beforeMount() {
@@ -168,6 +144,7 @@ export default {
 		this.firstTimeCreated =
 			this.$store.getters['community/createdSuccessfully'];
 		this.getSubreddit();
+		this.getModerators();
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
@@ -190,8 +167,20 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log(this.subreddit.isFavorite);
 		},
-
+		async getModerators() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('moderation/loadListOfModerators', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.moderators = this.$store.getters['moderation/listOfModerators'];
+		},
+		reloadPage() {
+			this.getSubreddit();
+		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
 			console.log('hide');

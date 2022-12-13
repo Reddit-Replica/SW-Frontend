@@ -1,12 +1,11 @@
 <template>
-	<div>awards recieved</div>
-	<user-block-page></user-block-page>
+	<empty-page></empty-page>
 </template>
 <script>
-import UserBlockPage from '../../../components/UserComponents/UserBlockPage';
+import EmptyPage from '../../../components/UserComponents/BaseUserComponents/PostComponents/EmptyPage.vue';
 export default {
 	components: {
-		UserBlockPage,
+		EmptyPage,
 	},
 };
 </script>

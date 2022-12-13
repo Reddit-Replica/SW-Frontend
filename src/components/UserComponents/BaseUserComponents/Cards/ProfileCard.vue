@@ -6,7 +6,10 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url(${userData.banner}) `"
+				:style="`background-image: url(${$baseurl}/${userData['banner'].replace(
+					/\\/g,
+					`/`
+				)}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span
@@ -104,9 +107,9 @@
 					>
 						<img
 							v-if="userData.picture != ''"
-							:src="userData.picture"
+							:src="$baseurl + '/' + userData.picture"
 							alt=""
-							id="profile-picture"
+							id="profile-picture_user"
 						/>
 					</div>
 
@@ -218,7 +221,7 @@
 				</span>
 				<span class="i cake-day">
 					<h5>Cake day</h5>
-					<span>
+					<span v-if="userData.cakeDate != null">
 						<p id="birth-date">
 							<span><i class="fa-solid fa-cake-candles" /></span
 							>{{ getMonthName(userData.cakeDate.slice(5, 7)) }}
@@ -494,40 +497,32 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		async loadProfilePic() {
-			const file = this.$refs.profileFile.files[0];
-			// console.log('loadprofilepic');
-			const reader = new FileReader();
-			reader.onload = () => {
-				const result = reader.result;
-				const img = new Image();
-				img.onload = async () => {
-					console.log(img.width, img.height);
-					// if (img.width > 1280 && img.height > 384 && file.size < 500) {
-					// const formData = new FormData();
-					// formData.append('ProfilePic', file, this.selectedFile.name);
-					// const imageUrl = await fetch(this.$baseurl + '/profile-picture', {
-					// 	method: 'POST',
-					// 	headers: {
-					// 		'Content-Type': 'application/json',
-					// 		Authorization: `Bearer ${localStorage.getItem('userName')}`,
-					// 	},
-					// 	body: formData,
-					// });
-					try {
-						await this.$store.dispatch('user/AddProfilePicture', {
-							baseurl: this.$baseurl,
-							// profilePictureUrl: imageUrl,
-						});
-					} catch (error) {
-						this.error = error.message || 'Something went wrong';
-					}
-					document.querySelector('#profile-picture').src = result;
-					// }
-				};
-				img.src = result;
-			};
-			reader.readAsDataURL(file);
+		async loadProfilePic(e) {
+			// const file2 = await e.target.files[0];
+			const file1 = e.target.files;
+			const file = file1[0];
+
+			// const file = await this.$refs.profileFile.files[0];
+			const profilePictureUrl = await URL.createObjectURL(file);
+			console.log(profilePictureUrl);
+			document.querySelector('#profile-picture_user').src = profilePictureUrl;
+			try {
+				await this.$store.dispatch('user/AddProfilePicture', {
+					baseurl: this.$baseurl,
+					file,
+					profilePictureUrl: this.$baseurl + profilePictureUrl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			// try {
+			// 	await this.$store.dispatch('user/getUserData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.$route.params.userName,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
 		},
 		/**
 		 * @vuese
@@ -535,35 +530,25 @@ export default {
 		 * it will be removed
 		 * @arg no arg
 		 */
-		loadCoverPic() {
-			const file = this.$refs.coverFile.files[0];
-			const reader = new FileReader();
-			reader.onload = async () => {
-				const result = reader.result;
-				// if (img.width > 1280 && img.height > 384 && file.size < 500) {
-				// const formData = new FormData();
-				// formData.append('ProfilePic', file, this.selectedFile.name);
-				// const imageUrl = await fetch(this.$baseurl + '/profile-picture', {
-				// 	method: 'POST',
-				// 	headers: {
-				// 		'Content-Type': 'application/json',
-				// 		Authorization: `Bearer ${localStorage.getItem('userName')}`,
-				// 	},
-				// 	body: formData,
-				// });
-				try {
-					await this.$store.dispatch('user/AddProfileBanner', {
-						baseurl: this.$baseurl,
-						// bannerImageUrl: imageUrl,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
-				document.querySelector(
-					'#cover-picture'
-				).style.backgroundImage = `url(${result})`;
-			};
-			reader.readAsDataURL(file);
+		async loadCoverPic(e) {
+			const file = e.target.files[0];
+			const file2 = this.$refs.coverFile.files[0];
+			const bannerImageUrl = URL.createObjectURL(file2);
+			// const bannerImageUrl = URL.createObjectURL(file);
+			document.querySelector(
+				'#cover-picture'
+			).style.backgroundImage = `url(${bannerImageUrl})`;
+			let responseStatus;
+			try {
+				responseStatus = await this.$store.dispatch('user/AddProfileBanner', {
+					baseurl: this.$baseurl,
+					file,
+					bannerImageUrl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			console.log(responseStatus);
 		},
 		/**
 		 * @vuese

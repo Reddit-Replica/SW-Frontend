@@ -34,7 +34,7 @@ export default {
 		const postInfo = {
 			title: payload.title,
 			kind: payload.kind,
-			//subreddit: payload.subreddit,
+			subreddit: payload.subreddit,
 			inSubreddit: payload.inSubreddit,
 			content: payload.content,
 
@@ -57,7 +57,6 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 201) {
-			localStorage.setItem('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -68,12 +67,13 @@ export default {
 			console.log(error);
 			throw error;
 		}
+		return response.status;
 	},
 	async createpostLink(context, payload) {
 		const postInfo = {
 			title: payload.title,
 			kind: payload.kind,
-			//subreddit: payload.subreddit,
+			subreddit: payload.subreddit,
 			inSubreddit: payload.inSubreddit,
 			link: payload.content,
 
@@ -95,7 +95,6 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 201) {
-			localStorage.setItem('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -104,12 +103,14 @@ export default {
 			const error = new Error('server error');
 			throw error;
 		}
+		return response.status;
 	},
 	async createpostImage(context, payload) {
 		const postInfo = new FormData();
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
 		postInfo.append('inSubreddit', payload.inSubreddit);
+		postInfo.append('subreddit', payload.subreddit);
 		// let arr1 = [' '];
 		// let arr2 = [' '];
 		for (let i = 0; i < payload.images.length; i++)
@@ -143,7 +144,6 @@ export default {
 		});
 		const responseData = await response.text();
 		if (response.status == 201) {
-			localStorage.setItem('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -154,6 +154,7 @@ export default {
 			const error = new Error('server error');
 			throw error;
 		}
+		return response.status;
 	},
 	async createpostVideo(context, payload) {
 		const postInfo = new FormData();
@@ -161,6 +162,7 @@ export default {
 		videos.push(payload.video);
 		postInfo.append('title', payload.title);
 		postInfo.append('kind', payload.kind);
+		postInfo.append('subreddit', payload.subreddit);
 		postInfo.append('inSubreddit', payload.inSubreddit);
 		postInfo.append('video', payload.video);
 		postInfo.append('nsfw', payload.nsfw);
@@ -178,7 +180,6 @@ export default {
 		});
 		const responseData = await response.text();
 		if (response.status == 201) {
-			localStorage.setItem('response', response.status);
 			console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -187,6 +188,7 @@ export default {
 			const error = new Error('server error');
 			throw error;
 		}
+		return response.status;
 	},
 	/**
 	 * Action for checking if subreddit name is used before.
@@ -196,12 +198,16 @@ export default {
 	 */
 	async getAllsubreddits(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/subredditName');
+		const response = await fetch(baseurl + '/joined-subreddits', {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			localStorage.setItem('response', response.status);
-			context.commit('setallSubreddits', responseData);
-			console.log(response);
+			context.commit('setallSubreddits', responseData.children);
+			console.log(responseData.children);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;
@@ -209,5 +215,6 @@ export default {
 			const error = new Error('server error');
 			throw error;
 		}
+		return response.status;
 	},
 };

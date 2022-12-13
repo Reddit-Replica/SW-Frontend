@@ -2,6 +2,9 @@ export default {
 	listOfModerators(state) {
 		return state.listOfModerators;
 	},
+	listOfAllModerators(state) {
+		return state.listOfAllModerators;
+	},
 	listOfInvitedModerators(state) {
 		return state.listOfInvitedModerators;
 	},
@@ -13,6 +16,53 @@ export default {
 	},
 	after(state) {
 		return state.after;
+	},
+	/////////////////////APPROVED/////////////////////
+
+	listOfApproved(state) {
+		return state.listOfApproved;
+	},
+	approveUserSuccessfully(state) {
+		return state.approveUserSuccessfully;
+	},
+	removeApproveSuccessfully(state) {
+		return state.removeApproveSuccessfully;
+	},
+
+	/////////////////////MUTED/////////////////////
+
+	listOfMuted(state) {
+		return state.listOfMuted;
+	},
+	muteUserSuccessfully(state) {
+		return state.muteUserSuccessfully;
+	},
+	unmuteUserSuccessfully(state) {
+		return state.unmuteUserSuccessfully;
+	},
+
+	/////////////////////LEAVE MOD/////////////////////
+
+	leaveModSuccessfully(state) {
+		return state.leaveModSuccessfully;
+	},
+	cancelSuccessfully(state) {
+		return state.cancelSuccessfully;
+	},
+
+	/////////////////////INVITE MOD/////////////////////
+
+	inviteModSuccessfully(state) {
+		return state.inviteModSuccessfully;
+	},
+
+	//////////////////////SPAM////////////////////////
+
+	listOfSpams(state) {
+		return state.listOfSpams;
+	},
+	approveSuccessfully(state) {
+		return state.approveSuccessfully;
 	},
 
 	//////////////////////RULES////////////////////////
@@ -47,10 +97,19 @@ export default {
 	deleteFlairSuccessfully(state) {
 		return state.deleteFlairSuccessfully;
 	},
+	updateFlairsSuccessfully(state) {
+		return state.updateFlairsSuccessfully;
+	},
 
 	//////////////////////BAN////////////////////////
 
 	banUserSuccessfully(state) {
 		return state.banUserSuccessfully;
+	},
+	unBanUserSuccessfully(state) {
+		return state.unBanUserSuccessfully;
+	},
+	listOfBanned(state) {
+		return state.listOfBanned;
 	},
 };
