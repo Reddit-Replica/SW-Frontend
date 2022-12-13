@@ -357,6 +357,35 @@ export default {
 			});
 		return response.status;
 	},
+	async markUnMarkSendMeReply(context, payload) {
+		const sendReplyData = payload.sendReplyData; // id ,type
+		console.log(sendReplyData);
+		const baseurl = payload.baseurl;
+		let response;
+		response = await fetch(baseurl + '/send-replies', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(sendReplyData),
+		});
+
+		const responseData = await response.json();
+		if (!response.ok) {
+			// const error = new Error(
+			// 	responseData.message || 'Failed to send request.'
+			// );
+			// throw error;
+		}
+		console.log(response.status);
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('markUnMarkSendMeReply', {
+				sendReplyData,
+			});
+		return response.status;
+	},
 	async unlockPostOrComment(context, payload) {
 		const ApprovePostOrCommentData = payload.ApprovePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
@@ -543,7 +572,7 @@ export default {
 		const baseurl = payload.baseurl;
 		let response;
 		try {
-			response = await fetch(baseurl + '/mark-spam', {
+			response = await fetch(baseurl + '/mod-spam', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
