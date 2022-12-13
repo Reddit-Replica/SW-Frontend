@@ -8,7 +8,7 @@
 	>
 		<li>
 			<p class="subject-text">
-				<span>{{ message.subject }}</span>
+				<span>{{ message.subject }}:</span>
 			</p>
 			<div>
 				<p class="md-details">
@@ -147,7 +147,7 @@
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
+					<li @click="unreadAction()" :id="'unread-' + index">
 						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 					</li>
 					<li :id="'reply-box-' + index">
@@ -275,13 +275,14 @@ export default {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/deleteMessage', {
+					await this.$store.dispatch('messages/deleteMessage', {
 						id: this.message.id,
 						type: 'message',
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
 						this.disappear = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -331,8 +332,6 @@ export default {
 				try {
 					this.$store.dispatch('messages/spamMessage', {
 						id: this.message.id,
-						type: 'message',
-						reason: '',
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/markSpamSuccessfully']) {
@@ -362,5 +361,8 @@ export default {
 a:hover,
 .link:hover {
 	text-decoration: underline;
+}
+.hide-message {
+	display: none;
 }
 </style>
