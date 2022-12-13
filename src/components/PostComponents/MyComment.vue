@@ -77,13 +77,17 @@
 							Edit
 						</li>
 						<li>Follow</li>
-						<li @click="displaySubmenu" id="dots">
+						<li
+							@click="displaySubmenu"
+							id="dots"
+							v-if="comment.commentedBy == getuserName"
+						>
 							<font-awesome-icon icon="fa-solid fa-ellipsis" />
 							<ul class="sub-menu" v-if="display">
 								<li
 									class="icon-box"
 									id="sub-menu-delete"
-									@click="deleteComment"
+									@click="deletingComment"
 								>
 									<font-awesome-icon
 										icon="fa-regular fa-trash-can"
@@ -126,15 +130,29 @@
 			</div>
 		</div>
 	</div>
+	<base-dialog
+		:show="deleting"
+		title="Delete comment"
+		@close="cancelDelete"
+		dialog-class="delete"
+	>
+		<div class="body">Are you sure you want to delete your comment?</div>
+		<div class="buttons">
+			<base-button button-text="Keep" @click="cancelDelete" />
+			<base-button button-text="Delete" @click="deleteComment" />
+		</div>
+	</base-dialog>
 </template>
 <script>
 //import NestedReply from './NestedReply.vue';
 import CommentSubmit from './CommentSubmit.vue';
+import BaseDialog from '../BaseComponents/BaseDialog.vue';
 export default {
 	name: 'MyComment',
 	components: {
 		//NestedReply,
 		CommentSubmit,
+		BaseDialog,
 	},
 	computed: {
 		//@vuese
@@ -213,6 +231,7 @@ export default {
 			replying: false,
 			display: false,
 			deleted: false,
+			deleting: false,
 		};
 	},
 	//@vuese
@@ -295,18 +314,26 @@ export default {
 		addReply() {
 			this.replying = !this.replying;
 		},
+		deletingComment() {
+			this.deleting = true;
+		},
 		//@vuese
 		//delete comment
 		async deleteComment() {
+			this.deleting = false;
 			this.deleted = true;
 			try {
 				await this.$store.dispatch('comments/deleteComment', {
 					baseurl: this.$baseurl,
-					//id: this.id,
+					id: this.comment.commentId,
+					type: 'comment',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		cancelDelete() {
+			this.deleting = false;
 		},
 	},
 };
@@ -458,5 +485,30 @@ export default {
 }
 .reply {
 	margin-left: 2px;
+}
+.delete .body {
+	font-size: 12px;
+	width: 360px;
+}
+.delete .buttons {
+	display: flex;
+	justify-content: end;
+	margin-top: 30px;
+}
+.delete .buttons button {
+	font-weight: bolder;
+	height: 30px;
+	width: 90px;
+	font-size: 14px;
+}
+.delete .buttons button:first-of-type {
+	border: 1px solid var(--color-blue-2);
+	background-color: white;
+	color: var(--color-blue-2);
+}
+.delete .buttons button:last-of-type {
+	border: 2px solid white;
+	background-color: var(--color-blue-2);
+	color: white;
 }
 </style>
