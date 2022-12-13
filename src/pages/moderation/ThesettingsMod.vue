@@ -93,6 +93,7 @@
 			rows="2"
 			class="text-area"
 			style="margin-bottom: 0px"
+			v-model="communityDescription"
 		></textarea>
 		<div class="Characters-remaining">500 Characters remaining</div>
 		<h3 class="medium-font">Send welcome message to new members</h3>
@@ -133,43 +134,32 @@
 				></div>
 			</div>
 			&nbsp;
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<switch-button
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getSendmessage"
+			></switch-button>
 		</span>
+		<textarea
+			v-if="sendWelcomeMessage"
+			maxlength="50000"
+			rows="5"
+			class="text-area"
+			style="
+				margin: 10px auto;
+				padding: 15px;
+				font-size: 15px;
+				font-weight: 100;
+			"
+			v-model="welcomeMessage"
+			placeholder="Welcome to our community! We’re here to discuss our passion for all things related to grated cheese. (Heads up—we’re a text-only community, so sorry no image posts.) Get started by introducing yourself in our post for newbies, then check out our rules to learn more and dive in."
+		></textarea>
 		<h3 class="secondary-title">COMMUNITY LOCATION AND MAIN LANGUAGE</h3>
 		<p class="description">
 			Adding a location helps your community show up in search results and
 			recommendations and helps local redditors find it easier.
 		</p>
-		<!-- <div class="community-box flex-column">
-			<div class="community-box-title">
-				<h3 class="title-black">Community category</h3>
-			</div>
-			<div class="community-box-input flex-column">
-				<select
-					class="input-name"
-					v-model.trim="communityCategory"
-					@blur="validateCommunityCategory"
-					@click="validateCommunityCategory"
-					id="category-input"
-				>
-					<option
-						v-for="category of categories"
-						:key="category.name"
-						:value="category.name"
-						:id="category.name"
-					>
-						{{ category.name }}
-					</option>
-				</select>
-				<div
-					v-if="communityCategoryRequiredError"
-					class="title-grey title-red"
-					id="required-category"
-				>
-					A community category is required
-				</div>
-			</div>
-		</div> -->
+
 		<h3 class="medium-font">Language</h3>
 		<!-- <input
 			id="1"
@@ -296,7 +286,7 @@
 				class="location-input"
 				name="location"
 				placeholder="Add location"
-				value=""
+				v-model="Region"
 			/>
 		</div>
 		<h3 class="secondary-title">COMMUNITY TYPE</h3>
@@ -476,7 +466,11 @@
 			When your community is marked as an 18+ community, users must be flagged
 			as 18+ in their user settings
 
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<switch-button
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getNsfw"
+			></switch-button>
 		</p>
 		<div v-if="communityType == 'Private'">
 			<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
@@ -486,7 +480,11 @@
 				Display a button on your private subreddit that allows users to request
 				to join. Users may still send your subreddit modmail whether this is on
 				or off.
-				<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+				<switch-button
+					id="btn2"
+					style="margin-left: 15px"
+					@checked="getRequesttojoin"
+				></switch-button>
 			</p>
 		</div>
 		<div v-if="communityType == 'Restricted'">
@@ -523,7 +521,11 @@
 
 			<h3 class="medium-font">
 				Accepting new requests to post
-				<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+				<switch-button
+					id="btn2"
+					style="margin-left: 15px"
+					@checked="getRequeststopost"
+				></switch-button>
 			</h3>
 		</div>
 	</div>
@@ -650,7 +652,7 @@ export default {
 			typeChosen1: false,
 			typeChosen2: false,
 			communityType: 'Public',
-			buttonDisabled: true,
+			buttonDisabled: false,
 		};
 	},
 	methods: {
@@ -682,6 +684,26 @@ export default {
 				this.typeChosen2 = false;
 				this.communityType = 'Public';
 			}
+		},
+		getSendmessage(value) {
+			this.sendWelcomeMessage = value;
+			console.log('this.sendWelcomeMessage');
+			console.log(this.this.sendWelcomeMessage);
+		},
+		getNsfw(value) {
+			this.NSFW = value;
+			console.log('this.NSFW');
+			console.log(this.this.NSFW);
+		},
+		getRequesttojoin(value) {
+			this.acceptingRequestsToJoin = value;
+			console.log('this.acceptingRequestsToJoin');
+			console.log(this.acceptingRequestsToJoin);
+		},
+		getRequeststopost(value) {
+			this.acceptingRequestsToPost = value;
+			console.log('this.acceptingRequestsToPost');
+			console.log(this.acceptingRequestsToPost);
 		},
 	},
 };
@@ -938,6 +960,7 @@ ol {
 }
 .save-button {
 	width: max-content;
+	height: 30px;
 	background-color: #0079d3;
 	color: white;
 	padding: 10px;
