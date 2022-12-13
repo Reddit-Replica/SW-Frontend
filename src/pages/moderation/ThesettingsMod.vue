@@ -5,6 +5,7 @@
 				button-text="Save Changes"
 				:disable-button="buttonDisabled"
 				class="save-button"
+				@click="saveChanges"
 			></base-button>
 		</p>
 		<h3 class="main-title">Community settings</h3>
@@ -552,15 +553,14 @@ export default {
 			mainTopic: '',
 			subTopics: [],
 			communityDescription: '',
-			sendWelcomeMessage: '',
+			sendWelcomeMessage: false,
 			welcomeMessage: '',
-			language: '',
+			language: 'English',
 			Region: '',
-			Type: '',
-			NSFW: '',
-			acceptingRequestsToJoin: '',
-			acceptingRequestsToPost: '',
-			approvedUsersHaveTheAbilityTo: '',
+			nsfw: false,
+			acceptingRequestsToJoin: false,
+			acceptingRequestsToPost: false,
+			approvedUsersHaveTheAbilityTo: 'Post only',
 			languages: [
 				'Afrikaans',
 				'Azərbaycan',
@@ -646,7 +646,7 @@ export default {
 				'中文 (香港)',
 				'日本語',
 			],
-			approvedUsers: ['POST ONLY (DEFAULT)', 'COMMENT ONLY', 'POST & COMMENT'],
+			approvedUsers: ['Post only', 'Comment only', 'Post & Comment'],
 			topics: [],
 			typeChosen0: true,
 			typeChosen1: false,
@@ -691,7 +691,7 @@ export default {
 			console.log(this.this.sendWelcomeMessage);
 		},
 		getNsfw(value) {
-			this.NSFW = value;
+			this.nsfw = value;
 			console.log('this.NSFW');
 			console.log(this.this.NSFW);
 		},
@@ -704,6 +704,38 @@ export default {
 			this.acceptingRequestsToPost = value;
 			console.log('this.acceptingRequestsToPost');
 			console.log(this.acceptingRequestsToPost);
+		},
+		async saveChanges() {
+			const actionPayload = {
+				communityName: this.communityName,
+				mainTopic: this.mainTopic,
+				subTopics: this.subTopics,
+				communityDescription: this.communityDescription,
+				sendWelcomeMessage: this.sendWelcomeMessage,
+				welcomeMessage: this.welcomeMessage,
+				language: this.language,
+				Region: this.Region,
+				Type: this.communityType,
+				NSFW: this.nsfw,
+				acceptingRequestsToJoin: this.acceptingRequestsToJoin,
+				acceptingRequestsToPost: this.acceptingRequestsToPost,
+				approvedUsersHaveTheAbilityTo: this.approvedUsersHaveTheAbilityTo,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/communitySettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
 		},
 	},
 };
