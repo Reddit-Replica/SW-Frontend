@@ -583,7 +583,7 @@ export default {
 					id: this.$route.path.split('/')[4],
 					beforeMod: '',
 					afterMod: '',
-					sort: this.$route.query.sort,
+					sort: this.sortByTitle.toLowerCase(),
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
