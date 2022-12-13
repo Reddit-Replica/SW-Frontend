@@ -6,7 +6,7 @@
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Email address</h3>
-					<p class="p-title-description">menna.said00@eng-st.cu.edu.eg</p>
+					<p class="p-title-description">{{ email }}</p>
 				</div>
 				<div>
 					<base-button class="blue-button" button-text="Change" id="change" />
@@ -46,7 +46,7 @@
 						]"
 						:display="genderMenuDisplayed"
 						@change-title="changeGender"
-						clicked-prop=""
+						:clicked-prop="gender"
 					/>
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 					</p>
 				</div>
 				<div>
-					<select id="country">
+					<select id="select1" @change="changeCountry()" :value="country">
 						<option value="xx">No country identified</option>
 						<option value="Afghanistan">Afghanistan</option>
 						<option value="Åland Islands">Åland Islands</option>
@@ -540,9 +540,32 @@ export default {
 		return {
 			gender: 'select gender',
 			genderMenuDisplayed: false,
+			country: '',
+			email: '',
 		};
 	},
+	created() {
+		this.fetchAccountSettings();
+	},
 	methods: {
+		// @vuese
+		//Loading Community suggested categories
+		//@arg no argument
+		async fetchAccountSettings() {
+			try {
+				const accessToken = localStorage.getItem('accessToken');
+				await this.$store.dispatch('setting/fetchAccountSettings', {
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something failed!';
+			}
+			const accountSettings = this.$store.getters['setting/getAccountSettings'];
+			this.country = accountSettings.country;
+			this.gender = accountSettings.gender;
+			this.email = accountSettings.email;
+		},
 		//@vuese
 		//show gender menu
 		showGenderMenu() {
@@ -550,8 +573,49 @@ export default {
 		},
 		//@vuese
 		//change gender
-		changeGender(gender) {
+		async changeGender(gender) {
 			this.gender = gender;
+			console.log(gender);
+			const actionPayload = {
+				gender: this.gender,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeGender',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+		async changeCountry() {
+			const selectElement = document.querySelector('#select1');
+			const value = selectElement.options[selectElement.selectedIndex].value;
+			this.country = value;
+			console.log(value);
+			const actionPayload = {
+				country: this.country,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeCountry',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
 		},
 	},
 };
@@ -634,6 +698,7 @@ export default {
 .section:nth-of-type(3) div:last-of-type,
 .section:nth-of-type(4) div:last-of-type {
 	position: relative;
+	cursor: pointer;
 }
 .section:nth-of-type(3) div:last-of-type::before,
 .section:nth-of-type(4) div:last-of-type::before {
