@@ -14,32 +14,46 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('userName')}`,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
 			const messages = [];
 
-			for (const key in responseData) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
 				const message = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					id: responseData[key].children[0].id,
-					text: responseData[key].children[0].text,
-					type: responseData[key].children[0].type,
-					senderUsername: responseData[key].children[0].senderUsername,
-					receiverUsername: responseData[key].children[0].receiverUsername,
-					subredditName: responseData[key].children[0].subredditName,
-					postTitle: responseData[key].children[0].postTitle,
-					subject: responseData[key].children[0].subject,
-					sendAt: responseData[key].children[0].sendAt,
-					isReply: responseData[key].children[0].isReply,
-					isRead: responseData[key].children[0].isRead,
+					id: responseData.children[i].id,
+					text: responseData.children[i].data.text,
+					senderUsername: responseData.children[i].data.senderUsername,
+					receiverUsername: responseData.children[i].data.receiverUsername,
+					sendAt: responseData.children[i].data.sendAt,
+					subject: responseData.children[i].data.subject,
+					type: responseData.children[i].data.type,
+					subredditName: responseData.children[i].data.subredditName,
+					isModerator: responseData.children[i].data.isModerator,
+					postTitle: responseData.children[i].data.postTitle,
+					postID: responseData.children[i].data.postID,
+					commentID: responseData.children[i].data.commentID,
+					numOfComments: responseData.children[i].data.numOfComments,
+					isSenderUser: responseData.children[i].data.isSenderUser,
+					isReceiverUser: responseData.children[i].data.isReceiverUser,
 				};
 				messages.push(message);
 			}
+			console.log(messages);
 			context.commit('setInboxMessages', messages);
+			context.commit('before', before);
+			context.commit('after', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
@@ -658,6 +672,40 @@ export default {
 			const error = new Error(
 				responseData.error || 'Unauthorized to send a message'
 			);
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async markAllReadMessage(_, payload) {
+		const mark = {
+			type: payload.type,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/read-all-msgs', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(mark),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 400) {
+			const error = new Error(responseData.error || 'The request was invalid');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to delete this thing'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Thing not found');
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');
