@@ -1,5 +1,5 @@
 <template>
-	<div class="base-profile-post" @resize="resizePost">
+	<div v-if="!deletedHiddenPost" class="base-profile-post" @resize="resizePost">
 		<div class="box">
 			<div class="box-items">
 				<!-- <div class="voting-box"></div> -->
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="main-post-container" id="#main-post-container">
+				<div class="main-post-container" id="main-post-container">
 					<div class="main-box">
 						<div class="post-pic-box">
 							<i
@@ -91,6 +91,11 @@
 									postData.data.images[0] != null &&
 									postData.data.images[0].path != null
 								"
+								:style="[
+									postData.data.nsfw || postData.data.spoiler
+										? 'filter: blur(60px);'
+										: '',
+								]"
 								:src="$baseurl + '/' + postData.data.images[0].path"
 								alt=""
 							/>
@@ -105,6 +110,16 @@
 									class="post-title-link"
 									id="base-user-post-data-link"
 									:href="postData.data.link"
+									target="_blank"
+									>{{ postData.data.link }}/<i
+										class="fa-solid fa-arrow-up-right-from-square"
+									></i
+								></a>
+								<a
+									v-else-if="postData.data.kind == 'post'"
+									class="post-title-link"
+									id="base21565-user-post-data-link"
+									:href="CrossPostLinkHandler"
 									target="_blank"
 									>{{ postData.data.link }}/<i
 										class="fa-solid fa-arrow-up-right-from-square"
@@ -156,7 +171,22 @@
 									>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
-									posted by
+									<span class="posted-by-unhovered">
+										<i
+											v-if="postData.data.kind == 'post'"
+											style="
+												transform: rotate(133deg);
+												margin-right: 2px;
+												color: #0079d3;
+											"
+											class="fa-solid fa-arrows-split-up-and-left"
+										></i>
+										{{
+											postData.data.kind == 'post'
+												? 'Crossposted by'
+												: 'posted by'
+										}}</span
+									>
 									<router-link
 										style="margin-left: 3px"
 										:to="`/user/${postData.data.postedBy}`"
@@ -267,379 +297,11 @@
 									@insights-toggle="insightsPostToggle(postData.id)"
 									@expand-post="expandPostContent"
 									@collapse-post="collapsePostContent"
+									@deletePost="deletePost"
+									@hidePost="hidePost"
+									@savePost="savePost"
+									@sharePost="sharePost"
 								></post-options>
-								<!-- <ul>
-									<li class="bottom-vote-box">
-										<div
-											class="d-flex flex-row vote-box"
-											style="width: auto; background-color: inherit"
-										>
-											<div class="upvote" @click="upvote">
-												<svg
-													class="icon icon-arrow-down p-1 up-clicked"
-													v-if="upClicked"
-												>
-													<use
-														xlink:href="../../../../img/vote.svg#icon-arrow-up"
-													></use>
-												</svg>
-												<svg class="icon icon-shift" v-else>
-													<use
-														xlink:href="../../../../img/shift.svg#icon-shift"
-													></use>
-												</svg>
-											</div>
-											<div
-												class="p-2 vote-count"
-												:class="
-													upClicked
-														? 'up-clicked'
-														: downClicked
-														? 'down-clicked'
-														: ''
-												"
-											>
-												{{ postData.data.votes }}
-											</div>
-											<div class="downvote" @click="downvote">
-												<svg
-													class="icon icon-arrow-down p-1"
-													:class="downClicked ? 'down-clicked' : ''"
-													v-if="downClicked"
-												>
-													<use
-														xlink:href="../../../../img/vote.svg#icon-arrow-down"
-													></use>
-												</svg>
-												<svg class="icon icon-shift" v-else>
-													<use
-														xlink:href="../../../../img/shift.svg#icon-shift"
-													></use>
-												</svg>
-											</div>
-										</div>
-									</li>
-									<li class="post-option-item">
-										<div
-											v-if="postData.data.kind == 'link'"
-											class="post-options-icon"
-										>
-											<a
-												class="post-link-href"
-												:href="postData.data.link"
-												target="_blank"
-											>
-												<i
-													style="font-size: 20px"
-													class="fa-solid fa-arrow-up-right-from-square"
-												></i>
-											</a>
-										</div>
-										<div
-											v-else-if="!showPostContent"
-											@click="expandPostContent"
-											class="post-options-icon"
-											style="
-												transform: rotate(90deg);
-												stroke-width: 35px;
-												stroke: rgb(135, 138, 140);
-												color: transparent;
-											"
-										>
-											<i
-												class="fa-solid fa-up-right-and-down-left-from-center"
-											></i>
-										</div>
-										<div
-											v-else
-											@click="collapsePostContent"
-											class="post-options-icon"
-										>
-											<i
-												style="
-													transform: rotate(90deg);
-													stroke-width: 35px;
-													stroke: rgb(135, 138, 140);
-													color: transparent;
-												"
-												class="fa-solid fa-down-left-and-up-right-to-center"
-											></i>
-										</div>
-									</li>
-									<li class="post-option-item">
-										<router-link to="">
-											<div class="post-options-icon">
-												<i
-													style="
-														stroke-width: 35px;
-														stroke: rgb(135, 138, 140);
-														color: transparent;
-													"
-													class="fa-solid fa-message"
-												></i>
-											</div>
-											<div class="post-options-text">
-												<p>{{ postData.data.comments }}</p>
-											</div>
-										</router-link>
-									</li>
-									<li
-										style="position: relative"
-										class="post-option-item-hover"
-										@click="sharePost"
-									>
-										<router-link to="">
-											<div class="post-options-icon">
-												<i
-													style="
-														stroke-width: 35px;
-														stroke: rgb(135, 138, 140);
-														color: transparent;
-													"
-													class="fa-solid fa-share"
-												></i>
-											</div>
-											<div class="post-options-text">
-												<p>share</p>
-											</div>
-										</router-link>
-										<div v-if="showShareOptions" class="options-box-list">
-											<ul>
-												<li @click="CopyPostLink" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-solid fa-link"
-														></i>
-													</div>
-													<div class="options-box-text">Copy Link</div>
-												</li>
-												<li @click="Crosspost" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-solid fa-shuffle"
-														></i>
-													</div>
-													<div class="options-box-text">Crosspost</div>
-												</li>
-											</ul>
-										</div>
-									</li>
-									<li
-										id="approve-user-post-button"
-										@click="approvePost"
-										:style="[
-											postData.data.moderation &&
-											postData.data.moderation.approve &&
-											postData.data.moderation.approve.approvedBy != ''
-												? 'color: #46d160'
-												: '',
-										]"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i class="fa-solid fa-check"></i>
-										</div>
-										<div class="post-options-text">Approve</div>
-									</li>
-									<li
-										id="remove-user-post-button"
-										@click="removePost"
-										:style="[
-											postData.data.moderation &&
-											postData.data.moderation.remove &&
-											postData.data.moderation.remove.removedBy != ''
-												? 'color: #ff585b'
-												: 'color: rgba(135, 138, 140)',
-										]"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i style="color: inherit" class="fa-solid fa-ban"></i>
-										</div>
-										<div class="post-options-text">
-											<p>Remove</p>
-										</div>
-									</li>
-									<li
-										id="spam-user-post-button"
-										@click="spamPost"
-										:style="[
-											postData.data.moderation &&
-											postData.data.moderation.spam &&
-											postData.data.moderation.spam.spammedBy != ''
-												? 'color: #ff585b'
-												: 'color: rgba(135, 138, 140)',
-										]"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i class="fa-regular fa-calendar-xmark"></i>
-										</div>
-										<div class="post-options-text">
-											<p>Spam</p>
-										</div>
-									</li>
-									<li
-										id="insights-user-post-button"
-										@click="insightsPostToggle"
-										class="post-option-item"
-									>
-										<div class="post-options-icon">
-											<i
-												style="color: #0079d3"
-												class="fa-solid fa-chart-simple"
-											></i>
-										</div>
-										<div class="post-options-text">
-											<p>Insights</p>
-										</div>
-									</li>
-									<li id="shield-user-post-button" class="post-option-item">
-										<div class="post-options-icon">
-											<i
-												style="
-													stroke-width: 35px;
-													stroke: rgb(135, 138, 140);
-													color: transparent;
-												"
-												class="fa-solid fa-shield"
-											></i>
-										</div>
-									</li>
-									<li
-										class="post-option-item2"
-										style="position: relative"
-										@click="openOptionsBoxList"
-									>
-										<div class="post-options-icon three-dot-icon-box">
-											<i>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="20"
-													height="20"
-													fill="currentColor"
-													class="bi bi-three-dots"
-													viewBox="0 0 16 16"
-												>
-													<path
-														d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-													/>
-												</svg>
-											</i>
-										</div>
-										<div v-if="showOptionsBoxList" class="options-box-list">
-											<ul>
-												<li @click="editPost" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-solid fa-pen"
-														></i>
-													</div>
-													<div class="options-box-text">Edit Post</div>
-												</li>
-												<li @click="savePost" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-regular fa-bookmark"
-														></i>
-													</div>
-													<div class="options-box-text">Save</div>
-												</li>
-												<li @click="pinPostToProfile" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-solid fa-thumbtack"
-														></i>
-													</div>
-													<div class="options-box-text">
-														Pin Post to Profile
-													</div>
-												</li>
-												<li @click="hidePost" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-regular fa-eye-slash"
-														></i>
-													</div>
-													<div class="options-box-text">Hide</div>
-												</li>
-												<li @click="deletePost" class="options-box-item">
-													<div class="options-box-icon">
-														<i
-															style="color: rgba(135, 138, 140)"
-															class="fa-solid fa-trash"
-														></i>
-													</div>
-													<div class="options-box-text">Delete</div>
-												</li>
-												<li @click="markAsOC" class="options-box-item">
-													<div class="options-box-icon">
-														<i>
-															<input
-																type="checkbox"
-																id="mark-as-oc"
-																name="mark-as-oc"
-																checked
-														/></i>
-													</div>
-													<div class="options-box-text">
-														<label for="mark-as-oc">Mark As OC</label>
-													</div>
-												</li>
-												<li @click="markAsSpoiler" class="options-box-item">
-													<div class="options-box-icon">
-														<i>
-															<input
-																type="checkbox"
-																id="mark-as-spoiler"
-																name="mark-as-spoiler"
-																checked
-														/></i>
-													</div>
-													<div class="options-box-text">
-														<label for="mark-as-spoiler">Mark As Spoiler</label>
-													</div>
-												</li>
-												<li @click="markAsNSFW" class="options-box-item">
-													<div class="options-box-icon">
-														<i>
-															<input
-																type="checkbox"
-																id="mark-as-nsfw"
-																name="mark-as-nsfw"
-																checked
-														/></i>
-													</div>
-													<div class="options-box-text">
-														<label for="mark-as-nsfw">Mark As NSFW</label>
-													</div>
-												</li>
-												<li class="options-box-item">
-													<div class="options-box-icon">
-														<i>
-															<input
-																type="checkbox"
-																id="send-me-notifications"
-																name="send-me-notifications"
-																checked
-														/></i>
-													</div>
-													<div class="options-box-text">
-														<label for="send-me-notifications"
-															>Send Me Replay Notifications</label
-														>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</li>
-								</ul> -->
 							</div>
 						</div>
 					</div>
@@ -652,41 +314,14 @@
 						<div
 							class="post-picture-container"
 							v-if="postData.data.kind == 'image'"
-							id="base-user-data-post-picture-container"
+							id="base-user-data-post-picture-iii-container"
 						>
-							<picture-post :images="postData.data.images"></picture-post>
+							<picture-post
+								:images="postData.data.images"
+								:nsfw-flag="postData.data.nsfw"
+								:spoiler-flag="postData.data.spoiler"
+							></picture-post>
 						</div>
-						<!-- <div class="post-picture" v-if="postData.data.kind == 'image'">
-							<div class="picture-container">
-								<span
-									v-if="lastRightPic != 0"
-									@click="rightClick"
-									class="left-button"
-									><i class="fa-solid fa-angle-left"></i
-								></span>
-								<span
-									v-if="lastLeftPic != 0"
-									@click="leftClick"
-									class="right-button"
-									><i class="fa-solid fa-angle-right"></i
-								></span>
-								<div class="picture-number-box">
-									{{ lastRightPic + 1 }} / {{ images.length }}
-								</div>
-								<div class="pic-items">
-									<ul class="images">
-										<li
-											v-for="(image, index) in images"
-											:key="index"
-											:style="{ left: image.left + '%' }"
-										>
-											<img src="../../../assets/R.png" alt="" />
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="post-footer"></div>
-						</div> -->
 						<div
 							v-else-if="postData.data.kind == 'hybrid'"
 							class="paragraph-post"
@@ -703,19 +338,6 @@
 							id="base-user-data-post-video-container"
 							v-else-if="postData.data.kind == 'video'"
 						>
-							<!-- <video
-								controls
-								style="
-									background-color: rgb(0, 0, 0);
-									width: 100%;
-									max-height: 450px;
-								"
-							>
-								<source
-									src="../../../../video/userPostTest.mp4"
-									type="video/mp4"
-								/>
-							</video> -->
 							<video-post :video-src="postData.data.video"></video-post>
 						</div>
 					</div>
@@ -734,52 +356,7 @@
 							class="insights-content"
 							id="base-user-data-post-insights-content"
 						>
-							<div class="insight-header">
-								<h3 class="insights-title">Post Insights</h3>
-								<p class="insights-p">
-									Only you and mods of this community can see this
-								</p>
-							</div>
-							<ul>
-								<li>
-									<span
-										id="base-user-data-post-insights-getInsights-Data-totalViews"
-										>{{ getInsightsData.totalViews }}
-										<i
-											style="color: #0079d3"
-											class="fa-solid fa-chart-simple"
-										></i
-									></span>
-									<span><i class="fa-regular fa-eye"></i> total views</span>
-								</li>
-								<li>
-									<span
-										id="base-user-data-post-insights-getInsights-Data-upvoteRate"
-										>{{ getInsightsData.upvoteRate }}%</span
-									>
-									<span>
-										<i
-											style="width: 12px; height: 12px"
-											class="fa-solid fa-up-long"
-										></i>
-										Upvote Rate</span
-									>
-								</li>
-								<li>
-									<span
-										id="base-user-data-post-insights-getInsightsData-communityKarma"
-										>{{ getInsightsData.communityKarma }} <i></i
-									></span>
-									<span><i class="fa-solid fa-fan"></i> Community Karma</span>
-								</li>
-								<li>
-									<span
-										id="base-user-data-post-insights-getInsightsData-totalShares"
-										>{{ getInsightsData.totalShares }}<i></i
-									></span>
-									<span> <i class="fa-solid fa-upload"></i> total shares</span>
-								</li>
-							</ul>
+							<the-insights></the-insights>
 						</div>
 					</div>
 				</div>
@@ -793,11 +370,13 @@ import * as moment from 'moment';
 import PostOptions from './PostComponents/PostOptions.vue';
 import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
+import TheInsights from './PostComponents/TheInsights.vue';
 export default {
 	components: {
 		PostOptions,
 		VideoPost,
 		PicturePost,
+		TheInsights,
 	},
 	emits: ['showComments'],
 	props: {
@@ -817,6 +396,8 @@ export default {
 			downClicked: this.postData.data.votingType == -1 ? true : false,
 			postHidden: false,
 			showPostContent: false,
+			deletedHiddenPost: false,
+
 			// images: [
 			// 	{
 			// 		imgUrl: '../../../assets/R.png',
@@ -842,13 +423,31 @@ export default {
 		// this.lastLeftPic = this.images.length - 1;
 	},
 	mounted() {},
-	computed: {
-		getInsightsData() {
-			console.log(this.$store.getters['userposts/getInsightsData']);
-			return this.$store.getters['userposts/getInsightsData'].insightsData;
-		},
-	},
+	computed: {},
 	methods: {
+		CrossPostLinkHandler() {
+			if (this.postData.data.subreddit)
+				return (
+					this.$baseurl +
+					'/r' +
+					this.postData.data.subreddit +
+					'/comments/' +
+					this.postData.data.sharePostId +
+					'/' +
+					this.postData.data.title
+				);
+			else {
+				return (
+					this.$baseurl +
+					'/user/' +
+					this.postData.data.postedBy +
+					'/comments/' +
+					this.postData.data.sharePostId +
+					'/' +
+					this.postData.data.title
+				);
+			}
+		},
 		postFlairRouteHandler() {
 			this.$router.push({
 				path: `/r/${this.postData.data.subreddit}`,
@@ -915,10 +514,14 @@ export default {
 			console.log('pin');
 		},
 		deletePost() {
-			console.log('delete');
+			console.log('delete,base');
+			/* call the End point */
+			this.deletedHiddenPost = true;
 		},
 		hidePost() {
-			console.log('hide');
+			console.log('hide,base');
+			/* call the End point */
+			this.deletedHiddenPost = true;
 		},
 		markAsOC() {
 			console.log('mark as os');
@@ -1612,6 +1215,7 @@ span.post-oc {
 	padding-top: 0.8em;
 }
 /* end kind post */
+
 /* insights content */
 .insights-content {
 	padding: 16px 16px 8px 120px;
