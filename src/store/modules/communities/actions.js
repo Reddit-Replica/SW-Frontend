@@ -440,4 +440,29 @@ export default {
 		}
 		context.commit('setPosts', posts);
 	},
+	///////////////// moderation community norhan //////////////////
+	async getsuggestedTopics(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/suggested-topics`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('setTopics', responseData.communityTopics);
+			console.log(responseData.children);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+		return response.status;
+	},
 };
