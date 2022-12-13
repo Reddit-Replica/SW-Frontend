@@ -218,6 +218,7 @@ export default {
 					commentId: this.comment.commentId,
 					beforeMod: '',
 					afterMod: '',
+					sort: this.$route.query.sort,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

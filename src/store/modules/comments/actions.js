@@ -69,13 +69,14 @@ export default {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
 		const afterMod = payload.afterMod;
+		const sort = payload.sort;
 		let mediaQuery;
 		if (beforeMod) {
-			mediaQuery = '?before=' + beforeMod;
+			mediaQuery = '?before=' + beforeMod + '&sort=' + sort;
 		} else if (afterMod) {
-			mediaQuery = '?after=' + afterMod;
+			mediaQuery = '?after=' + afterMod + '&sort=' + sort;
 		} else {
-			mediaQuery = '';
+			mediaQuery = '?sort=' + sort;
 		}
 		const response = await fetch(
 			baseurl + `/comments/${payload.id}${mediaQuery}`,
@@ -106,13 +107,14 @@ export default {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
 		const afterMod = payload.afterMod;
+		const sort = payload.sort;
 		let mediaQuery;
 		if (beforeMod) {
-			mediaQuery = '?before=' + beforeMod;
+			mediaQuery = '?before=' + beforeMod + '&sort=' + sort;
 		} else if (afterMod) {
-			mediaQuery = '?after=' + afterMod;
+			mediaQuery = '?after=' + afterMod + '&sort=' + sort;
 		} else {
-			mediaQuery = '';
+			mediaQuery = '?sort=' + sort;
 		}
 		const response = await fetch(
 			baseurl + `/comments/${payload.postId}/${payload.commentId}${mediaQuery}`,

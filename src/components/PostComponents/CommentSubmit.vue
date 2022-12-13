@@ -223,7 +223,6 @@ div {
 	border: 1px solid #edeff1;
 	border-radius: 4px;
 	position: relative;
-	width: 100%;
 }
 .ql-snow.ql-toolbar button.comment-button {
 	width: 100px;
