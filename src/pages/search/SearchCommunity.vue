@@ -69,7 +69,7 @@
 					<div class="search-results">
 						<div class="people">
 							<div>
-								<div v-if="!notFound">
+								<div v-if="!(SearchedCms && SearchedCms.length == 0)">
 									<div v-for="value in SearchedCms" :key="value.id">
 										<a class="user-a"
 											><div class="user-div">
@@ -138,23 +138,22 @@ export default {
 	data() {
 		return {
 			q: '',
-			notFound: false,
+			notFound: true,
 		};
 	},
 	computed: {
 		SearchedCms() {
+			console.log(this.$store.getters['search/Getsubreddits']);
 			return this.$store.getters['search/Getsubreddits'];
 		},
 	},
-	watch: {
-		SearchedCms() {
-			console.log(this.notFound);
-			if (this.SearchedCms().length == 0) {
-				this.notFound = true;
-				console.log(this.SearchedCms());
-			}
-		},
-	},
+	// created() {
+	// 	console.log(this.notFound);
+	// 	if (this.SearchedCms().length == 0) {
+	// 		this.notFound = true;
+	// 		console.log(this.SearchedCms());
+	// 	}
+	// },
 	methods: {
 		toggle(id) {
 			for (let i = 0; i < this.SearchedCms.length; i++) {
