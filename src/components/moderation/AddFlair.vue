@@ -9,8 +9,8 @@
 				>
 			</div>
 			<div class="buttons">
-				<button class="small-button">Edit</button>
-				<button class="small-button">
+				<button class="small-button" id="edit-button">Edit</button>
+				<button class="small-button" id="delete-button">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -79,6 +79,7 @@
 						<div
 							class="small-box"
 							@click="viewPickerFunction()"
+							id="flair-color"
 							:style="{ background: backgroundColor }"
 						>
 							<svg
@@ -99,6 +100,7 @@
 								class="picker-color"
 								@click="viewPickerFunction()"
 								v-if="viewPicker"
+								id="flair-back-color"
 							>
 								<ColorPicker
 									theme="light"
@@ -118,6 +120,7 @@
 						<span class="flair-text-span-2">Flair text color</span>
 						<button
 							class="small-box-button"
+							id="flair-text-color"
 							:class="textColor == 'white' ? 'white' : 'black'"
 							@click="toggleTextColor(textColor)"
 						>

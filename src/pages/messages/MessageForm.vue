@@ -232,6 +232,7 @@ export default {
 					text: this.text,
 					senderUsername: this.senderUsername,
 					receiverUsername: this.receiverUsername,
+					isReply: false,
 					subject: this.subject,
 					baseurl: this.$baseurl,
 				});
