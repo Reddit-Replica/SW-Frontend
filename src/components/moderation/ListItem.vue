@@ -64,13 +64,13 @@
 						<base-button
 							@click="sureShownFunction()"
 							class="button-white"
-							id="cancel-button"
+							:id="'cancel-button' + index"
 							>Cancel</base-button
 						>
 						<base-button
 							@click="removeInvitation()"
 							class="button-blue"
-							id="create-rule-button"
+							:id="'create-rule-button' + index"
 							>Remove</base-button
 						>
 					</div>

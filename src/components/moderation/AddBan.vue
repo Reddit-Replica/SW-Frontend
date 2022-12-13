@@ -35,14 +35,14 @@
 						>
 							{{ reasonRule.ruleName }}
 						</option>
-						<option class="options">Spam</option>
-						<option class="options">
+						<option class="options" id="spam">Spam</option>
+						<option class="options" id="personal-and-confidential">
 							Personal And Confidential Information
 						</option>
-						<option class="options">
+						<option class="options" id="threatening-harassing">
 							Threatening, Harassing, Or Incities Violence
 						</option>
-						<option class="options">Other</option>
+						<option class="options" id="other">Other</option>
 					</select>
 				</div>
 				<div class="ban-box-input flex-column">
@@ -144,7 +144,7 @@
 										? 'disabled'
 										: ''
 								"
-								id="delete-button"
+								id="ban-button"
 								>Ban user</base-button
 							>
 						</div>

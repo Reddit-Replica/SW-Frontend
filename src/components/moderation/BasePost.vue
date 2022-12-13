@@ -45,17 +45,19 @@
 							:src="$baseurl + '/' + subreddit.picture"
 							alt="img"
 							class="subreddit-img"
-							id="subreddit-img"
+							:id="'subreddit-img' + index"
 						/>
 					</div>
 					<div class="subreddit-details">
 						<div class="subreddit-name">
-							<a href="#">r/{{ spam.data.subreddit }}</a>
+							<a href="#" :id="'subreddit-' + index"
+								>r/{{ spam.data.subreddit }}</a
+							>
 						</div>
 						<span class="dot">•</span>
 						<span class="posted-by">Posted by</span>
 						<div class="poster">
-							<a :href="'/user/' + spam.data.postedBy">{{
+							<a :href="'/user/' + spam.data.postedBy" :id="'user-' + index">{{
 								spam.data.postedBy
 							}}</a>
 						</div>
@@ -98,8 +100,12 @@
 					</div>
 					<div class="buttons">
 						<!-- <base-button>Add Removal Reason</base-button> -->
-						<base-button @click="approveFunction()">Approve</base-button>
-						<base-button>Flair</base-button>
+						<base-button
+							@click="approveFunction()"
+							:id="'approve-button-' + index"
+							>Approve</base-button
+						>
+						<base-button :id="'flair-button-' + index">Flair</base-button>
 					</div>
 				</div>
 			</div>

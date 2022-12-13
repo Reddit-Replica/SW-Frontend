@@ -7,7 +7,7 @@
 				<button
 					class="button-edit"
 					@click="showAddRuleFunction()"
-					id="edit-button"
+					:id="'edit-button' + index"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@
 				<button
 					class="expand"
 					@click="viewDetailsFunction()"
-					id="expand-button"
+					:id="'expand-button' + index"
 				>
 					<svg
 						v-if="!viewDetails"
@@ -131,6 +131,14 @@ export default {
 				reportReason: '',
 				description: '',
 			}),
+		},
+		// @vuese
+		//index of the item
+		// @type string
+		index: {
+			type: Number,
+			default: 0,
+			required: true,
 		},
 	},
 	computed: {
