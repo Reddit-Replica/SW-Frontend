@@ -24,4 +24,8 @@ export default {
 	createdSuccessfully(state) {
 		return state.createdSuccessfully;
 	},
+	///////////////norhan///////////////
+	getTopics(state) {
+		return state.topics;
+	},
 };

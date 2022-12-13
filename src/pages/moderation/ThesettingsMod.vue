@@ -53,10 +53,16 @@
 		>
 		<v-select
 			style="margin: 10px; width: max-content; color: #0079d3; fill: #0079d3"
-			:options="mainTopics"
+			:options="topics"
 			v-model="mainTopic"
+			@click="getsuggestedTopics()"
 		></v-select>
-		<v-select class="" :options="subTopicsview" v-model="subTopics"></v-select>
+		<v-select
+			class=""
+			:options="topics"
+			v-model="subTopics"
+			@click="getsuggestedTopics()"
+		></v-select>
 		<!-- <div class="_1oREjd5ToMFah-VfX5Zt1z">
 			<div class="_1PLoXiZH4WKzHTfmYIt34X qWs3cMcSjquK-OXl-9jH5">
 				<button class="apk_M-7ks6NcaiMN8cotM qWs3cMcSjquK-OXl-9jH5" role="menu">
@@ -543,9 +549,21 @@ export default {
 				'中文 (香港)',
 				'日本語',
 			],
-			mainTopics: ['Activism', 'Addiction Support'],
-			subTopicsview: [],
+			topics: [],
 		};
+	},
+	methods: {
+		async getsuggestedTopics() {
+			try {
+				await this.$store.dispatch('community/getsuggestedTopics', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.topics = this.$store.getters['community/getTopics'];
+		},
 	},
 };
 </script>
