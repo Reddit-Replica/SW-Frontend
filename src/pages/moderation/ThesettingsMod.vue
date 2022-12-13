@@ -1,5 +1,12 @@
 <template>
 	<div class="box">
+		<p style="text-align: right">
+			<base-button
+				button-text="Save Changes"
+				:disable-button="buttonDisabled"
+				class="save-button"
+			></base-button>
+		</p>
 		<h3 class="main-title">Community settings</h3>
 		<h3 class="secondary-title">COMMUNITY PROFILE</h3>
 		<h3 class="medium-font">Community name</h3>
@@ -523,6 +530,7 @@
 </template>
 
 <script>
+import BaseButton from '@/components/BaseComponents/BaseButton.vue';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
@@ -534,6 +542,7 @@ export default {
 	},
 	components: {
 		vSelect,
+		BaseButton,
 	},
 	data() {
 		return {
@@ -641,6 +650,7 @@ export default {
 			typeChosen1: false,
 			typeChosen2: false,
 			communityType: 'Public',
+			buttonDisabled: true,
 		};
 	},
 	methods: {
@@ -925,5 +935,12 @@ ol {
 	margin: 0 4px 0 8px;
 	padding: 0 4px;
 	background-color: #ff585b;
+}
+.save-button {
+	width: max-content;
+	background-color: #0079d3;
+	color: white;
+	padding: 10px;
+	font-size: medium;
 }
 </style>
