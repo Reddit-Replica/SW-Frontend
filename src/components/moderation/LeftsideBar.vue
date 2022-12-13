@@ -176,10 +176,20 @@
 				Other
 			</div>
 			<router-link
-				:to="'/r/' + subredditName + '/about/edit'"
+				:to="'/r/' + subredditName + '/about/edit/community'"
 				class="options"
 				id="community-settings-button"
 				>Community settings
+				<div class="new">New</div>
+				<svg class="icon-mod icon-arrow icon-right">
+					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
+				</svg>
+			</router-link>
+			<router-link
+				:to="'/r/' + subredditName + '/about/edit/postsandcomments'"
+				class="options"
+				id="postsandcomments-button"
+				>Posts and Comments settings
 				<div class="new">New</div>
 				<svg class="icon-mod icon-arrow icon-right">
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
