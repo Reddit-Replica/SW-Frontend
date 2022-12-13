@@ -1,5 +1,13 @@
 <template>
 	<div class="box">
+		<p style="text-align: right">
+			<base-button
+				button-text="Save Changes"
+				:disable-button="buttonDisabled"
+				class="save-button"
+				@click="saveChanges"
+			></base-button>
+		</p>
 		<h3 class="main-title">Community settings</h3>
 		<h3 class="secondary-title">COMMUNITY PROFILE</h3>
 		<h3 class="medium-font">Community name</h3>
@@ -7,7 +15,8 @@
 			maxlength="100"
 			type="text"
 			class="community-name-input"
-			value="nono58"
+			v-model="communityName"
+			:placeholder="subredditName"
 		/>
 		<div class="Characters-remaining">93 Characters remaining</div>
 		<h3 class="medium-font">Community topics</h3>
@@ -47,9 +56,23 @@
 				></div>
 			</div>
 			&nbsp;
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+
 			<span style="margin-left: auto; margin-right: 2px">0/25</span></span
 		>
+		<v-select
+			style="margin: 10px; width: max-content; color: #0079d3; fill: #0079d3"
+			:options="topics"
+			v-model="mainTopic"
+			@click="getsuggestedTopics()"
+		></v-select>
+		<v-select
+			class=""
+			style="margin: 10px; height: 50px"
+			:options="topics"
+			v-model="subTopics"
+			multiple
+			@click="getsuggestedTopics()"
+		></v-select>
 		<!-- <div class="_1oREjd5ToMFah-VfX5Zt1z">
 			<div class="_1PLoXiZH4WKzHTfmYIt34X qWs3cMcSjquK-OXl-9jH5">
 				<button class="apk_M-7ks6NcaiMN8cotM qWs3cMcSjquK-OXl-9jH5" role="menu">
@@ -71,146 +94,179 @@
 			rows="2"
 			class="text-area"
 			style="margin-bottom: 0px"
+			v-model="communityDescription"
 		></textarea>
 		<div class="Characters-remaining">500 Characters remaining</div>
 		<h3 class="medium-font">Send welcome message to new members</h3>
-		<!-- <p class="description">
-			This is how new members come to understand your community.
-		</p> -->
+		<span class="description"
+			>Create a custom welcome message to greet people the instant they join
+			your community. New community members will see this in a direct message 1
+			hour after joining.&nbsp;<a
+				href=""
+				rel="noopener nofollow ugc"
+				target="_blank"
+				class="_13svhQIUZqD9PVzFcLwOKT styled-outbound-link _2Tzl9XrmQzUn94gYHRUYMI"
+				original_target=""
+				waprocessedid="a53wog"
+				waprocessedanchor="true"
+				style="display: inline-block"
+				>Learn more.</a
+			>
+			<div
+				mcafee_wa_ann=""
+				waprocessedid="a53wog"
+				style="
+					cursor: default;
+					display: inline-block;
+					float: none;
+					padding: 0px 0px 0px 4px;
+					position: relative;
+					top: 2px;
+					z-index: 1;
+				"
+			>
+				<div
+					id="0DE9E47C-871A-4F90-8440-B190C216800A_11"
+					class="mcafee_ok"
+					onselectstart="return false;"
+					oncontextmenu="return false;"
+					tabindex="0"
+					style="outline: none"
+				></div>
+			</div>
+			&nbsp;
+			<switch-button
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getSendmessage"
+			></switch-button>
+		</span>
+		<textarea
+			v-if="sendWelcomeMessage"
+			maxlength="50000"
+			rows="5"
+			class="text-area"
+			style="
+				margin: 10px auto;
+				padding: 15px;
+				font-size: 15px;
+				font-weight: 100;
+			"
+			v-model="welcomeMessage"
+			placeholder="Welcome to our community! We’re here to discuss our passion for all things related to grated cheese. (Heads up—we’re a text-only community, so sorry no image posts.) Get started by introducing yourself in our post for newbies, then check out our rules to learn more and dive in."
+		></textarea>
 		<h3 class="secondary-title">COMMUNITY LOCATION AND MAIN LANGUAGE</h3>
 		<p class="description">
 			Adding a location helps your community show up in search results and
 			recommendations and helps local redditors find it easier.
 		</p>
-		<!-- <div class="community-box flex-column">
-			<div class="community-box-title">
-				<h3 class="title-black">Community category</h3>
-			</div>
-			<div class="community-box-input flex-column">
-				<select
-					class="input-name"
-					v-model.trim="communityCategory"
-					@blur="validateCommunityCategory"
-					@click="validateCommunityCategory"
-					id="category-input"
-				>
-					<option
-						v-for="category of categories"
-						:key="category.name"
-						:value="category.name"
-						:id="category.name"
-					>
-						{{ category.name }}
-					</option>
-				</select>
-				<div
-					v-if="communityCategoryRequiredError"
-					class="title-grey title-red"
-					id="required-category"
-				>
-					A community category is required
-				</div>
-			</div>
-		</div> -->
+
 		<h3 class="medium-font">Language</h3>
-		<input
+		<!-- <input
 			id="1"
 			data-testid="autocomplete-input-73c89008-53dd-4eea-8ee5-a5e450cf90c7"
 			class="language"
 			name="1"
 			placeholder="Type to search for a language"
 			value="English"
-		/>
-		<!-- <ul
-			class="lang_ul"
-			id="autocomplete-dropdown-45a86af7-8d96-49ec-8e3b-bd8aa27fb18f"
-		>
-			<li class="lang_li">Other</li>
-			<li class="lang_li">Afrikaans</li>
-			<li class="lang_li">Azərbaycan</li>
-			<li class="lang_li">Bahasa Indonesia</li>
-			<li class="lang_li">Bahasa Melayu</li>
-			<li class="lang_li">Bosanski</li>
-			<li class="lang_li">Català</li>
-			<li class="lang_li">Čeština</li>
-			<li class="lang_li">Dansk</li>
-			<li class="lang_li">Deutsch</li>
-			<li class="lang_li">Eesti</li>
-			<li class="lang_li2 lang_li">English</li>
-			<li class="lang_li">English (India)</li>
-			<li class="lang_li">English (UK)</li>
-			<li class="lang_li">English (US)</li>
-			<li class="lang_li">Español (España)</li>
-			<li class="lang_li">Español (Latinoamérica)</li>
-			<li class="lang_li">Español (US)</li>
-			<li class="lang_li">Euskara</li>
-			<li class="lang_li">Filipino</li>
-			<li class="lang_li">Français</li>
-			<li class="lang_li">Français (Canada)</li>
-			<li class="lang_li">Galego</li>
-			<li class="lang_li">Hrvatski</li>
-			<li class="lang_li">IsiZulu</li>
-			<li class="lang_li">Íslenska</li>
-			<li class="lang_li">Italiano</li>
-			<li class="lang_li">Kiswahili</li>
-			<li class="lang_li">Latviešu</li>
-			<li class="lang_li">Lietuvių</li>
-			<li class="lang_li">Magyar</li>
-			<li class="lang_li">Nederlands</li>
-			<li class="lang_li">Norsk</li>
-			<li class="lang_li">O‘zbek</li>
-			<li class="lang_li">Polski</li>
-			<li class="lang_li">Português</li>
-			<li class="lang_li">Português (Brasil)</li>
-			<li class="lang_li">Română</li>
-			<li class="lang_li">Shqip</li>
-			<li class="lang_li">Slovenčina</li>
-			<li class="lang_li">Slovenščina</li>
-			<li class="lang_li">Srpski</li>
-			<li class="lang_li">Suomi</li>
-			<li class="lang_li">Svenska</li>
-			<li class="lang_li">Tiếng Việt</li>
-			<li class="lang_li">Türkçe</li>
-			<li class="lang_li">Ελληνικά</li>
-			<li class="lang_li">Беларуская</li>
-			<li class="lang_li">Български</li>
-			<li class="lang_li">Кыргызча</li>
-			<li class="lang_li">Қазақ Тілі</li>
-			<li class="lang_li">Македонски</li>
-			<li class="lang_li">Монгол</li>
-			<li class="lang_li">Русский</li>
-			<li class="lang_li">Српски</li>
-			<li class="lang_li">Українська</li>
-			<li class="lang_li">ქართული</li>
-			<li class="lang_li">Հայերեն</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">עברית</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">اردو</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">العربية</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">فارسی</li>
-			<li class="lang_li">አማርኛ</li>
-			<li class="lang_li">नेपाली</li>
-			<li class="lang_li">मराठी</li>
-			<li class="lang_li">हिन्दी</li>
-			<li class="lang_li">অসমীয়া</li>
-			<li class="lang_li">বাংলা</li>
-			<li class="lang_li">ਪੰਜਾਬੀ</li>
-			<li class="lang_li">ગુજરાતી</li>
-			<li class="lang_li">ଓଡ଼ିଆ</li>
-			<li class="lang_li">தமிழ்</li>
-			<li class="lang_li">తెలుగు</li>
-			<li class="lang_li">ಕನ್ನಡ</li>
-			<li class="lang_li">മലയാളം</li>
-			<li class="lang_li">සිංහල</li>
-			<li class="lang_li">ภาษาไทย</li>
-			<li class="lang_li">ລາວ</li>
-			<li class="lang_li">မြန်မာစကား</li>
-			<li class="lang_li">ភាសាខ្មែរ</li>
-			<li class="lang_li">한국어</li>
-			<li class="lang_li">中文 (简体)</li>
-			<li class="lang_li">中文 (繁體)</li>
-			<li class="lang_li">中文 (香港)</li>
-			<li class="lang_li">日本語</li>
-		</ul> -->
+		/> -->
+		<v-select
+			class="land-drop"
+			:options="languages"
+			v-model="language"
+		></v-select>
+		<!-- <div class="parent-language">
+			<ul
+				class="lang_ul"
+				id="autocomplete-dropdown-45a86af7-8d96-49ec-8e3b-bd8aa27fb18f"
+			>
+				<li class="lang_li">Other</li>
+				<li class="lang_li">Afrikaans</li>
+				<li class="lang_li">Azərbaycan</li>
+				<li class="lang_li">Bahasa Indonesia</li>
+				<li class="lang_li">Bahasa Melayu</li>
+				<li class="lang_li">Bosanski</li>
+				<li class="lang_li">Català</li>
+				<li class="lang_li">Čeština</li>
+				<li class="lang_li">Dansk</li>
+				<li class="lang_li">Deutsch</li>
+				<li class="lang_li">Eesti</li>
+				<li class="lang_li">English</li>
+				<li class="lang_li">English (India)</li>
+				<li class="lang_li">English (UK)</li>
+				<li class="lang_li">English (US)</li>
+				<li class="lang_li">Español (España)</li>
+				<li class="lang_li">Español (Latinoamérica)</li>
+				<li class="lang_li">Español (US)</li>
+				<li class="lang_li">Euskara</li>
+				<li class="lang_li">Filipino</li>
+				<li class="lang_li">Français</li>
+				<li class="lang_li">Français (Canada)</li>
+				<li class="lang_li">Galego</li>
+				<li class="lang_li">Hrvatski</li>
+				<li class="lang_li">IsiZulu</li>
+				<li class="lang_li">Íslenska</li>
+				<li class="lang_li">Italiano</li>
+				<li class="lang_li">Kiswahili</li>
+				<li class="lang_li">Latviešu</li>
+				<li class="lang_li">Lietuvių</li>
+				<li class="lang_li">Magyar</li>
+				<li class="lang_li">Nederlands</li>
+				<li class="lang_li">Norsk</li>
+				<li class="lang_li">O‘zbek</li>
+				<li class="lang_li">Polski</li>
+				<li class="lang_li">Português</li>
+				<li class="lang_li">Português (Brasil)</li>
+				<li class="lang_li">Română</li>
+				<li class="lang_li">Shqip</li>
+				<li class="lang_li">Slovenčina</li>
+				<li class="lang_li">Slovenščina</li>
+				<li class="lang_li">Srpski</li>
+				<li class="lang_li">Suomi</li>
+				<li class="lang_li">Svenska</li>
+				<li class="lang_li">Tiếng Việt</li>
+				<li class="lang_li">Türkçe</li>
+				<li class="lang_li">Ελληνικά</li>
+				<li class="lang_li">Беларуская</li>
+				<li class="lang_li">Български</li>
+				<li class="lang_li">Кыргызча</li>
+				<li class="lang_li">Қазақ Тілі</li>
+				<li class="lang_li">Македонски</li>
+				<li class="lang_li">Монгол</li>
+				<li class="lang_li">Русский</li>
+				<li class="lang_li">Српски</li>
+				<li class="lang_li">Українська</li>
+				<li class="lang_li">ქართული</li>
+				<li class="lang_li">Հայերեն</li>
+				<li class="lang_li lang_li2">עברית</li>
+				<li class="lang_li lang_li2">اردو</li>
+				<li class="lang_li lang_li2">العربية</li>
+				<li class="lang_li lang_li2">فارسی</li>
+				<li class="lang_li">አማርኛ</li>
+				<li class="lang_li">नेपाली</li>
+				<li class="lang_li">मराठी</li>
+				<li class="lang_li">हिन्दी</li>
+				<li class="lang_li">অসমীয়া</li>
+				<li class="lang_li">বাংলা</li>
+				<li class="lang_li">ਪੰਜਾਬੀ</li>
+				<li class="lang_li">ગુજરાતી</li>
+				<li class="lang_li">ଓଡ଼ିଆ</li>
+				<li class="lang_li">தமிழ்</li>
+				<li class="lang_li">తెలుగు</li>
+				<li class="lang_li">ಕನ್ನಡ</li>
+				<li class="lang_li">മലയാളം</li>
+				<li class="lang_li">සිංහල</li>
+				<li class="lang_li">ภาษาไทย</li>
+				<li class="lang_li">ລາວ</li>
+				<li class="lang_li">မြန်မာစကား</li>
+				<li class="lang_li">ភាសាខ្មែរ</li>
+				<li class="lang_li">한국어</li>
+				<li class="lang_li">中文 (简体)</li>
+				<li class="lang_li">中文 (繁體)</li>
+				<li class="lang_li">中文 (香港)</li>
+				<li class="lang_li">日本語</li>
+			</ul>
+		</div> -->
 		<h3 class="medium-font">Region</h3>
 		<div style="position: relative">
 			<label class="loc-icon" for="location"
@@ -231,7 +287,7 @@
 				class="location-input"
 				name="location"
 				placeholder="Add location"
-				value=""
+				v-model="Region"
 			/>
 		</div>
 		<h3 class="secondary-title">COMMUNITY TYPE</h3>
@@ -411,22 +467,278 @@
 			When your community is marked as an 18+ community, users must be flagged
 			as 18+ in their user settings
 
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<switch-button
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getNsfw"
+			></switch-button>
 		</p>
-		<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
-		<h3 class="medium-font">Accepting requests to join</h3>
+		<div v-if="communityType == 'Private'">
+			<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
+			<h3 class="medium-font">Accepting requests to join</h3>
 
-		<p class="description">
-			Display a button on your private subreddit that allows users to request to
-			join. Users may still send your subreddit modmail whether this is on or
-			off.
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
-		</p>
+			<p class="description">
+				Display a button on your private subreddit that allows users to request
+				to join. Users may still send your subreddit modmail whether this is on
+				or off.
+				<switch-button
+					id="btn2"
+					style="margin-left: 15px"
+					@checked="getRequesttojoin"
+				></switch-button>
+			</p>
+		</div>
+		<div v-if="communityType == 'Restricted'">
+			<h3 class="secondary-title">RESTRICTED COMMUNITY SETTINGS</h3>
+			<h3 class="medium-font">
+				Approved users have the ability to
+				<!-- <p style="text-align: right"> -->
+				<v-select
+					class=""
+					style="margin-left: 50px"
+					:options="approvedUsers"
+					v-model="approvedUsersHaveTheAbilityTo"
+				></v-select>
+				<!-- </p> -->
+			</h3>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'POST ONLY (DEFAULT)'"
+			>
+				Only approved users can post. Anyone can comment
+			</p>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'COMMENT ONLY'"
+			>
+				Only approved users can comment. Anyone can post.
+			</p>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'POST & COMMENT'"
+			>
+				Only approved users can post and comment.
+			</p>
+
+			<h3 class="medium-font">
+				Accepting new requests to post
+				<switch-button
+					id="btn2"
+					style="margin-left: 15px"
+					@checked="getRequeststopost"
+				></switch-button>
+			</h3>
+		</div>
 	</div>
 </template>
 
 <script>
-export default {};
+import BaseButton from '@/components/BaseComponents/BaseButton.vue';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+export default {
+	computed: {
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+	},
+	components: {
+		vSelect,
+		BaseButton,
+	},
+	data() {
+		return {
+			communityName: '',
+			mainTopic: '',
+			subTopics: [],
+			communityDescription: '',
+			sendWelcomeMessage: false,
+			welcomeMessage: '',
+			language: 'English',
+			Region: '',
+			nsfw: false,
+			acceptingRequestsToJoin: false,
+			acceptingRequestsToPost: false,
+			approvedUsersHaveTheAbilityTo: 'Post only',
+			languages: [
+				'Afrikaans',
+				'Azərbaycan',
+				'Bahasa Indonesia',
+				'Bahasa Melayu',
+				'Bosanski',
+				'Català',
+				'Čeština',
+				'Dansk',
+				'Deutsch',
+				'Eesti',
+				'English',
+				'English (India)',
+				'English (UK)',
+				'English (US)',
+				'Español (España)',
+				'Español (Latinoamérica)',
+				'Español (US)',
+				'Euskara',
+				'Filipino',
+				'Français',
+				'Français (Canada)',
+				'Galego',
+				'Hrvatski',
+				'IsiZulu',
+				'Íslenska',
+				'Italiano',
+				'Kiswahili',
+				'Latviešu',
+				'Lietuvių',
+				'Magyar',
+				'Nederlands',
+				'Norsk',
+				'O‘zbek',
+				'Polski',
+				'Português',
+				'Português (Brasil)',
+				'Română',
+				'Shqip',
+				'Slovenščina',
+				'Srpski',
+				'Suomi',
+				'Svenska',
+				'Tiếng Việt',
+				'Türkçe',
+				'Ελληνικά',
+				'Беларуская',
+				'Български',
+				'Кыргызча',
+				'Қазақ Тілі',
+				'Македонски',
+				'Монгол',
+				'Русский',
+				'Српски',
+				'Українська',
+				'ქართული',
+				'Հայերեն',
+				'עברית',
+				'اردو',
+				'العربية',
+				'فارسی',
+				'አማርኛ',
+				'नेपाली',
+				'मराठी<',
+				'हिन्दी',
+				'অসমীয়া',
+				'বাংলা',
+				'ਪੰਜਾਬੀ',
+				'ગુજરાતી',
+				'ଓଡ଼ିଆ',
+				'தமிழ்',
+				'తెలుగు',
+				'ಕನ್ನಡ',
+				'മലയാളം',
+				'සිංහල',
+				'ภาษาไทย',
+				'ລາວ',
+				'မြန်မာစကား',
+				'ភាសាខ្មែរ',
+				'한국어',
+				'中文 (简体)',
+				'中文 (繁體)',
+				'中文 (香港)',
+				'日本語',
+			],
+			approvedUsers: ['Post only', 'Comment only', 'Post & Comment'],
+			topics: [],
+			typeChosen0: true,
+			typeChosen1: false,
+			typeChosen2: false,
+			communityType: 'Public',
+			buttonDisabled: false,
+		};
+	},
+	methods: {
+		async getsuggestedTopics() {
+			try {
+				await this.$store.dispatch('community/getsuggestedTopics', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.topics = this.$store.getters['community/getTopics'];
+		},
+		chooseType(index) {
+			if (index == 2) {
+				this.typeChosen2 = true;
+				this.typeChosen1 = false;
+				this.typeChosen0 = false;
+				this.communityType = 'Private';
+			} else if (index == 1) {
+				this.typeChosen1 = true;
+				this.typeChosen2 = false;
+				this.typeChosen0 = false;
+				this.communityType = 'Restricted';
+			} else {
+				this.typeChosen0 = true;
+				this.typeChosen1 = false;
+				this.typeChosen2 = false;
+				this.communityType = 'Public';
+			}
+		},
+		getSendmessage(value) {
+			this.sendWelcomeMessage = value;
+			console.log('this.sendWelcomeMessage');
+			console.log(this.this.sendWelcomeMessage);
+		},
+		getNsfw(value) {
+			this.nsfw = value;
+			console.log('this.NSFW');
+			console.log(this.this.NSFW);
+		},
+		getRequesttojoin(value) {
+			this.acceptingRequestsToJoin = value;
+			console.log('this.acceptingRequestsToJoin');
+			console.log(this.acceptingRequestsToJoin);
+		},
+		getRequeststopost(value) {
+			this.acceptingRequestsToPost = value;
+			console.log('this.acceptingRequestsToPost');
+			console.log(this.acceptingRequestsToPost);
+		},
+		async saveChanges() {
+			const actionPayload = {
+				communityName: this.communityName,
+				mainTopic: this.mainTopic,
+				subTopics: this.subTopics,
+				communityDescription: this.communityDescription,
+				sendWelcomeMessage: this.sendWelcomeMessage,
+				welcomeMessage: this.welcomeMessage,
+				language: this.language,
+				Region: this.Region,
+				Type: this.communityType,
+				NSFW: this.nsfw,
+				acceptingRequestsToJoin: this.acceptingRequestsToJoin,
+				acceptingRequestsToPost: this.acceptingRequestsToPost,
+				approvedUsersHaveTheAbilityTo: this.approvedUsersHaveTheAbilityTo,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/communitySettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+	},
+};
 </script>
 
 <style scoped>
@@ -438,6 +750,8 @@ export default {};
 	padding: 16px 24px;
 	display: block;
 	margin: 10px auto;
+	height: max-content;
+	overflow-y: auto;
 }
 .main-title {
 	font-size: 18px;
@@ -514,7 +828,10 @@ export default {};
 	line-height: 21px;
 	padding: 5px 8px 5px 10px;
 	width: 100%;
-	margin: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 0;
 }
 .lang_ul {
 	background-color: #ffffff;
@@ -522,7 +839,6 @@ export default {};
 	border-radius: 4px;
 	box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 	box-sizing: border-box;
-	-ms-flex: none;
 	flex: none;
 	max-height: 35vh;
 	overflow-y: auto;
@@ -531,6 +847,17 @@ export default {};
 	top: 100%;
 	width: 100%;
 	z-index: 3;
+	margin-top: 0;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+ul,
+ol {
+	list-style: none;
+}
+.land-drop {
+	margin: 10px;
 }
 .lang_li {
 	cursor: pointer;
@@ -546,8 +873,13 @@ export default {};
 .lang_li2 {
 	direction: rtl;
 }
-.lang_li3 {
-	direction: rtl;
+.language:focus ~ .lang_ul {
+	display: nono;
+}
+.parent-language {
+	display: flex;
+	flex: auto;
+	position: relative;
 }
 .location-input {
 	background-color: #ffffff;
@@ -657,5 +989,13 @@ export default {};
 	margin: 0 4px 0 8px;
 	padding: 0 4px;
 	background-color: #ff585b;
+}
+.save-button {
+	width: max-content;
+	height: 30px;
+	background-color: #0079d3;
+	color: white;
+	padding: 10px;
+	font-size: medium;
 }
 </style>

@@ -583,7 +583,7 @@ export default {
 					id: this.$route.path.split('/')[4],
 					beforeMod: '',
 					afterMod: '',
-					sort: this.$route.query.sort,
+					sort: this.sortByTitle.toLowerCase(),
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -755,7 +755,8 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			this.$router.back();
+			if (this.$route.path.split('/')[1] == 'r') this.$router.push('/main');
+			else this.$router.back();
 		},
 	},
 };

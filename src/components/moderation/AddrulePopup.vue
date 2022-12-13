@@ -410,7 +410,6 @@ export default {
 		charCount(title) {
 			if (this.isNameTaken) {
 				this.showError = true;
-				console.log(this.ruleNameEdit, ' ', this.ruleName);
 			}
 			if (title == 'reason') {
 				this.charRemainingReason = 100 - this.reportReason.length;

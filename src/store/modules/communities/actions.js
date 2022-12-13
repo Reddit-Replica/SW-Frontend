@@ -307,7 +307,7 @@ export default {
 	/**
 	 * Action for joining a specific subreddit.
 	 * @action joinSubreddit
-	 * @param {Object} contains message if it is a private subreddit and base url.
+	 * @param {Object} contains message if it is a private subreddit, subreddit id and base url.
 	 * @returns {void}
 	 */
 	async joinSubreddit(_, payload) {
@@ -333,6 +333,39 @@ export default {
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	/**
+	 * Action for leaving a specific subreddit.
+	 * @action leaveSubreddit
+	 * @param {Object} contains subreddit name and base url.
+	 * @returns {void}
+	 */
+	async leaveSubreddit(_, payload) {
+		const leaveInfo = {
+			subredditName: payload.subredditName,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/leave-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+			body: JSON.stringify(leaveInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			return;
 		} else if (response.status == 404) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -406,5 +439,30 @@ export default {
 			posts.push(post);
 		}
 		context.commit('setPosts', posts);
+	},
+	///////////////// moderation community norhan //////////////////
+	async getsuggestedTopics(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/suggested-topics`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('setTopics', responseData.communityTopics);
+			console.log(responseData.children);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+		return response.status;
 	},
 };

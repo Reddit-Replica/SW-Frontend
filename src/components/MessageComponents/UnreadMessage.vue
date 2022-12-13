@@ -8,11 +8,11 @@
 	>
 		<li>
 			<p class="subject-text">
-				<span>{{ message.subject }}:</span>
+				<span>{{ message.subject }}</span>
 			</p>
-			<div :class="!isRead ? 'box-unread' : ''">
+			<div class="box-unread">
 				<p class="md-details">
-					<span>from&nbsp;</span>
+					<span class="unread">from&nbsp;</span>
 					<span class="sender"
 						><a
 							v-if="message.isSenderUser"
@@ -26,10 +26,8 @@
 							:id="'message-sender-' + index"
 							>/r/{{ message.senderUsername }}</a
 						>
-						<span
-							v-if="message.receiverUsername != ''"
-							:class="!isRead ? 'unread' : ''"
-							><span>&nbsp;via&nbsp;</span>
+						<span v-if="message.receiverUsername != ''"
+							><span class="unread">&nbsp;via&nbsp;</span>
 							<a
 								v-if="message.isReceiverUser"
 								:href="'/user/' + message.receiverUsername"
@@ -42,18 +40,13 @@
 								>/r/{{ message.receiverUsername }}</a
 							>
 						</span></span
-					><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
-					><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
-						{{ handleTime }}</time
-					>
+					><span class="unread">&nbsp;sent&nbsp;</span
+					><time class="unread" :id="'time-' + index"> {{ handleTime }}</time>
 				</p>
 
 				<Markdown class="md" id="md" :source="message.text" />
 				<!-- <p class="md">{{ message.text }}</p> -->
-				<ul
-					class="flat-list ul-messages"
-					v-if="message.isSenderUser && !sendByMe"
-				>
+				<ul class="flat-list ul-messages">
 					<!-- <li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li> -->
@@ -154,7 +147,7 @@
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" :id="'unread-' + index" v-if="isRead">
+					<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
 						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 					</li>
 					<li :id="'reply-box-' + index">
@@ -200,13 +193,8 @@ export default {
 				receiverUsername: '',
 				sendAt: '',
 				subject: '',
-				type: '',
 				subredditName: '',
 				isModerator: '',
-				postTitle: '',
-				postID: '',
-				commentID: '',
-				numOfComments: '',
 				isSenderUser: '',
 				isReceiverUser: '',
 			}),
@@ -230,7 +218,6 @@ export default {
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
-			isRead: true,
 		};
 	},
 	// @vuese
@@ -245,9 +232,9 @@ export default {
 		// @vuese
 		//return handled time after calculated it
 		// @type object
-		sendByMe() {
-			return this.message.senderUsername == localStorage.getItem('userName');
-		},
+		// handleTime() {
+		// 	return this.$store.getters['moderation/handleTime'];
+		// },
 	},
 	methods: {
 		// @vuese
@@ -283,7 +270,7 @@ export default {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {
 				try {
-					await this.$store.dispatch('messages/deleteMessage', {
+					this.$store.dispatch('messages/deleteMessage', {
 						id: this.message.id,
 						type: 'message',
 						baseurl: this.$baseurl,
@@ -303,21 +290,20 @@ export default {
 		async blockAction(action) {
 			this.blockUser = !this.blockUser;
 			let name = '';
-			if (this.sendByMe) {
-				name = this.message.receiverUsername;
+			if (this.senderUsername == localStorage.getItem('userName')) {
+				name = this.receiverUsername;
 			} else {
-				name = this.message.senderUsername;
+				name = this.senderUsername;
 			}
 			if (action == 'yes') {
 				try {
-					await this.$store.dispatch('messages/blockUser', {
+					this.$store.dispatch('messages/blockUser', {
 						block: true,
 						username: name,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
-						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -338,13 +324,14 @@ export default {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
 				try {
-					await this.$store.dispatch('messages/spamMessage', {
+					this.$store.dispatch('messages/spamMessage', {
 						id: this.message.id,
+						type: 'message',
+						reason: '',
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/markSpamSuccessfully']) {
 						this.spammed = true;
-						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -370,8 +357,5 @@ export default {
 a:hover,
 .link:hover {
 	text-decoration: underline;
-}
-.hide-message {
-	display: none;
 }
 </style>

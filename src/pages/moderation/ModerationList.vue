@@ -81,7 +81,7 @@
 						:moderator="invitedModerator"
 						:index="index"
 						:invited-mod="true"
-						@done-successfully="doneSuccessfully('invited')"
+						@done-successfully="doneSuccessfully('canceled')"
 					></list-item>
 				</ul>
 			</div>
@@ -90,7 +90,7 @@
 			v-if="showInvitePopup"
 			:subreddit-name="subredditName"
 			@exit="handleInviteMod()"
-			@done-successfully="doneSuccessfully('cancel')"
+			@done-successfully="doneSuccessfully('invited')"
 		></invite-moderator>
 		<div id="sure-popup-form">
 			<base-dialog
@@ -539,5 +539,15 @@ input:focus {
 	margin-top: 2rem;
 	padding: 1rem;
 	color: red;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>

@@ -66,6 +66,8 @@ export default {
 	border-radius: 5px;
 	z-index: 10;
 	min-width: 80px;
+	width: max-content;
+	cursor: pointer;
 }
 .sub-menu li {
 	color: var(--color-grey-dark-2);

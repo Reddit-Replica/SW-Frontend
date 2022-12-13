@@ -1,9 +1,13 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div
 			v-for="(message, index) in inboxMessages"
 			:key="message"
 			:message="message"
+			@done-successfully="doneSuccessfully()"
 		>
 			<allinbox-component
 				v-if="message.type == 'Messages'"
@@ -21,9 +25,7 @@
 				:index="index"
 			></user-mentions>
 		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
-		</div>
+		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
 
@@ -48,6 +50,7 @@ export default {
 	data() {
 		return {
 			noMessages: false,
+			errorResponse: null,
 		};
 	},
 	computed: {
@@ -78,30 +81,12 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			try {
-				await this.$store.dispatch('messages/markAllReadMessage', {
-					baseurl: this.$baseurl,
-					type: 'Messages',
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			try {
-				await this.$store.dispatch('messages/markAllReadMessage', {
-					baseurl: this.$baseurl,
-					type: 'Post Replies',
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			try {
-				await this.$store.dispatch('messages/markAllReadMessage', {
-					baseurl: this.$baseurl,
-					type: 'Username Mentions',
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
+		},
+		// @vuese
+		//reload compose messages from the store
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadInboxMessages();
 		},
 	},
 };

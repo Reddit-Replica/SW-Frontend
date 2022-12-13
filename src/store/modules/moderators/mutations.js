@@ -26,6 +26,9 @@ export default {
 	approveUserSuccessfully(state, payload) {
 		state.approveUserSuccessfully = payload;
 	},
+	removeApproveSuccessfully(state, payload) {
+		state.removeApproveSuccessfully = payload;
+	},
 
 	//////////////MUTED/////////////
 
@@ -34,6 +37,9 @@ export default {
 	},
 	muteUserSuccessfully(state, payload) {
 		state.muteUserSuccessfully = payload;
+	},
+	unmuteUserSuccessfully(state, payload) {
+		state.unmuteUserSuccessfully = payload;
 	},
 
 	//////////////LEAVE MOD/////////////

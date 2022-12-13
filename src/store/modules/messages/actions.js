@@ -50,7 +50,6 @@ export default {
 				};
 				messages.push(message);
 			}
-			console.log(messages);
 			context.commit('setInboxMessages', messages);
 			context.commit('before', before);
 			context.commit('after', after);
@@ -473,35 +472,35 @@ export default {
 	 */
 	async deleteMessage(context, payload) {
 		context.commit('deleteMessageSuccessfully', false);
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
 		const del = {
 			id: payload.id,
 			type: payload.type,
 		};
-		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/delete', {
+		const response = await fetch(baseurl + `/delete`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				Authorization: `Bearer ${accessToken}`,
 			},
 			body: JSON.stringify(del),
 		});
 
 		const responseData = await response.json();
-
-		if (response.status == 204) {
+		if (response.status == 200) {
 			context.commit('deleteMessageSuccessfully', true);
 		} else if (response.status == 400) {
-			const error = new Error(responseData.error || 'The request was invalid');
+			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		} else if (response.status == 401) {
 			const error = new Error(
-				responseData.error || 'Unauthorized to delete this thing'
+				responseData.error || 'Unauthorized to send a message'
 			);
 			throw error;
 		} else if (response.status == 404) {
-			const error = new Error(responseData.error || 'Thing not found');
+			const error = new Error(responseData.error || 'Not Found');
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');
@@ -519,13 +518,11 @@ export default {
 		context.commit('markSpamSuccessfully', false);
 		const spam = {
 			id: payload.id,
-			type: payload.type,
-			reason: payload.reason,
 		};
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/mark-spam', {
-			method: 'POST',
+		const response = await fetch(baseurl + '/spam-message', {
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
