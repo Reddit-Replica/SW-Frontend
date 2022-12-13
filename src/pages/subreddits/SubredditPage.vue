@@ -40,19 +40,9 @@
 					:community-topic-prop="subreddit.mainTopic"
 					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
-				<!-- <about-community-read-only
-					v-else
-					id="abot-comm-comp"
-					:subreddit-name="subreddit.title"
-					:is-favourite="subreddit.isFavorite"
-					:members-count="subreddit.members"
-					:community-date="subreddit.dateOfCreation"
-					:community-description-prop="subreddit.description"
-				></about-community-read-only> -->
-
 				<moderators-bar
-					:moderators="subreddit.moderators"
-					:subreddit-name="subredditName"
+					:moderators="moderators"
+					:subreddit-name="subreddit.title"
 				></moderators-bar>
 				<backtotop-button id="back-to-top-subreddit"></backtotop-button>
 			</div>
@@ -93,7 +83,6 @@ import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue'
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
-// import AboutCommunityReadOnly from '../../components/CommunityComponents/AboutCommunityReadOnly.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
@@ -106,7 +95,6 @@ export default {
 		CreatepostBar,
 		SortBarSubreddit,
 		AboutCommunityBar,
-		// AboutCommunityReadOnly,
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
@@ -135,15 +123,11 @@ export default {
 				'Sports',
 				'Travel',
 			],
-			moderators: [
-				{ id: 0, name: 'HodaGamal' },
-				{ id: 1, name: 'AsmaaAdel' },
-			],
 			showFirstDialog: true,
 			firstTimeCreated: false,
 			subreddit: {},
+			moderators: [],
 			posts: [],
-			isModerator: true,
 		};
 	},
 	computed: {
@@ -160,6 +144,7 @@ export default {
 		this.firstTimeCreated =
 			this.$store.getters['community/createdSuccessfully'];
 		this.getSubreddit();
+		this.getModerators();
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
@@ -183,6 +168,16 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 			console.log(this.subreddit);
+		},
+		async getModerators() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('moderation/loadListOfModerators', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.moderators = this.$store.getters['moderation/listOfModerators'];
+			console.log(this.moderators);
 		},
 		reloadPage() {
 			this.getSubreddit();
