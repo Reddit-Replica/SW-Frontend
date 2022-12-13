@@ -46,7 +46,10 @@
 
 				<Markdown class="md" id="md" :source="message.text" />
 				<!-- <p class="md">{{ message.text }}</p> -->
-				<ul class="flat-list ul-messages">
+				<ul
+					class="flat-list ul-messages"
+					v-if="message.isSenderUser && !sendByMe"
+				>
 					<!-- <li :id="'permalink-link-' + index">
 						<a href="" :id="'permalink-a-' + index">Permalink</a>
 					</li> -->
@@ -237,9 +240,9 @@ export default {
 		// @vuese
 		//return handled time after calculated it
 		// @type object
-		// handleTime() {
-		// 	return this.$store.getters['moderation/handleTime'];
-		// },
+		sendByMe() {
+			return this.message.senderUsername == localStorage.getItem('userName');
+		},
 	},
 	methods: {
 		// @vuese
@@ -330,12 +333,13 @@ export default {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/spamMessage', {
+					await this.$store.dispatch('messages/spamMessage', {
 						id: this.message.id,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/markSpamSuccessfully']) {
 						this.spammed = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
