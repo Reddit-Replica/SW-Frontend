@@ -361,6 +361,7 @@ export default {
 			receiverUsername: payload.receiverUsername,
 			subject: payload.subject,
 			type: 'Messages',
+			isReply: payload.isReply,
 		};
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
