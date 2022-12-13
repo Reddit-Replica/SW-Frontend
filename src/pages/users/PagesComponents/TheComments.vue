@@ -1,7 +1,7 @@
 <template>
 	<div style="position: relative">
 		<sortposts-bar @title="sortBarClicked"></sortposts-bar>
-		<div v-if="loading">
+		<div v-if="0 && loading">
 			<the-spinner
 				style="position: absolute; left: 50%; top: 53%; top: 188px"
 			></the-spinner>
@@ -9,11 +9,10 @@
 		<empty-page
 			:page-title="`hmm... u/${this.$route.params.userName} hasn't commented on anything`"
 			v-else-if="
-				0 &&
-				(errorLoading ||
-					!getUserCommentsData.commentsData ||
-					!getUserCommentsData.commentsData.children ||
-					getUserCommentsData.commentsData.children.length == 0)
+				errorLoading ||
+				!getUserCommentsData.commentsData ||
+				!getUserCommentsData.commentsData.children ||
+				getUserCommentsData.commentsData.children.length == 0
 			"
 		></empty-page>
 		<div v-else>
@@ -63,6 +62,8 @@ export default {
 		}
 		this.requestStatusHandler(reqStatus, `user ${sortType} comments`);
 		this.loading = false;
+		console.log(this.getUserCommentsData);
+
 		// if (requestStatus == 200) console.log('Successfully fetched data');
 		// else if (requestStatus == 404) console.log('not found');
 		// else if (requestStatus == 500) console.log(' internal server error');

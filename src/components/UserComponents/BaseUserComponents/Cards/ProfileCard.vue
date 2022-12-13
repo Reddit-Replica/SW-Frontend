@@ -6,7 +6,10 @@
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url(${$baseurl}/${userData['banner']}) `"
+				:style="`background-image: url(${$baseurl}/${userData['banner'].replace(
+					/\\/g,
+					`/`
+				)}) `"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span
@@ -512,6 +515,14 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			// try {
+			// 	await this.$store.dispatch('user/getUserData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.$route.params.userName,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
 		},
 		/**
 		 * @vuese

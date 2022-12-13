@@ -37,16 +37,34 @@
 						</div>
 					</div>
 				</div>
-				<div class="main-post-container">
+				<div class="main-post-container" id="#main-post-container">
 					<div class="main-box">
 						<div class="post-pic-box">
-							<i v-if="postData.data.kind == 'image'"
+							<i
+								v-if="postData.data.kind == 'image'"
+								id="postData-data-kind-image-icon"
 								><i class="fa-regular fa-file-image"></i
 							></i>
-							<i v-if="postData.data.kind == 'link'"
+							<i
+								v-else-if="postData.data.kind == 'link'"
+								id="postData-data-kind-link-icon"
 								><i class="fa-solid fa-link"></i
 							></i>
 							<i
+								v-else-if="
+									postData.data.kind == 'hybrid' || postData.data.kind == 'post'
+								"
+								id="postData-data-hybrid-post-icon"
+								><i class="fa-regular fa-bookmark"></i
+							></i>
+							<i
+								v-else-if="postData.data.kind == 'video'"
+								id="postData-data-kind-video-icon"
+								><i class="fa-solid fa-clapperboard"></i
+							></i>
+
+							<i
+								id="postData-data-kind-post-hybrid-icon"
 								style="
 									transform: translate(185%, 34%);
 									z-index: 5;
@@ -67,53 +85,68 @@
 										class="fa-solid fa-arrow-up-right-from-square"
 									></i></a
 							></i>
-							<img src="../../../assets/R.png" alt="" />
+							<img
+								v-if="
+									postData.data.kind == 'image' &&
+									postData.data.images[0] != null &&
+									postData.data.images[0].path != null
+								"
+								:src="$baseurl + '/' + postData.data.images[0].path"
+								alt=""
+							/>
 						</div>
-						<div class="post-content">
+						<div class="post-content" id="base-user-post-content">
 							<div class="post-header">
-								<div class="post-title">
+								<div class="post-title" id="base-user-post-title">
 									<h3>{{ postData.data.title }}</h3>
 								</div>
 								<a
 									v-if="postData.data.kind == 'link'"
 									class="post-title-link"
+									id="base-user-post-data-link"
 									:href="postData.data.link"
 									target="_blank"
 									>{{ postData.data.link }}/<i
 										class="fa-solid fa-arrow-up-right-from-square"
 									></i
 								></a>
-								<div class="post-status">
+								<div class="post-status" id="base-user-post-status">
 									<router-link
+										id="base-user-post-flair-link"
 										v-if="postData.data.flair"
-										:to="`${$router.push({
-											path: `/r/${postData.data.subreddit}`,
-											query: {
-												f: `flair_name ${postData.data.flair.flairName}`,
-											},
-										})}`"
+										to=""
+										@click="postFlairRouteHandler"
 										class="flair-box"
 										:style="`background-color :${postData.data.flair.backgroundColor};
 										color : ${postData.data.flair.textColor};
 										`"
 										>{{ postData.data.flair.flairName }}</router-link
 									>
-									<span v-if="postData.data.spoiler" class="post-spoiler"
+									<span
+										id="base-user-post-content-spoiler-span"
+										v-if="postData.data.spoiler"
+										class="post-spoiler"
 										><p>spoiler</p></span
 									>
-									<span v-if="postData.data.nsfw" class="post-nsfw"
+									<span
+										id="base-user-post-content-nsfw-span"
+										v-if="postData.data.nsfw"
+										class="post-nsfw"
 										><p>nsfw</p></span
 									>
-									<span class="post-oc"><p>OC</p></span>
+									<span id="base-user-post-content-oc-span" class="post-oc"
+										><p>OC</p></span
+									>
 								</div>
 							</div>
 							<div class="post-user-information">
 								<div class="post-user-name">
 									<router-link
+										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
-												? `u/${$route.params.userName}`
-												: `r/${$postData.data.subreddit}`
+												? `/user/${$route.params.userName}`
+												: `/r/${$postData.data.subreddit}`
 										"
 										>{{
 											postData.data.subreddit == null
@@ -122,18 +155,22 @@
 										}}</router-link
 									>
 								</div>
-								<div class="posted-by">
+								<div class="posted-by" id="base-user-post-content-posted-by">
 									posted by
-									<a style="margin-left: 3px" href=""
+									<router-link
+										style="margin-left: 3px"
+										:to="`/user/${postData.data.postedBy}`"
 										>{{ postData.data.postedBy }}
-									</a>
+									</router-link>
 								</div>
-								<div v-if="postData.data.moderation">
+								<div id="base-user-post-content-posted-posted-at">
 									{{ getMoment(postData.data.postedAt) }}
 									<div
+										id="base-user-data-moderation-spam-spammedBy"
 										v-if="
-											postData.data.moderation.spam &&
-											postData.data.moderation.spam.spammedBy != ''
+											postData.data.moderation != null &&
+											postData.data.moderation.spam != null &&
+											postData.data.moderation.spam.spammedBy != null
 										"
 										class="post-tooltip"
 									>
@@ -141,46 +178,81 @@
 											class="fa-regular fa-calendar-xmark"
 											style="color: #ff585b"
 										></i>
-										<span class="post-tooltiptext"
-											>Approved by
+										<span
+											class="post-tooltiptext"
+											id="base-user-post-data-moderation-spam-spammedBy-tool-tip"
+											>Spammed by
 											{{ postData.data.moderation.spam.spammedBy }} at
 											{{ postData.data.moderation.spam.spammedDate }}</span
 										>
 									</div>
 									<div
-										v-if="postData.data.moderation.lock"
+										id="base-user-data-moderation-lock-lockedBy"
+										v-if="
+											postData.data.moderation != null &&
+											postData.data.moderation.lock != null &&
+											postData.data.moderation.lock
+										"
 										class="post-tooltip"
 									>
-										<i class="fa-solid fa-lock" style="color: #ffd635"></i>
-										<span class="post-tooltiptext">Comments are locked</span>
+										<i
+											id="base-user-data-moderation-lock-lockedBy-icon"
+											class="fa-solid fa-lock"
+											style="color: #ffd635"
+										></i>
+										<span
+											id="base-user-data-moderation-lock-lockedBy-tool-tip"
+											class="post-tooltiptext"
+											>Comments are locked</span
+										>
 									</div>
-									<div v-if="postData.data.pin" class="post-tooltip">
+									<div
+										id="base-user-data-moderation-pin-pinnedBy"
+										v-if="postData.data.pin"
+										class="post-tooltip"
+									>
 										<i class="fa-solid fa-thumbtack" style="color: #46d160"></i>
 										<span class="post-tooltiptext">post are Pinned</span>
 									</div>
 									<div
+										id="base-user-data-moderation-remove-removedBy"
 										v-if="
-											postData.data.moderation.remove &&
-											postData.data.moderation.remove.removedBy != ''
+											postData.data.moderation != null &&
+											postData.data.moderation.remove != null &&
+											postData.data.moderation.remove.removedBy != null
 										"
 										class="post-tooltip"
 									>
-										<i style="color: #ff585b" class="fa-solid fa-ban"></i>
-										<span class="post-tooltiptext"
-											>Approved by
+										<i
+											id="base-user-data-moderation-icon-removedBy"
+											style="color: #ff585b"
+											class="fa-solid fa-ban"
+										></i>
+										<span
+											class="post-tooltiptext"
+											id="base-user-data-moderation-remove-removedBy-tool-tip"
+											>Removed by
 											{{ postData.data.moderation.remove.removedBy }} at
 											{{ postData.data.moderation.remove.removedDate }}</span
 										>
 									</div>
 									<div
+										id="base-user-data-moderation-approve-approveBy"
 										v-if="
-											postData.data.moderation.approve &&
-											postData.data.moderation.approve.approvedBy != ''
+											postData.data.moderation != null &&
+											postData.data.moderation.approve != null &&
+											postData.data.moderation.approve.approvedBy != null
 										"
 										class="post-tooltip"
 									>
-										<i class="fa-solid fa-check" style="color: #46d160"></i>
-										<span class="post-tooltiptext"
+										<i
+											id="base-user-data-moderation-approve-approvedBy-icon"
+											class="fa-solid fa-check"
+											style="color: #46d160"
+										></i>
+										<span
+											class="post-tooltiptext"
+											id="base-user-data-moderation-approve-approvedBy-tool-tip"
 											>Approved by
 											{{ postData.data.moderation.approve.approvedBy }}
 											at
@@ -575,10 +647,12 @@
 						class="post-contents"
 						style="overflow: hidden"
 						v-if="showPostContent"
+						id="base-user-data-show-Post-Content"
 					>
 						<div
 							class="post-picture-container"
 							v-if="postData.data.kind == 'image'"
+							id="base-user-data-post-picture-container"
 						>
 							<picture-post :images="postData.data.images"></picture-post>
 						</div>
@@ -616,10 +690,19 @@
 						<div
 							v-else-if="postData.data.kind == 'hybrid'"
 							class="paragraph-post"
+							id="base-user-data-post-paragraph-post"
 						>
-							<div class="post-kind-post" v-html="PostHybridContent"></div>
+							<div
+								class="post-kind-post"
+								id="base-user-data-post-post-kind-post"
+								v-html="PostHybridContent"
+							></div>
 						</div>
-						<div class="video" v-else-if="postData.data.kind == 'video'">
+						<div
+							class="video"
+							id="base-user-data-post-video-container"
+							v-else-if="postData.data.kind == 'video'"
+						>
 							<!-- <video
 								controls
 								style="
@@ -637,12 +720,20 @@
 						</div>
 					</div>
 					<div class="post-insight" v-else-if="insightActive">
-						<div style="display: flex" v-if="this.insightsLoading">
+						<div
+							id="base-user-data-post-insights-spinner"
+							style="display: flex"
+							v-if="insightsLoading"
+						>
 							<the-spinner
 								style="margin-left: auto; margin-right: auto"
 							></the-spinner>
 						</div>
-						<div v-else class="insights-content">
+						<div
+							v-else
+							class="insights-content"
+							id="base-user-data-post-insights-content"
+						>
 							<div class="insight-header">
 								<h3 class="insights-title">Post Insights</h3>
 								<p class="insights-p">
@@ -652,6 +743,7 @@
 							<ul>
 								<li>
 									<span
+										id="base-user-data-post-insights-getInsights-Data-totalViews"
 										>{{ getInsightsData.totalViews }}
 										<i
 											style="color: #0079d3"
@@ -661,7 +753,10 @@
 									<span><i class="fa-regular fa-eye"></i> total views</span>
 								</li>
 								<li>
-									<span>{{ getInsightsData.upvoteRate }}%</span>
+									<span
+										id="base-user-data-post-insights-getInsights-Data-upvoteRate"
+										>{{ getInsightsData.upvoteRate }}%</span
+									>
 									<span>
 										<i
 											style="width: 12px; height: 12px"
@@ -671,11 +766,17 @@
 									>
 								</li>
 								<li>
-									<span>{{ getInsightsData.communityKarma }} <i></i></span>
+									<span
+										id="base-user-data-post-insights-getInsightsData-communityKarma"
+										>{{ getInsightsData.communityKarma }} <i></i
+									></span>
 									<span><i class="fa-solid fa-fan"></i> Community Karma</span>
 								</li>
 								<li>
-									<span>{{ getInsightsData.totalShares }}<i></i></span>
+									<span
+										id="base-user-data-post-insights-getInsightsData-totalShares"
+										>{{ getInsightsData.totalShares }}<i></i
+									></span>
 									<span> <i class="fa-solid fa-upload"></i> total shares</span>
 								</li>
 							</ul>
@@ -714,39 +815,31 @@ export default {
 			counter: this.postData.data.votes,
 			upClicked: this.postData.data.votingType == 1 ? true : false,
 			downClicked: this.postData.data.votingType == -1 ? true : false,
-			// saved: this.post.saved,
 			postHidden: false,
-			// subMenuDisplay: false,
-			// shareSubMenuDisplay: false,
-			// postHidden: false,
-			// saved: false,
-			/* medo */
 			showPostContent: false,
-			// showOptionsBoxList: false,
-			images: [
-				{
-					imgUrl: '../../../assets/R.png',
-					left: '0',
-				},
-				{
-					imgUrl: '../../../assets/R.png',
-					left: '100',
-				},
-				{
-					imgUrl: '../../../assets/R.png',
-					left: '200',
-				},
-			],
+			// images: [
+			// 	{
+			// 		imgUrl: '../../../assets/R.png',
+			// 		left: '0',
+			// 	},
+			// 	{
+			// 		imgUrl: '../../../assets/R.png',
+			// 		left: '100',
+			// 	},
+			// 	{
+			// 		imgUrl: '../../../assets/R.png',
+			// 		left: '200',
+			// 	},
+			// ],
 			lastLeftPic: 0,
 			lastRightPic: 0,
-			// showShareOptions: false,
 			insightActive: false,
 			insightsLoading: false,
 			PostHybridContent: '',
 		};
 	},
 	created() {
-		this.lastLeftPic = this.images.length - 1;
+		// this.lastLeftPic = this.images.length - 1;
 	},
 	mounted() {},
 	computed: {
@@ -756,6 +849,14 @@ export default {
 		},
 	},
 	methods: {
+		postFlairRouteHandler() {
+			this.$router.push({
+				path: `/r/${this.postData.data.subreddit}`,
+				query: {
+					f: `flair_name ${this.postData.data.flair.flairName}`,
+				},
+			});
+		},
 		getMoment(date) {
 			return moment(date).fromNow();
 		},

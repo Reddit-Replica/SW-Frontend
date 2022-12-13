@@ -2,7 +2,7 @@
 	<div class="popup">
 		<div class="popup-inner">
 			<div class="comments">
-				<div class="container bg-black">
+				<div class="container bg-black" id="test">
 					<div class="row justify-content-center align-items-center">
 						<div class="col-7 d-flex">
 							<div class="vote-box">
@@ -459,22 +459,15 @@
 										</div>
 										<div class="sort-by" @click="displaySortByMenu" id="sort">
 											<span class="title"
-												>Sort By:{{ sortByTitle }}
+												>Sort By:{{ currentSortType }}
 												<font-awesome-icon icon="fa-solid fa-caret-down"
 											/></span>
 											<subMenu
-												:titles="[
-													'Best',
-													'Top',
-													'New',
-													'Controversial',
-													'Old',
-													'Q&A',
-												]"
+												:titles="['best', 'top', 'new', 'old']"
 												class="sort-by-sub-menu"
 												:display="showSortByMenu"
 												@change-title="changeSortByTitle"
-												clicked-prop="Best"
+												:clicked-prop="currentSortType"
 											/>
 										</div>
 									</div>
@@ -556,6 +549,10 @@ export default {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'].userData;
 		},
+		currentSortType() {
+			if (this.$route.query.sort) return this.$route.query.sort;
+			else return 'best';
+		},
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
@@ -563,15 +560,30 @@ export default {
 		this.getPostDetails();
 		this.RequestUserData();
 		this.fetchPostComments();
+		// document.getElementById('test').addEventListener('scroll', () => {
+		// 	console.log('scroll');
+		// });
 	},
 	methods: {
+		click() {
+			console.log('scrolled');
+		},
+		handleScroll: function () {
+			console.log('scroll' + window.scrollY);
+			if (window.scrollY > 50) {
+				this.fetchPostComments();
+			}
+			//return window.scrollY > 100;
+		},
 		async fetchPostComments() {
+			console.log(this.$route.query.sort);
 			try {
 				await this.$store.dispatch('comments/fetchPostComments', {
 					baseurl: this.$baseurl,
 					id: this.$route.path.split('/')[4],
 					beforeMod: '',
 					afterMod: '',
+					sort: this.$route.query.sort,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -631,9 +643,13 @@ export default {
 		//@vuese
 		//change the order of comments listing according to parameter passed to it
 		// @arg The argument is a string value representing sort type
-		changeSortByTitle(title) {
+		async changeSortByTitle(title) {
 			this.sortByTitle = title;
-			this.$router.push('/comments/' + title);
+			await this.$router.push({
+				path: this.$route.fullPath,
+				query: { sort: this.sortByTitle.toLowerCase() },
+			});
+			this.fetchPostComments();
 		},
 		//@vuese
 		//opens the sorting menu of comments

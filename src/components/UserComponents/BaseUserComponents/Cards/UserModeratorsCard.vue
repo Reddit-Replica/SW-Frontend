@@ -22,12 +22,13 @@
 						<p :id="`moderator-member-number-${userModerator.subredditName}`">
 							{{ userModerator.numOfMembers }} member
 						</p>
+						<span v-if="userModerator.nsfw" class="post-nsfw"><p>nsfw</p></span>
 					</span>
 					<base-button
 						:id="`moderator-join-button-${userModerator.subredditName}`"
 						:button-text="userModerator.buttonText"
 						class="join-button"
-						:class="[userModerator.joined ? 'joined-button' : '']"
+						:class="[userModerator.followed ? 'joined-button' : '']"
 						@mouseover="hoverButton(userModerator.subredditName)"
 						@mouseleave="unHoverButton"
 						@click="changeButtonState(userModerator.subredditName)"
@@ -57,7 +58,7 @@ export default {
 		// console.log(this.userModerators);
 		this.userModerators.forEach((element) => {
 			element.buttonText = 'joined';
-			if (!element.joined) element.buttonText = 'join';
+			if (!element.followed) element.buttonText = 'join';
 		});
 	},
 	data() {
@@ -74,7 +75,7 @@ export default {
 		userModerators() {
 			this.userModerators.forEach((element) => {
 				element.buttonText = 'joined';
-				if (!element.joined) element.buttonText = 'join';
+				if (!element.followed) element.buttonText = 'join';
 			});
 		},
 	},
@@ -88,7 +89,7 @@ export default {
 		hoverButton(key) {
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
-					if (element.joined) {
+					if (element.followed) {
 						element.buttonText = 'leave';
 					}
 				}
@@ -101,7 +102,7 @@ export default {
 		 */
 		unHoverButton() {
 			this.userModerators.forEach((element) => {
-				if (element.joined) {
+				if (element.followed) {
 					element.buttonText = 'joined';
 				}
 			});
@@ -114,12 +115,12 @@ export default {
 		changeButtonState(key) {
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
-					if (element.joined) {
+					if (element.followed) {
 						element.buttonText = 'join';
 					} else {
 						element.buttonText = 'leave';
 					}
-					element.joined = !element.joined;
+					element.followed = !element.followed;
 				}
 			});
 		},
@@ -224,6 +225,7 @@ li span a:hover {
 	line-height: 16px;
 	border: none;
 	width: 104px;
+	height: 30px;
 }
 .joined-button {
 	background-color: var(--main-white-color);
@@ -244,5 +246,23 @@ li span a:hover {
 }
 .joined-button:hover::before {
 	opacity: 0.04;
+}
+span.post-nsfw {
+	border: 1px solid #a4a7a8;
+	/* color: #a4a7a8; */
+	display: inline-block;
+	/* height: 16px; */
+	font-size: 12px;
+	font-weight: 500;
+	/* line-height: 16px; */
+	border-radius: 2px;
+	margin-right: 5px;
+	line-height: 14px;
+	padding: 0 4px;
+	border: 1px solid rgb(255, 88, 91) !important;
+	color: rgb(255, 88, 91) !important;
+}
+span.post-nsfw p {
+	color: rgb(255, 88, 91) !important;
 }
 </style>
