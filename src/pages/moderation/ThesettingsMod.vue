@@ -435,15 +435,54 @@
 
 			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
 		</p>
-		<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
-		<h3 class="medium-font">Accepting requests to join</h3>
+		<div v-if="communityType == 'Private'">
+			<h3 class="secondary-title">PRIVATE COMMUNITY SETTINGS</h3>
+			<h3 class="medium-font">Accepting requests to join</h3>
 
-		<p class="description">
-			Display a button on your private subreddit that allows users to request to
-			join. Users may still send your subreddit modmail whether this is on or
-			off.
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
-		</p>
+			<p class="description">
+				Display a button on your private subreddit that allows users to request
+				to join. Users may still send your subreddit modmail whether this is on
+				or off.
+				<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			</p>
+		</div>
+		<div v-if="communityType == 'Restricted'">
+			<h3 class="secondary-title">RESTRICTED COMMUNITY SETTINGS</h3>
+			<h3 class="medium-font">
+				Approved users have the ability to
+				<!-- <p style="text-align: right"> -->
+				<v-select
+					class=""
+					style="margin-left: 50px"
+					:options="approvedUsers"
+					v-model="approvedUsersHaveTheAbilityTo"
+				></v-select>
+				<!-- </p> -->
+			</h3>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'POST ONLY (DEFAULT)'"
+			>
+				Only approved users can post. Anyone can comment
+			</p>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'COMMENT ONLY'"
+			>
+				Only approved users can comment. Anyone can post.
+			</p>
+			<p
+				style="margin-left: 290px"
+				v-if="approvedUsersHaveTheAbilityTo == 'POST & COMMENT'"
+			>
+				Only approved users can post and comment.
+			</p>
+
+			<h3 class="medium-font">
+				Accepting new requests to post
+				<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			</h3>
+		</div>
 	</div>
 </template>
 
@@ -462,10 +501,19 @@ export default {
 	},
 	data() {
 		return {
-			language: '',
 			communityName: '',
 			mainTopic: '',
 			subTopics: [],
+			communityDescription: '',
+			sendWelcomeMessage: '',
+			welcomeMessage: '',
+			language: '',
+			Region: '',
+			Type: '',
+			NSFW: '',
+			acceptingRequestsToJoin: '',
+			acceptingRequestsToPost: '',
+			approvedUsersHaveTheAbilityTo: '',
 			languages: [
 				'Afrikaans',
 				'Azərbaycan',
@@ -551,7 +599,7 @@ export default {
 				'中文 (香港)',
 				'日本語',
 			],
-
+			approvedUsers: ['POST ONLY (DEFAULT)', 'COMMENT ONLY', 'POST & COMMENT'],
 			topics: [],
 			typeChosen0: true,
 			typeChosen1: false,
@@ -602,6 +650,8 @@ export default {
 	padding: 16px 24px;
 	display: block;
 	margin: 10px auto;
+	height: max-content;
+	overflow-y: auto;
 }
 .main-title {
 	font-size: 18px;
