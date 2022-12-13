@@ -276,11 +276,17 @@ export default {
 		// @arg The argument is a string value representing if user click ok
 		async blockAction(action) {
 			this.blockUser = !this.blockUser;
+			let name = '';
+			if (this.senderUsername == localStorage.getItem('userName')) {
+				name = this.receiverUsername;
+			} else {
+				name = this.senderUsername;
+			}
 			if (action == 'yes') {
 				try {
 					this.$store.dispatch('messages/blockUser', {
 						block: true,
-						username: this.message.senderUsername,
+						username: name,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
