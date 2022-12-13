@@ -26,7 +26,7 @@
 						<div>
 							<base-button
 								class="button blue-button"
-								@click="joinsubreddit"
+								@click="joinSubreddit"
 								v-if="!joined"
 								id="join-button"
 								>Join</base-button
@@ -35,6 +35,7 @@
 								class="button white-button"
 								@mouseover="hoverJoin('Leave')"
 								@mouseleave="hoverJoin('Joined')"
+								@click="leaveSubreddit"
 								v-if="joined"
 								id="leave-button"
 								>{{ hoverButtonText }}</base-button
@@ -95,14 +96,23 @@ export default {
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
-		async joinsubreddit() {
-			// this.toogleJoin();
-
+		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
 			await this.$store.dispatch('community/joinSubreddit', {
 				message: this.message,
 				subredditId: this.subredditId,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+
+			this.$emit('reload');
+		},
+		async leaveSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+
+			await this.$store.dispatch('community/leaveSubreddit', {
+				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
