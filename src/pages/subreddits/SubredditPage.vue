@@ -4,7 +4,7 @@
 		<subreddit-top
 			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
-			:subreddit-nickname="nickname"
+			:subreddit-nickname="subreddit.nickname"
 			:subreddit-image-url="subreddit.picture"
 			:joined="subreddit.isMember"
 			:subreddit-id="subreddit.subredditId"
@@ -27,10 +27,10 @@
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
-					v-if="subreddit.isModerator"
 					@reload="reloadPage"
 					id="abot-comm-comp"
 					:subreddit-name="subreddit.title"
+					:is-moderator="subreddit.isModerator"
 					:is-favourite="subreddit.isFavorite"
 					:topics="topics"
 					:members-count="subreddit.members"
@@ -40,15 +40,15 @@
 					:community-topic-prop="subreddit.mainTopic"
 					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
-				<about-community-read-only
+				<!-- <about-community-read-only
 					v-else
 					id="abot-comm-comp"
-					:subreddit-name="subredditName"
+					:subreddit-name="subreddit.title"
+					:is-favourite="subreddit.isFavorite"
 					:members-count="subreddit.members"
-					:online-members-count="subreddit.online"
 					:community-date="subreddit.dateOfCreation"
 					:community-description-prop="subreddit.description"
-				></about-community-read-only>
+				></about-community-read-only> -->
 
 				<moderators-bar
 					:moderators="subreddit.moderators"
@@ -93,7 +93,7 @@ import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue'
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
-import AboutCommunityReadOnly from '../../components/CommunityComponents/AboutCommunityReadOnly.vue';
+// import AboutCommunityReadOnly from '../../components/CommunityComponents/AboutCommunityReadOnly.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
 import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
@@ -106,7 +106,7 @@ export default {
 		CreatepostBar,
 		SortBarSubreddit,
 		AboutCommunityBar,
-		AboutCommunityReadOnly,
+		// AboutCommunityReadOnly,
 		GrowCommunity,
 		CommunityPost,
 		ModeratorsBar,
@@ -182,6 +182,7 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log(this.subreddit);
 		},
 		reloadPage() {
 			this.getSubreddit();

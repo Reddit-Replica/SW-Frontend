@@ -7,6 +7,7 @@
 					:to="'/r/' + subredditName + '/about/moderators'"
 					class="mod-tools"
 					id="mod-tools"
+					v-if="isModerator"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +60,7 @@
 			<div
 				class="description-1"
 				@click="showTextarea"
-				v-if="!textareaShown && emptyDescription"
+				v-if="!textareaShown && emptyDescription && isModerator"
 				id="add-description-1"
 			>
 				<div class="description-1-text" id="add-desc">Add description</div>
@@ -68,7 +69,7 @@
 			<div
 				class="description-1 blue-border"
 				id="add-description-2"
-				v-else-if="textareaShown"
+				v-else-if="textareaShown && isModerator"
 			>
 				<textarea
 					placeholder="Tell us about your community"
@@ -113,6 +114,7 @@
 					fill="currentColor"
 					class="bi bi-pencil"
 					viewBox="0 0 16 16"
+					v-if="isModerator"
 				>
 					<path
 						d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
@@ -218,7 +220,7 @@
 
 			<div class="line"></div>
 
-			<div class="box-body">
+			<div class="box-body" v-if="isModerator">
 				<span class="span-new" v-if="isNew" id="new-comm">NEW</span>
 				<span
 					class="text-bold"
@@ -254,7 +256,7 @@
 				</div>
 			</div>
 
-			<div class="box-body box-topic">
+			<div class="box-body box-topic" v-if="isModerator">
 				<span
 					class="text-bold span-save"
 					@click="toogleTopicsList"
@@ -324,7 +326,6 @@
 					v-if="subtopicChosen"
 					id="subtopic-box-3"
 				>
-					<!-- <input v-if="subtopicChosen" id="subtopic-box-4" /> -->
 					<div v-if="subtopicChosen" @click="showBoth">
 						<base-button
 							v-for="(subtopic, index) in subtopicsToShow"
@@ -400,7 +401,7 @@
 							>
 							<base-button
 								class="button-blue-2 text"
-								@click="saveSubtopics"
+								@click="saveSubtopicsInDialog"
 								id="dialog-save"
 								>Save</base-button
 							>
@@ -409,7 +410,7 @@
 				</div>
 			</div>
 
-			<div class="line"></div>
+			<div class="line" v-if="isModerator"></div>
 
 			<div class="box-body">
 				<base-button
@@ -488,6 +489,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		isModerator: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -500,7 +505,7 @@ export default {
 			subtopicsShown: false,
 			savedCommunitySubtopics: [],
 			saveDialogShown: false,
-			isSubtopicsSaved: false,
+			isSubtopicsSaved: true,
 			isNew: true,
 			dateBoxShown: false,
 			MembersCountBoxShown: false,
@@ -736,6 +741,10 @@ export default {
 			if (!this.isSubtopicsSaved) {
 				this.toogleSaveDialog();
 			}
+		},
+		saveSubtopicsInDialog() {
+			this.saveSubtopics();
+			this.toogleSaveDialog();
 		},
 		//@vuese
 		//Show/Hide date box while hovering on subreddit creation date
