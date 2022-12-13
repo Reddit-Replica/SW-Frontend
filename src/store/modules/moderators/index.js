@@ -15,9 +15,11 @@ export default {
 			//////////////APPROVED/////////////
 			listOfApproved: [],
 			approveUserSuccessfully: false,
+			removeApproveSuccessfully: false,
 			//////////////MUTED/////////////
 			listOfMuted: [],
 			muteUserSuccessfully: false,
+			unmuteUserSuccessfully: false,
 			//////////////LEAVE MOD/////////////
 			leaveModSuccessfully: false,
 			//////////////INVITE MOD/////////////

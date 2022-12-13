@@ -60,6 +60,7 @@
 					:mute="mute"
 					:search="search"
 					:index="index"
+					@doneSuccessfully="doneSuccessfully()"
 				></mute-item>
 			</ul>
 			<div class="no-items" v-else>
@@ -195,6 +196,12 @@ export default {
 		// @arg no argument
 		showMuteUserFunction() {
 			this.showMuteUser = !this.showMuteUser;
+		},
+		// @vuese
+		// handle load muted list instead of refreshing
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadListOfMuted();
 		},
 	},
 };
