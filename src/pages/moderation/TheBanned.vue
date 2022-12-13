@@ -336,4 +336,14 @@ export default {
 	font-size: 2rem;
 	font-weight: bold;
 }
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
+}
 </style>
