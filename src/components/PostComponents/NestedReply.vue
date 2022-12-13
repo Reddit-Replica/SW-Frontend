@@ -63,13 +63,19 @@
 								<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
 							</svg>
 						</li>
-						<li><font-awesome-icon icon="fa-regular fa-message" /> Reply</li>
+						<li @click="addReply">
+							<font-awesome-icon icon="fa-regular fa-message" /> Reply
+						</li>
 						<li>Give Award</li>
 						<li>Share</li>
 						<li>Report</li>
 						<li>Save</li>
 						<li>Follow</li>
 					</ul>
+				</div>
+				<div class="add-new-reply">
+					<div class="vertical-line"></div>
+					<comment-submit></comment-submit>
 				</div>
 				<div class="replies">
 					<nested-reply
@@ -83,7 +89,11 @@
 	</div>
 </template>
 <script>
+import CommentSubmit from './CommentSubmit.vue';
 export default {
+	components: {
+		CommentSubmit,
+	},
 	name: 'NestedReply',
 	props: {
 		//@vuese
@@ -95,15 +105,24 @@ export default {
 				return {};
 			},
 		},
+		parentId: {
+			type: String,
+			required: true,
+			default: '',
+		},
 	},
 	data() {
 		return {
 			upClicked: false,
 			downClicked: false,
 			voteCounter: 0,
+			addingNewReply: false,
 		};
 	},
 	methods: {
+		addReply() {
+			this.addingNewReply = !this.addingNewReply;
+		},
 		//@vuese
 		//called when upvote is clicked to change the style of upvote icon and increment vote counter
 		upClick() {
@@ -223,5 +242,8 @@ export default {
 }
 .services li:nth-of-type(2).down {
 	color: var(--color-blue);
+}
+.add-new-reply {
+	display: flex;
 }
 </style>

@@ -1,4 +1,13 @@
+/**
+ * @module UserActions
+ */
 export default {
+	/**
+	 * Make a request to get user information with specific name ,
+	 * @action getUserData=setUserData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} status code
+	 */
 	async getUserData(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
@@ -22,7 +31,14 @@ export default {
 			responseData,
 			responseStatus: response.status,
 		});
+		return response.status;
 	},
+	/**
+	 * Make a request to get user posts data,
+	 * @action getUserPostData=setUserPostData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
@@ -44,11 +60,47 @@ export default {
 			);
 			throw error;
 		}
+		// if (response.status == 200)
 		context.commit('setUserPostData', {
 			responseData,
 			responseStatus: response.status,
 		});
+		return response.status;
 	},
+	async getUserCommentsData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		const response = await fetch(baseurl + `/user-comments`); // mock server
+		// const response = await fetch(url); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		// if (response.status == 200)
+		context.commit('setUserCommentsData', {
+			responseData,
+			responseStatus: response.status,
+		});
+		return response.status;
+	},
+	/**
+	 * Make a request to add new social link
+	 * @action AddNewSocialLink=addUserSocialLink
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
 	async AddNewSocialLink(context, payload) {
 		const newSocialLink = payload.newSocialLink;
 		const baseurl = payload.baseurl;
@@ -67,10 +119,18 @@ export default {
 			);
 			throw error;
 		}
+		// if (response.status == 200)
 		context.commit('addUserSocialLink', {
 			newSocialLink,
 		});
+		return response.status;
 	},
+	/**
+	 * Make a request to Add Profile Picture
+	 * @action AddProfilePicture=addUserProfilePicture
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
 	async AddProfilePicture(context, payload) {
 		const profilePictureUrl = payload.profilePictureUrl;
 		const baseurl = payload.baseurl;
@@ -89,10 +149,18 @@ export default {
 			);
 			throw error;
 		}
+		// if(response.status == 200)
 		context.commit('addUserProfilePicture', {
 			profilePictureUrl,
 		});
+		return response.status;
 	},
+	/**
+	 * Make a request to Add Profile Banner
+	 * @action AddProfileBanner=addUserProfileBannerImageUrl
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
 	async AddProfileBanner(context, payload) {
 		const bannerImageUrl = payload.bannerImageUrl;
 		const baseurl = payload.baseurl;
@@ -111,10 +179,18 @@ export default {
 			);
 			throw error;
 		}
+		// if(response.status == 200)
 		context.commit('addUserProfileBannerImageUrl', {
 			bannerImageUrl,
 		});
+		return response.status;
 	},
+	/**
+	 * Make a request to followUnfollowUser
+	 * @action followUnfollowUser=followUnfollowUser
+	 * @param {object} payload An object contains baseurl , object followUnfollowData contains (username,follow flag)
+	 * @returns {integer} status code
+	 */
 	async followUnfollowUser(context, payload) {
 		const followUnfollowData = payload.followUnfollowData;
 		const baseurl = payload.baseurl;
@@ -138,10 +214,18 @@ export default {
 			throw error;
 		}
 		console.log(response.status);
+		// if(response.status == 200)
 		context.commit('followUnfollowUser', {
 			followUnfollowData,
 		});
+		return response.status;
 	},
+	/**
+	 * Make a request to blockUnblockUser
+	 * @action blockUnblockUser=blockUnblockUser
+	 * @param {object} payload An object contains baseurl , object conatins blockUnblockData (username,block flag)
+	 * @returns {integer} status code
+	 */
 	async blockUnblockUser(context, payload) {
 		const blockUnblockData = payload.blockUnblockData;
 		const baseurl = payload.baseurl;
@@ -162,8 +246,40 @@ export default {
 		}
 		console.log(response.status);
 		console.log(responseData);
+		// if(response.status == 200)
 		context.commit('blockUnblockUser', {
 			blockUnblockData,
 		});
+		return response.status;
+	},
+	/**
+	 * Make a request to FetchListOfBlockedUsers
+	 * @action FetchListOfBlockedUsersr=SetListOfBlockedUsers
+	 * @param {object} payload An object contains baseurl
+	 * @returns {integer} status code
+	 */
+	async FetchListOfBlockedUsers(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/blocked-users', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+		console.log(response.status);
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('SetListOfBlockedUsers', {
+				responseData,
+			});
+		return response.status;
 	},
 };

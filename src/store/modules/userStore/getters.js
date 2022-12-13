@@ -1,10 +1,12 @@
 /**
  * The module 'UserStore' object.
- * @name UserGetters
+ * @module UserGetters
  * @type {object}
  * @getter {object} getUserData={userData,userModeratorData} Returns an Object contain userData for user Card, userModeratorData for moderator card property.
  * @getter {object} getUserPostData=postData Returns Object contain postData.
- * @getter {object} getStaticSocialLinks=socialLinkItems Returns a property that is a number.
+ * @getter {object} getStaticSocialLinks=socialLinkItems Returns array of user social link.
+ * @getter {object} getUserCommentsData=commentsData Returns object contains all user comments data
+ * @getter {object} getBlockedUsersData=blockedUsersData Returns object contains all  blocked user data
  */
 export default {
 	getUserData(state) {
@@ -18,10 +20,18 @@ export default {
 			postData: state.postData,
 		};
 	},
+	getUserCommentsData(state) {
+		return {
+			commentsData: state.commentsData,
+		};
+	},
 	getStaticSocialLinks(state) {
 		return state.socialLinkItems;
 	},
 	getSocialLinkIcon(state) {
 		return state.socialLinkItems;
+	},
+	getBlockedUsersData(state) {
+		return state.blockedUsersData;
 	},
 };

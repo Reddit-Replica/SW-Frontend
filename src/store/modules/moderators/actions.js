@@ -2,7 +2,55 @@ export default {
 	async loadListOfModerators(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/about/moderators`,
+			baseurl + `/r/${payload.subredditName}/about/moderators?limit=2`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+
+		const moderators = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const moderator = {
+					username: responseData.children[i].username,
+					dateOfModeration: responseData.children[i].dateOfModeration,
+					permissions: responseData.children[i].permissions,
+				};
+				moderators.push(moderator);
+			}
+			context.commit('setListOfModerators', moderators, before, after);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+
+	async loadListOfInvitedModerators(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/invited-moderators`,
 			{
 				method: 'GET',
 				headers: {
@@ -17,10 +65,10 @@ export default {
 			throw error;
 		}
 
-		const moderators = [];
+		const invitedModerators = [];
 
 		for (const key in responseData) {
-			const moderator = {
+			const invitedModerator = {
 				before: responseData[key].before,
 				after: responseData[key].after,
 				username: responseData[key].children[0].username,
@@ -28,10 +76,33 @@ export default {
 				dateOfModeration: responseData[key].children[0].dateOfModeration,
 				permissions: responseData[key].children[0].permissions,
 			};
-			moderators.push(moderator);
+			invitedModerators.push(invitedModerator);
 		}
-		context.commit('setListOfModerators', moderators);
+		context.commit('setListOfInvitedModerators', invitedModerators);
 	},
+
+	handleTime(context, payload) {
+		var currentDate = new Date();
+		var returnValue = '';
+		var myTime = new Date(payload.time);
+		if (currentDate.getFullYear() != myTime.getFullYear()) {
+			returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+		} else if (currentDate.getMonth() != myTime.getMonth()) {
+			returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+		} else if (currentDate.getDate() != myTime.getDate()) {
+			returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+		} else if (currentDate.getHours() != myTime.getHours()) {
+			returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+		} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+			returnValue =
+				currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+		} else {
+			returnValue = 'Just now';
+		}
+		context.commit('setHandleTime', returnValue);
+	},
+
+	//////////////////////RULES////////////////////////
 
 	async addRule(context, payload) {
 		context.commit('addRuleSuccessfully', false);
@@ -239,6 +310,287 @@ export default {
 
 		if (response.status == 200) {
 			context.commit('updateRulesSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	//////////////////////FLAIR////////////////////////
+
+	async loadListOfFlairs(context, payload) {
+		const baseurl = payload.baseurl;
+		/////////////////////should be localStorage.getItem('accessToken');/////////////////////
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/about/post-flairs`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			const flairs = [];
+
+			for (let i = 0; i < responseData.postFlairs.length; i++) {
+				const flair = {
+					flairId: responseData.postFlairs[i].flairId,
+					flairName: responseData.postFlairs[i].flairName,
+					flairOrder: responseData.postFlairs[i].flairOrder,
+					backgroundColor: responseData.postFlairs[i].backgroundColor,
+					textColor: responseData.postFlairs[i].textColor,
+					modOnly: responseData.postFlairs[i].flairSettings.modOnly,
+					allowUserEdits:
+						responseData.postFlairs[i].flairSettings.allowUserEdits,
+					flairType: responseData.postFlairs[i].flairSettings.flairType,
+					emojisLimit: responseData.postFlairs[i].flairSettings.emojisLimit,
+				};
+				flairs.push(flair);
+			}
+			context.commit('setListOfFlairs', flairs);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+
+	async addFlair(context, payload) {
+		context.commit('addFlairSuccessfully', false);
+		const newFlair = {
+			flairName: payload.flairName,
+			backgroundColor: payload.backgroundColor,
+			textColor: payload.textColor,
+			settings: {
+				modOnly: payload.modOnly,
+				allowUserEdits: payload.allowUserEdits,
+			},
+		};
+		const baseurl = payload.baseurl;
+		const subredditName = payload.subredditName;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + '/r/' + subredditName + '/about/post-flairs',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify(newFlair),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('addFlairSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async updateFlair(context, payload) {
+		context.commit('updateFlairSuccessfully', false);
+		const updatedFlair = {
+			flairName: payload.flairName,
+			backgroundColor: payload.backgroundColor,
+			textColor: payload.textColor,
+			settings: {
+				modOnly: payload.modOnly,
+				allowUserEdits: payload.allowUserEdits,
+			},
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl +
+				`/r/${payload.subredditName}/about/post-flairs/${payload.flairId}`,
+			{
+				method: 'put',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify(updatedFlair),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('updateFlairSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async deleteFlair(context, payload) {
+		context.commit('deleteFlairSuccessfully', false);
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl +
+				`/r/${payload.subredditName}/about/post-flairs/${payload.flairId}`,
+			{
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('deleteFlairSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	async updateFlairsOrder(context, payload) {
+		context.commit('updateFlairsSuccessfully', false);
+		const flairsOrder = [];
+
+		for (let i = 0; i < payload.flairsOrder.length; i++) {
+			const flair = {
+				flairId: payload.flairsOrder[i].flairId,
+				flairOrder: i,
+			};
+			flairsOrder.push(flair);
+		}
+		const baseurl = payload.baseurl;
+		const subredditName = payload.subredditName;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(
+			baseurl + '/r/' + subredditName + '/about/post-flairs-order',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify({ flairsOrder: flairsOrder }),
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('updateFlairsSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	//////////////////////BAN////////////////////////
+
+	async banUser(context, payload) {
+		context.commit('banUserSuccessfully', false);
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		console.log(payload);
+		const bannedUser = {
+			userId: payload.userId,
+			subreddit: payload.subredditName,
+			banPeriod: payload.banPeriod,
+			reasonForBan: payload.reasonForBan,
+			modNote: payload.modNote,
+			noteInclude: payload.noteInclude,
+		};
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + `/ban`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(bannedUser),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('banUserSuccessfully', true);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;

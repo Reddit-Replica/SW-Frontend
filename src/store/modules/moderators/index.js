@@ -7,11 +7,25 @@ export default {
 	state() {
 		return {
 			listOfModerators: [],
+			listOfInvitedModerators: [],
+			handleTime: '',
+			after: '',
+			before: '',
+			//////////////RULES/////////////////
 			addRuleSuccessfully: false,
 			listOfRules: [],
 			updateRuleSuccessfully: false,
 			deleteRuleSuccessfully: false,
 			updateRulesSuccessfully: false,
+
+			//////////////FLAIRS/////////////////
+			listOfFlairs: [],
+			addFlairSuccessfully: false,
+			updateFlairSuccessfully: false,
+			deleteFlairSuccessfully: false,
+
+			//////////////////////BAN////////////////////////
+			banUserSuccessfully: false,
 		};
 	},
 	mutations,

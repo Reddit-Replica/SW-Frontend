@@ -22,6 +22,7 @@ describe ('PostreplyComponent.vue', () => {
   const index = 0;
   let count = 2;
   const isRead = true;
+  let handleTime = '2 years ago';
 
   const messagesAction = {
     loadInboxMessages: vi.fn (),
@@ -36,6 +37,7 @@ describe ('PostreplyComponent.vue', () => {
     loadSuggestedSender: vi.fn (),
     voteComment: vi.fn (),
     replyMessage: vi.fn (),
+    handleTime: vi.fn (),
   };
 
   //Mocking the store
@@ -57,6 +59,7 @@ describe ('PostreplyComponent.vue', () => {
           blockSuccessfully: false,
           votedSuccessfully: false,
           replyMessageSuccessfully: false,
+          handleTime: '',
         },
         actions: messagesAction,
       },
@@ -174,7 +177,7 @@ describe ('PostreplyComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
+    // expect (wrapper.find ('#time-0').text ()).contain ('2 years ago');
   });
 
   // it ('Testing the Permalink button text is correct', () => {

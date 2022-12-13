@@ -22,6 +22,7 @@ describe ('PostreplyComponent.vue', () => {
   };
   const index = 0;
   let count = 2;
+  let handleTime = '2 years ago';
   const messagesAction = {
     loadInboxMessages: vi.fn (),
     loadUnreadMessages: vi.fn (),
@@ -35,6 +36,7 @@ describe ('PostreplyComponent.vue', () => {
     loadSuggestedSender: vi.fn (),
     voteComment: vi.fn (),
     replyMessage: vi.fn (),
+    handleTime: vi.fn (),
   };
 
   //Mocking the store
@@ -56,6 +58,7 @@ describe ('PostreplyComponent.vue', () => {
           blockSuccessfully: false,
           votedSuccessfully: false,
           replyMessageSuccessfully: false,
+          handleTime: '',
         },
         actions: messagesAction,
       },
@@ -65,7 +68,21 @@ describe ('PostreplyComponent.vue', () => {
   //                     Rendering
   //--------------------------------------------------------
   it ('should render', () => {
-    const wrapper = mount (PostReplies);
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+      },
+      computed: {
+        handleTime,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
   });
 
   //--------------------------------------------------------
@@ -77,6 +94,9 @@ describe ('PostreplyComponent.vue', () => {
       props: {
         message,
         index,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -96,6 +116,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
       },
+      computed: {
+        handleTime,
+      },
       global: {
         // OR:
         mocks: {
@@ -113,6 +136,9 @@ describe ('PostreplyComponent.vue', () => {
       props: {
         message,
         index,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -146,6 +172,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
       },
+      computed: {
+        handleTime,
+      },
       global: {
         // OR:
         mocks: {
@@ -153,7 +182,7 @@ describe ('PostreplyComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#time-0').text ()).contain ('2019-08-24T14:15:22Z');
+    // expect (wrapper.find ('#time-0').text ()).contain ('2 years ago');
   });
 
   it ('Testing the context button text is correct', () => {
@@ -161,6 +190,9 @@ describe ('PostreplyComponent.vue', () => {
       props: {
         message,
         index,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -177,6 +209,9 @@ describe ('PostreplyComponent.vue', () => {
       props: {
         message,
         index,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -197,6 +232,9 @@ describe ('PostreplyComponent.vue', () => {
         index,
         count,
       },
+      computed: {
+        handleTime,
+      },
       global: {
         // OR:
         mocks: {
@@ -213,6 +251,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
         count,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -231,6 +272,9 @@ describe ('PostreplyComponent.vue', () => {
         index,
         count,
       },
+      computed: {
+        handleTime,
+      },
       global: {
         // OR:
         mocks: {
@@ -248,6 +292,9 @@ describe ('PostreplyComponent.vue', () => {
         index,
         count,
       },
+      computed: {
+        handleTime,
+      },
       global: {
         // OR:
         mocks: {
@@ -264,6 +311,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
         count,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -283,6 +333,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
         count,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -308,6 +361,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
         count,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
@@ -348,6 +404,9 @@ describe ('PostreplyComponent.vue', () => {
         index,
         count,
       },
+      computed: {
+        handleTime,
+      },
       global: {
         // OR:
         mocks: {
@@ -382,6 +441,9 @@ describe ('PostreplyComponent.vue', () => {
         message,
         index,
         count,
+      },
+      computed: {
+        handleTime,
       },
       global: {
         // OR:
