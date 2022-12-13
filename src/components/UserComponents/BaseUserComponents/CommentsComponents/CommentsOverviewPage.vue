@@ -1,211 +1,33 @@
 <template>
-	<div class="comment-body" :class="[commentType ? '' : 'comment-body-hover']">
-		<div
-			class="comment-body-container"
-			:style="[
-				commentType && 1
-					? 'padding: 0px 0px 0px 8px;'
-					: 'padding: 10px 0 8px 8px;',
-			]"
-		>
-			<div class="comment-box">
-				<div
-					class="nested-comment-order"
-					:class="[commentType ? 'nested-comment-order-ov' : '']"
-				>
-					<div v-for="i in commentContent.level" :key="i"></div>
-					<!-- <div></div> -->
-				</div>
-				<div
-					class="comment-content"
-					:class="[commentType ? 'comment-overview-content' : '']"
-				>
-					<div class="comment-body-title">
-						<router-link :to="'/user/' + $route.params.userName">
-							{{ $route.params.userName }}</router-link
-						>
-						<span class="comment-op">op</span>
-						<p>{{ commentContent.points }} point</p>
-						<router-link class="comment-date" to="">{{
-							getMoment(commentContent.publishTime)
-						}}</router-link>
-					</div>
-					<div class="comment-content-data" v-html="PostHybridContent"></div>
-					<!-- <p>{{ PostHybridContent }} fdkjbfjhg skjdfnskd sjdnfksjd</p> -->
-					<div class="comment-options">
-						<ul>
-							<li @click="ReplyCommentHandler" class="underline">Replay</li>
-							<li class="underline">Share</li>
-							<li
-								class="post-option-item2"
-								style="position: relative"
-								@click="openOptionsBoxList"
-							>
-								<div class="post-options-icon three-dot-icon-box">
-									<i>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="20"
-											height="20"
-											fill="currentColor"
-											class="bi bi-three-dots"
-											viewBox="0 0 16 16"
-										>
-											<path
-												d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-											/>
-										</svg>
-									</i>
-								</div>
-								<div v-if="showOptionsBoxList" class="options-box-list">
-									<ul>
-										<li @click="editPost" class="options-box-item">
-											<div class="options-box-icon">
-												<i
-													style="color: rgba(135, 138, 140)"
-													class="fa-solid fa-pen"
-												></i>
-											</div>
-											<div class="options-box-text">Edit Post</div>
-										</li>
-										<li @click="savePost" class="options-box-item">
-											<div class="options-box-icon">
-												<i
-													style="color: rgba(135, 138, 140)"
-													class="fa-regular fa-bookmark"
-												></i>
-											</div>
-											<div class="options-box-text">Save</div>
-										</li>
-										<li @click="deletePost" class="options-box-item">
-											<div class="options-box-icon">
-												<i
-													style="color: rgba(135, 138, 140)"
-													class="fa-solid fa-trash"
-												></i>
-											</div>
-											<div class="options-box-text">Delete</div>
-										</li>
-									</ul>
-								</div>
-							</li>
-						</ul>
-						<div v-if="commentContent.inYourSubreddit" class="post-options">
-							<ul class="comment-moderator-options">
-								<li
-									@click="approvePost"
-									:style="['aa' == '' ? 'color: #46d160' : '']"
-									class="post-option-item"
-								>
-									<div class="post-options-icon">
-										<i class="fa-solid fa-check"></i>
-									</div>
-									<div class="post-options-text">Approve</div>
-								</li>
-								<li
-									@click="removePost"
-									:style="[
-										'aa' == ''
-											? 'color: #ff585b'
-											: 'color: rgba(135, 138, 140)',
-									]"
-									class="post-option-item"
-								>
-									<div class="post-options-icon">
-										<i style="color: inherit" class="fa-solid fa-ban"></i>
-									</div>
-									<div class="post-options-text">
-										<p>Remove</p>
-									</div>
-								</li>
-								<li
-									@click="spamPost"
-									:style="[
-										'aa' == ''
-											? 'color: #ff585b'
-											: 'color: rgba(135, 138, 140)',
-									]"
-									class="post-option-item"
-								>
-									<div class="post-options-icon">
-										<i class="fa-regular fa-calendar-xmark"></i>
-									</div>
-									<div class="post-options-text">
-										<p>Spam</p>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div id="commentId" class="comment-container" style="padding-bottom: 8px">
+		<comment-header :comment-data="commentData"></comment-header>
+
+		<comment-content
+			comment-type="overview"
+			v-for="(commentContent, index) in commentData.data.comments"
+			:key="index"
+			:post-id="commentData.id"
+			:post-title="commentData.data.post.title"
+			:comment-content="commentContent"
+		></comment-content>
 	</div>
 </template>
 <script>
-import * as moment from 'moment';
+import CommentContent from './CommentContent.vue';
+import CommentHeader from './CommentHeader.vue';
 export default {
+	components: {
+		CommentContent,
+		CommentHeader,
+	},
 	props: {
-		commentContent: {
+		commentData: {
 			type: Object,
 			required: true,
 		},
-		commentType: {
+		id: {
 			type: String,
 			required: true,
-		},
-		postId: {
-			type: String,
-			required: true,
-		},
-		postTitle: {
-			type: String,
-			required: true,
-		},
-	},
-	data() {
-		return {
-			showOptionsBoxList: false,
-			PostHybridContent: '',
-		};
-	},
-	mounted() {
-		this.setPostHybridContent();
-	},
-	methods: {
-		ReplyCommentHandler() {
-			console.log('reply clicked', this.postId);
-			if (!this.commentContent.subreddit) {
-				this.$router.push(
-					`/user/${this.$route.params.userName}/comments/${this.postId}/comment/${this.commentContent.commentId}`
-				);
-			} else {
-				this.$router.push(
-					`/r/${this.commentContent.subreddit}/comments/${this.postId}/comment/${this.commentContent.commentId}`
-				);
-			}
-		},
-		openOptionsBoxList() {
-			this.showOptionsBoxList = !this.showOptionsBoxList;
-		},
-		getMoment(date) {
-			return moment(date).fromNow();
-		},
-		setPostHybridContent() {
-			// if (this.postData.data.kind == 'hybrid') {
-			if (this.commentContent.commentBody) {
-				let QuillDeltaToHtmlConverter =
-					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-				console.log('comment body', this.commentContent.commentBody);
-
-				let deltaOps = this.commentContent.commentBody.ops;
-
-				let cfg = {};
-				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-				console.log('converter', converter.convert());
-				this.PostHybridContent = converter.convert();
-			}
-			// }
 		},
 	},
 };
@@ -329,9 +151,6 @@ span.post-oc {
 	width: 100%;
 }
 .comment-body:hover {
-	border: unset;
-}
-.comment-body-hover:hover {
 	border: thin solid #898989;
 }
 .comment-body-container {
@@ -349,12 +168,6 @@ span.post-oc {
 	border-left: 2px dashed #edeff1;
 	margin-right: 16px;
 	align-self: stretch;
-}
-.nested-comment-order div:first-child {
-	margin-left: 8px;
-}
-.nested-comment-order-ov div:last-child {
-	margin-top: 8px;
 }
 .comment-body-title {
 	display: flex;
@@ -565,12 +378,8 @@ span.post-oc {
 
 .post-tooltip:hover .post-tooltiptext {
 	visibility: visible;
-} /* End post Options */
-.comment-overview-content {
-	flex: 1;
-	background-color: rgba(0, 121, 211, 0.05);
-	padding: 4px 8px;
-	margin-top: 8px;
-	margin-right: 8px;
+}
+.comment-body:hover {
+	border: unset;
 }
 </style>

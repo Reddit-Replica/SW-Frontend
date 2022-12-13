@@ -34,4 +34,9 @@ export default {
 	getBlockedUsersData(state) {
 		return state.blockedUsersData;
 	},
+	getUserOverviewData(state) {
+		return {
+			overviewData: state.overviewData,
+		};
+	},
 };

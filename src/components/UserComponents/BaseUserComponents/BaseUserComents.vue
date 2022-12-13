@@ -65,13 +65,10 @@
 						<div></div>
 					</div> -->
 		<comment-content
-			v-for="commentContent in commentData.data.comments"
-			:key="commentContent.id"
-			:comment-content="commentContent"
-		></comment-content>
-		<comment-content
-			v-for="commentContent in commentData.data.comments"
-			:key="commentContent.id"
+			v-for="(commentContent, index) in commentData.data.comments"
+			:key="index"
+			:post-id="commentData.id"
+			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
 		></comment-content>
 		<!-- <div class="comment-content">
@@ -238,6 +235,7 @@ li {
 .comment-container {
 	width: 100%;
 	background-color: #ffffff;
+	/* padding-bottom: 8px; */
 }
 .comment-container header {
 	border: thin solid #edeff1;
@@ -574,5 +572,6 @@ span.post-oc {
 .post-tooltip:hover .post-tooltiptext {
 	visibility: visible;
 }
+
 /* */
 </style>

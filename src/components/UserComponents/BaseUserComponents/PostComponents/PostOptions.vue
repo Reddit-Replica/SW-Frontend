@@ -73,7 +73,13 @@
 			</div>
 		</li>
 		<li class="post-option-item post-option-item-hover2">
-			<router-link to="">
+			<router-link
+				:to="
+					postData.data.subreddit != null
+						? `/r/${postData.data.subreddit}/comments/${postData.id}/${postData.data.title}`
+						: `/user/${postData.data.postedBy}/comments/${postData.id}/${postData.data.title}`
+				"
+			>
 				<div class="post-options-icon">
 					<i
 						style="

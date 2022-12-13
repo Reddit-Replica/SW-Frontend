@@ -86,7 +86,7 @@ const router = createRouter({
 			children: [
 				{
 					name: 'comments',
-					path: '/r/:subredditName/comments/:postId/:postName/', //$route.path.split('/')[2: for subredditname , 4: for post id]
+					path: '/r/:subredditName/comments/:postId/:postName',
 					component: PostComments,
 				},
 			],
