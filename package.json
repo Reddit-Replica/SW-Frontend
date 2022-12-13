@@ -41,6 +41,7 @@
 		"vue-quill": "^1.5.1",
 		"vue-recaptcha": "^2.0.3",
 		"vue-router": "^4.0.13",
+		"vue-select": "^4.0.0-beta.6",
 		"vue3-google-oauth2": "^1.0.6",
 		"vue3-markdown-it": "^1.0.10",
 		"vuese": "^1.4.7",

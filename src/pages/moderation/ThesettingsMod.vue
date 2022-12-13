@@ -113,104 +113,111 @@
 			</div>
 		</div> -->
 		<h3 class="medium-font">Language</h3>
-		<input
+		<!-- <input
 			id="1"
 			data-testid="autocomplete-input-73c89008-53dd-4eea-8ee5-a5e450cf90c7"
 			class="language"
 			name="1"
 			placeholder="Type to search for a language"
 			value="English"
-		/>
-		<!-- <ul
-			class="lang_ul"
-			id="autocomplete-dropdown-45a86af7-8d96-49ec-8e3b-bd8aa27fb18f"
-		>
-			<li class="lang_li">Other</li>
-			<li class="lang_li">Afrikaans</li>
-			<li class="lang_li">Azərbaycan</li>
-			<li class="lang_li">Bahasa Indonesia</li>
-			<li class="lang_li">Bahasa Melayu</li>
-			<li class="lang_li">Bosanski</li>
-			<li class="lang_li">Català</li>
-			<li class="lang_li">Čeština</li>
-			<li class="lang_li">Dansk</li>
-			<li class="lang_li">Deutsch</li>
-			<li class="lang_li">Eesti</li>
-			<li class="lang_li2 lang_li">English</li>
-			<li class="lang_li">English (India)</li>
-			<li class="lang_li">English (UK)</li>
-			<li class="lang_li">English (US)</li>
-			<li class="lang_li">Español (España)</li>
-			<li class="lang_li">Español (Latinoamérica)</li>
-			<li class="lang_li">Español (US)</li>
-			<li class="lang_li">Euskara</li>
-			<li class="lang_li">Filipino</li>
-			<li class="lang_li">Français</li>
-			<li class="lang_li">Français (Canada)</li>
-			<li class="lang_li">Galego</li>
-			<li class="lang_li">Hrvatski</li>
-			<li class="lang_li">IsiZulu</li>
-			<li class="lang_li">Íslenska</li>
-			<li class="lang_li">Italiano</li>
-			<li class="lang_li">Kiswahili</li>
-			<li class="lang_li">Latviešu</li>
-			<li class="lang_li">Lietuvių</li>
-			<li class="lang_li">Magyar</li>
-			<li class="lang_li">Nederlands</li>
-			<li class="lang_li">Norsk</li>
-			<li class="lang_li">O‘zbek</li>
-			<li class="lang_li">Polski</li>
-			<li class="lang_li">Português</li>
-			<li class="lang_li">Português (Brasil)</li>
-			<li class="lang_li">Română</li>
-			<li class="lang_li">Shqip</li>
-			<li class="lang_li">Slovenčina</li>
-			<li class="lang_li">Slovenščina</li>
-			<li class="lang_li">Srpski</li>
-			<li class="lang_li">Suomi</li>
-			<li class="lang_li">Svenska</li>
-			<li class="lang_li">Tiếng Việt</li>
-			<li class="lang_li">Türkçe</li>
-			<li class="lang_li">Ελληνικά</li>
-			<li class="lang_li">Беларуская</li>
-			<li class="lang_li">Български</li>
-			<li class="lang_li">Кыргызча</li>
-			<li class="lang_li">Қазақ Тілі</li>
-			<li class="lang_li">Македонски</li>
-			<li class="lang_li">Монгол</li>
-			<li class="lang_li">Русский</li>
-			<li class="lang_li">Српски</li>
-			<li class="lang_li">Українська</li>
-			<li class="lang_li">ქართული</li>
-			<li class="lang_li">Հայերեն</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">עברית</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">اردو</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">العربية</li>
-			<li class="lang_li _3e5-Tc_WqzN-NNzAg8R7T6">فارسی</li>
-			<li class="lang_li">አማርኛ</li>
-			<li class="lang_li">नेपाली</li>
-			<li class="lang_li">मराठी</li>
-			<li class="lang_li">हिन्दी</li>
-			<li class="lang_li">অসমীয়া</li>
-			<li class="lang_li">বাংলা</li>
-			<li class="lang_li">ਪੰਜਾਬੀ</li>
-			<li class="lang_li">ગુજરાતી</li>
-			<li class="lang_li">ଓଡ଼ିଆ</li>
-			<li class="lang_li">தமிழ்</li>
-			<li class="lang_li">తెలుగు</li>
-			<li class="lang_li">ಕನ್ನಡ</li>
-			<li class="lang_li">മലയാളം</li>
-			<li class="lang_li">සිංහල</li>
-			<li class="lang_li">ภาษาไทย</li>
-			<li class="lang_li">ລາວ</li>
-			<li class="lang_li">မြန်မာစကား</li>
-			<li class="lang_li">ភាសាខ្មែរ</li>
-			<li class="lang_li">한국어</li>
-			<li class="lang_li">中文 (简体)</li>
-			<li class="lang_li">中文 (繁體)</li>
-			<li class="lang_li">中文 (香港)</li>
-			<li class="lang_li">日本語</li>
-		</ul> -->
+		/> -->
+		<v-select
+			class="land-drop"
+			:options="languages"
+			v-model="selectedLanguage"
+		></v-select>
+		<!-- <div class="parent-language">
+			<ul
+				class="lang_ul"
+				id="autocomplete-dropdown-45a86af7-8d96-49ec-8e3b-bd8aa27fb18f"
+			>
+				<li class="lang_li">Other</li>
+				<li class="lang_li">Afrikaans</li>
+				<li class="lang_li">Azərbaycan</li>
+				<li class="lang_li">Bahasa Indonesia</li>
+				<li class="lang_li">Bahasa Melayu</li>
+				<li class="lang_li">Bosanski</li>
+				<li class="lang_li">Català</li>
+				<li class="lang_li">Čeština</li>
+				<li class="lang_li">Dansk</li>
+				<li class="lang_li">Deutsch</li>
+				<li class="lang_li">Eesti</li>
+				<li class="lang_li">English</li>
+				<li class="lang_li">English (India)</li>
+				<li class="lang_li">English (UK)</li>
+				<li class="lang_li">English (US)</li>
+				<li class="lang_li">Español (España)</li>
+				<li class="lang_li">Español (Latinoamérica)</li>
+				<li class="lang_li">Español (US)</li>
+				<li class="lang_li">Euskara</li>
+				<li class="lang_li">Filipino</li>
+				<li class="lang_li">Français</li>
+				<li class="lang_li">Français (Canada)</li>
+				<li class="lang_li">Galego</li>
+				<li class="lang_li">Hrvatski</li>
+				<li class="lang_li">IsiZulu</li>
+				<li class="lang_li">Íslenska</li>
+				<li class="lang_li">Italiano</li>
+				<li class="lang_li">Kiswahili</li>
+				<li class="lang_li">Latviešu</li>
+				<li class="lang_li">Lietuvių</li>
+				<li class="lang_li">Magyar</li>
+				<li class="lang_li">Nederlands</li>
+				<li class="lang_li">Norsk</li>
+				<li class="lang_li">O‘zbek</li>
+				<li class="lang_li">Polski</li>
+				<li class="lang_li">Português</li>
+				<li class="lang_li">Português (Brasil)</li>
+				<li class="lang_li">Română</li>
+				<li class="lang_li">Shqip</li>
+				<li class="lang_li">Slovenčina</li>
+				<li class="lang_li">Slovenščina</li>
+				<li class="lang_li">Srpski</li>
+				<li class="lang_li">Suomi</li>
+				<li class="lang_li">Svenska</li>
+				<li class="lang_li">Tiếng Việt</li>
+				<li class="lang_li">Türkçe</li>
+				<li class="lang_li">Ελληνικά</li>
+				<li class="lang_li">Беларуская</li>
+				<li class="lang_li">Български</li>
+				<li class="lang_li">Кыргызча</li>
+				<li class="lang_li">Қазақ Тілі</li>
+				<li class="lang_li">Македонски</li>
+				<li class="lang_li">Монгол</li>
+				<li class="lang_li">Русский</li>
+				<li class="lang_li">Српски</li>
+				<li class="lang_li">Українська</li>
+				<li class="lang_li">ქართული</li>
+				<li class="lang_li">Հայերեն</li>
+				<li class="lang_li lang_li2">עברית</li>
+				<li class="lang_li lang_li2">اردو</li>
+				<li class="lang_li lang_li2">العربية</li>
+				<li class="lang_li lang_li2">فارسی</li>
+				<li class="lang_li">አማርኛ</li>
+				<li class="lang_li">नेपाली</li>
+				<li class="lang_li">मराठी</li>
+				<li class="lang_li">हिन्दी</li>
+				<li class="lang_li">অসমীয়া</li>
+				<li class="lang_li">বাংলা</li>
+				<li class="lang_li">ਪੰਜਾਬੀ</li>
+				<li class="lang_li">ગુજરાતી</li>
+				<li class="lang_li">ଓଡ଼ିଆ</li>
+				<li class="lang_li">தமிழ்</li>
+				<li class="lang_li">తెలుగు</li>
+				<li class="lang_li">ಕನ್ನಡ</li>
+				<li class="lang_li">മലയാളം</li>
+				<li class="lang_li">සිංහල</li>
+				<li class="lang_li">ภาษาไทย</li>
+				<li class="lang_li">ລາວ</li>
+				<li class="lang_li">မြန်မာစကား</li>
+				<li class="lang_li">ភាសាខ្មែរ</li>
+				<li class="lang_li">한국어</li>
+				<li class="lang_li">中文 (简体)</li>
+				<li class="lang_li">中文 (繁體)</li>
+				<li class="lang_li">中文 (香港)</li>
+				<li class="lang_li">日本語</li>
+			</ul>
+		</div> -->
 		<h3 class="medium-font">Region</h3>
 		<div style="position: relative">
 			<label class="loc-icon" for="location"
@@ -426,7 +433,103 @@
 </template>
 
 <script>
-export default {};
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+export default {
+	components: {
+		vSelect,
+	},
+	data() {
+		return {
+			selectedLanguage: '',
+			languages: [
+				'Afrikaans',
+				'Azərbaycan',
+				'Bahasa Indonesia',
+				'Bahasa Melayu',
+				'Bosanski',
+				'Català',
+				'Čeština',
+				'Dansk',
+				'Deutsch',
+				'Eesti',
+				'English',
+				'English (India)',
+				'English (UK)',
+				'English (US)',
+				'Español (España)',
+				'Español (Latinoamérica)',
+				'Español (US)',
+				'Euskara',
+				'Filipino',
+				'Français',
+				'Français (Canada)',
+				'Galego',
+				'Hrvatski',
+				'IsiZulu',
+				'Íslenska',
+				'Italiano',
+				'Kiswahili',
+				'Latviešu',
+				'Lietuvių',
+				'Magyar',
+				'Nederlands',
+				'Norsk',
+				'O‘zbek',
+				'Polski',
+				'Português',
+				'Português (Brasil)',
+				'Română',
+				'Shqip',
+				'Slovenščina',
+				'Srpski',
+				'Suomi',
+				'Svenska',
+				'Tiếng Việt',
+				'Türkçe',
+				'Ελληνικά',
+				'Беларуская',
+				'Български',
+				'Кыргызча',
+				'Қазақ Тілі',
+				'Македонски',
+				'Монгол',
+				'Русский',
+				'Српски',
+				'Українська',
+				'ქართული',
+				'Հայերեն',
+				'עברית',
+				'اردو',
+				'العربية',
+				'فارسی',
+				'አማርኛ',
+				'नेपाली',
+				'मराठी<',
+				'हिन्दी',
+				'অসমীয়া',
+				'বাংলা',
+				'ਪੰਜਾਬੀ',
+				'ગુજરાતી',
+				'ଓଡ଼ିଆ',
+				'தமிழ்',
+				'తెలుగు',
+				'ಕನ್ನಡ',
+				'മലയാളം',
+				'සිංහල',
+				'ภาษาไทย',
+				'ລາວ',
+				'မြန်မာစကား',
+				'ភាសាខ្មែរ',
+				'한국어',
+				'中文 (简体)',
+				'中文 (繁體)',
+				'中文 (香港)',
+				'日本語',
+			],
+		};
+	},
+};
 </script>
 
 <style scoped>
@@ -514,7 +617,10 @@ export default {};
 	line-height: 21px;
 	padding: 5px 8px 5px 10px;
 	width: 100%;
-	margin: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 0;
 }
 .lang_ul {
 	background-color: #ffffff;
@@ -522,7 +628,6 @@ export default {};
 	border-radius: 4px;
 	box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
 	box-sizing: border-box;
-	-ms-flex: none;
 	flex: none;
 	max-height: 35vh;
 	overflow-y: auto;
@@ -531,6 +636,17 @@ export default {};
 	top: 100%;
 	width: 100%;
 	z-index: 3;
+	margin-top: 0;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+ul,
+ol {
+	list-style: none;
+}
+.land-drop {
+	margin: 10px;
 }
 .lang_li {
 	cursor: pointer;
@@ -546,8 +662,13 @@ export default {};
 .lang_li2 {
 	direction: rtl;
 }
-.lang_li3 {
-	direction: rtl;
+.language:focus ~ .lang_ul {
+	display: nono;
+}
+.parent-language {
+	display: flex;
+	flex: auto;
+	position: relative;
 }
 .location-input {
 	background-color: #ffffff;
