@@ -30,7 +30,7 @@
 				</svg>
 			</a>
 		</div>
-		<no-list :title="'Muted users'">
+		<no-list :title="'Muted users'" v-if="noMuted">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"
@@ -44,6 +44,47 @@
 				/>
 			</svg>
 		</no-list>
+		<div v-else>
+			<search-bar
+				@enter-search="(search) => enterSearch(search)"
+				:empty-input="search"
+				:before="before"
+				:after="after"
+				@fetch-before="loadListOfMuted('before')"
+				@fetch-after="loadListOfMuted('after')"
+			></search-bar>
+			<ul class="ul-items" v-if="!noItems">
+				<mute-item
+					v-for="(mute, index) in listOfMuted"
+					:key="mute"
+					:mute="mute"
+					:search="search"
+					:index="index"
+				></mute-item>
+			</ul>
+			<div class="no-items" v-else>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-search icon-search"
+					viewBox="0 0 16 16"
+					id="search-icon"
+				>
+					<path
+						d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+					/>
+				</svg>
+				<span>No results for u/{{ search }}</span>
+				<base-button
+					class="see-all-button"
+					id="see-all-button"
+					@click="seeAll()"
+					>See all</base-button
+				>
+			</div>
+		</div>
 		<mute-user
 			v-if="showMuteUser"
 			:subreddit-name="subredditName"
@@ -57,14 +98,28 @@
 import NoList from '../../components/moderation/NoList.vue';
 import MuteUser from '../../components/moderation/MuteUser.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
+import MuteItem from '../../components/moderation/MuteItem.vue';
+import SearchBar from '../../components/moderation/SearchBar.vue';
 export default {
-	components: { NoList, MuteUser, ListBar },
+	components: { NoList, MuteUser, ListBar, MuteItem, SearchBar },
 	data() {
 		return {
 			showMuteUser: false,
+			search: '',
+			count: 0,
+			noItems: false,
 		};
 	},
+	beforeMount() {
+		this.loadListOfMuted();
+	},
 	computed: {
+		// @vuese
+		//return list of moderators
+		// @type object
+		listOfMuted() {
+			return this.$store.getters['moderation/listOfMuted'];
+		},
 		// @vuese
 		//return subreddit name
 		// @type string
@@ -72,8 +127,69 @@ export default {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
 		},
+		// @vuese
+		//return true if there is no approved, false otherwise
+		// @type boolean
+		noMuted() {
+			if (this.listOfMuted.length != 0) {
+				return false;
+			}
+			return true;
+		},
+		// @vuese
+		//return if there is approved before
+		// @type string
+		before() {
+			return this.$store.getters['moderation/before'];
+		},
+		// @vuese
+		//return if there is approved after
+		// @type string
+		after() {
+			return this.$store.getters['moderation/after'];
+		},
 	},
 	methods: {
+		// @vuese
+		//load approved list from the store
+		// @arg no argument
+		async loadListOfMuted() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfMuted', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		//access value of search
+		// @arg The argument is a string value representing search input
+		enterSearch(input) {
+			this.search = input;
+			this.noItems = false;
+			for (let i = 0; i < this.listOfMuted.length; i++) {
+				if (this.listOfMuted[i].username != input && input != '') {
+					this.count = this.count + 1;
+					this.noItems = false;
+				}
+			}
+			if (this.count == this.listOfMuted.length) {
+				this.noItems = true;
+			}
+			if (input == '') {
+				this.noItems = false;
+			}
+			this.count = 0;
+		},
+		// @vuese
+		//show all list of moderators
+		// @arg no argument
+		seeAll() {
+			this.search = '';
+			this.noItems = false;
+		},
 		// @vuese
 		// Used to show add rule popup
 		// @arg no argument
@@ -97,5 +213,20 @@ export default {
 	line-height: 2.2rem;
 	color: var(--color-dark-2);
 	padding-top: 9rem;
+}
+.ul-items {
+	list-style: none;
+	background-color: var(--color-white-1);
+	padding-left: 0rem;
+}
+.no-items {
+	background-color: var(--color-white-1);
+	height: 25rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	font-weight: bold;
 }
 </style>

@@ -2,7 +2,7 @@
 	<div class="popup">
 		<div class="popup-inner">
 			<div class="comments">
-				<div class="container bg-black">
+				<div class="container bg-black" id="test">
 					<div class="row justify-content-center align-items-center">
 						<div class="col-7 d-flex">
 							<div class="vote-box">
@@ -459,22 +459,15 @@
 										</div>
 										<div class="sort-by" @click="displaySortByMenu" id="sort">
 											<span class="title"
-												>Sort By:{{ sortByTitle }}
+												>Sort By:{{ currentSortType }}
 												<font-awesome-icon icon="fa-solid fa-caret-down"
 											/></span>
 											<subMenu
-												:titles="[
-													'Best',
-													'Top',
-													'New',
-													'Controversial',
-													'Old',
-													'Q&A',
-												]"
+												:titles="['best', 'top', 'new', 'old']"
 												class="sort-by-sub-menu"
 												:display="showSortByMenu"
 												@change-title="changeSortByTitle"
-												clicked-prop="Best"
+												:clicked-prop="currentSortType"
 											/>
 										</div>
 									</div>
@@ -482,8 +475,9 @@
 								<div class="post-comments">
 									<my-comment
 										v-for="userComment in userComments"
-										:key="userComment.id"
+										:key="userComment.commentId"
 										:comment="userComment"
+										:post-id="$route.path.split('/')[4]"
 									></my-comment>
 								</div>
 							</div>
@@ -555,14 +549,49 @@ export default {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'].userData;
 		},
+		currentSortType() {
+			if (this.$route.query.sort) return this.$route.query.sort;
+			else return 'best';
+		},
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
 	created() {
 		this.getPostDetails();
 		this.RequestUserData();
+		this.fetchPostComments();
+		// document.getElementById('test').addEventListener('scroll', () => {
+		// 	console.log('scroll');
+		// });
 	},
 	methods: {
+		click() {
+			console.log('scrolled');
+		},
+		handleScroll: function () {
+			console.log('scroll' + window.scrollY);
+			if (window.scrollY > 50) {
+				this.fetchPostComments();
+			}
+			//return window.scrollY > 100;
+		},
+		async fetchPostComments() {
+			console.log(this.$route.query.sort);
+			try {
+				await this.$store.dispatch('comments/fetchPostComments', {
+					baseurl: this.$baseurl,
+					id: this.$route.path.split('/')[4],
+					beforeMod: '',
+					afterMod: '',
+					sort: this.$route.query.sort,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.userComments =
+				this.$store.getters['comments/getListOfComments'].children;
+			console.log(this.userComments);
+		},
 		async RequestUserData() {
 			try {
 				await this.$store.dispatch('user/getUserData', {
@@ -591,6 +620,7 @@ export default {
 		},
 		newComment(comment) {
 			this.userComments.unshift(comment);
+			console.log(comment);
 		},
 		//@vuese
 		//fetch posts according to type of sorting
@@ -607,14 +637,19 @@ export default {
 			this.counter = this.postDetails.votes;
 			this.commentsCount = this.postDetails.comments;
 			this.postedAt = this.postDetails.postedAt;
+			this.isFollowed = this.postDetails.followed;
 			console.log(this.postDetails);
 		},
 		//@vuese
 		//change the order of comments listing according to parameter passed to it
 		// @arg The argument is a string value representing sort type
-		changeSortByTitle(title) {
+		async changeSortByTitle(title) {
 			this.sortByTitle = title;
-			this.$router.push('/comments/' + title);
+			await this.$router.push({
+				path: this.$route.fullPath,
+				query: { sort: this.sortByTitle.toLowerCase() },
+			});
+			this.fetchPostComments();
 		},
 		//@vuese
 		//opens the sorting menu of comments
@@ -673,16 +708,17 @@ export default {
 		},
 		//@vuese
 		//follow post
-		async followPost() {
+		async follow() {
 			try {
 				await this.$store.dispatch('comments/followPost', {
 					baseurl: this.$baseurl,
-					id: this.id,
+					id: this.$route.path.split('/')[4],
+					follow: !this.isFollowed,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.isFollowed = this.$store.getters['comments/getIfFollowed'];
+			this.isFollowed = !this.isFollowed;
 		},
 		//@vuese
 		//show services submenu of post

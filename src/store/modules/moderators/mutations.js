@@ -18,6 +18,24 @@ export default {
 		state.handleTime = payload;
 	},
 
+	//////////////APPROVED/////////////
+
+	setListOfApproved(state, payload) {
+		state.listOfApproved = payload;
+	},
+	approveUserSuccessfully(state, payload) {
+		state.approveUserSuccessfully = payload;
+	},
+
+	//////////////MUTED/////////////
+
+	setListOfMuted(state, payload) {
+		state.listOfMuted = payload;
+	},
+	muteUserSuccessfully(state, payload) {
+		state.muteUserSuccessfully = payload;
+	},
+
 	//////////////LEAVE MOD/////////////
 
 	leaveModSuccessfully(state, payload) {
@@ -84,5 +102,8 @@ export default {
 	},
 	unBanUserSuccessfully(state, payload) {
 		state.unBanUserSuccessfully = payload;
+	},
+	setListOfBanned(state, payload) {
+		state.listOfBanned = payload;
 	},
 };

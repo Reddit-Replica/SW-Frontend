@@ -17,6 +17,23 @@ export default {
 	after(state) {
 		return state.after;
 	},
+	/////////////////////APPROVED/////////////////////
+
+	listOfApproved(state) {
+		return state.listOfApproved;
+	},
+	approveUserSuccessfully(state) {
+		return state.approveUserSuccessfully;
+	},
+
+	/////////////////////MUTED/////////////////////
+
+	listOfMuted(state) {
+		return state.listOfMuted;
+	},
+	muteUserSuccessfully(state) {
+		return state.muteUserSuccessfully;
+	},
 
 	/////////////////////LEAVE MOD/////////////////////
 
@@ -85,5 +102,8 @@ export default {
 	},
 	unBanUserSuccessfully(state) {
 		return state.unBanUserSuccessfully;
+	},
+	listOfBanned(state) {
+		return state.listOfBanned;
 	},
 };

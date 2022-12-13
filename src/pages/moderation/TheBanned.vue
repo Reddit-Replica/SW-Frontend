@@ -145,7 +145,7 @@ export default {
 		//return list of moderators
 		// @type object
 		listOfBanned() {
-			return this.$store.getters['moderation/listOfModerators'];
+			return this.$store.getters['moderation/listOfBanned'];
 		},
 		// @vuese
 		//return true if there is no banned, false otherwise
@@ -246,12 +246,10 @@ export default {
 		enterSearch(input) {
 			this.search = input;
 			this.noItems = false;
-			this.notSearch = true;
 			for (let i = 0; i < this.listOfBanned.length; i++) {
 				if (this.listOfBanned[i].username != input && input != '') {
 					this.count = this.count + 1;
 					this.noItems = false;
-					this.notSearch = false;
 				}
 			}
 			if (this.count == this.listOfBanned.length) {
@@ -260,7 +258,6 @@ export default {
 			}
 			if (input == '') {
 				this.noItems = false;
-				this.notSearch = true;
 			}
 			this.count = 0;
 		},
@@ -272,7 +269,7 @@ export default {
 			this.noItems = false;
 		},
 		// @vuese
-		//load moderators list from the store
+		//load banned list from the store
 		// @arg no argument
 		async loadListOfBanned(title) {
 			let beforeMod = '',
@@ -283,7 +280,7 @@ export default {
 				afterMod = this.after;
 			}
 			try {
-				await this.$store.dispatch('moderation/listOfModerators', {
+				await this.$store.dispatch('moderation/loadListOfBanned', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 					beforeMod: beforeMod,
