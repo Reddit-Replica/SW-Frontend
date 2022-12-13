@@ -31,11 +31,15 @@
 import BaseButton from '../../../BaseComponents/BaseButton.vue';
 export default {
 	props: {
+		// @vuese
+		// blocked to Know the status of the user if blocked or not
 		blocked: {
 			type: Boolean,
 			required: false,
 			default: false,
 		},
+		// @vuese
+		// followed to Know the status of the user if followed or not
 		followed: {
 			type: Boolean,
 			required: true,
@@ -52,6 +56,11 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * this methods handle a request for following || unfollowing the  user
+		 * @arg no
+		 */
 		async toggleFollowed() {
 			try {
 				await this.$store.dispatch('user/followUnfollowUser', {
@@ -65,6 +74,11 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		/**
+		 * @vuese
+		 * this methods handle a request for blocking || unblocking the  user
+		 * @arg no
+		 */
 		async toggleBlockedUnblocked() {
 			try {
 				await this.$store.dispatch('user/blockUnblockUser', {

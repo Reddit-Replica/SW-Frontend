@@ -140,8 +140,6 @@ it('Testing clicking submit', () => {
 	return Promise.resolve();
 });
 
-
-
 //--------------------------------------------------------
 //                     Testing clickig buttons Routing
 //--------------------------------------------------------
@@ -166,13 +164,12 @@ test('test login button', async () => {
 		},
 	});
 
-		await wrapper
+	await wrapper
 		.find('#login')
 		.trigger('click')
 		.then(() => {
 			expect(wrapper.html()).toContain('Log in');
 		});
-
 });
 
 test('test signup button', async () => {

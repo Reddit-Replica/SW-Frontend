@@ -47,6 +47,26 @@ export default {
 	},
 	getinSubreddit(state) {
 		console.log('getters in subreddit');
-		return state.nSubreddit;
+		return state.inSubreddit;
+	},
+	getImages(state) {
+		console.log('getters images');
+		return state.images;
+	},
+	getImageCaptions(state) {
+		console.log('getters ImageCaptions');
+		return state.imageCaptions;
+	},
+	getImageLinks(state) {
+		console.log('getters ImageLinks');
+		return state.imageLinks;
+	},
+	getVideo(state) {
+		console.log('getters video');
+		return state.video;
+	},
+	getvideoOrimage(state) {
+		console.log('getters videoOrimage');
+		return state.videoOrimage;
 	},
 };

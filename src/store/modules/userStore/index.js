@@ -1,16 +1,16 @@
 import mutations from './mutations.js';
 import actions from './actions.js';
 import getters from './getters.js';
-
 export default {
 	namespaced: true,
 	/**
 	 * The Vuex 'UserState' object.
-	 * @name UserState
+	 * @module UserState
 	 * @type {object}
 	 * @property {Object} userData contain all user information DiasplayedName,about,banner.. .
 	 * @property {Array} SocialLinksItems contain array of static social links items data (picture,text,imgSrc,type).
-	 * @property {Object} numProp This property is a number.
+	 * @property {Object} blockedUsersData contain all blocked users Data.
+	 * @property {Object} commentsData contain all user comments Data.
 	 */
 	state() {
 		return {
@@ -293,6 +293,72 @@ export default {
 								spammedDate: '2019-08-24T14:15:22Z',
 							},
 							lock: true,
+						},
+					},
+				],
+			},
+			commentsData: {
+				before: 'string',
+				after: 'string',
+				children: [
+					{
+						id: 'string',
+						data: {
+							subreddit: 'string',
+							postedBy: 'string',
+							title: 'string',
+							type: 'text',
+							content: 'string',
+							flair: {
+								flairId: 'string',
+								flairText: 'string',
+								backgroundColor: 'string',
+								textColor: 'string',
+							},
+							nsfw: true,
+							spoiler: true,
+							comment: [
+								{
+									commentId: 'string',
+									commentBy: 'string',
+									commentBody: 'string',
+									points: 0,
+									editTime: '2019-08-24T14:15:22Z',
+									publishTime: '2019-08-24T14:15:22Z',
+									level: 0,
+									inYourSubreddit: true,
+									moderation: {
+										approve: {
+											approvedBy: 'string',
+											approvedDate: '2019-08-24T14:15:22Z',
+										},
+										remove: {
+											removedBy: 'string',
+											removedDate: '2019-08-24T14:15:22Z',
+										},
+										spam: {
+											spamedBy: 'string',
+											spamedDate: '2019-08-24T14:15:22Z',
+										},
+										lock: true,
+									},
+								},
+							],
+						},
+					},
+				],
+			},
+			blockedUsersData: {
+				before: 'string',
+				after: 'string',
+				children: [
+					{
+						id: 'string',
+						data: {
+							username: 'string',
+							blockDate: '2019-08-24T14:15:22Z',
+							userImage:
+								'https://www.redditstatic.com/avatars/defaults/v2/avatar_default_1.png',
 						},
 					},
 				],

@@ -7,7 +7,7 @@
 	<div>
 		<!-- ///////////change to !moderatorByMe/////////// -->
 		<unmoderator-view
-			v-if="moderatorByMe"
+			v-if="!moderatorByMe"
 			:list-of-moderators="listOfModerators"
 			:subreddit-name="subredditName"
 		></unmoderator-view>
@@ -21,15 +21,7 @@
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
-									v-if="
-										banned ||
-										muted ||
-										approved ||
-										moderators ||
-										postFlair ||
-										scheduledPosts ||
-										contentControls
-									"
+									v-if="scheduledPosts || contentControls"
 									:title="barTitle"
 									:subreddit-name="subredditName"
 								></list-bar>
@@ -46,6 +38,7 @@
 </template>
 
 <script>
+//
 import ListBar from '../../components/moderation/ListBar.vue';
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
 import LeftsideBar from '../../components/moderation/LeftsideBar.vue';
@@ -67,8 +60,9 @@ export default {
 	// @vuese
 	//load moderators list and change document title
 	beforeMount() {
-		document.title = this.$store.state.subredditName;
+		document.title = this.$route.params.subredditName;
 		this.loadListOfModerators();
+		this.loadListOfInvitedModerators();
 	},
 	computed: {
 		// @vuese
@@ -83,6 +77,12 @@ export default {
 		// @type object
 		listOfModerators() {
 			return this.$store.getters['moderation/listOfModerators'];
+		},
+		// @vuese
+		//return list of invited moderators
+		// @type object
+		listOfInvitedModerators() {
+			return this.$store.getters['moderation/listOfInvitedModerators'];
 		},
 		// @vuese
 		//return user name
@@ -235,42 +235,19 @@ export default {
 		//return title of button in fixed bar
 		// @type string
 		barTitle() {
-			if (this.$route.path === '/r/' + this.subredditName + '/about/banned') {
-				return 'Banned';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/muted'
-			) {
-				return 'Muted';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/contributors'
-			) {
-				return 'Approved';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/moderators'
-			) {
-				return 'Moderators of t/' + this.subredditName;
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/rules'
-			) {
-				return 'Rules';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/postflair'
-			) {
-				return 'Post flair';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/scheduledposts'
-			) {
-				return 'Schedule Post';
-			} else if (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/settings'
-			) {
+			// if (
+			// 	this.$route.path ===
+			// 	'/r/' + this.subredditName + '/about/moderators'
+			// ) {
+			// 	return 'Moderators of t/' + this.subredditName;
+			// } else
+			// if (
+			// 	this.$route.path ===
+			// 	'/r/' + this.subredditName + '/about/scheduledposts'
+			// ) {
+			// 	return 'Schedule Post';
+			// } else
+			if (this.$route.path === '/r/' + this.subredditName + '/about/settings') {
 				return 'Content controls';
 			}
 			return '';
@@ -283,6 +260,19 @@ export default {
 		async loadListOfModerators() {
 			try {
 				await this.$store.dispatch('moderation/loadListOfModerators', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		// @vuese
+		//load moderators invited list from the store
+		// @arg no argument
+		async loadListOfInvitedModerators() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfInvitedModerators', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
 				});

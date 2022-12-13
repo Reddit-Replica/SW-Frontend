@@ -12,7 +12,7 @@
 			</h5>
 		</div>
 		<div class="time">
-			<span>{{ moderator.dateOfModeration }}</span>
+			<span>{{ handleTime }}</span>
 		</div>
 		<div class="remove">
 			<base-button class="button-remove" :id="'button-remove-' + index"
@@ -24,6 +24,9 @@
 
 <script>
 export default {
+	beforeMount() {
+		this.calculateTime();
+	},
 	props: {
 		// @vuese
 		//details of moderator
@@ -65,6 +68,22 @@ export default {
 				} else return false;
 			}
 			return true;
+		},
+		// @vuese
+		//return handled time after calculated it
+		// @type object
+		handleTime() {
+			return this.$store.getters['moderation/handleTime'];
+		},
+	},
+	methods: {
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			this.$store.dispatch('moderation/handleTime', {
+				time: this.moderator.dateOfModeration,
+			});
 		},
 	},
 };

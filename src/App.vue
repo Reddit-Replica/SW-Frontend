@@ -74,6 +74,8 @@ export default {
 	--color-pink: #ff64ae;
 	--color-pink-2: #fff9fb;
 	--color-pink-3: #fcbcdc;
+	--color-pink-4: #f7f1f4;
+	--color-pink-5: #fbdeeb;
 
 	/* blue colors */
 	--color-blue: #6094fe;
@@ -82,11 +84,13 @@ export default {
 	--color-blue-4: #336699;
 	--color-blue-5: #83afdc;
 	--color-blue-6: #0079f3;
-	--color-blue-light: rgb(67, 198, 249);
+	--color-blue-7: #24a0ed;
+	--color-blue-light: #43c6f9;
 	--color-blue-light-2: #e5f5fd;
-	--color-blue-light-3: rgb(51, 168, 255);
+	--color-blue-light-3: #33a8ff;
 	--color-blue-light-4: #f6f7f8;
 	--color-blue-light-5: #e5effa;
+	--color-baby-blue: #24a0ed1a;
 
 	/* green colors */
 	--color-green: rgb(62, 231, 62);
@@ -110,6 +114,7 @@ export default {
 	--line-8: 1px solid var(--color-grey-light-3);
 	--line-9: 1px solid var(--color-blue-4);
 	--line-10: 1px solid var(--color-grey-light-4);
+	--line-11: 1px solid var(--color-blue-light-5);
 	--line-dashed: 1px dashed var(--color-grey-light-2);
 	--line-dashed-2: 1px dashed var(--color-grey-dark-2);
 	--line-dashed-3: 2px dashed var(--color-grey-light-12);

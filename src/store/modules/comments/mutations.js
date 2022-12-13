@@ -9,4 +9,8 @@ export default {
 		console.log(payload);
 		state.subreddit = payload;
 	},
+	setCommentID(state, payload) {
+		console.log(payload);
+		state.commentID = payload;
+	},
 };

@@ -248,12 +248,19 @@
 		</div>
 		<form action="#" class="search">
 			<input
+				v-model="searchQuery"
 				type="text"
 				class="header-search-input"
 				placeholder="Search Reddit"
 				id="header-search"
+				@keyup.enter="searchgo"
 			/>
-			<button class="header-search-button" id="header-search-button">
+			<!-- <span>{{ searchQuery }}</span> -->
+			<button
+				class="header-search-button"
+				id="header-search-button"
+				@click="searchgo"
+			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
 				</svg>
@@ -528,6 +535,7 @@ export default {
 		return {
 			settingsSubMenuDisplay: false,
 			homeSubMenuDisplay: false,
+			searchQuery: '',
 		};
 	},
 	computed: {
@@ -574,7 +582,18 @@ export default {
 		// Used to go to user page
 		// @arg no argument
 		goToUserPage() {
-			this.$router.push(`/user/${this.$store.getters.getUserName}`);
+			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
+			this.$router.push(`/user/${this.userName}`);
+		},
+		// @vuese
+		// Used to go to Search page
+		// @arg no argument
+		searchgo() {
+			if (this.searchQuery) {
+				this.$router.push(`/search`);
+			} else {
+				alert('No Search');
+			}
 		},
 		// @vuese
 		// Used handle logout action

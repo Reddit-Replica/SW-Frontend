@@ -33,6 +33,8 @@
 				class="bi bi-arrow-left icon"
 				viewBox="0 0 16 16"
 				id="arrow-left"
+				v-if="before"
+				@click="fetchBefore()"
 			>
 				<path
 					fill-rule="evenodd"
@@ -47,6 +49,8 @@
 				class="bi bi-arrow-right icon"
 				viewBox="0 0 16 16"
 				id="arrow-right"
+				v-if="after"
+				@click="fetchAfter()"
 			>
 				<path
 					fill-rule="evenodd"
@@ -65,6 +69,22 @@ export default {
 		//if clicked in see all then value of searching should be ''
 		//@type string
 		emptyInput: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return if there is moderators before
+		//@type string
+		before: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		// @vuese
+		//return if there is moderators after
+		//@type string
+		after: {
 			type: String,
 			default: '',
 			required: true,
@@ -93,6 +113,22 @@ export default {
 			// Fire when entered search value
 			// @arg The argument is a string value representing search input
 			this.$emit('enterSearch', this.search);
+		},
+		// @vuese
+		//used to fetch more moderators before
+		// @arg no argument
+		fetchBefore() {
+			// Fire when fetch more moderators before
+			// @arg no argument
+			this.$emit('fetchBefore');
+		},
+		// @vuese
+		//used to fetch more moderators after
+		// @arg no argument
+		fetchAfter() {
+			// Fire when fetch more moderators after
+			// @arg no argument
+			this.$emit('fetchAfter');
 		},
 	},
 };
@@ -133,10 +169,11 @@ export default {
 	margin: 1rem;
 }
 .arrows {
-	margin: 2rem;
-	display: none;
+	margin: 1.5rem;
+	/* display: none; */
 }
 .icon {
+	margin: 0.5rem;
 	cursor: pointer;
 }
 @media only screen and (max-width: 49.25em) {
