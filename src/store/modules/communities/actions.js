@@ -179,7 +179,7 @@ export default {
 				body: JSON.stringify(description),
 			}
 		);
-
+		console.log(payload.description);
 		const responseData = await response.json();
 
 		if (!response.ok) {
@@ -196,7 +196,7 @@ export default {
 	 * @returns {void}
 	 */
 	async AddMainTopic(_, payload) {
-		const title = { title: payload.topic };
+		const title = { title: payload.title };
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
@@ -227,7 +227,7 @@ export default {
 	 * @returns {void}
 	 */
 	async AddSubTopic(_, payload) {
-		const title = { subtopics: payload.subtopics };
+		const title = { title: payload.subtopics };
 		const baseurl = payload.baseurl;
 
 		const response = await fetch(
@@ -241,13 +241,18 @@ export default {
 				body: JSON.stringify(title),
 			}
 		);
-
 		const responseData = await response.json();
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 403) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		}
 	},

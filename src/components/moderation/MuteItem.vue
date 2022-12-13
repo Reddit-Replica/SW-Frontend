@@ -1,9 +1,10 @@
 <template>
 	<div>
+		<!-- should be v-if show -->
 		<li class="item" v-if="show">
-			<div class="image" id="moderator">
+			<div class="image" id="ban">
 				<img
-					v-if="!approve.avatar"
+					v-if="!mute.avatar"
 					src="../../../img/default_inbox_avatar.png"
 					alt="img"
 					class="img"
@@ -11,52 +12,91 @@
 				/>
 				<img
 					v-else
-					:src="$baseurl + '/' + approve.avatar"
+					:src="$baseurl + '/' + mute.avatar"
 					alt="img"
 					class="img"
 					:id="'moderator-img-' + index"
 				/>
-				<h5 class="heading-5" :id="'moderator-name-' + index">
-					{{ approve.username }}
+				<h5 class="heading-5" :id="'ban-name-' + index">
+					{{ mute.username }}
 				</h5>
 			</div>
 			<div class="time">
-				<span>{{ handleTime }}</span>
+				<span> {{ handleTime }}</span>
+				<!-- <span>{{ moderator.dateOfModeration }}</span> -->
 			</div>
-			<div class="remove">
+			<div class="permissions">
 				<base-button
-					class="button-remove"
-					:id="'button-remove-' + index"
-					@click="showApproveFunction()"
-					>Remove</base-button
+					class="button-ban"
+					id="button-edit"
+					@click="showUnMuteFunction()"
+					>Unmute</base-button
 				>
+				<base-button
+					class="button-ban"
+					id="button-more-details"
+					@click="viewDetailsFunction()"
+					>More Details<svg
+						v-if="!viewDetails"
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-caret-down"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
+						/>
+					</svg>
+					<svg
+						v-else
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-caret-up"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"
+						/>
+					</svg>
+				</base-button>
 			</div>
 		</li>
+		<div class="show-more" v-if="viewDetails">
+			<div v-if="muteReason"><div class="banned-for">No mod note.</div></div>
+			<div v-if="muteReason">
+				<div class="banned-for">Mod note:</div>
+				<div class="reason">{{ muteReason }}</div>
+			</div>
+			<div v-else>
+				<div class="banned-for">No mod note.</div>
+			</div>
+		</div>
 		<div id="sure-popup-form">
 			<base-dialog
-				:show="showApprove"
-				@close="showApproveFunction()"
+				:show="showUnMute"
+				@close="showUnMuteFunction()"
 				title="Confirm"
 			>
 				<div class="rule-dialog flex-column">
 					<div class="rule-box-p flex-column">
-						<p class="sure-text">
-							Are you sure you want to remove {{ approve.username }} as an
-							approved user?
-						</p>
+						<p class="sure-text">Are you sure you want to unmute mute?</p>
 					</div>
 					<div class="rule-box box-buttons">
 						<base-button
-							@click="showApproveFunction()"
+							@click="showUnMuteFunction()"
 							class="button-white"
 							id="cancel-button"
 							>Cancel</base-button
 						>
 						<base-button
-							@click="removeFunction()"
+							@click="Unmute()"
 							class="button-blue"
 							id="delete-button"
-							>Remove</base-button
+							>Unmute</base-button
 						>
 					</div>
 					<div class="no-messages" v-if="errorResponse">
@@ -70,20 +110,19 @@
 
 <script>
 export default {
-	beforeMount() {
-		this.calculateTime();
-	},
+	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
-		//details of approve
+		//details of moderator
 		// @type object
-		approve: {
+		mute: {
 			type: Object,
 			required: true,
 			default: () => ({
 				username: '',
 				avatar: '',
-				dateOfApprove: '',
+				dateOfMute: '',
+				muteReason: '',
 			}),
 		},
 		// @vuese
@@ -104,10 +143,15 @@ export default {
 	},
 	data() {
 		return {
+			viewDetails: false,
+			showAddBan: false,
+			showUnMute: false,
 			handleTime: '',
-			showApprove: false,
 			errorResponse: null,
 		};
+	},
+	beforeMount() {
+		this.calculateTime();
 	},
 	computed: {
 		// @vuese
@@ -115,23 +159,46 @@ export default {
 		// @type boolean
 		show() {
 			if (this.search != '') {
-				if (this.search == this.approve.username) {
+				if (this.search == this.mute.username) {
 					return true;
 				} else return false;
 			}
 			return true;
 		},
+
 		// @vuese
-		//return handled time after calculated it
-		// @type object
-		// handleTime() {
-		// 	return this.$store.getters['moderation/handleTime'];
-		// },
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
 	},
 	methods: {
 		// @vuese
-		//calculate time
-		// @type object
+		// Used to show view Details
+		// @arg no argument
+		viewDetailsFunction() {
+			this.viewDetails = !this.viewDetails;
+		},
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		showAddBanFunction() {
+			this.showAddBan = !this.showAddBan;
+		},
+		// @vuese
+		// Used to show add rule popup
+		// @arg no argument
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
+		},
+		// @vuese
+		//used to show sure unmute popup
+		// @arg no argument
+		showUnMuteFunction() {
+			this.showUnMute = !this.showUnMute;
+		},
 		calculateTime() {
 			// this.$store.dispatch('moderation/handleTime', {
 			// 	time: this.moderator.dateOfModeration,
@@ -139,7 +206,8 @@ export default {
 
 			var currentDate = new Date();
 			var returnValue = '';
-			var myTime = new Date(this.approve.dateOfApprove);
+			var myTime = new Date(this.mute.dateOfMute);
+			console.log(this.mute);
 			if (currentDate.getFullYear() != myTime.getFullYear()) {
 				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
 			} else if (currentDate.getMonth() != myTime.getMonth()) {
@@ -157,15 +225,9 @@ export default {
 			this.handleTime = returnValue;
 		},
 		// @vuese
-		//used to show sure approve popup
+		//used to handle unmute request
 		// @arg no argument
-		showApproveFunction() {
-			this.showApprove = !this.showApprove;
-		},
-		// @vuese
-		//used to handle remove request
-		// @arg no argument
-		removeFunction() {},
+		Unmute() {},
 	},
 };
 </script>
@@ -197,7 +259,7 @@ export default {
 	margin-right: 0.6rem;
 }
 .time,
-.remove {
+.permissions {
 	align-items: center;
 	font-size: 1.2rem;
 }
@@ -208,27 +270,15 @@ export default {
 	flex: 1 0 100px;
 	line-height: normal;
 }
-.remove {
+.permissions {
 	margin-right: 2rem;
-}
-.button-remove {
-	position: relative;
-	border: 1px solid transparent;
-	color: var(--color-blue-2);
-	fill: var(--color-blue-2);
-	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 1.4rem;
-	font-weight: 700;
-	letter-spacing: unset;
-	line-height: 1.7rem;
-	text-transform: unset;
-	min-height: 3.2rem;
-	min-width: 3.2rem;
-	padding: 0.4 1.6rem;
-	background-color: var(--color-white-1);
 }
 .heading-5 {
 	color: var(--color-dark-1);
+}
+.delete-icon {
+	margin-left: 1rem;
+	cursor: pointer;
 }
 .rule-dialog {
 	max-height: 100%;
@@ -315,6 +365,39 @@ button {
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
+}
+.button-ban {
+	background-color: transparent;
+	color: var(--color-blue-2) !important;
+	fill: var(--color-blue-2);
+}
+.button-ban:hover {
+	background-color: var(--color-grey-light-4);
+}
+.show-more {
+	background-color: var(--color-grey-light-10);
+	border-top: 0;
+	padding: 16px;
+	word-break: break-all;
+}
+.banned-for {
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	line-height: 12px;
+	text-transform: uppercase;
+	color: var(--color-grey-dark-8);
+	display: inline-block;
+	margin-right: 3px;
+}
+.reason {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 18px;
+	display: inline-block;
+	padding-top: 10px;
+	color: var(--color-dark-1);
 }
 /* 340px */
 @media only screen and (max-width: 21.25em) {

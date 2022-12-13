@@ -161,13 +161,15 @@ export default {
 		//adds new comment
 		async writeNewComment() {
 			let write = {
-				userName: localStorage.getItem('userName'),
-				duration: 'just now',
-				content: this.content,
-				replies: [],
-				id: '',
+				commentedBy: localStorage.getItem('userName'),
+				publishTime: new Date().toJSON(),
+				commentBody: this.content,
+				children: [],
+				numberOfChildren: 0,
+				commentId: '',
 				level: 0,
 			};
+			let content = this.content;
 			var element = document.getElementsByClassName('ql-editor');
 			while (element[0].firstChild) {
 				element[0].firstChild.remove();
@@ -175,7 +177,7 @@ export default {
 			try {
 				await this.$store.dispatch('comments/comment', {
 					baseurl: this.$baseurl,
-					text: write.content,
+					text: content,
 					postId: this.$route.path.split('/')[4],
 					parentId: this.parentId,
 					parentType: this.parentType,
@@ -186,7 +188,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			write.id = this.$store.getters['comments/getCommentID'];
+			write.commentId = this.$store.getters['comments/getCommentID'];
 			write.level = this.level;
 			console.log(this.level);
 			this.$emit('newComment', write);
@@ -446,6 +448,7 @@ button {
 	color: #000;
 	display: flex;
 	flex-direction: column-reverse;
+	width: 100%;
 }
 .ql-snow.ql-toolbar button:hover,
 .ql-snow.ql-toolbar button.comment-button:disabled {

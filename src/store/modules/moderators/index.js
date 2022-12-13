@@ -12,6 +12,12 @@ export default {
 			handleTime: '',
 			after: '',
 			before: '',
+			//////////////APPROVED/////////////
+			listOfApproved: [],
+			approveUserSuccessfully: false,
+			//////////////MUTED/////////////
+			listOfMuted: [],
+			muteUserSuccessfully: false,
 			//////////////LEAVE MOD/////////////
 			leaveModSuccessfully: false,
 			//////////////INVITE MOD/////////////
@@ -37,6 +43,7 @@ export default {
 			//////////////////////BAN////////////////////////
 			banUserSuccessfully: false,
 			unBanUserSuccessfully: false,
+			listOfBanned: [],
 		};
 	},
 	mutations,

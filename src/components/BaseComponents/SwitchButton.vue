@@ -1,6 +1,20 @@
 <template>
-	<input type="checkbox" />
+	<input type="checkbox" v-model="value" @click="onChecked" />
 </template>
+<script>
+export default {
+	data() {
+		return {
+			value: true,
+		};
+	},
+	methods: {
+		onChecked() {
+			this.$emit('checked', this.value);
+		},
+	},
+};
+</script>
 <style scoped>
 input[type='checkbox'] {
 	appearance: none;

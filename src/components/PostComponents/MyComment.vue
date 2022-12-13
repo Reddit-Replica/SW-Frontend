@@ -4,7 +4,7 @@
 			<div class="left">
 				<div class="image">
 					<router-link
-						:to="{ name: 'user', params: { userName: comment.userName } }"
+						:to="{ name: 'user', params: { userName: comment.commentedBy } }"
 						><img src="../../../img/user-image.jpg" alt="" id="user"
 					/></router-link>
 				</div>
@@ -13,11 +13,11 @@
 			<div class="right">
 				<div class="user-name">
 					<router-link
-						:to="{ name: 'user', params: { userName: comment.userName } }"
+						:to="{ name: 'user', params: { userName: comment.commentedBy } }"
 						id="userName"
-						>{{ comment.userName }}</router-link
+						>{{ comment.commentedBy }}</router-link
 					>
-					<span>. {{ comment.duration }} </span>
+					<span>. {{ handleTime }} </span>
 				</div>
 				<div class="content" v-if="!editing" v-html="renderingHTML"></div>
 				<div class="services" v-if="!editing">
@@ -62,7 +62,10 @@
 							</svg>
 						</li>
 						<li @click="addReply">
-							<font-awesome-icon icon="fa-regular fa-message" />Reply
+							<font-awesome-icon icon="fa-regular fa-message" /><span
+								class="reply"
+								>Reply</span
+							>
 						</li>
 						<li>Share</li>
 						<li>Save</li>
@@ -90,7 +93,7 @@
 					v-if="editing"
 					:parent-id="this.$route.path.split('/')[4]"
 					:level="1"
-					:identifier="'edit' + comment.id"
+					:identifier="'edit' + comment.commentId"
 					:current-text="newComment"
 					@save-editing="saveEditing"
 					@cancel-editing="cancelEditing"
@@ -98,10 +101,10 @@
 				<comment-submit
 					type="Reply"
 					v-if="replying"
-					:parent-id="comment.id"
+					:parent-id="comment.commentId"
 					parent-type="comment"
 					:level="comment.level + 1"
-					:identifier="'reply' + comment.id"
+					:identifier="'reply' + comment.commentId"
 					:current-text="{ ops: [{ insert: '\n' }] }"
 					@new-comment="newReply"
 					@cancel-editing="cancelReplying"
@@ -109,9 +112,9 @@
 				<div class="replies">
 					<my-comment
 						v-for="reply in replies"
-						:key="reply.id"
+						:key="reply.commentId"
 						:comment="reply"
-						:parent-id="comment.id"
+						:post-id="postId"
 					></my-comment>
 				</div>
 			</div>
@@ -128,6 +131,26 @@ export default {
 		CommentSubmit,
 	},
 	computed: {
+		handleTime() {
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.comment.publishTime);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			return returnValue;
+		},
 		//@vuese
 		//chceks if there is a written text in text area or not to edit the comment
 		noComment() {
@@ -141,7 +164,7 @@ export default {
 			// TypeScript / ES6:
 			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 
-			var deltaOps = this.newComment.ops;
+			var deltaOps = this.comment.commentBody.ops;
 
 			var cfg = {};
 
@@ -161,14 +184,19 @@ export default {
 				return {};
 			},
 		},
+		postId: {
+			type: String,
+			required: true,
+			default: '',
+		},
 	},
 	data() {
 		return {
 			upClicked: true,
 			downClicked: false,
 			voteCounter: 1,
-			newComment: this.comment.content,
-			replies: this.comment.replies,
+			newComment: this.comment.commentBody,
+			replies: [],
 			edittedComment: '',
 			editing: false,
 			replying: false,
@@ -176,7 +204,28 @@ export default {
 			deleted: false,
 		};
 	},
+	//@vuese
+	//before mount fetch posts according to type of sorting
+	created() {
+		if (this.comment.numberofChildren != 0) this.fetchPostComments();
+	},
 	methods: {
+		async fetchPostComments() {
+			try {
+				await this.$store.dispatch('comments/fetchPostReplies', {
+					baseurl: this.$baseurl,
+					postId: this.$route.path.split('/')[4],
+					commentId: this.comment.commentId,
+					beforeMod: '',
+					afterMod: '',
+					sort: this.$route.query.sort,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.replies = this.$store.getters['comments/getListOfReplies'].children;
+			console.log(this.replies);
+		},
 		newReply(reply) {
 			this.replies.unshift(reply);
 			this.replying = false;
@@ -285,7 +334,7 @@ export default {
 	color: var(--color-grey-light-5);
 	margin-left: 2px;
 }
-.content p {
+.content {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 21px;
@@ -385,5 +434,8 @@ export default {
 }
 .services > ul > li:last-of-type {
 	position: relative;
+}
+.reply {
+	margin-left: 2px;
 }
 </style>

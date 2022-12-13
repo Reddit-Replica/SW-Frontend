@@ -60,7 +60,7 @@ import TheRules from './pages/moderation/TheRules.vue';
 import ContentControls from './pages/moderation/ContentControls.vue';
 import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
-import TrafficStats from './pages/moderation/TrafficStats.vue';
+// import TrafficStats from './pages/moderation/TrafficStats.vue';
 
 import NotFound from './pages/NotFound.vue';
 
@@ -86,7 +86,7 @@ const router = createRouter({
 			children: [
 				{
 					name: 'comments',
-					path: '/r/:subredditName/comments/:postId/:postName/', //$route.path.split('/')[2: for subredditname , 4: for post id]
+					path: '/r/:subredditName/comments/:postId/:postName',
 					component: PostComments,
 				},
 			],
@@ -198,7 +198,7 @@ const router = createRouter({
 				},
 				{ path: '/r/:subredditName/about/edit', component: ThesettingsMod },
 				// //?page=community ?page=posts ?page=notifications
-				{ path: '/r/:subredditName/about/traffic', component: TrafficStats },
+				// { path: '/r/:subredditName/about/traffic', component: TrafficStats },
 				// { path: '/hc/en-us', component: TheHistory },
 				// { path: '/reddithelp', component: TheHistory },
 				// { path: '/policies/moderator-guidelines', component: TheHistory },

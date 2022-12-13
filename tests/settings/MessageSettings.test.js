@@ -2,9 +2,52 @@ import {mount} from '@vue/test-utils';
 import MessagingSettings from '../../src/pages/settings/MessagingSettings.vue';
 import {describe, it, expect} from 'vitest';
 import Vuex from 'vuex';
-import store from '../../src/store/index.js';
+// import store from '../../src/store/index.js';
 
 describe ('MessagingSettings.vue', () => {
+  let store = new Vuex.Store ({
+    modules: {
+      userModule: {
+        namespaced: true,
+        state: {
+          userData: {
+            displayName: '',
+            about: '',
+            banner: '',
+            picture: '',
+            karma: 0,
+            cakeDate: '2019-08-24',
+            socialLinks: [
+              {
+                type: 'Reddit',
+                displayText: 'medo',
+                link: '11',
+              },
+            ],
+            nsfw: true,
+            followed: true,
+            blocked: true,
+            moderatorOf: [
+              {
+                subredditName: '',
+                numOfMembers: 0,
+                nsfw: true,
+              },
+            ],
+          },
+          socialLinkItems: [
+            {
+              text: 'Custom URL',
+              imgSrc: 'img',
+              alt: 'custom url',
+              type: 'link' /* link or username */,
+              baseurl: '',
+            },
+          ],
+        },
+      },
+    },
+  });
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
