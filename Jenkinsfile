@@ -4,7 +4,6 @@ triggers {
     githubPush()
   }
 
-
   	environment {
 		DOCKERHUB_CREDENTIALS=credentials('Dockerhub')
 	}
@@ -28,7 +27,7 @@ triggers {
 
   stage("intgration testing"){
     steps {
-              echo "till get its waerrrrrrrrrrrrr"
+              echo "till get its waerrrrrrrrsrrrrr"
       }
   }
 
