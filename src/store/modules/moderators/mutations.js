@@ -26,6 +26,9 @@ export default {
 	approveUserSuccessfully(state, payload) {
 		state.approveUserSuccessfully = payload;
 	},
+	removeApproveSuccessfully(state, payload) {
+		state.removeApproveSuccessfully = payload;
+	},
 
 	//////////////MUTED/////////////
 

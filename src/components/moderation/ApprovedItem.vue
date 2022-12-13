@@ -70,6 +70,7 @@
 
 <script>
 export default {
+	emits: ['doneSuccessfully'],
 	beforeMount() {
 		this.calculateTime();
 	},
@@ -127,6 +128,14 @@ export default {
 		// handleTime() {
 		// 	return this.$store.getters['moderation/handleTime'];
 		// },
+
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
 	},
 	methods: {
 		// @vuese
@@ -165,7 +174,21 @@ export default {
 		// @vuese
 		//used to handle remove request
 		// @arg no argument
-		removeFunction() {},
+		async removeFunction() {
+			try {
+				await this.$store.dispatch('moderation/removeApprove', {
+					username: this.approve.username,
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+				if (this.$store.getters['moderation/removeApproveSuccessfully']) {
+					this.$emit('doneSuccessfully');
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 	},
 };
 </script>
@@ -226,6 +249,10 @@ export default {
 	min-width: 3.2rem;
 	padding: 0.4 1.6rem;
 	background-color: var(--color-white-1);
+}
+
+.button-remove:hover {
+	background-color: var(--color-blue-light-5);
 }
 .heading-5 {
 	color: var(--color-dark-1);
