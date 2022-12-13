@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="no-messages" v-if="noMessages">
+			there doesn't seem to be anything here
+		</div>
 		<div>
 			<sent-messages
 				v-for="(message, index) in sentMessages"
@@ -7,9 +10,6 @@
 				:message="message"
 				:index="index"
 			></sent-messages>
-		</div>
-		<div class="no-messages" v-if="noMessages">
-			there doesn't seem to be anything here
 		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>

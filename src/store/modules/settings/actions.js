@@ -76,14 +76,17 @@ export default {
 		};
 
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/r/{subreddit}/about/edit', {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-			body: JSON.stringify(setting),
-		});
+		const response = await fetch(
+			baseurl + `/r/${payload.communityName}/about/edit`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(setting),
+			}
+		);
 		const responseData = await response.json();
 		if (response.status == 200) {
 			console.log(response);
