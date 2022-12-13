@@ -14,36 +14,68 @@ export default {
 	 */
 	async SearchPost(context, payload) {
 		const baseurl = payload.baseurl;
+		// const response = await fetch(
+		// 	baseurl + '/search?type=post' + '?q=' + payload.q
+		// );
+		console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
-			baseurl + '/search?type=post' + '?q=' + payload.q
+			baseurl + '/search?type=post' + '?q=' + payload.q,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
+		console.log(response);
 		const responseData = await response.json();
 		if (response.status == 200) {
 			const posts = [];
 
-			for (const key in responseData) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
 				const post = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					id: responseData[key].children[0].id,
-					kind: responseData[key].children[0].king,
-					subreddit: responseData[key].children[0].subreddit,
-					link: responseData[key].children[0].link,
-					content: responseData[key].children[0].content,
-					video: responseData[key].children[0].video,
-					nsfw: responseData[key].children[0].nsfw,
-					spoiler: responseData[key].children[0].spoiler,
-					title: responseData[key].children[0].title,
-					sharePostId: responseData[key].children[0].sharePostId,
-					comments: responseData[key].children[0].comments,
-					votes: responseData[key].children[0].votes,
-					postedAt: responseData[key].children[0].postedAt,
-					postedBy: responseData[key].children[0].postedBy,
+					id: responseData.children[i].id,
+					dataId: responseData.children[i].data.id,
+					kind: responseData.children[i].data.kind,
+					subreddit: responseData.children[i].data.subreddit,
+					link: responseData.children[i].data.link,
+					video: responseData.children[i].data.video,
+					content: responseData.children[i].data.content,
+					nsfw: responseData.children[i].data.nsfw,
+					spoiler: responseData.children[i].data.spoiler,
+					title: responseData.children[i].data.title,
+					sharePostId: responseData.children[i].data.sharePostId,
+					comments: responseData.children[i].data.comments,
+					postedAt: responseData.children[i].data.postedAt,
+					postedBy: responseData.children[i].data.postedBy,
+					votes: responseData.children[i].data.votes,
+					//image
+					ImagePath: responseData.children[i].data.images.path,
+					ImageCaption: responseData.children[i].data.images.caption,
+					Imagelink: responseData.children[i].data.images.link,
+					//flair
+					flairId: responseData.children[i].data.flair.id,
+					flairName: responseData.children[i].data.flair.caption,
+					order: responseData.children[i].data.flair.link,
+					backgroundColor: responseData.children[i].data.flair.path,
+					textColor: responseData.children[i].data.flair.caption,
 				};
 				posts.push(post);
 			}
 			context.commit('setPosts', posts);
-		} else if (!response.ok) {
+			context.commit('after', after);
+			context.commit('before', before);
+		} else {
 			const error = new Error(responseData.error);
 			throw error;
 		}
@@ -57,23 +89,38 @@ export default {
 	async SearchUser(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
-			baseurl + '/search/type=user' + '?q=' + payload.q
+			baseurl + '/search?type=user' + '?q=' + payload.q
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
 			const users = [];
 
-			for (const key in responseData) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
 				const user = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					username: responseData[key].children[0].username,
-					karma: responseData[key].children[0].karma,
+					id: responseData.children[i].id,
+					dataId: responseData.children[i].data.id,
+					username: responseData.children[i].data.username,
+					karma: responseData.children[i].data.karma,
+					nsfw: responseData.children[i].data.nsfw,
+					joinDate: responseData.children[i].data.joinDate,
+					following: responseData.children[i].data.following,
+					avatar: responseData.children[i].data.avatar,
 				};
 				users.push(user);
 			}
+			context.commit('before', before);
+			context.commit('after', after);
 			context.commit('setUsers', users);
-		} else if (!response.ok) {
+		} else {
 			const error = new Error(responseData.error);
 			throw error;
 		}
@@ -93,17 +140,32 @@ export default {
 		if (response.status == 200) {
 			const subreddits = [];
 
-			for (const key in responseData) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
 				const subreddit = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					subredditName: responseData[key].children[0].subredditName,
-					numberOfMembers: responseData[key].children[0].numberOfMembers,
+					id: responseData.children[i].id,
+					dataId: responseData.children[i].data.id,
+					subredditName: responseData.children[i].data.subredditName,
+					numberOfMembers: responseData.children[i].data.numberOfMembers,
+					nsfw: responseData.children[i].data.nsfw,
+					picture: responseData.children[i].data.picture,
+					description: responseData.children[i].data.description,
+					joined: responseData.children[i].data.joined,
 				};
 				subreddits.push(subreddit);
 			}
 			context.commit('setSubreddits', subreddits);
-		} else if (!response.ok) {
+			context.commit('before', before);
+			context.commit('after', after);
+		} else {
 			const error = new Error(responseData.error);
 			throw error;
 		}

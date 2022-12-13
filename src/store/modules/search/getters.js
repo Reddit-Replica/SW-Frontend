@@ -5,6 +5,7 @@
  */
 export default {
 	Getsubreddits(state) {
+		console.log(state.subreddits);
 		return state.subreddits;
 	},
 	Getusers(state) {
@@ -15,5 +16,11 @@ export default {
 	},
 	GetQuery(state) {
 		return state.SearchQuery;
+	},
+	before(state) {
+		return state.before;
+	},
+	after(state) {
+		return state.after;
 	},
 };
