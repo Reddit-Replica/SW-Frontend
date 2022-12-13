@@ -48,8 +48,8 @@
 					<router-link
 						:to="
 							commentData.data.post.subreddit != null
-								? `r/${commentData.data.post.subreddit}`
-								: `user/${this.$route.params.userName}`
+								? `/r/${commentData.data.post.subreddit}`
+								: `/user/${this.$route.params.userName}`
 						"
 					>
 						{{

@@ -8,28 +8,59 @@
 		<div v-if="pinnedPost.kind == 'video'" class="video-post">
 			<video-post :video-src="pinnedPost.video"></video-post>
 		</div>
+		<div
+			class="content-text content-text-link link-post"
+			v-if="pinnedPost.kind === 'link'"
+		>
+			<div class="post-pic-box">
+				<i id="postData-data-kind-link-icon"
+					><i class="fa-solid fa-link"></i
+				></i>
+				<i
+					id="postData-data-kind-post-hybrid-icon"
+					style="z-index: 5; color: #ffffff; transform: translate(88px, 59px)"
+					><a
+						style="color: #ffffff"
+						class="post-link-href"
+						:href="pinnedPost.link"
+						target="_blank"
+						><i
+							style="
+								background-color: #0079d3;
+								border-top-left-radius: 4px;
+								padding: 3px;
+								font-size: 12px;
+							"
+							class="fa-solid fa-arrow-up-right-from-square"
+						></i></a
+				></i>
+			</div>
+			<!-- <a href="">{{ pinnedPost.link }}</a> -->
+		</div>
 		<div class="pinned-post-item2">
 			<div class="pinned-post-title">{{ pinnedPost.title }}</div>
 			<div class="post-info">
 				<div class="post-subreddit-icon">
-					<i></i>
-					<img src="" alt="" />
+					<img src="../../../../../img/default_inbox_avatar.png" alt="" />
 				</div>
-				<router-link to=""> {{ 'r/' + pinnedPost.subreddit }} </router-link>
-			</div>
-			<div class="content-text" v-if="pinnedPost.kind === 'hybrid'">
-				{{ PostHybridContent }}
+				<router-link :to="routerLinkSubredditHandler">
+					{{
+						pinnedPost.subreddit
+							? `r/${pinnedPost.subreddit}`
+							: `u/${pinnedPost.postedBy}`
+					}}
+				</router-link>
 			</div>
 			<div
-				class="content-text content-text-link"
-				v-if="pinnedPost.kind === 'link'"
-			>
-				<a href="">{{ pinnedPost.link }}</a>
-			</div>
+				v-html="PostHybridContent"
+				class="content-text"
+				v-if="pinnedPost.kind === 'hybrid'"
+			></div>
+
 			<div style="flex-grow: 1"></div>
 			<div class="post-options">
 				<post-options
-					:post-data="{ data: pinnedPost }"
+					:post-data="{ data: pinnedPost, id: pinnedPost.id }"
 					pinned-post-flag="true"
 				></post-options>
 			</div>
@@ -59,16 +90,26 @@ export default {
 			PostHybridContent: {},
 		};
 	},
+	mounted() {
+		this.setPostHybridContent();
+	},
 	methods: {
+		routerLinkSubredditHandler() {
+			if (this.pinnedPost.subreddit) {
+				return `/r/${this.pinnedPost.subreddit}`;
+			} else return `/user/${this.pinnedPost.postedBy}`;
+		},
 		setPostHybridContent() {
-			let QuillDeltaToHtmlConverter =
-				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-			console.log(this.pinnedPost.content);
-			let deltaOps = this.pinnedPost.content.ops;
-			let cfg = {};
-			let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-			console.log(converter.convert());
-			this.PostHybridContent = converter.convert();
+			if (this.pinnedPost.kind == 'hybrid') {
+				let QuillDeltaToHtmlConverter =
+					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+				console.log(this.pinnedPost.content);
+				let deltaOps = this.pinnedPost.content.ops;
+				let cfg = {};
+				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+				console.log(converter.convert());
+				this.PostHybridContent = converter.convert();
+			}
 		},
 	},
 	watch: {
@@ -144,7 +185,7 @@ header.pinned-posts h2 {
 	font-size: 18px;
 	font-weight: 500;
 	line-height: 22px;
-	color: #222222;
+	color: #9b9b9b9b;
 	display: inline;
 	padding-right: 5px;
 	word-wrap: break-word;
@@ -155,6 +196,7 @@ header.pinned-posts h2 {
 	font-weight: 400;
 	line-height: 16px;
 	display: flex;
+	align-items: center;
 	flex-flow: row nowrap;
 	position: relative;
 }
@@ -171,14 +213,68 @@ header.pinned-posts h2 {
 	border-radius: 50%;
 	margin-right: 3px;
 }
-.picture-post {
+.picture-post,
+.link-post {
 	width: 100%;
 	overflow: hidden;
-	max-height: 176px;
+	height: 176px;
+}
+.link-post {
+	padding: 12px;
 }
 .video-post {
 	width: 100%;
 	overflow: hidden;
 	max-height: 176px;
+}
+.post-pic-box {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	width: 210px;
+	height: 155px;
+	border-radius: 4px;
+	background-color: rgba(28, 28, 28, 0.03);
+	flex: none;
+}
+.post-pic-box::before {
+	font-family: 'Font Awesome 5 Free';
+	content: '\f03e';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 20px;
+	color: inherit;
+	display: none;
+}
+.post-pic-box i {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 20px;
+	color: inherit;
+}
+.post-pic-box img {
+	width: 100%;
+	height: 100%;
+	display: block;
+	border-radius: 4px;
+	position: relative;
+	z-index: 1;
+}
+.post-subreddit-icon {
+	margin-right: 4px;
+}
+.post-subreddit-icon img {
+	width: 100%;
+	height: 100%;
+}
+.post-link-href {
+	color: #ffffff;
+}
+a.post-link-href:hover {
+	color: unset;
 }
 </style>

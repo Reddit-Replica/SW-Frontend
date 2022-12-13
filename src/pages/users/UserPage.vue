@@ -66,7 +66,8 @@ export default {
 			blockedFlag: false,
 		};
 	},
-	mounted() {
+	beforeMount() {
+		// location.reload();
 		// this.checkInOverviewPage;
 	},
 	watch: {
@@ -140,8 +141,15 @@ export default {
 	async created() {
 		if (this.$route.params.userName) {
 			this.loading = true;
-			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
-			if (this.$route.params.userName == this.$store.getters.getUserName)
+			if (
+				!localStorage.getItem('userName') ||
+				localStorage.getItem('userName') == ''
+			) {
+				this.state = 'unAuth';
+			} else if (
+				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+				this.$route.params.userName == localStorage.getItem('userName')
+			)
 				this.state = 'profile';
 			/* means same authenticated user */ else
 				this.state = 'user'; /* means other user */

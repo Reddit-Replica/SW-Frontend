@@ -17,7 +17,11 @@
 						:key="index"
 						:style="{ left: image.left + '%' }"
 					>
-						<img :src="image.imgUrl" alt="" />
+						<img
+							:style="[nsfwFlag || spoilerFlag ? 'filter: blur(60px);' : '']"
+							:src="image.imgUrl"
+							alt=""
+						/>
 					</li>
 				</ul>
 			</div>
@@ -31,6 +35,14 @@ export default {
 		images: {
 			type: Array,
 			required: true,
+		},
+		nsfwFlag: {
+			type: Boolean,
+			required: false,
+		},
+		spoilerFlag: {
+			type: Boolean,
+			required: false,
 		},
 	},
 	created() {
