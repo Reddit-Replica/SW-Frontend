@@ -485,7 +485,7 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		isFavorite: {
+		isFavourite: {
 			type: Boolean,
 			default: false,
 		},
@@ -537,7 +537,7 @@ export default {
 			return this.subtopicsToShow.length;
 		},
 		favouriteText() {
-			if (!this.isFavorite) return 'Add To Favorites';
+			if (!this.isFavourite) return 'Add To Favorites';
 			else return 'Remove From Favorites';
 		},
 		communityCreationDate() {
@@ -585,22 +585,24 @@ export default {
 		//@vuese
 		//Mark subreddit added to favourites
 		//@arg no argument
-		toogleFavourite() {
+		async toogleFavourite() {
 			//send request
 			const accessToken = localStorage.getItem('accessToken');
-			if (this.isFavorite) {
-				this.$store.dispatch('community/removeFromFavourite', {
+			if (this.isFavourite) {
+				await this.$store.dispatch('community/removeFromFavourite', {
 					subredditName: this.subredditName,
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
 			} else {
-				this.$store.dispatch('community/addToFavourite', {
+				await this.$store.dispatch('community/addToFavourite', {
 					subredditName: this.subredditName,
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
 			}
+
+			this.$emit('reload');
 
 			//hide list
 			this.dotsClick();

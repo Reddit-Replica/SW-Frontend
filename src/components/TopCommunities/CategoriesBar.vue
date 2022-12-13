@@ -140,7 +140,7 @@ ul {
 	overflow: hidden;
 }
 .large-ul {
-	height: 1188px;
+	height: 1111px;
 	overflow: auto;
 }
 .catg-links {
@@ -161,12 +161,4 @@ ul {
 	border-left: 5px solid var(--color-blue-2);
 	font-weight: 550;
 }
-/* .catg-links:before {
-	background-color: var(--color-blue-2);
-	content: '';
-	height: 100%;
-	left: 0;
-	position: absolute;
-	width: 5px;
-} */ ;
 </style>
