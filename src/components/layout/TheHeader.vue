@@ -270,10 +270,7 @@
 			<button
 				class="header-search-button"
 				id="header-search-button"
-				@click="
-					searchSub();
-					searchUsers();
-				"
+				@click="searchSub()"
 			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
@@ -667,17 +664,17 @@ export default {
 		// @vuese
 		// Used to go to go to Search page
 		// @arg no argument
-		gotosearch() {
-			// console.log('waiting');
-			setTimeout(
-				() =>
-					this.$router.push({
-						name: 'searchpost',
-						query: { q: this.searchQuery },
-					}),
-				1000
-			);
-		},
+		// gotosearch() {
+		// 	// console.log('waiting');
+		// 	setTimeout(
+		// 		() =>
+		// 			this.$router.push({
+		// 				name: 'searchpost',
+		// 				query: { q: this.searchQuery },
+		// 			}),
+		// 		1000
+		// 	);
+		// },
 		// @vuese
 		// Used handle logout action
 		// @arg no argument
