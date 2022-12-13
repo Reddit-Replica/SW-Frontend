@@ -88,10 +88,22 @@ export default {
 	 */
 	async SearchUser(context, payload) {
 		const baseurl = payload.baseurl;
+		// const response = await fetch(
+		// 	baseurl + '/search?type=user' + '?q=' + payload.q
+		// );
 		const response = await fetch(
-			baseurl + '/search?type=user' + '?q=' + payload.q
+			baseurl + '/search?type=user' + '&?q=' + payload.q,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
+		console.log(response);
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
 			const users = [];
 
@@ -133,10 +145,22 @@ export default {
 	 */
 	async SearchSubreddit(context, payload) {
 		const baseurl = payload.baseurl;
+		// const response = await fetch(
+		// 	baseurl + '/search?type=subreddit' + '?q=' + payload.q
+		// );
+		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=subreddit' + '?q=' + payload.q
+			baseurl + '/search?type=subreddit' + '&q=' + payload.q,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
 		const responseData = await response.json();
+		console(responseData);
 		if (response.status == 200) {
 			const subreddits = [];
 
