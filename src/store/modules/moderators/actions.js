@@ -401,6 +401,47 @@ export default {
 		}
 	},
 
+	async unmuteUser(context, payload) {
+		context.commit('unmuteUserSuccessfully', false);
+		const approve = {
+			username: payload.username,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		const response = await fetch(
+			baseurl +
+				`/r/${payload.subredditName}/unmute-user
+			`,
+			{
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${accessToken}`,
+				},
+				body: JSON.stringify(approve),
+			}
+		);
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('unmuteUserSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
 	/////////////////////LEAVE MOD/////////////////////
 
 	async leaveMod(context, payload) {

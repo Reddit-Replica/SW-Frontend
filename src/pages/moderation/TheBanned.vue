@@ -174,8 +174,8 @@ export default {
 	},
 	methods: {
 		// @vuese
-		// handle load flairs instead of refreshing
-		// @arg no argument
+		// handle load banned list instead of refreshing
+		// @arg the argument is the title used in show popup
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');

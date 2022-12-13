@@ -37,6 +37,9 @@ export default {
 	muteUserSuccessfully(state) {
 		return state.muteUserSuccessfully;
 	},
+	unmuteUserSuccessfully(state) {
+		return state.unmuteUserSuccessfully;
+	},
 
 	/////////////////////LEAVE MOD/////////////////////
 
