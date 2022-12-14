@@ -245,7 +245,7 @@
 				</svg>
 			</a>
 		</div> -->
-		<!-- <div class="box">
+		<div class="box">
 			<div class="head">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -265,9 +265,10 @@
 				:to="'/r/' + subredditName + '/about/traffic'"
 				class="options"
 				id="traffic-stats-button"
+				@click="showFunction()"
 				>Traffic stats</router-link
 			>
-		</div> -->
+		</div>
 		<!-- Mod Help -->
 		<!-- <div class="box">
 			<div class="head">
