@@ -32,7 +32,30 @@
 
 		<!-- section to display post information -->
 		<div class="post-content" @click="showPostComments">
-			<post-content :post="post"></post-content>
+			<router-link
+				:to="
+					post.subreddit != undefined
+						? {
+								name: 'comments',
+								params: {
+									postName: post.title,
+									subredditName: post.data.subreddit,
+									postId: id,
+								},
+						  }
+						: {
+								name: 'userPostComments',
+								params: {
+									userName: post.postedBy,
+									postName: post.title,
+									postId: id,
+								},
+						  }
+				"
+				id="post-router-comment"
+			>
+				<post-content :post="post"></post-content>
+			</router-link>
 			<div class="post-services">
 				<span class="vote-services vote-box">
 					<span class="upvote" @click="upvote" id="upvote-service">
@@ -66,14 +89,25 @@
 				<ul class="services">
 					<li>
 						<router-link
-							:to="{
-								name: 'comments',
-								params: {
-									postName: post.title,
-									subredditName: post.subreddit,
-									postId: post.id,
-								},
-							}"
+							:to="
+								post.subreddit != undefined
+									? {
+											name: 'comments',
+											params: {
+												postName: post.title,
+												subredditName: post.data.subreddit,
+												postId: id,
+											},
+									  }
+									: {
+											name: 'userPostComments',
+											params: {
+												userName: post.postedBy,
+												postName: post.title,
+												postId: id,
+											},
+									  }
+							"
 							id="post-router-comment"
 						>
 							<svg
@@ -91,7 +125,6 @@
 							{{ post.comments }} Comments
 						</router-link>
 					</li>
-
 					<li @click="showShareSubMenu" id="share">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -289,6 +322,10 @@ export default {
 			type: Object,
 			required: true,
 		},
+		id: {
+			type: String,
+			required: true,
+		},
 	},
 	watch: {
 		savedUnsavedInMainID(newID) {
@@ -337,19 +374,19 @@ export default {
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
-				try {
-					await this.$store.dispatch('postCommentActions/vote', {
-						baseurl: this.$baseurl,
-						id: this.id,
-						type: 'post',
-						direction: 1,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
 			} else {
 				this.upClicked = false;
 				this.counter--;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.id,
+					type: 'post',
+					direction: 1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		//@vuese
@@ -362,19 +399,19 @@ export default {
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
-				try {
-					await this.$store.dispatch('postCommentActions/vote', {
-						baseurl: this.$baseurl,
-						id: this.id,
-						type: 'post',
-						direction: -1,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
 			} else {
 				this.downClicked = false;
 				this.counter++;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.id,
+					type: 'post',
+					direction: -1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		//@vuese

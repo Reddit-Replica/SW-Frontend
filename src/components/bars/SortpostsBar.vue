@@ -92,7 +92,7 @@
 			<div
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'top' }"
-				@click="selectTime(time)"
+				@click="selectSort('top')"
 				id="top-sort"
 			>
 				<svg
@@ -128,7 +128,7 @@
 					<li
 						class="sort-post-box"
 						:class="{ clicked: time == 'Now' }"
-						@click="selectTime('Now')"
+						@click="selectTime('Now', 'hour')"
 						id="now-sort-sub-menu"
 					>
 						<span>Now</span>
@@ -136,7 +136,7 @@
 					<li
 						class="sort-post-box"
 						:class="{ clicked: time == 'Today' }"
-						@click="selectTime('Today')"
+						@click="selectTime('Today', 'day')"
 						id="today-sort-sub-menu"
 					>
 						<span>Today</span>
@@ -144,7 +144,7 @@
 					<li
 						class="sort-post-box"
 						:class="{ clicked: time == 'This Week' }"
-						@click="selectTime('This Week')"
+						@click="selectTime('This Week', 'week')"
 						id="this-week-sort-sub-menu"
 					>
 						<span>This Week</span>
@@ -152,7 +152,7 @@
 					<li
 						class="sort-post-box"
 						:class="{ clicked: time == 'This Month' }"
-						@click="selectTime('This Month')"
+						@click="selectTime('This Month', 'month')"
 						id="this-month-sort-sub-menu"
 					>
 						<span>This Month</span>
@@ -160,7 +160,7 @@
 					<li
 						class="sort-post-box"
 						:class="{ clicked: time == 'this-year' }"
-						@click="selectTime('This Year')"
+						@click="selectTime('This Year', 'year')"
 						id="this-year-sort-sub-menu"
 					>
 						<span>This Year</span>
@@ -168,12 +168,39 @@
 					<li
 						class="sort-post-box"
 						:class="{ clicked: time == 'All Time' }"
-						@click="selectTime('All Time')"
+						@click="selectTime('All Time', 'all')"
 						id="all-time-sort-sub-menu"
 					>
 						<span>All Time</span>
 					</li>
 				</ul>
+			</div>
+			<div
+				class="sort-post-icon-box"
+				@click="showRising()"
+				id="show-sub-rising-menu"
+				v-if="clicked != 'trending'"
+			>
+				<font-awesome-icon icon="fa-solid fa-ellipsis" />
+				<ul class="sort-post-sub-menu" v-if="risingListShow">
+					<li
+						class="sort-post-box"
+						:class="{ clicked: clicked == 'trending' }"
+						@click="selectSort('trending')"
+						id="now-sort-sub-menu"
+					>
+						<font-awesome-icon icon="fa-solid fa-arrow-trend-up" />
+						<span>Rising</span>
+					</li>
+				</ul>
+			</div>
+			<div
+				class="sort-post-icon-box clicked"
+				id="show-sub-rising-menu"
+				v-if="clicked == 'trending'"
+			>
+				<font-awesome-icon icon="fa-solid fa-arrow-trend-up" />
+				<span>Rising</span>
 			</div>
 		</div>
 		<ul class="sort-post-sub-menu" v-if="showMenu">
@@ -284,6 +311,7 @@ export default {
 		return {
 			showMenu: false,
 			showTimeMenu: false,
+			risingListShow: false,
 			clicked: this.initialTitle,
 			time: 'Today',
 		};
@@ -297,8 +325,9 @@ export default {
 			if (this.showMenu) this.showSubMenu();
 			this.$emit('title', title.toLowerCase());
 		},
-		selectTime(title) {
-			this.time = title;
+		selectTime(time, title) {
+			this.clicked = 'top';
+			this.time = time;
 			if (this.showMenu) this.showSubMenu();
 			this.$emit('time', title.toLowerCase());
 		},
@@ -311,10 +340,14 @@ export default {
 		showTimeSubMenu() {
 			this.showTimeMenu = !this.showTimeMenu;
 		},
+		showRising() {
+			this.risingListShow = !this.risingListShow;
+		},
 	},
 	watch: {
 		$route() {
 			console.log('rotechange');
+			if (this.$route.params.title != 'trending') this.risingListShow = false;
 		},
 	},
 };
@@ -433,7 +466,11 @@ export default {
 		display: flex;
 	}
 }
-#show-sub-time-menu {
+#show-sub-time-menu,
+#show-sub-rising-menu {
 	position: relative;
+}
+#show-sub-rising-menu span {
+	margin-left: 2px;
 }
 </style>

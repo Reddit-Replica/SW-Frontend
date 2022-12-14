@@ -455,6 +455,7 @@
 												@new-comment="newComment"
 												identifier="tool1"
 												:current-text="{ ops: [{ insert: '\n' }] }"
+												:subreddit-name="postDetails.subreddit"
 											/>
 										</div>
 										<div class="sort-by" @click="displaySortByMenu" id="sort">
@@ -638,7 +639,9 @@ export default {
 			this.commentsCount = this.postDetails.comments;
 			this.postedAt = this.postDetails.postedAt;
 			this.isFollowed = this.postDetails.followed;
-			console.log(this.postDetails);
+			(this.upClicked = this.postDetails.votingType == 1 ? true : false),
+				(this.downClicked = this.postDetails.votingType == -1 ? true : false),
+				console.log(this.postDetails);
 		},
 		//@vuese
 		//change the order of comments listing according to parameter passed to it
@@ -666,19 +669,19 @@ export default {
 			if (this.upClicked == false) {
 				this.upClicked = true;
 				this.counter++;
-				try {
-					await this.$store.dispatch('postCommentActions/vote', {
-						baseurl: this.$baseurl,
-						id: this.id,
-						type: 'post',
-						direction: 1,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
 			} else {
 				this.upClicked = false;
 				this.counter--;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.postDetails.id,
+					type: 'post',
+					direction: 1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		//@vuese
@@ -691,19 +694,19 @@ export default {
 			if (this.downClicked == false) {
 				this.downClicked = true;
 				this.counter--;
-				try {
-					await this.$store.dispatch('postCommentActions/vote', {
-						baseurl: this.$baseurl,
-						id: this.id,
-						type: 'post',
-						direction: -1,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
 			} else {
 				this.downClicked = false;
 				this.counter++;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.postDetails.id,
+					type: 'post',
+					direction: -1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		//@vuese
