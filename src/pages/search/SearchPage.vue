@@ -25,7 +25,7 @@
 											role="tab"
 											><button
 												class="button-nav button-nav2"
-												@click="goSearch('Comments')"
+												@click="goSearch('coms')"
 											>
 												Comments
 											</button></a
@@ -253,10 +253,10 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
 		},
 	},

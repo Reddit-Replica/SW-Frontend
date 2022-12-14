@@ -71,7 +71,7 @@
 							<div>
 								<div v-if="!(SearchedCms && SearchedCms.length == 0)">
 									<div v-for="value in SearchedCms" :key="value.id">
-										<a class="user-a"
+										<a class="user-a" @click="gotosub(value.subredditName)"
 											><div class="user-div">
 												<div class="user-details">
 													<div class="user-img-div">
@@ -96,11 +96,10 @@
 												</div>
 												<div class="people-content">
 													<div class="people-content_release">
-														<a @click="gotosub(value.subredditName)">
-															<h6 class="people-name">
-																r/{{ value.subredditName }}&nbsp;
-															</h6>
-														</a>
+														<h6 class="people-name">
+															r/{{ value.subredditName }}&nbsp;
+														</h6>
+
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -189,10 +188,10 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
 		},
 		gotosub(subredditName) {
