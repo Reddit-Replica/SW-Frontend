@@ -339,9 +339,11 @@ export default {
 		},
 		showTimeSubMenu() {
 			this.showTimeMenu = !this.showTimeMenu;
+			this.risingListShow = false;
 		},
 		showRising() {
 			this.risingListShow = !this.risingListShow;
+			this.showTimeMenu = false;
 		},
 	},
 	watch: {
