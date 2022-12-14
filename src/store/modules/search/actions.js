@@ -19,7 +19,14 @@ export default {
 		// );
 		console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
-			baseurl + '/search?type=post' + '&q=' + payload.q
+			baseurl +
+				'/search?type=post' +
+				'&q=' +
+				payload.q +
+				'&sort=' +
+				payload.sort +
+				'&time=' +
+				payload.time
 			// {
 			// 	method: 'GET',
 			// 	headers: {
@@ -84,6 +91,9 @@ export default {
 			throw error;
 		}
 	},
+	// setfollow(context, payload) {
+	// 	context.commit('setPosts', payload.id);
+	// },
 	/**
 	 * action for Search for users
 	 * @action  Search for Users
@@ -96,14 +106,14 @@ export default {
 		// 	baseurl + '/search?type=user' + '?q=' + payload.q
 		// );
 		const response = await fetch(
-			baseurl + '/search?type=user' + '&q=' + payload.q
-			// {
-			// 	method: 'GET',
-			// 	headers: {
-			// 		'Content-Type': 'application/json',
-			// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			// 	},
-			// }
+			baseurl + '/search?type=user' + '&q=' + payload.q,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
 		console.log(response);
 		const responseData = await response.json();
@@ -158,18 +168,17 @@ export default {
 		// );
 		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=subreddit' + '&q=' + payload.q
+			baseurl + '/search?type=subreddit' + '&q=' + payload.q,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
-		// {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-		// },
-		// }
-		// );
 		const responseData = await response.json();
-		console(responseData);
+		console.log(responseData);
 		if (
 			response.status == 200 ||
 			response.status == 404 ||
@@ -211,16 +220,15 @@ export default {
 		const baseurl = payload.baseurl;
 		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=comment' + '&q=' + payload.q
+			baseurl + '/search?type=comment' + '&q=' + payload.q,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
-		// {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-		// },
-		// }
-		// );
 		const responseData = await response.json();
 		console(responseData);
 		if (
