@@ -14,20 +14,16 @@
 				</div>
 			</div>
 			<div class="markdown-links">
-				<a
-					href="https://www.redditinc.com/policies/content-policy"
-					target="__blank"
-					:id="'content-policy-link-' + index"
+				<a href="#" target="__blank" :id="'content-policy-link-' + index"
 					>content policy</a
 				>
-				<button
-					class="markdown-link"
-					href=""
+				<span
+					class="markdown-link span-hide"
 					@click="changeTitle()"
 					:id="'formatting-button-' + index"
 				>
 					{{ formatting }} help
-				</button>
+				</span>
 			</div>
 			<button
 				class="submit-form"
@@ -339,5 +335,9 @@ th {
 	color: var(--color-red-dark-1);
 	padding: 0 2rem;
 	font-size: small;
+}
+.span-hide {
+	background-color: transparent;
+	cursor: pointer;
 }
 </style>
