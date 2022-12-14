@@ -181,12 +181,12 @@ export default {
 	margin-right: 3.1rem;
 }
 @media only screen and (max-width: 49.25em) {
-	.input {
+	.input-search {
 		width: 50%;
 	}
 }
 @media only screen and (max-width: 25em) {
-	.input {
+	.input-search {
 		width: 80%;
 	}
 }
