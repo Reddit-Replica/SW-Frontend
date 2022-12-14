@@ -69,12 +69,7 @@
 						id="content-policy-link"
 						>content policy</a
 					>
-					<button
-						class="link"
-						href=""
-						@click="changeTitle()"
-						id="formatting-button"
-					>
+					<button class="link" @click="changeTitle()" id="formatting-button">
 						{{ formatting }} help
 					</button>
 				</div>
@@ -249,7 +244,6 @@ export default {
 				this.errorResponse = err;
 				this.delivered = false;
 			}
-			console.log(this.errorResponse);
 		},
 		// @vuese
 		//change title to formatting or hide
@@ -380,5 +374,28 @@ th {
 	font-size: 1.5rem;
 	display: inline;
 	color: var(--color-dark-2);
+}
+/* 296px */
+@media only screen and (max-width: 296px) {
+	table {
+		font-size: 1rem;
+		font-weight: 300;
+	}
+	.row > * {
+		padding-right: 0;
+		padding-left: 0;
+	}
+	input,
+	select,
+	textarea {
+		width: 70%;
+	}
+	.submit-form {
+		font-size: 1rem;
+	}
+	.heading-3 {
+		font-size: 1.5rem;
+		padding: 1rem;
+	}
 }
 </style>

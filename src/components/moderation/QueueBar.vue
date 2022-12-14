@@ -228,4 +228,9 @@ export default {
 	display: flex;
 	padding: 0 2px 0 6px;
 }
+@media only screen and (max-width: 768px) {
+	.content {
+		padding-top: 2.4rem;
+	}
+}
 </style>

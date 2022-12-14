@@ -5,25 +5,32 @@
 	</div>
 </template>
 <script>
+// import { inject } from 'vue';
 export default {
+	// setup() {
+	// 	const vue3 = inject('Vue3GoogleOauth');
+	// 	return {
+	// 		vue3,
+	// 	};
+	// },
 	methods: {
 		//@vuese
 		//Login And SignUp with Google
 		async handlesign() {
 			try {
 				const googleUser = await this.$gAuth.signIn();
-				this.$store.state.userName = googleUser.lv.Af;
-				this.$store.state.id_token = googleUser.Bc.id_token;
-				console.log(this.$store.state.id_token);
+				console.log(googleUser);
+				this.$store.state.userName = googleUser.kv.KX;
+				this.$store.state.id_token = googleUser.Bc.access_token;
 				console.log(this.$store.getters.getUserName);
 				const actionPayload = {
 					type: 'google',
-					id_token: googleUser.Bc.id_token,
+					id_token: googleUser.Bc.access_token,
 					baseurl: this.$baseurl,
 				};
 				try {
 					await this.$store.dispatch('googleSign', actionPayload);
-					this.$router.replace('/main');
+					this.$router.push('/main');
 				} catch (err) {
 					this.error = err;
 				}

@@ -3,26 +3,35 @@
 		<form action="#" class="form-reply">
 			<div class="user-text-reply" :id="'reply-form-' + index">
 				<div class="md">
-					<textarea name="text" cols="1" rows="1" class="text-area"></textarea>
+					<textarea
+						name="text"
+						cols="1"
+						rows="1"
+						class="text-area"
+						:id="'message-' + index"
+						v-model="text"
+					></textarea>
 				</div>
 			</div>
 			<div class="markdown-links">
-				<a
-					href="https://www.redditinc.com/policies/content-policy"
-					target="__blank"
-					:id="'content-policy-link-' + index"
+				<a href="#" target="__blank" :id="'content-policy-link-' + index"
 					>content policy</a
 				>
-				<button
-					class="markdown-link"
-					href=""
+				<span
+					class="markdown-link span-hide"
 					@click="changeTitle()"
 					:id="'formatting-button-' + index"
 				>
 					{{ formatting }} help
-				</button>
+				</span>
 			</div>
-			<button class="submit-form" :id="'submit-form-' + index">Save</button>
+			<button
+				class="submit-form"
+				:id="'submit-form-' + index"
+				@click="replyFunction('send')"
+			>
+				Save
+			</button>
 			<button
 				class="submit-form"
 				:id="'cancel-form-' + index"
@@ -30,6 +39,10 @@
 			>
 				Cancel
 			</button>
+			<span class="delivered" v-if="delivered"
+				>your message has been delivered</span
+			>
+			<p class="error" v-if="error">we need something here</p>
 			<div class="formatting-help" v-if="formatting == 'hide'">
 				<p>
 					reddit uses a slightly-customized version of
@@ -103,6 +116,7 @@
 					</tr>
 				</table>
 			</div>
+			<span class="error" v-if="errorResponse">{{ errorResponse }}</span>
 		</form>
 	</div>
 </template>
@@ -112,6 +126,10 @@ export default {
 	data() {
 		return {
 			formatting: 'formatting',
+			error: null,
+			errorResponse: null,
+			delivered: false,
+			text: '',
 		};
 	},
 	emits: ['hideReplyBox'],
@@ -130,6 +148,34 @@ export default {
 			required: true,
 			default: 0,
 		},
+		// @vuese
+		//id of the msg that this msg is a reply for
+		id: {
+			type: String,
+			required: true,
+			default: '',
+		},
+		// @vuese
+		//receiver Username
+		receiverUsername: {
+			type: String,
+			required: true,
+			default: '',
+		},
+		// @vuese
+		//sender Username
+		senderUsername: {
+			type: String,
+			required: true,
+			default: '',
+		},
+		// @vuese
+		//subject
+		subject: {
+			type: String,
+			required: true,
+			default: '',
+		},
 	},
 	methods: {
 		// @vuese
@@ -140,11 +186,50 @@ export default {
 			else this.formatting = 'formatting';
 		},
 		// @vuese
-		//show reply box or hide it
+		//make form validation
 		// @arg no argument
-		replyFunction(title) {
+		formValidation() {
+			this.delivered = false;
+			this.errorResponse = null;
+			if (this.text == '') {
+				this.error = 'error';
+			} else {
+				this.error = '';
+			}
+		},
+		// @vuese
+		//show reply box or hide it, and handle request
+		// @arg no argument
+		async replyFunction(title) {
 			if (title == 'hide') {
 				this.$emit('hideReplyBox', true);
+			} else if (title == 'send') {
+				this.formValidation();
+				if (this.error != '') return;
+				this.delivered = false;
+				this.errorResponse = null;
+				try {
+					await this.$store.dispatch('messages/sendMessage', {
+						text: this.text,
+						senderUsername: '/u/' + this.receiverUsername,
+						receiverUsername: '/u/' + this.senderUsername,
+						isReply: true,
+						subject: 're: ' + this.subject,
+						repliedMsgId: this.id,
+						baseurl: this.$baseurl,
+					});
+					if (this.$store.getters['messages/sentSuccessfully']) {
+						this.text = '';
+						this.delivered = true;
+						this.$emit('doneSuccessfully');
+					} else {
+						this.errorResponse = 'some thing wrong';
+					}
+				} catch (err) {
+					console.log(err);
+					this.errorResponse = err;
+					this.delivered = false;
+				}
 			}
 		},
 	},
@@ -245,5 +330,45 @@ th {
 .block-quote {
 	margin-left: 5px;
 	border-left: 2px solid #c5c1ad;
+}
+.error {
+	color: var(--color-red-dark-1);
+	padding: 0 2rem;
+	font-size: small;
+}
+.span-hide {
+	background-color: transparent;
+	cursor: pointer;
+}
+/* 296px */
+@media only screen and (max-width: 296px) {
+	table {
+		font-size: 1rem;
+		font-weight: 300;
+		width: 80%;
+	}
+	input,
+	select,
+	textarea {
+		width: 70%;
+	}
+	.submit-form {
+		font-size: 1rem;
+	}
+	.markdown-links {
+		font-size: 1rem;
+	}
+	.formatting-help {
+		font-size: 1rem;
+		width: 80%;
+		text-align: left;
+		margin: 0.5rem 0rem;
+	}
+	.text-area {
+		width: 100%;
+	}
+	.md {
+		margin-left: 0rem;
+	}
 }
 </style>

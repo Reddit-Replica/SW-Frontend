@@ -566,4 +566,9 @@ export default {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+@media only screen and (max-width: 768px) {
+	.content {
+		padding-top: 11.4rem;
+	}
+}
 </style>
