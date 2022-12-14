@@ -8,6 +8,7 @@ export default {
 			subreddits: [],
 			users: [],
 			posts: [],
+			comments: [],
 			SearchQuery: '',
 			after: '',
 			before: '',
