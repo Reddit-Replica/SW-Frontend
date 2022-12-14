@@ -236,7 +236,9 @@ export default {
 		// @vuese
 		// Used to  set the choosen subreddit
 		// @arg a string value representing subreddit name
-		setsubreddit(title, image) {
+		async setsubreddit(title, image) {
+			await this.loadSubredditInfo();
+			console.log(this.subreddit);
 			console.log(image);
 			this.inSubreddit = true;
 			this.subredditTitle = title;
@@ -244,8 +246,7 @@ export default {
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
-			this.loadSubredditInfo();
-			console.log(this.subreddit);
+
 			if (image) {
 				this.image = image;
 				this.path = false;
