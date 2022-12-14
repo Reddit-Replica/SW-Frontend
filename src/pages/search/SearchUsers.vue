@@ -69,7 +69,7 @@
 							<div class="people-results">
 								<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 									<div v-for="value in SearchedUsers" :key="value.username">
-										<a class="user-a"
+										<a class="user-a" @click="gotoUser(value.username)"
 											><div class="user-div">
 												<div class="user-details">
 													<div class="user-img-div">
@@ -94,11 +94,9 @@
 												</div>
 												<div class="people-content">
 													<div class="people-content_release">
-														<a @click="gotoUser(value.username)">
-															<h6 class="people-name">
-																u/{{ value.username }}&nbsp;
-															</h6>
-														</a>
+														<h6 class="people-name">
+															u/{{ value.username }}&nbsp;
+														</h6>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -193,10 +191,10 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
 		},
 		gotoUser(name) {

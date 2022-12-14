@@ -1,0 +1,530 @@
+<template>
+	<div class="all">
+		<div class="after-all">
+			<the-header :header-title="'u/asmaaadel0'"></the-header>
+			<div class="page-release">
+				<div class="page">
+					<div>
+						<div class="upper-nav">
+							<div class="searchin-nav">
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('posts')"
+										>
+											Posts
+										</button></a
+									>
+								</div>
+								<div class="search-nav now-page" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										><button class="button-nav button-nav2">Comments</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=comment" -->
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										><button
+											class="button-nav button-nav2"
+											@click="goSearch('cm')"
+										>
+											Communities
+										</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=com" -->
+								<div class="search-nav" role="tablist">
+									<a
+										class="search-nav-button"
+										data-testid="tab_posts"
+										aria-selected="true"
+										role="tab"
+										@click="goSearch('users')"
+										><button class="button-nav button-nav2">People</button></a
+									>
+								</div>
+								<!-- href="/search/?q=Query&amp;type=ppl" -->
+							</div>
+						</div>
+					</div>
+					<div class="search-results">
+						<div class="people">
+							<div class="people-results">
+								<div class="comments-release">
+									<div class="high-nav">
+										<div class="com-det">
+											<img class="comimage" />
+											<div class="sub-name">&nbsp;r/hamada&nbsp;</div>
+										</div>
+										<span class="dot" role="presentation">•&nbsp;</span>
+										<div class="post-det">
+											<span class="posted-by" style="color: rgb(120, 124, 126)"
+												>Posted by</span
+											>
+											<div class="user-info">
+												<div id="user-name">
+													<a
+														class="user-name-info"
+														style="color: rgb(120, 124, 126)"
+														>u/Ok-Strategy-8582</a
+													>
+												</div>
+											</div>
+											<span class="posted-at" style="color: rgb(120, 124, 126)"
+												>9 days ago</span
+											>
+										</div>
+									</div>
+									<div>
+										<div class="comment">
+											<div class="post-content">
+												<div class="the-content">
+													<h3 class="the-words">
+														The 10 countries with the largest populations that
+														didnt make it into the World Cup this year
+													</h3>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="bording">
+										<div class="blue-one">
+											<div class="the-pic"></div>
+											<div class="the-rest">
+												<div class="user-commentes">
+													<span class="the-span"
+														><div class="div-name">
+															<div class="div-name-2">
+																<div id="user-info">
+																	<a class="name-commented">welshmanec2</a>
+																</div>
+															</div>
+														</div>
+														<span class="dot" role="presentation">•&nbsp;</span
+														><a class="commented_at">9 days ago</a>
+													</span>
+												</div>
+												<div class="comment-word">
+													<div class="comment-div">
+														<p class="p-comment">
+															Egypt too? Or is it Mo Salah that sticks in my
+															mind and the rest of the team are rubbish?
+														</p>
+													</div>
+												</div>
+												<div class="down-nav">
+													<span class="votes">609 upvotes</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<a class="go-to-thread" role="button" tabindex="0"
+										>Go to thread</a
+									>
+									<div class="post-in">
+										<span class="no-cm-posts">8.7k upvotes</span
+										><span class="no-cm-posts">465 comments</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+// import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+// import Notfound from '../../components/SearchComponents/NotFound.vue';
+export default {
+	data() {
+		return {
+			q: '',
+		};
+	},
+	computed: {
+		SearchedUsers() {
+			console.log(this.$store.getters['search/Getusers']);
+			return this.$store.getters['search/Getusers'];
+		},
+	},
+	methods: {
+		//not true just writing what will it been do in action
+		toggle(id) {
+			for (let i = 0; i < this.SearchedUsers().length; i++) {
+				if (this.SearchedUsers()[i].id == id) {
+					this.SearchedUsers()[i].joined = !this.SearchedUsers()[i].joined;
+				}
+			}
+		},
+		goSearch(value) {
+			if (value == 'cm') {
+				this.$router.replace({
+					name: 'searchcm',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'posts') {
+				this.$router.replace({
+					name: 'searchpost',
+					query: { q: this.$route.query.q },
+				});
+			} else if (value == 'users') {
+				this.$router.replace({
+					name: 'searchuser',
+					query: { q: this.$route.query.q },
+				});
+			}
+		},
+	},
+	// components: { BaseButton, Notfound },
+};
+</script>
+
+<style scoped>
+.all {
+	z-index: 3;
+}
+.after-all {
+	max-width: 1024px;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+.page-release {
+	width: 80%;
+	min-width: fit-content;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	justify-content: center;
+	padding: 24px 24px 0;
+}
+.page {
+	padding: 24px 24px 0;
+	display: flex;
+	flex-direction: column;
+	max-width: 1024px;
+	flex-grow: 1;
+}
+div {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+.upper-nav {
+	display: flex;
+	align-items: center;
+	margin-bottom: 24px;
+	margin-top: 24px;
+}
+.searchin-nav {
+	display: flex;
+}
+.search-nav {
+	display: flex;
+}
+.search-nav:hover {
+	border-radius: 9999px;
+	background-color: #ccc;
+}
+.now-page {
+	border-radius: 9999px;
+	background-color: #f6f7f8;
+}
+.search-nav-button {
+	position: relative;
+	margin-right: 4px;
+}
+.button-nav {
+	background-color: var(--newCommunityTheme-field);
+	opacity: 1;
+	color: #000;
+	font-weight: 700;
+	padding: 12px 20px;
+}
+.button-nav::before {
+	opacity: 0;
+}
+.button-nav2 {
+	align-items: center;
+	border-radius: 9999px;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	width: auto;
+	position: relative;
+	background-color: var(--newCommunityTheme-button);
+	border: none;
+	color: #000;
+	fill: var(--newCommunityTheme-body);
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 17px;
+	text-transform: unset;
+	min-height: 32px;
+	min-width: 32px;
+}
+.search-results {
+	min-width: fit-content;
+	max-width: 100%;
+	width: 100%;
+	display: flex;
+	padding-top: 8px;
+}
+.user-a {
+	margin-bottom: 0;
+	border-radius: 4px 4px 0 0;
+	border: thin solid #ccc;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	margin-top: -1px;
+	color: inherit;
+	text-decoration: inherit;
+}
+.user-div {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+.people {
+	margin-bottom: 16px;
+	width: 100%;
+}
+.people-results {
+	cursor: pointer;
+	background: #fff;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px 0 rgb(0 0 0 / 6%);
+	max-width: 100%;
+	width: 100%;
+}
+.comments-release {
+	display: flex;
+	flex-direction: column;
+}
+.people-results:hover {
+	border-radius: 2px;
+	border-color: #000;
+	border-style: solid;
+}
+.high-nav {
+	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 16px;
+	padding-bottom: 4px;
+}
+.com-det {
+	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
+	flex: 0 0 auto;
+}
+.sub-name {
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	color: #1c1c1c;
+	display: inline;
+	text-decoration: none;
+	vertical-align: baseline;
+}
+.dot {
+	color: #7c7c7c;
+	font-size: 6px;
+	line-height: 20px;
+	margin: 0 4px;
+}
+.post-det {
+	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	color: inherit;
+}
+.posted-by {
+	flex: 0 0 auto;
+	margin-right: 3px;
+}
+.user-info {
+	display: inline-block;
+	flex: 0 0 auto;
+}
+.user-name-info {
+	margin-right: 3px;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+}
+.comment {
+	padding: 0 16px;
+	margin: 10px;
+}
+.the-content {
+	display: inline;
+	margin: 4px;
+}
+.the-words {
+	display: inline;
+	font-size: 12px;
+	font-weight: 50;
+	color: inherit;
+}
+.bording {
+	border-radius: 4px;
+	background-color: #e9f5fd;
+	font-size: 14px;
+	margin: 0 12px 12px;
+	padding: 4px 8px 8px;
+	color: #1a1a1b;
+}
+.blue-one {
+	background: transparent;
+	border-radius: 4px;
+	display: flex;
+	position: relative;
+	transition: color 0.5s, fill 0.5s, background 1s;
+	align-items: center;
+}
+.the-pic {
+	display: inline-block;
+	flex: 0 0 auto;
+}
+.the-rest {
+	margin-left: 8px;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	box-sizing: border-box;
+	max-width: 800px;
+	width: calc(100% - 56px);
+	padding: 0;
+}
+.user-commentes {
+	margin-top: 10px;
+	margin-left: 0;
+	min-height: 18px;
+	margin-bottom: 6px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+.the-span {
+	min-height: 18px;
+	display: flex;
+	align-items: center;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+}
+.div-name-2 {
+	display: inline-block;
+}
+.name-commented {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	color: #1a1a1b;
+}
+.commented_at {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 18px;
+	color: #7c7c7c;
+}
+.comment-word {
+	padding: 2px 0;
+	width: 100%;
+}
+.comment-div {
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 21px;
+	word-break: break-word;
+	overflow: auto;
+	padding-bottom: 1px;
+	margin-bottom: -1px;
+	color: #1c1c1c;
+}
+.p-comment {
+	padding: 0.8em 0 0.25em;
+	font: inherit;
+	vertical-align: baseline;
+	color: #1c1c1c;
+}
+.down-nav {
+	margin-top: 8px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	color: #7c7c7c;
+	display: flex;
+}
+.votes {
+	display: block;
+	margin-right: 12px;
+}
+.go-to-thread {
+	display: block;
+	font-size: 12px;
+	font-weight: 400;
+	margin: 0 0 4px 8px;
+	min-height: 0;
+	padding: 0;
+	text-align: left;
+	color: #0079d3;
+	background-color: unset;
+	font-family: Noto Sans, Arial, sans-serif;
+	letter-spacing: unset;
+	line-height: 17px;
+	text-transform: unset;
+	min-width: 32px;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.post-in {
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 8px;
+	padding-bottom: 16px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	color: #7c7c7c;
+	display: flex;
+}
+.no-cm-posts {
+	display: block;
+	margin-right: 12px;
+}
+</style>
