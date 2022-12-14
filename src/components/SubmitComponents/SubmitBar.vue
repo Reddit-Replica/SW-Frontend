@@ -317,10 +317,8 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
-			console.log('print subreddit');
 			console.log(this.subreddit);
 
-			//////////////////////
 			try {
 				await this.$store.dispatch('moderation/loadListOfFlairs', {
 					baseurl: this.$baseurl,
