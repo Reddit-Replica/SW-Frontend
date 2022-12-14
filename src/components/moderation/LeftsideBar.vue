@@ -518,4 +518,10 @@ a.router-link-active {
 .icon-right {
 	color: var(--color-grey-dark-8);
 }
+@media only screen and (max-width: 768px) {
+	.content {
+		top: 18.6rem;
+		left: 0;
+	}
+}
 </style>
