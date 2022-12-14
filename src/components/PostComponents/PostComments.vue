@@ -134,84 +134,8 @@
 										</div>
 									</div>
 									<div class="main">
-										<div class="info d-flex justify-content-space-between">
-											<div class="subreddit-info">
-												<span class="subreddit-image"
-													><img src="../../../img/user-image.jpg" alt=""
-												/></span>
-												<span class="subreddit-name">
-													<router-link
-														:to="{
-															name: 'subreddit',
-															params: { subredditName: subredditName },
-														}"
-														id="subreddit-router"
-														>{{ $route.path.split('/')[2] }}
-													</router-link>
-												</span>
-												<span>
-													. Posted by .
-													<router-link
-														:to="{
-															name: 'user',
-															params: { userName: postedBy },
-														}"
-														id="poster-router"
-													>
-														{{ postedBy }} </router-link
-													>&nbsp;{{ postedAt }} ago
-												</span>
-											</div>
-											<div class="bell" @click="follow" id="follow">
-												<svg
-													v-if="!isFollowed"
-													xmlns="http://www.w3.org/2000/svg"
-													width="22"
-													height="22"
-													fill="currentColor"
-													class="bi bi-bell"
-													viewBox="0 0 22 22"
-												>
-													<path
-														d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
-													/>
-												</svg>
-												<svg
-													v-else
-													xmlns="http://www.w3.org/2000/svg"
-													width="22"
-													height="22"
-													fill="currentColor"
-													class="bi bi-bell-fill"
-													viewBox="0 0 22 22"
-												>
-													<path
-														d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"
-													/>
-												</svg>
-											</div>
-										</div>
 										<div class="content">
-											<div class="post-name">
-												<h3>{{ postDetails.title }}</h3>
-											</div>
-											<img
-												v-for="image in postDetails.images"
-												:key="image.id"
-												:src="this.$baseurl + '/' + image.path"
-												alt=""
-											/>
-											<video
-												width="800"
-												height="500"
-												controls
-												v-if="postDetails.kind == 'video'"
-											>
-												<source
-													:src="this.$baseurl + '/' + postDetails.video"
-												/>
-											</video>
-											<!-- <div class="post-text" v-html="renderingHTML"></div> -->
+											<post-content :post="postDetails"></post-content>
 										</div>
 										<div class="post-services">
 											<ul
@@ -508,6 +432,7 @@ import MyComment from './MyComment.vue';
 import CommentSubmit from './CommentSubmit.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostOptions from '../UserComponents/BaseUserComponents/PostComponents/PostOptions.vue';
+import PostContent from './PostContent.vue';
 export default {
 	components: {
 		SubMenu,
@@ -516,6 +441,7 @@ export default {
 		CommentSubmit,
 		ProfileCard,
 		PostOptions,
+		PostContent,
 	},
 	data() {
 		return {
@@ -639,9 +565,9 @@ export default {
 			this.commentsCount = this.postDetails.comments;
 			this.postedAt = this.postDetails.postedAt;
 			this.isFollowed = this.postDetails.followed;
-			(this.upClicked = this.postDetails.votingType == 1 ? true : false),
-				(this.downClicked = this.postDetails.votingType == -1 ? true : false),
-				console.log(this.postDetails);
+			this.upClicked = this.postDetails.votingType == 1 ? true : false;
+			this.downClicked = this.postDetails.votingType == -1 ? true : false;
+			console.log(this.postDetails);
 		},
 		//@vuese
 		//change the order of comments listing according to parameter passed to it
