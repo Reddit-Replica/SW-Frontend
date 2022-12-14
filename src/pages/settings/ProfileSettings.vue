@@ -201,7 +201,7 @@
 				<div class="box-switch-button">
 					<div>
 						<switch-button
-							@click="nsfwClick"
+							@checked="getNsfw"
 							id="nsfw-profile-settings"
 						></switch-button>
 						<base-dialog
@@ -252,7 +252,10 @@
 				</div>
 				<div class="box-switch-button">
 					<div>
-						<switch-button id="allow-profile-settings"></switch-button>
+						<switch-button
+							id="allow-profile-settings"
+							@checked="getAllowfollow"
+						></switch-button>
 					</div>
 				</div>
 			</div>
@@ -363,6 +366,51 @@ export default {
 			try {
 				const response = await this.$store.dispatch(
 					'setting/changeAbout',
+					actionPayload
+				);
+
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				console.log(this.err);
+			}
+		},
+		async getNsfw(value) {
+			this.nsfw = value;
+			console.log('this.nsfw');
+			console.log(this.nsfw);
+			const actionPayload = {
+				about: this.about,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeNsfw',
+					actionPayload
+				);
+
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				console.log(this.err);
+			}
+		},
+
+		async getAllowfollow(value) {
+			this.allowToFollowYou = value;
+			console.log('this.allowToFollowYou');
+			console.log(this.allowToFollowYou);
+			const actionPayload = {
+				allowToFollowYou: this.allowToFollowYou,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeAllowfollow',
 					actionPayload
 				);
 
