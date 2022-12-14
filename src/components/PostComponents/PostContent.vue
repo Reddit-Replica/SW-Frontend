@@ -1,17 +1,20 @@
 <template>
 	<div class="subreddit-info">
 		<span class="subreddit-image"
-			><img src="../../../img/user-image.jpg" alt=""
+			><img
+				src="../../../img/user-image.jpg"
+				alt=""
+				v-if="post.subreddit != undefined"
 		/></span>
-		<span class="subreddit-name">
+		<span class="subreddit-name" v-if="post.subreddit != undefined">
 			<router-link
 				:to="{
 					name: 'subreddit',
 					params: { subredditName: post.subreddit },
 				}"
 				id="subreddit-router"
-				>{{ post.subreddit }}
-			</router-link>
+				>{{ post.subreddit }} </router-link
+			>.
 		</span>
 		<span>
 			<span v-if="post.kind == 'post'"
@@ -20,55 +23,91 @@
 					class="crosspost-icon"
 				/>Crossposted by
 			</span>
-			<span v-else>. Posted by .</span>
+			<span v-else>Posted by .</span>
 			<router-link
+				v-if="post.postedBy != undefined"
 				:to="{ name: 'user', params: { userName: post.postedBy } }"
 				id="post-by-router"
 			>
 				{{ post.postedBy }} </router-link
-			>&nbsp;{{ post.postedAt }} ago
+			>&nbsp;{{ calculateTime }} ago
 		</span>
 	</div>
-	<!-- <router-link
-		:to="{
-			name: 'comments',
-			params: {
-				postName: post.title,
-				subredditName: post.subreddit,
-				postId: post.id,
-			},
-		}"
-		id="post-router"
-	> -->
+
 	<div class="post-title">
 		<h3>{{ post.title }}</h3>
 	</div>
-	<div class="post-text" v-if="post.kind == 'text'">
-		{{ post.content }}
-	</div>
-	<div class="post-post" v-else-if="post.kind == 'post'">
+	<div
+		class="post-text"
+		v-html="renderingHTML"
+		v-if="post.content != undefined"
+	></div>
+	<div class="post-post" v-if="post.kind == 'post'">
 		<post-content :post="post.sharedPostDetails"></post-content>
 	</div>
 	<img
 		v-for="image in post.images"
+		class="post-image"
 		:key="image.id"
 		:src="this.$baseurl + '/' + image.path"
 		alt=""
 	/>
-	<video width="800" height="500" controls v-if="post.kind == 'video'">
-		<source :src="this.$baseurl + '/' + postDetails.video" />
+	<video width="800" height="500" controls v-if="post.video != undefined">
+		<source :src="this.$baseurl + '/' + post.video" />
 	</video>
-	<!-- </router-link> -->
 </template>
 <script>
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
 	name: 'PostContent',
 	props: {
 		//@vuese
 		//post object that will get displayed in this post component
 		post: {
-			type: Object,
 			required: true,
+		},
+	},
+	computed: {
+		renderingHTML() {
+			var QuillDeltaToHtmlConverter =
+				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+
+			// TypeScript / ES6:
+			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+
+			var deltaOps = this.post.content.ops;
+
+			var cfg = {};
+
+			var converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+
+			var html = converter.convert();
+			return html;
+		},
+		calculateTime() {
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.post.postedAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			return returnValue;
+		},
+	},
+	methods: {
+		click() {
+			console.log(this.renderingHTML);
 		},
 	},
 };
@@ -105,11 +144,11 @@ export default {
 }
 
 .post-card .subreddit-info span:nth-of-type(3),
-.post-card .subreddit-info span:nth-of-type(3) a {
+.post-card .subreddit-info #post-by-router {
 	color: var(--color-grey-dark-2);
 }
 
-.post-card .subreddit-info span:nth-of-type(3) a:hover {
+.post-card .subreddit-info #post-by-router:hover {
 	text-decoration: underline;
 }
 .crosspost-icon {
@@ -119,5 +158,10 @@ export default {
 .post-post {
 	border: 1px solid var(--color-grey-light-8);
 	border-radius: 5px;
+}
+video,
+.post-image {
+	width: 100%;
+	height: auto;
 }
 </style>

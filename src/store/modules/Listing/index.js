@@ -13,7 +13,7 @@ export default {
 	state() {
 		return {
 			postDetails: {},
-			Posts: [],
+			Posts: {},
 		};
 	},
 	actions,
