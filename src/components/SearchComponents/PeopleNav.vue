@@ -3,7 +3,7 @@
 		<h4 class="people-word">People</h4>
 		<div>
 			<div>
-				<div>
+				<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 					<a class="people-status"
 						><div class="people-status-release">
 							<div class="img-release">
@@ -33,6 +33,9 @@
 							</div></div
 					></a>
 				</div>
+				<div v-else>
+					<div class="no-res">No Results</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -50,6 +53,12 @@ export default {
 	},
 	components: {
 		BaseButton,
+	},
+	computed: {
+		SearchedUsers() {
+			console.log(this.$store.getters['search/Getusers']);
+			return this.$store.getters['search/Getusers'];
+		},
 	},
 	methods: {
 		toggle() {},
@@ -170,5 +179,10 @@ p {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
+}
+.no-res {
+	color: #1c1c1c;
+	padding: 16px;
+	font-size: 16px;
 }
 </style>
