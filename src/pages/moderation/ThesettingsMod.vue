@@ -706,6 +706,7 @@ export default {
 			console.log(this.acceptingRequestsToPost);
 		},
 		async saveChanges() {
+			if (this.communityName == '') this.communityName = this.subredditName;
 			const actionPayload = {
 				communityName: this.communityName,
 				mainTopic: this.mainTopic,
