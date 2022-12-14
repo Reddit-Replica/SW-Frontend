@@ -999,4 +999,9 @@ ol {
 	padding: 10px;
 	font-size: medium;
 }
+@media only screen and (max-width: 768px) {
+	.box {
+		padding: 86px 24px;
+	}
+}
 </style>
