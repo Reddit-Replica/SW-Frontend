@@ -535,8 +535,8 @@ export default {
 
 			// const file = await this.$refs.profileFile.files[0];
 			const profilePictureUrl = await URL.createObjectURL(file);
-			console.log(profilePictureUrl);
-			document.querySelector('#profile-picture_user').src = profilePictureUrl;
+			// console.log(profilePictureUrl);
+			// document.querySelector('#profile-picture_user').src = profilePictureUrl;
 			try {
 				await this.$store.dispatch('user/AddProfilePicture', {
 					baseurl: this.$baseurl,

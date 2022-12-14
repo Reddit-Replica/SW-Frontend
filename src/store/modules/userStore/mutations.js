@@ -68,4 +68,9 @@ export default {
 			Object.assign(state.overviewData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserSavedData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.savedData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
 };

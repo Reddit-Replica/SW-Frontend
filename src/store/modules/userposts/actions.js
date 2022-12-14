@@ -41,9 +41,18 @@ export default {
 	},
 	async getUserPinnedPostData(context, payload) {
 		const baseurl = payload.baseurl;
+		console.log('pinned-post-body', payload.body);
 		let url = new URL(baseurl + `/pinned-posts`);
+		let params = {
+			username: payload.body.username,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		console.log('stst');
 		const response = await fetch(url, {
+			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -54,8 +63,8 @@ export default {
 			const error = new Error(
 				responseData.message || 'Failed to fetch User Data!'
 			);
-			// throw error;
-			console.log(error);
+			throw error;
+			// console.log(error);
 		}
 		console.log('getUserPinnedPostData', responseData);
 		if (response.status == 200)
