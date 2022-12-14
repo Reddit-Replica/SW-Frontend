@@ -90,6 +90,7 @@
 				style="margin: 10px; color: #0079d3; fill: #0079d3"
 				:options="flairs"
 				v-model="flairId"
+				@click="getFlairs()"
 			>
 				></v-select
 			>
@@ -133,6 +134,7 @@ export default {
 		},
 		getFlairs() {
 			this.flairs = this.$store.getters['moderation/listOfFlairs'];
+			console.log(this.flairs);
 		},
 	},
 };
