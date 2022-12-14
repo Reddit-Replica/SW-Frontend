@@ -379,10 +379,22 @@ button {
 	margin-top: 2rem;
 	padding: 1rem;
 }
-/* 340px */
-@media only screen and (max-width: 21.25em) {
-	.permissions {
+@media only screen and (max-width: 499px) {
+	.time {
 		display: none;
+	}
+	.icon-delete {
+		display: none;
+	}
+	.permissions {
+		margin-right: 0;
+	}
+	.image {
+		margin: 0;
+	}
+	button {
+		padding: 4px 2px;
+		font-size: 1rem;
 	}
 }
 </style>
