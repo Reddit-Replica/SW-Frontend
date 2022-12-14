@@ -177,8 +177,8 @@
 			@hide-reply-box="replyFunction('hide')"
 			@done-successfully="doneSuccessfully()"
 			:id="message.id"
-			:senderUsername="message.senderUsername"
-			:receiverUsername="message.receiverUsername"
+			:sender-username="message.senderUsername"
+			:receiver-username="message.receiverUsername"
 			:subject="message.subject"
 		></ReplyComponent>
 	</div>
