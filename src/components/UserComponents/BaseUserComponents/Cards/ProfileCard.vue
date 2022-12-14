@@ -254,9 +254,10 @@
 			<!-- //////////////////////////////////////////// -->
 			<!-- follow chat for other users -->
 			<follow-chat-component
-				v-if="state == 'user'"
+				v-if="state == 'user' || state == 'unauth'"
 				:blocked="userData.blocked"
 				:followed="userData.followed"
+				:state="state"
 			></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
@@ -269,7 +270,7 @@
 			<button
 				v-if="state == 'profile'"
 				class="new-post"
-				@click="$router.push(`${userName}/submit`)"
+				@click="$router.push(`/user/${userName}/submit`)"
 				id="profile-new-post"
 			>
 				New post
@@ -401,6 +402,18 @@ export default {
 					toLink: '',
 				},
 			],
+			unauthOptions: [
+				{
+					id: 0,
+					name: 'Send Message',
+					toLink: '/message/compose/?to=' /* add in html only user name */,
+				},
+				{
+					id: 1,
+					name: 'Report user',
+					toLink: '',
+				},
+			],
 			isAvatar: false,
 		};
 	},
@@ -412,7 +425,8 @@ export default {
 		 */
 		profileOptions() {
 			if (this.state == 'profile') return this.myProfileOptions;
-			return this.userProfileOptions;
+			if (this.state == 'user') return this.userProfileOptions;
+			else return this.unauthOptions;
 		},
 	},
 	methods: {
@@ -427,6 +441,23 @@ export default {
 				if (profileOption.id == 1) {
 					// block user
 					this.blockUser();
+				}
+			}
+			if (state == 'user') {
+				if (profileOption.id == 0) {
+					// block user
+					this.$router.push({
+						path: '/message/compose/',
+						query: {
+							to: this.$route.params.userName,
+						},
+					});
+				}
+			}
+			if (state == 'unauth') {
+				if (profileOption.id == 0) {
+					// block user
+					this.$router.push('/');
 				}
 			}
 		},
@@ -590,8 +621,8 @@ a {
 }
 
 .profile-card {
-	/* width: 312px; */
-	width: 100%;
+	width: 312px;
+	/* width: 100%; */
 	background-color: var(--main-white-color);
 	display: flex;
 	flex-direction: column;
@@ -630,12 +661,12 @@ a {
 
 span.add-image {
 	position: relative;
-	z-index: 50;
+	z-index: 2;
 	color: var(--main-white-color);
 	cursor: pointer;
 }
 span.add-image i {
-	z-index: 50;
+	z-index: 2;
 	color: var(--main-white-color);
 }
 .add-image::before {
