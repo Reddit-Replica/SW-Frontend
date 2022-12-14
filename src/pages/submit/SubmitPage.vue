@@ -109,7 +109,7 @@ export default {
 			content: null,
 			nsfw: null,
 			spoiler: null,
-			flairId: 123,
+			flairId: '',
 			images: [],
 			imageCaptions: [],
 			imageLinks: [],
@@ -194,6 +194,7 @@ export default {
 		getInSubreddit() {
 			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
 		},
+
 		// @vuese
 		// dispatch createpost from the store
 
@@ -212,6 +213,7 @@ export default {
 			this.getUsername();
 			this.getSubreddit();
 			this.getInSubreddit();
+			this.getFlairs();
 			// this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
