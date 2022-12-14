@@ -237,11 +237,13 @@ export default {
 		// Used to  set the choosen subreddit
 		// @arg a string value representing subreddit name
 		async setsubreddit(title, image) {
+			this.subredditTitle = title;
 			await this.loadSubredditInfo();
+			console.log('print subreddit');
 			console.log(this.subreddit);
 			console.log(image);
 			this.inSubreddit = true;
-			this.subredditTitle = title;
+
 			console.log(this.subredditTitle);
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
@@ -315,6 +317,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log('print subreddit');
 			console.log(this.subreddit);
 
 			//////////////////////
