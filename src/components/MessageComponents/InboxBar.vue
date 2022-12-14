@@ -61,5 +61,8 @@ li:first-of-type {
 	li:first-of-type {
 		margin-left: 0.3rem;
 	}
+	li {
+		font-size: 1.1rem;
+	}
 }
 </style>
