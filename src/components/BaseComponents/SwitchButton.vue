@@ -18,9 +18,9 @@ export default {
 <style scoped>
 input[type='checkbox'] {
 	appearance: none;
+	background-color: var(--color-blue);
 	width: 35px;
 	height: 22px;
-	background-color: #ddd;
 	border-radius: 100px;
 	border: 2px solid transparent;
 	position: relative;
@@ -38,7 +38,7 @@ input[type='checkbox']::before {
 	cursor: pointer;
 }
 input[type='checkbox']:checked {
-	background-color: var(--color-blue);
+	background-color: #ddd;
 }
 input[type='checkbox']:checked::before {
 	left: 14px;
