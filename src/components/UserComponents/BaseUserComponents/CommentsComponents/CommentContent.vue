@@ -22,7 +22,13 @@
 				</div>
 				<div
 					class="comment-content"
-					:class="[commentType ? 'comment-overview-content' : '']"
+					:class="[
+						RemovedComment
+							? 'comment-content-removed'
+							: commentType
+							? 'comment-overview-content'
+							: '',
+					]"
 				>
 					<div class="comment-body-title">
 						<router-link :to="'/user/' + $route.params.userName">
@@ -72,7 +78,7 @@
 											</div>
 											<div class="options-box-text">Edit Post</div>
 										</li>
-										<li @click="savePost" class="options-box-item">
+										<li @click="saveComment" class="options-box-item">
 											<div class="options-box-icon">
 												<i
 													v-if="!commentContent.saved"
@@ -118,7 +124,8 @@
 						<div v-if="commentContent.inYourSubreddit" class="post-options">
 							<ul class="comment-moderator-options">
 								<li
-									@click="approvePost"
+									v-if="!ApprovedComment"
+									@click="approveComment"
 									:style="['aa' == '' ? 'color: #46d160' : '']"
 									class="post-option-item"
 								>
@@ -128,7 +135,8 @@
 									<div class="post-options-text">Approve</div>
 								</li>
 								<li
-									@click="removePost"
+									v-if="!RemovedComment"
+									@click="removeComment"
 									:style="[
 										'aa' == ''
 											? 'color: #ff585b'
@@ -144,7 +152,8 @@
 									</div>
 								</li>
 								<li
-									@click="spamPost"
+									v-if="!RemovedComment"
+									@click="spamComment"
 									:style="[
 										'aa' == ''
 											? 'color: #ff585b'
@@ -157,6 +166,22 @@
 									</div>
 									<div class="post-options-text">
 										<p>Spam</p>
+									</div>
+								</li>
+								<li
+									@click="lockUnLockComment"
+									:style="[
+										'aa' == ''
+											? 'color: #ff585b'
+											: 'color: rgba(135, 138, 140)',
+									]"
+									class="post-option-item"
+								>
+									<div class="post-options-icon">
+										<i class="fa-solid fa-lock"></i>
+									</div>
+									<div class="post-options-text">
+										<p>{{ LockedComment ? 'unlock' : 'Lock' }}</p>
 									</div>
 								</li>
 							</ul>
@@ -187,18 +212,58 @@ export default {
 			type: String,
 			required: true,
 		},
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	data() {
 		return {
 			showOptionsBoxList: false,
 			PostHybridContent: '',
 			DeletedComment: false,
+			ApprovedCommentFlag: true,
+			RemovedCommentFlag: false,
+			SpammedCommentFlag: false,
+			LockedCommentFlag: false,
 		};
+	},
+	computed: {
+		LockedComment() {
+			return this.LockedCommentFlag && this.commentContent.moderation.lock;
+		},
+		SpammedComment() {
+			return (
+				this.SpammedCommentFlag &&
+				this.commentContent.moderation.spam &&
+				this.commentContent.moderation.spam.spammedBy
+			);
+		},
+		RemovedComment() {
+			return (
+				this.RemovedCommentFlag &&
+				this.commentContent.moderation.remove &&
+				this.commentContent.moderation.remove.removedBy
+			);
+		},
+		ApprovedComment() {
+			return (
+				this.ApprovedCommentFlag &&
+				this.commentContent.moderation.approve &&
+				this.commentContent.moderation.approve.approvedBy
+			);
+		},
 	},
 	mounted() {
 		this.setPostHybridContent();
 	},
 	methods: {
+		editPost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
+		},
 		ReplyCommentHandler() {
 			console.log('reply clicked', this.postId);
 			if (!this.commentContent.subreddit) {
@@ -235,6 +300,106 @@ export default {
 		},
 		deletePost() {
 			this.DeletedComment = true;
+			this.RequestDeleteComment();
+		},
+		async RequestDeleteComment() {
+			let responseStatus;
+			try {
+				responseStatus = await this.$store.dispatch('comments/deleteComment', {
+					baseurl: this.$baseurl,
+					id: this.commentContent.commentId,
+					type: 'comment',
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			return responseStatus;
+		},
+		saveComment() {
+			this.RequestSaveComment();
+		},
+		async RequestSaveComment() {
+			let responseStatus;
+			try {
+				responseStatus = await this.$store.dispatch(
+					'userposts/savePostOrComment',
+					{
+						baseurl: this.$baseurl,
+						savePostOrCommentData: {
+							id: this.commentContent.commentId,
+							type: 'comment',
+						},
+					}
+				);
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			return responseStatus;
+		},
+		async approveComment() {
+			try {
+				await this.$store.dispatch('userposts/approvePostOrComment', {
+					baseurl: this.$baseurl,
+					ApprovePostOrCommentData: {
+						id: this.commentContent.commentId,
+						type: 'comment',
+						username: this.$route.params.userName,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async removeComment() {
+			(this.RemovedComment = true), (this.ApprovedComment = false);
+			console.log('removeComment');
+			try {
+				await this.$store.dispatch('userposts/removePostOrComment', {
+					baseurl: this.$baseurl,
+					removePostOrCommentData: {
+						id: this.commentContent.commentId,
+						type: 'comment',
+						username: this.$route.params.userName,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async spamComment() {
+			try {
+				await this.$store.dispatch('userposts/markSpam', {
+					baseurl: this.$baseurl,
+					markSpamData: {
+						id: this.commentContent.commentId,
+						type: 'comment',
+						reason: '',
+					},
+					username: this.$route.params.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async lockUnLockComment() {
+			console.log('lock un lock clicked');
+			let key = 'lock';
+			// if (1) {
+			// 	key = 'lock';
+			// }
+			console.log('main', key);
+			try {
+				await this.$store.dispatch('userposts/lockUnLockPostOrComment', {
+					baseurl: this.$baseurl,
+					lockUnlockData: {
+						id: this.commentContent.commentId,
+						type: `comment`, // mark UnMark
+					},
+					key: `${key}`,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };
@@ -598,6 +763,14 @@ span.post-oc {
 .comment-overview-content {
 	flex: 1;
 	background-color: rgba(0, 121, 211, 0.05);
+	padding: 4px 8px;
+	margin-top: 8px;
+	margin-right: 8px;
+}
+.comment-content-removed {
+	flex: 1;
+	background-color: rgba(255, 88, 91, 0.05);
+	border: 2px solid #ff585b;
 	padding: 4px 8px;
 	margin-top: 8px;
 	margin-right: 8px;

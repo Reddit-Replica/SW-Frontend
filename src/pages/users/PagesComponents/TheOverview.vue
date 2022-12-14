@@ -12,6 +12,7 @@
 			:key="overviewPostData.id"
 			:comment-data="overviewPostData"
 			:id="overviewPostData.id"
+			:state="state"
 		>
 		</comments-overview-page>
 	</div>
@@ -29,10 +30,19 @@ export default {
 		CommentsOverviewPage,
 		// BasePost,
 	},
+	props: {
+		state: {
+			type: String,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			loading: false,
 		};
+	},
+	mounted() {
+		console.log('in overview', this.state);
 	},
 	async created() {
 		let sortType;

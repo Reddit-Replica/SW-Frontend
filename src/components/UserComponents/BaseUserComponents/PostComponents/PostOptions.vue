@@ -668,7 +668,7 @@ export default {
 		},
 		async lockUnLockComments(id) {
 			console.log('lock un lock clicked');
-			let key = 'unLock';
+			let key = 'unlock';
 			if (
 				!this.postData.data.moderation ||
 				!this.postData.data.moderation.lock

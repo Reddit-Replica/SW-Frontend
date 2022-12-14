@@ -21,6 +21,7 @@
 				:key="commentData.id"
 				:comment-data="commentData"
 				:id="commentData.id"
+				:state="state"
 			></base-user-comments>
 		</div>
 	</div>
@@ -35,6 +36,10 @@ export default {
 		SortpostsBar,
 		BaseUserComments,
 		EmptyPage,
+	},
+	state: {
+		type: String,
+		required: true,
 	},
 	data() {
 		return {
