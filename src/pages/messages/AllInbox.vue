@@ -92,4 +92,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* 296px */
+@media only screen and (max-width: 296px) {
+	.row > * {
+		padding-right: 0;
+		padding-left: 0;
+	}
+}
+</style>

@@ -513,4 +513,9 @@ input:focus {
 	display: flex;
 	flex-direction: column; */
 }
+@media only screen and (max-width: 768px) {
+	.list-moderations {
+		padding-top: 11.4rem;
+	}
+}
 </style>

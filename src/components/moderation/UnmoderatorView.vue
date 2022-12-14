@@ -213,4 +213,9 @@ export default {
 		width: 100%;
 	}
 }
+@media only screen and (max-width: 25em) {
+	.heading-3 {
+		font-size: 1.4rem;
+	}
+}
 </style>

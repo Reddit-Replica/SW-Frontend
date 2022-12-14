@@ -67,15 +67,28 @@
 					<div class="search-results">
 						<div class="people">
 							<div class="people-results">
-								<div v-if="!notfounded">
+								<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 									<div v-for="value in SearchedUsers" :key="value.username">
-										<a class="user-a"
+										<a class="user-a" @click="gotoUser(value.username)"
 											><div class="user-div">
 												<div class="user-details">
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
-															<img class="image-user" />
+															<img
+																v-if="!value.avatar"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar' + index"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.avatar"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar' + index"
+															/>
 														</div>
 													</div>
 												</div>
@@ -116,7 +129,7 @@
 										</a>
 									</div>
 								</div>
-								<div v-if="notfounded">
+								<div v-else>
 									<Notfound></Notfound>
 								</div>
 							</div>
@@ -144,6 +157,7 @@ export default {
 	},
 	computed: {
 		SearchedUsers() {
+			console.log(this.$store.getters['search/Getusers']);
 			return this.$store.getters['search/Getusers'];
 		},
 	},
@@ -177,11 +191,14 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
+		},
+		gotoUser(name) {
+			this.$router.push('/user/' + name);
 		},
 	},
 	components: { BaseButton, Notfound },

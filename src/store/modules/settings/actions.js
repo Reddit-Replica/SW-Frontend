@@ -56,6 +56,122 @@ export default {
 		}
 		return response.status;
 	},
+	//////////////////// profile setting ///////////////////////////////////////////
+
+	async changedisplayName(context, payload) {
+		const setting = {
+			displayName: payload.displayName,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/account-settings', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+
+	async changeAbout(context, payload) {
+		const setting = {
+			about: payload.about,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/account-settings', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+	async changeNsfw(context, payload) {
+		const setting = {
+			nsfw: payload.nsfw,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/account-settings', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+	async changeAllowfollow(context, payload) {
+		const setting = {
+			allowToFollowYou: payload.allowToFollowYou,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/account-settings', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+
 	//////////////////// this part for moderation setting //////////////////////////
 
 	async communitySettings(context, payload) {
@@ -82,6 +198,42 @@ export default {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(setting),
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+	async postandcommentsSettings(context, payload) {
+		const setting = {
+			subreddit: payload.communityName,
+			enableSpoiler: payload.enableSpoiler,
+			allowImagesInComment: payload.allowImagesInComment,
+			suggestedSort: payload.suggestedSort,
+		};
+
+		const baseurl = payload.baseurl;
+		console.log(localStorage.getItem('accessToken'));
+		const response = await fetch(
+			baseurl + `/r/${payload.communityName}/about/edit-post-settings`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					// 'Access-Control-Allow-Origin': '*',
 					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 				},
 				body: JSON.stringify(setting),

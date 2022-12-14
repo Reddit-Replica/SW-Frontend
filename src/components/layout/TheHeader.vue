@@ -262,15 +262,12 @@
 				class="header-search-input"
 				placeholder="Search Reddit"
 				id="header-search"
-				@keyup.enter="
-					searchSub();
-					searchUsers();
-				"
+				@keyup.enter="searchUser"
 			/>
 			<button
 				class="header-search-button"
 				id="header-search-button"
-				@click="searchSub()"
+				@click="searchUser"
 			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
@@ -581,9 +578,6 @@ export default {
 		getUserData() {
 			return this.$store.getters['user/getUserData'];
 		},
-		srchq() {
-			return this.$store.getters['GetQuery'];
-		},
 	},
 	// mounted() {
 	// 	this.searchQuery = this.srchq;
@@ -627,10 +621,21 @@ export default {
 			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
 			this.$router.push(`/user/${this.userName}`);
 		},
-		// @vuese
-		// Used to go to Request to Search for Users
-		// @arg no argument
-		async searchUsers() {
+		async searchpost() {
+			if (this.searchQuery) {
+				let quer = this.searchQuery;
+				try {
+					await this.$store.dispatch('search/SearchPost', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+					this.searchSub;
+				} catch (err) {
+					console.log(err);
+				}
+			}
+		},
+		async searchUser() {
 			if (this.searchQuery) {
 				let quer = this.searchQuery;
 				try {
@@ -638,9 +643,23 @@ export default {
 						baseurl: this.$baseurl,
 						q: quer,
 					});
+					await this.$store.dispatch('search/SearchPost', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+					await this.$store.dispatch('search/SearchSubreddit', {
+						baseurl: this.$baseurl,
+						q: quer,
+					});
+					this.$router.push({
+						name: 'searchpost',
+						query: { q: quer },
+					});
 				} catch (err) {
 					console.log(err);
 				}
+			} else {
+				alert('Did not enter a word to Search');
 			}
 		},
 		// @vuese
@@ -654,16 +673,16 @@ export default {
 						baseurl: this.$baseurl,
 						q: quer,
 					});
+					this.$router.push({
+						name: 'searchpost',
+						query: { q: quer },
+					});
 				} catch (err) {
 					console.log(err);
 				}
-			} else {
-				alert('Did not enter a word to Search');
 			}
 		},
-		// @vuese
-		// Used to go to go to Search page
-		// @arg no argument
+
 		// gotosearch() {
 		// 	// console.log('waiting');
 		// 	setTimeout(

@@ -134,10 +134,10 @@
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
 			></subreddit-card> -->
-			<!-- <subreddit-card
+			<subreddit-card
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
-			></subreddit-card> -->
+			></subreddit-card>
 		</div>
 		<div
 			v-if="inSubreddit"
@@ -168,7 +168,7 @@ import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 // import SubredditInfo from '../PostComponents/SubredditInfo.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
-// import SubredditCard from '../PostComponents/SubredditCard.vue';
+import SubredditCard from '../PostComponents/SubredditCard.vue';
 // import SubredditRules from './SubredditRules.vue';
 
 export default {
@@ -177,7 +177,7 @@ export default {
 		// SubredditInfo,
 		PostingtoReddit,
 		ProfileCard,
-		// SubredditCard,
+		SubredditCard,
 		// SubredditRules,
 	},
 	data() {
@@ -236,16 +236,19 @@ export default {
 		// @vuese
 		// Used to  set the choosen subreddit
 		// @arg a string value representing subreddit name
-		setsubreddit(title, image) {
+		async setsubreddit(title, image) {
+			this.subredditTitle = title;
+			await this.loadSubredditInfo();
+			console.log('print subreddit');
+			console.log(this.subreddit);
 			console.log(image);
 			this.inSubreddit = true;
-			this.subredditTitle = title;
+
 			console.log(this.subredditTitle);
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
-			this.loadSubredditInfo();
-			console.log(this.subreddit);
+
 			if (image) {
 				this.image = image;
 				this.path = false;
@@ -314,7 +317,18 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log('print subreddit');
 			console.log(this.subreddit);
+
+			//////////////////////
+			try {
+				await this.$store.dispatch('moderation/loadListOfFlairs', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditTitle,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 	computed: {
