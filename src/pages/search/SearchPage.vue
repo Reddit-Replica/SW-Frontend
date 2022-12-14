@@ -258,6 +258,48 @@ export default {
 				});
 			}
 		},
+		async searchwithSort(value) {
+			try {
+				if (!(this.SecitemChoice == 'Time')) {
+					await this.$store.dispatch('search/SearchPost', {
+						baseurl: this.$baseurl,
+						q: this.$route.query.q,
+						sort: value,
+						time: 'all',
+					});
+				} else {
+					await this.$store.dispatch('search/SearchPost', {
+						baseurl: this.$baseurl,
+						q: this.$route.query.q,
+						sort: value,
+						time: this.SecitemChoice,
+					});
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async searchwithtime(value) {
+			try {
+				if (!(this.FirstitemChoice == 'Sort')) {
+					await this.$store.dispatch('search/SearchPost', {
+						baseurl: this.$baseurl,
+						q: this.$route.query.q,
+						sort: this.FirstitemChoice,
+						time: value,
+					});
+				} else {
+					await this.$store.dispatch('search/SearchPost', {
+						baseurl: this.$baseurl,
+						q: this.$route.query.q,
+						sort: 'new',
+						time: value,
+					});
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		},
 	},
 	components: {
 		SearchPost,
@@ -272,12 +314,11 @@ export default {
 		},
 	},
 	watch: {
-		SearchedPosts() {
-			console.log(this.notFound);
-			if (this.SearchedPosts().length == 0) {
-				this.notFound = true;
-				console.log(this.SearchedPosts());
-			}
+		FirstitemChoice(value) {
+			this.searchwithSort(value);
+		},
+		SecitemChoice(value) {
+			this.searchwithtime(value);
 		},
 	},
 };

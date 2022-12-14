@@ -255,19 +255,18 @@
 				</li>
 			</ul>
 		</div>
-		<form class="search">
+		<form class="search" @submit.prevent="searchUser">
 			<input
 				v-model="searchQuery"
 				type="text"
 				class="header-search-input"
 				placeholder="Search Reddit"
 				id="header-search"
-				@keyup.enter="searchUser"
 			/>
 			<button
 				class="header-search-button"
+				type="submit"
 				id="header-search-button"
-				@click="searchUser"
 			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
@@ -621,20 +620,6 @@ export default {
 			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
 			this.$router.push(`/user/${this.userName}`);
 		},
-		async searchpost() {
-			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchPost', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					this.searchSub;
-				} catch (err) {
-					console.log(err);
-				}
-			}
-		},
 		async searchUser() {
 			if (this.searchQuery) {
 				let quer = this.searchQuery;
@@ -643,18 +628,24 @@ export default {
 						baseurl: this.$baseurl,
 						q: quer,
 					});
+					console.log('h1');
 					await this.$store.dispatch('search/SearchPost', {
 						baseurl: this.$baseurl,
 						q: quer,
+						sort: 'new',
+						time: 'all',
 					});
+					console.log('h2');
 					await this.$store.dispatch('search/SearchSubreddit', {
 						baseurl: this.$baseurl,
 						q: quer,
 					});
-					this.$router.push({
+					console.log('h3');
+					this.$router.replace({
 						name: 'searchpost',
-						query: { q: quer },
+						query: { q: this.searchQuery },
 					});
+					// setTimeout(window.location.reload(), 500);
 				} catch (err) {
 					console.log(err);
 				}
