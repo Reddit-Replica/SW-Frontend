@@ -44,7 +44,8 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log('here');
+		console.log(responseData.subreddit);
+		if (responseData.subreddit == '') delete responseData['subreddit'];
 		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');

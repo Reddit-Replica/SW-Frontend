@@ -1,18 +1,15 @@
 <template>
 	<div class="subreddit-info">
 		<span class="subreddit-image"
-			><img
-				src="../../../img/user-image.jpg"
-				alt=""
-				v-if="post.subreddit != undefined"
+			><img src="../../../img/user-image.jpg" alt="" v-if="notInSubreddit"
 		/></span>
-		<span class="subreddit-name" v-if="post.subreddit != undefined">
+		<span class="subreddit-name" v-if="notInSubreddit">
 			<router-link
 				:to="{
 					name: 'subreddit',
 					params: { subredditName: post.subreddit },
 				}"
-				id="subreddit-router"
+				id="subreddit-route"
 				>{{ post.subreddit }} </router-link
 			>.
 		</span>
@@ -59,6 +56,9 @@
 <script>
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
+	beforeMount() {
+		this.click;
+	},
 	name: 'PostContent',
 	props: {
 		//@vuese
@@ -68,6 +68,11 @@ export default {
 		},
 	},
 	computed: {
+		notInSubreddit() {
+			if (this.post.subreddit == undefined) return false;
+			else if (this.post.subreddit == '') return false;
+			else return true;
+		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
 				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
@@ -88,9 +93,7 @@ export default {
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.post.postedAt);
-			if (currentDate.getFullYear() != myTime.getFullYear()) {
-				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
-			} else if (currentDate.getMonth() != myTime.getMonth()) {
+			if (currentDate.getMonth() != myTime.getMonth()) {
 				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
 			} else if (currentDate.getDate() != myTime.getDate()) {
 				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
@@ -107,7 +110,7 @@ export default {
 	},
 	methods: {
 		click() {
-			console.log(this.renderingHTML);
+			console.log(this.post);
 		},
 	},
 };

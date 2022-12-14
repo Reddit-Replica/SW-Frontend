@@ -275,7 +275,7 @@ export default {
 			try {
 				await this.$store.dispatch('postCommentActions/vote', {
 					baseurl: this.$baseurl,
-					id: this.id,
+					id: this.comment.commentId,
 					type: 'comment',
 					direction: 1,
 				});
@@ -293,7 +293,7 @@ export default {
 			try {
 				await this.$store.dispatch('postCommentActions/vote', {
 					baseurl: this.$baseurl,
-					id: this.id,
+					id: this.comment.commentId,
 					type: 'comment',
 					direction: -1,
 				});
