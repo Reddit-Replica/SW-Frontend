@@ -207,4 +207,83 @@ export default {
 			throw error;
 		}
 	},
+	async SearchComments(context, payload) {
+		const baseurl = payload.baseurl;
+		console.log(payload.q);
+		const response = await fetch(
+			baseurl + '/search?type=comment' + '&q=' + payload.q
+		);
+		// {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+		// },
+		// }
+		// );
+		const responseData = await response.json();
+		console(responseData);
+		if (
+			response.status == 200 ||
+			response.status == 404 ||
+			response.status == 304
+		) {
+			const comments = [];
+
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const comment = {
+					id: responseData.children[i].id,
+					dataId: responseData.children[i].data.id,
+					//posts
+					postId: responseData.children[i].data.post.id,
+					postKind: responseData.children[i].data.post.kind,
+					postSubreddit: responseData.children[i].data.post.subreddit,
+					postlink: responseData.children[i].data.post.link,
+					postImagepath: responseData.children[i].data.post.images.path,
+					postImageCaption: responseData.children[i].data.post.images.caption,
+					postImagelink: responseData.children[i].data.post.images.link,
+					postVideo: responseData.children[i].data.post.video,
+					postContnet: responseData.children[i].data.post.content,
+					postnfsw: responseData.children[i].data.post.nsfw,
+					postspoiler: responseData.children[i].data.post.spoiler,
+					posttitle: responseData.children[i].data.post.title,
+					postsharedId: responseData.children[i].data.post.sharePostId,
+					postFlairId: responseData.children[i].data.post.flair.id,
+					postFlairName: responseData.children[i].data.post.flair.flairName,
+					postFlairOrder: responseData.children[i].data.post.flair.order,
+					postFlairBack:
+						responseData.children[i].data.post.flair.backgroundColor,
+					postFlairtext: responseData.children[i].data.post.flair.textColor,
+					postComments: responseData.children[i].post.comments,
+					postvotes: responseData.children[i].data.post.votes,
+					postpostedAt: responseData.children[i].data.post.postedAt,
+					postpostedby: responseData.children[i].data.post.postedBy,
+					//comments
+					commentId: responseData.children[i].data.comment.id,
+					commentcontent: responseData.children[i].data.comment.content,
+					commentparentId: responseData.children[i].data.comment.parentId,
+					commentlevel: responseData.children[i].data.comment.level,
+					commentusername: responseData.children[i].data.comment.username,
+					commentcreatedAt: responseData.children[i].data.comment.createdAt,
+					commentvotes: responseData.children[i].data.comment.votes,
+				};
+				comments.push(comment);
+			}
+			context.commit('setComments', comments);
+			context.commit('before', before);
+			context.commit('after', after);
+		} else {
+			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
 };

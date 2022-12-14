@@ -16,6 +16,9 @@ export default {
 	setSearchQuery(state, payload) {
 		state.SearchQuery = payload;
 	},
+	setComments(state, payload) {
+		state.comments = payload;
+	},
 	setBefore(state, payload) {
 		state.before = payload;
 	},
