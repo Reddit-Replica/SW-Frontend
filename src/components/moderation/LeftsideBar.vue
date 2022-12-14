@@ -20,18 +20,21 @@
 				:to="'/r/' + subredditName + '/about/spam'"
 				class="options"
 				id="spam-button"
+				@click="showFunction()"
 				>Spam</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/edited'"
 				class="options"
 				id="edited-button"
+				@click="showFunction()"
 				>Edited</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/unmoderated'"
 				class="options"
 				id="unmoderated-button"
+				@click="showFunction()"
 				>Unmoderated</router-link
 			>
 		</div>
@@ -55,24 +58,28 @@
 				:to="'/r/' + subredditName + '/about/banned'"
 				class="options"
 				id="banned-button"
+				@click="showFunction()"
 				>Banned</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/muted'"
 				class="options"
 				id="muted-button"
+				@click="showFunction()"
 				>Muted</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/contributors'"
 				class="options"
 				id="approved-button"
+				@click="showFunction()"
 				>Approved</router-link
 			>
 			<router-link
 				:to="'/r/' + subredditName + '/about/moderators'"
 				class="options"
 				id="moderators-button"
+				@click="showFunction()"
 			>
 				Moderators</router-link
 			>
@@ -100,6 +107,7 @@
 				:to="'/r/' + subredditName + '/about/postflair'"
 				class="options"
 				id="post-flair-button"
+				@click="showFunction()"
 				>Post flair</router-link
 			>
 		</div>
@@ -123,6 +131,7 @@
 				:to="'/r/' + subredditName + '/about/rules'"
 				class="options"
 				id="rules-button"
+				@click="showFunction()"
 				>Rules</router-link
 			>
 			<!-- <router-link
@@ -179,6 +188,7 @@
 				:to="'/r/' + subredditName + '/about/edit/community'"
 				class="options"
 				id="community-settings-button"
+				@click="showFunction()"
 				>Community settings
 				<div class="new">New</div>
 				<svg class="icon-mod icon-arrow icon-right">
@@ -189,6 +199,7 @@
 				:to="'/r/' + subredditName + '/about/edit/postsandcomments'"
 				class="options"
 				id="postsandcomments-button"
+				@click="showFunction()"
 				>Posts and Comments settings
 				<div class="new">New</div>
 				<svg class="icon-mod icon-arrow icon-right">
@@ -403,6 +414,7 @@
 
 <script>
 export default {
+	emits: ['showFunction'],
 	props: {
 		// @vuese
 		//subreddit name
@@ -411,6 +423,11 @@ export default {
 			type: String,
 			default: 'Subreddit Name',
 			requiered: true,
+		},
+	},
+	methods: {
+		showFunction() {
+			this.$emit('showFunction');
 		},
 	},
 };

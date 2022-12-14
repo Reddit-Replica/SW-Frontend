@@ -39,6 +39,7 @@
 						<list-bar :left-bar="true" @show-bar="showBarFunction()"></list-bar>
 						<leftside-bar
 							:subreddit-name="subredditName"
+							@show-function="showBarFunction()"
 							v-if="showLiftBar"
 						></leftside-bar>
 						<!-- <transition name="route" mode="out-in"> -->
