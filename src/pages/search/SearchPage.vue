@@ -25,7 +25,7 @@
 											role="tab"
 											><button
 												class="button-nav button-nav2"
-												@click="goSearch('Comments')"
+												@click="goSearch('coms')"
 											>
 												Comments
 											</button></a
@@ -143,12 +143,11 @@
 									<div>
 										<CommunitesNav
 											id="community-nav"
-											:commcontents="commcontent"
 											@change-joining="toggling"
 										></CommunitesNav>
 									</div>
 									<PeopleNav></PeopleNav>
-									<backtotop-button></backtotop-button>
+									<backtotop-button v-if="false"></backtotop-button>
 								</div>
 							</div>
 						</div>
@@ -253,10 +252,10 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
 		},
 	},
@@ -419,7 +418,7 @@ a {
 	margin-left: 17px;
 }
 .search-results {
-	width: 100%;
+	width: 95rem;
 	max-width: 100%;
 	display: flex;
 	padding-top: 8px;

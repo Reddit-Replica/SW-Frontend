@@ -213,7 +213,7 @@ export default {
 			this.getUsername();
 			this.getSubreddit();
 			this.getInSubreddit();
-			this.getFlairs();
+			// this.getFlairs();
 			// this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
