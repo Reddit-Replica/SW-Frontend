@@ -148,7 +148,6 @@
 	</div>
 </template>
 <script>
-// import BaseButton from '../../components/BaseComponents/BaseButton.vue';
 // import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	data() {
@@ -190,7 +189,7 @@ export default {
 			}
 		},
 	},
-	// components: { BaseButton, Notfound },
+	// components: { Notfound },
 };
 </script>
 

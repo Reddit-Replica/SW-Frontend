@@ -129,7 +129,7 @@
 										</a>
 									</div>
 								</div>
-								<div v-if="notfounded">
+								<div v-else>
 									<Notfound></Notfound>
 								</div>
 							</div>

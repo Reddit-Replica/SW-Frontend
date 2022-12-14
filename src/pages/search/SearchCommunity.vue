@@ -110,7 +110,7 @@
 												</div>
 												<div
 													class="follow"
-													v-if="value.notjoined"
+													v-if="value.joined"
 													@click="toggle(value.id)"
 												>
 													<base-button
@@ -120,7 +120,7 @@
 												</div>
 												<div
 													class="follow"
-													v-if="!value.notjoined"
+													v-if="!value.joined"
 													@click="toggle(value.id)"
 												>
 													<base-button
