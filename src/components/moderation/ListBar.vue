@@ -355,7 +355,6 @@ button {
 	border: 1px solid var(--color-blue-2);
 	color: var(--color-blue-2);
 	fill: var(--color-blue-2);
-	padding: 0.4rem 1.6rem;
 	background-color: transparent;
 }
 .button-white:hover {
@@ -364,7 +363,6 @@ button {
 .reorder-button {
 	color: var(--color-blue-2) !important;
 	fill: var(--color-blue-2);
-	padding: 0.4rem 1.6rem;
 	margin-right: 1rem;
 	background-color: transparent;
 }
@@ -405,6 +403,10 @@ button {
 	.bar {
 		width: 100%;
 		left: 0;
+	}
+	button {
+		font-size: 1.2rem;
+		padding: 0.2rem 1rem;
 	}
 }
 </style>
