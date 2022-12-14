@@ -249,7 +249,6 @@ export default {
 				this.errorResponse = err;
 				this.delivered = false;
 			}
-			console.log(this.errorResponse);
 		},
 		// @vuese
 		//change title to formatting or hide

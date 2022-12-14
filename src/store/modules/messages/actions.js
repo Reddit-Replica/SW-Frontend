@@ -360,8 +360,8 @@ export default {
 			senderUsername: payload.senderUsername,
 			receiverUsername: payload.receiverUsername,
 			subject: payload.subject,
-			type: 'Messages',
 			isReply: payload.isReply,
+			repliedMsgId: payload.repliedMsgId,
 		};
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
