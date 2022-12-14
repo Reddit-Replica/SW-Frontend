@@ -77,15 +77,30 @@
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
-															<img class="image-user" />
+															<img
+																v-if="!value.picture"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar-' + value.subredditName"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.picture"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar-' + value.subredditName"
+															/>
 														</div>
 													</div>
 												</div>
 												<div class="people-content">
 													<div class="people-content_release">
-														<h6 class="people-name">
-															r/{{ value.subredditName }}&nbsp;
-														</h6>
+														<a @click="gotosub(value.subredditName)">
+															<h6 class="people-name">
+																r/{{ value.subredditName }}&nbsp;
+															</h6>
+														</a>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -179,6 +194,9 @@ export default {
 				// 	query: { q: this.$route.query.q },
 				// });
 			}
+		},
+		gotosub(subredditName) {
+			this.$router.push('/r/' + subredditName);
 		},
 	},
 	components: { BaseButton, Notfound },
@@ -331,6 +349,7 @@ a {
 	line-height: 16px;
 	color: rgb(58, 49, 49);
 	font-weight: 700;
+	cursor: pointer;
 }
 .karma-number {
 	font-size: 12px;

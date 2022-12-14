@@ -19,18 +19,22 @@ export default {
 		// );
 		console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
-			baseurl + '/search?type=post' + '?q=' + payload.q,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}
+			baseurl + '/search?type=post' + '&q=' + payload.q
+			// {
+			// 	method: 'GET',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			// 	},
+			// }
 		);
 		console.log(response);
 		const responseData = await response.json();
-		if (response.status == 200) {
+		if (
+			response.status == 200 ||
+			response.status == 404 ||
+			response.status == 304
+		) {
 			const posts = [];
 
 			let before, after;
@@ -92,19 +96,23 @@ export default {
 		// 	baseurl + '/search?type=user' + '?q=' + payload.q
 		// );
 		const response = await fetch(
-			baseurl + '/search?type=user' + '&?q=' + payload.q,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}
+			baseurl + '/search?type=user' + '&q=' + payload.q
+			// {
+			// 	method: 'GET',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			// 	},
+			// }
 		);
 		console.log(response);
 		const responseData = await response.json();
 		console.log(responseData);
-		if (response.status == 200) {
+		if (
+			response.status == 200 ||
+			response.status == 404 ||
+			response.status == 304
+		) {
 			const users = [];
 
 			let before, after;
@@ -150,18 +158,23 @@ export default {
 		// );
 		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=subreddit' + '&q=' + payload.q,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}
+			baseurl + '/search?type=subreddit' + '&q=' + payload.q
 		);
+		// {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+		// },
+		// }
+		// );
 		const responseData = await response.json();
 		console(responseData);
-		if (response.status == 200) {
+		if (
+			response.status == 200 ||
+			response.status == 404 ||
+			response.status == 304
+		) {
 			const subreddits = [];
 
 			let before, after;
