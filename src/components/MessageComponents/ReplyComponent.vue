@@ -340,4 +340,35 @@ th {
 	background-color: transparent;
 	cursor: pointer;
 }
+/* 296px */
+@media only screen and (max-width: 296px) {
+	table {
+		font-size: 1rem;
+		font-weight: 300;
+		width: 80%;
+	}
+	input,
+	select,
+	textarea {
+		width: 70%;
+	}
+	.submit-form {
+		font-size: 1rem;
+	}
+	.markdown-links {
+		font-size: 1rem;
+	}
+	.formatting-help {
+		font-size: 1rem;
+		width: 80%;
+		text-align: left;
+		margin: 0.5rem 0rem;
+	}
+	.text-area {
+		width: 100%;
+	}
+	.md {
+		margin-left: 0rem;
+	}
+}
 </style>

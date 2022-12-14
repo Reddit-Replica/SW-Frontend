@@ -116,5 +116,8 @@ a.router-link-active,
 	.content {
 		display: block;
 	}
+	.message-button {
+		font-size: 1.1rem;
+	}
 }
 </style>
