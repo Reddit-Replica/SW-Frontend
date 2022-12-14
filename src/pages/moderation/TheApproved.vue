@@ -118,7 +118,7 @@
 						<base-button
 							@click="approveUser()"
 							class="button-blue"
-							id="create-rule-button"
+							id="add-user-button"
 							:class="userName != '' ? '' : 'disable-button'"
 							>Add user</base-button
 						>

@@ -232,6 +232,7 @@ export default {
 					text: this.text,
 					senderUsername: this.senderUsername,
 					receiverUsername: this.receiverUsername,
+					isReply: false,
 					subject: this.subject,
 					baseurl: this.$baseurl,
 				});
@@ -248,7 +249,6 @@ export default {
 				this.errorResponse = err;
 				this.delivered = false;
 			}
-			console.log(this.errorResponse);
 		},
 		// @vuese
 		//change title to formatting or hide

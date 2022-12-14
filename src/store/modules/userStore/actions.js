@@ -18,19 +18,21 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to fetch User Data!'
-			);
-			console.log(response.status);
-			throw error;
-		}
-		console.log(response.status);
 		console.log(responseData);
-		context.commit('setUserData', {
-			responseData,
-			responseStatus: response.status,
-		});
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to fetch User Data!'
+		// 	);
+		// 	console.log(response.status);
+		// 	throw error;
+		// }
+		console.log('medo', response.status);
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserData', {
+				responseData,
+				responseStatus: response.status,
+			});
 		return response.status;
 	},
 	/**
