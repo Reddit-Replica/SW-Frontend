@@ -13,10 +13,10 @@
 		<div v-else>
 			<div class="container">
 				<div class="row no-gutters">
-					<div class="col-6 col-md-4">
+					<div class="col-6 col-md-4 col-sm-4">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-12 col-md-8 right">
+					<div class="col-12 col-md-8 col-sm-8 right">
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
@@ -297,7 +297,6 @@ export default {
 }
 @media only screen and (max-width: 50em) {
 	.row > * {
-		width: 50%;
 	}
 }
 </style>
