@@ -120,7 +120,7 @@ export default {
 
 .post-content .post-text {
 	color: black;
-	mask-image: linear-gradient(180deg, #000 60%, transparent);
+	mask-image: linear-gradient(180deg, #000 0%, transparent);
 	overflow: hidden;
 	font-size: 12px;
 }
