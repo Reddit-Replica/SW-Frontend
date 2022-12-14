@@ -315,6 +315,16 @@ export default {
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 			console.log(this.subreddit);
+
+			//////////////////////
+			try {
+				await this.$store.dispatch('moderation/loadListOfFlairs', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditTitle,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 	computed: {
