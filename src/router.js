@@ -74,6 +74,7 @@ import Search from './pages/search/SearchPage.vue';
 import PostSearch from './pages/search/SearchPage.vue';
 import UserSearch from './pages/search/SearchUsers.vue';
 import SearchCommunity from './pages/search/SearchCommunity.vue';
+import SearchComments from './pages/search/SearchComment.vue';
 import GetHelp from './pages/forget/GetHelp.vue';
 
 const router = createRouter({
@@ -113,6 +114,12 @@ const router = createRouter({
 			path: '/search/type=cm',
 			name: 'searchcm',
 			component: SearchCommunity,
+			props: true,
+		},
+		{
+			path: '/search/type=coms',
+			name: 'searchcoms',
+			component: SearchComments,
 			props: true,
 		},
 		{
