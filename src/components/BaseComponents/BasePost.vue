@@ -39,7 +39,7 @@
 								name: 'comments',
 								params: {
 									postName: post.title,
-									subredditName: post.data.subreddit,
+									subredditName: post.subreddit,
 									postId: id,
 								},
 						  }
@@ -95,7 +95,7 @@
 											name: 'comments',
 											params: {
 												postName: post.title,
-												subredditName: post.data.subreddit,
+												subredditName: post.subreddit,
 												postId: id,
 											},
 									  }
@@ -685,5 +685,8 @@ a {
 .post-content {
 	padding: 8px 8px 3px 5px;
 	width: 100%;
+	overflow: auto;
+	height: 100%;
+	word-break: break-all;
 }
 </style>
