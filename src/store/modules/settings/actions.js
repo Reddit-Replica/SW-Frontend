@@ -101,6 +101,42 @@ export default {
 		}
 		return response.status;
 	},
+	async postandcommentsSettings(context, payload) {
+		const setting = {
+			subreddit: payload.communityName,
+			enableSpoiler: payload.enableSpoiler,
+			allowImagesInComment: payload.allowImagesInComment,
+			suggestedSort: payload.suggestedSort,
+		};
+
+		const baseurl = payload.baseurl;
+		console.log(localStorage.getItem('accessToken'));
+		const response = await fetch(
+			baseurl + `/r/${payload.communityName}/about/edit-post-settings`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					// 'Access-Control-Allow-Origin': '*',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify(setting),
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
 	/////////////////////account setting ///////////////////////////
 	async changeCountry(context, payload) {
 		const setting = {
