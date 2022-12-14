@@ -248,7 +248,12 @@
 								</div>
 								<div id="base-user-post-content-posted-posted-at">
 									{{ getMoment(postData.data.postedAt) }}
-									<div
+									<moderation-title
+										v-if="postData.data.moderation != null"
+										:moderation="postData.data.moderation"
+										:pinned-post="postData.data.pin"
+									></moderation-title>
+									<!-- <div
 										id="base-user-data-moderation-spam-spammedBy"
 										v-if="
 											postData.data.moderation != null &&
@@ -341,7 +346,7 @@
 											at
 											{{ postData.data.moderation.approve.approvedDate }}</span
 										>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="post-options">
@@ -424,12 +429,14 @@ import PostOptions from './PostComponents/PostOptions.vue';
 import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
+import ModerationTitle from './PostComponents/ModerationTitle.vue';
 export default {
 	components: {
 		PostOptions,
 		VideoPost,
 		PicturePost,
 		TheInsights,
+		ModerationTitle,
 	},
 	emits: ['showComments'],
 	props: {

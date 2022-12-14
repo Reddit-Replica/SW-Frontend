@@ -120,6 +120,9 @@ export default {
 					'userposts/getUserPinnedPostData',
 					{
 						baseurl: this.$baseurl,
+						body: {
+							username: this.$route.params.userName,
+						},
 					}
 				);
 			} catch (error) {

@@ -39,6 +39,11 @@
 						<router-link class="comment-date" to="">{{
 							getMoment(commentContent.publishTime)
 						}}</router-link>
+						<moderation-title
+							v-if="commentContent.moderation != null"
+							:moderation="commentContent.moderation"
+							:pinned-post="false"
+						></moderation-title>
 					</div>
 					<div class="comment-content-data" v-html="PostHybridContent"></div>
 					<!-- <p>{{ PostHybridContent }} fdkjbfjhg skjdfnskd sjdnfksjd</p> -->
@@ -194,7 +199,11 @@
 </template>
 <script>
 import * as moment from 'moment';
+import ModerationTitle from '../PostComponents/ModerationTitle.vue';
 export default {
+	components: {
+		ModerationTitle,
+	},
 	props: {
 		commentContent: {
 			type: Object,
