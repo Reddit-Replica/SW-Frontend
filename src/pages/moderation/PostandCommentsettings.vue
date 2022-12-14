@@ -156,4 +156,9 @@ export default {
 	font-weight: 400;
 	color: #7c7c7c;
 }
+@media only screen and (max-width: 768px) {
+	.box {
+		padding-top: 11.4rem;
+	}
+}
 </style>
