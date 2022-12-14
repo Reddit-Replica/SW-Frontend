@@ -67,7 +67,7 @@
 					<div class="search-results">
 						<div class="people">
 							<div class="people-results">
-								<div v-if="!notfounded">
+								<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 									<div v-for="value in SearchedUsers" :key="value.username">
 										<a class="user-a"
 											><div class="user-div">
@@ -75,15 +75,30 @@
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
-															<img class="image-user" />
+															<img
+																v-if="!value.avatar"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar' + index"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.avatar"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar' + index"
+															/>
 														</div>
 													</div>
 												</div>
 												<div class="people-content">
 													<div class="people-content_release">
-														<h6 class="people-name">
-															u/{{ value.username }}&nbsp;
-														</h6>
+														<a @click="gotoUser(value.username)">
+															<h6 class="people-name">
+																u/{{ value.username }}&nbsp;
+															</h6>
+														</a>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -144,6 +159,7 @@ export default {
 	},
 	computed: {
 		SearchedUsers() {
+			console.log(this.$store.getters['search/Getusers']);
 			return this.$store.getters['search/Getusers'];
 		},
 	},
@@ -182,6 +198,9 @@ export default {
 				// 	query: { q: this.$route.query.q },
 				// });
 			}
+		},
+		gotoUser(name) {
+			this.$router.push('/user/' + name);
 		},
 	},
 	components: { BaseButton, Notfound },
