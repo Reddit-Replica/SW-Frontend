@@ -123,6 +123,26 @@ export default {
 			console.log('bo');
 		}
 	},
+	markUnMarkSendMeReply(state, payload) {
+		console.log('st', payload.sendReplyData.id);
+		let fIndex = -1;
+		state.postData.children.forEach((element, index) => {
+			// console.log(element);
+			if (element.id == payload.sendReplyData.id) {
+				fIndex = index;
+			}
+		});
+		if (fIndex != -1) {
+			console.log(fIndex);
+			console.log(state.postData);
+			state.postData.children[fIndex].data.sendReplies =
+				state.postData.children[fIndex].data.sendReplies || {};
+			if (payload.sendReplyData.state == 1)
+				state.postData.children[fIndex].data.sendReplies = true;
+			else state.postData.children[fIndex].data.sendReplies = false;
+			console.log('bo');
+		}
+	},
 	lockUnLockPostOrComment(state, payload) {
 		console.log('st', payload.lockUnlockData.id);
 		let fIndex = -1;
@@ -189,7 +209,7 @@ export default {
 
 				state.postData.children[fIndex].data.moderation.spam.spammedBy =
 					payload.payload.username;
-				state.postData.children[fIndex].data.moderation.remove.spammedDate =
+				state.postData.children[fIndex].data.moderation.spam.spammedDate =
 					'now';
 				if (state.postData.children[fIndex].data.moderation.approve) {
 					delete state.postData.children[fIndex].data.moderation.approve;

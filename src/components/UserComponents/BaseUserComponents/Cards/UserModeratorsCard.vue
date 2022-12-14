@@ -124,6 +124,20 @@ export default {
 				}
 			});
 		},
+		async joinsubreddit(id) {
+			// this.toogleJoin();
+
+			const accessToken = localStorage.getItem('accessToken');
+
+			await this.$store.dispatch('community/joinSubreddit', {
+				message: '',
+				subredditId: id,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+
+			this.$emit('reload');
+		},
 	},
 };
 </script>

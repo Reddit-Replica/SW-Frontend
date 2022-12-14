@@ -33,13 +33,13 @@
 			<div class="permissions">
 				<base-button
 					class="button-ban"
-					id="button-edit"
+					:id="'button-edit' + index"
 					@click="showAddBanFunction()"
 					>Edit</base-button
 				>
 				<base-button
 					class="button-ban"
-					id="button-more-details"
+					:id="'button-more-details' + index"
 					@click="viewDetailsFunction()"
 					>More Details<svg
 						v-if="!viewDetails"
