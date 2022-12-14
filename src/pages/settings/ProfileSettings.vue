@@ -19,7 +19,8 @@
 						name="dispalyname"
 						id="dispalyname"
 						class="input-field"
-						v-model="name"
+						v-model="displayName"
+						@blur="getdisplayName"
 					/>
 					<div class="p-comment">30 Characters remaining</div>
 				</div>
@@ -41,92 +42,13 @@
 						rows="4"
 						class="text-area-field"
 						v-model="about"
+						@blur="getAbout"
 					></textarea>
 					<div class="p-comment">200 Characters remaining</div>
 				</div>
 			</div>
 
-			<div class="box box-flex-column">
-				<div class="box-1">
-					<h3 class="h3-title">Social links (5 max)</h3>
-					<p class="p-title-description">
-						People who visit your profile will see your social links.
-					</p>
-				</div>
-				<div class="box-2">
-					<div class="box-social-links">
-						<!-- <div class="social-link">
-							<img
-								class="social-link-image"
-								src="https://www.redditstatic.com/desktop2x/img/social-links/reddit.png"
-							/>
-							Custom URL
-						</div> -->
-						<div
-							class="box-icon-social-links"
-							@click="socialLinksClick"
-							id="links-profile-settings"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								fill="currentColor"
-								class="bi bi-plus"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
-								/>
-							</svg>
-							Add social link
-						</div>
-						<base-dialog
-							:show="socialLinksClicked"
-							@close="socialLinksClick"
-							title="Add Social Links"
-							center
-						>
-							<div class="social-links-dialog">
-								<social-link
-									v-for="link in links"
-									:key="link.title"
-									:title="link.title"
-									:image-url="link.imageUrl"
-									@click="chooseLink"
-								>
-								</social-link>
-							</div>
-						</base-dialog>
-						<base-dialog :show="isLinkChosen" @close="chooseLink" center>
-							<template #header>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									class="bi bi-arrow-left"
-									viewBox="0 0 16 16"
-									@click="chooseLink"
-								>
-									<path
-										fill-rule="evenodd"
-										d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
-									/>
-								</svg>
-								<h2 class="h2-social-links">Add Social Links</h2>
-								<base-button
-									class="save-button"
-									button-text="Save"
-								></base-button>
-							</template>
-							<div class="social-links-dialog">
-								<!-- <social-link > </social-link> -->
-							</div>
-						</base-dialog>
-					</div>
-				</div>
-			</div>
+			<!--  -->
 
 			<h3 class="h3-main-title">IMAGES</h3>
 
@@ -135,7 +57,7 @@
 					<h3 class="h3-title">Profile picture and banner image</h3>
 					<p class="p-title-description">Images must be .png or .jpg format</p>
 				</div>
-				<div class="box-2">
+				<!-- <div class="box-2">
 					<div class="box-images">
 						<div
 							class="box-image-1"
@@ -259,7 +181,7 @@
 							</label>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<h3 class="h3-main-title">PROFILE CATEGORY</h3>
@@ -335,7 +257,7 @@
 				</div>
 			</div>
 
-			<div class="box">
+			<!-- <div class="box">
 				<div class="box-1">
 					<div>
 						<label for="visibility">
@@ -381,49 +303,27 @@
 						>Profile Moderation page</a
 					>
 				</p>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
 
 <script>
 // import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
-import SocialLink from './SocialLink.vue';
+// import SocialLink from './SocialLink.vue';
 export default {
 	components: {
 		// BaseDialog,
-		SocialLink,
+		// SocialLink,
 	},
 	props: {},
 	data() {
 		return {
-			links: [
-				{
-					imageUrl:
-						'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
-
-					title: 'Reddit',
-					placeholder1: 'r/community, u/user',
-					placeholder2: '',
-				},
-			],
-			images: [
-				{
-					image: null,
-					imageUrl: null,
-				},
-				{
-					image: null,
-					imageUrl: null,
-				},
-			],
-			name: '',
+			displayName: '',
 			about: '',
-			nsfwClicked: false,
-			nsfwCancel: false,
-			nsfwUnderstand: false,
-			socialLinksClicked: false,
-			isLinkChosen: false,
+			// havePassword: false,
+			nsfw: false,
+			allowToFollowYou: false,
 		};
 	},
 	methods: {
@@ -435,33 +335,44 @@ export default {
 			this.images[index].image = file;
 			this.images[index].imageUrl = URL.createObjectURL(file);
 		},
-		//@vuese
-		//Toggle Choosing NSFW
-		nsfwClick() {
-			this.nsfwClicked = !this.nsfwClicked;
+		async getdisplayName() {
+			const actionPayload = {
+				displayName: this.displayName,
+				baseurl: this.$baseurl,
+			};
+			console.log('enter get user data');
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changedisplayName',
+					actionPayload
+				);
+
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				console.log(this.err);
+			}
 		},
-		//@vuese
-		//Click on cancel button in NSFW dialog
-		nsfwSetCancel() {
-			this.nsfwCancel = !this.nsfwCancel;
-			this.nsfwClick();
-		},
-		//@vuese
-		//Click on I understand button in NSFW dialog
-		nsfwSetUnderstand() {
-			this.nsfwUnderstand = !this.nsfwUnderstand;
-			this.nsfwClick();
-		},
-		//@vuese
-		//Show/Hide social links dialog
-		socialLinksClick() {
-			this.socialLinksClicked = !this.socialLinksClicked;
-		},
-		//@vuese
-		//Show/Hide chosen social link dialog
-		chooseLink() {
-			this.isLinkChosen = !this.isLinkChosen;
-			this.socialLinksClicked = false;
+		async getAbout() {
+			const actionPayload = {
+				about: this.about,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeAbout',
+					actionPayload
+				);
+
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				console.log(this.err);
+			}
 		},
 	},
 };
