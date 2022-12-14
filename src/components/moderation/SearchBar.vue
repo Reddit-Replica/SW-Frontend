@@ -180,9 +180,9 @@ export default {
 .more-margin {
 	margin-right: 3.1rem;
 }
-@media only screen and (max-width: 49.25em) {
+@media only screen and (max-width: 50em) {
 	.input-search {
-		width: 50%;
+		width: 70%;
 	}
 }
 @media only screen and (max-width: 25em) {

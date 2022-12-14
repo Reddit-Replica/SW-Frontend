@@ -349,6 +349,7 @@ button {
 	background-color: transparent;
 	color: var(--color-blue-2) !important;
 	fill: var(--color-blue-2);
+	font-size: 1.3rem;
 }
 .button-ban:hover {
 	background-color: var(--color-grey-light-4);
@@ -358,9 +359,9 @@ button {
 	border-top: 0;
 	padding: 16px;
 	word-break: break-all;
+	font-size: 1rem;
 }
 .banned-for {
-	font-size: 10px;
 	font-weight: 700;
 	letter-spacing: 0.5px;
 	line-height: 12px;
@@ -371,7 +372,6 @@ button {
 }
 .reason {
 	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 12px;
 	font-weight: 400;
 	line-height: 18px;
 	display: inline-block;
