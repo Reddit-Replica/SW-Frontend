@@ -154,6 +154,11 @@ export default {
 			default: '',
 			required: false,
 		},
+		subredditName: {
+			type: String,
+			default: '',
+			required: false,
+		},
 	},
 
 	methods: {
@@ -182,8 +187,8 @@ export default {
 					parentId: this.parentId,
 					parentType: this.parentType,
 					level: this.level,
-					subredditName: this.$route.path.split('/')[2],
-					haveSubreddit: this.$route.path.split('/')[1] == 'r',
+					subredditName: this.subredditName,
+					haveSubreddit: this.subredditName != '',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

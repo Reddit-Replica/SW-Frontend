@@ -99,6 +99,59 @@
 								:src="$baseurl + '/' + postData.data.images[0].path"
 								alt=""
 							/>
+							<div
+								id="expand-collapse-media-query"
+								style="
+									display: none;
+									position: absolute;
+									bottom: -25px;
+									right: -3px;
+								"
+							>
+								<li
+									style="
+										width: 25px;
+										height: 25px;
+										align-items: center;
+										justify-content: center;
+									"
+									class="post-option-item post-option-item-hover2"
+								>
+									<div
+										v-if="!showPostContent && postData.data.kind != 'link'"
+										@click="expandPostContent"
+										class="post-options-icon"
+										style="
+											transform: rotate(90deg);
+											stroke-width: 35px;
+											stroke: rgb(135, 138, 140);
+											color: transparent;
+										"
+									>
+										<i
+											style="width: 19px; height: 16px"
+											class="fa-solid fa-up-right-and-down-left-from-center"
+										></i>
+									</div>
+									<div
+										v-else-if="postData.data.kind != 'link'"
+										@click="collapsePostContent"
+										class="post-options-icon"
+									>
+										<i
+											style="
+												transform: rotate(90deg);
+												stroke-width: 35px;
+												stroke: rgb(135, 138, 140);
+												color: transparent;
+												width: 19px;
+												height: 16px;
+											"
+											class="fa-solid fa-down-left-and-up-right-to-center"
+										></i>
+									</div>
+								</li>
+							</div>
 						</div>
 						<div class="post-content" id="base-user-post-content">
 							<div class="post-header">
@@ -161,12 +214,12 @@
 										:to="
 											postData.data.subreddit == null
 												? `/user/${$route.params.userName}`
-												: `/r/${$postData.data.subreddit}`
+												: `/r/${postData.data.subreddit}`
 										"
 										>{{
 											postData.data.subreddit == null
 												? `u/${$route.params.userName}`
-												: `r/${$postData.data.subreddit}`
+												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
 								</div>
@@ -195,7 +248,12 @@
 								</div>
 								<div id="base-user-post-content-posted-posted-at">
 									{{ getMoment(postData.data.postedAt) }}
-									<div
+									<moderation-title
+										v-if="postData.data.moderation != null"
+										:moderation="postData.data.moderation"
+										:pinned-post="postData.data.pin"
+									></moderation-title>
+									<!-- <div
 										id="base-user-data-moderation-spam-spammedBy"
 										v-if="
 											postData.data.moderation != null &&
@@ -288,7 +346,7 @@
 											at
 											{{ postData.data.moderation.approve.approvedDate }}</span
 										>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="post-options">
@@ -297,10 +355,10 @@
 									@insights-toggle="insightsPostToggle(postData.id)"
 									@expand-post="expandPostContent"
 									@collapse-post="collapsePostContent"
-									@deletePost="deletePost"
-									@hidePost="hidePost"
-									@savePost="savePost"
-									@sharePost="sharePost"
+									@delete-post="deletePost"
+									@hide-post="hidePost"
+									@save-post="savePost"
+									@share-post="sharePost"
 								></post-options>
 							</div>
 						</div>
@@ -371,12 +429,14 @@ import PostOptions from './PostComponents/PostOptions.vue';
 import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
+import ModerationTitle from './PostComponents/ModerationTitle.vue';
 export default {
 	components: {
 		PostOptions,
 		VideoPost,
 		PicturePost,
 		TheInsights,
+		ModerationTitle,
 	},
 	emits: ['showComments'],
 	props: {
@@ -385,6 +445,10 @@ export default {
 			required: true,
 		},
 		post: {
+			type: Object,
+			required: true,
+		},
+		state: {
 			type: Object,
 			required: true,
 		},
@@ -397,7 +461,6 @@ export default {
 			postHidden: false,
 			showPostContent: false,
 			deletedHiddenPost: false,
-
 			// images: [
 			// 	{
 			// 		imgUrl: '../../../assets/R.png',
@@ -496,15 +559,23 @@ export default {
 			}
 		},
 		savePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			console.log('save');
 		},
-		removePost() {
-			console.log('remove');
-		},
-		// sharePost() {
-		// 	console.log('share');
-		// 	this.showShareOptions = true;
+		// removePost() {
+		// 	console.log('remove');
 		// },
+		sharePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
+			console.log('share');
+			// this.showShareOptions = true;
+		},
 		CopyPostLink() {},
 		Crosspost() {},
 		editPost() {
@@ -514,24 +585,32 @@ export default {
 			console.log('pin');
 		},
 		deletePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			console.log('delete,base');
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
 		hidePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			console.log('hide,base');
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
-		markAsOC() {
-			console.log('mark as os');
-		},
-		markAsSpoiler() {
-			console.log('mark as spoiler');
-		},
-		markAsNSFW() {
-			console.log('mark as nsfw');
-		},
+		// markAsOC() {
+		// 	console.log('mark as os');
+		// },
+		// markAsSpoiler() {
+		// 	console.log('mark as spoiler');
+		// },
+		// markAsNSFW() {
+		// 	console.log('mark as nsfw');
+		// },
 
 		resizePost() {
 			console.log('resize');
@@ -554,9 +633,6 @@ export default {
 				ele.left = String(Number(ele.left) + 100);
 			});
 		},
-		// openOptionsBoxList() {
-		// 	this.showOptionsBoxList = true;
-		// },
 		expandPostContent() {
 			this.setPostHybridContent();
 			this.showPostContent = true;
@@ -566,10 +642,11 @@ export default {
 			this.showPostContent = false;
 			this.insightActive = false;
 		},
-		// showPostComments() {
-		// 	this.$emit('showComments');
-		// },
 		async upvote() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			if (this.downClicked) {
 				this.downClicked = false;
 				this.counter++;
@@ -593,6 +670,10 @@ export default {
 			}
 		},
 		async downvote() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			if (this.upClicked) {
 				this.upClicked = false;
 				this.counter--;
@@ -789,7 +870,7 @@ div.vote-box {
 	position: relative;
 	display: block;
 	width: 96px;
-	overflow: hidden;
+	/* overflow: hidden; */
 	height: 72px;
 	border-radius: 4px;
 	background-color: rgba(28, 28, 28, 0.03);
@@ -839,6 +920,9 @@ div.vote-box {
 	#remove-user-post-button,
 	#approve-user-post-button {
 		display: none;
+	}
+	#expand-collapse-media-query {
+		display: block !important;
 	}
 }
 /* @media (min-width: 640px) {
@@ -933,6 +1017,29 @@ span.post-oc {
 /* Post-options  */
 .post-options {
 	margin-top: 8px;
+}
+li.post-option-item,
+.post-option-item-hover {
+	/* padding: 8px; */
+	padding: 0 8px 0 8px;
+	margin-right: 4px;
+	border-radius: 2px;
+}
+
+.post-option-item .post-options-text,
+.post-option-item-hover .post-options-text {
+	margin-left: 6px;
+}
+li.post-option-item p,
+.post-option-item-hover p {
+	font-size: 12px;
+}
+li.post-option-item-hover2:hover,
+.post-option-item-hover:hover {
+	background-color: rgba(26, 26, 27, 0.1);
+}
+li.post-option-item {
+	display: flex;
 }
 /* .post-options ul li,
 .post-options ul li a {

@@ -39,4 +39,9 @@ export default {
 			overviewData: state.overviewData,
 		};
 	},
+	getUserSavedData(state) {
+		return {
+			savedData: state.savedData,
+		};
+	},
 };

@@ -264,7 +264,7 @@ export default {
 	 */
 	async getSubreddit(context, payload) {
 		const baseurl = payload.baseurl;
-
+		console.log(payload);
 		const response = await fetch(baseurl + `/r/${payload.subredditName}`, {
 			method: 'GET',
 			headers: {
@@ -274,7 +274,8 @@ export default {
 		});
 
 		const responseData = await response.json();
-
+		console.log('fetch data');
+		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

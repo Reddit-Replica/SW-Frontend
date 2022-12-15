@@ -92,6 +92,11 @@ const router = createRouter({
 					path: '/r/:subredditName/comments/:postId/:postName',
 					component: PostComments,
 				},
+				{
+					name: 'userPostComments',
+					path: '/user/:userName/comments/:postId/:postName',
+					component: PostComments,
+				},
 			],
 		},
 		{ path: '/forgetPassword', component: ForgetPassword },

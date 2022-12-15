@@ -47,7 +47,7 @@
 						width="16"
 						height="16"
 						fill="currentColor"
-						class="bi bi-caret-down"
+						class="bi bi-caret-down icon-delete"
 						viewBox="0 0 16 16"
 					>
 						<path
@@ -60,7 +60,7 @@
 						width="16"
 						height="16"
 						fill="currentColor"
-						class="bi bi-caret-up"
+						class="bi bi-caret-up icon-delete"
 						viewBox="0 0 16 16"
 					>
 						<path
@@ -379,9 +379,21 @@ button {
 	color: var(--color-dark-1);
 }
 /* 340px */
-@media only screen and (max-width: 21.25em) {
-	.permissions {
+@media only screen and (max-width: 441px) {
+	.time {
 		display: none;
+	}
+	.icon-delete {
+		display: none;
+	}
+	.permissions {
+		margin-right: 0;
+	}
+	.image {
+		margin: 0;
+	}
+	button {
+		padding: 4px 2px;
 	}
 }
 </style>

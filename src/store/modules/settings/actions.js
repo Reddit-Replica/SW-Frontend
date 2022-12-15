@@ -449,4 +449,35 @@ export default {
 		}
 		return response.status;
 	},
+	async changePassword(_, payload) {
+		const baseurl = payload.baseurl;
+		const body = {
+			currentPassword: payload.currentPassword,
+			newPassword: payload.newPassword,
+			confirmNewPassword: payload.confirmNewPassword,
+		};
+		console.log(payload);
+		const response = await fetch(baseurl + '/change-password', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(body),
+		});
+		const responseData = await response.json();
+		console.log(responseData);
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
 };
