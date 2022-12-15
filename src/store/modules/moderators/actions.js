@@ -1280,13 +1280,17 @@ export default {
 	async unModerated(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
-		const response = await fetch(baseurl + `/r/` + sub + '/about/unmoderated', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		});
+		const sort = payload.sort;
+		const response = await fetch(
+			baseurl + `/r/` + sub + '/about/unmoderated?sort=' + sort,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
 
 		const responseData = await response.json();
 		const unModerated = [];
@@ -1435,8 +1439,8 @@ export default {
 					postTitle: responseData.children[i].postTitle,
 					postId: responseData.children[i].postId,
 					subreddit: responseData.children[i].comment.subreddit,
-					commentedBy: responseData.children[i].comment.commentedBy,
-					commentedAt: responseData.children[i].comment.commentedAt,
+					postBy: responseData.children[i].comment.commentedBy,
+					postedAt: responseData.children[i].comment.commentedAt,
 					editedAt: responseData.children[i].comment.editedAt,
 					spammedAt: responseData.children[i].comment.spammedAt,
 					votes: responseData.children[i].comment.votes,
