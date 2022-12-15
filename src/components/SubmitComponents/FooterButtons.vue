@@ -22,6 +22,7 @@
 					class="grey-button"
 					button-text="Spoiler"
 					id="footer-button-spoiler"
+					:disable-button="buttonDisabled"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -111,9 +112,22 @@ export default {
 			spoiler: false,
 			flairs: [],
 			flairId: null,
+			subreddit: null,
+			buttonDisabled: true,
 		};
 	},
-	watch: {},
+	watch: {
+		getSubreddit(value) {
+			this.subreddit = value;
+			this.getPostsettings();
+		},
+	},
+	computed: {
+		getSubreddit() {
+			var a = this.$store.getters['posts/getSubreddit'];
+			return a;
+		},
+	},
 	methods: {
 		toggleNsfw() {
 			this.nsfw = !this.nsfw;
@@ -135,6 +149,34 @@ export default {
 		getFlairs() {
 			this.flairs = this.$store.getters['moderation/listOfFlairs'];
 			console.log(this.flairs);
+		},
+
+		async getPostsettings() {
+			const actionPayload = {
+				communityName: this.subreddit,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetcpostandcommentsSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters[
+				'setting/getpostandcommentsSettings'
+			];
+			console.log('getting settings');
+			console.log(this.setting);
+			if (this.setting.enableSpoiler) this.buttonDisabled = false;
+			else this.buttonDisabled = true;
 		},
 	},
 };

@@ -14,9 +14,11 @@
 		<h6 class="description" style="margin-top: 10px">
 			Media on posts with the spoiler tag are blurred
 			<switch-button
-				id="btn2"
+				:val="enableSpoiler"
+				id="btn1"
 				style="margin-left: 15px"
 				@checked="getenableSpoiler"
+				v-if="create"
 			></switch-button>
 		</h6>
 
@@ -36,9 +38,11 @@
 			Allow comments with uploaded images.
 
 			<switch-button
+				:val="allowImagesInComment"
 				id="btn2"
 				style="margin-left: 15px"
 				@checked="getallowImagesInComment"
+				v-if="create"
 			></switch-button>
 		</h6>
 	</div>
@@ -48,8 +52,12 @@
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
-	created() {
-		this.getSettings();
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.enableSpoiler);
+		console.log(this.allowImagesInComment);
+		this.create = true;
 	},
 	computed: {
 		subredditName() {
@@ -61,8 +69,9 @@ export default {
 	},
 	data() {
 		return {
-			enableSpoiler: false,
-			allowImagesInComment: false,
+			create: false,
+			enableSpoiler: '',
+			allowImagesInComment: '',
 			suggestedSort: 'none',
 			suggestedSortoptions: ['none', 'best', 'top', 'new', 'old'],
 			buttonDisabled: false,
@@ -122,10 +131,15 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
-			this.setting = this.$store.getters['setting/getpostandcommentsSettings'];
+			this.setting = await this.$store.getters[
+				'setting/getpostandcommentsSettings'
+			];
+			console.log(this.setting);
 			this.enableSpoiler = this.setting.enableSpoiler;
 			this.allowImagesInComment = this.setting.allowImagesInComment;
 			this.suggestedSort = this.setting.suggestedSort;
+			console.log(this.enableSpoiler);
+			console.log(this.allowImagesInComment);
 		},
 	},
 };
