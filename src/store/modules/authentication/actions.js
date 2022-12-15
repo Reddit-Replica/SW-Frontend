@@ -158,6 +158,7 @@ export default {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
 				localStorage.setItem('Password', payload.password);
+				console.log(localStorage.getItem('Password'));
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
@@ -204,6 +205,7 @@ export default {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
 				localStorage.setItem('Password', payload.password);
+				console.log(localStorage.getItem('Password'));
 				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
@@ -250,10 +252,12 @@ export default {
 			type: payload.type,
 			accessToken: payload.id_token,
 		};
-		const response = await fetch(baseurl + '/signin/' + payload.type, {
+		console.log('hamada');
+		console.log(userInfo.accessToken);
+		const response = await fetch(baseurl + '/signin/google', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(userInfo),
+			body: JSON.stringify(userInfo.accessToken),
 		});
 		const responseData = await response.json();
 		// localStorage.setItem('response', response.status);
@@ -268,6 +272,7 @@ export default {
 			context.commit('settype', 'google');
 		} else if (!response.ok) {
 			const error = new Error(responseData.error);
+			console.log(error);
 			throw error;
 		}
 	},

@@ -11,6 +11,18 @@
 				<div>
 					<base-button class="blue-button" button-text="Change" id="change" />
 				</div>
+				<div>
+					<h3 class="h3-title">Change Password</h3>
+					<p class="p-title-description">here write description</p>
+				</div>
+				<div>
+					<base-button
+						class="blue-button"
+						button-text="Change"
+						id="change"
+						@click="showChangePasswordDialog"
+					/>
+				</div>
 			</div>
 			<div class="section">
 				<div>
@@ -50,41 +62,6 @@
 					/>
 				</div>
 			</div>
-			<!-- <div class="section">
-				<div>
-					<h3 class="h3-title">Display language <span>(beta)</span></h3>
-					<p class="p-title-description">
-						Select the language you'd like to experience the Reddit interface
-						in. Note that this won't change the language of user-generated
-						content and that this feature is still in development so
-						translations and UI are still under review.
-					</p>
-				</div>
-				<div>
-					<select id="language">
-						<option value="Deutsch">Deutsch</option>
-						<option value="English (US)">English (US)</option>
-						<option value="Español (ES)">Español (ES)</option>
-						<option value="Español (MX)">Español (MX)</option>
-						<option value="Français">Français</option>
-						<option value="Italiano">Italiano</option>
-						<option value="Português (BR)">Português (BR)</option>
-						<option value="Português (PT)">Português (PT)</option>
-					</select>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="currentColor"
-						class="bi bi-caret-down-fill"
-						viewBox="0 0 16 16"
-					>
-						<path
-							d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-						/>
-					</svg>
-				</div>
-			</div> -->
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Country</h3>
@@ -408,47 +385,6 @@
 				</div>
 			</div>
 			<h3 class="h3-main-title">CONNECTED ACCOUNTS</h3>
-			<!-- <div class="section">
-				<div>
-					<h3 class="h3-title">Connect to Twitter</h3>
-					<p class="p-title-description">
-						Connect a Twitter account to enable the choice to tweet your new
-						posts and display a link on your profile. We will never post to
-						Twitter without your permission.
-					</p>
-				</div>
-				<div>
-					<base-button
-						class="blue-button"
-						button-text="Connect to Twitter"
-						id="twitter"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="currentColor"
-							class="bi bi-twitter"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
-							/>
-						</svg>
-					</base-button>
-				</div>
-			</div>
-			<div class="section">
-				<div>
-					<h3 class="h3-title">Show link on profile</h3>
-					<p class="p-title-description">
-						You can show a link to your Twitter account on your profile
-					</p>
-				</div>
-				<div>
-					<switch-button disabled id="sb-4" />
-				</div>
-			</div> -->
 			<div class="section">
 				<div>
 					<h3 class="h3-title">Connect to Facebook</h3>
@@ -600,6 +536,37 @@
 			</div>
 		</div>
 	</base-dialog>
+	<base-dialog :show="changePasswordDialog" @close="cancelChangePassword">
+		<div class="delete-account">
+			<img src="" alt="" />
+			<p>Update your password</p>
+			<input type="password" placeholder="OLD PASSWORD" v-model="oldPassword" />
+			<span v-if="fieldEmpty" class="error">This field is required</span>
+			<span v-if="incorrectPassword" class="error">incorrect password</span>
+			<input type="password" placeholder="NEW PASSWORD" v-model="newPassword" />
+			<span v-if="shortPassword" class="error">
+				Password must be at least 8 characters long
+			</span>
+			<span v-if="oldMatchNew" class="error">
+				New and old passwords must not match
+			</span>
+			<input
+				type="password"
+				placeholder="CONFIRM PASSWORD"
+				v-model="confirmPassword"
+			/>
+			<span v-if="dntMatch" class="error">Password must match</span>
+			<div class="buttons">
+				<base-button button-text="Save" @click="savePassword" id="save" />
+			</div>
+		</div>
+	</base-dialog>
+	<base-dialog :show="changeEmailDialog" @close="cancelChangeEmail">
+		<p>Update your email below.</p>
+		<input type="password" placeholder="CURRENT PASSWORD" />
+		<input type="email" placeholder="NEW EMAIL" />
+		<base-button button-text="Save email" @click="saveEmail" id="saveEmail" />
+	</base-dialog>
 </template>
 
 <script>
@@ -612,6 +579,14 @@ export default {
 	},
 	data() {
 		return {
+			changeEmailDialog: false,
+			incorrectPassword: '',
+			fieldEmpty: '',
+			shortPassword: '',
+			dntMatch: '',
+			oldPassword: '',
+			newPassword: '',
+			confirmPassword: '',
 			gender: 'select gender',
 			genderMenuDisplayed: false,
 			country: '',
@@ -623,12 +598,75 @@ export default {
 			userName: '',
 			password: '',
 			agreement: false,
+			changePasswordDialog: false,
+			oldMatchNew: false,
 		};
 	},
-	created() {
-		this.fetchAccountSettings();
+	created() {},
+	beforeMount() {
+		if (localStorage.getItem('accessToken') == null)
+			this.$router.push('/login');
+		else this.fetchAccountSettings();
 	},
 	methods: {
+		cancelChangePassword() {
+			this.changePasswordDialog = false;
+			this.shortPassword = false;
+			this.dntMatch = false;
+			this.incorrectPassword = false;
+			this.oldMatchNew = false;
+		},
+		async changePassword() {
+			this.changePasswordDialog = false;
+			localStorage.setItem('Password', this.newPassword);
+			try {
+				await this.$store.dispatch('setting/changePassword', {
+					baseurl: this.$baseurl,
+					currentPassword: this.oldPassword,
+					newPassword: this.newPassword,
+					confirmNewPassword: this.confirmPassword,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		savePassword() {
+			if (this.oldPassword == '') {
+				this.fieldEmpty = true;
+				this.incorrectPassword = false;
+			} else if (this.oldPassword != localStorage.getItem('Password')) {
+				this.fieldEmpty = false;
+				this.incorrectPassword = true;
+			} else {
+				this.fieldEmpty = false;
+				this.incorrectPassword = false;
+			}
+			if (this.newPassword.length < 8) {
+				this.shortPassword = true;
+				this.oldMatchNew = false;
+			} else if (this.newPassword == this.oldPassword) {
+				this.shortPassword = false;
+				this.oldMatchNew = true;
+			} else {
+				this.shortPassword = false;
+				this.oldMatchNew = false;
+			}
+			if (this.confirmPassword == this.newPassword) {
+				this.dntMatch = false;
+			} else {
+				this.dntMatch = true;
+			}
+			if (
+				!this.shortPassword &&
+				!this.dntMatch &&
+				!this.incorrectPassword &&
+				!this.oldMatchNew
+			)
+				this.changePassword();
+		},
+		showChangePasswordDialog() {
+			this.changePasswordDialog = true;
+		},
 		confirmAccountDeletion() {
 			this.deleting = false;
 			this.confirmDeletion = true;
@@ -1022,5 +1060,12 @@ button.disconnect-button:hover {
 }
 .delete-account .buttons button:last-of-type:disabled {
 	background-color: var(--color-grey-dark-4);
+}
+.delete-account .buttons button#save {
+	background-color: var(--color-blue);
+}
+span.error {
+	color: red;
+	font-size: 8px;
 }
 </style>

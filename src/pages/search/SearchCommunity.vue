@@ -71,13 +71,26 @@
 							<div>
 								<div v-if="!(SearchedCms && SearchedCms.length == 0)">
 									<div v-for="value in SearchedCms" :key="value.id">
-										<a class="user-a"
+										<a class="user-a" @click="gotosub(value.subredditName)"
 											><div class="user-div">
 												<div class="user-details">
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
-															<img class="image-user" />
+															<img
+																v-if="!value.picture"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar-' + value.subredditName"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.picture"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar-' + value.subredditName"
+															/>
 														</div>
 													</div>
 												</div>
@@ -86,6 +99,7 @@
 														<h6 class="people-name">
 															r/{{ value.subredditName }}&nbsp;
 														</h6>
+
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -96,7 +110,7 @@
 												</div>
 												<div
 													class="follow"
-													v-if="value.notjoined"
+													v-if="value.joined"
 													@click="toggle(value.id)"
 												>
 													<base-button
@@ -106,7 +120,7 @@
 												</div>
 												<div
 													class="follow"
-													v-if="!value.notjoined"
+													v-if="!value.joined"
 													@click="toggle(value.id)"
 												>
 													<base-button
@@ -174,11 +188,14 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
+		},
+		gotosub(subredditName) {
+			this.$router.push('/r/' + subredditName);
 		},
 	},
 	components: { BaseButton, Notfound },
@@ -331,6 +348,7 @@ a {
 	line-height: 16px;
 	color: rgb(58, 49, 49);
 	font-weight: 700;
+	cursor: pointer;
 }
 .karma-number {
 	font-size: 12px;

@@ -13,7 +13,13 @@
 		<h4 class="main-title">Enable spoiler tag</h4>
 		<h6 class="description" style="margin-top: 10px">
 			Media on posts with the spoiler tag are blurred
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<switch-button
+				:val="enableSpoiler"
+				id="btn1"
+				style="margin-left: 15px"
+				@checked="getenableSpoiler"
+				v-if="create"
+			></switch-button>
 		</h6>
 
 		<h3 class="secondary-title" style="margin-top: 20px">COMMENTS</h3>
@@ -31,7 +37,13 @@
 		<h6 class="description" style="margin-top: 10px">
 			Allow comments with uploaded images.
 
-			<switch-button id="btn2" style="margin-left: 15px"></switch-button>
+			<switch-button
+				:val="allowImagesInComment"
+				id="btn2"
+				style="margin-left: 15px"
+				@checked="getallowImagesInComment"
+				v-if="create"
+			></switch-button>
 		</h6>
 	</div>
 </template>
@@ -40,6 +52,13 @@
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.enableSpoiler);
+		console.log(this.allowImagesInComment);
+		this.create = true;
+	},
 	computed: {
 		subredditName() {
 			return this.$route.params.subredditName;
@@ -50,19 +69,78 @@ export default {
 	},
 	data() {
 		return {
-			buttonDisabled: false,
-			suggestedSort: '',
-			suggestedSortoptions: ['none', 'best', 'top', 'new', 'old'],
+			create: false,
 			enableSpoiler: '',
+			allowImagesInComment: '',
+			suggestedSort: 'none',
+			suggestedSortoptions: ['none', 'best', 'top', 'new', 'old'],
+			buttonDisabled: false,
 		};
 	},
 	methods: {
-		getSendmessage(value) {
-			this.sendWelcomeMessage = value;
-			console.log('this.sendWelcomeMessage');
-			console.log(this.this.sendWelcomeMessage);
+		getenableSpoiler(value) {
+			this.enableSpoiler = value;
+			console.log('this.enableSpoiler');
+			console.log(this.enableSpoiler);
 		},
-		saveChanges() {},
+		getallowImagesInComment(value) {
+			this.allowImagesInComment = value;
+			console.log('this.allowImagesInComment');
+			console.log(this.allowImagesInComment);
+		},
+		async saveChanges() {
+			const actionPayload = {
+				communityName: this.subredditName,
+				enableSpoiler: this.enableSpoiler,
+				allowImagesInComment: this.allowImagesInComment,
+				suggestedSort: this.suggestedSort,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/postandcommentsSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+
+		async getSettings() {
+			const actionPayload = {
+				communityName: this.subredditName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetcpostandcommentsSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters[
+				'setting/getpostandcommentsSettings'
+			];
+			console.log(this.setting);
+			this.enableSpoiler = this.setting.enableSpoiler;
+			this.allowImagesInComment = this.setting.allowImagesInComment;
+			this.suggestedSort = this.setting.suggestedSort;
+			console.log(this.enableSpoiler);
+			console.log(this.allowImagesInComment);
+		},
 	},
 };
 </script>
@@ -119,5 +197,10 @@ export default {
 	display: flex;
 	font-weight: 400;
 	color: #7c7c7c;
+}
+@media only screen and (max-width: 768px) {
+	.box {
+		padding-top: 11.4rem;
+	}
 }
 </style>

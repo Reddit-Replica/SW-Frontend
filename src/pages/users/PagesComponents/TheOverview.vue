@@ -2,7 +2,7 @@
 	<pinned-posts
 		:pinned-posts-data="getUserPinnedPostData.pinnedPostData"
 	></pinned-posts>
-	<sortposts-bar @title="sortBarClicked"></sortposts-bar>
+	<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
 	<div
 		v-for="overviewPostData in getUserOverviewData.overviewData.children"
 		:key="overviewPostData.id"
@@ -12,6 +12,7 @@
 			:key="overviewPostData.id"
 			:comment-data="overviewPostData"
 			:id="overviewPostData.id"
+			:state="state"
 		>
 		</comments-overview-page>
 	</div>
@@ -29,10 +30,19 @@ export default {
 		CommentsOverviewPage,
 		// BasePost,
 	},
+	props: {
+		state: {
+			type: String,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			loading: false,
 		};
+	},
+	mounted() {
+		console.log('in overview', this.state);
 	},
 	async created() {
 		let sortType;
@@ -110,6 +120,9 @@ export default {
 					'userposts/getUserPinnedPostData',
 					{
 						baseurl: this.$baseurl,
+						body: {
+							username: this.$route.params.userName,
+						},
 					}
 				);
 			} catch (error) {

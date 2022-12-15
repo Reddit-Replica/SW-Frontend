@@ -238,4 +238,9 @@ header.pinned-posts h2 {
 	overflow: hidden;
 	max-height: 176px;
 }
+@media (max-width: 960px) {
+	.pinned-post-container {
+		justify-content: flex-start;
+	}
+}
 </style>

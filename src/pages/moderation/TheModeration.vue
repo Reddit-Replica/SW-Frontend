@@ -12,11 +12,12 @@
 		></unmoderator-view>
 		<div v-else>
 			<div class="container">
-				<div class="row no-gutters">
-					<div class="col-6 col-md-4">
+				<div class="row no-gutters first-show">
+					<div class="col-4 bg-light">
 						<leftside-bar :subreddit-name="subredditName"></leftside-bar>
 					</div>
-					<div class="col-12 col-md-8 right">
+
+					<div class="col-12 col-md-8 col-sm-12 right">
 						<router-view v-slot="slotProps">
 							<div>
 								<list-bar
@@ -31,6 +32,21 @@
 						</router-view>
 					</div>
 				</div>
+			</div>
+			<div class="page-content">
+				<router-view v-slot="slotProps">
+					<div>
+						<list-bar :left-bar="true" @show-bar="showBarFunction()"></list-bar>
+						<leftside-bar
+							:subreddit-name="subredditName"
+							@show-function="showBarFunction()"
+							v-if="showLiftBar"
+						></leftside-bar>
+						<!-- <transition name="route" mode="out-in"> -->
+						<component :is="slotProps.Component"></component>
+						<!-- </transition> -->
+					</div>
+				</router-view>
 			</div>
 		</div>
 	</div>
@@ -48,6 +64,7 @@ export default {
 			search: '',
 			count: 0,
 			noItems: false,
+			showLiftBar: false,
 		};
 	},
 	components: {
@@ -284,11 +301,23 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		// @vuese
+		// Used to handle show left bar action
+		// @arg no argument
+		showBarFunction() {
+			this.showLiftBar = !this.showLiftBar;
+		},
 	},
 };
 </script>
 
 <style scoped>
+.page-content {
+	width: 95%;
+	margin: auto;
+	display: none;
+	margin-top: 9rem;
+}
 .container {
 	margin: 0;
 	padding: 0;
@@ -296,9 +325,23 @@ export default {
 .right {
 	margin-top: 9rem;
 }
-@media only screen and (max-width: 50em) {
-	.row > * {
-		width: 50%;
+.bg-light {
+	--bs-bg-opacity: 0;
+}
+.second-show {
+	margin-top: 10rem;
+	display: none;
+}
+/* 768 */
+@media only screen and (max-width: 768px) {
+	.first-show {
+		display: none;
+	}
+	.second-show {
+		display: block;
+	}
+	.page-content {
+		display: block;
 	}
 }
 </style>

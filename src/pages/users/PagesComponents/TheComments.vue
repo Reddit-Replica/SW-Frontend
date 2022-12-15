@@ -1,7 +1,7 @@
 <template>
 	<div style="position: relative">
-		<sortposts-bar @title="sortBarClicked"></sortposts-bar>
-		<div v-if="0 && loading">
+		<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
+		<div v-if="loading">
 			<the-spinner
 				style="position: absolute; left: 50%; top: 53%; top: 188px"
 			></the-spinner>
@@ -21,6 +21,7 @@
 				:key="commentData.id"
 				:comment-data="commentData"
 				:id="commentData.id"
+				:state="state"
 			></base-user-comments>
 		</div>
 	</div>
@@ -35,6 +36,10 @@ export default {
 		SortpostsBar,
 		BaseUserComments,
 		EmptyPage,
+	},
+	state: {
+		type: String,
+		required: true,
 	},
 	data() {
 		return {

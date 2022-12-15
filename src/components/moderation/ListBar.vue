@@ -3,118 +3,136 @@
 		<!-- <div class="bar" v-if="barTitle == 'Schedule Post'">
 			<base-button class="base-button">{{ barTitle }}</base-button>
 		</div> -->
-		<div class="bar" v-if="title == 'Moderators'">
-			<base-button
-				class="button-white"
-				id="leave-mod-button"
-				@click="leaveMod()"
-				>Leave as mod</base-button
-			>
-			<base-button
-				class="base-button"
-				id="invite-user-mod-button"
-				@click="inviteMod()"
-				>Invite user as mod</base-button
-			>
-		</div>
+		<div class="bar">
+			<div class="bar" v-if="title == 'Moderators'">
+				<base-button
+					class="button-white"
+					id="leave-mod-button"
+					@click="leaveMod()"
+					>Leave as mod</base-button
+				>
+				<base-button
+					class="base-button"
+					id="invite-user-mod-button"
+					@click="inviteMod()"
+					>Invite user as mod</base-button
+				>
+			</div>
 
-		<div class="bar" v-if="title == 'approved'">
-			<base-button
-				class="base-button"
-				id="approve-user-button"
-				@click="ApproveUser()"
-				>Approve user</base-button
-			>
-		</div>
+			<div class="bar" v-if="title == 'approved'">
+				<base-button
+					class="base-button"
+					id="approve-user-button"
+					@click="ApproveUser()"
+					>Approve user</base-button
+				>
+			</div>
 
-		<div class="bar" v-if="title == 'muted'">
-			<base-button class="base-button" id="mute-user-button" @click="MuteUser()"
-				>Mute user</base-button
-			>
-		</div>
+			<div class="bar" v-if="title == 'muted'">
+				<base-button
+					class="base-button"
+					id="mute-user-button"
+					@click="MuteUser()"
+					>Mute user</base-button
+				>
+			</div>
 
-		<div class="bar" v-if="title == 'Rules' && !dragDrop">
-			<base-button
-				class="reorder-button"
-				id="reorder-rules-button"
-				:class="rulesCount > 1 ? '' : 'disable-button'"
-				@click="reorderRules()"
-				>Reorder rules</base-button
-			>
-			<base-button
-				class="base-button"
-				@click="showAddRuleFunction()"
-				id="add-rules-button"
-				:class="rulesCount == 15 ? 'content-controls-button' : ''"
-				>Add rule</base-button
-			>
-		</div>
-		<div class="bar" v-if="title == 'Rules' && dragDrop">
-			<base-button
-				class="button-white"
-				id="cancel-reorder-rules-button"
-				@click="reorderRules()"
-				>Cancel</base-button
-			>
-			<base-button
-				class="base-button"
-				id="save-reorder-rules-button"
-				@click="saveReorderRules()"
-				>Save</base-button
-			>
-		</div>
-		<div class="bar" v-if="title == 'banned'">
-			<base-button
-				class="base-button"
-				id="ban-user-button"
-				@click="showBanUser()"
-				>Ban user</base-button
-			>
-		</div>
-		<div class="bar" v-if="title == 'flair' && !dragDrop">
-			<!-- <base-button class="button-white" id="post-flair-button"
+			<div class="bar" v-if="title == 'Rules' && !dragDrop">
+				<base-button
+					class="reorder-button"
+					id="reorder-rules-button"
+					:class="rulesCount > 1 ? '' : 'disable-button'"
+					@click="reorderRules()"
+					>Reorder rules</base-button
+				>
+				<base-button
+					class="base-button"
+					@click="showAddRuleFunction()"
+					id="add-rules-button"
+					:class="rulesCount == 15 ? 'content-controls-button' : ''"
+					>Add rule</base-button
+				>
+			</div>
+
+			<div class="bar" v-if="title == 'Rules' && dragDrop">
+				<base-button
+					class="button-white"
+					id="cancel-reorder-rules-button"
+					@click="reorderRules()"
+					>Cancel</base-button
+				>
+				<base-button
+					class="base-button"
+					id="save-reorder-rules-button"
+					@click="saveReorderRules()"
+					>Save</base-button
+				>
+			</div>
+
+			<div class="bar" v-if="title == 'banned'">
+				<base-button
+					class="base-button"
+					id="ban-user-button"
+					@click="showBanUser()"
+					>Ban user</base-button
+				>
+			</div>
+
+			<div class="bar" v-if="title == 'flair' && !dragDrop">
+				<!-- <base-button class="button-white" id="post-flair-button"
 				>Post flair settings</base-button
 			> -->
-			<base-button
-				class="reorder-button"
-				id="reorder-flairs-button"
-				:class="flairsCount > 1 ? '' : 'disable-button'"
-				@click="reorderFlairs()"
-				>Reorder</base-button
-			>
-			<base-button
-				class="base-button"
-				id="add-flair-button"
-				@click="showAddFlairFunction()"
-				:class="showAddFlair ? 'disable-button ' : ''"
-				>Add flair</base-button
-			>
+				<base-button
+					class="reorder-button"
+					id="reorder-flairs-button"
+					:class="flairsCount > 1 ? '' : 'disable-button'"
+					@click="reorderFlairs()"
+					>Reorder</base-button
+				>
+				<base-button
+					class="base-button"
+					id="add-flair-button"
+					@click="showAddFlairFunction()"
+					:class="showAddFlair ? 'disable-button ' : ''"
+					>Add flair</base-button
+				>
+			</div>
+
+			<div class="bar" v-if="title == 'flair' && dragDrop">
+				<base-button
+					class="button-white"
+					id="cancel-reorder-flairs-button"
+					@click="reorderFlairs()"
+					>Cancel</base-button
+				>
+				<base-button
+					class="base-button"
+					id="save-reorder-flairs-button"
+					@click="saveReorderFlairs()"
+					>Save</base-button
+				>
+			</div>
+
+			<div v-if="leftBar" class="bar second-bar">
+				<base-button
+					class="base-button"
+					id="show-bar-button"
+					@click="showBarFunction()"
+					>Show Bar</base-button
+				>
+			</div>
 		</div>
 
-		<div class="bar" v-if="title == 'flair' && dragDrop">
-			<base-button
-				class="button-white"
-				id="cancel-reorder-flairs-button"
-				@click="reorderFlairs()"
-				>Cancel</base-button
-			>
-			<base-button
-				class="base-button"
-				id="save-reorder-flairs-button"
-				@click="saveReorderFlairs()"
-				>Save</base-button
-			>
-		</div>
 		<!-- <div class="bar" v-if="title == 'Post flair'">
 			<base-button class="button-white">Post flair settings</base-button>
 			<base-button class="reorder-post-flair-button">Reorder</base-button>
 			<base-button class="base-button">Add flair</base-button>
 		</div> -->
-		<div class="bar" v-if="title == 'Content controls'">
+		<!-- <div v-if="title == 'Content controls'">
 			<base-button class="content-controls-button" id="content-controls-button"
 				>Save changes</base-button
 			>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -133,6 +151,7 @@ export default {
 		'ApproveUser',
 		'MuteUser',
 		'leaveMod',
+		'showBar',
 	],
 	props: {
 		// @vuese
@@ -182,6 +201,14 @@ export default {
 			type: Number,
 			default: 0,
 			required: true,
+		},
+		// @vuese
+		// to left bar or not
+		// @type string
+		leftBar: {
+			type: Boolean,
+			default: false,
+			required: false,
 		},
 	},
 	// computed: {
@@ -260,6 +287,12 @@ export default {
 		leaveMod() {
 			this.$emit('leaveMod');
 		},
+		// @vuese
+		// Used to handle show left bar action
+		// @arg no argument
+		showBarFunction() {
+			this.$emit('showBar');
+		},
 	},
 };
 </script>
@@ -281,6 +314,11 @@ export default {
 	position: fixed;
 	right: 0;
 	z-index: 3;
+}
+.second-bar {
+	top: 13.8rem;
+	justify-content: flex-start;
+	border-top: 1px solid var(--color-blue-light-4);
 }
 button {
 	position: relative;
@@ -317,7 +355,6 @@ button {
 	border: 1px solid var(--color-blue-2);
 	color: var(--color-blue-2);
 	fill: var(--color-blue-2);
-	padding: 0.4rem 1.6rem;
 	background-color: transparent;
 }
 .button-white:hover {
@@ -326,7 +363,6 @@ button {
 .reorder-button {
 	color: var(--color-blue-2) !important;
 	fill: var(--color-blue-2);
-	padding: 0.4rem 1.6rem;
 	margin-right: 1rem;
 	background-color: transparent;
 }
@@ -362,5 +398,15 @@ button {
 }
 .content-controls-button:hover {
 	opacity: 0.8;
+}
+@media only screen and (max-width: 768px) {
+	.bar {
+		width: 100%;
+		left: 0;
+	}
+	button {
+		font-size: 1.2rem;
+		padding: 0.2rem 1rem;
+	}
 }
 </style>

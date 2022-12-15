@@ -40,6 +40,7 @@ export default {
 		//return all messages sent or recieved
 		// @type object
 		userMessages() {
+			console.log(this.$store.getters['messages/userMessages']);
 			return this.$store.getters['messages/userMessages'];
 		},
 	},
@@ -63,6 +64,12 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		// @vuese
+		//reload compose messages from the store
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadUserMessages();
 		},
 	},
 };

@@ -8,6 +8,8 @@ export default {
 		return {
 			unsubscribeFromEmails: false,
 			accountSettings: {},
+			moderationSettings: {},
+			postandcommentsSettings: {},
 		};
 	},
 	mutations,
