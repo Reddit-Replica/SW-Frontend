@@ -1,13 +1,16 @@
 <template>
 	<div class="subreddit-info">
 		<span class="subreddit-image"
-			><img src="../../../img/user-image.jpg" alt="" v-if="notInSubreddit"
+			><img
+				src="../../../img/user-image.jpg"
+				alt=""
+				v-if="post.subreddit != undefined"
 		/></span>
-		<span class="subreddit-name" v-if="notInSubreddit">
+		<span class="subreddit-name" v-if="true">
 			<router-link
 				:to="{
 					name: 'subreddit',
-					params: { subredditName: post.subreddit },
+					params: { subredditName: post.subreddit != undefined },
 				}"
 				id="subreddit-route"
 				>{{ post.subreddit }} </router-link
@@ -56,9 +59,6 @@
 <script>
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
-	beforeMount() {
-		this.click;
-	},
 	name: 'PostContent',
 	props: {
 		//@vuese
@@ -68,17 +68,9 @@ export default {
 		},
 	},
 	computed: {
-		notInSubreddit() {
-			if (this.post.subreddit == undefined) return false;
-			else if (this.post.subreddit == '') return false;
-			else return true;
-		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
 				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-
-			// TypeScript / ES6:
-			// import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 
 			var deltaOps = this.post.content.ops;
 
@@ -110,7 +102,7 @@ export default {
 	},
 	methods: {
 		click() {
-			console.log(this.post);
+			console.log(this.subreddit);
 		},
 	},
 };
@@ -127,31 +119,31 @@ export default {
 	overflow: hidden;
 	font-size: 12px;
 }
-.post-card .subreddit-info .subreddit-image img {
+.subreddit-info .subreddit-image img {
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
 }
 
-.post-card .subreddit-info .subreddit-image {
+.subreddit-info .subreddit-image {
 	padding-right: 5px;
 }
 
-.post-card .subreddit-info .subreddit-name a {
+.subreddit-info .subreddit-name a {
 	font-weight: 700;
 	color: black;
 }
 
-.post-card .subreddit-info .subreddit-name a:hover {
+.subreddit-info .subreddit-name a:hover {
 	text-decoration: underline;
 }
 
-.post-card .subreddit-info span:nth-of-type(3),
-.post-card .subreddit-info #post-by-router {
+.subreddit-info span:nth-of-type(3),
+.subreddit-info #post-by-router {
 	color: var(--color-grey-dark-2);
 }
 
-.post-card .subreddit-info #post-by-router:hover {
+.subreddit-info #post-by-router:hover {
 	text-decoration: underline;
 }
 .crosspost-icon {

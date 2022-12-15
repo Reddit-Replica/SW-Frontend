@@ -14,10 +14,10 @@
 		<h6 class="description" style="margin-top: 10px">
 			Media on posts with the spoiler tag are blurred
 			<switch-button
-				:val="enableSpoiler"
 				id="btn1"
 				style="margin-left: 15px"
 				@checked="getenableSpoiler"
+				:value="enableSpoiler"
 				v-if="create"
 			></switch-button>
 		</h6>

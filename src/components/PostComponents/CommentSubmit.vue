@@ -110,9 +110,17 @@
 		</div>
 		<!-- {{ content }} -->
 	</div>
+	<subMenu
+		:titles="commentedUsers"
+		:display="showMentionsList"
+		@change-title="userMentioned"
+		:clicked-prop="mentionedUser"
+		v-if="commentedUsers.length > 0"
+	/>
 </template>
 
 <script>
+import SubMenu from '../BaseComponents/SubMenu.vue';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
@@ -121,6 +129,9 @@ export default {
 	data() {
 		return {
 			content: this.currentText,
+			showMentionsList: false,
+			commentedUsers: [],
+			mentionedUser: '',
 		};
 	},
 	props: {
@@ -162,6 +173,18 @@ export default {
 	},
 
 	methods: {
+		userMentioned(userName) {
+			this.showMentionsList = false;
+			console.log(this.$refs.myQuillEditor.getContents());
+			this.$refs.myQuillEditor.setContents([
+				// this.$refs.myQuillEditor.getContents().ops,
+				{
+					insert: 'u/' + userName,
+					attributes: { link: this.$baseurl + '/user/' + userName },
+				},
+			]);
+			this.mentionedUser = '';
+		},
 		//@vuese
 		//adds new comment
 		async writeNewComment() {
@@ -193,9 +216,31 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			console.log(write.commentBody.ops.length);
+			for (let i = 0; i < write.commentBody.ops.length; i++) {
+				if (write.commentBody.ops[i].attributes != undefined)
+					if (write.commentBody.ops[i].attributes.link != undefined) {
+						console.log(write.commentBody.ops[i].insert.split('/')[1]);
+						console.log({
+							baseurl: this.$baseurl,
+							postId: this.$route.path.split('/')[4],
+							commentId: this.$store.getters['comments/getCommentID'],
+							receiverUsername: write.commentBody.ops[i].insert.split('/')[2],
+						});
+						try {
+							await this.$store.dispatch('postCommentActions/mention', {
+								baseurl: this.$baseurl,
+								postId: this.$route.path.split('/')[4],
+								commentId: this.$store.getters['comments/getCommentID'],
+								receiverUsername: write.commentBody.ops[i].insert.split('/')[1],
+							});
+						} catch (error) {
+							this.error = error.message || 'Something went wrong';
+						}
+					}
+			}
 			write.commentId = this.$store.getters['comments/getCommentID'];
 			write.level = this.level;
-			console.log(this.level);
 			this.$emit('newComment', write);
 		},
 		saveEditing() {
@@ -207,6 +252,38 @@ export default {
 	},
 	components: {
 		QuillEditor,
+		SubMenu,
+	},
+	watch: {
+		content(value) {
+			console.log(value);
+			for (let i = 0; i < value.ops.length; i++) {
+				if (value.ops[i].insert.search('@') != -1) {
+					this.showMentionsList = true;
+					// this.content.ops[i].insert = this.content.ops[i].insert.replace(
+					// 	'@',
+					// 	'u/'
+					// );
+				}
+				console.log(value.ops[i].insert);
+				console.log(value.ops[i].insert.search('@') != -1);
+			}
+			return false;
+		},
+	},
+	async beforeMount() {
+		try {
+			await this.$store.dispatch('postCommentActions/commentedUsers', {
+				baseurl: this.$baseurl,
+				postId: this.$route.path.split('/')[4],
+			});
+		} catch (error) {
+			this.error = error.message || 'Something went wrong';
+		}
+		this.commentedUsers =
+			this.$store.getters['postCommentActions/getCommentedUsers'];
+		console.log('commentedUsers');
+		console.log(this.commentedUsers);
 	},
 };
 </script>
@@ -492,6 +569,11 @@ button {
 .comment-submit button {
 	display: inline-block;
 	margin-right: auto;
+}
+subMenu {
+	position: absolute;
+	top: 120px;
+	left: 336px;
 }
 @media (max-width: 1287px) {
 	.icons-box .tool-tip:nth-of-type(15) {
