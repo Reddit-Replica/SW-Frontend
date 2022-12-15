@@ -87,24 +87,51 @@
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</base-button> -->
-			<v-select
+			<!-- <v-select
 				style="margin: 10px; color: #0079d3; fill: #0079d3"
-				:options="flairs"
+				v-for="flair in flairs"
+				:key="flair.id"
+				:options="flair.flairName"
 				v-model="flairId"
 				@click="getFlairs()"
 			>
 				></v-select
-			>
+			
+			> -->
+			<div class="tool-tip">
+				<span class="tool-tip-text-small strike1">Add flair</span>
+				<select
+					@click="getFlairs()"
+					v-model="flairId"
+					style="
+						margin-left: 10px;
+						width: max-content;
+						height: 30px;
+						border-radius: 20px;
+					"
+				>
+					<option
+						v-for="flair in flairs"
+						:id="'message-from-options-' + flair.flairId"
+						:key="flair.flairId"
+						:value="flair.flairId"
+					>
+						{{ flair.flairName }}
+					</option>
+				</select>
+			</div>
 		</div>
+
+		{{ flairId }}
 	</div>
 </template>
 
 <script>
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
+// import vSelect from 'vue-select';
+// import 'vue-select/dist/vue-select.css';
 export default {
 	components: {
-		vSelect,
+		// vSelect,
 	},
 	data() {
 		return {
@@ -149,6 +176,7 @@ export default {
 		},
 		getFlairs() {
 			this.flairs = this.$store.getters['moderation/listOfFlairs'];
+			console.log('this.flairs');
 			console.log(this.flairs);
 		},
 
@@ -180,6 +208,7 @@ export default {
 				console.log(this.setting);
 				if (this.setting.enableSpoiler) this.buttonDisabled = false;
 				else this.buttonDisabled = true;
+				this.getFlairs();
 			} else this.buttonDisabled = true;
 		},
 	},
@@ -278,6 +307,9 @@ export default {
 }
 .strike {
 	width: 200px;
+}
+.strike1 {
+	width: 100px;
 }
 .tool-tip-text::before {
 	content: '';
