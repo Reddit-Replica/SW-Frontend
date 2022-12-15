@@ -70,6 +70,7 @@
 			:post-id="commentData.id"
 			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
+			:state="state"
 		></comment-content>
 		<!-- <div class="comment-content">
 						<div class="comment-body-title">
@@ -213,6 +214,10 @@ export default {
 			required: true,
 		},
 		id: {
+			type: String,
+			required: true,
+		},
+		state: {
 			type: String,
 			required: true,
 		},

@@ -2,14 +2,27 @@
 	<div class="people-nav">
 		<h4 class="people-word">People</h4>
 		<div>
-			<div>
-				<div>
+			<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
+				<div v-for="value in SearchedUsers" :key="value.username">
 					<a class="people-status"
 						><div class="people-status-release">
 							<div class="img-release">
 								<div class="img-holder">
 									<div class="img-div">
-										<img class="people-img" />
+										<img
+											v-if="!value.avatar"
+											src="../../../img/default_inbox_avatar.png"
+											alt="img"
+											class="people-img"
+											:id="'user-avatar-' + value.id"
+										/>
+										<img
+											v-else
+											:src="$baseurl + '/' + value.avatar"
+											alt="img"
+											class="people-img"
+											:id="'user-avatar-' + value.id"
+										/>
 									</div>
 								</div>
 							</div>
@@ -19,13 +32,13 @@
 									<p class="karma-number">{{ karma }} Karma&nbsp;</p>
 								</div>
 							</div>
-							<div class="follow" v-if="notFollowed" @click="toggle">
+							<div class="follow" v-if="value.following" @click="toggle">
 								<base-button
 									button-text="Follow"
 									class="follow-button"
 								></base-button>
 							</div>
-							<div class="follow" v-if="!notFollowed" @click="toggle">
+							<div class="follow" v-if="!value.following" @click="toggle">
 								<base-button
 									button-text="Unfollow"
 									class="follow-button"
@@ -33,6 +46,9 @@
 							</div></div
 					></a>
 				</div>
+			</div>
+			<div v-else>
+				<div class="no-res">No Results</div>
 			</div>
 		</div>
 	</div>
@@ -50,6 +66,12 @@ export default {
 	},
 	components: {
 		BaseButton,
+	},
+	computed: {
+		SearchedUsers() {
+			console.log(this.$store.getters['search/Getusers']);
+			return this.$store.getters['search/Getusers'];
+		},
 	},
 	methods: {
 		toggle() {},
@@ -170,5 +192,10 @@ p {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
+}
+.no-res {
+	color: #1c1c1c;
+	padding: 16px;
+	font-size: 16px;
 }
 </style>

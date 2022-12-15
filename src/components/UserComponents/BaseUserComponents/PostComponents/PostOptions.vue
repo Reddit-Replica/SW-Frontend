@@ -22,7 +22,7 @@
 					class="p-2 vote-count"
 					:class="upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''"
 				>
-					{{ postData.data.votes }}
+					{{ getAbbreviationsOfNumber(counter) }}
 				</div>
 				<div class="downvote" @click="downvote">
 					<svg
@@ -171,7 +171,7 @@
 		>
 			<div class="post-options-icon">
 				<i
-					v-if="!postData.data.saved"
+					v-if="!saved"
 					style="color: rgba(135, 138, 140); font-size: 20px"
 					class="fa-regular fa-bookmark"
 				></i>
@@ -195,7 +195,7 @@
 				</i>
 			</div>
 			<div class="post-options-text" style="font-size: 12px">
-				{{ !postData.data.saved ? 'Save' : 'Unsaved' }}
+				{{ !saved ? 'Save' : 'Unsaved' }}
 			</div>
 		</li>
 		<li
@@ -325,7 +325,7 @@
 		>
 			<div
 				class="post-options-icon three-dot-icon-box"
-				v-if="postData.data.inYourSubreddit"
+				v-if="postData.data.inYourSubreddit || pinnedPostFlag"
 			>
 				<i>
 					<svg
@@ -344,7 +344,10 @@
 			</div>
 			<div
 				id="show-dots-options-BoxList"
-				v-if="showOptionsBoxList && postData.data.inYourSubreddit"
+				v-if="
+					(showOptionsBoxList && postData.data.inYourSubreddit) ||
+					(pinnedPostFlag && showOptionsBoxList)
+				"
 				class="options-box-list"
 			>
 				<ul>
@@ -357,7 +360,7 @@
 					<li @click="savePost" class="options-box-item">
 						<div class="options-box-icon">
 							<i
-								v-if="!postData.data.saved"
+								v-if="!saved"
 								style="color: rgba(135, 138, 140)"
 								class="fa-regular fa-bookmark"
 							></i>
@@ -381,7 +384,7 @@
 							</i>
 						</div>
 						<div class="options-box-text">
-							{{ !postData.data.saved ? 'Save' : 'Unsaved' }}
+							{{ !saved ? 'Save' : 'Unsaved' }}
 						</div>
 					</li>
 					<li @click="pinPostToProfile(postData.id)" class="options-box-item">
@@ -487,12 +490,20 @@
 export default {
 	data() {
 		return {
+			counter: this.postData.data.votes,
+			upClicked:
+				(this.postData.data.votingType == 1 ? true : false) ||
+				this.postData.data.vote == 1
+					? true
+					: false,
+			downClicked: this.postData.data.votingType == -1 ? true : false,
 			showShareOptions: false,
 			showOptionsBoxList: false,
 			showPostContent: false,
 			spoilerCheckBox: false,
 			nsfwCheckBox: false,
 			showSafetyOptions: false,
+			saved: this.postData.data.saved,
 		};
 	},
 	props: {
@@ -552,9 +563,33 @@ export default {
 			this.$emit('sharePost');
 			this.showShareOptions = !this.showShareOptions;
 		},
-		savePost() {
-			console.log('save');
-			this.$emit('savePost');
+		async savePost() {
+			this.saved = !this.saved;
+			if (!this.postData.data.saved) {
+				try {
+					await this.$store.dispatch('userposts/savePostOrComment', {
+						baseurl: this.$baseurl,
+						savePostOrCommentData: {
+							id: this.postData.id,
+							type: 'post',
+						},
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('userposts/unSavePostOrComment', {
+						baseurl: this.$baseurl,
+						savePostOrCommentData: {
+							id: this.postData.id,
+							type: 'post',
+						},
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 		editPost() {
 			console.log('edit');
@@ -668,7 +703,7 @@ export default {
 		},
 		async lockUnLockComments(id) {
 			console.log('lock un lock clicked');
-			let key = 'unLock';
+			let key = 'unlock';
 			if (
 				!this.postData.data.moderation ||
 				!this.postData.data.moderation.lock
@@ -721,6 +756,65 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+		async upvote() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
+			if (this.downClicked) {
+				this.downClicked = false;
+				this.counter++;
+			}
+			if (this.upClicked == false) {
+				this.upClicked = true;
+				this.counter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postData.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.upClicked = false;
+				this.counter--;
+			}
+		},
+		async downvote() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
+			if (this.upClicked) {
+				this.upClicked = false;
+				this.counter--;
+			}
+			if (this.downClicked == false) {
+				this.downClicked = true;
+				this.counter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postData.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.downClicked = false;
+				this.counter++;
+			}
+		},
+		getAbbreviationsOfNumber(num) {
+			var abbreviate = require('number-abbreviate');
+			console.log(num);
+			return abbreviate(num, 2); // => 1k
 		},
 	},
 };

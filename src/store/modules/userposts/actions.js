@@ -41,9 +41,18 @@ export default {
 	},
 	async getUserPinnedPostData(context, payload) {
 		const baseurl = payload.baseurl;
+		console.log('pinned-post-body', payload.body);
 		let url = new URL(baseurl + `/pinned-posts`);
+		let params = {
+			username: payload.body.username,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		console.log('stst');
 		const response = await fetch(url, {
+			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -54,8 +63,8 @@ export default {
 			const error = new Error(
 				responseData.message || 'Failed to fetch User Data!'
 			);
-			// throw error;
-			console.log(error);
+			throw error;
+			// console.log(error);
 		}
 		console.log('getUserPinnedPostData', responseData);
 		if (response.status == 200)
@@ -286,9 +295,10 @@ export default {
 		console.log(responseData);
 		console.log('commit');
 		// if (response.status == 200)
-		context.commit('ApprovePostOrComment', {
-			ApprovePostOrCommentData,
-		});
+		if (ApprovePostOrCommentData.type == 'post')
+			context.commit('ApprovePostOrComment', {
+				ApprovePostOrCommentData,
+			});
 		return response.status;
 	},
 	async removePostOrComment(context, payload) {
@@ -311,12 +321,65 @@ export default {
 		// }
 		console.log(response.status);
 		console.log(responseData);
-		if (response.status == 200)
+		if (response.status == 200 && removePostOrCommentData.type == 'post')
 			context.commit('removePostOrComment', {
 				removePostOrCommentData,
 			});
 		return response.status;
 	},
+	async savePostOrComment(context, payload) {
+		const savePostOrCommentData = payload.savePostOrCommentData; // id ,type
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/save', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(savePostOrCommentData),
+		});
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(response.status);
+		console.log(responseData);
+		// if (response.status == 200)
+		// 	context.commit('rPostOrComment', {
+		// 		removePostOrCommentData,
+		// 	});
+		return response.status;
+	},
+	async unSavePostOrComment(context, payload) {
+		const savePostOrCommentData = payload.savePostOrCommentData; // id ,type
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/unsave', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(savePostOrCommentData),
+		});
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(response.status);
+		console.log(responseData);
+		// if (response.status == 200)
+		// 	context.commit('rPostOrComment', {
+		// 		removePostOrCommentData,
+		// 	});
+		return response.status;
+	},
+
 	async lockUnLockPostOrComment(context, payload) {
 		const lockUnlockData = payload.lockUnlockData; // id ,type
 		console.log(lockUnlockData);
@@ -350,7 +413,7 @@ export default {
 		}
 		console.log(response.status);
 		console.log(responseData);
-		if (response.status == 200)
+		if (response.status == 200 && lockUnlockData.type == 'post')
 			context.commit('lockUnLockPostOrComment', {
 				lockUnlockData,
 				key: payload.key,
@@ -583,7 +646,7 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-		// const responseData = await response.json();
+		const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
@@ -591,12 +654,12 @@ export default {
 			// throw error;
 			// console.log(responseData);
 		}
-		// console.log(response.status);
-		// console.log(responseData);
-		// if(response.status == 200)
-		context.commit('markSpam', {
-			payload,
-		});
+		console.log(response.status);
+		console.log(responseData);
+		if (response.status == 200 && markSpamData.type == 'post')
+			context.commit('markSpam', {
+				payload,
+			});
 		return response.status;
 	},
 	async unmarkSpam(context, payload) {

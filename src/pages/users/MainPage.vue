@@ -16,7 +16,8 @@
 							<base-post
 								v-for="post in posts"
 								:key="post.id"
-								:post="post"
+								:id="post.id"
+								:post="post.data"
 								@show-comments="showPostComments"
 								@saved="savePost"
 								@unsaved="unsavePost"
@@ -181,18 +182,22 @@ export default {
 				await this.$store.dispatch('listing/fetchPosts', {
 					baseurl: this.$baseurl,
 					title: title,
+					query: this.$route.query.t,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.posts = this.$store.getters['listing/getPosts'];
+			this.posts = this.$store.getters['listing/getPosts'].children;
+			console.log(this.posts);
 		},
 		changeRoute(title) {
 			this.$router.push('/main/' + title);
 		},
-		// changeRouteQueryParam(title) {
-
-		// },
+		async changeRouteQueryParam(title) {
+			console.log(title);
+			await this.$router.push({ path: '/main/top', query: { t: title } });
+			this.fetchPosts('top');
+		},
 	},
 };
 </script>

@@ -67,7 +67,7 @@
 					<div class="search-results">
 						<div class="people">
 							<div class="people-results">
-								<div v-if="!notfounded">
+								<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 									<div v-for="value in SearchedUsers" :key="value.username">
 										<a class="user-a"
 											><div class="user-div">
@@ -75,15 +75,30 @@
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
-															<img class="image-user" />
+															<img
+																v-if="!value.avatar"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar' + value.id"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.avatar"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar' + value.id"
+															/>
 														</div>
 													</div>
 												</div>
 												<div class="people-content">
 													<div class="people-content_release">
-														<h6 class="people-name">
-															u/{{ value.username }}&nbsp;
-														</h6>
+														<div class="name" @click="gotoUser(value.username)">
+															<h6 class="people-name">
+																u/{{ value.username }}&nbsp;
+															</h6>
+														</div>
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -94,8 +109,8 @@
 												</div>
 												<div
 													class="follow"
-													v-if="notFollowed"
-													@click="toggle(value.id)"
+													v-if="value.following"
+													@click="toggle(value.dataId)"
 												>
 													<base-button
 														button-text="Follow"
@@ -104,8 +119,8 @@
 												</div>
 												<div
 													class="follow"
-													v-if="!notFollowed"
-													@click="toggle(value.id)"
+													v-if="!value.following"
+													@click="toggle(value.dataId)"
 												>
 													<base-button
 														button-text="Unfollow"
@@ -116,7 +131,7 @@
 										</a>
 									</div>
 								</div>
-								<div v-if="notfounded">
+								<div v-else>
 									<Notfound></Notfound>
 								</div>
 							</div>
@@ -144,6 +159,7 @@ export default {
 	},
 	computed: {
 		SearchedUsers() {
+			console.log(this.$store.getters['search/Getusers']);
 			return this.$store.getters['search/Getusers'];
 		},
 	},
@@ -177,11 +193,14 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
+		},
+		gotoUser(name) {
+			this.$router.push('/user/' + name);
 		},
 	},
 	components: { BaseButton, Notfound },
@@ -364,5 +383,8 @@ a {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
+}
+.name {
+	cursor: pointer;
 }
 </style>

@@ -175,6 +175,11 @@
 			:show-reply-box="showReplyBox"
 			:index="index"
 			@hide-reply-box="replyFunction('hide')"
+			@done-successfully="doneSuccessfully()"
+			:id="message.id"
+			:sender-username="message.senderUsername"
+			:receiver-username="message.receiverUsername"
+			:subject="message.subject"
 		></ReplyComponent>
 	</div>
 </template>
@@ -330,6 +335,12 @@ export default {
 		// @arg no argument
 		unreadAction() {
 			this.isRead = false;
+		},
+		// @vuese
+		// handle load messages instead of refreshing
+		// @arg no argument
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
 		},
 		// @vuese
 		//handle spam action

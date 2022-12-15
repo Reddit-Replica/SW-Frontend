@@ -112,4 +112,8 @@ export default {
 	listOfBanned(state) {
 		return state.listOfBanned;
 	},
+	//////////////////UnModerated///////////////////////
+	Unmoderated(state) {
+		return state.Unmoderated;
+	},
 };
