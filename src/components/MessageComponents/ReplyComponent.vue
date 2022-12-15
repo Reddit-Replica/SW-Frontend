@@ -310,7 +310,7 @@ export default {
 				if (this.$store.getters['messages/addSuccessfully']) {
 					this.text = '';
 					this.delivered = true;
-					this.$emit('doneSuccessfully');
+					// this.$emit('doneSuccessfully');
 				} else {
 					this.errorResponse = 'some thing wrong';
 				}
