@@ -114,6 +114,7 @@ export default {
 			flairId: null,
 			subreddit: null,
 			buttonDisabled: true,
+			insubreddit: null,
 		};
 	},
 	watch: {
@@ -152,31 +153,34 @@ export default {
 		},
 
 		async getPostsettings() {
-			const actionPayload = {
-				communityName: this.subreddit,
-				baseurl: this.$baseurl,
-			};
-			console.log(actionPayload);
-			try {
-				const response = await this.$store.dispatch(
-					'setting/fetcpostandcommentsSettings',
-					actionPayload
-				);
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+			this.insubreddit = await this.$store.getters['posts/getinSubreddit'];
+			if (this.insubreddit) {
+				const actionPayload = {
+					communityName: this.subreddit,
+					baseurl: this.$baseurl,
+				};
+				console.log(actionPayload);
+				try {
+					const response = await this.$store.dispatch(
+						'setting/fetcpostandcommentsSettings',
+						actionPayload
+					);
+					if (response == 200) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(err);
 				}
-			} catch (err) {
-				this.error = err;
-				console.log(err);
-			}
-			this.setting = await this.$store.getters[
-				'setting/getpostandcommentsSettings'
-			];
-			console.log('getting settings');
-			console.log(this.setting);
-			if (this.setting.enableSpoiler) this.buttonDisabled = false;
-			else this.buttonDisabled = true;
+				this.setting = await this.$store.getters[
+					'setting/getpostandcommentsSettings'
+				];
+				console.log('getting settings');
+				console.log(this.setting);
+				if (this.setting.enableSpoiler) this.buttonDisabled = false;
+				else this.buttonDisabled = true;
+			} else this.buttonDisabled = true;
 		},
 	},
 };

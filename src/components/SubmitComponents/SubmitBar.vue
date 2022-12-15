@@ -271,10 +271,14 @@ export default {
 			this.inSubreddit = false;
 			this.subredditTitle = name;
 			this.communityName = name;
+			this.subreddit = '';
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
 			this.path = false;
+			this.$store.commit('posts/setSubreddit', {
+				subreddit: this.subreddit,
+			});
 			this.$store.commit('posts/setinSubreddit', {
 				inSubreddit: this.inSubreddit,
 			});
