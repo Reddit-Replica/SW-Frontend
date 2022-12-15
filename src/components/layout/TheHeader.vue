@@ -659,7 +659,7 @@ export default {
 		//return user data
 		// @type object
 		getUserData() {
-			console.log(this.$store.getters['user/getUserData']);
+			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 		// @vuese
@@ -743,7 +743,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log('function');
+			// console.log('function');
 		},
 		// @vuese
 		// Used to go to Search page

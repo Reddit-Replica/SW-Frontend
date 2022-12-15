@@ -263,8 +263,9 @@ export default {
 	 * @returns {void}
 	 */
 	async getSubreddit(context, payload) {
+		context.commit('notFound', false);
 		const baseurl = payload.baseurl;
-		console.log(payload);
+		// console.log(payload);
 		const response = await fetch(baseurl + `/r/${payload.subredditName}`, {
 			method: 'GET',
 			headers: {
@@ -274,21 +275,24 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log('fetch data');
-		console.log(responseData);
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
+		// console.log('fetch data');
+		// console.log(responseData);
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
 
+		// console.log(response.status);
 		if (response.status == 200) {
 			context.commit('setSubreddit', responseData);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		} else if (response.status == 404) {
+			// console.log('notttttttt');
+			context.commit('notFound', true);
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		} else if (response.status == 500) {
