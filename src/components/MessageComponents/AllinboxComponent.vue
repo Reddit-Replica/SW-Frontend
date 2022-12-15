@@ -8,7 +8,14 @@
 	>
 		<li>
 			<p class="subject-text">
-				<span>{{ message.subject }}:</span>
+				<a
+					:href="
+						'/r/' + message.subredditName + '/about/accept-moderator-invite'
+					"
+					v-if="isInvitation"
+					>link: {{ message.subject }}:</a
+				>
+				<span v-else>{{ message.subject }}:</span>
 			</p>
 			<div :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
@@ -254,6 +261,17 @@ export default {
 		// @type object
 		sendByMe() {
 			return this.message.senderUsername == localStorage.getItem('userName');
+		},
+
+		// @vuese
+		//if it's invitaion or not
+		// @arg no argument
+		isInvitation() {
+			if (this.message.subject.includes('invitation to moderate')) {
+				return true;
+			} else {
+				return false;
+			}
 		},
 	},
 	methods: {
