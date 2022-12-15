@@ -1,25 +1,52 @@
 <template>
-	<div
-		v-for="savedPostData in getUserSavedData.savedData.children"
-		:key="savedPostData.id"
-	>
-		<comments-overview-page
-			v-if="savedPostData.type == 'summaryPost'"
+	<div style="position: relative">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 53%; top: 188px"
+			></the-spinner>
+		</div>
+		<empty-page
+			:page-title="`hmm... looks like you haven't saved anything yet`"
+			v-else-if="
+				!getUserSavedData.savedData ||
+				!getUserSavedData.savedData.children ||
+				getUserSavedData.savedData.children.length == 0
+			"
+		></empty-page>
+		<div
+			v-else
+			v-for="(savedPostData, index) in getUserSavedData.savedData.children"
 			:key="savedPostData.id"
-			:comment-data="savedPostData"
-			:id="savedPostData.id"
-			:state="state"
 		>
-		</comments-overview-page>
+			<comments-overview-page
+				v-if="savedPostData.type == 'summaryPost'"
+				:key="savedPostData.id"
+				:comment-data="savedPostData"
+				:id="savedPostData.id"
+				:state="state"
+			>
+			</comments-overview-page>
+			<base-user-post
+				v-else
+				:key="index"
+				:post-data="{ data: savedPostData.data.post, id: savedPostData.id }"
+				:state="state"
+			></base-user-post>
+		</div>
 	</div>
 </template>
 
 <script>
 import CommentsOverviewPage from '../../../components/UserComponents/BaseUserComponents/CommentsComponents/CommentsOverviewPage.vue';
+import BaseUserPost from '../../../components/UserComponents/BaseUserComponents/BaseUserPost.vue';
+// import EmptyPage from '../../../components/UserComponents/BaseUserComponents/PostComponents/EmptyPage.vue';
+
 // import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
 		CommentsOverviewPage,
+		BaseUserPost,
+		// EmptyPage,
 		// BasePost,
 	},
 	props: {
@@ -49,9 +76,10 @@ export default {
 			reqStatus = await this.RequestUserSavedData(sortType);
 		} catch (error) {
 			console.log(error);
+			this.loading = false;
 		}
-		this.requestStatusHandler(reqStatus, `user ${sortType} ovverview data`);
 		this.loading = false;
+		this.requestStatusHandler(reqStatus, `user ${sortType} ovverview data`);
 
 		// let sortType;
 		// if (!this.$route.query.sort || this.$route.query.sort == 'new') {

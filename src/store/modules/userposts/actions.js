@@ -353,6 +353,32 @@ export default {
 		// 	});
 		return response.status;
 	},
+	async unSavePostOrComment(context, payload) {
+		const savePostOrCommentData = payload.savePostOrCommentData; // id ,type
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/unsave', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(savePostOrCommentData),
+		});
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(response.status);
+		console.log(responseData);
+		// if (response.status == 200)
+		// 	context.commit('rPostOrComment', {
+		// 		removePostOrCommentData,
+		// 	});
+		return response.status;
+	},
 
 	async lockUnLockPostOrComment(context, payload) {
 		const lockUnlockData = payload.lockUnlockData; // id ,type
