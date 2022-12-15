@@ -35,7 +35,9 @@ export default {
 		NotificationMessage,
 	},
 	beforeMount() {
-		this.loadAllNotifications();
+		if (localStorage.getItem('accessToken') == null)
+			this.$router.push('/login');
+		else this.loadAllNotifications();
 	},
 	data() {
 		return {
