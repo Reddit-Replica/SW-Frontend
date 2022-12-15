@@ -56,6 +56,9 @@ export default {
 	cancelSuccessfully(state, payload) {
 		state.cancelSuccessfully = payload;
 	},
+	acceptSuccessfully(state, payload) {
+		state.acceptSuccessfully = payload;
+	},
 
 	//////////////SPAM/////////////////
 	setListOfSpams(state, payload) {

@@ -55,7 +55,9 @@ export default {
 	inviteModSuccessfully(state) {
 		return state.inviteModSuccessfully;
 	},
-
+	acceptSuccessfully(state) {
+		return state.acceptSuccessfully;
+	},
 	//////////////////////SPAM////////////////////////
 
 	listOfSpams(state) {

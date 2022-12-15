@@ -566,6 +566,43 @@ export default {
 		}
 	},
 
+	async acceptInvitation(context, payload) {
+		context.commit('acceptSuccessfully', false);
+		const accept = {
+			username: payload.username,
+			subreddit: payload.subreddit,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		const response = await fetch(baseurl + `/accept-moderator-invite`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(accept),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('acceptSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
 	//////////////////////SPAM////////////////////////
 
 	async loadListOfSpams(context, payload) {
