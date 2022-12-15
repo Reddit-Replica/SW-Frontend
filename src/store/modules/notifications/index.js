@@ -9,6 +9,8 @@ export default {
 			notifications: [],
 			allRead: false,
 			hiddenSuccessfully: false,
+
+			clientToken: null,
 		};
 	},
 	mutations,
