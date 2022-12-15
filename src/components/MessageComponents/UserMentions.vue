@@ -61,7 +61,8 @@
 						><time :class="!isRead ? 'unread' : ''"> {{ handleTime }}</time>
 					</p>
 					<!-- <p class="md">{{ message.text }}</p> -->
-					<Markdown class="md" :source="message.text" />
+					<!-- <Markdown class="md" :source="message.text[0]" /> -->
+					<div class="md" v-html="data"></div>
 					<ul class="flat-list ul-messages">
 						<li :id="'context-link-' + index">
 							<a href="#" :id="'context-a-' + index">context</a>
@@ -271,11 +272,11 @@
 </template>
 
 <script>
-import Markdown from 'vue3-markdown-it';
+// import Markdown from 'vue3-markdown-it';
 import ReplyComponent from './ReplyComponent.vue';
 export default {
 	components: {
-		Markdown,
+		// Markdown,
 		ReplyComponent,
 	},
 	props: {
@@ -290,16 +291,11 @@ export default {
 				senderUsername: '',
 				receiverUsername: '',
 				sendAt: '',
-				subject: '',
-				type: '',
 				subredditName: '',
-				isModerator: '',
 				postTitle: '',
-				postID: '',
-				commentID: '',
+				postId: '',
+				commentId: '',
 				numOfComments: '',
-				isSenderUser: '',
-				isReceiverUser: '',
 			}),
 		},
 		// @vuese
@@ -323,6 +319,7 @@ export default {
 			isRead: true,
 			upClicked: false,
 			downClicked: false,
+			data: '',
 		};
 	},
 
@@ -333,6 +330,7 @@ export default {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
 		this.calculateTime();
+		this.renderContent();
 	},
 	computed: {},
 	methods: {
@@ -400,11 +398,13 @@ export default {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
 				try {
-					await this.$store.dispatch('messages/spamMessage', {
-						id: this.message.id,
+					await this.$store.dispatch('messages/spamComment', {
+						id: this.message.commentId,
+						type: 'comment',
+						reason: '',
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/markSpamSuccessfully']) {
+					if (this.$store.getters['messages/spamCommentSuccessfully']) {
 						this.spammed = true;
 						this.$emit('doneSuccessfully');
 					}
@@ -473,6 +473,20 @@ export default {
 			} else if (title == 'hide') {
 				this.showReplyBox = false;
 			}
+		},
+		// @vuese
+		//handle rendering html code
+		// @arg no argument
+		renderContent() {
+			var QuillDeltaToHtmlConverter =
+				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+			var deltaOps = this.message.text.ops;
+
+			var cfg = {};
+
+			var converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+
+			this.data = converter.convert();
 		},
 	},
 };
