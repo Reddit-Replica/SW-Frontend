@@ -55,7 +55,7 @@
 						<span class="dot">•</span>
 						<span class="posted-by">Posted by</span>
 						<div class="poster">
-							<a :href="'/user/' + spam.data.postedBy" :id="'user-' + index">{{
+							<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
 								spam.data.postedBy
 							}}</a>
 						</div>
@@ -154,7 +154,7 @@ export default {
 
 			var currentDate = new Date();
 			var returnValue = '';
-			var myTime = new Date(this.spam.data.publishTime);
+			var myTime = new Date(this.spam.postedAt);
 			if (currentDate.getFullYear() != myTime.getFullYear()) {
 				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
 			} else if (currentDate.getMonth() != myTime.getMonth()) {
