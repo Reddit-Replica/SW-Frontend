@@ -71,9 +71,9 @@ export default {
 					postedBy: responseData.children[i].data.postedBy,
 					votes: responseData.children[i].data.votes,
 					//image
-					ImagePath: responseData.children[i].data.images.path,
-					ImageCaption: responseData.children[i].data.images.caption,
-					Imagelink: responseData.children[i].data.images.link,
+					ImagePath: responseData.children[i].data.images[0].path,
+					ImageCaption: responseData.children[i].data.images[0].caption,
+					Imagelink: responseData.children[i].data.images[0].link,
 					//flair
 					flairId: responseData.children[i].data.flair.id,
 					flairName: responseData.children[i].data.flair.caption,
@@ -256,9 +256,10 @@ export default {
 					postKind: responseData.children[i].data.post.kind,
 					postSubreddit: responseData.children[i].data.post.subreddit,
 					postlink: responseData.children[i].data.post.link,
-					postImagepath: responseData.children[i].data.post.images.path,
-					postImageCaption: responseData.children[i].data.post.images.caption,
-					postImagelink: responseData.children[i].data.post.images.link,
+					postImagepath: responseData.children[i].data.post.images[0].path,
+					postImageCaption:
+						responseData.children[i].data.post.images[0].caption,
+					postImagelink: responseData.children[i].data.post.images[0].link,
 					postVideo: responseData.children[i].data.post.video,
 					postContnet: responseData.children[i].data.post.content,
 					postnfsw: responseData.children[i].data.post.nsfw,

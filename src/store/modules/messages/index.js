@@ -37,6 +37,7 @@ export default {
 			blockSuccessfully: false,
 			votedSuccessfully: false,
 			replyMessageSuccessfully: false,
+			addSuccessfully: false,
 			after: '',
 			before: '',
 		};

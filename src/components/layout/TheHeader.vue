@@ -578,10 +578,6 @@ export default {
 			return this.$store.getters['user/getUserData'];
 		},
 	},
-	// mounted() {
-	// 	this.searchQuery = this.srchq;
-	// 	console.log(this.srchq());
-	// },
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
@@ -620,71 +616,19 @@ export default {
 			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
 			this.$router.push(`/user/${this.userName}`);
 		},
+		// @vuese
+		// Used to go to Search page
+		// @arg no argument
 		async searchUser() {
 			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchUser', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					console.log('h1');
-					await this.$store.dispatch('search/SearchPost', {
-						baseurl: this.$baseurl,
-						q: quer,
-						sort: 'new',
-						time: 'all',
-					});
-					console.log('h2');
-					await this.$store.dispatch('search/SearchSubreddit', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					console.log('h3');
-					this.$router.replace({
-						name: 'searchpost',
-						query: { q: this.searchQuery },
-					});
-					// setTimeout(window.location.reload(), 500);
-				} catch (err) {
-					console.log(err);
-				}
+				this.$router.push({
+					name: 'searchpost',
+					query: { q: this.searchQuery },
+				});
 			} else {
 				alert('Did not enter a word to Search');
 			}
 		},
-		// @vuese
-		// Used to go to Request to Search for Subreddits
-		// @arg no argument
-		async searchSub() {
-			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchSubreddit', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					this.$router.push({
-						name: 'searchpost',
-						query: { q: quer },
-					});
-				} catch (err) {
-					console.log(err);
-				}
-			}
-		},
-
-		// gotosearch() {
-		// 	// console.log('waiting');
-		// 	setTimeout(
-		// 		() =>
-		// 			this.$router.push({
-		// 				name: 'searchpost',
-		// 				query: { q: this.searchQuery },
-		// 			}),
-		// 		1000
-		// 	);
-		// },
 		// @vuese
 		// Used handle logout action
 		// @arg no argument

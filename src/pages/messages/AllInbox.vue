@@ -7,22 +7,24 @@
 			v-for="(message, index) in inboxMessages"
 			:key="message"
 			:message="message"
-			@done-successfully="doneSuccessfully()"
 		>
 			<allinbox-component
 				v-if="message.type == 'Messages'"
 				:message="message"
 				:index="index"
+				@done-successfully="doneSuccessfully()"
 			></allinbox-component>
 			<PostreplyComponent
 				v-if="message.type == 'Post replies'"
 				:message="message"
 				:index="index"
+				@done-successfully="doneSuccessfully()"
 			></PostreplyComponent>
 			<user-mentions
 				v-if="message.type == 'Mentions'"
 				:message="message"
 				:index="index"
+				@done-successfully="doneSuccessfully()"
 			></user-mentions>
 		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
@@ -83,7 +85,7 @@ export default {
 			}
 		},
 		// @vuese
-		//reload compose messages from the store
+		//reload inbox messages from the store
 		// @arg no argument
 		doneSuccessfully() {
 			this.loadInboxMessages();
