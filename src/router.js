@@ -284,9 +284,10 @@ const router = createRouter({
 			children: [
 				{
 					path: '/subreddits/leaderboard/:category',
+					name: 'leaderboard',
 					component: TopCommunitiesPage,
 				},
-				{ path: '', component: TopCommunitiesPage },
+				//{ path: '', component: TopCommunitiesPage },
 			],
 		},
 
