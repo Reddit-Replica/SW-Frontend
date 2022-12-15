@@ -1,12 +1,8 @@
 <template>
-	<div class="page-content">
+	<div class="page-contentt">
 		<h3 class="heading-3">
 			Moderators of r/{{ subredditName }}
-			<a
-				href="https://mods.reddithelp.com/hc/en-us/articles/360009381491"
-				id="info-link"
-				__blank="targe"
-			>
+			<a href="#" id="info-link" __blank="targe">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -165,9 +161,10 @@ export default {
 </script>
 
 <style scoped>
-.page-content {
+.page-contentt {
 	width: 95%;
 	margin: auto;
+	display: block !important;
 }
 .icon-info {
 	width: 2rem;
@@ -211,6 +208,11 @@ export default {
 @media only screen and (max-width: 40em) {
 	.content {
 		width: 100%;
+	}
+}
+@media only screen and (max-width: 25em) {
+	.heading-3 {
+		font-size: 1.4rem;
 	}
 }
 </style>

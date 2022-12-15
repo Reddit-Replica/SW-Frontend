@@ -1,37 +1,64 @@
 <template>
 	<div class="communities-nav">
 		<h4 class="communities-word">Communities</h4>
-		<div v-if="commcontents.length >= 4">
-			<div v-for="value in commcontents" :key="value.id">
-				<div>
-					<a class="communities-status"
-						><div class="communities-status-release">
-							<img style="background-color: #0266b3" class="communities-img" />
-							<div class="communities-content">
-								<div class="communities-content-release">
-									<h6 class="communities-name">r/{{ value.community }}</h6>
-									<p class="community-members">{{ value.members }} Members</p>
+		<div>
+			<div v-if="!(SearchedCms && SearchedCms.length == 0)">
+				<div v-for="value in SearchedCms" :key="value.id">
+					<div>
+						<a class="communities-status"
+							><div class="communities-status-release">
+								<img
+									v-if="!value.picture"
+									src="../../../img/default_inbox_avatar.png"
+									alt="img"
+									class="communities-img"
+									:id="'user-avatar-' + value.subredditName"
+								/>
+								<img
+									v-else
+									:src="$baseurl + '/' + value.picture"
+									alt="img"
+									class="communities-img"
+									:id="'user-avatar-' + value.subredditName"
+								/>
+								<div class="communities-content">
+									<a
+										class="communities-content-release"
+										:href="'/r/' + value.subredditName"
+									>
+										<h6 class="communities-name">
+											r/{{ value.subredditName }}
+										</h6>
+										<p class="community-members">
+											{{ value.numberOfMembers }} Members
+										</p>
+									</a>
 								</div>
-							</div>
-							<div class="join" v-if="value.notjoined">
-								<base-button
-									button-text="Join"
-									class="join-button"
-									@click="clickedFunction(false)"
-								></base-button>
-							</div>
-							<div class="join" v-if="!value.notjoined">
-								<base-button
-									button-text="Leave"
-									class="join-button"
-									@click="clickedFunction(true)"
-								></base-button>
-							</div></div
-					></a>
+								<div class="join" v-if="value.joined">
+									<base-button
+										button-text="Join"
+										class="join-button"
+										@click="clickedFunction(false)"
+									></base-button>
+								</div>
+								<div class="join" v-if="!value.joined">
+									<base-button
+										button-text="Leave"
+										class="join-button"
+										@click="clickedFunction(true)"
+									></base-button>
+								</div></div
+						></a>
+					</div>
 				</div>
 			</div>
+			<div v-else>
+				<div class="no-res">No Results</div>
+			</div>
 		</div>
-		<a><p class="communities-go" @click="doFunc">See more communities</p></a>
+		<a v-if="!(SearchedCms && SearchedCms.length == 0)"
+			><p class="communities-go" @click="doFunc">See more communities</p></a
+		>
 	</div>
 </template>
 
@@ -43,10 +70,12 @@ export default {
 			type: Object,
 			required: true,
 		},
-		// index: {
-		// 	type: Number,
-		// 	required: true,
-		// },
+	},
+	computed: {
+		SearchedCms() {
+			console.log(this.$store.getters['search/Getsubreddits']);
+			return this.$store.getters['search/Getsubreddits'];
+		},
 	},
 	data() {
 		return {
@@ -187,5 +216,10 @@ p {
 	line-height: 18px;
 	color: rgb(98, 98, 252);
 	padding: 16px;
+}
+.no-res {
+	color: #1c1c1c;
+	padding: 16px;
+	font-size: 16px;
 }
 </style>

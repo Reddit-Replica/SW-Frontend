@@ -566,6 +566,43 @@ export default {
 		}
 	},
 
+	async acceptInvitation(context, payload) {
+		context.commit('acceptSuccessfully', false);
+		const accept = {
+			username: payload.username,
+			subreddit: payload.subreddit,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		const response = await fetch(baseurl + `/accept-moderator-invite`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(accept),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('acceptSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
 	//////////////////////SPAM////////////////////////
 
 	async loadListOfSpams(context, payload) {
@@ -1264,6 +1301,193 @@ export default {
 				banned.push(ban);
 			}
 			context.commit('setListOfBanned', banned);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+	async unModerated(context, payload) {
+		const baseurl = payload.baseurl;
+		const sub = payload.subredditName;
+		const sort = payload.sort;
+		const response = await fetch(
+			baseurl + `/r/` + sub + '/about/unmoderated?sort=' + sort,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		const unModerated = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const post = {
+					id: responseData.children[i].id,
+					postId: responseData.children[i].data.id,
+					subreddit: responseData.children[i].data.subreddit,
+					postBy: responseData.children[i].data.postBy,
+					title: responseData.children[i].data.title,
+					link: responseData.children[i].data.link,
+					video: responseData.children[i].data.video,
+					content: responseData.children[i].data.content,
+					nsfw: responseData.children[i].data.nsfw,
+					spoiler: responseData.children[i].data.spoiler,
+					votes: responseData.children[i].data.votes,
+					numberOfComments: responseData.children[i].data.numberOfComments,
+					editedAt: responseData.children[i].data.editedAt,
+					postedAt: responseData.children[i].data.postedAt,
+					spammedAt: responseData.children[i].data.spammedAt,
+					saved: responseData.children[i].data.saved,
+					vote: responseData.children[i].data.vote,
+					ImagePath: responseData.children[i].data.images[0].path,
+					Imagecaption: responseData.children[i].data.images[0].caption,
+					Imagelink: responseData.children[i].data.images[0].link,
+				};
+				unModerated.push(post);
+			}
+			context.commit('setUnmoderated', unModerated);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+	async EditedPosts(context, payload) {
+		const baseurl = payload.baseurl;
+		const sub = payload.subredditName;
+		const response = await fetch(
+			baseurl + `/r/` + sub + '/about/edited?only=posts',
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		const EditedPosts = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const post = {
+					id: responseData.children[i].id,
+					postId: responseData.children[i].data.id,
+					subreddit: responseData.children[i].data.subreddit,
+					postBy: responseData.children[i].data.postBy,
+					title: responseData.children[i].data.title,
+					link: responseData.children[i].data.link,
+					video: responseData.children[i].data.video,
+					content: responseData.children[i].data.content,
+					nsfw: responseData.children[i].data.nsfw,
+					spoiler: responseData.children[i].data.spoiler,
+					votes: responseData.children[i].data.votes,
+					numberOfComments: responseData.children[i].data.numberOfComments,
+					editedAt: responseData.children[i].data.editedAt,
+					postedAt: responseData.children[i].data.postedAt,
+					spammedAt: responseData.children[i].data.spammedAt,
+					saved: responseData.children[i].data.saved,
+					vote: responseData.children[i].data.vote,
+					ImagePath: responseData.children[i].data.images[0].path,
+					Imagecaption: responseData.children[i].data.images[0].caption,
+					Imagelink: responseData.children[i].data.images[0].link,
+				};
+				EditedPosts.push(post);
+			}
+			context.commit('setEditedPosts', EditedPosts);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+	async EditedComments(context, payload) {
+		const baseurl = payload.baseurl;
+		const sub = payload.subredditName;
+		const response = await fetch(
+			baseurl + `/r/` + sub + '/about/edited?only=comments',
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		const EditedComments = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const Comment = {
+					postTitle: responseData.children[i].postTitle,
+					postId: responseData.children[i].postId,
+					subreddit: responseData.children[i].comment.subreddit,
+					postBy: responseData.children[i].comment.commentedBy,
+					postedAt: responseData.children[i].comment.commentedAt,
+					editedAt: responseData.children[i].comment.editedAt,
+					spammedAt: responseData.children[i].comment.spammedAt,
+					votes: responseData.children[i].comment.votes,
+					saved: responseData.children[i].comment.saved,
+					vote: responseData.children[i].comment.vote,
+					commentId: responseData.children[i].comment.id,
+				};
+				EditedComments.push(Comment);
+			}
+			context.commit('setEditedComments', EditedComments);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
 		} else if (response.status == 401) {

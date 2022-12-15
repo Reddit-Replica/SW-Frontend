@@ -10,7 +10,7 @@
 				"
 			>
 				<div class="hole-post-2">
-					<div v-if="not_Found">
+					<div v-if="!(posts && posts.length == 0)">
 						<div class="post-release" v-for="value in posts" :key="value.id">
 							<div class="post-name-bar">
 								<div class="community-name">

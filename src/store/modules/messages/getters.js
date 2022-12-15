@@ -48,6 +48,9 @@ export default {
 	markSpamSuccessfully(state) {
 		return state.markSpamSuccessfully;
 	},
+	spamCommentSuccessfully(state) {
+		return state.spamCommentSuccessfully;
+	},
 	blockSuccessfully(state) {
 		return state.blockSuccessfully;
 	},
@@ -56,6 +59,9 @@ export default {
 	},
 	replyMessageSuccessfully(state) {
 		return state.replyMessageSuccessfully;
+	},
+	addSuccessfully(state) {
+		return state.addSuccessfully;
 	},
 	before(state) {
 		return state.before;

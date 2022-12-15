@@ -277,4 +277,9 @@ header.pinned-posts h2 {
 a.post-link-href:hover {
 	color: unset;
 }
+@media (max-width: 960px) {
+	.pinned-post-container {
+		justify-content: flex-start;
+	}
+}
 </style>

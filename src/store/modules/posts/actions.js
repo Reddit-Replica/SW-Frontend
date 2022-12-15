@@ -40,7 +40,7 @@ export default {
 
 			nsfw: payload.nsfw,
 			spoiler: payload.spoiler,
-			// flairId: payload.flairId,
+			flairId: payload.flairId,
 			sendReplies: payload.sendReplies,
 		};
 		//const token = localStorage.getItem('accessToken');
@@ -79,7 +79,7 @@ export default {
 
 			nsfw: payload.nsfw,
 			spoiler: payload.spoiler,
-			// flairId: payload.flairId,
+			flairId: payload.flairId,
 			sendReplies: payload.sendReplies,
 		};
 		//const token = localStorage.getItem('accessToken');
@@ -125,7 +125,8 @@ export default {
 		// postInfo.append('imageLinks', arr2[0]);
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
-		postInfo.append('sendReplies', payload.sendReplies);
+		postInfo.append('flairId', payload.spoiler);
+		postInfo.append('sendReplies', payload.flairId);
 		console.log(payload.images);
 		console.log(payload.imageCaptions);
 		console.log(payload.imageLinks);
@@ -167,6 +168,7 @@ export default {
 		postInfo.append('video', payload.video);
 		postInfo.append('nsfw', payload.nsfw);
 		postInfo.append('spoiler', payload.spoiler);
+		postInfo.append('sendReplies', payload.flairId);
 		postInfo.append('sendReplies', payload.sendReplies);
 		const baseurl = payload.baseurl;
 		console.log(videos[0]);

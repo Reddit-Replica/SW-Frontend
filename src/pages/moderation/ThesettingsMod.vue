@@ -537,6 +537,9 @@ import BaseButton from '@/components/BaseComponents/BaseButton.vue';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
+	created() {
+		this.getSettings();
+	},
 	computed: {
 		subredditName() {
 			// return this.$store.state.subredditName;
@@ -653,6 +656,7 @@ export default {
 			typeChosen2: false,
 			communityType: 'Public',
 			buttonDisabled: false,
+			setting: {},
 		};
 	},
 	methods: {
@@ -706,6 +710,7 @@ export default {
 			console.log(this.acceptingRequestsToPost);
 		},
 		async saveChanges() {
+			if (this.communityName == '') this.communityName = this.subredditName;
 			const actionPayload = {
 				communityName: this.communityName,
 				mainTopic: this.mainTopic,
@@ -736,6 +741,42 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
+		},
+		async getSettings() {
+			if (this.communityName == '') this.communityName = this.subredditName;
+			const actionPayload = {
+				communityName: this.communityName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchmoderationSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = this.$store.getters['setting/getmoderationSettings'];
+			this.communityName = this.setting.communityName;
+			this.mainTopic = this.setting.mainTopic;
+			this.subTopics = this.setting.subTopics;
+			this.communityDescription = this.setting.communityDescription;
+			this.sendWelcomeMessage = this.setting.sendWelcomeMessage;
+			this.welcomeMessage = this.setting.welcomeMessage;
+			this.language = this.setting.language;
+			this.Region = this.setting.region;
+			this.nsfw = this.setting.NSFW;
+			this.communityType = this.setting.type;
+			this.acceptingRequestsToJoin = this.setting.acceptingRequestsToJoin;
+			this.acceptingRequestsToPost = this.setting.acceptingRequestsToPost;
+			this.approvedUsersHaveTheAbilityTo =
+				this.setting.approvedUsersHaveTheAbilityTo;
 		},
 	},
 };
@@ -997,5 +1038,10 @@ ol {
 	color: white;
 	padding: 10px;
 	font-size: medium;
+}
+@media only screen and (max-width: 768px) {
+	.box {
+		padding: 86px 24px;
+	}
 }
 </style>

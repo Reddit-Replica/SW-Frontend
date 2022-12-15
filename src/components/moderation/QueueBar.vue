@@ -43,13 +43,18 @@
 						/>
 					</svg>
 					<subMenu
-						:titles="['Newest First', 'Older First', 'Most Reported First']"
+						:titles="['Newest First', 'Older First']"
 						:display="showFirstMenu"
 						@change-title="changeFirstTitle"
 						clicked-prop="Everyone"
 					/>
 				</div>
-				<div class="choice" @click="showSecondMenuFunction" id="type">
+				<div
+					class="choice"
+					@click="showSecondMenuFunction"
+					id="type"
+					v-if="!(title == 'Unmoderated')"
+				>
 					<span class="title" :id="'title-' + titleSecond">{{
 						titleSecond
 					}}</span>
@@ -123,6 +128,12 @@
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: { SubMenu },
+	computed: {
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+	},
 	props: {
 		// @vuese
 		// title for bar
@@ -141,6 +152,15 @@ export default {
 			titleFirst: 'Newest First',
 			titleSecond: 'Posts',
 		};
+	},
+	watch: {
+		titleFirst(value) {
+			if (value == 'Older First' && this.title == 'Unmoderated') {
+				this.unmod('old');
+			} else if (value == 'Newest First' && this.title == 'Unmoderated') {
+				this.unmod('new');
+			}
+		},
 	},
 	methods: {
 		// @vuese
@@ -178,6 +198,18 @@ export default {
 		// @arg The argument is a string value representing choosen title in second sub menu
 		changeSecondTitle(title) {
 			this.titleSecond = title;
+		},
+		async unmod(value) {
+			try {
+				await this.$store.dispatch('moderation/unModerated', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					sort: value,
+				});
+				window.location.reload();
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 	},
 };
@@ -227,5 +259,10 @@ export default {
 	display: -ms-flexbox;
 	display: flex;
 	padding: 0 2px 0 6px;
+}
+@media only screen and (max-width: 768px) {
+	.content {
+		padding-top: 2.4rem;
+	}
 }
 </style>

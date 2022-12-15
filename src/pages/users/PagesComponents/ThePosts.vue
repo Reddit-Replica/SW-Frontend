@@ -19,6 +19,7 @@
 				v-for="(postData, index) in getUserPostData.postData.children"
 				:key="index"
 				:post-data="postData"
+				:state="state"
 			></base-user-post>
 		</div>
 	</div>
@@ -33,6 +34,12 @@ export default {
 		BaseUserPost,
 		SortpostsBar,
 		EmptyPage,
+	},
+	props: {
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	data() {
 		return {
