@@ -340,6 +340,7 @@ export default {
 				postId: '',
 				commentId: '',
 				numOfComments: '',
+				vote: '',
 			}),
 		},
 		// @vuese
@@ -361,8 +362,8 @@ export default {
 			showReplyBox: false,
 			handleTime: '',
 			isRead: true,
-			upClicked: this.message.votingType == 1 ? true : false,
-			downClicked: this.message.votingType == -1 ? true : false,
+			upClicked: this.message.vote == 1 ? true : false,
+			downClicked: this.message.vote == -1 ? true : false,
 			// counter: this.message.votes,
 			data: '',
 		};
