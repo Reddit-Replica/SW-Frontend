@@ -73,19 +73,39 @@
 									<div v-for="value in SearchedCms" :key="value.id">
 										<a class="user-a"
 											><div class="user-div">
-												<div class="user-details">
+												<div
+													class="user-details"
+													@click="gotosub(value.subredditName)"
+												>
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
-															<img class="image-user" />
+															<img
+																v-if="!value.picture"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar-' + value.subredditName"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.picture"
+																alt="img"
+																class="image-user"
+																:id="'user-avatar-' + value.subredditName"
+															/>
 														</div>
 													</div>
 												</div>
-												<div class="people-content">
+												<a
+													class="people-content pointer"
+													@click="gotosub(value.subredditName)"
+												>
 													<div class="people-content_release">
 														<h6 class="people-name">
 															r/{{ value.subredditName }}&nbsp;
 														</h6>
+
 														<p class="karma-number">
 															<span class="point-span" role="presentation"
 																>&nbsp;•&nbsp;</span
@@ -93,10 +113,10 @@
 														</p>
 													</div>
 													<p class="p-details">{{ value.description }}&nbsp;</p>
-												</div>
+												</a>
 												<div
 													class="follow"
-													v-if="value.notjoined"
+													v-if="value.joined"
 													@click="toggle(value.id)"
 												>
 													<base-button
@@ -106,7 +126,7 @@
 												</div>
 												<div
 													class="follow"
-													v-if="!value.notjoined"
+													v-if="!value.joined"
 													@click="toggle(value.id)"
 												>
 													<base-button
@@ -154,7 +174,20 @@ export default {
 	// 		console.log(this.SearchedCms());
 	// 	}
 	// },
+	beforeMount() {
+		this.search();
+	},
 	methods: {
+		async search() {
+			try {
+				await this.$store.dispatch('search/SearchSubreddit', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		toggle(id) {
 			for (let i = 0; i < this.SearchedCms.length; i++) {
 				if (this.SearchedCms[i].id == id) {
@@ -174,11 +207,14 @@ export default {
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'coms') {
-				// this.$router.replace({
-				// 	name: 'searchuser',
-				// 	query: { q: this.$route.query.q },
-				// });
+				this.$router.replace({
+					name: 'searchcoms',
+					query: { q: this.$route.query.q },
+				});
 			}
+		},
+		gotosub(subredditName) {
+			this.$router.push('/r/' + subredditName);
 		},
 	},
 	components: { BaseButton, Notfound },
@@ -194,6 +230,9 @@ export default {
 	display: flex;
 	justify-content: center;
 	margin: 0 auto;
+}
+.pointer {
+	cursor: pointer;
 }
 .page-release {
 	width: 80%;
@@ -302,6 +341,7 @@ a {
 	justify-content: space-between;
 }
 .people {
+	background-color: #fff;
 	margin-bottom: 16px;
 	width: 100%;
 }
@@ -331,6 +371,7 @@ a {
 	line-height: 16px;
 	color: rgb(58, 49, 49);
 	font-weight: 700;
+	cursor: pointer;
 }
 .karma-number {
 	font-size: 12px;

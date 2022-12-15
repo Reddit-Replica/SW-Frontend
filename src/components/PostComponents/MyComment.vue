@@ -267,19 +267,39 @@ export default {
 		},
 		//@vuese
 		//called when upvote is clicked to change the style of upvote icon and increment vote counter
-		upClick() {
+		async upClick() {
 			if (this.downClicked) this.downClick();
 			this.upClicked = !this.upClicked;
 			if (this.upClicked) this.voteCounter++;
 			else this.voteCounter--;
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.comment.commentId,
+					type: 'comment',
+					direction: 1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		//@vuese
 		//called when downvote is clicked to change the style of downvote icon and decrement vote counter
-		downClick() {
+		async downClick() {
 			if (this.upClicked) this.upClick();
 			this.downClicked = !this.downClicked;
 			if (this.downClicked) this.voteCounter--;
 			else this.voteCounter++;
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.comment.commentId,
+					type: 'comment',
+					direction: -1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		//@vuese
 		//sets comment in editting mode (stlye is changed)

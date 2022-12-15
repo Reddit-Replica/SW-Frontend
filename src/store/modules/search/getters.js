@@ -14,6 +14,9 @@ export default {
 	GetPosts(state) {
 		return state.posts;
 	},
+	GetComments(state) {
+		return state.comments;
+	},
 	GetQuery(state) {
 		return state.SearchQuery;
 	},

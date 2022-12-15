@@ -51,6 +51,10 @@ export default {
 			type: Array,
 			required: true,
 		},
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	// @vuese
 	// at mounting we loop for each moderator to add button text if joined or not
@@ -113,6 +117,10 @@ export default {
 		 * @arg no arg
 		 */
 		changeButtonState(key) {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.userModerators.forEach((element) => {
 				if (element.subredditName == key) {
 					if (element.followed) {

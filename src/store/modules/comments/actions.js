@@ -36,6 +36,7 @@ export default {
 		}
 	},
 	async comment(context, payload) {
+		console.log(payload);
 		const newComment = {
 			content: payload.text,
 			postId: payload.postId,

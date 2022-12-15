@@ -255,22 +255,18 @@
 				</li>
 			</ul>
 		</div>
-		<form class="search">
+		<form class="search" @submit.prevent="searchUser">
 			<input
 				v-model="searchQuery"
 				type="text"
 				class="header-search-input"
 				placeholder="Search Reddit"
 				id="header-search"
-				@keyup.enter="
-					searchSub();
-					searchUsers();
-				"
 			/>
 			<button
 				class="header-search-button"
+				type="submit"
 				id="header-search-button"
-				@click="searchSub()"
 			>
 				<svg class="header-search-icon" id="header-search-icon">
 					<use xlink:href="../../../img/sprite.svg#icon-magnifying-glass" />
@@ -581,14 +577,7 @@ export default {
 		getUserData() {
 			return this.$store.getters['user/getUserData'];
 		},
-		srchq() {
-			return this.$store.getters['GetQuery'];
-		},
 	},
-	// mounted() {
-	// 	this.searchQuery = this.srchq;
-	// 	console.log(this.srchq());
-	// },
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
@@ -628,53 +617,18 @@ export default {
 			this.$router.push(`/user/${this.userName}`);
 		},
 		// @vuese
-		// Used to go to Request to Search for Users
+		// Used to go to Search page
 		// @arg no argument
-		async searchUsers() {
+		async searchUser() {
 			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchUser', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-				} catch (err) {
-					console.log(err);
-				}
-			}
-		},
-		// @vuese
-		// Used to go to Request to Search for Subreddits
-		// @arg no argument
-		async searchSub() {
-			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchSubreddit', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-				} catch (err) {
-					console.log(err);
-				}
+				this.$router.push({
+					name: 'searchpost',
+					query: { q: this.searchQuery },
+				});
 			} else {
 				alert('Did not enter a word to Search');
 			}
 		},
-		// @vuese
-		// Used to go to go to Search page
-		// @arg no argument
-		// gotosearch() {
-		// 	// console.log('waiting');
-		// 	setTimeout(
-		// 		() =>
-		// 			this.$router.push({
-		// 				name: 'searchpost',
-		// 				query: { q: this.searchQuery },
-		// 			}),
-		// 		1000
-		// 	);
-		// },
 		// @vuese
 		// Used handle logout action
 		// @arg no argument

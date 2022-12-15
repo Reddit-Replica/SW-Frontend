@@ -64,7 +64,8 @@ import ContentControls from './pages/moderation/ContentControls.vue';
 import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
 import PostandCommentsettings from './pages/moderation/PostandCommentsettings.vue';
-// import TrafficStats from './pages/moderation/TrafficStats.vue';
+import TrafficStats from './pages/moderation/TrafficStats.vue';
+import AcceptInvitation from './pages/moderation/AcceptInvitation.vue';
 
 import NotFound from './pages/NotFound.vue';
 
@@ -74,6 +75,7 @@ import Search from './pages/search/SearchPage.vue';
 import PostSearch from './pages/search/SearchPage.vue';
 import UserSearch from './pages/search/SearchUsers.vue';
 import SearchCommunity from './pages/search/SearchCommunity.vue';
+import SearchComments from './pages/search/SearchComment.vue';
 import GetHelp from './pages/forget/GetHelp.vue';
 
 const router = createRouter({
@@ -89,6 +91,11 @@ const router = createRouter({
 				{
 					name: 'comments',
 					path: '/r/:subredditName/comments/:postId/:postName',
+					component: PostComments,
+				},
+				{
+					name: 'userPostComments',
+					path: '/user/:userName/comments/:postId/:postName',
 					component: PostComments,
 				},
 			],
@@ -113,6 +120,12 @@ const router = createRouter({
 			path: '/search/type=cm',
 			name: 'searchcm',
 			component: SearchCommunity,
+			props: true,
+		},
+		{
+			path: '/search/type=coms',
+			name: 'searchcoms',
+			component: SearchComments,
 			props: true,
 		},
 		{
@@ -166,6 +179,12 @@ const router = createRouter({
 				},
 			],
 		}, //render subreddit component
+
+		{
+			props: true,
+			path: '/r/:subredditName/about/accept-moderator-invite',
+			component: AcceptInvitation,
+		},
 		{
 			path: '/r/:subredditName/about/',
 			name: 'moderation',
@@ -207,7 +226,7 @@ const router = createRouter({
 					component: PostandCommentsettings,
 				},
 				// //?page=community ?page=posts ?page=notifications
-				// { path: '/r/:subredditName/about/traffic', component: TrafficStats },
+				{ path: '/r/:subredditName/about/traffic', component: TrafficStats },
 				// { path: '/hc/en-us', component: TheHistory },
 				// { path: '/reddithelp', component: TheHistory },
 				// { path: '/policies/moderator-guidelines', component: TheHistory },

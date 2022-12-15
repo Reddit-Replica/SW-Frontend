@@ -47,7 +47,7 @@
 							<div class="down-row">
 								<base-button
 									@click="handleSubmit"
-									class="post-button"
+									:class="buttonDisabled ? 'post-button' : 'success'"
 									button-text="Post"
 									:disable-button="buttonDisabled"
 								></base-button>
@@ -99,7 +99,7 @@ export default {
 	data() {
 		return {
 			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
-			buttonDisabled: false,
+			buttonDisabled: true,
 
 			//post params
 			kind: null,
@@ -109,17 +109,72 @@ export default {
 			content: null,
 			nsfw: null,
 			spoiler: null,
-			flairId: 123,
+			flairId: '',
 			images: [],
 			imageCaptions: [],
 			imageLinks: [],
 			video: null,
 			sendReplies: null,
 			choosen: null,
-			userName: '',
+			userName: null,
+			try: (this.getTitle && this.getSubreddit) || this.getUsername,
 		};
 	},
-	watch: {},
+	computed: {
+		// enable() {
+		// 	console.log(this.getTitle && (this.getSubreddit || this.getUsername));
+		// 	return this.getTitle && (this.getSubreddit || this.getUsername);
+		// },
+		Title() {
+			return this.$store.getters['posts/getTitle'];
+		},
+		community() {
+			return this.$store.getters['posts/getSubreddit'];
+		},
+		incommunity() {
+			return this.$store.getters['posts/getinSubreddit'];
+		},
+	},
+	watch: {
+		// enable(value) {
+		// 	console.log(value);
+		// 	// this.enable();
+		// 	if (value) this.buttonDisabled = false;
+		// },
+		Title(value) {
+			console.log(value);
+			// this.enable();
+			this.title = value;
+			// if(value=='')
+			//  this.title=null;
+			if (this.inSubreddit && this.inSubreddit != '') {
+				if (
+					this.title &&
+					this.title != '' &&
+					this.subreddit &&
+					this.subreddit != ''
+				)
+					this.buttonDisabled = false;
+				else this.buttonDisabled = true;
+			} else {
+				if (this.title && this.title != '') this.buttonDisabled = false;
+				else this.buttonDisabled = true;
+			}
+			// if (value) this.buttonDisabled = false;
+		},
+		community(value) {
+			this.subreddit = value;
+		},
+		incommunity(value) {
+			this.inSubreddit = value;
+		},
+
+		// try(value) {
+		// 	console.log(value);
+		// 	// this.enable();
+		// 	if (value) this.buttonDisabled = false;
+		// },
+	},
 	methods: {
 		// @vuese
 		// get the title of the post
@@ -153,7 +208,7 @@ export default {
 		// get flair id of the post
 
 		getFlairId() {
-			//this.flairId = this.$store.getters['posts/getFlairId'];
+			this.flairId = this.$store.getters['posts/getFlairId'];
 		},
 		// @vuese
 		// get send replies of the post
@@ -194,6 +249,7 @@ export default {
 		getInSubreddit() {
 			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
 		},
+
 		// @vuese
 		// dispatch createpost from the store
 
@@ -202,7 +258,7 @@ export default {
 			this.getKind();
 			this.getNsfw();
 			this.getSpoiler();
-			//this.getFlairId();
+			this.getFlairId();
 			this.getsendReplies();
 			this.getContent();
 			this.getVideo();
@@ -226,7 +282,8 @@ export default {
 			console.log(this.sendReplies);
 			console.log(this.subreddit);
 			console.log(this.inSubreddit);
-			//console.log(this.subreddit);
+			console.log('flair id');
+			console.log(this.flairId);
 
 			if (
 				this.title === null ||
@@ -251,7 +308,7 @@ export default {
 					content: this.content,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -285,7 +342,7 @@ export default {
 					video: this.video,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -319,7 +376,7 @@ export default {
 					content: this.content,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -355,7 +412,7 @@ export default {
 					imageLinks: this.imageLinks,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -512,6 +569,24 @@ nav ul li:hover {
 	align-items: center;
 	text-align: center;
 }
+.success {
+	color: #ffffff;
+	background-color: #0079d3;
+	width: 8%;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 17px;
+	text-transform: unset;
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	position: absolute;
+	left: 88%;
+	top: 20%;
+	display: flex;
+}
 .box1 {
 	margin-top: 50px;
 }
@@ -521,9 +596,19 @@ nav ul li:hover {
 		display: flex;
 		left: 70%;
 	}
+	.success {
+		width: max-content;
+		display: flex;
+		left: 70%;
+	}
 }
 @media (max-width: 221px) {
 	.post-button {
+		width: max-content;
+		display: flex;
+		left: 50%;
+	}
+	.success {
 		width: max-content;
 		display: flex;
 		left: 50%;

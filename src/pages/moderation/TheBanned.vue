@@ -346,4 +346,9 @@ export default {
 	display: flex;
 	flex-direction: column; */
 }
+@media only screen and (max-width: 768px) {
+	.text {
+		padding-top: 11.4rem;
+	}
+}
 </style>
