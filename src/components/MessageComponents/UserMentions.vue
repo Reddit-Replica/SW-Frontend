@@ -156,6 +156,13 @@
 			:show-reply-box="showReplyBox"
 			:index="index"
 			@hide-reply-box="replyFunction('hide')"
+			:is-mention="true"
+			@done-successfully="doneSuccessfully()"
+			:post-id="message.postId"
+			:parent-id="message.commentId"
+			:parent-type="'comment'"
+			:level="1"
+			:subreddit-name="message.subredditName"
 		></ReplyComponent>
 		<!-- <div class="child-reply" v-if="showReplyBox">
 			<form action="#" class="form-reply">

@@ -59,6 +59,9 @@ export default {
 	replyMessageSuccessfully(state, payload) {
 		state.replyMessageSuccessfully = payload;
 	},
+	addSuccessfully(state, payload) {
+		state.addSuccessfully = payload;
+	},
 	setBefore(state, payload) {
 		state.before = payload;
 	},
