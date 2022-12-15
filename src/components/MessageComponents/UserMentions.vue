@@ -13,6 +13,37 @@
 			</p>
 			<div class="d-flex flex-row big-box">
 				<div class="d-flex flex-column vote-box">
+					<div class="upvote" @click="upvote" id="upvote">
+						<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
+							<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
+						</svg>
+						<svg class="icon icon-shift" v-else>
+							<use xlink:href="../../../img/shift.svg#icon-shift"></use>
+						</svg>
+					</div>
+					<!-- <div
+						class="p-2 vote-count"
+						:class="
+							upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''
+						"
+					>
+						{{ counter }}
+					</div> -->
+					<div class="downvote" @click="downvote" id="downvote">
+						<svg
+							class="icon icon-arrow-down p-1"
+							:class="downClicked ? 'down-clicked' : ''"
+							v-if="downClicked"
+						>
+							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
+						</svg>
+						<svg class="icon icon-shift" v-else>
+							<use xlink:href="../../../img/shift.svg#icon-shift"></use>
+						</svg>
+					</div>
+				</div>
+
+				<!-- <div class="d-flex flex-column vote-box">
 					<div class="upvote" @click="upvote" :id="'up-vote-box-' + index">
 						<svg
 							class="icon p-1"
@@ -35,7 +66,7 @@
 							<use xlink:href="../../../img/vote.svg#icon-arrow-down"></use>
 						</svg>
 					</div>
-				</div>
+				</div> -->
 				<div :class="!isRead ? 'box-unread' : ''">
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
@@ -68,9 +99,15 @@
 							<a href="#" :id="'context-a-' + index">context</a>
 						</li>
 						<li :id="'full-comment-link-' + index">
-							<a href="" :id="'full-comment-a-' + index"
-								>Full Comments({{ message.numOfComments }})</a
+							<span
+								class="link"
+								@click="goFullComments()"
+								:id="'full-comment-a-' + index"
+								>Full Comments({{ message.numOfComments }})</span
 							>
+							<!-- <a href="" :id="'full-comment-a-' + index"
+								>Full Comments({{ message.numOfComments }})</a
+							> -->
 						</li>
 						<li :id="'spam-box-' + index">
 							<div v-if="!spammed">
@@ -324,8 +361,9 @@ export default {
 			showReplyBox: false,
 			handleTime: '',
 			isRead: true,
-			upClicked: false,
-			downClicked: false,
+			upClicked: this.message.votingType == 1 ? true : false,
+			downClicked: this.message.votingType == -1 ? true : false,
+			// counter: this.message.votes,
 			data: '',
 		};
 	},
@@ -421,56 +459,117 @@ export default {
 				}
 			}
 		},
-		// @vuese
-		//handle upvote action
-		// @arg no argument
+
+		//@vuese
+		//upvote on post
 		async upvote() {
-			if (this.upClicked == false) {
-				try {
-					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
-						direction: 1,
-						baseurl: this.$baseurl,
-					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.upClicked = true;
-					}
-				} catch (err) {
-					this.errorResponse = err;
-					this.upClicked = false;
-				}
-			} else {
-				this.upClicked = false;
-			}
 			if (this.downClicked) {
 				this.downClicked = false;
+				// this.counter++;
+			}
+			if (this.upClicked == false) {
+				this.upClicked = true;
+				// this.counter++;
+			} else {
+				this.upClicked = false;
+				// this.counter--;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.message.commentId,
+					type: 'comment',
+					direction: 1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
-		// @vuese
-		//handle downvote action
-		// @arg no argument
+		//@vuese
+		//down vote on post
 		async downvote() {
-			if (this.downClicked == false) {
-				try {
-					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
-						direction: -1,
-						baseurl: this.$baseurl,
-					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.downClicked = true;
-					}
-				} catch (err) {
-					this.errorResponse = err;
-					this.downClicked = false;
-				}
-			} else {
-				this.downClicked = false;
-			}
 			if (this.upClicked) {
 				this.upClicked = false;
+				// this.counter--;
+			}
+			if (this.downClicked == false) {
+				this.downClicked = true;
+				// this.counter--;
+			} else {
+				this.downClicked = false;
+				// this.counter++;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.message.commentId,
+					type: 'comment',
+					direction: -1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
+
+		// @vuese
+		// Used to go to full comments page
+		// @arg no argument
+		goFullComments() {
+			let route = '/user/asmaaadel0/comments/639a56e93a373e5497eee43a/text';
+			this.$router.push(route);
+		},
+
+		// // @vuese
+		// //handle upvote action
+		// // @arg no argument
+		// async upvote() {
+		// 	if (this.upClicked == false) {
+		// 		try {
+		// 			this.$store.dispatch('messages/voteComment', {
+		// 				id: this.message.id,
+		// 				direction: 1,
+		// 				baseurl: this.$baseurl,
+		// 			});
+		// 			if (this.$store.getters['messages/votedSuccessfully']) {
+		// 				this.upClicked = true;
+		// 			}
+		// 		} catch (err) {
+		// 			this.errorResponse = err;
+		// 			this.upClicked = false;
+		// 		}
+		// 	} else {
+		// 		this.upClicked = false;
+		// 	}
+		// 	if (this.downClicked) {
+		// 		this.downClicked = false;
+		// 	}
+		// },
+		// // @vuese
+		// //handle downvote action
+		// // @arg no argument
+		// async downvote() {
+		// 	if (this.downClicked == false) {
+		// 		try {
+		// 			this.$store.dispatch('messages/voteComment', {
+		// 				id: this.message.id,
+		// 				direction: -1,
+		// 				baseurl: this.$baseurl,
+		// 			});
+		// 			if (this.$store.getters['messages/votedSuccessfully']) {
+		// 				this.downClicked = true;
+		// 			}
+		// 		} catch (err) {
+		// 			this.errorResponse = err;
+		// 			this.downClicked = false;
+		// 		}
+		// 	} else {
+		// 		this.downClicked = false;
+		// 	}
+		// 	if (this.upClicked) {
+		// 		this.upClicked = false;
+		// 	}
+		// },
+
 		// @vuese
 		//show reply box or hide it
 		// @arg The argument is a string value representing if show or hide reply box
