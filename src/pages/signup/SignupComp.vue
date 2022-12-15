@@ -254,6 +254,12 @@ export default {
 			};
 			try {
 				await this.$store.dispatch('available_user', actionPayload);
+				await this.$store.dispatch('notifications/createNotificationToken', {
+					host: 'http://localhost:8081',
+					baseurl: this.$baseurl,
+					token: localStorage.getItem('accessToken'),
+				});
+
 				const response = localStorage.getItem('response');
 				console.log(response);
 				this.messageErrorShowUser = true;
