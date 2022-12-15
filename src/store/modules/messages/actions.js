@@ -163,12 +163,13 @@ export default {
 					senderUsername: responseData.children[i].data.senderUsername,
 					receiverUsername: responseData.children[i].data.receiverUsername,
 					sendAt: responseData.children[i].data.sendAt,
-					subredditName: responseData.children[i].data.subredditName,
 					postTitle: responseData.children[i].data.postTitle,
 					postId: responseData.children[i].data.postId,
 					commentId: responseData.children[i].data.commentId,
 					numOfComments: responseData.children[i].data.numOfComments,
 					vote: responseData.children[i].data.vote,
+					postOwner: responseData.children[i].data.postOwner,
+					isRead: responseData.children[i].data.isRead,
 				};
 				mentions.push(mention);
 			}
