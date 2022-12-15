@@ -116,4 +116,10 @@ export default {
 	setUnmoderated(state, payload) {
 		state.Unmoderated = payload;
 	},
+	setEditedPosts(state, payload) {
+		state.EditedPosts = payload;
+	},
+	setEditedComments(state, payload) {
+		state.EditedComments = payload;
+	},
 };
