@@ -161,8 +161,30 @@ export default {
 				this.unmod('new');
 			}
 		},
+		titleSecond(value) {
+			this.editing(value);
+		},
 	},
+	emits: ['getarr'],
 	methods: {
+		editing(value) {
+			if (value == 'Posts') {
+				let arr = [];
+				arr[0] = false;
+				arr[1] = true;
+				this.$emit('getarr', arr);
+			} else if (value == 'Comments') {
+				let arr = [];
+				arr[0] = true;
+				arr[1] = false;
+				this.$emit('getarr', arr);
+			} else {
+				let arr = [];
+				arr[0] = true;
+				arr[1] = true;
+				this.$emit('getarr', arr);
+			}
+		},
 		// @vuese
 		//show menu of time
 		// @arg no argument

@@ -28,4 +28,8 @@ export default {
 	getTopics(state) {
 		return state.topics;
 	},
+	notFound(state) {
+		console.log(state.notFound);
+		return state.notFound;
+	},
 };
