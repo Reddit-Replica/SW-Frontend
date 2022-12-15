@@ -203,7 +203,6 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
 		if (response.status == 200) {
 			const messages = [];
 
@@ -218,29 +217,33 @@ export default {
 			}
 			let messagesInMessage = [];
 			for (let i = 0; i < responseData.children.length; i++) {
-				for (let j = 0; j < responseData.children[i].messages.length; i++) {
-					messagesInMessage = {
-						senderUsername: responseData.children[i].messages[j].senderUsername,
+				for (
+					let j = 0;
+					j < responseData.children[i].data.messages.length;
+					j++
+				) {
+					const messageInMessage = {
+						senderUsername:
+							responseData.children[i].data.messages[j].senderUsername,
 						receiverUsername:
-							responseData.children[i].messages[j].receiverUsername,
-						sendAt: responseData.children[i].messages[j].sendAt,
-						subredditName: responseData.children[i].messages[j].subredditName,
-						isModerator: responseData.children[i].messages[j].isModerator,
-						isSenderUser: responseData.children[i].messages[j].isSenderUser,
-						isReceiverUser: responseData.children[i].messages[j].isReceiverUser,
+							responseData.children[i].data.messages[j].receiverUsername,
+						sendAt: responseData.children[i].data.messages[j].sendAt,
+						isSenderUser:
+							responseData.children[i].data.messages[j].isSenderUser,
+						isReceiverUser:
+							responseData.children[i].data.messages[j].isReceiverUser,
 					};
+					messagesInMessage.push(messageInMessage);
 				}
 				const message = {
 					id: responseData.children[i].id,
-					isUser: responseData.children[i].isUser,
-					subjectContent: responseData.children[i].subjectContent,
-					msgID: responseData.children[i].messages.msgID,
+					isUser: responseData.children[i].data.isUser,
+					subjectContent: responseData.children[i].data.subjectContent,
+					subjectTitle: responseData.children[i].data.subjectTitle,
 					messages: messagesInMessage,
 				};
-				console.log(message);
 				messages.push(message);
 			}
-			console.log(messages);
 			context.commit('setUserMessages', messages);
 			context.commit('before', before);
 			context.commit('after', after);
@@ -796,7 +799,6 @@ export default {
 			subredditName: payload.subredditName,
 			haveSubreddit: payload.haveSubreddit,
 		};
-		console.log(comment);
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
 		// const accessToken =
