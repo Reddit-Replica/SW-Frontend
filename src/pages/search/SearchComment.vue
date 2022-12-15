@@ -184,7 +184,20 @@ export default {
 			return this.$store.getters['search/GetComments'];
 		},
 	},
+	beforeMount() {
+		this.search();
+	},
 	methods: {
+		async search() {
+			try {
+				await this.$store.dispatch('search/SearchComments', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		//not true just writing what will it been do in action
 		toggle(id) {
 			for (let i = 0; i < this.SearchedUsers().length; i++) {
