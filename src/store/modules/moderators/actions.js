@@ -36,6 +36,7 @@ export default {
 			throw error;
 		}
 	},
+
 	async loadListOfModerators(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -96,9 +97,20 @@ export default {
 	},
 
 	async loadListOfInvitedModerators(context, payload) {
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
 		const baseurl = payload.baseurl;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?limit=10&before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?limit=10&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=10';
+		}
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/about/invited-moderators`,
+			baseurl +
+				`/r/${payload.subredditName}/about/invited-moderators${mediaQuery}`,
 			{
 				method: 'GET',
 				headers: {
@@ -110,6 +122,15 @@ export default {
 		const responseData = await response.json();
 		const invitedModerators = [];
 		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
 			for (let i = 0; i < responseData.children.length; i++) {
 				const invitedmoderator = {
 					username: responseData.children[i].username,
@@ -120,6 +141,8 @@ export default {
 				invitedModerators.push(invitedmoderator);
 			}
 			context.commit('setListOfInvitedModerators', invitedModerators);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Unauthorized access');
 			throw error;
