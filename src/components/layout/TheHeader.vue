@@ -85,7 +85,11 @@
 				</li>
 				<h4 class="heading-4">Your Communities</h4>
 				<li class="setting-choice">
-					<div class="settings-box" id="create-community">
+					<div
+						class="settings-box"
+						id="create-community"
+						@click="showCreateCommunity"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -597,14 +601,20 @@
 				</ul>
 			</div>
 		</nav>
+		<create-community
+			v-if="createCommunityShown"
+			@exit="showCreateCommunity"
+		></create-community>
 	</header>
 </template>
 
 <script>
 import NotificationsList from '../NotificationsComponents/NotificationsList.vue';
+import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 export default {
 	components: {
 		NotificationsList,
+		CreateCommunity,
 	},
 	props: {
 		// @vuese
@@ -620,6 +630,7 @@ export default {
 			homeSubMenuDisplay: false,
 			searchQuery: '',
 			notificationsListShown: false,
+			createCommunityShown: false,
 		};
 	},
 	computed: {
@@ -681,6 +692,12 @@ export default {
 		goToUserPage() {
 			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
 			this.$router.push(`/user/${this.userName}`);
+		},
+		// @vuese
+		// Used to show create community popup
+		// @arg no argument
+		showCreateCommunity() {
+			this.createCommunityShown = !this.createCommunityShown;
 		},
 		// @vuese
 		// Used to go to Search page
