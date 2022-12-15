@@ -40,13 +40,15 @@ export default {
 					subject: responseData.children[i].data.subject,
 					type: responseData.children[i].data.type,
 					subredditName: responseData.children[i].data.subredditName,
-					isModerator: responseData.children[i].data.isModerator,
 					postTitle: responseData.children[i].data.postTitle,
-					postID: responseData.children[i].data.postID,
-					commentID: responseData.children[i].data.commentID,
+					postId: responseData.children[i].data.postId,
+					commentId: responseData.children[i].data.commentId,
 					numOfComments: responseData.children[i].data.numOfComments,
 					isSenderUser: responseData.children[i].data.isSenderUser,
 					isReceiverUser: responseData.children[i].data.isReceiverUser,
+					isRead: responseData.children[i].data.isRead,
+					vote: responseData.children[i].data.vote,
+					postOwner: responseData.children[i].data.postOwner,
 				};
 				messages.push(message);
 			}

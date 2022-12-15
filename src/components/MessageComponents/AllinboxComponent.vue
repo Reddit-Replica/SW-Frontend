@@ -207,13 +207,15 @@ export default {
 				subject: '',
 				type: '',
 				subredditName: '',
-				isModerator: '',
 				postTitle: '',
-				postID: '',
-				commentID: '',
+				postId: '',
+				commentId: '',
 				numOfComments: '',
 				isSenderUser: '',
 				isReceiverUser: '',
+				isRead: '',
+				vote: '',
+				postOwner: '',
 			}),
 		},
 		// @vuese
@@ -235,7 +237,7 @@ export default {
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
-			isRead: true,
+			isRead: this.message.isRead,
 		};
 	},
 	// @vuese
