@@ -48,6 +48,8 @@ export default {
 			listOfBanned: [],
 			////////////////////////////Unmoderated/////////////
 			Unmoderated: [],
+			EditedPosts: [],
+			EditedComments: [],
 		};
 	},
 	mutations,

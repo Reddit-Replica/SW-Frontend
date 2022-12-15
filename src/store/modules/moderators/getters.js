@@ -116,4 +116,10 @@ export default {
 	Unmoderated(state) {
 		return state.Unmoderated;
 	},
+	EditedPosts(state) {
+		return state.EditedPosts;
+	},
+	EditedComments(state) {
+		return state.EditedComments;
+	},
 };
