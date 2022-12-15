@@ -143,7 +143,6 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
 		if (response.status == 200) {
 			const mentions = [];
 
@@ -171,7 +170,6 @@ export default {
 				};
 				mentions.push(mention);
 			}
-			console.log(mentions);
 			context.commit('setUserMentions', mentions);
 			context.commit('before', before);
 			context.commit('after', after);
