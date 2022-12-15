@@ -40,14 +40,22 @@
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
-							><a href="" :id="'message-sender-' + index">{{
-								message.senderUsername
-							}}</a>
+							><a
+								:href="'/user/' + message.senderUsername"
+								:id="'message-sender-' + index"
+								>{{ message.senderUsername }}</a
+							>
 							<span
-								><span :class="!isRead ? 'unread' : ''">&nbsp;via&nbsp;</span>
-								<a href="" :id="'message-receiver-' + index">{{
-									message.subredditName
-								}}</a>
+								><span
+									v-if="message.subredditName"
+									:class="!isRead ? 'unread' : ''"
+									>&nbsp;via&nbsp;</span
+								>
+								<a
+									:href="'/r/' + message.subredditName"
+									:id="'message-receiver-' + index"
+									>{{ message.subredditName }}</a
+								>
 							</span></span
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 						><time :class="!isRead ? 'unread' : ''"> {{ handleTime }}</time>
@@ -56,7 +64,7 @@
 					<Markdown class="md" :source="message.text" />
 					<ul class="flat-list ul-messages">
 						<li :id="'context-link-' + index">
-							<a href="" :id="'context-a-' + index">context</a>
+							<a href="#" :id="'context-a-' + index">context</a>
 						</li>
 						<li :id="'full-comment-link-' + index">
 							<a href="" :id="'full-comment-a-' + index"
@@ -123,7 +131,7 @@
 								>Block User</span
 							>
 						</li>
-						<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
+						<li @click="unreadAction()" :id="'unread-' + index" v-if="isRead">
 							<span class="link" :id="'mark-un-read-' + index"
 								>Mark Unread</span
 							>
@@ -282,11 +290,16 @@ export default {
 				senderUsername: '',
 				receiverUsername: '',
 				sendAt: '',
+				subject: '',
 				type: '',
 				subredditName: '',
+				isModerator: '',
+				postTitle: '',
 				postID: '',
 				commentID: '',
 				numOfComments: '',
+				isSenderUser: '',
+				isReceiverUser: '',
 			}),
 		},
 		// @vuese
@@ -299,16 +312,17 @@ export default {
 	},
 	data() {
 		return {
-			blockUser: false,
 			spamUser: false,
-			upClicked: false,
-			downClicked: false,
+			blockUser: false,
 			backcolor: 'grey',
-			spammed: false,
 			disappear: false,
-			isRead: this.message.isRead,
+			spammed: false,
 			errorResponse: null,
 			showReplyBox: false,
+			handleTime: '',
+			isRead: true,
+			upClicked: false,
+			downClicked: false,
 		};
 	},
 
@@ -320,22 +334,30 @@ export default {
 		} else this.backcolor = 'grey';
 		this.calculateTime();
 	},
-	computed: {
-		// @vuese
-		//return handled time after calculated it
-		// @type object
-		handleTime() {
-			return this.$store.getters['moderation/handleTime'];
-		},
-	},
+	computed: {},
 	methods: {
 		// @vuese
 		//calculate time
 		// @type object
 		calculateTime() {
-			this.$store.dispatch('moderation/handleTime', {
-				time: this.message.sendAt,
-			});
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.message.sendAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
 		},
 		// @vuese
 		//handle block action
@@ -344,13 +366,14 @@ export default {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/blockUser', {
+					await this.$store.dispatch('messages/blockUser', {
 						block: true,
 						username: this.message.senderUsername,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -365,20 +388,25 @@ export default {
 			this.isRead = false;
 		},
 		// @vuese
+		// handle load messages instead of refreshing
+		// @arg no argument
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
+		},
+		// @vuese
 		//handle spam action
 		// @arg The argument is a string value representing if user click ok
 		async spamAction(action) {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/spamMessage', {
+					await this.$store.dispatch('messages/spamMessage', {
 						id: this.message.id,
-						type: 'comment',
-						reason: '',
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/markSpamSuccessfully']) {
 						this.spammed = true;
+						this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
