@@ -119,6 +119,7 @@
 							@click="approveUser()"
 							class="button-blue"
 							id="add-user-button"
+							:disabled="userName == ''"
 							:class="userName != '' ? '' : 'disable-button'"
 							>Add user</base-button
 						>

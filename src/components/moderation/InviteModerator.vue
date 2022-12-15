@@ -108,6 +108,7 @@
 					<base-button
 						@click="submitInvite()"
 						class="button-blue"
+						:disabled="userName == ''"
 						:class="userName == '' ? 'disabled' : ''"
 						id="invite-moderation-button"
 						>Invite

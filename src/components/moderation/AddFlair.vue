@@ -143,6 +143,7 @@
 				<base-button
 					@click="submitFlair()"
 					class="button-blue"
+					:disabled="flairText == ''"
 					:class="flairText == '' ? 'disabled' : ''"
 					id="save-button"
 					v-if="!edit"
@@ -151,6 +152,12 @@
 				<base-button
 					@click="updateFlair()"
 					class="button-blue"
+					:disabled="
+						flairText == '' ||
+						(flairText == flairNameEdit &&
+							backgroundColor == backgroundColorEdit &&
+							textColor == textColorEdit)
+					"
 					:class="
 						flairText == '' ||
 						(flairText == flairNameEdit &&
