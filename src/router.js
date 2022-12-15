@@ -65,6 +65,7 @@ import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
 import PostandCommentsettings from './pages/moderation/PostandCommentsettings.vue';
 import TrafficStats from './pages/moderation/TrafficStats.vue';
+import AcceptInvitation from './pages/moderation/AcceptInvitation.vue';
 
 import NotFound from './pages/NotFound.vue';
 
@@ -178,6 +179,12 @@ const router = createRouter({
 				},
 			],
 		}, //render subreddit component
+
+		{
+			props: true,
+			path: '/r/:subredditName/about/accept-moderator-invite',
+			component: AcceptInvitation,
+		},
 		{
 			path: '/r/:subredditName/about/',
 			name: 'moderation',
@@ -277,9 +284,10 @@ const router = createRouter({
 			children: [
 				{
 					path: '/subreddits/leaderboard/:category',
+					name: 'leaderboard',
 					component: TopCommunitiesPage,
 				},
-				{ path: '', component: TopCommunitiesPage },
+				//{ path: '', component: TopCommunitiesPage },
 			],
 		},
 

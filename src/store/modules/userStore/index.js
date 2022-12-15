@@ -15,6 +15,9 @@ export default {
 	 */
 	state() {
 		return {
+			listOfSubreddits: [],
+			after: '',
+			before: '',
 			userData: {
 				displayName: '',
 				about: '',

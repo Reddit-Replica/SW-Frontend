@@ -8,4 +8,7 @@ export default {
 	setHiddenSuccessfully(state, payload) {
 		state.hiddenSuccessfully = payload;
 	},
+	setClientToken(state, payload) {
+		state.clientToken = payload;
+	},
 };

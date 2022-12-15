@@ -106,10 +106,11 @@
 					style="
 						margin-left: 10px;
 						width: max-content;
-						height: 30px;
+						height: 35px;
 						border-radius: 20px;
 					"
 				>
+					<!-- <option value="" disabled selected>Choose a drink</option> -->
 					<option
 						v-for="flair in flairs"
 						:id="'message-from-options-' + flair.flairId"
@@ -142,12 +143,17 @@ export default {
 			subreddit: null,
 			buttonDisabled: true,
 			insubreddit: null,
+			disabled: true,
 		};
 	},
 	watch: {
 		getSubreddit(value) {
 			this.subreddit = value;
 			this.getPostsettings();
+		},
+		flairId(value) {
+			this.flairId = value;
+			this.setFlairId();
 		},
 	},
 	computed: {
@@ -209,6 +215,8 @@ export default {
 				if (this.setting.enableSpoiler) this.buttonDisabled = false;
 				else this.buttonDisabled = true;
 				this.getFlairs();
+				if (this.flairs.length == 0) this.disabled = false;
+				else this.disabled = true;
 			} else this.buttonDisabled = true;
 		},
 	},
@@ -338,6 +346,8 @@ export default {
 	top: -40px;
 	visibility: visible;
 	opacity: 1;
+}
+.disable-Flair {
 }
 @media (max-width: 40em) {
 	.buttons-section {

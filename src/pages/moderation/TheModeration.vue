@@ -6,6 +6,7 @@
 	></listmoderation-bar>
 	<div>
 		<!-- ///////////change to !moderatorByMe/////////// -->
+		<div v-if="!moderatorByMe">moderatorByMe</div>
 		<unmoderator-view
 			v-if="!moderatorByMe"
 			:subreddit-name="subredditName"
@@ -82,7 +83,7 @@ export default {
 		} else {
 			document.title = this.$route.params.subredditName;
 			this.loadListOfAllModerators();
-			this.loadListOfInvitedModerators();
+			// this.loadListOfInvitedModerators();
 		}
 	},
 	computed: {
@@ -99,12 +100,12 @@ export default {
 		listOfAllModerators() {
 			return this.$store.getters['moderation/listOfAllModerators'];
 		},
-		// @vuese
-		//return list of invited moderators
-		// @type object
-		listOfInvitedModerators() {
-			return this.$store.getters['moderation/listOfInvitedModerators'];
-		},
+		// // @vuese
+		// //return list of invited moderators
+		// // @type object
+		// listOfInvitedModerators() {
+		// 	return this.$store.getters['moderation/listOfInvitedModerators'];
+		// },
 		// @vuese
 		//return user name
 		// @type string
@@ -115,6 +116,7 @@ export default {
 		//return if i'm a moderator in this subreddit or not
 		// @type boolean
 		moderatorByMe() {
+			console.log('modddd');
 			for (let i = 0; i < this.listOfAllModerators.length; i++) {
 				if (this.listOfAllModerators[i].username == this.getUserName) {
 					return true;
@@ -285,22 +287,23 @@ export default {
 					subredditName: this.subredditName,
 				});
 			} catch (error) {
+				this.$router.push('/notFound');
 				this.error = error.message || 'Something went wrong';
 			}
 		},
 		// @vuese
 		//load moderators invited list from the store
 		// @arg no argument
-		async loadListOfInvitedModerators() {
-			try {
-				await this.$store.dispatch('moderation/loadListOfInvitedModerators', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-		},
+		// async loadListOfInvitedModerators() {
+		// 	try {
+		// 		await this.$store.dispatch('moderation/loadListOfInvitedModerators', {
+		// 			baseurl: this.$baseurl,
+		// 			subredditName: this.subredditName,
+		// 		});
+		// 	} catch (error) {
+		// 		this.error = error.message || 'Something went wrong';
+		// 	}
+		// },
 		// @vuese
 		// Used to handle show left bar action
 		// @arg no argument
