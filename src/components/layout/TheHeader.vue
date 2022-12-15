@@ -617,37 +617,10 @@ export default {
 			this.$router.push(`/user/${this.userName}`);
 		},
 		// @vuese
-		// Used to go to Search page and request all searches kinds
+		// Used to go to Search page
 		// @arg no argument
 		async searchUser() {
 			if (this.searchQuery) {
-				// let quer = this.searchQuery;
-				// try {
-				// 	await this.$store.dispatch('search/SearchUser', {
-				// 		baseurl: this.$baseurl,
-				// 		q: quer,
-				// 	});
-				// 	console.log('h1');
-				// 	await this.$store.dispatch('search/SearchComments', {
-				// 		baseurl: this.$baseurl,
-				// 		q: quer,
-				// 	});
-				// 	await this.$store.dispatch('search/SearchPost', {
-				// 		baseurl: this.$baseurl,
-				// 		q: quer,
-				// 		sort: 'new',
-				// 		time: 'all',
-				// 	});
-				// 	console.log('h2');
-				// 	await this.$store.dispatch('search/SearchSubreddit', {
-				// 		baseurl: this.$baseurl,
-				// 		q: quer,
-				// 	});
-				// 	console.log('h3');
-				// 	// setTimeout(window.location.reload(), 500);
-				// } catch (err) {
-				// 	console.log(err);
-				// }
 				this.$router.push({
 					name: 'searchpost',
 					query: { q: this.searchQuery },
