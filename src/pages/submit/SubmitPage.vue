@@ -47,7 +47,7 @@
 							<div class="down-row">
 								<base-button
 									@click="handleSubmit"
-									class="post-button"
+									:class="buttonDisabled ? 'post-button' : 'success'"
 									button-text="Post"
 									:disable-button="buttonDisabled"
 								></base-button>
@@ -569,6 +569,24 @@ nav ul li:hover {
 	align-items: center;
 	text-align: center;
 }
+.success {
+	color: #ffffff;
+	background-color: #0079d3;
+	width: 8%;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 17px;
+	text-transform: unset;
+	min-height: 32px;
+	min-width: 32px;
+	padding: 4px 16px;
+	position: absolute;
+	left: 88%;
+	top: 20%;
+	display: flex;
+}
 .box1 {
 	margin-top: 50px;
 }
@@ -578,9 +596,19 @@ nav ul li:hover {
 		display: flex;
 		left: 70%;
 	}
+	.success {
+		width: max-content;
+		display: flex;
+		left: 70%;
+	}
 }
 @media (max-width: 221px) {
 	.post-button {
+		width: max-content;
+		display: flex;
+		left: 50%;
+	}
+	.success {
 		width: max-content;
 		display: flex;
 		left: 50%;
