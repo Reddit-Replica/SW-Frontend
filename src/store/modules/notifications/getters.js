@@ -8,4 +8,7 @@ export default {
 	getHiddenSuccessfully(state) {
 		return state.hiddenSuccessfully;
 	},
+	getClientToken(state) {
+		return state.clientToken;
+	},
 };
