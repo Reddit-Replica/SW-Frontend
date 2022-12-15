@@ -274,7 +274,7 @@
 			</button>
 		</form>
 		<nav class="header-user-nav">
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<!-- <div class="header-user-nav-icon-box header-popular" id="header-popular">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -288,6 +288,25 @@
 					<path
 						fill-rule="evenodd"
 						d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"
+					/>
+				</svg>
+			</div> -->
+			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-gear header-user-nav-icon"
+					viewBox="0 0 16 16"
+					@click="goToSettings()"
+				>
+					<title>settings</title>
+					<path
+						d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
+					/>
+					<path
+						d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
 					/>
 				</svg>
 			</div>
@@ -312,8 +331,9 @@
 					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
 					id="chat-icon"
+					@click="goToMessages()"
 				>
-					<title>Chat</title>
+					<title>Messages</title>
 					<path
 						d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
 					/>
@@ -321,9 +341,9 @@
 						d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
 					/>
 				</svg>
-				<span class="header-user-nav-notification" id="num-notification-chat"
+				<!-- <span class="header-user-nav-notification" id="num-notification-chat"
 					>2</span
-				>
+				> -->
 			</div>
 
 			<div
@@ -351,6 +371,42 @@
 					>2</span
 				>
 			</div>
+
+			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-person-circle header-user-nav-icon"
+					viewBox="0 0 16 16"
+					@click="goToUserPage()"
+				>
+					<title>Your Profile</title>
+					<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+					<path
+						fill-rule="evenodd"
+						d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+					/>
+				</svg>
+			</div>
+
+			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-house-door-fill header-user-nav-icon"
+					viewBox="0 0 16 16"
+				>
+					<title>Home</title>
+					<path
+						d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"
+					/>
+				</svg>
+			</div>
+
 			<notifications-list
 				v-if="notificationsListShown"
 				class="sub-menu sub-menu-ntf"
@@ -376,7 +432,7 @@
 					/>
 				</svg>
 			</div>
-			<div class="header-user-nav-box header-box" id="advertise-box">
+			<!-- <div class="header-user-nav-box header-box" id="advertise-box">
 				<button class="header-button-advertise">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -393,7 +449,7 @@
 					</svg>
 					Advertise
 				</button>
-			</div>
+			</div> -->
 
 			<div
 				class="header-user-nav-box header-user"
@@ -463,14 +519,14 @@
 						</svg>
 						My Stuff
 					</li>
-					<li
+					<!-- <li
 						class="setting-choice"
 						@click="showSettingsSubMenu()"
 						id="online-status"
 					>
 						Online Status
 						<switch-button id="online-status-button" />
-					</li>
+					</li> -->
 					<li
 						class="setting-choice"
 						@click="goToUserPage()"
@@ -505,14 +561,14 @@
 						</svg>
 						View Options
 					</li>
-					<li
+					<!-- <li
 						class="setting-choice"
 						@click="showSettingsSubMenu()"
 						id="dark-mode"
 					>
 						Dark Mode
 						<switch-button id="dark-mode-button" />
-					</li>
+					</li> -->
 					<li
 						class="setting-choice-with-icon"
 						id="logout"
@@ -600,6 +656,12 @@ export default {
 		// @arg no argument
 		goToSettings() {
 			this.$router.push('/settings');
+		},
+		// @vuese
+		// Used to go to messages page
+		// @arg no argument
+		goToMessages() {
+			this.$router.push('/message/inbox');
 		},
 		// @vuese
 		// Used to go to Home page
