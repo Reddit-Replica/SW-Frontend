@@ -11,4 +11,8 @@ export default {
 		console.log(payload);
 		state.moderationSettings = payload;
 	},
+	setpostandcommentsSettings(state, payload) {
+		console.log(payload);
+		state.postandcommentsSettings = payload;
+	},
 };

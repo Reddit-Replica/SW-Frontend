@@ -9,6 +9,7 @@ export default {
 			unsubscribeFromEmails: false,
 			accountSettings: {},
 			moderationSettings: {},
+			postandcommentsSettings: {},
 		};
 	},
 	mutations,
