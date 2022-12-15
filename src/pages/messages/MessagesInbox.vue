@@ -40,7 +40,6 @@ export default {
 		//return all messages sent or recieved
 		// @type object
 		userMessages() {
-			console.log(this.$store.getters['messages/userMessages']);
 			return this.$store.getters['messages/userMessages'];
 		},
 	},
