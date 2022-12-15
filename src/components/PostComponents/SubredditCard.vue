@@ -3,7 +3,7 @@
 		<div class="header"></div>
 		<div class="content">
 			<div class="image-name">
-				<div class="image" v-if="subreddit.picture">
+				<div class="image" v-if="subreddit.picture != undefined">
 					<img :src="subreddit.picture" alt="" />
 				</div>
 				<div class="image">
@@ -48,6 +48,7 @@
 			>
 		</div>
 	</div>
+	<button @click="click"></button>
 </template>
 <script>
 export default {
@@ -64,6 +65,9 @@ export default {
 		};
 	},
 	methods: {
+		click() {
+			console.log(this.subreddit);
+		},
 		// @vuese
 		//load Rules list from the store
 		// @arg no argument

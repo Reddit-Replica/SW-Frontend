@@ -37,7 +37,7 @@
 							:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
 						>
 							<!-- <sortposts-bar></sortposts-bar> -->
-							<router-view></router-view>
+							<router-view :state="state"></router-view>
 						</main>
 						<aside id="profile-aside">
 							<profile-card
@@ -48,6 +48,7 @@
 							<user-moderators-card
 								v-if="getUserData.userModeratorData.length != 0"
 								:user-moderators="getUserData.userModeratorData"
+								:state="state"
 							></user-moderators-card>
 						</aside>
 					</div>
@@ -167,7 +168,7 @@ export default {
 				!localStorage.getItem('userName') ||
 				localStorage.getItem('userName') == ''
 			) {
-				this.state = 'unAuth';
+				this.state = 'unauth';
 			} else if (
 				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
 				this.$route.params.userName == localStorage.getItem('userName')

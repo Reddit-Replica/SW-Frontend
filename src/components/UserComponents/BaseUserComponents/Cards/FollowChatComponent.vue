@@ -1,7 +1,7 @@
 <template>
 	<div class="follow-chat-div">
 		<base-button
-			v-if="!blocked"
+			v-if="(!blocked && state == 'user') || state == 'unauth'"
 			:button-text="followed ? 'Unfollow' : 'Follow'"
 			class="chat-follow-button"
 			id="profile-follow-button"
@@ -9,13 +9,17 @@
 			:class="[followed ? 'chat-unfollow-button' : '']"
 		></base-button>
 		<base-button
-			v-if="!blocked"
+			v-if="(!blocked && state == 'user') || state == 'unauth'"
 			button-text="Chat"
 			class="chat-follow-button"
 			id="profile-chat-button"
 		></base-button>
 	</div>
-	<div v-if="blocked" class="blocked-user-button" id="blocked-user-box">
+	<div
+		v-if="blocked && state == 'user'"
+		class="blocked-user-button"
+		id="blocked-user-box"
+	>
 		<base-button
 			@click="toggleBlockedUnblocked"
 			class="blocked-button"
@@ -45,6 +49,10 @@ export default {
 			required: true,
 			default: false,
 		},
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	components: {
 		BaseButton,
@@ -55,6 +63,9 @@ export default {
 			// Followed: false,
 		};
 	},
+	mounted() {
+		console.log(this.state);
+	},
 	methods: {
 		/**
 		 * @vuese
@@ -62,6 +73,9 @@ export default {
 		 * @arg no
 		 */
 		async toggleFollowed() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+			}
 			try {
 				await this.$store.dispatch('user/followUnfollowUser', {
 					baseurl: this.$baseurl,

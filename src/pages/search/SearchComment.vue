@@ -64,79 +64,102 @@
 						<div class="people">
 							<div class="people-results">
 								<div class="comments-release">
-									<div class="high-nav">
-										<div class="com-det">
-											<img class="comimage" />
-											<div class="sub-name">&nbsp;r/hamada&nbsp;</div>
-										</div>
-										<span class="dot" role="presentation">•&nbsp;</span>
-										<div class="post-det">
-											<span class="posted-by" style="color: rgb(120, 124, 126)"
-												>Posted by</span
-											>
-											<div class="user-info">
-												<div id="user-name">
-													<a
-														class="user-name-info"
+									<div
+										v-if="!(SearchedComments && SearchedComments.length == 0)"
+									>
+										<div v-for="value in SearchedComments" :key="value.id">
+											<div class="high-nav">
+												<div class="com-det">
+													<img class="comimage" />
+													<div class="sub-name">
+														&nbsp;r/{{ value.postSubreddit }}&nbsp;
+													</div>
+												</div>
+												<span class="dot" role="presentation">•&nbsp;</span>
+												<div class="post-det">
+													<span
+														class="posted-by"
 														style="color: rgb(120, 124, 126)"
-														>u/Ok-Strategy-8582</a
+														>Posted by</span
+													>
+													<div class="user-info">
+														<div id="user-name">
+															<a
+																class="user-name-info"
+																style="color: rgb(120, 124, 126)"
+																>u/{{ value.postpostedby }}</a
+															>
+														</div>
+													</div>
+													<span
+														class="posted-at"
+														style="color: rgb(120, 124, 126)"
+														>{{ value.postpostedAt }}</span
 													>
 												</div>
 											</div>
-											<span class="posted-at" style="color: rgb(120, 124, 126)"
-												>9 days ago</span
-											>
-										</div>
-									</div>
-									<div>
-										<div class="comment">
-											<div class="post-content">
-												<div class="the-content">
-													<h3 class="the-words">
-														The 10 countries with the largest populations that
-														didnt make it into the World Cup this year
-													</h3>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="bording">
-										<div class="blue-one">
-											<div class="the-pic"></div>
-											<div class="the-rest">
-												<div class="user-commentes">
-													<span class="the-span"
-														><div class="div-name">
-															<div class="div-name-2">
-																<div id="user-info">
-																	<a class="name-commented">welshmanec2</a>
-																</div>
-															</div>
+											<div>
+												<div class="comment">
+													<div class="post-content">
+														<div class="the-content">
+															<h3 class="the-words">
+																{{ value.postContnet }}
+															</h3>
 														</div>
-														<span class="dot" role="presentation">•&nbsp;</span
-														><a class="commented_at">9 days ago</a>
-													</span>
-												</div>
-												<div class="comment-word">
-													<div class="comment-div">
-														<p class="p-comment">
-															Egypt too? Or is it Mo Salah that sticks in my
-															mind and the rest of the team are rubbish?
-														</p>
 													</div>
 												</div>
-												<div class="down-nav">
-													<span class="votes">609 upvotes</span>
+											</div>
+											<div class="bording">
+												<div class="blue-one">
+													<div class="the-pic"></div>
+													<div class="the-rest">
+														<div class="user-commentes">
+															<span class="the-span"
+																><div class="div-name">
+																	<div class="div-name-2">
+																		<div id="user-info">
+																			<a class="name-commented">{{
+																				value.commentusername
+																			}}</a>
+																		</div>
+																	</div>
+																</div>
+																<span class="dot" role="presentation"
+																	>•&nbsp;</span
+																><a class="commented_at">{{
+																	value.commentcreatedAt
+																}}</a>
+															</span>
+														</div>
+														<div class="comment-word">
+															<div class="comment-div">
+																<p class="p-comment">
+																	{{ value.commentcontent }}
+																</p>
+															</div>
+														</div>
+														<div class="down-nav">
+															<span class="votes"
+																>{{ value.commentvotes }} upvotes</span
+															>
+														</div>
+													</div>
 												</div>
+											</div>
+											<a class="go-to-thread" role="button" tabindex="0"
+												>Go to thread</a
+											>
+											<div class="post-in">
+												<span class="no-cm-posts"
+													>{{ value.postvotes }} upvotes</span
+												><span class="no-cm-posts"
+													>{{ value.postComments }} comments</span
+												>
 											</div>
 										</div>
 									</div>
-									<a class="go-to-thread" role="button" tabindex="0"
-										>Go to thread</a
-									>
-									<div class="post-in">
-										<span class="no-cm-posts">8.7k upvotes</span
-										><span class="no-cm-posts">465 comments</span>
+									<div v-else>
+										<Notfound></Notfound>
 									</div>
 								</div>
 							</div>
@@ -148,7 +171,7 @@
 	</div>
 </template>
 <script>
-// import Notfound from '../../components/SearchComponents/NotFound.vue';
+import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	data() {
 		return {
@@ -156,9 +179,9 @@ export default {
 		};
 	},
 	computed: {
-		SearchedUsers() {
-			console.log(this.$store.getters['search/Getusers']);
-			return this.$store.getters['search/Getusers'];
+		SearchedComments() {
+			console.log(this.$store.getters['search/GetComments']);
+			return this.$store.getters['search/GetComments'];
 		},
 	},
 	methods: {
@@ -189,7 +212,7 @@ export default {
 			}
 		},
 	},
-	// components: { Notfound },
+	components: { Notfound },
 };
 </script>
 
