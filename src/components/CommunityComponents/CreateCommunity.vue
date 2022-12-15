@@ -386,10 +386,15 @@ export default {
 			selectIsShown: false,
 		};
 	},
-	//@vuese
-	//Load community suggested categories when creating 'Create Community' dialog
-	created() {
-		this.loadCategories();
+	// // @vuese
+	// // Load community suggested categories when creating 'Create Community' dialog
+	// // created() {
+	// // 	this.loadCategories();
+	// // },
+	beforeMount() {
+		if (localStorage.getItem('accessToken') == null)
+			this.$router.push('/login');
+		else this.loadCategories();
 	},
 	methods: {
 		// @vuese
@@ -512,7 +517,7 @@ export default {
 		//Decrease characters count while typing
 		//@arg no argument
 		charCount() {
-			this.validateCommunityName();
+			// this.validateCommunityName();
 			this.charRemaining = 21 - this.communityName.length;
 			this.communityNameRequiredError = false;
 			this.communityNameCharError = false;

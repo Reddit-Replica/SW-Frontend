@@ -30,6 +30,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 /* import specific icons */
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
+import Notifications from '@kyvg/vue3-notification';
+
 /* add icons to the library */
 library.add(faLinkSlash);
 
@@ -39,6 +41,10 @@ const app = createApp(App);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.use(router);
 app.use(store);
+
+app.config.productionTip = false;
+
+app.use(Notifications);
 
 // app.use(VueCookies, {
 // 	expires: '7d',
@@ -74,5 +80,6 @@ app.config.globalProperties.$baseurl = isProduction
 	? '/api'
 	: 'http://localhost:3000';
 // app.component('VueRecaptcha', VueRecaptcha);
+
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';
