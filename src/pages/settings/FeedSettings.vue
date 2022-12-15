@@ -14,10 +14,13 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button id="button-one"></switch-button>
+					<switch-button
+						id="button-one"
+						@checked="getadultContent"
+					></switch-button>
 				</div>
 			</div>
-			<div class="option-block">
+			<!-- <div class="option-block">
 				<div class="first-half">
 					<label>
 						<h3 class="h3-title">Safe browsing mode</h3>
@@ -57,7 +60,7 @@
 				<div class="second-half">
 					<switch-button id="button-four"></switch-button>
 				</div>
-			</div>
+			</div> -->
 			<div class="option-block">
 				<div class="first-half">
 					<label>
@@ -68,10 +71,13 @@
 					</p>
 				</div>
 				<div class="second-half">
-					<switch-button id="button-five"></switch-button>
+					<switch-button
+						id="button-five"
+						@checked="getautoplayMedia"
+					></switch-button>
 				</div>
 			</div>
-			<div class="option-block">
+			<!-- <div class="option-block">
 				<div class="first-half">
 					<label>
 						<h3 class="h3-title">Reduce Animations</h3>
@@ -146,7 +152,7 @@
 				<div class="second-half">
 					<switch-button id="button-eight"></switch-button>
 				</div>
-			</div>
+			</div> -->
 			<!-- <div class="option-block">
 				<div class="first-half">
 					<label>
@@ -195,7 +201,7 @@
 					<switch-button></switch-button>
 				</div>
 			</div> -->
-			<div class="option-block">
+			<!-- <div class="option-block">
 				<div class="first-half">
 					<label>
 						<h3 class="h3-title">Open posts in new tab</h3>
@@ -222,34 +228,88 @@
 				<div class="second-half">
 					<switch-button id="button-ten"></switch-button>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </template>
 
 <script>
 import SwitchButton from '../../components/BaseComponents/SwitchButton.vue';
-import SubMenu from '../../components/BaseComponents/SubMenu.vue';
+// import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: {
 		SwitchButton,
-		SubMenu,
+		// SubMenu,
 	},
 	data() {
 		return {
-			FirstitemChoice: 'Hot',
-			ShowFirstitemChoice: false,
-			SecitemChoice: 'Card',
-			ShowSecitemChoice: false,
+			// FirstitemChoice: 'Hot',
+			// ShowFirstitemChoice: false,
+			// SecitemChoice: 'Card',
+			// ShowSecitemChoice: false,
+			adultContent: false,
+			autoplayMedia: false,
 		};
 	},
 	methods: {
-		itemsMenuOneFunction() {
-			this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
+		getadultContent(value) {
+			this.adultContent = value;
+			console.log('this.adultContent');
+			console.log(this.adultContent);
+			this.changeadultContent();
 		},
-		changeFirstChoiceItem(item) {
-			this.FirstitemChoice = item;
+		getautoplayMedia(value) {
+			this.autoplayMedia = value;
+			console.log('this.autoplayMedia');
+			console.log(this.autoplayMedia);
+			this.changeadultContent();
 		},
+		async changeadultContent() {
+			const actionPayload = {
+				adultContent: this.adultContent,
+
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeneadultContent',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+		async changegetautoplayMedia() {
+			const actionPayload = {
+				autoplayMedia: this.autoplayMedia,
+				baseurl: this.$baseurl,
+			};
+			try {
+				const response = await this.$store.dispatch(
+					'setting/changeautoplayMedia',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+		// itemsMenuOneFunction() {
+		// 	this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
+		// },
+		// changeFirstChoiceItem(item) {
+		// 	this.FirstitemChoice = item;
+		// },
+
 		// itemsMenuSecFunction() {
 		// 	this.ShowSecitemChoice = !this.ShowSecitemChoice;
 		// },
