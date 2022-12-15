@@ -7,4 +7,8 @@ export default {
 		console.log('getters getAccountSettings');
 		return state.accountSettings;
 	},
+	getmoderationSettings(state) {
+		console.log('getters moderationSettings');
+		return state.moderationSettings;
+	},
 };

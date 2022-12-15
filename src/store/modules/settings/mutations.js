@@ -7,4 +7,8 @@ export default {
 		console.log(payload);
 		state.accountSettings = payload;
 	},
+	setmoderationSettings(state, payload) {
+		console.log(payload);
+		state.moderationSettings = payload;
+	},
 };
