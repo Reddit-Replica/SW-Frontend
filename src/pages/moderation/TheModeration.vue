@@ -286,6 +286,7 @@ export default {
 					subredditName: this.subredditName,
 				});
 			} catch (error) {
+				this.$router.push('/notFound');
 				this.error = error.message || 'Something went wrong';
 			}
 		},
