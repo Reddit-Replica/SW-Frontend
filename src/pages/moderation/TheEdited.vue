@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<queue-bar :title="'Edited'"></queue-bar>
+		<queue-bar :title="'Edited'" @getarr="getdata"></queue-bar>
 		<div
 			v-if="
 				EditedPosts &&
@@ -12,17 +12,21 @@
 			<clean-queue></clean-queue>
 		</div>
 		<div v-else>
-			<div v-for="value in EditedPosts" :key="value.id">
-				<new-base-post
-					:spam="UnmoderatedPosts"
-					:index="value.id"
-				></new-base-post>
+			<div v-if="posts">
+				<div v-for="value in EditedPosts" :key="value.id">
+					<new-base-post
+						:spam="UnmoderatedPosts"
+						:index="value.id"
+					></new-base-post>
+				</div>
 			</div>
-			<div v-for="value in EditedComments" :key="value.id">
-				<new-base-post
-					:spam="UnmoderatedPosts"
-					:index="value.id"
-				></new-base-post>
+			<div v-if="comments">
+				<div v-for="value in EditedComments" :key="value.id">
+					<new-base-post
+						:spam="EditedComments"
+						:index="value.id"
+					></new-base-post>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -33,6 +37,12 @@ import CleanQueue from '../../components/moderation/CleanQueue.vue';
 import QueueBar from '../../components/moderation/QueueBar.vue';
 import NewBasePost from '../../components/moderation/NewBasePost.vue';
 export default {
+	data() {
+		return {
+			posts: true,
+			comments: false,
+		};
+	},
 	components: { CleanQueue, QueueBar, NewBasePost },
 	computed: {
 		subredditName() {
@@ -50,6 +60,12 @@ export default {
 		this.EditComments();
 	},
 	methods: {
+		getdata(arr) {
+			this.comments = arr[0];
+			this.posts = arr[1];
+			console.log(arr[0]);
+			console.log(arr[1]);
+		},
 		async EditPosts() {
 			try {
 				await this.$store.dispatch('moderation/EditedPosts', {
