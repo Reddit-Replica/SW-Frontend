@@ -212,7 +212,44 @@ export default {
 			// indexTrue: true,
 		};
 	},
+	beforeMount() {
+		this.search();
+		this.usersearch();
+		this.comsearch();
+	},
 	methods: {
+		async search() {
+			try {
+				await this.$store.dispatch('search/SearchPost', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+					sort: 'new',
+					time: 'all',
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async usersearch() {
+			try {
+				await this.$store.dispatch('search/SearchUser', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async comsearch() {
+			try {
+				await this.$store.dispatch('search/SearchSubreddit', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		itemsMenuOneFunction() {
 			this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
 			this.ShowSecitemChoice = false;

@@ -27,10 +27,13 @@
 								</div>
 							</div>
 							<div class="people-content">
-								<div class="people-content-release">
-									<h6 class="people-name">u/{{ name }}&nbsp;</h6>
-									<p class="karma-number">{{ karma }} Karma&nbsp;</p>
-								</div>
+								<a
+									class="people-content-release"
+									:href="'/user/' + value.username"
+								>
+									<h6 class="people-name">u/{{ value.username }}&nbsp;</h6>
+									<p class="karma-number">{{ value.karma }} Karma&nbsp;</p>
+								</a>
 							</div>
 							<div class="follow" v-if="value.following" @click="toggle">
 								<base-button
