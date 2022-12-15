@@ -1,5 +1,10 @@
 <template>
-	<input type="checkbox" v-model="value" @click="onChecked" />
+	<input
+		type="checkbox"
+		v-model="value"
+		@click="onChecked"
+		:class="value ? 'style1' : 'style2'"
+	/>
 </template>
 <script>
 export default {
@@ -27,7 +32,7 @@ export default {
 };
 </script>
 <style scoped>
-input[type='checkbox'] {
+/*input[type='checkbox'] {
 	appearance: none;
 	background-color: var(--color-blue);
 	width: 35px;
@@ -53,8 +58,8 @@ input[type='checkbox']:checked {
 }
 input[type='checkbox']:checked::before {
 	left: 14px;
-}
-/*.style1 {
+}*/
+.style1 {
 	appearance: none;
 	background-color: var(--color-blue);
 	width: 35px;
@@ -96,5 +101,5 @@ input[type='checkbox']:checked::before {
 	border-radius: 50%;
 	transition: 0.5s all;
 	cursor: pointer;
-}*/
+}
 </style>

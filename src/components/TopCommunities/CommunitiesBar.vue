@@ -30,7 +30,11 @@ export default {
 	watch: {
 		'$route.params.category': {
 			handler: function () {
-				if (this.$route.params.category == null) this.getAllCommunities();
+				if (
+					this.$route.params.category == null ||
+					this.$route.params.category == ''
+				)
+					this.getAllCommunities();
 				else this.getCategoryCommunities(this.$route.params.category);
 			},
 		},
@@ -44,9 +48,7 @@ export default {
 		let category = this.$route.params.category;
 		console.log(category);
 		if (!category) {
-			// category = 'Sports';
 			console.log('hi null');
-			// this.getCategoryCommunities(category);
 			this.getAllCommunities();
 		}
 	},
@@ -60,7 +62,6 @@ export default {
 			});
 			this.allCommunities =
 				this.$store.getters['topCommunity/getAllCommunities'];
-			console.log('--->', this.allCommunities);
 		},
 		async getCategoryCommunities(category) {
 			const accessToken = localStorage.getItem('accessToken');

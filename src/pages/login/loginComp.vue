@@ -145,6 +145,12 @@ export default {
 				// // console.log(response);
 				// console.log(response);
 				if (response == 200) {
+					await this.$store.dispatch('notifications/createNotificationToken', {
+						host: 'http://localhost:8081',
+						baseurl: this.$baseurl,
+						token: localStorage.getItem('accessToken'),
+					});
+
 					location.reload();
 					// this.done_login = true;
 					// this.done_message =

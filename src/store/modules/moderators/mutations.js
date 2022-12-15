@@ -56,6 +56,9 @@ export default {
 	cancelSuccessfully(state, payload) {
 		state.cancelSuccessfully = payload;
 	},
+	acceptSuccessfully(state, payload) {
+		state.acceptSuccessfully = payload;
+	},
 
 	//////////////SPAM/////////////////
 	setListOfSpams(state, payload) {
@@ -115,5 +118,11 @@ export default {
 	//////////////////////Unmoderated////////
 	setUnmoderated(state, payload) {
 		state.Unmoderated = payload;
+	},
+	setEditedPosts(state, payload) {
+		state.EditedPosts = payload;
+	},
+	setEditedComments(state, payload) {
+		state.EditedComments = payload;
 	},
 };

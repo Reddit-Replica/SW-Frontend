@@ -55,7 +55,9 @@ export default {
 	inviteModSuccessfully(state) {
 		return state.inviteModSuccessfully;
 	},
-
+	acceptSuccessfully(state) {
+		return state.acceptSuccessfully;
+	},
 	//////////////////////SPAM////////////////////////
 
 	listOfSpams(state) {
@@ -115,5 +117,11 @@ export default {
 	//////////////////UnModerated///////////////////////
 	Unmoderated(state) {
 		return state.Unmoderated;
+	},
+	EditedPosts(state) {
+		return state.EditedPosts;
+	},
+	EditedComments(state) {
+		return state.EditedComments;
 	},
 };
