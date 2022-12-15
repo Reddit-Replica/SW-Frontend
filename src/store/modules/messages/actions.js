@@ -162,11 +162,16 @@ export default {
 					senderUsername: responseData.children[i].data.senderUsername,
 					receiverUsername: responseData.children[i].data.receiverUsername,
 					sendAt: responseData.children[i].data.sendAt,
+					subject: responseData.children[i].data.subject,
 					type: responseData.children[i].data.type,
 					subredditName: responseData.children[i].data.subredditName,
+					isModerator: responseData.children[i].data.isModerator,
+					postTitle: responseData.children[i].data.postTitle,
 					postID: responseData.children[i].data.postID,
 					commentID: responseData.children[i].data.commentID,
 					numOfComments: responseData.children[i].data.numOfComments,
+					isSenderUser: responseData.children[i].data.isSenderUser,
+					isReceiverUser: responseData.children[i].data.isReceiverUser,
 				};
 				mentions.push(mention);
 			}
@@ -206,22 +211,38 @@ export default {
 		if (response.status == 200) {
 			const messages = [];
 
-			for (const key in responseData) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
 				const message = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					id: responseData[key].children[0].id,
-					text: responseData[key].children[0].text,
-					senderUsername: responseData[key].children[0].senderUsername,
-					receiverUsername: responseData[key].children[0].receiverUsername,
-					sendAt: responseData[key].children[0].sendAt,
-					subject: responseData[key].children[0].subject,
-					isReply: responseData[key].children[0].isReply,
-					isRead: responseData[key].children[0].isRead,
+					id: responseData.children[i].id,
+					text: responseData.children[i].data.text,
+					senderUsername: responseData.children[i].data.senderUsername,
+					receiverUsername: responseData.children[i].data.receiverUsername,
+					sendAt: responseData.children[i].data.sendAt,
+					subject: responseData.children[i].data.subject,
+					type: responseData.children[i].data.type,
+					subredditName: responseData.children[i].data.subredditName,
+					isModerator: responseData.children[i].data.isModerator,
+					postTitle: responseData.children[i].data.postTitle,
+					postID: responseData.children[i].data.postID,
+					commentID: responseData.children[i].data.commentID,
+					numOfComments: responseData.children[i].data.numOfComments,
+					isSenderUser: responseData.children[i].data.isSenderUser,
+					isReceiverUser: responseData.children[i].data.isReceiverUser,
 				};
 				messages.push(message);
 			}
 			context.commit('setUserMessages', messages);
+			context.commit('before', before);
+			context.commit('after', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
