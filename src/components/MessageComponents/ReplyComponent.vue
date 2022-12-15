@@ -28,7 +28,17 @@
 			<button
 				class="submit-form"
 				:id="'submit-form-' + index"
-				@click="replyFunction('send')"
+				v-if="!isMention"
+				@click.prevent="replyFunction('send')"
+			>
+				Save
+			</button>
+
+			<button
+				class="submit-form"
+				:id="'submit-form-' + index"
+				v-if="isMention"
+				@click.prevent="replyCommentFunction('send')"
 			>
 				Save
 			</button>
@@ -40,7 +50,7 @@
 				Cancel
 			</button>
 			<span class="delivered" v-if="delivered"
-				>your message has been delivered</span
+				>your reply has been delivered</span
 			>
 			<p class="error" v-if="error">we need something here</p>
 			<div class="formatting-help" v-if="formatting == 'hide'">
@@ -176,6 +186,48 @@ export default {
 			required: true,
 			default: '',
 		},
+		// @vuese
+		//if the reply is mentions
+		isMention: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		// @vuese
+		//post id
+		postId: {
+			type: String,
+			required: false,
+			default: '',
+		},
+		// @vuese
+		//comment id
+		parentId: {
+			type: String,
+			required: false,
+			default: '',
+		},
+		// @vuese
+		//parent type
+		parentType: {
+			type: String,
+			required: false,
+			default: '',
+		},
+		// @vuese
+		//level of the comment
+		level: {
+			type: Number,
+			required: false,
+			default: 0,
+		},
+		// @vuese
+		//subreddit name
+		subredditName: {
+			type: String,
+			required: false,
+			default: '',
+		},
 	},
 	methods: {
 		// @vuese
@@ -230,6 +282,42 @@ export default {
 					this.errorResponse = err;
 					this.delivered = false;
 				}
+			}
+		},
+		// @vuese
+		//handle request of sending reply in user mention
+		// @arg no argument
+		async replyCommentFunction() {
+			this.formValidation();
+			if (this.error != '') return;
+			this.delivered = false;
+			this.errorResponse = null;
+			let haveSubreddit = false;
+			if (this.subredditName != '') {
+				haveSubreddit = true;
+			}
+			try {
+				await this.$store.dispatch('messages/addComment', {
+					content: { ops: [{ insert: this.text }] },
+					postId: this.postId,
+					parentId: this.parentId,
+					parentType: this.parentType,
+					level: this.level,
+					subredditName: this.subredditName,
+					haveSubreddit: haveSubreddit,
+					baseurl: this.$baseurl,
+				});
+				if (this.$store.getters['messages/addSuccessfully']) {
+					this.text = '';
+					this.delivered = true;
+					this.$emit('doneSuccessfully');
+				} else {
+					this.errorResponse = 'some thing wrong';
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+				this.delivered = false;
 			}
 		},
 	},

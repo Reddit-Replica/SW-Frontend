@@ -9,6 +9,7 @@
 				:key="message"
 				:message="message"
 				:index="index"
+				@done-successfully="doneSuccessfully()"
 			></postreply-component>
 		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
@@ -62,6 +63,13 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+		},
+
+		// @vuese
+		//reload post replies from the store
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadPostReplies();
 		},
 	},
 };
