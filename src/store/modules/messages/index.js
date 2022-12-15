@@ -33,6 +33,7 @@ export default {
 			sentSuccessfully: false,
 			deleteMessageSuccessfully: false,
 			markSpamSuccessfully: false,
+			spamCommentSuccessfully: false,
 			blockSuccessfully: false,
 			votedSuccessfully: false,
 			replyMessageSuccessfully: false,

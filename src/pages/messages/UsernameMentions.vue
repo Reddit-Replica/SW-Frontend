@@ -64,6 +64,12 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		// @vuese
+		//reload compose messages from the store
+		// @arg no argument
+		doneSuccessfully() {
+			this.loadUserMentions();
+		},
 	},
 };
 </script>

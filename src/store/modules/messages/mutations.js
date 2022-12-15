@@ -47,6 +47,9 @@ export default {
 	markSpamSuccessfully(state, payload) {
 		state.markSpamSuccessfully = payload;
 	},
+	spamCommentSuccessfully(state, payload) {
+		state.spamCommentSuccessfully = payload;
+	},
 	blockSuccessfully(state, payload) {
 		state.blockSuccessfully = payload;
 	},
