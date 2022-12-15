@@ -335,12 +335,13 @@ export default {
 				senderUsername: '',
 				receiverUsername: '',
 				sendAt: '',
-				subredditName: '',
 				postTitle: '',
 				postId: '',
 				commentId: '',
 				numOfComments: '',
 				vote: '',
+				postOwner: '',
+				isRead: '',
 			}),
 		},
 		// @vuese
@@ -361,7 +362,7 @@ export default {
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
-			isRead: true,
+			isRead: this.message.isRead,
 			upClicked: this.message.vote == 1 ? true : false,
 			downClicked: this.message.vote == -1 ? true : false,
 			// counter: this.message.votes,
@@ -516,7 +517,13 @@ export default {
 		// Used to go to full comments page
 		// @arg no argument
 		goFullComments() {
-			let route = '/user/asmaaadel0/comments/639a56e93a373e5497eee43a/text';
+			let route =
+				'/user/' +
+				this.message.postOwner +
+				'/comments/' +
+				this.message.postId +
+				'/' +
+				this.message.postTitle;
 			this.$router.push(route);
 		},
 
