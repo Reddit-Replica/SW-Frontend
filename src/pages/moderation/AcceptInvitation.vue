@@ -43,7 +43,7 @@ export default {
 			this.$router.push('/login');
 			document.title = 'reddit';
 		} else {
-			document.title = this.$route.params.subredditName;
+			document.title = this.subredditName;
 		}
 	},
 	computed: {
