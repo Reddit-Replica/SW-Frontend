@@ -112,4 +112,8 @@ export default {
 	setListOfBanned(state, payload) {
 		state.listOfBanned = payload;
 	},
+	//////////////////////Unmoderated////////
+	setUnmoderated(state, payload) {
+		state.Unmoderated = payload;
+	},
 };
