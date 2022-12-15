@@ -207,7 +207,7 @@
 <script>
 import ListBar from '../../components/moderation/ListBar.vue';
 import AddFlair from '../../components/moderation/AddFlair.vue';
-import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 import FlairItem from '../../components/moderation/FlairItem.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 export default {
