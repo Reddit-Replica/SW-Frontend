@@ -700,8 +700,14 @@ export default {
 		// @arg no argument
 		async handlelogout() {
 			try {
+				await this.$store.dispatch('notifications/removeNotificationToken', {
+					baseurl: this.$baseurl,
+					token: localStorage.getItem('accessToken'),
+				});
+
 				await this.$store.dispatch('logout_handle');
-				location.reload();
+
+				//location.reload();
 			} catch (error) {
 				console.log('error');
 				// this.error = err;

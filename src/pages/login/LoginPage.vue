@@ -191,6 +191,7 @@ export default {
 				await this.$store.dispatch('notifications/createNotificationToken', {
 					host: 'http://localhost:8081',
 					baseurl: this.$baseurl,
+					token: localStorage.getItem('accessToken'),
 				});
 
 				setTimeout(() => this.$router.replace('/main'), 1000);

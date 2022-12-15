@@ -93,15 +93,12 @@ export default {
 			await this.dispatch('notifications/registerServiceWorker', {
 				baseurl: payload.baseurl,
 				host: payload.host,
+				token: payload.token,
 			});
 		} else {
 			console.log(localStorage.getItem('clientToken'));
 			context.commit('setClientToken', localStorage.getItem('clientToken'));
 		}
-		// await store.dispatch('notifications/registerServiceWorker', {
-		// 	host: payload.host,
-		// 	baseurl: payload.baseurl,
-		// });
 	},
 
 	async registerServiceWorker(_, payload) {
@@ -126,6 +123,7 @@ export default {
 						await store.dispatch('notifications/sendTokenToServer', {
 							clientToken: token,
 							baseurl: payload.baseurl,
+							token: payload.token,
 						});
 
 						//store returned uuid with token
@@ -135,6 +133,7 @@ export default {
 						store.dispatch('notifications/listenForegroundMessage', {
 							reg,
 							host: payload.host,
+							token: payload.token,
 						});
 					} catch (err) {
 						console.error(err);
@@ -173,27 +172,23 @@ export default {
 		console.log('send');
 
 		const baseurl = payload.baseurl;
-		const clientToken = { clientToken: payload.clientToken };
+		const data = { type: 'web', accessToken: payload.clientToken };
 
-		console.log(clientToken);
-
-		const response = await fetch(baseurl + '/send-token', {
+		const response = await fetch(baseurl + '/notification-subscribe', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				//Authorization: 'Bearer ' + payload.token,
+				Authorization: 'Bearer ' + payload.token,
 			},
-			body: JSON.stringify(clientToken),
+			body: JSON.stringify(data),
 		});
-
-		console.log(clientToken);
 
 		const responseData = await response.json();
 
 		if (response.status == 200) {
 			return;
 		} else if (response.status == 401) {
-			const error = new Error(responseData.error || 'Bad Request');
+			const error = new Error(responseData.error || 'Unauthorized');
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');
@@ -207,7 +202,7 @@ export default {
 			reg = await navigator.serviceWorker.getRegistration(
 				host + '/firebase-messaging-sw.js'
 			);
-		onMessage(this.messaging, (payload) => {
+		onMessage(getMessaging(firebaseApp), (payload) => {
 			console.log('Message received. ', payload);
 			let { notification, data } = payload;
 			let notificationTitle = 'Test title';
@@ -235,5 +230,34 @@ export default {
 					notificationOptions
 				);
 		});
+	},
+	async removeNotificationToken(_, payload) {
+		console.log('removing');
+
+		const baseurl = payload.baseurl;
+		const data = { type: 'web' };
+
+		localStorage.removeItem('clientToken');
+
+		const response = await fetch(baseurl + '/notification-unsubscribe', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+			body: JSON.stringify(data),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
 	},
 };
