@@ -11,4 +11,8 @@ export default {
 		console.log('getters moderationSettings');
 		return state.moderationSettings;
 	},
+	getpostandcommentsSettings(state) {
+		console.log('getters postandcommentsSettings');
+		return state.postandcommentsSettings;
+	},
 };

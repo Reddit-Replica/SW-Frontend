@@ -48,6 +48,9 @@
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 export default {
+	created() {
+		this.getSettings();
+	},
 	computed: {
 		subredditName() {
 			return this.$route.params.subredditName;
@@ -98,6 +101,31 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
+		},
+
+		async getSettings() {
+			const actionPayload = {
+				communityName: this.subredditName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetcpostandcommentsSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = this.$store.getters['setting/getpostandcommentsSettings'];
+			this.enableSpoiler = this.setting.enableSpoiler;
+			this.allowImagesInComment = this.setting.allowImagesInComment;
+			this.suggestedSort = this.setting.suggestedSort;
 		},
 	},
 };
