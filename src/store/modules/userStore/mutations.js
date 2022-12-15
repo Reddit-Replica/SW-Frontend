@@ -73,4 +73,13 @@ export default {
 			Object.assign(state.savedData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setSubreddits(state, payload) {
+		state.listOfSubreddits = payload;
+	},
+	setBefore(state, payload) {
+		state.before = payload;
+	},
+	setAfter(state, payload) {
+		state.after = payload;
+	},
 };
