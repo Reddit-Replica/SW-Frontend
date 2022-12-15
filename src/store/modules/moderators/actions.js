@@ -1277,4 +1277,66 @@ export default {
 			throw error;
 		}
 	},
+	async unModerated(context, payload) {
+		const baseurl = payload.baseurl;
+		const sub = payload.subredditName;
+		const response = await fetch(baseurl + `/r/` + sub + '/about/unmoderated', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
+
+		const responseData = await response.json();
+		const unModerated = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const post = {
+					id: responseData.children[i].id,
+					postId: responseData.children[i].data.id,
+					subreddit: responseData.children[i].data.id,
+					postBy: responseData.children[i].data.id,
+					title: responseData.children[i].data.id,
+					link: responseData.children[i].data.id,
+					video: responseData.children[i].data.video,
+					content: responseData.children[i].data.content,
+					nsfw: responseData.children[i].data.nsfw,
+					spoiler: responseData.children[i].data.spoiler,
+					votes: responseData.children[i].data.votes,
+					numberOfComments: responseData.children[i].data.numberOfComments,
+					editedAt: responseData.children[i].data.editedAt,
+					postedAt: responseData.children[i].data.postedAt,
+					spammedAt: responseData.children[i].data.spammedAt,
+					saved: responseData.children[i].data.saved,
+					vote: responseData.children[i].data.vote,
+					ImagePath: responseData.children[i].data.images[0].path,
+					Imagecaption: responseData.children[i].data.images[0].caption,
+					Imagelink: responseData.children[i].data.images[0].link,
+				};
+				unModerated.push(post);
+			}
+			context.commit('setUnmoderated', unModerated);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
 };
