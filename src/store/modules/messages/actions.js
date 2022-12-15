@@ -143,6 +143,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
 			const mentions = [];
 
@@ -167,6 +168,7 @@ export default {
 					postId: responseData.children[i].data.postId,
 					commentId: responseData.children[i].data.commentId,
 					numOfComments: responseData.children[i].data.numOfComments,
+					vote: responseData.children[i].data.vote,
 				};
 				mentions.push(mention);
 			}
