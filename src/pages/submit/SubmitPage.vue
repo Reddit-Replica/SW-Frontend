@@ -99,7 +99,7 @@ export default {
 	data() {
 		return {
 			submitTypesActive: [1, 0, 0, 0, 0], // this an array -> decide which submit types is active 1-> active 0-> not active
-			buttonDisabled: false,
+			buttonDisabled: true,
 
 			//post params
 			kind: null,
@@ -116,10 +116,65 @@ export default {
 			video: null,
 			sendReplies: null,
 			choosen: null,
-			userName: '',
+			userName: null,
+			try: (this.getTitle && this.getSubreddit) || this.getUsername,
 		};
 	},
-	watch: {},
+	computed: {
+		// enable() {
+		// 	console.log(this.getTitle && (this.getSubreddit || this.getUsername));
+		// 	return this.getTitle && (this.getSubreddit || this.getUsername);
+		// },
+		Title() {
+			return this.$store.getters['posts/getTitle'];
+		},
+		community() {
+			return this.$store.getters['posts/getSubreddit'];
+		},
+		incommunity() {
+			return this.$store.getters['posts/getinSubreddit'];
+		},
+	},
+	watch: {
+		// enable(value) {
+		// 	console.log(value);
+		// 	// this.enable();
+		// 	if (value) this.buttonDisabled = false;
+		// },
+		Title(value) {
+			console.log(value);
+			// this.enable();
+			this.title = value;
+			// if(value=='')
+			//  this.title=null;
+			if (this.inSubreddit && this.inSubreddit != '') {
+				if (
+					this.title &&
+					this.title != '' &&
+					this.subreddit &&
+					this.subreddit != ''
+				)
+					this.buttonDisabled = false;
+				else this.buttonDisabled = true;
+			} else {
+				if (this.title && this.title != '') this.buttonDisabled = false;
+				else this.buttonDisabled = true;
+			}
+			// if (value) this.buttonDisabled = false;
+		},
+		community(value) {
+			this.subreddit = value;
+		},
+		incommunity(value) {
+			this.inSubreddit = value;
+		},
+
+		// try(value) {
+		// 	console.log(value);
+		// 	// this.enable();
+		// 	if (value) this.buttonDisabled = false;
+		// },
+	},
 	methods: {
 		// @vuese
 		// get the title of the post
@@ -153,7 +208,7 @@ export default {
 		// get flair id of the post
 
 		getFlairId() {
-			//this.flairId = this.$store.getters['posts/getFlairId'];
+			this.flairId = this.$store.getters['posts/getFlairId'];
 		},
 		// @vuese
 		// get send replies of the post
@@ -203,7 +258,7 @@ export default {
 			this.getKind();
 			this.getNsfw();
 			this.getSpoiler();
-			//this.getFlairId();
+			this.getFlairId();
 			this.getsendReplies();
 			this.getContent();
 			this.getVideo();
@@ -213,7 +268,6 @@ export default {
 			this.getUsername();
 			this.getSubreddit();
 			this.getInSubreddit();
-			// this.getFlairs();
 			// this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
@@ -228,7 +282,8 @@ export default {
 			console.log(this.sendReplies);
 			console.log(this.subreddit);
 			console.log(this.inSubreddit);
-			//console.log(this.subreddit);
+			console.log('flair id');
+			console.log(this.flairId);
 
 			if (
 				this.title === null ||
@@ -253,7 +308,7 @@ export default {
 					content: this.content,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -287,7 +342,7 @@ export default {
 					video: this.video,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -321,7 +376,7 @@ export default {
 					content: this.content,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
@@ -357,7 +412,7 @@ export default {
 					imageLinks: this.imageLinks,
 					nsfw: this.nsfw,
 					spoiler: this.spoiler,
-					// flairId: this.flairId,
+					flairId: this.flairId,
 					sendReplies: this.sendReplies,
 					baseurl: this.$baseurl,
 				};
