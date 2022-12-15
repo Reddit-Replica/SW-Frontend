@@ -60,6 +60,9 @@ export default {
 	replyMessageSuccessfully(state) {
 		return state.replyMessageSuccessfully;
 	},
+	addSuccessfully(state) {
+		return state.addSuccessfully;
+	},
 	before(state) {
 		return state.before;
 	},

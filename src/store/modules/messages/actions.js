@@ -796,6 +796,7 @@ export default {
 			subredditName: payload.subredditName,
 			haveSubreddit: payload.haveSubreddit,
 		};
+		console.log(comment);
 		const baseurl = payload.baseurl;
 		const accessToken = localStorage.getItem('accessToken');
 		// const accessToken =
