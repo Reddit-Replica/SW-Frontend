@@ -2,7 +2,7 @@
 	<pinned-posts
 		:pinned-posts-data="getUserPinnedPostData.pinnedPostData"
 	></pinned-posts>
-	<sortposts-bar @title="sortBarClicked"></sortposts-bar>
+	<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
 	<div
 		v-for="overviewPostData in getUserOverviewData.overviewData.children"
 		:key="overviewPostData.id"

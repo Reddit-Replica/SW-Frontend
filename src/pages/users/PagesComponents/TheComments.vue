@@ -1,7 +1,7 @@
 <template>
 	<div style="position: relative">
-		<sortposts-bar @title="sortBarClicked"></sortposts-bar>
-		<div v-if="0 && loading">
+		<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
+		<div v-if="loading">
 			<the-spinner
 				style="position: absolute; left: 50%; top: 53%; top: 188px"
 			></the-spinner>
