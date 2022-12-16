@@ -606,7 +606,7 @@ button {
 	position: absolute;
 	left: 103%;
 	width: 300px;
-	top: 400px;
+	top: 450px;
 }
 
 .big-box {
