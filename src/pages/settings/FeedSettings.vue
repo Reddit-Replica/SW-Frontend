@@ -17,6 +17,8 @@
 					<switch-button
 						id="button-one"
 						@checked="getadultContent"
+						v-if="create"
+						:val="adultContent"
 					></switch-button>
 				</div>
 			</div>
@@ -74,6 +76,8 @@
 					<switch-button
 						id="button-five"
 						@checked="getautoplayMedia"
+						:val="autoplayMedia"
+						v-if="create"
 					></switch-button>
 				</div>
 			</div>
@@ -230,15 +234,34 @@
 				</div>
 			</div>-->
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
 <script>
 import SwitchButton from '../../components/BaseComponents/SwitchButton.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 // import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.adultContent);
+		console.log(this.autoplayMedia);
+		this.create = true;
+	},
 	components: {
 		SwitchButton,
+		SaveUnsavePopupMessage,
 		// SubMenu,
 	},
 	data() {
@@ -249,6 +272,8 @@ export default {
 			// ShowSecitemChoice: false,
 			adultContent: false,
 			autoplayMedia: false,
+			create: false,
+			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
@@ -262,7 +287,7 @@ export default {
 			this.autoplayMedia = value;
 			console.log('this.autoplayMedia');
 			console.log(this.autoplayMedia);
-			this.changeadultContent();
+			this.changegetautoplayMedia();
 		},
 		async changeadultContent() {
 			const actionPayload = {
@@ -278,6 +303,7 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				this.error = err;
@@ -297,11 +323,68 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
+		},
+		async getSettings() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchAccountSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters['setting/getAccountSettings'];
+			console.log(this.setting);
+			this.adultContent = this.setting.adultContent;
+			this.autoplayMedia = this.setting.autoplayMedia;
+			console.log(this.adultContent);
+			console.log(this.autoplayMedia);
+		},
+		doneSuccessfully(title) {
+			this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'settings',
+				state: title,
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
 		},
 		// itemsMenuOneFunction() {
 		// 	this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
@@ -374,5 +457,15 @@ label {
 }
 .new-option-block {
 	padding-left: 32px;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>

@@ -3,17 +3,17 @@
 		type="checkbox"
 		v-model="value"
 		@click="onChecked"
-		:class="value ? 'style1' : 'style2'"
+		:class="value ? 'style2' : 'style1'"
 	/>
 </template>
 <script>
 export default {
 	emits: ['checked'],
-	created() {
-		this.value = this.val;
-		console.log('this.value in switch button');
-		console.log(this.value);
-	},
+	// created() {
+	// 	this.value = !this.val;
+	// 	console.log('this.value in switch button');
+	// 	console.log(this.value);
+	// },
 	props: {
 		val: {
 			type: Boolean,
@@ -22,7 +22,7 @@ export default {
 	},
 	data() {
 		return {
-			value: this.val,
+			value: !this.val,
 		};
 	},
 	methods: {

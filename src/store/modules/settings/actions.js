@@ -233,6 +233,8 @@ export default {
 	//////////////////// this part for moderation setting //////////////////////////
 
 	async communitySettings(context, payload) {
+		console.log('welcome message');
+		console.log(payload.welcomeMessage);
 		const setting = {
 			communityName: payload.communityName,
 			mainTopic: payload.mainTopic,
