@@ -4,7 +4,7 @@
 		<div class="content">
 			<div class="image-name">
 				<div class="image" v-if="subreddit.picture != undefined">
-					<img :src="subreddit.picture" alt="" />
+					<img :src="$baseurl + '/' + subreddit.picture" alt="" />
 				</div>
 				<div class="image">
 					<img src="../../../img/default_subreddit_image.png" alt="" />

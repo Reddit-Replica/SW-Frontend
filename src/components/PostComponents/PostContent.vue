@@ -42,6 +42,9 @@
 		v-html="renderingHTML"
 		v-if="post.content != undefined"
 	></div>
+	<div v-if="post.kind == 'link'" class="post-link">
+		<router-link :to="post.link">{{ post.link }}</router-link>
+	</div>
 	<div class="post-post" v-if="post.kind == 'post'">
 		<post-content :post="post.sharedPostDetails"></post-content>
 	</div>
@@ -164,5 +167,12 @@ video,
 .post-image {
 	width: 100%;
 	height: auto;
+}
+.post-link {
+	font-size: 12px;
+}
+.post-link:hover {
+	font-size: 12px;
+	text-decoration: underline;
 }
 </style>
