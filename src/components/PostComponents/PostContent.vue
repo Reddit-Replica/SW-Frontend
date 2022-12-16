@@ -42,7 +42,7 @@
 		v-html="renderingHTML"
 		v-if="post.content != undefined"
 	></div>
-	<div v-if="post.kind == 'link'" class="post-link">
+	<div v-if="post.link != undefined" class="post-link">
 		<router-link :to="post.link">{{ post.link }}</router-link>
 	</div>
 	<div class="post-post" v-if="post.kind == 'post'">
