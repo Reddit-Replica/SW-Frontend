@@ -112,7 +112,7 @@
 							</div>
 							<div v-if="spammed">spammed</div>
 						</li>
-						<li>
+						<!-- <li>
 							<form action="#">
 								<input
 									type="hidden"
@@ -147,7 +147,7 @@
 								:id="'click-remove-' + index"
 								>Remove</span
 							>
-						</li>
+						</li> -->
 						<li :id="'block-' + index">
 							<span
 								class="sure-block"
@@ -263,6 +263,7 @@ export default {
 			errorResponse: null,
 			showReplyBox: false,
 			data: '',
+			handleTime: '',
 			isRead: this.message.isRead,
 		};
 	},
@@ -275,44 +276,51 @@ export default {
 		this.calculateTime();
 		this.renderContent();
 	},
-	computed: {
-		// @vuese
-		//return handled time after calculated it
-		// @type object
-		handleTime() {
-			return this.$store.getters['moderation/handleTime'];
-		},
-	},
 	methods: {
 		// @vuese
 		//calculate time
 		// @type object
 		calculateTime() {
-			this.$store.dispatch('moderation/handleTime', {
-				time: this.message.sendAt,
-			});
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.message.sendAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
 		},
 		// @vuese
 		//toggle remove action
-		// @arg The argument is a string value representing if user click ok
-		async removeAction(action) {
-			this.removeUser = !this.removeUser;
-			if (action == 'yes') {
-				try {
-					this.$store.dispatch('messages/deleteMessage', {
-						id: this.message.id,
-						type: 'comment',
-						baseurl: this.$baseurl,
-					});
-					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
-						this.disappear = true;
-					}
-				} catch (err) {
-					this.errorResponse = err;
-					this.disappear = false;
-				}
-			}
-		},
+		// // @arg The argument is a string value representing if user click ok
+		// async removeAction(action) {
+		// 	this.removeUser = !this.removeUser;
+		// 	if (action == 'yes') {
+		// 		try {
+		// 			this.$store.dispatch('messages/deleteMessage', {
+		// 				id: this.message.commentId,
+		// 				type: 'comment',
+		// 				baseurl: this.$baseurl,
+		// 			});
+		// 			if (this.$store.getters['messages/deleteMessageSuccessfully']) {
+		// 				this.disappear = true;
+		// 			}
+		// 		} catch (err) {
+		// 			this.errorResponse = err;
+		// 			this.disappear = false;
+		// 		}
+		// 	}
+		// },
 		// @vuese
 		//handle block action
 		// @arg The argument is a string value representing if user click ok
@@ -367,24 +375,24 @@ export default {
 		// @vuese
 		//handle delete action
 		// @arg The argument is a string value representing if user click ok
-		async deleteAction(action) {
-			this.deleteUser = !this.deleteUser;
-			if (action == 'yes') {
-				try {
-					this.$store.dispatch('messages/deleteMessage', {
-						id: this.message.commentId,
-						type: 'comment',
-						baseurl: this.$baseurl,
-					});
-					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
-						this.disappear = true;
-					}
-				} catch (err) {
-					this.errorResponse = err;
-					this.disappear = false;
-				}
-			}
-		},
+		// async deleteAction(action) {
+		// 	this.deleteUser = !this.deleteUser;
+		// 	if (action == 'yes') {
+		// 		try {
+		// 			this.$store.dispatch('messages/deleteMessage', {
+		// 				id: this.message.commentId,
+		// 				type: 'comment',
+		// 				baseurl: this.$baseurl,
+		// 			});
+		// 			if (this.$store.getters['messages/deleteMessageSuccessfully']) {
+		// 				this.disappear = true;
+		// 			}
+		// 		} catch (err) {
+		// 			this.errorResponse = err;
+		// 			this.disappear = false;
+		// 		}
+		// 	}
+		// },
 		//@vuese
 		//upvote on post
 		async upvote() {
