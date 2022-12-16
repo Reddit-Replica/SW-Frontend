@@ -9,11 +9,11 @@
 <script>
 export default {
 	emits: ['checked'],
-	created() {
-		this.value = !this.val;
-		console.log('this.value in switch button');
-		console.log(this.value);
-	},
+	// created() {
+	// 	this.value = !this.val;
+	// 	console.log('this.value in switch button');
+	// 	console.log(this.value);
+	// },
 	props: {
 		val: {
 			type: Boolean,
