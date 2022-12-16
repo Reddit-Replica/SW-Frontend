@@ -207,6 +207,8 @@
 						<switch-button
 							@checked="getNsfw"
 							id="nsfw-profile-settings"
+							v-if="create"
+							:val="nsfw"
 						></switch-button>
 						<base-dialog
 							:show="nsfwClicked"
@@ -259,6 +261,8 @@
 						<switch-button
 							id="allow-profile-settings"
 							@checked="getAllowfollow"
+							v-if="create"
+							:val="allowToFollowYou"
 						></switch-button>
 					</div>
 				</div>
@@ -323,6 +327,16 @@ export default {
 	// async created() {
 	// 	this.userData = await this.$store.getters['user/getUserData'];
 	// 	console.log(this.userData);
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.displayName);
+		console.log(this.about);
+		console.log(this.nsfw);
+		console.log(this.allowToFollowYou);
+
+		this.create = true;
+	},
 	computed: {
 		user() {
 			return this.$store.getters['user/getUserData'];
@@ -340,9 +354,10 @@ export default {
 			displayName: '',
 			about: '',
 			// havePassword: false,
-			nsfw: false,
-			allowToFollowYou: false,
+			nsfw: null,
+			allowToFollowYou: null,
 			userData: null,
+			create: false,
 		};
 	},
 	watch: {
@@ -403,7 +418,7 @@ export default {
 			console.log('this.nsfw');
 			console.log(this.nsfw);
 			const actionPayload = {
-				about: this.about,
+				nsfw: this.nsfw,
 				baseurl: this.$baseurl,
 			};
 			try {
@@ -442,6 +457,36 @@ export default {
 			} catch (err) {
 				console.log(this.err);
 			}
+		},
+
+		async getSettings() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchAccountSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters['setting/getAccountSettings'];
+			console.log(this.setting);
+			this.displayName = this.setting.displayName;
+			this.about = this.setting.about;
+			this.nsfw = this.setting.nsfw;
+			this.allowToFollowYou = this.setting.allowToFollowYou;
+			console.log(this.displayName);
+			console.log(this.about);
+			console.log(this.nsfw);
+			console.log(this.allowToFollowYou);
 		},
 	},
 };
