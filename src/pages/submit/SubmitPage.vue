@@ -323,6 +323,7 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
+						/////r/:subredditName/comments/:postId/:postName
 						setTimeout(
 							() => this.$router.replace('/user/' + this.userName),
 							1000

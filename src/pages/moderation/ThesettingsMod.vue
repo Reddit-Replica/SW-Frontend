@@ -139,7 +139,8 @@
 				id="btn2"
 				style="margin-left: 15px"
 				@checked="getSendmessage"
-				:val="nsfw"
+				:val="sendWelcomeMessage"
+				v-if="create"
 			></switch-button>
 		</span>
 		<textarea
@@ -472,6 +473,7 @@
 				id="btn2"
 				style="margin-left: 15px"
 				@checked="getNsfw"
+				:val="nsfw"
 			></switch-button>
 		</p>
 		<div v-if="communityType == 'Private'">
@@ -675,6 +677,7 @@ export default {
 			buttonDisabled: false,
 			setting: {},
 			savedUnsavedPosts: [],
+			create: false,
 		};
 	},
 	methods: {
