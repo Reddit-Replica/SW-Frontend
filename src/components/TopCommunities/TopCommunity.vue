@@ -1,7 +1,8 @@
 <template>
 	<li class="topCommunity">
-		<router-link
+		<div
 			:to="'r/' + name"
+			@click.prevent="goToSubreddit(name)"
 			class="topCommunityLink"
 			:id="'top-community-link-' + index"
 		>
@@ -33,9 +34,9 @@
 					alt="community image"
 					v-else
 				/>
-				<a class="topCommunityName" href="link">{{ name }}</a>
+				<a class="topCommunityName" href="link">r/{{ name }}</a>
 			</div>
-		</router-link>
+		</div>
 
 		<div class="joinBlock">
 			<!-- <base-button
@@ -152,6 +153,9 @@ export default {
 			});
 
 			this.$emit('reload');
+		},
+		goToSubreddit(name) {
+			this.$router.replace(`/r/${name}`);
 		},
 	},
 };
