@@ -388,9 +388,13 @@ export default {
 	async fetchSubredditPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const title = payload.title;
+		var query;
+
+		if (payload.query == undefined) query = '';
+		else query = '?time=' + payload.query;
 
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/${title}`,
+			baseurl + `/r/${payload.subredditName}/${title}${query}`,
 			{
 				method: 'GET',
 				headers: {
@@ -406,44 +410,8 @@ export default {
 			throw error;
 		}
 
-		const posts = [];
-		for (const key in responseData) {
-			const post = {
-				before: responseData[key].before,
-				after: responseData[key].after,
-				id: responseData[key].children[0].id,
-				content: responseData[key].children[0].content,
-				postedBy: responseData[key].children[0].postedBy,
-				subreddit: responseData[key].children[0].subreddit,
-				postedAt: responseData[key].children[0].postedAt,
-				title: responseData[key].children[0].title,
-				comments: responseData[key].children[0].comments,
-				votes: responseData[key].children[0].votes,
-				votingType: responseData[key].children[0].votingType,
-				saved: responseData[key].children[0].saved,
-				kind: responseData[key].children[0].kind,
-				sharePostId: responseData[key].children[0].sharePostId,
-			};
-			if (post.kind == 'post') {
-				const response2 = await fetch(baseurl + '/post-details', {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + payload.token,
-					},
-				});
-				const responseData2 = await response2.json();
-				if (!response2.ok) {
-					const error2 = new Error(responseData2.message || 'Failed to fetch!');
-					throw error2;
-				}
-				const sharedPostDetails = responseData2[0];
-				sharedPostDetails.id = post.sharePostId;
-				post.sharedPostDetails = sharedPostDetails;
-			}
-			posts.push(post);
-		}
-		context.commit('setPosts', posts);
+		context.commit('setPosts', responseData['children']);
+		console.log(responseData);
 	},
 	///////////////// moderation community norhan //////////////////
 	async getsuggestedTopics(context, payload) {
