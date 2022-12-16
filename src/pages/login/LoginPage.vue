@@ -187,6 +187,13 @@ export default {
 				this.done_message =
 					'youre now logged in, You will be redirected to main page';
 				// this.$router.replace('/main');
+
+				await this.$store.dispatch('notifications/createNotificationToken', {
+					host: 'http://localhost:8081',
+					baseurl: this.$baseurl,
+					token: localStorage.getItem('accessToken'),
+				});
+
 				setTimeout(() => this.$router.replace('/main'), 1000);
 				// if (response == 200) {
 				// }

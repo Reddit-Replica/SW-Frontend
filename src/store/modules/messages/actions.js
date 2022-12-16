@@ -40,13 +40,15 @@ export default {
 					subject: responseData.children[i].data.subject,
 					type: responseData.children[i].data.type,
 					subredditName: responseData.children[i].data.subredditName,
-					isModerator: responseData.children[i].data.isModerator,
 					postTitle: responseData.children[i].data.postTitle,
-					postID: responseData.children[i].data.postID,
-					commentID: responseData.children[i].data.commentID,
+					postId: responseData.children[i].data.postId,
+					commentId: responseData.children[i].data.commentId,
 					numOfComments: responseData.children[i].data.numOfComments,
 					isSenderUser: responseData.children[i].data.isSenderUser,
 					isReceiverUser: responseData.children[i].data.isReceiverUser,
+					isRead: responseData.children[i].data.isRead,
+					vote: responseData.children[i].data.vote,
+					postOwner: responseData.children[i].data.postOwner,
 				};
 				messages.push(message);
 			}
@@ -206,6 +208,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
 			const messages = [];
 
@@ -226,11 +229,15 @@ export default {
 					j++
 				) {
 					const messageInMessage = {
+						msgID: responseData.children[i].data.messages[j].msgID,
 						senderUsername:
 							responseData.children[i].data.messages[j].senderUsername,
+						text: responseData.children[i].data.messages[j].text,
 						receiverUsername:
 							responseData.children[i].data.messages[j].receiverUsername,
 						sendAt: responseData.children[i].data.messages[j].sendAt,
+						subredditName:
+							responseData.children[i].data.messages[j].subredditName,
 						isSenderUser:
 							responseData.children[i].data.messages[j].isSenderUser,
 						isReceiverUser:

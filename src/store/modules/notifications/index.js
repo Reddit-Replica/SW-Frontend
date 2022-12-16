@@ -7,8 +7,12 @@ export default {
 	state() {
 		return {
 			notifications: [],
+			someNotifications: [],
 			allRead: false,
 			hiddenSuccessfully: false,
+			readSuccessfully: false,
+
+			clientToken: null,
 		};
 	},
 	mutations,

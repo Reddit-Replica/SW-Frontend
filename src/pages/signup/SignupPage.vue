@@ -407,6 +407,11 @@ export default {
 
 				try {
 					await this.$store.dispatch('signuphandle', actionPayload);
+					await this.$store.dispatch('notifications/createNotificationToken', {
+						host: 'http://localhost:8081',
+						baseurl: this.$baseurl,
+					});
+
 					this.$router.replace('/main');
 				} catch (err) {
 					this.error = err;

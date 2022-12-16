@@ -60,7 +60,7 @@
 					:mute="mute"
 					:search="search"
 					:index="index"
-					@doneSuccessfully="doneSuccessfully('unmuted')"
+					@done-successfully="doneSuccessfully('unmuted')"
 				></mute-item>
 			</ul>
 			<div class="no-items" v-else>

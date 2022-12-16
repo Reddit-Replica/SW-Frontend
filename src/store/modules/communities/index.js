@@ -22,6 +22,7 @@ export default {
 			posts: [],
 			createdSuccessfully: false,
 			topics: [],
+			notFound: false,
 		};
 	},
 	mutations,

@@ -142,7 +142,7 @@ export default {
 			text: '',
 		};
 	},
-	emits: ['hideReplyBox'],
+	emits: ['hideReplyBox', 'doneSuccessfully'],
 	props: {
 		// @vuese
 		//show reply box prop
@@ -265,6 +265,7 @@ export default {
 						text: this.text,
 						senderUsername: '/u/' + this.receiverUsername,
 						receiverUsername: '/u/' + this.senderUsername,
+						subredditName: this.subredditName,
 						isReply: true,
 						subject: 're: ' + this.subject,
 						repliedMsgId: this.id,
@@ -310,7 +311,7 @@ export default {
 				if (this.$store.getters['messages/addSuccessfully']) {
 					this.text = '';
 					this.delivered = true;
-					this.$emit('doneSuccessfully');
+					// this.$emit('doneSuccessfully');
 				} else {
 					this.errorResponse = 'some thing wrong';
 				}

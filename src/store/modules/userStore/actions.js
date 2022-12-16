@@ -18,7 +18,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		// console.log(responseData);
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to fetch User Data!'
@@ -26,8 +26,8 @@ export default {
 		// 	console.log(response.status);
 		// 	throw error;
 		// }
-		console.log('medo', response.status);
-		console.log(responseData);
+		// console.log('medo', response.status);
+		// console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserData', {
 				responseData,
@@ -387,5 +387,61 @@ export default {
 				responseData,
 			});
 		return response.status;
+	},
+
+	async getUserSubreddits(context, payload) {
+		const beforeMod = payload.beforeMod;
+		const afterMod = payload.afterMod;
+		const baseurl = payload.baseurl;
+		let mediaQuery;
+		if (beforeMod) {
+			mediaQuery = '?limit=10&before=' + beforeMod;
+		} else if (afterMod) {
+			mediaQuery = '?limit=10&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=10';
+		}
+		const response = await fetch(baseurl + `/joined-subreddits${mediaQuery}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
+		const responseData = await response.json();
+		// console.log(responseData);
+		const subreddits = [];
+		if (response.status == 200) {
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			for (let i = 0; i < responseData.children.length; i++) {
+				const subreddit = {
+					title: responseData.children[i].title,
+					picture: responseData.children[i].picture,
+					members: responseData.children[i].members,
+				};
+				subreddits.push(subreddit);
+			}
+			// console.log(subreddits);
+			context.commit('setSubreddits', subreddits);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized access');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
 	},
 };
