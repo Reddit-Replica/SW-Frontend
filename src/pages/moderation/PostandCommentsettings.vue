@@ -70,8 +70,8 @@ export default {
 	data() {
 		return {
 			create: false,
-			enableSpoiler: '',
-			allowImagesInComment: '',
+			enableSpoiler: null,
+			allowImagesInComment: null,
 			suggestedSort: 'none',
 			suggestedSortoptions: ['none', 'best', 'top', 'new', 'old'],
 			buttonDisabled: false,
