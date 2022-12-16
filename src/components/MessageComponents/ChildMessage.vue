@@ -215,6 +215,13 @@ export default {
 			required: true,
 			default: false,
 		},
+		// @vuese
+		//if it is expand or collapse
+		expandd: {
+			type: Boolean,
+			required: true,
+			default: true,
+		},
 	},
 	computed: {
 		// @vuese
@@ -240,6 +247,12 @@ export default {
 	},
 	beforeMount() {
 		this.calculateTime();
+	},
+	watch: {
+		expandd() {
+			console.log('watch');
+			this.expandAll = this.expandd;
+		},
 	},
 	methods: {
 		// @vuese
