@@ -55,13 +55,31 @@
 						>
 					</p>
 					<!-- <p class="md">{{ message.text }}</p> -->
-					<Markdown class="md" :source="message.text" />
+					<!-- <Markdown class="md" :source="message.text" /> -->
+					<div class="md" v-html="data"></div>
 					<ul class="ul-messages flat-list">
-						<li :id="'context-link-' + index">
+						<!-- <li :id="'context-link-' + index">
 							<a href="" :id="'context-a-' + index">context</a>
+						</li> -->
+						<!-- <li :id="'full-comment-link-' + index">
+							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
+						</li> -->
+						<li :id="'context-link-' + index">
+							<!-- <a href="#" :id="'context-a-' + index">context</a> -->
+							<span class="link" @click="goContext()" id="'context-a-' + index"
+								>context</span
+							>
 						</li>
 						<li :id="'full-comment-link-' + index">
-							<a href="" :id="'full-comment-a-' + index">Full Comments(5)</a>
+							<span
+								class="link"
+								@click="goFullComments()"
+								:id="'full-comment-a-' + index"
+								>Full Comments({{ message.numOfComments }})</span
+							>
+							<!-- <a href="" :id="'full-comment-a-' + index"
+								>Full Comments({{ message.numOfComments }})</a
+							> -->
 						</li>
 						<li :id="'spam-box-' + index">
 							<div v-if="!spammed">
@@ -183,16 +201,23 @@
 			:show-reply-box="showReplyBox"
 			:index="index"
 			@hide-reply-box="replyFunction('hide')"
+			:is-mention="true"
+			@done-successfully="doneSuccessfully()"
+			:post-id="message.postId"
+			:parent-id="message.commentId"
+			:parent-type="'comment'"
+			:level="1"
+			:subreddit-name="message.subredditName"
 		></ReplyComponent>
 	</div>
 </template>
 
 <script>
-import Markdown from 'vue3-markdown-it';
+// import Markdown from 'vue3-markdown-it';
 import ReplyComponent from './ReplyComponent.vue';
 export default {
 	components: {
-		Markdown,
+		// Markdown,
 		ReplyComponent,
 	},
 	props: {
@@ -230,13 +255,15 @@ export default {
 			removeUser: false,
 			blockUser: false,
 			spamUser: false,
-			upClicked: false,
-			downClicked: false,
+			upClicked: this.message.vote == 1 ? true : false,
+			downClicked: this.message.vote == -1 ? true : false,
 			backcolor: 'grey',
 			disappear: false,
 			spammed: false,
 			errorResponse: null,
 			showReplyBox: false,
+			data: '',
+			isRead: this.message.isRead,
 		};
 	},
 	// @vuese
@@ -246,6 +273,7 @@ export default {
 			this.backcolor = 'white';
 		} else this.backcolor = 'grey';
 		this.calculateTime();
+		this.renderContent();
 	},
 	computed: {
 		// @vuese
@@ -292,13 +320,14 @@ export default {
 			this.blockUser = !this.blockUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/blockUser', {
+					await this.$store.dispatch('messages/blockUser', {
 						block: true,
 						username: this.message.senderUsername,
 						baseurl: this.$baseurl,
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
+						// this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -319,14 +348,15 @@ export default {
 			this.spamUser = !this.spamUser;
 			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/spamMessage', {
-						id: this.message.id,
+					await this.$store.dispatch('messages/spamComment', {
+						id: this.message.commentId,
 						type: 'comment',
 						reason: '',
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/markSpamSuccessfully']) {
+					if (this.$store.getters['messages/spamCommentSuccessfully']) {
 						this.spammed = true;
+						// this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -335,53 +365,74 @@ export default {
 			}
 		},
 		// @vuese
-		//handle upvote action
-		// @arg no argument
-		async upvote() {
-			if (this.upClicked == false) {
+		//handle delete action
+		// @arg The argument is a string value representing if user click ok
+		async deleteAction(action) {
+			this.deleteUser = !this.deleteUser;
+			if (action == 'yes') {
 				try {
-					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
-						direction: 1,
+					this.$store.dispatch('messages/deleteMessage', {
+						id: this.message.commentId,
+						type: 'comment',
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.upClicked = true;
+					if (this.$store.getters['messages/deleteMessageSuccessfully']) {
+						this.disappear = true;
 					}
 				} catch (err) {
 					this.errorResponse = err;
-					this.upClicked = false;
+					this.disappear = false;
 				}
-			} else {
-				this.upClicked = false;
-			}
-			if (this.downClicked) {
-				this.downClicked = false;
 			}
 		},
-		// @vuese
-		//handle downvote action
-		// @arg no argument
-		async downvote() {
-			if (this.downClicked == false) {
-				try {
-					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
-						direction: -1,
-						baseurl: this.$baseurl,
-					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.downClicked = true;
-					}
-				} catch (err) {
-					this.errorResponse = err;
-					this.downClicked = false;
-				}
-			} else {
+		//@vuese
+		//upvote on post
+		async upvote() {
+			if (this.downClicked) {
 				this.downClicked = false;
+				// this.counter++;
 			}
+			if (this.upClicked == false) {
+				this.upClicked = true;
+				// this.counter++;
+			} else {
+				this.upClicked = false;
+				// this.counter--;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.message.commentId,
+					type: 'comment',
+					direction: 1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		//@vuese
+		//down vote on post
+		async downvote() {
 			if (this.upClicked) {
 				this.upClicked = false;
+				// this.counter--;
+			}
+			if (this.downClicked == false) {
+				this.downClicked = true;
+				// this.counter--;
+			} else {
+				this.downClicked = false;
+				// this.counter++;
+			}
+			try {
+				await this.$store.dispatch('postCommentActions/vote', {
+					baseurl: this.$baseurl,
+					id: this.message.commentId,
+					type: 'comment',
+					direction: -1,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		// @vuese
@@ -393,6 +444,46 @@ export default {
 			} else if (title == 'hide') {
 				this.showReplyBox = false;
 			}
+		},
+		// @vuese
+		//handle rendering html code
+		// @arg no argument
+		renderContent() {
+			var QuillDeltaToHtmlConverter =
+				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+			var deltaOps = this.message.text.ops;
+
+			var cfg = {};
+
+			var converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
+
+			this.data = converter.convert();
+		},
+		// @vuese
+		// Used to go to full comments page
+		// @arg no argument
+		goFullComments() {
+			let route =
+				'/user/' +
+				this.message.postOwner +
+				'/comments/' +
+				this.message.postId +
+				'/' +
+				this.message.postTitle;
+			this.$router.push(route);
+		},
+		// @vuese
+		// Used to go context page
+		// @arg no argument
+		goContext() {
+			let route = '/user/' + this.message.postOwner;
+			this.$router.push(route);
+		},
+		// @vuese
+		// handle load messages instead of refreshing
+		// @arg no argument
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
 		},
 	},
 };
