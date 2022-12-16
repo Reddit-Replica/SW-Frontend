@@ -309,7 +309,11 @@
 					/>
 				</svg>
 			</div> -->
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<div
+				class="header-user-nav-icon-box header-popular"
+				id="header-popular"
+				@click="goToSettings()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -317,7 +321,6 @@
 					fill="currentColor"
 					class="bi bi-gear header-user-nav-icon"
 					viewBox="0 0 16 16"
-					@click="goToSettings()"
 				>
 					<title>settings</title>
 					<path
@@ -340,7 +343,11 @@
 
       | -->
 
-			<div class="header-user-nav-icon-box" id="chat-icon-box">
+			<div
+				class="header-user-nav-icon-box"
+				id="chat-icon-box"
+				@click="goToMessages()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -349,7 +356,6 @@
 					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
 					id="chat-icon"
-					@click="goToMessages()"
 				>
 					<title>Messages</title>
 					<path
@@ -390,7 +396,11 @@
 				>
 			</div>
 
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<div
+				class="header-user-nav-icon-box header-popular"
+				id="header-popular"
+				@click="goToUserPage()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -398,7 +408,6 @@
 					fill="currentColor"
 					class="bi bi-person-circle header-user-nav-icon"
 					viewBox="0 0 16 16"
-					@click="goToUserPage()"
 				>
 					<title>Your Profile</title>
 					<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -409,7 +418,11 @@
 				</svg>
 			</div>
 
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<div
+				class="header-user-nav-icon-box header-popular"
+				id="header-popular"
+				@click="goToHome()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"

@@ -31,6 +31,7 @@
 				:key="index"
 				:post-data="{ data: savedPostData.data.post, id: savedPostData.id }"
 				:state="state"
+				:page="'overview'"
 			></base-user-post>
 		</div>
 	</div>
@@ -103,7 +104,7 @@ export default {
 	computed: {
 		getUserSavedData() {
 			// console.log(this.$store.getters['userposts/getUserData']);
-			return this.$store.getters['user/getUserSavedData'];
+			return this.$store.getters['userposts/getUserSavedData'];
 		},
 	},
 	methods: {
@@ -128,17 +129,20 @@ export default {
 		async RequestUserSavedData(sortType) {
 			let requestStatus = -1;
 			try {
-				requestStatus = await this.$store.dispatch('user/getUserSavedData', {
-					baseurl: this.$baseurl,
-					userName: this.$route.params.userName,
-					params: {
-						sort: `${sortType}`,
-						time: 'all',
-						before: '',
-						after: '',
-						limit: '25',
-					},
-				});
+				requestStatus = await this.$store.dispatch(
+					'userposts/getUserSavedData',
+					{
+						baseurl: this.$baseurl,
+						userName: this.$route.params.userName,
+						params: {
+							sort: `${sortType}`,
+							time: 'all',
+							before: '',
+							after: '',
+							limit: '25',
+						},
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
