@@ -424,8 +424,17 @@
 			</div>
 		</div>
 	</div>
+	<div class="positioning">
+		<SaveUnsavePopupMessage
+			v-for="message in savedUnsavedPosts"
+			:key="message"
+			:type="message.type"
+			:state="message.state"
+		></SaveUnsavePopupMessage>
+	</div>
 </template>
 <script>
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import SubMenu from '../BaseComponents/SubMenu.vue';
 import SubredditInfo from './SubredditInfo.vue';
 import MyComment from './MyComment.vue';
@@ -442,6 +451,7 @@ export default {
 		ProfileCard,
 		PostOptions,
 		PostContent,
+		SaveUnsavePopupMessage,
 	},
 	data() {
 		return {
@@ -464,6 +474,7 @@ export default {
 			showSortByMenu: false,
 			sortByTitle: 'Best',
 			userComments: [],
+			savedUnsavedPosts: [],
 		};
 	},
 	computed: {
@@ -666,6 +677,14 @@ export default {
 		async savePost() {
 			this.saved = !this.saved;
 			if (this.saved == true) {
+				this.savedUnsavedPosts.push({
+					type: 'post',
+					state: 'saved',
+				});
+				setTimeout(() => {
+					this.savedUnsavedPosts.shift();
+				}, 10000);
+				console.log(this.savedUnsavedPosts);
 				try {
 					await this.$store.dispatch('postCommentActions/save', {
 						baseurl: this.$baseurl,
@@ -676,6 +695,13 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
+				this.savedUnsavedPosts.push({
+					type: 'post',
+					state: 'unsaved',
+				});
+				setTimeout(() => {
+					this.savedUnsavedPosts.shift();
+				}, 10000);
 				try {
 					await this.$store.dispatch('postCommentActions/unsave', {
 						baseurl: this.$baseurl,
@@ -1021,5 +1047,16 @@ export default {
 	#awards {
 		display: none;
 	}
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	z-index: 4;
 }
 </style>

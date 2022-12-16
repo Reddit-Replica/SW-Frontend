@@ -42,7 +42,7 @@ export default {
 		//id of pot/comment
 		typeid: {
 			type: String,
-			required: true,
+			required: false,
 			default: '',
 		},
 	},
