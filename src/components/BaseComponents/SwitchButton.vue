@@ -3,13 +3,13 @@
 		type="checkbox"
 		v-model="value"
 		@click="onChecked"
-		:class="value ? 'style1' : 'style2'"
+		:class="value ? 'style2' : 'style1'"
 	/>
 </template>
 <script>
 export default {
 	created() {
-		this.value = this.val;
+		this.value = !this.val;
 		console.log('this.value in switch button');
 		console.log(this.value);
 	},
@@ -21,7 +21,7 @@ export default {
 	},
 	data() {
 		return {
-			value: this.val,
+			value: !this.val,
 		};
 	},
 	methods: {

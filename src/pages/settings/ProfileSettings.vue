@@ -49,6 +49,10 @@
 			</div>
 
 			<!--  -->
+			<sociallinks-block
+				:social-data="userData.socialLinks"
+				v-if="userData"
+			></sociallinks-block>
 
 			<h3 class="h3-main-title">IMAGES</h3>
 
@@ -314,10 +318,21 @@
 <script>
 // import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
 // import SocialLink from './SocialLink.vue';
+import SociallinksBlock from '../../components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksBlock.vue';
 export default {
+	// async created() {
+	// 	this.userData = await this.$store.getters['user/getUserData'];
+	// 	console.log(this.userData);
+	computed: {
+		user() {
+			return this.$store.getters['user/getUserData'];
+		},
+	},
+	// },
 	components: {
 		// BaseDialog,
 		// SocialLink,
+		SociallinksBlock,
 	},
 	props: {},
 	data() {
@@ -327,7 +342,13 @@ export default {
 			// havePassword: false,
 			nsfw: false,
 			allowToFollowYou: false,
+			userData: null,
 		};
+	},
+	watch: {
+		user(val) {
+			this.userData = val;
+		},
 	},
 	methods: {
 		//@vuese
