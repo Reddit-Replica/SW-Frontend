@@ -46,11 +46,22 @@
 				</div>
 			</div>
 		</a>
+		<div class="positioning">
+			<FollowJoin
+				v-for="message in savedUnsavedfollow"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="toggle(value.username, !value.following)"
+			></FollowJoin>
+		</div>
 	</div>
 </template>
 
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';
+import FollowJoin from './FollowJoin.vue';
 export default {
 	props: {
 		value: {
@@ -61,10 +72,12 @@ export default {
 	data() {
 		return {
 			notFollowed: true,
+			savedUnsavedfollow: [],
 		};
 	},
 	components: {
 		BaseButton,
+		FollowJoin,
 	},
 	computed: {
 		SearchedUsers() {
@@ -80,8 +93,29 @@ export default {
 			this.notFollowed = !this.value.following;
 		},
 		async toggle(user, follow) {
-			this.notFollowed = !this.notFollowed;
 			if (localStorage.getItem('accessToken')) {
+				this.notFollowed = !this.notFollowed;
+				if (this.notFollowed) {
+					this.savedUnsavedfollow.push({
+						id: this.savedUnsavedfollow.length,
+						postid: this.value.id,
+						type: 'follow',
+						state: 'r/' + this.value.username,
+					});
+					setTimeout(() => {
+						this.savedUnsavedPosts.shift();
+					}, 10000);
+				} else {
+					this.savedUnsavedfollow.push({
+						id: this.savedUnsavedfollow.length,
+						postid: this.value.id,
+						type: 'unfollow',
+						state: 'r/' + this.value.username,
+					});
+					setTimeout(() => {
+						this.savedUnsavedfollow.shift();
+					}, 10000);
+				}
 				try {
 					await this.$store.dispatch('search/follow', {
 						baseurl: this.$baseurl,
@@ -191,5 +225,10 @@ a {
 }
 .name {
 	cursor: pointer;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	right: 500px;
 }
 </style>
