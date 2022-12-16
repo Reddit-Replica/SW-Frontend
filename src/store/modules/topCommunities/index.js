@@ -9,6 +9,14 @@ export default {
 		return {
 			allCommunities: [],
 			categoryCommunities: [],
+
+			secondCategory: '',
+			firstCategory: '',
+			secondCommunities: [],
+			firstCommunities: [],
+
+			oneCategory: '',
+			oneCommunities: [],
 		};
 	},
 	mutations,

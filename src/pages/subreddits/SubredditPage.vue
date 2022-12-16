@@ -113,16 +113,17 @@ export default {
 	},
 	data() {
 		return {
-			topics: [
-				'Art',
-				'Anime',
-				'Beauty',
-				'Cars',
-				'Fashion',
-				'Music',
-				'Sports',
-				'Travel',
-			],
+			// topics: [
+			// 	'Art',
+			// 	'Anime',
+			// 	'Beauty',
+			// 	'Cars',
+			// 	'Fashion',
+			// 	'Music',
+			// 	'Sports',
+			// 	'Travel',
+			// ],
+			topics: [],
 			showFirstDialog: true,
 			firstTimeCreated: false,
 			subreddit: {},
@@ -145,6 +146,7 @@ export default {
 			this.$store.getters['community/createdSuccessfully'];
 		this.getSubreddit();
 		this.getModerators();
+		this.getTopics();
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
@@ -171,11 +173,19 @@ export default {
 				console.log(this.subreddit.isFavorite);
 			} catch (err) {
 				console.log(err);
-				console.log(this.$store.getters['community/notFound']);
 				if (this.$store.getters['community/notFound']) {
 					this.$router.push('/notFound');
 				}
 			}
+		},
+		async getTopics() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getsuggestedTopics', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.topics = this.$store.getters['community/getTopics'];
 		},
 		async getModerators() {
 			const accessToken = localStorage.getItem('accessToken');
