@@ -234,11 +234,22 @@
 				</div>
 			</div>-->
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
 <script>
 import SwitchButton from '../../components/BaseComponents/SwitchButton.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 // import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	async created() {
@@ -250,6 +261,7 @@ export default {
 	},
 	components: {
 		SwitchButton,
+		SaveUnsavePopupMessage,
 		// SubMenu,
 	},
 	data() {
@@ -261,6 +273,7 @@ export default {
 			adultContent: false,
 			autoplayMedia: false,
 			create: false,
+			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
@@ -290,6 +303,7 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				this.error = err;
@@ -309,6 +323,7 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				this.error = err;
@@ -339,6 +354,37 @@ export default {
 			this.autoplayMedia = this.setting.autoplayMedia;
 			console.log(this.adultContent);
 			console.log(this.autoplayMedia);
+		},
+		doneSuccessfully(title) {
+			this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'settings',
+				state: title,
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
 		},
 		// itemsMenuOneFunction() {
 		// 	this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
@@ -411,5 +457,15 @@ label {
 }
 .new-option-block {
 	padding-left: 32px;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>
