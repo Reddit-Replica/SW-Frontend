@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="blue-top">
-			<router-link to="/subreddit"
+			<router-link to="/subreddit" id="link-top-subreddit-page-2"
 				><div class="link" id="link-top-subreddit-page"></div
 			></router-link>
 		</div>
@@ -12,16 +12,22 @@
 						:src="subredditImageUrl"
 						alt="subredditImage"
 						v-if="subredditImageUrl"
+						id="img-top-subreddit-page"
 					/>
 					<img
 						src="../../../img/default_subreddit_image.png"
 						alt="user-img"
 						v-else
+						id="img-2-top-subreddit-page"
 					/>
 					<div class="top-title-button">
 						<div class="top-title">
-							<h1 class="title-1">{{ subredditNickname }}</h1>
-							<h2 class="title-2">r/{{ subredditName }}</h2>
+							<h1 class="title-1" id="title-top-subreddit-page">
+								{{ subredditNickname }}
+							</h1>
+							<h2 class="title-2" id="title-2-top-subreddit-page">
+								r/{{ subredditName }}
+							</h2>
 						</div>
 						<div>
 							<base-button
