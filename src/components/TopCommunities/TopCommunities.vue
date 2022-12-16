@@ -18,6 +18,7 @@
 				:name="community.name"
 				:image="community.image"
 				:link="community.link"
+				:show-members="false"
 			>
 			</top-community>
 		</ol>
