@@ -71,7 +71,7 @@
 				title="Share your community"
 				content="Spread the word about your community by sharing it on different social
 				platforms."
-				link="/submit"
+				link="/help"
 				button="Start Sharing"
 				@exit="hideSecond"
 			>
@@ -97,7 +97,7 @@
 				title="Crosspost your best posts"
 				content="Build your community and attract more visitors by crossposting posts to
 				other communities."
-				link="/submit"
+				link="/help"
 				button="Learn More"
 				@exit="hideThird"
 			>
@@ -126,7 +126,7 @@
 				title="Recruit more members"
 				content="Learn how to use invitations to bring more members and moderators to
 				your community."
-				link="/submit"
+				link="/help"
 				button="Learn More"
 				@exit="hideForth"
 			>
