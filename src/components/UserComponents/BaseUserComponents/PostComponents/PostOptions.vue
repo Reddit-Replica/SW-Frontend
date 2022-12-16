@@ -1,6 +1,11 @@
 <template>
-	<ul class="post-list" :style="[pinnedPostFlag ? 'flex-wrap:nowrap' : '']">
+	<ul
+		class="post-list"
+		:class="[postKind == 'ov' ? 'm-left-8' : '']"
+		:style="[pinnedPostFlag ? 'flex-wrap:nowrap' : '']"
+	>
 		<li
+			id="post-options-bottom-vote-box"
 			class="bottom-vote-box"
 			:style="[
 				pinnedPostFlag ? 'display:block !important;     margin-right: 0px' : '',
@@ -10,7 +15,11 @@
 				class="d-flex flex-row vote-box"
 				style="width: auto; background-color: inherit"
 			>
-				<div class="upvote" @click="upvote">
+				<div
+					class="upvote"
+					id="post-options-bottom-vote-box-upvote"
+					@click="upvote"
+				>
 					<svg class="icon icon-arrow-down p-1 up-clicked" v-if="upClicked">
 						<use xlink:href="../../../../../img/vote.svg#icon-arrow-up"></use>
 					</svg>
@@ -21,10 +30,15 @@
 				<div
 					class="p-2 vote-count"
 					:class="upClicked ? 'up-clicked' : downClicked ? 'down-clicked' : ''"
+					id="post-options-bottom-vote-down-clicked"
 				>
 					{{ getAbbreviationsOfNumber(counter) }}
 				</div>
-				<div class="downvote" @click="downvote">
+				<div
+					class="downvote"
+					id="post-options-bottom-vote-downvote-clicked"
+					@click="downvote"
+				>
 					<svg
 						class="icon icon-arrow-down p-1"
 						:class="downClicked ? 'down-clicked' : ''"
@@ -38,8 +52,16 @@
 				</div>
 			</div>
 		</li>
-		<li v-if="!pinnedPostFlag" class="post-option-item post-option-item-hover2">
-			<div v-if="postData.data.kind == 'link'" class="post-options-icon">
+		<li
+			v-if="!(pinnedPostFlag || postKind == 'ov')"
+			class="post-option-item post-option-item-hover2"
+			id="expand-post-option-in-options"
+		>
+			<div
+				v-if="postData.data.kind == 'link'"
+				id="post-options-postData-data-kind-link"
+				class="post-options-icon"
+			>
 				<a class="post-link-href" :href="postData.data.link" target="_blank">
 					<i
 						style="font-size: 20px"
@@ -51,6 +73,7 @@
 				v-else-if="!showPostContent"
 				@click="expandPostContent"
 				class="post-options-icon"
+				id="post-options-expand-Post-Content"
 				style="
 					transform: rotate(90deg);
 					stroke-width: 35px;
@@ -60,7 +83,12 @@
 			>
 				<i class="fa-solid fa-up-right-and-down-left-from-center"></i>
 			</div>
-			<div v-else @click="collapsePostContent" class="post-options-icon">
+			<div
+				v-else
+				@click="collapsePostContent"
+				id="post-options-collapse-Post-Content"
+				class="post-options-icon"
+			>
 				<i
 					style="
 						transform: rotate(90deg);
@@ -74,13 +102,14 @@
 		</li>
 		<li class="post-option-item post-option-item-hover2">
 			<router-link
+				id="post-options-postData-data-subreddit-comments"
 				:to="
 					postData.data.subreddit != null
 						? `/r/${postData.data.subreddit}/comments/${postData.id}/${postData.data.title}`
 						: `/user/${postData.data.postedBy}/comments/${postData.id}/${postData.data.title}`
 				"
 			>
-				<div class="post-options-icon">
+				<div id="post-options-postData-data-comments" class="post-options-icon">
 					<i
 						style="
 							stroke-width: 35px;
@@ -90,13 +119,18 @@
 						class="fa-solid fa-message"
 					></i>
 				</div>
-				<div class="post-options-text">
-					<p>{{ postData.data.comments }}</p>
+				<div
+					class="post-options-text"
+					id="post-options-postData-data-comments-text"
+				>
+					<p>{{ postData.data.comments + ' comments' }}</p>
 				</div>
 			</router-link>
 		</li>
 		<li
 			style="position: relative"
+			id="share-post-options"
+			:style="pinnedPost ? 'width:fit-content;' : ''"
 			class="post-option-item-hover"
 			@click="sharePost"
 		>
@@ -111,11 +145,15 @@
 						class="fa-solid fa-share"
 					></i>
 				</div>
-				<div class="post-options-text">
+				<div class="post-options-text" id="share-post-options-text">
 					<p>share</p>
 				</div>
 			</router-link>
-			<div v-if="showShareOptions" class="options-box-list">
+			<div
+				v-if="showShareOptions"
+				class="options-box-list"
+				id="show-share-more-post-options"
+			>
 				<ul>
 					<li @click="CopyPostLink" class="options-box-item">
 						<div class="options-box-icon">
@@ -178,6 +216,7 @@
 				<i v-else>
 					<svg
 						style="color: rgba(135, 138, 140); width: 20px"
+						:style="[saved ? 'color:#0079d3' : ' ']"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"
@@ -194,14 +233,19 @@
 					</svg>
 				</i>
 			</div>
-			<div class="post-options-text" style="font-size: 12px">
+			<div
+				class="post-options-text"
+				:style="[
+					saved ? 'color: #0079d3; font-size: 12px;' : ' font-size: 12px;',
+				]"
+			>
 				{{ !saved ? 'Save' : 'Unsaved' }}
 			</div>
 		</li>
 		<li
 			v-if="!postData.data.inYourSubreddit && !pinnedPostFlag"
 			id="savepost-ann-user-user-post-button"
-			@click="hidePost(postData.id)"
+			@click="hideUnhidePost(postData.id)"
 			class="post-option-item post-option-item-hover2"
 		>
 			<div class="post-options-icon">
@@ -281,7 +325,7 @@
 			</div>
 		</li>
 		<li
-			v-if="postData.data.inYourSubreddit"
+			v-if="postData.data.inYourSubreddit && !postKind"
 			@click="safetyClicked"
 			id="shield-user-post-button"
 			class="post-option-item post-option-item-hover2"
@@ -367,6 +411,7 @@
 							<i v-else>
 								<svg
 									style="color: rgba(135, 138, 140)"
+									:style="[saved ? 'color: #0079d3;' : '']"
 									xmlns="http://www.w3.org/2000/svg"
 									width="16"
 									height="16"
@@ -383,7 +428,10 @@
 								</svg>
 							</i>
 						</div>
-						<div class="options-box-text">
+						<div
+							class="options-box-text"
+							:style="[saved ? 'color: #0079d3;' : '']"
+						>
 							{{ !saved ? 'Save' : 'Unsaved' }}
 						</div>
 					</li>
@@ -398,16 +446,30 @@
 							{{ postData.data.pin ? 'unpin' : 'pin' }} Post to Profile
 						</div>
 					</li>
-					<li @click="hidePost(postData.id)" class="options-box-item">
+					<li
+						@click="hideUnhidePost(postData.id)"
+						id="hide-unhide-post-options"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
 								class="fa-regular fa-eye-slash"
+								:style="[postHiddenFlag ? 'color:#0079d3' : '']"
 							></i>
 						</div>
-						<div class="options-box-text">Hide</div>
+						<div
+							class="options-box-text"
+							:style="[postHiddenFlag ? 'color:#0079d3' : '']"
+						>
+							{{ postHiddenFlag ? 'Unhide' : 'Hide' }}
+						</div>
 					</li>
-					<li @click="deletePost" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="deletePost"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
@@ -416,7 +478,11 @@
 						</div>
 						<div class="options-box-text">Delete</div>
 					</li>
-					<li @click="markAsOC" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="markAsOC"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i>
 								<input
@@ -431,6 +497,7 @@
 						</div>
 					</li>
 					<li
+						v-if="postData.data.inYourSubreddit"
 						@click="markUnMarkAsSpoiler(postData.id)"
 						class="options-box-item"
 					>
@@ -447,7 +514,11 @@
 							<label for="mark-as-spoiler">Mark As Spoiler</label>
 						</div>
 					</li>
-					<li @click="markUnMarkAsNSFW(postData.id)" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="markUnMarkAsNSFW(postData.id)"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i>
 								<input
@@ -463,6 +534,7 @@
 					</li>
 					<li
 						@click="markUnMarkSendMeReply(postData.id)"
+						id="post-options-mark-UnMark-Send-MeReply"
 						class="options-box-item"
 					>
 						<div class="options-box-icon">
@@ -478,6 +550,26 @@
 							<label for="send-me-notifications"
 								>Send Me Replay Notifications</label
 							>
+						</div>
+					</li>
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="lockUnLockComments(postData.id)"
+						class="options-box-item"
+					>
+						<div class="options-box-icon" id="lock-post-comments-options">
+							<i>
+								<input
+									type="checkbox"
+									id="mark-as-oc"
+									name="mark-as-oc"
+									:checked="
+										postData.data.moderation && postData.data.moderation.lock
+									"
+							/></i>
+						</div>
+						<div class="options-box-text">
+							<label for="mark-as-oc">Lock Comments</label>
 						</div>
 					</li>
 				</ul>
@@ -504,6 +596,7 @@ export default {
 			nsfwCheckBox: false,
 			showSafetyOptions: false,
 			saved: this.postData.data.saved,
+			postHiddenFlag: this.page == 'hidden' || this.postData.data.hidden,
 		};
 	},
 	props: {
@@ -514,6 +607,14 @@ export default {
 		pinnedPostFlag: {
 			type: Boolean,
 			required: false,
+		},
+		page: {
+			type: String,
+			required: true,
+		},
+		postKind: {
+			type: String,
+			required: true,
 		},
 	},
 	mounted() {
@@ -533,22 +634,6 @@ export default {
 		'editPost',
 	],
 	methods: {
-		// clicked(event) {
-		// if (this.showOptionsBoxList) {
-		// 	if (
-		// 		document
-		// 			.getElementById('show-dots-options-BoxList')
-		// 			.contains(event.target)
-		// 	) {
-		// 		// Clicked in box
-		// 		console.log('ins');
-		// 	} else {
-		// 		// this.showOptionsBoxList = false;
-		// 		// Clicked outside the box
-		// 		console.log('out');
-		// 	}
-		// }
-		// },
 		insightsPostToggle() {
 			this.$emit('insightsToggle');
 		},
@@ -556,7 +641,7 @@ export default {
 			this.$emit('deletePost');
 		},
 		hidePost() {
-			this.$emit('hidePost');
+			// this.$emit('hidePost');
 		},
 		sharePost() {
 			console.log('share');
@@ -608,6 +693,7 @@ export default {
 		},
 		async approvePost(id) {
 			console.log('approve');
+			let approveSatus = -1;
 			if (
 				!(
 					this.postData.data.moderation != null &&
@@ -616,32 +702,59 @@ export default {
 				)
 			) {
 				try {
-					await this.$store.dispatch('userposts/approvePostOrComment', {
-						baseurl: this.$baseurl,
-						ApprovePostOrCommentData: {
-							id: id,
-							type: 'post',
-							username: this.$route.params.userName,
-						},
-					});
+					approveSatus = await this.$store.dispatch(
+						'userposts/approvePostOrComment',
+						{
+							baseurl: this.$baseurl,
+							ApprovePostOrCommentData: {
+								id: id,
+								type: 'post',
+								username: this.$route.params.userName,
+							},
+							page: this.page,
+						}
+					);
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
+				}
+				if (approveSatus == 200) {
+					this.$emit('emitPopup', id, 'approved post successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to approve post');
 				}
 			}
 		},
 		async removePost(id) {
 			console.log('remove');
-			try {
-				await this.$store.dispatch('userposts/removePostOrComment', {
-					baseurl: this.$baseurl,
-					removePostOrCommentData: {
-						id: id,
-						type: 'post',
-						username: this.$route.params.userName,
-					},
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			let approveSatus = -1;
+			if (
+				!(
+					this.postData.data.moderation != null &&
+					this.postData.data.moderation.remove != null &&
+					this.postData.data.moderation.remove.removedBy != null
+				)
+			) {
+				try {
+					approveSatus = await this.$store.dispatch(
+						'userposts/removePostOrComment',
+						{
+							baseurl: this.$baseurl,
+							removePostOrCommentData: {
+								id: id,
+								type: 'post',
+								username: this.$route.params.userName,
+							},
+							page: this.page,
+						}
+					);
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				if (approveSatus == 200) {
+					this.$emit('emitPopup', id, 'removed post successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to remove post');
+				}
 			}
 		},
 		async markUnMarkAsNSFW(id) {
@@ -656,6 +769,7 @@ export default {
 						id: id,
 						type: `${type}`, // mark UnMark
 					},
+					page: this.page,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -674,6 +788,7 @@ export default {
 						id: id,
 						type: `${type}`, // mark UnMark
 					},
+					page: this.page,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -693,6 +808,7 @@ export default {
 						type: `post`, // mark UnMark
 						state,
 					},
+					page: this.page,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -703,6 +819,7 @@ export default {
 		},
 		async lockUnLockComments(id) {
 			console.log('lock un lock clicked');
+			let approveSatus = -1;
 			let key = 'unlock';
 			if (
 				!this.postData.data.moderation ||
@@ -712,16 +829,31 @@ export default {
 			}
 			console.log('main', key);
 			try {
-				await this.$store.dispatch('userposts/lockUnLockPostOrComment', {
-					baseurl: this.$baseurl,
-					lockUnlockData: {
-						id: id,
-						type: `post`, // mark UnMark
-					},
-					key: `${key}`,
-				});
+				approveSatus = await this.$store.dispatch(
+					'userposts/lockUnLockPostOrComment',
+					{
+						baseurl: this.$baseurl,
+						lockUnlockData: {
+							id: id,
+							type: `post`, // mark UnMark
+						},
+						key: `${key}`,
+						page: this.page,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+			if (key == 'lock') {
+				if (approveSatus == 200) {
+					this.$emit('emitPopup', id, 'post locked successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to lock post');
+				}
+			} else if (approveSatus == 200) {
+				this.$emit('emitPopup', id, 'post unlocked successfully');
+			} else {
+				this.$emit('emitPopup', id, 'failed to unlock post');
 			}
 		},
 		async pinPostToProfile(id) {
@@ -737,24 +869,70 @@ export default {
 						id: id,
 						pin: key, // mark UnMark
 					},
+					page: this.page,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		async spamPost(id) {
+		async hideUnhidePost(id) {
+			let approveSatus = -1;
+			let key = 'hide';
+			if (this.page == 'hidden') key = 'unhide';
+			this.postHiddenFlag = !this.postHiddenFlag;
+			this.$emit('hidePost');
+			console.log('hide un hide clicked', key);
 			try {
-				await this.$store.dispatch('userposts/markSpam', {
+				approveSatus = await this.$store.dispatch('userposts/hideUnhidePost', {
 					baseurl: this.$baseurl,
-					markSpamData: {
+					hideUnhideData: {
 						id: id,
-						type: 'post',
-						reason: '',
+						key: key, // mark UnMark
 					},
-					username: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+			if (key == 'unhide') {
+				if (approveSatus == 200) {
+					this.$emit('emitPopup', id, 'post hidden successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to hide post');
+				}
+			} else if (approveSatus == 200) {
+				this.$emit('emitPopup', id, 'post unhide successfully');
+			} else {
+				this.$emit('emitPopup', id, 'failed to unhide post');
+			}
+		},
+		async spamPost(id) {
+			let approveSatus = -1;
+			if (
+				!(
+					this.postData.data.moderation != null &&
+					this.postData.data.moderation.spam != null &&
+					this.postData.data.moderation.spam.spammedBy != null
+				)
+			) {
+				try {
+					approveSatus = await this.$store.dispatch('userposts/markSpam', {
+						baseurl: this.$baseurl,
+						markSpamData: {
+							id: id,
+							type: 'post',
+							reason: '',
+						},
+						username: this.$route.params.userName,
+						page: this.page,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				if (approveSatus == 200) {
+					this.$emit('emitPopup', id, 'Spammed post successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to Spam post');
+				}
 			}
 		},
 		async upvote() {
@@ -1030,5 +1208,21 @@ div.vote-box {
 
 .vote-box .vote-count.down-clicked {
 	color: var(--color-blue);
+}
+@media (max-width: 640px) {
+	#expand-post-option-in-options,
+	#approve-user-post-button,
+	#insights-user-post-button,
+	#spam-user-post-button,
+	#remove-user-post-button,
+	#shield-user-post-button {
+		display: none !important;
+	}
+	#share-post-options {
+		width: 20px;
+	}
+}
+.m-left-8 {
+	margin-left: 8px;
 }
 </style>
