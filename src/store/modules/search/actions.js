@@ -146,7 +146,7 @@ export default {
 					avatar: responseData.children[i].data.avatar,
 				};
 				users.push(user);
-				if (i > 4) temp.push(user);
+				if (i < 4) temp.push(user);
 			}
 			context.commit('before', before);
 			context.commit('after', after);
@@ -209,7 +209,7 @@ export default {
 					description: responseData.children[i].data.description,
 					joined: responseData.children[i].data.joined,
 				};
-				if (i > 4) temp.push(subreddit);
+				if (i < 4) temp.push(subreddit);
 				subreddits.push(subreddit);
 			}
 			context.commit('setlimitedSubreddits', temp);

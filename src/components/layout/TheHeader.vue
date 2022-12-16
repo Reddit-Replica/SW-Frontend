@@ -781,6 +781,7 @@ export default {
 					name: 'searchpost',
 					query: { q: this.searchQuery },
 				});
+				// window.reload();
 			} else {
 				alert('Did not enter a word to Search');
 			}

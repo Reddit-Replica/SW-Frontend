@@ -50,16 +50,14 @@
 					</div>
 					<div class="subreddit-details">
 						<div class="subreddit-name">
-							<a href="#" :id="'subreddit-' + index"
-								>r/{{ spam.data.subreddit }}</a
-							>
+							<a href="#" :id="'subreddit-' + index">r/{{ spam.subreddit }}</a>
 						</div>
 						<span class="dot">•</span>
 						<div v-if="!spam.commentId">
 							<span class="posted-by">Posted by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-									spam.data.postedBy
+									spam.postedBy
 								}}</a>
 							</div>
 						</div>
@@ -67,7 +65,7 @@
 							<span class="posted-by">Commented by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-									spam.data.postedBy
+									spam.postedBy
 								}}</a>
 							</div>
 						</div>
@@ -75,8 +73,8 @@
 					</div>
 				</div>
 				<div class="post-title">
-					<div class="title-box">{{ spam.data.title }}</div>
-					<div class="body-box">{{ spam.data.content }}</div>
+					<div class="title-box">{{ spam.title }}</div>
+					<div class="body-box">{{ spam.content }}</div>
 				</div>
 				<div v-if="!spam.commentId">
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
@@ -107,7 +105,7 @@
 						/> -->
 						<div class="p-box">
 							<p class="p">Removed</p>
-							<p class="p-poster">u/asmaaadel0 1 hour ago</p>
+							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
 						</div>
 					</div>
 					<div class="buttons">

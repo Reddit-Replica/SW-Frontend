@@ -57,7 +57,7 @@
 							<span class="posted-by">Posted by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-									spam.data.postedBy
+									spam.postedBy
 								}}</a>
 							</div>
 						</div>
@@ -65,7 +65,7 @@
 							<span class="posted-by">Commented by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-									spam.data.postedBy
+									spam.postedBy
 								}}</a>
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 						</div>
 						<div class="p-box">
 							<p class="p">Removed</p>
-							<p class="p-poster">u/{{ spam.postBy }} {{ spam.postedAt }}</p>
+							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
 						</div>
 					</div>
 					<div class="buttons">
