@@ -215,7 +215,6 @@
 				</div> -->
 			</div>
 		</li>
-		{{ expandAll }}
 	</div>
 </template>
 
