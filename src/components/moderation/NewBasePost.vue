@@ -62,7 +62,7 @@
 							</div>
 						</div>
 						<div v-else>
-							<span class="posted-by">Commened by</span>
+							<span class="posted-by">Commented by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
 									spam.data.postedBy
