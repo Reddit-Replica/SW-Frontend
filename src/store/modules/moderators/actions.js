@@ -1406,8 +1406,9 @@ export default {
 	async EditedPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
+		const sort = payload.sort;
 		const response = await fetch(
-			baseurl + `/r/` + sub + '/about/edited?only=posts',
+			baseurl + `/r/` + sub + '/about/edited?only=posts&sort=' + sort,
 			{
 				method: 'GET',
 				headers: {
