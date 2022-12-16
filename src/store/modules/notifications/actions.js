@@ -22,8 +22,38 @@ export default {
 
 		const responseData = await response.json();
 
+		console.log(responseData['children']);
+
 		if (response.status == 200) {
 			context.commit('setNotifications', responseData['children']);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	async getSomeNotifications(context, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/notifications?limit=10', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+		});
+
+		const responseData = await response.json();
+
+		console.log(responseData['children']);
+
+		if (response.status == 200) {
+			context.commit('setSomeNotifications', responseData['children']);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;

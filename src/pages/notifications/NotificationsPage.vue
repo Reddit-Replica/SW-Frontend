@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
-		<notifications-top></notifications-top>
-		<div class="ntf-section">
+		<notifications-top @reload="reloadPage"></notifications-top>
+		<div class="ntf-section" @reload="reloadPage">
 			<div>
 				<div class="ntf-list-title">Title</div>
 				<ul>
@@ -45,6 +45,9 @@ export default {
 			});
 			this.notifications =
 				this.$store.getters['notifications/getNotifications'];
+		},
+		reloadPage() {
+			this.loadAllNotifications();
 		},
 	},
 };

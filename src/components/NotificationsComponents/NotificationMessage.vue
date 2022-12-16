@@ -2,11 +2,10 @@
 	<li
 		id="'ntf-msg-'+index"
 		class="ntf-msg-li"
-		:class="{ 'not-read': !notification.read }"
-		v-if="!notification.hidden"
+		:class="{ 'not-read': !notification.isRead }"
 	>
-		<router-link
-			:to="notification.link"
+		<a
+			:href="notification.link"
 			class="ntf-msg-routerlink"
 			@click="readNotification"
 		>
@@ -30,9 +29,9 @@
 			<span class="ntf-msg-2 text">
 				<div class="ntf-msg-2-1">
 					<span
-						><span class="text-title">{{ notification.data }}</span>
+						><span class="text-title">{{ notification.title }}</span>
 						<span class="text-dot">.</span>
-						<span>{{ calcDuration(notification.date) }}</span>
+						<span>{{ calcDuration(notification.sendAt) }}</span>
 					</span>
 					<span class="dots-icon">
 						<svg
@@ -54,7 +53,6 @@
 					</span>
 				</div>
 				<div>
-					{{ content }}
 					<base-button
 						class="reply-back"
 						v-if="replyBack"
@@ -78,12 +76,13 @@
 					>
 				</div>
 			</span>
-		</router-link>
+		</a>
 	</li>
 </template>
 
 <script>
 export default {
+	emits: ['reload'],
 	props: {
 		index: {
 			type: Number,
@@ -104,17 +103,17 @@ export default {
 	},
 	computed: {
 		dotsButtonText() {
-			if (this.notification.data.includes('replied')) {
+			if (this.notification.title.includes('replied')) {
 				return this.textNoUpdates;
 			} else {
 				return this.textHide;
 			}
 		},
 		toHide() {
-			return !this.notification.data.includes('replied');
+			return !this.notification.title.includes('replied');
 		},
 		replyBack() {
-			return this.notification.data.includes('replied to your comment');
+			return this.notification.title.includes('replied to your comment');
 		},
 	},
 
@@ -189,6 +188,7 @@ export default {
 					notificationId: this.notification.id,
 				});
 			}
+			this.$emit('reload');
 		},
 
 		async readNotification() {
@@ -198,6 +198,7 @@ export default {
 				token: accessToken,
 				notificationId: this.notification.id,
 			});
+			this.$emit('reload');
 		},
 	},
 };

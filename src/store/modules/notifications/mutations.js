@@ -2,6 +2,9 @@ export default {
 	setNotifications(state, payload) {
 		state.notifications = payload;
 	},
+	setSomeNotifications(state, payload) {
+		state.someNotifications = payload;
+	},
 	setAllRead(state, payload) {
 		state.allRead = payload;
 	},
