@@ -2,7 +2,6 @@
 	<div v-if="!deletedHiddenPost" class="base-profile-post" @resize="resizePost">
 		<div class="box">
 			<div class="box-items">
-				<!-- <div class="voting-box"></div> -->
 				<div class="vote-box left-vote-box">
 					<div class="d-flex flex-column vote-box">
 						<div class="upvote" @click="upvote">
@@ -39,122 +38,55 @@
 				</div>
 				<div class="main-post-container" id="main-post-container">
 					<div class="main-box">
-						<div class="post-pic-box">
-							<i
-								v-if="postData.data.kind == 'image'"
-								id="postData-data-kind-image-icon"
-								><i class="fa-regular fa-file-image"></i
-							></i>
-							<i
-								v-else-if="postData.data.kind == 'link'"
-								id="postData-data-kind-link-icon"
-								><i class="fa-solid fa-link"></i
-							></i>
-							<i
-								v-else-if="
-									postData.data.kind == 'hybrid' || postData.data.kind == 'post'
-								"
-								id="postData-data-hybrid-post-icon"
-								><i class="fa-regular fa-bookmark"></i
-							></i>
-							<i
-								v-else-if="postData.data.kind == 'video'"
-								id="postData-data-kind-video-icon"
-								><i class="fa-solid fa-clapperboard"></i
-							></i>
-
-							<i
-								id="postData-data-kind-post-hybrid-icon"
-								style="
-									transform: translate(185%, 34%);
-									z-index: 5;
-									color: #ffffff;
-								"
-								v-if="postData.data.kind == 'link'"
-								><a
-									class="post-link-href"
-									:href="postData.data.link"
-									target="_blank"
-									><i
-										style="
-											background-color: #0079d3;
-											border-top-left-radius: 4px;
-											padding: 3px;
-											font-size: 12px;
-										"
-										class="fa-solid fa-arrow-up-right-from-square"
-									></i></a
-							></i>
-							<img
-								v-if="
-									postData.data.kind == 'image' &&
-									postData.data.images[0] != null &&
-									postData.data.images[0].path != null
-								"
-								:style="[
-									postData.data.nsfw || postData.data.spoiler
-										? 'filter: blur(60px);'
-										: '',
-								]"
-								:src="$baseurl + '/' + postData.data.images[0].path"
-								alt=""
-							/>
-							<div
-								id="expand-collapse-media-query"
-								style="
-									display: none;
-									position: absolute;
-									bottom: 0px;
-									right: 0px;
-									z-index: 2;
-								"
-							>
-								<li
-									style="
-										width: 25px;
-										height: 25px;
-										align-items: center;
-										justify-content: center;
-									"
-									class="post-option-item post-option-item-hover2"
-								>
-									<div
-										v-if="!showPostContent && postData.data.kind != 'link'"
-										@click="expandPostContent"
-										class="post-options-icon"
-										style="
-											transform: rotate(90deg);
-											stroke-width: 35px;
-											stroke: rgb(135, 138, 140);
-											color: transparent;
-										"
-									>
-										<i
-											style="width: 19px; height: 16px"
-											class="fa-solid fa-up-right-and-down-left-from-center"
-										></i>
-									</div>
-									<div
-										v-else-if="postData.data.kind != 'link'"
-										@click="collapsePostContent"
-										class="post-options-icon"
-									>
-										<i
-											style="
-												transform: rotate(90deg);
-												stroke-width: 35px;
-												stroke: rgb(135, 138, 140);
-												color: transparent;
-												width: 19px;
-												height: 16px;
-											"
-											class="fa-solid fa-down-left-and-up-right-to-center"
-										></i>
-									</div>
-								</li>
-							</div>
-						</div>
 						<div class="post-content" id="base-user-post-content">
+							<div class="post-user-information">
+								<div class="post-user-name">
+									<router-link
+										id="base-user-post-content-post-user-name"
+										:to="
+											postData.data.subreddit == null
+												? `/user/${$route.params.userName}`
+												: `/r/${postData.data.subreddit}`
+										"
+										>{{
+											postData.data.subreddit == null
+												? `u/${$route.params.userName}`
+												: `r/${postData.data.subreddit}`
+										}}</router-link
+									>
+								</div>
+								<div class="posted-by" id="base-user-post-content-posted-by">
+									<span class="posted-by-unhovered">
+										<i
+											v-if="postData.data.kind == 'post'"
+											style="
+												transform: rotate(133deg);
+												margin-right: 2px;
+												color: #0079d3;
+											"
+											class="fa-solid fa-arrows-split-up-and-left"
+										></i>
+										{{
+											postData.data.kind == 'post'
+												? 'Crossposted by'
+												: 'posted by'
+										}}</span
+									>
+									<router-link
+										style="margin-left: 3px"
+										:to="`/user/${postData.data.postedBy}`"
+										>{{ postData.data.postedBy }}
+									</router-link>
+								</div>
+								<div id="base-user-post-content-posted-posted-at">
+									{{ getMoment(postData.data.postedAt) }}
+									<moderation-title
+										v-if="postData.data.moderation != null"
+										:moderation="postData.data.moderation"
+										:pinned-post="postData.data.pin"
+									></moderation-title>
+								</div>
+							</div>
 							<div class="post-header">
 								<div class="post-title" id="base-user-post-title">
 									<h3>{{ postData.data.title }}</h3>
@@ -208,167 +140,12 @@
 									>
 								</div>
 							</div>
-							<div class="post-user-information">
-								<div class="post-user-name">
-									<router-link
-										id="base-user-post-content-post-user-name"
-										:to="
-											postData.data.subreddit == null
-												? `/user/${$route.params.userName}`
-												: `/r/${postData.data.subreddit}`
-										"
-										>{{
-											postData.data.subreddit == null
-												? `u/${$route.params.userName}`
-												: `r/${postData.data.subreddit}`
-										}}</router-link
-									>
-								</div>
-								<div class="posted-by" id="base-user-post-content-posted-by">
-									<span class="posted-by-unhovered">
-										<i
-											v-if="postData.data.kind == 'post'"
-											style="
-												transform: rotate(133deg);
-												margin-right: 2px;
-												color: #0079d3;
-											"
-											class="fa-solid fa-arrows-split-up-and-left"
-										></i>
-										{{
-											postData.data.kind == 'post'
-												? 'Crossposted by'
-												: 'posted by'
-										}}</span
-									>
-									<router-link
-										style="margin-left: 3px"
-										:to="`/user/${postData.data.postedBy}`"
-										>{{ postData.data.postedBy }}
-									</router-link>
-								</div>
-								<div id="base-user-post-content-posted-posted-at">
-									{{ getMoment(postData.data.postedAt) }}
-									<moderation-title
-										v-if="postData.data.moderation != null"
-										:moderation="postData.data.moderation"
-										:pinned-post="postData.data.pin"
-									></moderation-title>
-									<!-- <div
-										id="base-user-data-moderation-spam-spammedBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.spam != null &&
-											postData.data.moderation.spam.spammedBy != null
-										"
-										class="post-tooltip"
-									>
-										<i
-											class="fa-regular fa-calendar-xmark"
-											style="color: #ff585b"
-										></i>
-										<span
-											class="post-tooltiptext"
-											id="base-user-post-data-moderation-spam-spammedBy-tool-tip"
-											>Spammed by
-											{{ postData.data.moderation.spam.spammedBy }} at
-											{{ postData.data.moderation.spam.spammedDate }}</span
-										>
-									</div>
-									<div
-										id="base-user-data-moderation-lock-lockedBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.lock != null &&
-											postData.data.moderation.lock
-										"
-										class="post-tooltip"
-									>
-										<i
-											id="base-user-data-moderation-lock-lockedBy-icon"
-											class="fa-solid fa-lock"
-											style="color: #ffd635"
-										></i>
-										<span
-											id="base-user-data-moderation-lock-lockedBy-tool-tip"
-											class="post-tooltiptext"
-											>Comments are locked</span
-										>
-									</div>
-									<div
-										id="base-user-data-moderation-pin-pinnedBy"
-										v-if="postData.data.pin"
-										class="post-tooltip"
-									>
-										<i class="fa-solid fa-thumbtack" style="color: #46d160"></i>
-										<span class="post-tooltiptext">post are Pinned</span>
-									</div>
-									<div
-										id="base-user-data-moderation-remove-removedBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.remove != null &&
-											postData.data.moderation.remove.removedBy != null
-										"
-										class="post-tooltip"
-									>
-										<i
-											id="base-user-data-moderation-icon-removedBy"
-											style="color: #ff585b"
-											class="fa-solid fa-ban"
-										></i>
-										<span
-											class="post-tooltiptext"
-											id="base-user-data-moderation-remove-removedBy-tool-tip"
-											>Removed by
-											{{ postData.data.moderation.remove.removedBy }} at
-											{{ postData.data.moderation.remove.removedDate }}</span
-										>
-									</div>
-									<div
-										id="base-user-data-moderation-approve-approveBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.approve != null &&
-											postData.data.moderation.approve.approvedBy != null
-										"
-										class="post-tooltip"
-									>
-										<i
-											id="base-user-data-moderation-approve-approvedBy-icon"
-											class="fa-solid fa-check"
-											style="color: #46d160"
-										></i>
-										<span
-											class="post-tooltiptext"
-											id="base-user-data-moderation-approve-approvedBy-tool-tip"
-											>Approved by
-											{{ postData.data.moderation.approve.approvedBy }}
-											at
-											{{ postData.data.moderation.approve.approvedDate }}</span
-										>
-									</div> -->
-								</div>
-							</div>
-							<div class="post-options">
-								<post-options
-									:post-data="postData"
-									@insights-toggle="insightsPostToggle(postData.id)"
-									@expand-post="expandPostContent"
-									@collapse-post="collapsePostContent"
-									@delete-post="deletePost"
-									@hide-post="hidePost"
-									@save-post="savePost"
-									@share-post="sharePost"
-									:page="page"
-								></post-options>
-							</div>
 						</div>
 					</div>
 					<div
 						class="post-contents"
 						style="overflow: hidden"
-						v-if="showPostContent"
+						v-if="1 || showPostContent"
 						id="base-user-data-show-Post-Content"
 					>
 						<div
@@ -400,8 +177,38 @@
 						>
 							<video-post :video-src="postData.data.video"></video-post>
 						</div>
+						<div
+							id="base-user-data-post-link-container"
+							v-else-if="postData.data.kind == 'link'"
+						>
+							<a
+								v-if="postData.data.kind == 'link'"
+								class="post-title-link"
+								id="base-user-post-data-link"
+								:href="postData.data.link"
+								target="_blank"
+								>{{ postData.data.link }}/<i
+									class="fa-solid fa-arrow-up-right-from-square"
+								></i
+							></a>
+						</div>
 					</div>
-					<div class="post-insight" v-else-if="insightActive">
+					<div class="post-options">
+						<post-options
+							:post-data="postData"
+							@insights-toggle="insightsPostToggle(postData.id)"
+							@expand-post="expandPostContent"
+							@collapse-post="collapsePostContent"
+							@delete-post="deletePost"
+							@hide-post="hidePost"
+							@save-post="savePost"
+							@share-post="sharePost"
+							:page="page"
+							post-kind="ov"
+							@emitPopup="emitPopup"
+						></post-options>
+					</div>
+					<div class="post-insight" v-if="insightActive">
 						<div
 							id="base-user-data-post-insights-spinner"
 							style="display: flex"
@@ -440,7 +247,7 @@ export default {
 		TheInsights,
 		ModerationTitle,
 	},
-	emits: ['showComments'],
+	emits: ['emitPopup'],
 	props: {
 		postData: {
 			type: Object,
@@ -466,20 +273,6 @@ export default {
 			postHidden: false,
 			showPostContent: false,
 			deletedHiddenPost: false,
-			// images: [
-			// 	{
-			// 		imgUrl: '../../../assets/R.png',
-			// 		left: '0',
-			// 	},
-			// 	{
-			// 		imgUrl: '../../../assets/R.png',
-			// 		left: '100',
-			// 	},
-			// 	{
-			// 		imgUrl: '../../../assets/R.png',
-			// 		left: '200',
-			// 	},
-			// ],
 			lastLeftPic: 0,
 			lastRightPic: 0,
 			insightActive: false,
@@ -487,12 +280,18 @@ export default {
 			PostHybridContent: '',
 		};
 	},
+
 	created() {
 		// this.lastLeftPic = this.images.length - 1;
 	},
-	mounted() {},
+	mounted() {
+		this.setPostHybridContent();
+	},
 	computed: {},
 	methods: {
+		emitPopup(id, message) {
+			this.$emit('emitPopup', id, message);
+		},
 		CrossPostLinkHandler() {
 			if (this.postData.data.subreddit)
 				return (
@@ -570,9 +369,6 @@ export default {
 			}
 			console.log('save');
 		},
-		// removePost() {
-		// 	console.log('remove');
-		// },
 		sharePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -607,15 +403,6 @@ export default {
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
-		// markAsOC() {
-		// 	console.log('mark as os');
-		// },
-		// markAsSpoiler() {
-		// 	console.log('mark as spoiler');
-		// },
-		// markAsNSFW() {
-		// 	console.log('mark as nsfw');
-		// },
 
 		resizePost() {
 			console.log('resize');
@@ -701,41 +488,6 @@ export default {
 				this.counter++;
 			}
 		},
-		// showSubMenu() {
-		// 	this.subMenuDisplay = !this.subMenuDisplay;
-		// 	this.shareSubMenuDisplay = false;
-		// },
-		// hidePost() {
-		// 	this.postHidden = true;
-		// },
-		// async savePost() {
-		// 	this.saved = !this.saved;
-		// 	if (this.saved == true) {
-		// 		try {
-		// 			await this.$store.dispatch('postCommentActions/save', {
-		// 				baseurl: this.$baseurl,
-		// 				id: this.id,
-		// 				type: 'post',
-		// 			});
-		// 		} catch (error) {
-		// 			this.error = error.message || 'Something went wrong';
-		// 		}
-		// 	} else {
-		// 		try {
-		// 			await this.$store.dispatch('postCommentActions/unsave', {
-		// 				baseurl: this.$baseurl,
-		// 				id: this.id,
-		// 				type: 'post',
-		// 			});
-		// 		} catch (error) {
-		// 			this.error = error.message || 'Something went wrong';
-		// 		}
-		// 	}
-		// },
-		// showShareSubMenu() {
-		// 	this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
-		// 	this.subMenuDisplay = false;
-		// },
 	},
 };
 </script>
@@ -788,9 +540,10 @@ span {
 	display: flex;
 	/* align-items: center; */
 	justify-content: flex-start;
-	background-color: #ccc;
+	/* background-color: #ccc; */
 	/* background-color: rgba(255, 255, 255, 0.8); */
 	background-color: var(--color-grey-light-2);
+	background-color: #ffffff;
 	padding: 8px 0px 8px 0px;
 
 	/* opacity: 0.4; */
@@ -871,43 +624,6 @@ div.vote-box {
 	flex-grow: 2;
 	border-radius: 5px !important;
 }
-.post-pic-box {
-	position: relative;
-	display: block;
-	width: 96px;
-	/* overflow: hidden; */
-	height: 72px;
-	border-radius: 4px;
-	background-color: rgba(28, 28, 28, 0.03);
-	flex: none;
-}
-.post-pic-box::before {
-	font-family: 'Font Awesome 5 Free';
-	content: '\f03e';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 20px;
-	color: inherit;
-	display: none;
-}
-.post-pic-box i {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 20px;
-	color: inherit;
-}
-.post-pic-box img {
-	width: 100%;
-	height: 100%;
-	display: block;
-	border-radius: 4px;
-	position: relative;
-	z-index: 1;
-}
 @media (max-width: 640px) {
 	div.left-vote-box {
 		display: none !important;
@@ -939,7 +655,7 @@ div.vote-box {
 	}
 } */
 .post-content {
-	margin-left: 8px;
+	/* margin-left: 8px; */
 	/* overflow: hidden; */
 }
 .post-header {
@@ -979,6 +695,7 @@ span {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
+	margin-bottom: 8px;
 }
 .post-user-information div {
 	margin-right: 3px;
@@ -1049,203 +766,13 @@ li.post-option-item-hover2:hover,
 li.post-option-item {
 	display: flex;
 }
-/* .post-options ul li,
-.post-options ul li a {
-	color: inherit;
-	list-style: none;
-	text-decoration: none;
-	height: 36px;
-	min-width: 36px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.post-options ul li.post-option-item,
-.post-option-item-hover {
-	padding: 0 8px 0 8px;
-	margin-right: 4px;
-	border-radius: 2px;
-}
 
-.post-options ul li.post-option-item .post-options-text,
-.post-option-item-hover .post-options-text {
-	margin-left: 6px;
-}
-@media (max-width: 800px) {
-	.post-options-text {
-		display: none;
-	}
-}
-.post-options ul li.post-option-item p,
-.post-option-item-hover p {
-	font-size: 12px;
-}
-.post-options ul li.post-option-item:hover,
-.post-option-item-hover:hover {
-	background-color: rgba(26, 26, 27, 0.1);
-}
-.post-options-icon {
-	font-size: 20px;
-}
-.post-options ul {
-	display: flex;
-	flex-wrap: wrap;
-}
-.post-options ul li.post-option-item {
-	display: flex;
-}
-.three-dot-icon-box {
-	position: relative;
-	display: flex;
-	padding: 0 8px 0 8px;
-	margin-right: 4px;
-	border-radius: 2px;
-}
-.three-dot-icon-box:hover {
-	background-color: rgba(26, 26, 27, 0.1);
-}
-.options-box-list {
-	position: absolute;
-	top: 35px;
-	left: 0px;
-	z-index: 15;
-	border: 1px solid #edeff1;
-	border-radius: 4px;
-	box-shadow: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
-	color: #1c1c1c;
-	overflow: hidden;
-	background-color: #ffffff;
-}
-.options-box-list ul {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-}
-.options-box-list i input[type='checkbox'] {
-	width: 14px !important;
-	height: 14px !important;
-	display: flex !important;
-}
-.options-box-list .options-box-text label {
-	position: relative;
-	bottom: -0.4px;
-}
-.options-box-list ul li.options-box-item {
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	text-transform: capitalize;
-	white-space: nowrap;
-	color: #878a8c;
-	cursor: pointer;
-	padding: 8px 16px 8px 8px;
-	text-align: left;
-	width: 100%;
-}
-.options-box-list ul li.options-box-item:not(:first-child) {
-	border-top: 1px solid #edeff1;
-}
-.options-box-list ul li.options-box-item:hover {
-	color: #1c1c1c;
-	background-color: #e9f5fd;
-}
-.options-box-list ul li.options-box-item .options-box-icon {
-	margin-right: 10px;
-	font-size: 14px;
-	display: flex;
-} */
-/* end-post-options */
-
-/* Post picture */
 /* .post-picture {
 	width: 100%;
 } */
 .post-picture-container {
 	width: 100%;
 }
-/* .post-picture .picture-container {
-	width: 100%;
-	height: 256px;
-	position: relative;
-}
-.post-picture .picture-container .left-button,
-.post-picture .picture-container .right-button {
-	position: absolute;
-}
-.post-picture .picture-container .left-button {
-	left: 16px;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 24px;
-	z-index: 2;
-	height: 44px;
-	width: 44px;
-	padding: 16px;
-	cursor: pointer;
-	background: #fff;
-	border-radius: 40px;
-	box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.post-picture .picture-container .right-button {
-	right: 16px;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 24px;
-	z-index: 2;
-	height: 44px;
-	width: 44px;
-	padding: 16px;
-	cursor: pointer;
-	background: #fff;
-	border-radius: 40px;
-	box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.picture-number-box {
-	display: flex;
-	align-items: center;
-	backdrop-filter: blur(40px);
-	background: rgba(0, 0, 0, 0.5);
-	border-radius: 50px;
-	color: #fff;
-	font-size: 12px;
-	padding: 4px 8px;
-	position: absolute;
-	right: 16px;
-	top: 16px;
-	z-index: 5;
-}
-.post-picture .picture-container .pic-items ul {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	justify-content: center;
-}
-.post-picture .picture-container .pic-items li {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	position: absolute;
-	transition: left 0.25s;
-}
-.post-picture .post-footer {
-	height: 40px;
-	background-color: #edeff1;
-	color: #222222;
-	display: flex;
-	width: 100%;
-	align-items: center;
-} */
-/* end post picture  */
 
 /* tool tip  */
 .post-tooltip {

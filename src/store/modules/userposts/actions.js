@@ -74,6 +74,78 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserOverviewData(context, payload) {
+		console.log('overvie Actions');
+
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log('overvie Actions', responseData);
+		if (response.status == 200)
+			context.commit('setUserOverviewData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserSavedData(context, payload) {
+		console.log('overvie Actions');
+
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/saved`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log('saved Actions', responseData);
+		if (response.status == 200)
+			context.commit('setUserOverviewData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
 	async getUserHistoryPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/history`);
@@ -294,11 +366,22 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		console.log('commit');
-		// if (response.status == 200)
-		if (ApprovePostOrCommentData.type == 'post')
-			context.commit('ApprovePostOrComment', {
-				ApprovePostOrCommentData,
-			});
+		if (response.status == 200) {
+			if (ApprovePostOrCommentData.type == 'post') {
+				if (payload.page != 'overview')
+					context.commit('ApprovePostOrComment', {
+						ApprovePostOrCommentData,
+					});
+				else
+					context.commit('ApprovePostOverview', {
+						ApprovePostOrCommentData,
+					});
+			} else if (ApprovePostOrCommentData.type == 'comment') {
+				context.commit('ApproveCommentOverview', {
+					ApprovePostOrCommentData,
+				});
+			}
+		}
 		return response.status;
 	},
 	async removePostOrComment(context, payload) {
@@ -322,9 +405,14 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		if (response.status == 200 && removePostOrCommentData.type == 'post')
-			context.commit('removePostOrComment', {
-				removePostOrCommentData,
-			});
+			if (payload.page != 'overview')
+				context.commit('removePostOrComment', {
+					removePostOrCommentData,
+				});
+			else
+				context.commit('removePostOverview', {
+					removePostOrCommentData,
+				});
 		return response.status;
 	},
 	async savePostOrComment(context, payload) {
@@ -414,10 +502,16 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		if (response.status == 200 && lockUnlockData.type == 'post')
-			context.commit('lockUnLockPostOrComment', {
-				lockUnlockData,
-				key: payload.key,
-			});
+			if (payload.page != 'overview')
+				context.commit('lockUnLockPostOrComment', {
+					lockUnlockData,
+					key: payload.key,
+				});
+			else
+				context.commit('lockUnLockPostOverview', {
+					lockUnlockData,
+					key: payload.key,
+				});
 		return response.status;
 	},
 	async markUnMarkSendMeReply(context, payload) {
@@ -560,9 +654,14 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		// if(response.status == 200)
-		context.commit('markUnMarkPostAsSpoiler', {
-			spoilerData,
-		});
+		if (payload.page != 'overview')
+			context.commit('markUnMarkPostAsSpoiler', {
+				spoilerData,
+			});
+		else
+			context.commit('markUnMarkPostAsSpoilerOverview', {
+				spoilerData,
+			});
 		return response.status;
 	},
 	async markPostAsNSFW(context, payload) {
@@ -598,9 +697,14 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		// if(response.status == 200)
-		context.commit('markPostAsNSFW', {
-			nsfwData,
-		});
+		if (payload.page != 'overview')
+			context.commit('markPostAsNSFW', {
+				nsfwData,
+			});
+		else
+			context.commit('markPostAsNSFWOverview', {
+				nsfwData,
+			});
 		return response.status;
 	},
 	async pinUnpinPost(context, payload) {
@@ -627,6 +731,44 @@ export default {
 		context.commit('pinUnpinPost', {
 			pinUnpinData,
 		});
+		return response.status;
+	},
+	async hideUnhidePost(context, payload) {
+		const hideUnhideData = payload.hideUnhideData; // id of post pin boolean
+		const baseurl = payload.baseurl;
+		let response;
+		if (hideUnhideData.key == 'hide') {
+			response = await fetch(baseurl + '/hide', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify({ id: hideUnhideData.id }),
+			});
+		} else if (hideUnhideData.key == 'unhide') {
+			response = await fetch(baseurl + '/unhide', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: JSON.stringify({ id: hideUnhideData.id }),
+			});
+		}
+		const responseData = await response.json();
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to send request.'
+		// 	);
+		// 	throw error;
+		// }
+		console.log(response.status);
+		console.log(responseData);
+		// if(response.status == 200)
+		// context.commit('pinUnpinPost', {
+		// 	pinUnpinData,
+		// });
 		return response.status;
 	},
 	async markSpam(context, payload) {
@@ -657,9 +799,14 @@ export default {
 		console.log(response.status);
 		console.log(responseData);
 		if (response.status == 200 && markSpamData.type == 'post')
-			context.commit('markSpam', {
-				payload,
-			});
+			if (payload.page != 'overview')
+				context.commit('markSpam', {
+					payload,
+				});
+			else
+				context.commit('markSpamOverview', {
+					payload,
+				});
 		return response.status;
 	},
 	async unmarkSpam(context, payload) {
