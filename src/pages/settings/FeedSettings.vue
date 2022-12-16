@@ -274,7 +274,7 @@ export default {
 			this.autoplayMedia = value;
 			console.log('this.autoplayMedia');
 			console.log(this.autoplayMedia);
-			this.changeadultContent();
+			this.changegetautoplayMedia();
 		},
 		async changeadultContent() {
 			const actionPayload = {
