@@ -1,11 +1,11 @@
 <template>
-	<div>
+	<div :class="!isRead ? 'box-unread' : ''">
 		<p class="md-details">
 			<span class="sign" :id="'sign-' + index" @click="expand('')"
 				>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
 			>
 			<span v-if="getUserName == childMessage.receiverUsername">
-				<span>from&nbsp;</span>
+				<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 				<span class="sender"
 					><a
 						v-if="childMessage.isSenderUser"
@@ -27,7 +27,7 @@
 				</span> -->
 			</span>
 			<span v-else>
-				<span>to&nbsp;</span>
+				<span :class="!isRead ? 'unread' : ''">to&nbsp;</span>
 				<span class="reciever"
 					><a
 						v-if="childMessage.isReceiverUser"
@@ -43,7 +43,12 @@
 					>
 				</span>
 			</span>
-			&nbsp;sent&nbsp;<time :id="'time-' + index"> {{ handleTime }}</time>
+			&nbsp;sent&nbsp;<time
+				:id="'time-' + index"
+				:class="!isRead ? 'unread' : ''"
+			>
+				{{ handleTime }}</time
+			>
 		</p>
 		<div v-if="expandAll">
 			<!-- <p class="md">{{ message.text }}</p> -->
@@ -252,7 +257,7 @@ export default {
 			disappear: false,
 			spammed: false,
 			spamUser: false,
-			isRead: false,
+			isRead: true,
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
@@ -410,7 +415,7 @@ ul {
 .box-unread {
 	margin: 1rem;
 	background-color: var(--color-grey-light-10) !important;
-	border-color: var(--color-grey-light-10) !important;
+	border-color: red !important;
 }
 .sender-box,
 .reciever-box {
