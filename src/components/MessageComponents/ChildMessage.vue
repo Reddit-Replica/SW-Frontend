@@ -1,11 +1,16 @@
 <template>
-	<div>
+	<div
+		:class="[
+			!isRead ? 'box-unread' : '',
+			disappear == true ? 'hide-message' : '',
+		]"
+	>
 		<p class="md-details">
 			<span class="sign" :id="'sign-' + index" @click="expand('')"
 				>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
 			>
 			<span v-if="getUserName == childMessage.receiverUsername">
-				<span>from&nbsp;</span>
+				<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 				<span class="sender"
 					><a
 						v-if="childMessage.isSenderUser"
@@ -27,7 +32,7 @@
 				</span> -->
 			</span>
 			<span v-else>
-				<span>to&nbsp;</span>
+				<span :class="!isRead ? 'unread' : ''">to&nbsp;</span>
 				<span class="reciever"
 					><a
 						v-if="childMessage.isReceiverUser"
@@ -43,7 +48,12 @@
 					>
 				</span>
 			</span>
-			&nbsp;sent&nbsp;<time :id="'time-' + index"> {{ handleTime }}</time>
+			&nbsp;sent&nbsp;<time
+				:id="'time-' + index"
+				:class="!isRead ? 'unread' : ''"
+			>
+				{{ handleTime }}</time
+			>
 		</p>
 		<div v-if="expandAll">
 			<!-- <p class="md">{{ message.text }}</p> -->
@@ -190,6 +200,7 @@ export default {
 		Markdown,
 		ReplyComponent,
 	},
+	emits: ['doneSuccessfully'],
 	// @vuese
 	//details of message
 	props: {
@@ -252,7 +263,7 @@ export default {
 			disappear: false,
 			spammed: false,
 			spamUser: false,
-			isRead: false,
+			isRead: true,
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
@@ -302,7 +313,7 @@ export default {
 			if (action == 'yes') {
 				try {
 					this.$store.dispatch('messages/deleteMessage', {
-						id: this.childMessage.id,
+						id: this.childMessage.msgID,
 						type: 'message',
 						baseurl: this.$baseurl,
 					});
@@ -350,7 +361,7 @@ export default {
 			if (action == 'yes') {
 				try {
 					this.$store.dispatch('messages/spamMessage', {
-						id: this.childMessage.id,
+						id: this.childMessage.msgID,
 						type: 'message',
 						reason: '',
 						baseurl: this.$baseurl,
@@ -410,7 +421,7 @@ ul {
 .box-unread {
 	margin: 1rem;
 	background-color: var(--color-grey-light-10) !important;
-	border-color: var(--color-grey-light-10) !important;
+	border-color: red !important;
 }
 .sender-box,
 .reciever-box {
@@ -450,5 +461,8 @@ a:hover,
 	color: var(--color-blue);
 	font-size: 1.1rem;
 	font-weight: bold;
+}
+.hide-message {
+	display: none;
 }
 </style>

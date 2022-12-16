@@ -215,7 +215,6 @@
 				</div> -->
 			</div>
 		</li>
-		{{ expandAll }}
 	</div>
 </template>
 
@@ -229,6 +228,7 @@ export default {
 		// ReplyComponent,
 		ChildMessage,
 	},
+	emits: ['doneSuccessfully'],
 	// @vuese
 	//details of message
 	props: {
