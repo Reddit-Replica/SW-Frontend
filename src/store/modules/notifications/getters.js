@@ -2,6 +2,9 @@ export default {
 	getNotifications(state) {
 		return state.notifications;
 	},
+	getSomeNotifications(state) {
+		return state.someNotifications;
+	},
 	getAllRead(state) {
 		return state.allRead;
 	},
