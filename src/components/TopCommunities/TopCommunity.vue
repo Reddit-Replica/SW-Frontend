@@ -21,7 +21,18 @@
 						d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
 					/>
 				</svg>
-				<img class="topCommunityImage" :src="image" alt="community image" />
+				<img
+					class="topCommunityImage"
+					:src="image"
+					alt="community image"
+					v-if="!noImage"
+				/>
+				<img
+					class="topCommunityImage"
+					src="../../../img/default_subreddit_image.png"
+					alt="community image"
+					v-else
+				/>
 				<a class="topCommunityName" href="link">{{ name }}</a>
 			</div>
 		</a>
@@ -103,6 +114,9 @@ export default {
 			} else {
 				return this.members;
 			}
+		},
+		noImage() {
+			return !this.image;
 		},
 	},
 	data() {
