@@ -18,6 +18,7 @@
 				v-for="(postData, index) in getUserPostData.postData.children"
 				:key="index"
 				:post-data="postData"
+				:page="'hidden'"
 			></base-user-post>
 		</div>
 	</div>

@@ -2,8 +2,11 @@
 	<pinned-posts
 		:pinned-posts-data="getUserPinnedPostData.pinnedPostData"
 	></pinned-posts>
-	<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
+	<div style="margin-bottom: 16px">
+		<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
+	</div>
 	<div
+		style="margin-bottom: 10px"
 		v-for="overviewPostData in getUserOverviewData.overviewData.children"
 		:key="overviewPostData.id"
 	>
@@ -13,8 +16,30 @@
 			:comment-data="overviewPostData"
 			:id="overviewPostData.id"
 			:state="state"
+			type="summarypost"
 		>
 		</comments-overview-page>
+		<div v-else>
+			<overview-post
+				:key="index"
+				:post-data="{
+					data: overviewPostData.data.post,
+					id: overviewPostData.id,
+				}"
+				:state="state"
+				:page="'overview'"
+				@emitPopup="emitPopup"
+			></overview-post>
+
+			<comments-overview-page
+				:key="overviewPostData.id"
+				:comment-data="overviewPostData"
+				:id="overviewPostData.id"
+				:state="state"
+				type="fullpost"
+			>
+			</comments-overview-page>
+		</div>
 	</div>
 </template>
 
@@ -22,12 +47,14 @@
 import SortpostsBar from '../../../components/bars/SortpostsBar.vue';
 import PinnedPosts from '../../../components/UserComponents/BaseUserComponents/PinnedPosts.vue';
 import CommentsOverviewPage from '../../../components/UserComponents/BaseUserComponents/CommentsComponents/CommentsOverviewPage.vue';
+import OverviewPost from '../../../components/UserComponents/BaseUserComponents/OverviewPost.vue';
 // import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
 		SortpostsBar,
 		PinnedPosts,
 		CommentsOverviewPage,
+		OverviewPost,
 		// BasePost,
 	},
 	props: {
@@ -43,7 +70,9 @@ export default {
 	},
 	mounted() {
 		console.log('in overview', this.state);
+		this.scroll();
 	},
+
 	async created() {
 		let sortType;
 		if (!this.$route.query.sort || this.$route.query.sort == 'new') {
@@ -84,6 +113,7 @@ export default {
 		// // else if (requestStatus == 404) console.log('not found');
 		// // else if (requestStatus == 500) console.log(' internal server error');
 	},
+	emits: ['emitPopup'],
 	computed: {
 		getUserPinnedPostData() {
 			// console.log(this.$store.getters['userposts/getUserPinnedData']);
@@ -91,13 +121,36 @@ export default {
 		},
 		getUserOverviewData() {
 			// console.log(this.$store.getters['userposts/getUserData']);
-			return this.$store.getters['user/getUserOverviewData'];
+			return this.$store.getters['userposts/getUserOverviewData'];
 		},
 	},
 	methods: {
+		scroll() {
+			window.onscroll = () => {
+				// console.log('bottom');
+				// let bottomOfWindow =
+				// 	Math.max(
+				// 		window.pageYOffset,
+				// 		document.documentElement.scrollTop,
+				// 		document.body.scrollTop
+				// 	) +
+				// 		window.innerHeight ===
+				// 	document.documentElement.offsetHeight;
+
+				if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+					// you're at the bottom of the page
+
+					// this.scrolledToBottom = true; // replace it with your code
+					console.log('bottom');
+				}
+			};
+		},
+		emitPopup(id, message) {
+			this.$emit('emitPopup', id, message);
+		},
 		async sortBarClicked(sortType) {
 			this.$router.push({
-				path: `/user/${this.$route.params.userName}/submitted`,
+				path: `/user/${this.$route.params.userName}/`,
 				query: { sort: `${sortType}` },
 			});
 			console.log(sortType);
@@ -134,17 +187,20 @@ export default {
 		async RequestUserOverviewData(sortType) {
 			let requestStatus = -1;
 			try {
-				requestStatus = await this.$store.dispatch('user/getUserOverviewData', {
-					baseurl: this.$baseurl,
-					userName: this.$route.params.userName,
-					params: {
-						sort: `${sortType}`,
-						time: 'all',
-						before: '',
-						after: '',
-						limit: '25',
-					},
-				});
+				requestStatus = await this.$store.dispatch(
+					'userposts/getUserOverviewData',
+					{
+						baseurl: this.$baseurl,
+						userName: this.$route.params.userName,
+						params: {
+							sort: `${sortType}`,
+							time: 'all',
+							before: '',
+							after: '',
+							limit: '25',
+						},
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
