@@ -311,7 +311,7 @@
 			</div> -->
 			<div
 				class="header-user-nav-icon-box header-popular"
-				id="header-popular"
+				id="header-settings"
 				@click="goToSettings()"
 			>
 				<svg
@@ -321,6 +321,7 @@
 					fill="currentColor"
 					class="bi bi-gear header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="header-settings-icon"
 				>
 					<title>settings</title>
 					<path
@@ -398,7 +399,7 @@
 
 			<div
 				class="header-user-nav-icon-box header-popular"
-				id="header-popular"
+				id="header-user-page"
 				@click="goToUserPage()"
 			>
 				<svg
@@ -408,6 +409,7 @@
 					fill="currentColor"
 					class="bi bi-person-circle header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="header-user-page-icon"
 				>
 					<title>Your Profile</title>
 					<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -420,7 +422,7 @@
 
 			<div
 				class="header-user-nav-icon-box header-popular"
-				id="header-popular"
+				id="header-go-home"
 				@click="goToHome()"
 			>
 				<svg
@@ -430,6 +432,7 @@
 					fill="currentColor"
 					class="bi bi-house-door-fill header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="header-go-home-icon"
 				>
 					<title>Home</title>
 					<path
