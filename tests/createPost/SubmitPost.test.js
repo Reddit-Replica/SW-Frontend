@@ -6,6 +6,27 @@ import Vuex from 'vuex';
 import mockservice from '../../../mockservice.txt';
 
 describe ('SubmitPage rendring', () => {
+  const messagesAction = {
+    loadListOfAllModerators: vi.fn (),
+    loadListOfModerators: vi.fn (),
+    loadListOfInvitedModerators: vi.fn (),
+    handleTime: vi.fn (),
+    loadListOfApproved: vi.fn (),
+    approveUser: vi.fn (),
+    removeApprove: vi.fn (),
+    loadListOfMuted: vi.fn (),
+    muteUser: vi.fn (),
+    unmuteUser: vi.fn (),
+    leaveMod: vi.fn (),
+    inviteMod: vi.fn (),
+    cancelInvitation: vi.fn (),
+    acceptInvitation: vi.fn (),
+    loadListOfSpams: vi.fn (),
+    approvedSpam: vi.fn (),
+    addRule: vi.fn (),
+    loadListOfRules: vi.fn (),
+    updateRule: vi.fn (),
+  };
   let store = new Vuex.Store ({
     modules: {
       userModule: {
@@ -46,6 +67,59 @@ describe ('SubmitPage rendring', () => {
             },
           ],
         },
+      },
+      moderatorsModule: {
+        namespaced: true,
+        state() {
+          return {
+            listOfModerators: [],
+            listOfAllModerators: [],
+            listOfInvitedModerators: [],
+            handleTime: '',
+            after: '',
+            before: '',
+            //////////////APPROVED/////////////
+            listOfApproved: [],
+            approveUserSuccessfully: false,
+            removeApproveSuccessfully: false,
+            //////////////MUTED/////////////
+            listOfMuted: [],
+            muteUserSuccessfully: false,
+            unmuteUserSuccessfully: false,
+            //////////////LEAVE MOD/////////////
+            leaveModSuccessfully: false,
+            //////////////INVITE MOD/////////////
+            inviteModSuccessfully: false,
+            cancelSuccessfully: false,
+            acceptSuccessfully: false,
+            //////////////SPAM/////////////////
+            listOfSpams: [],
+            approveSuccessfully: [],
+            //////////////RULES/////////////////
+            addRuleSuccessfully: false,
+            listOfRules: [],
+            updateRuleSuccessfully: false,
+            deleteRuleSuccessfully: false,
+            updateRulesSuccessfully: false,
+      
+            //////////////FLAIRS/////////////////
+            listOfFlairs: [],
+            addFlairSuccessfully: false,
+            updateFlairSuccessfully: false,
+            deleteFlairSuccessfully: false,
+            updateFlairsSuccessfully: false,
+      
+            //////////////////////BAN////////////////////////
+            banUserSuccessfully: false,
+            unBanUserSuccessfully: false,
+            listOfBanned: [],
+            ////////////////////////////Unmoderated/////////////
+            Unmoderated: [],
+            EditedPosts: [],
+            EditedComments: [],
+          };
+        },
+        actions: messagesAction,
       },
     },
   });

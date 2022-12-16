@@ -124,6 +124,12 @@ export default {
 	height: 20px;
 	border-radius: 50%;
 }
+.post-text {
+	width: 100%;
+	overflow: auto;
+	height: 100%;
+	word-break: break-all;
+}
 
 .subreddit-info .subreddit-image {
 	padding-right: 5px;
