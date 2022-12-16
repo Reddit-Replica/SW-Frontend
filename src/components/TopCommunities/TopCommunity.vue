@@ -6,9 +6,12 @@
 			class="topCommunityLink"
 			:id="'top-community-link-' + index"
 		>
-			<div class="topCommunityBlock">
-				<span class="topCommunityIndex">{{ index + 1 }}</span>
+			<div class="topCommunityBlock" :id="'top-community-div-' + index">
+				<span class="topCommunityIndex" :id="'top-community-order-' + index">{{
+					index + 1
+				}}</span>
 				<svg
+					:id="'top-community-icon-' + index"
 					xmlns="http://www.w3.org/2000/svg"
 					width="20"
 					height="20"
@@ -27,14 +30,21 @@
 					:src="image"
 					alt="community image"
 					v-if="!noImage"
+					:id="'top-community-img-' + index"
 				/>
 				<img
 					class="topCommunityImage"
 					src="../../../img/default_subreddit_image.png"
 					alt="community image"
 					v-else
+					:id="'top-community-img2-' + index"
 				/>
-				<a class="topCommunityName" href="link">r/{{ name }}</a>
+				<a
+					class="topCommunityName"
+					href="link"
+					:id="'top-community-link2-' + index"
+					>r/{{ name }}</a
+				>
 			</div>
 		</div>
 

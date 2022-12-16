@@ -14,9 +14,9 @@
 				<img
 					src="../../../img/default_inbox_avatar.png"
 					alt="image"
-					id="ntf-msg-2"
+					:id="'ntf-msg-2-' + index"
 				/>
-				<span class="circle" id="ntf-msg-3"
+				<span class="circle" :id="'ntf-msg-3-' + index"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -31,18 +31,20 @@
 					</svg>
 				</span>
 			</span>
-			<span class="ntf-msg-2 text" id="ntf-msg-4">
-				<div class="ntf-msg-2-1" id="ntf-msg-5">
-					<span id="ntf-msg-6"
-						><span class="text-title" id="ntf-msg-7">{{
+			<span class="ntf-msg-2 text" :id="'ntf-msg-4-' + index">
+				<div class="ntf-msg-2-1" :id="'ntf-msg-5-' + index">
+					<span :id="'ntf-msg-6-' + index"
+						><span class="text-title" :id="'ntf-msg-7-' + index">{{
 							notification.title
 						}}</span>
-						<span class="text-dot" id="ntf-msg-8">.</span>
-						<span id="ntf-msg-9">{{ calcDuration(notification.sendAt) }}</span>
+						<span class="text-dot" :id="'ntf-msg-8-' + index">.</span>
+						<span :id="'ntf-msg-9-' + index">{{
+							calcDuration(notification.sendAt)
+						}}</span>
 					</span>
-					<span class="dots-icon" id="ntf-msg-10">
+					<span class="dots-icon" :id="'ntf-msg-10-' + index">
 						<svg
-							id="ntf-msg-11"
+							:id="'ntf-msg-11-' + index"
 							xmlns="http://www.w3.org/2000/svg"
 							width="20"
 							height="20"
@@ -58,23 +60,23 @@
 						<button
 							v-if="buttonShown"
 							@click.prevent="clickDotsButton"
-							id="ntf-msg-12"
+							:id="'ntf-msg-12-' + index"
 						>
 							{{ dotsButtonText }}
 						</button>
 					</span>
 				</div>
-				<div id="ntf-msg-13">
-					<div id="ntf-msg-14">{{ content }}</div>
-					<div class="ntf-msg-2-2" id="ntf-msg-15">
+				<div :id="'ntf-msg-13-' + index">
+					<div :id="'ntf-msg-14-' + index">{{ content }}</div>
+					<div class="ntf-msg-2-2" :id="'ntf-msg-15-' + index">
 						<a
 							class="reply-back"
 							v-if="replyBack"
 							:href="notification.link"
-							id="ntf-msg-16"
+							:id="'ntf-msg-16-' + index"
 						>
 							<svg
-								id="ntf-msg-17"
+							:id="'ntf-msg-17-' + index"
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
 								height="16"
@@ -87,7 +89,7 @@
 									d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"
 								/>
 							</svg>
-							<span id="ntf-msg-18">Reply Back</span>
+							<span :id="'ntf-msg-18-' + index">Reply Back</span>
 						</a>
 					</div>
 				</div>
