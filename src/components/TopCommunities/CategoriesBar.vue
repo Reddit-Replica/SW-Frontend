@@ -1,9 +1,13 @@
 <template>
-	<div class="catg-bar-1">
-		<div class="catg-bar-2"><h2>Categories</h2></div>
-		<ul :class="{ 'small-ul': smallList, 'large-ul': !smallList }">
-			<li>
+	<div class="catg-bar-1" id="catg-bar-1">
+		<div class="catg-bar-2" id="catg-bar-2"><h2>Categories</h2></div>
+		<ul
+			:class="{ 'small-ul': smallList, 'large-ul': !smallList }"
+			id="catg-bar-3"
+		>
+			<li id="catg-bar-4">
 				<router-link
+					id="catg-bar-5"
 					to="/subreddits/leaderboard/"
 					@click="setClicked('All Communities')"
 					class="catg-links"
@@ -18,6 +22,7 @@
 				:id="category.name + '-top'"
 			>
 				<router-link
+					:id="category.name + '-top-link'"
 					:to="'/subreddits/leaderboard/' + category.name"
 					@click="setClicked(category.name)"
 					class="catg-links"
@@ -27,7 +32,7 @@
 			</li>
 		</ul>
 		<div>
-			<base-button class="button" @click="toggleShow">{{
+			<base-button class="button" @click="toggleShow" id="catg-bar-6">{{
 				buttonText
 			}}</base-button>
 		</div>

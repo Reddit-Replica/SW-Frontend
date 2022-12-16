@@ -1,21 +1,21 @@
 <template>
-	<div class="top-cards-1">
-		<div class="top-cards-2">
+	<div class="top-cards-1" id="top-cards-1">
+		<div class="top-cards-2" id="top-cards-2">
 			<top-communities
+				id="top-cards-3"
 				@reload-component="reloadPage"
 				class="top-cards-3"
 				:top-communities="firstCategoryCommunities"
 				top-communities-image="../../../img/banner-background_top.png"
 				:top-communities-caption="firstCategory"
-				id="top-comm-main-bar"
 			></top-communities>
 			<top-communities
+				id="top-cards-4"
 				@reload-component="reloadPage"
 				class="top-cards-4"
 				:top-communities="secondCategoryCommunities"
 				top-communities-image="../../../img/banner-background_top.png"
 				:top-communities-caption="secondCategory"
-				id="top-comm-main-bar"
 			></top-communities>
 		</div>
 	</div>
