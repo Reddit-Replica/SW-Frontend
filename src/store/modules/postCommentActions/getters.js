@@ -3,4 +3,8 @@ export default {
 		console.log(state.commentedUsers);
 		return state.commentedUsers;
 	},
+	getActions(state) {
+		console.log(state.actions);
+		return state.actions;
+	},
 };

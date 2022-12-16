@@ -42,13 +42,10 @@
 			</div>
 			<div class="positioning">
 				<SaveUnsavePopupMessage
-					v-for="message in savedUnsavedPosts"
-					:key="message.id"
-					:type="message.type"
-					:state="message.state"
-					:typeid="message.postid"
-					@undo-action="undoSaveUnsave"
-				></SaveUnsavePopupMessage>
+					v-for="action in savedUnsavedPosts"
+					:key="action"
+					>{{ action }}</SaveUnsavePopupMessage
+				>
 			</div>
 		</div>
 		<router-view></router-view>
@@ -99,6 +96,9 @@ export default {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');
 		},
+		savedUnsavedPosts() {
+			return this.$store.getters['postCommentActions/getActions'];
+		},
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
@@ -108,7 +108,6 @@ export default {
 			colorGreyDark2: '#0099CC',
 			posts: [],
 			showComments: false,
-			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
@@ -126,28 +125,28 @@ export default {
 					console.log(error);
 				});
 		},
-		savePost(id) {
-			this.savedUnsavedPosts.push({
-				id: this.savedUnsavedPosts.length,
-				postid: id,
-				type: 'post',
-				state: 'saved',
-			});
-			setTimeout(() => {
-				this.savedUnsavedPosts.shift();
-			}, 10000);
-		},
-		unsavePost(id) {
-			this.savedUnsavedPosts.push({
-				id: this.savedUnsavedPosts.length,
-				postid: id,
-				type: 'post',
-				state: 'unsaved',
-			});
-			setTimeout(() => {
-				this.savedUnsavedPosts.shift();
-			}, 10000);
-		},
+		// savePost(id) {
+		// 	this.savedUnsavedPosts.push({
+		// 		id: this.savedUnsavedPosts.length,
+		// 		postid: id,
+		// 		type: 'post',
+		// 		state: 'saved',
+		// 	});
+		// 	setTimeout(() => {
+		// 		this.savedUnsavedPosts.shift();
+		// 	}, 10000);
+		// },
+		// unsavePost(id) {
+		// 	this.savedUnsavedPosts.push({
+		// 		id: this.savedUnsavedPosts.length,
+		// 		postid: id,
+		// 		type: 'post',
+		// 		state: 'unsaved',
+		// 	});
+		// 	setTimeout(() => {
+		// 		this.savedUnsavedPosts.shift();
+		// 	}, 10000);
+		// },
 		async undoSaveUnsave(state, typeid) {
 			if (state == 'saved') {
 				this.unsavePost(typeid);

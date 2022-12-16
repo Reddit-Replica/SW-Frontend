@@ -13,17 +13,21 @@
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
 				<createpost-bar id="create-post-bar-subreddit"></createpost-bar>
-				<sort-bar-subreddit
-					:subreddit-name="subredditName"
-					id="sort-post-bar-subreddit"
-				></sort-bar-subreddit>
+				<sortposts-bar
+					@title="changeRoute"
+					@time="changeRouteQueryParam"
+					:initial-title="$route.params.title"
+				></sortposts-bar>
 				<grow-community id="grow-community-comp"></grow-community>
-				<community-post id="pinned-post-comp"></community-post>
-				<base-post
-					v-for="post in posts"
-					:key="post.id"
-					:post="post"
-				></base-post>
+				<!-- <community-post id="pinned-post-comp"></community-post> -->
+				<overview-post
+					v-for="(post, index) in posts"
+					:key="index"
+					:post-data="{
+						data: post.data,
+						id: post.id,
+					}"
+				></overview-post>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
@@ -86,27 +90,25 @@
 <script>
 import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue';
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
-import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
+import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
-import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
-import BasePost from '../../components/BaseComponents/BasePost.vue';
 import SubredditRules from '../../components/PostComponents/SubredditRules.vue';
+import OverviewPost from '../../components/UserComponents/BaseUserComponents/OverviewPost.vue';
 
 export default {
 	components: {
 		SubredditTop,
 		CreatepostBar,
-		SortBarSubreddit,
+		SortpostsBar,
 		AboutCommunityBar,
 		GrowCommunity,
-		CommunityPost,
 		ModeratorsBar,
 		BacktotopButton,
-		BasePost,
 		SubredditRules,
+		OverviewPost,
 	},
 	props: {
 		subredditName: {
@@ -169,7 +171,6 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
-				console.log(this.subreddit.isFavorite);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {
@@ -230,6 +231,7 @@ export default {
 					baseurl: this.$baseurl,
 					title: title,
 					token: accessToken,
+					query: this.$route.query.t,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -237,6 +239,7 @@ export default {
 
 			this.posts = this.$store.getters['community/getPosts'];
 		},
+
 		checkIfModerator() {
 			const username = localStorage.getItem('userName');
 			const moderators = this.subreddit['moderators'];
@@ -249,6 +252,18 @@ export default {
 			} else {
 				this.isModerator = true;
 			}
+		},
+		changeRoute(title) {
+			this.$router.push(`${title}`);
+			//this.$router.push(`/${title}`);
+		},
+		async changeRouteQueryParam(title) {
+			console.log(title);
+			await this.$router.push({
+				path: `top`,
+				query: { t: title },
+			});
+			this.fetchSubredditPosts('top');
 		},
 	},
 };

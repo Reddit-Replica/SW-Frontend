@@ -49,9 +49,11 @@ export default {
 			return this.$route.params.subredditName;
 		},
 		EditedPosts() {
+			// console.log(this.$store.getters['moderation/EditedPosts']);
 			return this.$store.getters['moderation/EditedPosts'];
 		},
 		EditedComments() {
+			console.log(this.$store.getters['moderation/EditedComments']);
 			return this.$store.getters['moderation/EditedComments'];
 		},
 	},
@@ -60,17 +62,22 @@ export default {
 		this.EditComments();
 	},
 	methods: {
-		getdata(arr) {
-			this.comments = arr[0];
-			this.posts = arr[1];
-			console.log(arr[0]);
-			console.log(arr[1]);
+		getdata(val) {
+			console.log(val);
+			if (val == 'Posts') {
+				this.comments == false;
+				this.posts == true;
+			} else {
+				this.comments == true;
+				this.posts == false;
+			}
 		},
 		async EditPosts() {
 			try {
 				await this.$store.dispatch('moderation/EditedPosts', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
+					sort: 'new',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

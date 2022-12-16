@@ -1,5 +1,5 @@
 <template>
-	<header class="header">
+	<header class="header" :class="userName == null ? 'not-auth' : ''">
 		<div class="header-logo" @click="goToHome()" id="reddit-logo">
 			<img
 				src="../../../img/logo.png"
@@ -14,7 +14,12 @@
 				id="reddit-name"
 			/>
 		</div>
-		<div class="header-home" @click="showHomeSubMenu()" id="home-header">
+		<div
+			class="header-home"
+			@click="showHomeSubMenu()"
+			id="home-header"
+			v-if="userName != null"
+		>
 			<div class="header-icon-home">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -291,7 +296,7 @@
 				</svg>
 			</button>
 		</form>
-		<nav class="header-user-nav">
+		<nav class="header-user-nav" v-if="userName != null">
 			<!-- <div class="header-user-nav-icon-box header-popular" id="header-popular">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -631,6 +636,9 @@
 				</ul>
 			</div>
 		</nav>
+		<div class="header-user-nav" v-else>
+			<base-button class="base-button" @click="goToLogin()">Login</base-button>
+		</div>
 		<create-community
 			v-if="createCommunityShown"
 			@exit="showCreateCommunity"
@@ -712,6 +720,12 @@ export default {
 			this.$router.push('/settings');
 		},
 		// @vuese
+		// Used to go to login page
+		// @arg no argument
+		goToLogin() {
+			this.$router.push('/login');
+		},
+		// @vuese
 		// Used to go to messages page
 		// @arg no argument
 		goToMessages() {
@@ -770,6 +784,7 @@ export default {
 					name: 'searchpost',
 					query: { q: this.searchQuery },
 				});
+				// window.reload();
 			} else {
 				alert('Did not enter a word to Search');
 			}
@@ -786,7 +801,7 @@ export default {
 
 				await this.$store.dispatch('logout_handle');
 
-				//location.reload();
+				location.reload();
 			} catch (error) {
 				console.log('error');
 				// this.error = err;
@@ -932,6 +947,9 @@ export default {
 	border: var(--line-3);
 }
 
+.not-auth {
+	grid-template-columns: 10% 60% auto;
+}
 .header-search-input:focus,
 .header-search-input:hover {
 	outline: navajowhite;
@@ -1085,6 +1103,40 @@ export default {
 	border: var(--line-3);
 	border-radius: 5px;
 	width: 16rem;
+}
+.base-button {
+	position: relative;
+	border: none;
+	color: var(--main-white-color);
+	fill: var(--main-white-color);
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 4.2rem;
+	padding: 4px 1.6rem;
+	-ms-flex-align: center;
+	align-items: center;
+	border-radius: 9999px;
+	box-sizing: border-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: center;
+	justify-content: center;
+	position: relative;
+	text-align: center;
+	width: auto;
+	margin-right: 0.8rem;
+	background-color: #ff4500;
+	border-color: transparent;
+	color: #fff;
+	padding: 8px 12px;
+}
+.base-button:hover {
+	background-color: #f04000;
 }
 
 .header-user-nav-user-photo {
@@ -1245,6 +1297,9 @@ export default {
 	.header {
 		grid-template-columns: max-content 20% 23% max-content;
 	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
+	}
 
 	.header-user-nav-user-name {
 		display: none;
@@ -1270,6 +1325,9 @@ export default {
 	.header {
 		grid-template-columns: max-content 10% 40% max-content;
 	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
+	}
 
 	.header-icon-home span,
 	.color-black span {
@@ -1286,12 +1344,18 @@ export default {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
+	}
 }
 
 /* 788px */
 @media only screen and (max-width: 49.25em) {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
+	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
 	}
 
 	.header-user-nav > * {
@@ -1326,6 +1390,9 @@ export default {
 @media only screen and (max-width: 25em) {
 	.header {
 		grid-template-columns: 10% 10% 30% auto;
+	}
+	.not-auth {
+		grid-template-columns: 20% 60% auto;
 	}
 
 	.header-box {

@@ -12,7 +12,6 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
 
 		if (!response.ok) {
 			const error = new Error(
@@ -74,7 +73,7 @@ export default {
 	async getTwoCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/random-category', {
+		const response = await fetch(baseurl + '/random-category?limit=5', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -115,9 +114,10 @@ export default {
 		}
 	},
 	async getOneCommunities(context, payload) {
+		console.log(payload);
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/custom-random-category', {
+		const response = await fetch(baseurl + '/custom-random-category?limit=5', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

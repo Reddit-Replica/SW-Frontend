@@ -3,7 +3,10 @@
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">Moderators</h2></div>
 		</div>
-		<div class="about-body">
+		<div class="about-body" v-if="notLoggedIn">
+			Moderator list hidden. <router-link to="/help">Learn More</router-link>
+		</div>
+		<div class="about-body" v-else>
 			<div class="box-body" id="message-mods">
 				<base-button link to="/message/compose" class="button-message text"
 					><svg
@@ -61,11 +64,11 @@ export default {
 	data() {
 		return {};
 	},
-	// computed: {
-	// 	subredditName() {
-	// 		return this.$store.state.subredditName;
-	// 	},
-	// },
+	computed: {
+		notLoggedIn() {
+			return localStorage.getItem('accessToken') == null;
+		},
+	},
 };
 </script>
 
