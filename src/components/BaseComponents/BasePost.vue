@@ -54,7 +54,7 @@
 				"
 				id="post-router-comment"
 			>
-				<post-content :post="post"></post-content>
+				<post-content :post="post" :blur="true"></post-content>
 			</router-link>
 			<div class="post-services">
 				<span class="vote-services vote-box">

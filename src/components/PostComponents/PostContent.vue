@@ -1,11 +1,17 @@
 <template>
 	<div class="subreddit-info">
-		<span class="subreddit-image"
-			><img
-				src="../../../img/user-image.jpg"
+		<span class="subreddit-image">
+			<img
+				v-if="post.subreddit != undefined && post.picture != undefined"
+				:src="$baseurl + '/' + post.picture"
 				alt=""
-				v-if="post.subreddit != undefined"
-		/></span>
+			/>
+			<img
+				src="../../../img/default_subreddit_image.png"
+				alt=""
+				v-if="post.subreddit != undefined && post.picture == undefined"
+			/>
+		</span>
 		<span class="subreddit-name" v-if="true">
 			<router-link
 				:to="{
@@ -41,6 +47,7 @@
 		class="post-text"
 		v-html="renderingHTML"
 		v-if="post.content != undefined"
+		:class="{ blur: blur }"
 	></div>
 	<div v-if="post.link != undefined" class="post-link">
 		<router-link :to="post.link">{{ post.link }}</router-link>
@@ -69,13 +76,19 @@ export default {
 		post: {
 			required: true,
 		},
+		blur: {
+			required: false,
+			type: Boolean,
+		},
 	},
 	computed: {
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
 				require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 
-			var deltaOps = this.post.content.ops;
+			var deltaOps = this.blur
+				? this.post.content.ops.slice(0, this.post.content.ops.length / 2 + 1)
+				: this.post.content.ops;
 
 			var cfg = {};
 
@@ -118,9 +131,11 @@ export default {
 
 .post-content .post-text {
 	color: black;
-	mask-image: linear-gradient(180deg, #000 0%, transparent);
 	overflow: hidden;
 	font-size: 12px;
+}
+.blur {
+	mask-image: linear-gradient(180deg, #000 0%, transparent);
 }
 .subreddit-info .subreddit-image img {
 	width: 20px;

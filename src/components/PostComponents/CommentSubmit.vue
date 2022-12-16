@@ -304,7 +304,6 @@ div {
 	display: block;
 }
 .big-box {
-	margin: 16px 16px 0 16px;
 	border: 1px solid #edeff1;
 	border-radius: 4px;
 	position: relative;
