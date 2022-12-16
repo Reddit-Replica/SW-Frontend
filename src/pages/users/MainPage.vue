@@ -26,7 +26,7 @@
 					</div>
 					<div class="col-lg-3">
 						<div class="right-col">
-							<div class="component">
+							<div class="component component-top">
 								<top-communities-bar></top-communities-bar>
 							</div>
 							<div class="component">
@@ -242,6 +242,9 @@ export default {
 
 .component {
 	margin-bottom: 1.3rem;
+}
+.component-top {
+	margin-top: 5rem;
 }
 
 @media only screen and (max-width: 75em) {
