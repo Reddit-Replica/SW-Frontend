@@ -52,7 +52,9 @@
 					v-for="(childMessage, index1) in message.messages"
 					:key="childMessage"
 					:index="index1"
+					:expandd="expandAll"
 					:child-message="childMessage"
+					:is-invitation="isInvitation"
 				></child-message>
 				<!-- <div
 					v-for="(childMessage, index1) in message.messages"
@@ -211,12 +213,11 @@
 				</div> -->
 			</div>
 		</li>
+		{{ expandAll }}
 		<ReplyComponent
 			:show-reply-box="showReplyBox"
 			:index="index"
 			@hide-reply-box="replyFunction('hide')"
-			:expandd="expandAll"
-			:is-invitation="isInvitation"
 		></ReplyComponent>
 	</div>
 </template>
@@ -399,12 +400,11 @@ export default {
 		//expand or collapse message details
 		// @arg The argument is a string value representing if its expand or collapse
 		expand(action) {
+			console.log('ss');
 			if (action == 'expand') {
 				this.expandAll = true;
 			} else if (action == 'collapse') {
 				this.expandAll = false;
-			} else {
-				this.expandAll = !this.expandAll;
 			}
 		},
 		// @vuese
