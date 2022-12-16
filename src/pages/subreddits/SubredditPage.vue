@@ -40,6 +40,11 @@
 					:community-topic-prop="subreddit.mainTopic"
 					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
+				<subreddit-rules
+					:rules="rules"
+					:subreddit-name="subredditName"
+					:blue="true"
+				></subreddit-rules>
 				<moderators-bar
 					:moderators="moderators"
 					:subreddit-name="subreddit.title"
@@ -88,6 +93,7 @@ import CommunityPost from '../../components/CommunityComponents/CommunityPost.vu
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 import BasePost from '../../components/BaseComponents/BasePost.vue';
+import SubredditRules from '../../components/PostComponents/SubredditRules.vue';
 
 export default {
 	components: {
@@ -100,6 +106,7 @@ export default {
 		ModeratorsBar,
 		BacktotopButton,
 		BasePost,
+		SubredditRules,
 	},
 	props: {
 		subredditName: {
@@ -113,21 +120,12 @@ export default {
 	},
 	data() {
 		return {
-			// topics: [
-			// 	'Art',
-			// 	'Anime',
-			// 	'Beauty',
-			// 	'Cars',
-			// 	'Fashion',
-			// 	'Music',
-			// 	'Sports',
-			// 	'Travel',
-			// ],
 			topics: [],
 			showFirstDialog: true,
 			firstTimeCreated: false,
 			subreddit: {},
 			moderators: [],
+			rules: [],
 			posts: [],
 		};
 	},
@@ -147,6 +145,7 @@ export default {
 		this.getSubreddit();
 		this.getModerators();
 		this.getTopics();
+		this.getRules();
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
@@ -195,6 +194,17 @@ export default {
 				token: accessToken,
 			});
 			this.moderators = this.$store.getters['moderation/listOfModerators'];
+		},
+		async getRules() {
+			try {
+				await this.$store.dispatch('moderation/loadListOfRules', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.rules = this.$store.getters['moderation/listOfRules'];
 		},
 		reloadPage() {
 			this.getSubreddit();
