@@ -34,25 +34,19 @@ export default {
 	watch: {
 		'$route.params.category': {
 			handler: function () {
-				if (
-					this.$route.params.category == null ||
-					this.$route.params.category == ''
-				)
+				if (this.$route.params.category) {
+					this.getCategoryCommunities(this.$route.params.category);
+				} else {
 					this.getAllCommunities();
-				else this.getCategoryCommunities(this.$route.params.category);
+				}
 			},
 		},
-		// $route: {
-		// 	handler: function () {
-		// 		if (this.$route == '/subreddit/leaderboard') this.getAllCommunities();
-		// 	},
-		// },
 	},
 	created() {
-		let category = this.$route.params.category;
-		if (!category) {
+		if (this.$route.params.category) {
+			this.getCategoryCommunities(this.$route.params.category);
+		} else {
 			this.getAllCommunities();
-			console.log(this.$store.getters['topCommunity/getAllCommunities']);
 		}
 	},
 
