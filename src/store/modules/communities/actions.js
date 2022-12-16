@@ -270,13 +270,14 @@ export default {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + payload.token,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		});
 
 		const responseData = await response.json();
-		// console.log('fetch data');
-		// console.log(responseData);
+		console.log('fetch data');
+		console.log(responseData);
+		console.log(responseData);
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
@@ -326,7 +327,7 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + payload.token,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(joinInfo),
 		});
@@ -362,7 +363,7 @@ export default {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + payload.token,
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 			body: JSON.stringify(leaveInfo),
 		});

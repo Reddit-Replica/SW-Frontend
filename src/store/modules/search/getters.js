@@ -26,4 +26,10 @@ export default {
 	after(state) {
 		return state.after;
 	},
+	limitedSubs(state) {
+		return state.limitedsubs;
+	},
+	limitedUsers(state) {
+		return state.limitedusers;
+	},
 };

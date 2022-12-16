@@ -30,8 +30,8 @@ export default {
 	},
 	computed: {
 		SearchedCms() {
-			console.log(this.$store.getters['search/Getsubreddits']);
-			return this.$store.getters['search/Getsubreddits'];
+			console.log(this.$store.getters['search/limitedSubs']);
+			return this.$store.getters['search/limitedSubs'];
 		},
 	},
 	data() {
