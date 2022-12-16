@@ -8,6 +8,7 @@
 </template>
 <script>
 export default {
+	emits: ['checked'],
 	created() {
 		this.value = this.val;
 		console.log('this.value in switch button');
