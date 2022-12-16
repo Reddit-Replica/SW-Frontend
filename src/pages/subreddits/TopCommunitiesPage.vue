@@ -5,6 +5,7 @@
 		<div class="top-page">
 			<categories-bar></categories-bar>
 			<communities-bar></communities-bar>
+			<cards-bar></cards-bar>
 		</div>
 	</div>
 </template>
@@ -12,12 +13,14 @@
 import TopBar from '../../components/TopCommunities/TopBar.vue';
 import CategoriesBar from '../../components/TopCommunities/CategoriesBar.vue';
 import CommunitiesBar from '../../components/TopCommunities/CommunitiesBar.vue';
+import CardsBar from '../../components/TopCommunities/CardsBar.vue';
 
 export default {
 	components: {
 		TopBar,
 		CategoriesBar,
 		CommunitiesBar,
+		CardsBar,
 	},
 };
 </script>

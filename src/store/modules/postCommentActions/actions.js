@@ -83,4 +83,55 @@ export default {
 			throw error;
 		}
 	},
+	async mention(_, payload) {
+		const body = {
+			postId: payload.postId,
+			commentId: payload.commentId,
+			receiverUsername: payload.receiverUsername,
+		};
+		const baseurl = payload.baseurl;
+		console.log(body);
+		const response = await fetch(baseurl + '/mention', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(body),
+		});
+
+		const responseData = await response.json();
+		console.log(responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async commentedUsers(context, payload) {
+		console.log('in action');
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + '/commented-users?id=' + payload.postId,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+		console.log('/commented-users response');
+		console.log(responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+		context.commit('setCommentedUsers', responseData);
+	},
 };

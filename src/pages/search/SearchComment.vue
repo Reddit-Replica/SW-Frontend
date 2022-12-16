@@ -94,7 +94,7 @@
 													<span
 														class="posted-at"
 														style="color: rgb(120, 124, 126)"
-														>{{ value.postpostedAt }}</span
+														>{{ this.calculateTime(value.postpostedAt) }}</span
 													>
 												</div>
 											</div>
@@ -127,7 +127,7 @@
 																<span class="dot" role="presentation"
 																	>•&nbsp;</span
 																><a class="commented_at">{{
-																	value.commentcreatedAt
+																	this.calculateTime(value.commentcreatedAt)
 																}}</a>
 															</span>
 														</div>
@@ -184,7 +184,40 @@ export default {
 			return this.$store.getters['search/GetComments'];
 		},
 	},
+	beforeMount() {
+		this.search();
+	},
 	methods: {
+		calculateTime(time) {
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(time);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			return returnValue;
+		},
+		async search() {
+			try {
+				await this.$store.dispatch('search/SearchComments', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		//not true just writing what will it been do in action
 		toggle(id) {
 			for (let i = 0; i < this.SearchedUsers().length; i++) {

@@ -22,14 +22,17 @@
 									:id="'user-avatar-' + value.subredditName"
 								/>
 								<div class="communities-content">
-									<div class="communities-content-release">
+									<a
+										class="communities-content-release"
+										:href="'/r/' + value.subredditName"
+									>
 										<h6 class="communities-name">
 											r/{{ value.subredditName }}
 										</h6>
 										<p class="community-members">
 											{{ value.numberOfMembers }} Members
 										</p>
-									</div>
+									</a>
 								</div>
 								<div class="join" v-if="value.joined">
 									<base-button

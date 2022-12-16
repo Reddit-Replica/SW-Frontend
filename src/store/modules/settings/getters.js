@@ -7,4 +7,12 @@ export default {
 		console.log('getters getAccountSettings');
 		return state.accountSettings;
 	},
+	getmoderationSettings(state) {
+		console.log('getters moderationSettings');
+		return state.moderationSettings;
+	},
+	getpostandcommentsSettings(state) {
+		console.log('getters postandcommentsSettings');
+		return state.postandcommentsSettings;
+	},
 };

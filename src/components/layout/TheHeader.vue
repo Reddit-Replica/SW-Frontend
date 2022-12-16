@@ -75,17 +75,21 @@
 				v-if="homeSubMenuDisplay"
 				id="home-sub-menu-1"
 			>
-				<li>
+				<!-- <li>
 					<input
 						type="text"
 						class="input-filter"
 						placeholder="Filter"
 						id="input-filter"
 					/>
-				</li>
+				</li> -->
 				<h4 class="heading-4">Your Communities</h4>
 				<li class="setting-choice">
-					<div class="settings-box" id="create-community">
+					<div
+						class="settings-box"
+						id="create-community"
+						@click="showCreateCommunity"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -103,17 +107,33 @@
 						Create Community
 					</div>
 				</li>
-				<li class="setting-choice">
-					<div class="settings-box" id="community-1">
+				<li
+					class="setting-choice"
+					v-for="subreddit in listOfSubreddits"
+					:key="subreddit"
+				>
+					<div
+						class="settings-box"
+						id="community-1"
+						@click="goToSubredditPage(subreddit.title)"
+					>
 						<img
-							src="../../../img/user-image.jpg"
+							v-if="!subreddit.picture"
+							src="../../../img/default_subreddit_image.png"
 							alt="img"
 							class="users-img"
-							id="community-icon-1"
+							:id="'subreddit-img-' + subreddit"
 						/>
-						r/announcements
+						<img
+							v-else
+							:src="$baseurl + '/' + subreddit.picture"
+							alt="img"
+							class="users-img"
+							:id="'subreddit-img-' + subreddit"
+						/>
+						{{ subreddit.title }}
 					</div>
-					<svg
+					<!-- <svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"
@@ -125,9 +145,10 @@
 						<path
 							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
 						/>
-					</svg>
+					</svg> -->
 				</li>
-				<li class="setting-choice">
+
+				<!-- <li class="setting-choice">
 					<div class="settings-box" id="community-2">
 						<img
 							src="../../../img/user-image.jpg"
@@ -137,21 +158,9 @@
 						/>
 						r/Makeup
 					</div>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="currentColor"
-						class="bi bi-star"
-						viewBox="0 0 16 16"
-						id="star-community-2"
-					>
-						<path
-							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-						/>
-					</svg>
-				</li>
-				<h4 class="heading-4">Following</h4>
+				</li> -->
+
+				<!-- <h4 class="heading-4">Following</h4>
 				<li class="setting-choice">
 					<div class="settings-box" id="user-1">
 						<img
@@ -199,7 +208,8 @@
 							d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
 						/>
 					</svg>
-				</li>
+				</li> -->
+
 				<h4 class="heading-4">Feeds</h4>
 				<li class="setting-choice" @click="goToHome()" id="go-to-home-page">
 					<div>
@@ -226,10 +236,18 @@
 				>
 					<div>
 						<img
-							src="../../../img/user-image.jpg"
+							v-if="!getUserData.userData.picture"
+							src="../../../img/default_inbox_avatar.png"
 							alt="img"
 							class="users-img"
-							id="go-to-user-settings-icon"
+							:id="'header-user-img-' + index"
+						/>
+						<img
+							v-else
+							:src="$baseurl + '/' + getUserData.userData.picture"
+							alt="img"
+							class="users-img"
+							:id="'header-user-img-' + index"
 						/>
 						User Settings
 					</div>
@@ -274,7 +292,7 @@
 			</button>
 		</form>
 		<nav class="header-user-nav">
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<!-- <div class="header-user-nav-icon-box header-popular" id="header-popular">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -288,6 +306,25 @@
 					<path
 						fill-rule="evenodd"
 						d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"
+					/>
+				</svg>
+			</div> -->
+			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-gear header-user-nav-icon"
+					viewBox="0 0 16 16"
+					@click="goToSettings()"
+				>
+					<title>settings</title>
+					<path
+						d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
+					/>
+					<path
+						d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
 					/>
 				</svg>
 			</div>
@@ -312,8 +349,9 @@
 					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
 					id="chat-icon"
+					@click="goToMessages()"
 				>
-					<title>Chat</title>
+					<title>Messages</title>
 					<path
 						d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
 					/>
@@ -321,9 +359,9 @@
 						d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"
 					/>
 				</svg>
-				<span class="header-user-nav-notification" id="num-notification-chat"
+				<!-- <span class="header-user-nav-notification" id="num-notification-chat"
 					>2</span
-				>
+				> -->
 			</div>
 
 			<div
@@ -351,6 +389,42 @@
 					>2</span
 				>
 			</div>
+
+			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-person-circle header-user-nav-icon"
+					viewBox="0 0 16 16"
+					@click="goToUserPage()"
+				>
+					<title>Your Profile</title>
+					<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+					<path
+						fill-rule="evenodd"
+						d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+					/>
+				</svg>
+			</div>
+
+			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-house-door-fill header-user-nav-icon"
+					viewBox="0 0 16 16"
+				>
+					<title>Home</title>
+					<path
+						d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"
+					/>
+				</svg>
+			</div>
+
 			<notifications-list
 				v-if="notificationsListShown"
 				class="sub-menu sub-menu-ntf"
@@ -376,7 +450,7 @@
 					/>
 				</svg>
 			</div>
-			<div class="header-user-nav-box header-box" id="advertise-box">
+			<!-- <div class="header-user-nav-box header-box" id="advertise-box">
 				<button class="header-button-advertise">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -393,7 +467,7 @@
 					</svg>
 					Advertise
 				</button>
-			</div>
+			</div> -->
 
 			<div
 				class="header-user-nav-box header-user"
@@ -441,8 +515,8 @@
 								d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"
 							/>
 						</svg>
-						2 karma</span
-					>
+						{{ getUserData.userData.karma }} karma
+					</span>
 				</div>
 				<ul class="sub-menu" v-if="settingsSubMenuDisplay" id="sub-menu-2">
 					<li>
@@ -463,14 +537,14 @@
 						</svg>
 						My Stuff
 					</li>
-					<li
+					<!-- <li
 						class="setting-choice"
 						@click="showSettingsSubMenu()"
 						id="online-status"
 					>
 						Online Status
 						<switch-button id="online-status-button" />
-					</li>
+					</li> -->
 					<li
 						class="setting-choice"
 						@click="goToUserPage()"
@@ -505,14 +579,14 @@
 						</svg>
 						View Options
 					</li>
-					<li
+					<!-- <li
 						class="setting-choice"
 						@click="showSettingsSubMenu()"
 						id="dark-mode"
 					>
 						Dark Mode
 						<switch-button id="dark-mode-button" />
-					</li>
+					</li> -->
 					<li
 						class="setting-choice-with-icon"
 						id="logout"
@@ -541,14 +615,20 @@
 				</ul>
 			</div>
 		</nav>
+		<create-community
+			v-if="createCommunityShown"
+			@exit="showCreateCommunity"
+		></create-community>
 	</header>
 </template>
 
 <script>
 import NotificationsList from '../NotificationsComponents/NotificationsList.vue';
+import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 export default {
 	components: {
 		NotificationsList,
+		CreateCommunity,
 	},
 	props: {
 		// @vuese
@@ -564,6 +644,7 @@ export default {
 			homeSubMenuDisplay: false,
 			searchQuery: '',
 			notificationsListShown: false,
+			createCommunityShown: false,
 		};
 	},
 	computed: {
@@ -574,25 +655,38 @@ export default {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');
 		},
+		// @vuese
+		//return user data
+		// @type object
 		getUserData() {
+			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
+		// @vuese
+		//return user communities
+		// @type object
+		listOfSubreddits() {
+			console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/listOfSubreddits'];
+		},
 	},
-	// mounted() {
-	// 	this.searchQuery = this.srchq;
-	// 	console.log(this.srchq());
-	// },
+	async beforeMount() {
+		this.RequestUserData();
+		this.getUserSubreddits();
+	},
 	methods: {
 		// @vuese
 		// Used to show or hide settings menu
 		// @arg no argument
 		showSettingsSubMenu() {
+			if (this.settingsSubMenuDisplay == false) this.homeSubMenuDisplay = false;
 			this.settingsSubMenuDisplay = !this.settingsSubMenuDisplay;
 		},
 		// @vuese
 		// Used to show or hide home menu
 		// @arg no argument
 		showHomeSubMenu() {
+			if (this.homeSubMenuDisplay == false) this.settingsSubMenuDisplay = false;
 			this.homeSubMenuDisplay = !this.homeSubMenuDisplay;
 		},
 		// @vuese
@@ -600,6 +694,12 @@ export default {
 		// @arg no argument
 		goToSettings() {
 			this.$router.push('/settings');
+		},
+		// @vuese
+		// Used to go to messages page
+		// @arg no argument
+		goToMessages() {
+			this.$router.push('/message/inbox');
 		},
 		// @vuese
 		// Used to go to Home page
@@ -620,78 +720,57 @@ export default {
 			// this.$router.push(`/user/${this.$store.getters.getUserName}`);
 			this.$router.push(`/user/${this.userName}`);
 		},
+		// @vuese
+		// Used to go to subreddit page
+		// @arg no argument
+		goToSubredditPage(subreddit) {
+			this.$router.push(`/r/${subreddit}`);
+		},
+		// @vuese
+		// Used to show create community popup
+		// @arg no argument
+		showCreateCommunity() {
+			this.createCommunityShown = !this.createCommunityShown;
+		},
+		// @vuese
+		//load compose messages from the store
+		// @arg no argument
+		async getUserSubreddits() {
+			try {
+				await this.$store.dispatch('user/getUserSubreddits', {
+					baseurl: this.$baseurl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			// console.log('function');
+		},
+		// @vuese
+		// Used to go to Search page
+		// @arg no argument
 		async searchUser() {
 			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchUser', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					console.log('h1');
-					await this.$store.dispatch('search/SearchPost', {
-						baseurl: this.$baseurl,
-						q: quer,
-						sort: 'new',
-						time: 'all',
-					});
-					console.log('h2');
-					await this.$store.dispatch('search/SearchSubreddit', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					console.log('h3');
-					this.$router.replace({
-						name: 'searchpost',
-						query: { q: this.searchQuery },
-					});
-					// setTimeout(window.location.reload(), 500);
-				} catch (err) {
-					console.log(err);
-				}
+				this.$router.push({
+					name: 'searchpost',
+					query: { q: this.searchQuery },
+				});
 			} else {
 				alert('Did not enter a word to Search');
 			}
 		},
 		// @vuese
-		// Used to go to Request to Search for Subreddits
-		// @arg no argument
-		async searchSub() {
-			if (this.searchQuery) {
-				let quer = this.searchQuery;
-				try {
-					await this.$store.dispatch('search/SearchSubreddit', {
-						baseurl: this.$baseurl,
-						q: quer,
-					});
-					this.$router.push({
-						name: 'searchpost',
-						query: { q: quer },
-					});
-				} catch (err) {
-					console.log(err);
-				}
-			}
-		},
-
-		// gotosearch() {
-		// 	// console.log('waiting');
-		// 	setTimeout(
-		// 		() =>
-		// 			this.$router.push({
-		// 				name: 'searchpost',
-		// 				query: { q: this.searchQuery },
-		// 			}),
-		// 		1000
-		// 	);
-		// },
-		// @vuese
 		// Used handle logout action
 		// @arg no argument
 		async handlelogout() {
 			try {
+				await this.$store.dispatch('notifications/removeNotificationToken', {
+					baseurl: this.$baseurl,
+					token: localStorage.getItem('accessToken'),
+				});
+
 				await this.$store.dispatch('logout_handle');
-				location.reload();
+
+				//location.reload();
 			} catch (error) {
 				console.log('error');
 				// this.error = err;
@@ -702,6 +781,23 @@ export default {
 		// @arg no argument
 		toggleNotificationsList() {
 			this.notificationsListShown = !this.notificationsListShown;
+		},
+		/**
+		 * @vuese
+		 * this function send  call an action function from the store to make a get request to get user data
+		 * @arg no arg
+		 */
+		async RequestUserData() {
+			let responseStatus;
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			return responseStatus;
 		},
 	},
 };

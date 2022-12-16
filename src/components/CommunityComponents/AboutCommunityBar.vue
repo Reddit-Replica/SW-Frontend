@@ -38,13 +38,13 @@
 					/>
 				</svg>
 				<div class="box-options" v-if="dotsClicked">
-					<button
+					<!-- <button
 						class="button-option"
 						@click="addToCustomFeed"
 						id="add-to-custom-feed"
 					>
 						Add To Custom Feed
-					</button>
+					</button> -->
 					<button
 						class="button-option"
 						@click="toogleFavourite"
@@ -194,7 +194,7 @@
 						{{ membersCount }} Members
 					</div>
 				</div>
-				<div id="online-members-num" class="relative-flex">
+				<!-- <div id="online-members-num" class="relative-flex">
 					<div>
 						<div class="point-green"></div>
 						<span
@@ -213,7 +213,7 @@
 					>
 						{{ membersCount }} Online
 					</div>
-				</div>
+				</div> -->
 				<div></div>
 				<div></div>
 			</div>
@@ -576,12 +576,12 @@ export default {
 		dotsClick() {
 			this.dotsClicked = !this.dotsClicked;
 		},
-		//@vuese
-		//Mark subreddit added to custom feed
-		//@arg no argument
-		addToCustomFeed() {
-			this.addedToCustomFeed = true;
-		},
+		// //@vuese
+		// //Mark subreddit added to custom feed
+		// //@arg no argument
+		// addToCustomFeed() {
+		// 	this.addedToCustomFeed = true;
+		// },
 		//@vuese
 		//Mark subreddit added to favourites
 		//@arg no argument

@@ -47,6 +47,9 @@ export default {
 	markSpamSuccessfully(state, payload) {
 		state.markSpamSuccessfully = payload;
 	},
+	spamCommentSuccessfully(state, payload) {
+		state.spamCommentSuccessfully = payload;
+	},
 	blockSuccessfully(state, payload) {
 		state.blockSuccessfully = payload;
 	},
@@ -55,6 +58,9 @@ export default {
 	},
 	replyMessageSuccessfully(state, payload) {
 		state.replyMessageSuccessfully = payload;
+	},
+	addSuccessfully(state, payload) {
+		state.addSuccessfully = payload;
 	},
 	setBefore(state, payload) {
 		state.before = payload;

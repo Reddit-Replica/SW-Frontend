@@ -172,7 +172,20 @@ export default {
 			}
 		},
 	},
+	beforeMount() {
+		this.search();
+	},
 	methods: {
+		async search() {
+			try {
+				await this.$store.dispatch('search/SearchUser', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		//not true just writing what will it been do in action
 		toggle(id) {
 			for (let i = 0; i < this.SearchedUsers().length; i++) {

@@ -113,16 +113,17 @@ export default {
 	},
 	data() {
 		return {
-			topics: [
-				'Art',
-				'Anime',
-				'Beauty',
-				'Cars',
-				'Fashion',
-				'Music',
-				'Sports',
-				'Travel',
-			],
+			// topics: [
+			// 	'Art',
+			// 	'Anime',
+			// 	'Beauty',
+			// 	'Cars',
+			// 	'Fashion',
+			// 	'Music',
+			// 	'Sports',
+			// 	'Travel',
+			// ],
+			topics: [],
 			showFirstDialog: true,
 			firstTimeCreated: false,
 			subreddit: {},
@@ -145,6 +146,7 @@ export default {
 			this.$store.getters['community/createdSuccessfully'];
 		this.getSubreddit();
 		this.getModerators();
+		this.getTopics();
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
@@ -161,13 +163,29 @@ export default {
 	methods: {
 		async getSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
-			await this.$store.dispatch('community/getSubreddit', {
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				this.subreddit = this.$store.getters['community/getSubreddit'];
+				console.log(this.subreddit.isFavorite);
+			} catch (err) {
+				console.log(err);
+				if (this.$store.getters['community/notFound']) {
+					this.$router.push('/notFound');
+				}
+			}
+		},
+		async getTopics() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getsuggestedTopics', {
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
-			this.subreddit = this.$store.getters['community/getSubreddit'];
-			console.log(this.subreddit.isFavorite);
+			this.topics = this.$store.getters['community/getTopics'];
 		},
 		async getModerators() {
 			const accessToken = localStorage.getItem('accessToken');
@@ -281,5 +299,8 @@ export default {
 	.subreddit-page-right {
 		display: none;
 	}
+}
+#pinned-post-comp {
+	margin-top: 1.2rem;
 }
 </style>

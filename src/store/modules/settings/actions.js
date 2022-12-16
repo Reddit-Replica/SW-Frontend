@@ -56,6 +56,64 @@ export default {
 		}
 		return response.status;
 	},
+	//////////////////// feed settings  ////////////////////////////////////////////
+	async changeneadultContent(context, payload) {
+		const setting = {
+			adultContent: payload.adultContent,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/account-settings', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+	async changeautoplayMedia(context, payload) {
+		const setting = {
+			autoplayMedia: payload.autoplayMedia,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/account-settings', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
+
 	//////////////////// profile setting ///////////////////////////////////////////
 
 	async changedisplayName(context, payload) {
@@ -175,6 +233,8 @@ export default {
 	//////////////////// this part for moderation setting //////////////////////////
 
 	async communitySettings(context, payload) {
+		console.log('welcome message');
+		console.log(payload.welcomeMessage);
 		const setting = {
 			communityName: payload.communityName,
 			mainTopic: payload.mainTopic,
@@ -251,6 +311,62 @@ export default {
 			console.log(error);
 			throw error;
 		}
+		return response.status;
+	},
+	async fetchmoderationSettings(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.communityName}/about/edit`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		console.log(responseData);
+		context.commit('setmoderationSettings', responseData);
+		return response.status;
+	},
+	async fetcpostandcommentsSettings(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.communityName}/about/edit-post-settings`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		console.log(responseData);
+		context.commit('setpostandcommentsSettings', responseData);
 		return response.status;
 	},
 	/////////////////////account setting ///////////////////////////

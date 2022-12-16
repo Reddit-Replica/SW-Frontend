@@ -22,6 +22,7 @@
 					class="grey-button"
 					button-text="Spoiler"
 					id="footer-button-spoiler"
+					:disable-button="buttonDisabled"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -86,24 +87,52 @@
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-small-down" />
 				</svg>
 			</base-button> -->
-			<v-select
+			<!-- <v-select
 				style="margin: 10px; color: #0079d3; fill: #0079d3"
-				:options="flairs"
+				v-for="flair in flairs"
+				:key="flair.id"
+				:options="flair.flairName"
 				v-model="flairId"
 				@click="getFlairs()"
 			>
 				></v-select
-			>
+			
+			> -->
+			<div class="tool-tip">
+				<span class="tool-tip-text-small strike1">Add flair</span>
+				<select
+					@click="getFlairs()"
+					v-model="flairId"
+					style="
+						margin-left: 10px;
+						width: max-content;
+						height: 35px;
+						border-radius: 20px;
+					"
+				>
+					<!-- <option value="" disabled selected>Choose a drink</option> -->
+					<option
+						v-for="flair in flairs"
+						:id="'message-from-options-' + flair.flairId"
+						:key="flair.flairId"
+						:value="flair.flairId"
+					>
+						{{ flair.flairName }}
+					</option>
+				</select>
+			</div>
 		</div>
+
+		{{ flairId }}
 	</div>
 </template>
 
 <script>
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
+// import vSelect from 'vue-select';
+// import 'vue-select/dist/vue-select.css';
 export default {
 	components: {
-		vSelect,
+		// vSelect,
 	},
 	data() {
 		return {
@@ -111,9 +140,28 @@ export default {
 			spoiler: false,
 			flairs: [],
 			flairId: null,
+			subreddit: null,
+			buttonDisabled: true,
+			insubreddit: null,
+			disabled: true,
 		};
 	},
-	watch: {},
+	watch: {
+		getSubreddit(value) {
+			this.subreddit = value;
+			this.getPostsettings();
+		},
+		flairId(value) {
+			this.flairId = value;
+			this.setFlairId();
+		},
+	},
+	computed: {
+		getSubreddit() {
+			var a = this.$store.getters['posts/getSubreddit'];
+			return a;
+		},
+	},
 	methods: {
 		toggleNsfw() {
 			this.nsfw = !this.nsfw;
@@ -134,7 +182,42 @@ export default {
 		},
 		getFlairs() {
 			this.flairs = this.$store.getters['moderation/listOfFlairs'];
+			console.log('this.flairs');
 			console.log(this.flairs);
+		},
+
+		async getPostsettings() {
+			this.insubreddit = await this.$store.getters['posts/getinSubreddit'];
+			if (this.insubreddit) {
+				const actionPayload = {
+					communityName: this.subreddit,
+					baseurl: this.$baseurl,
+				};
+				console.log(actionPayload);
+				try {
+					const response = await this.$store.dispatch(
+						'setting/fetcpostandcommentsSettings',
+						actionPayload
+					);
+					if (response == 200) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(err);
+				}
+				this.setting = await this.$store.getters[
+					'setting/getpostandcommentsSettings'
+				];
+				console.log('getting settings');
+				console.log(this.setting);
+				if (this.setting.enableSpoiler) this.buttonDisabled = false;
+				else this.buttonDisabled = true;
+				this.getFlairs();
+				if (this.flairs.length == 0) this.disabled = false;
+				else this.disabled = true;
+			} else this.buttonDisabled = true;
 		},
 	},
 };
@@ -233,6 +316,9 @@ export default {
 .strike {
 	width: 200px;
 }
+.strike1 {
+	width: 100px;
+}
 .tool-tip-text::before {
 	content: '';
 	position: absolute;
@@ -260,6 +346,8 @@ export default {
 	top: -40px;
 	visibility: visible;
 	opacity: 1;
+}
+.disable-Flair {
 }
 @media (max-width: 40em) {
 	.buttons-section {

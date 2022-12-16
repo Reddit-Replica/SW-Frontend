@@ -48,7 +48,7 @@
 			>
 		</div>
 	</div>
-	<button @click="click"></button>
+	<!-- <button @click="click"></button> -->
 </template>
 <script>
 export default {

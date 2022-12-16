@@ -40,13 +40,15 @@ export default {
 					subject: responseData.children[i].data.subject,
 					type: responseData.children[i].data.type,
 					subredditName: responseData.children[i].data.subredditName,
-					isModerator: responseData.children[i].data.isModerator,
 					postTitle: responseData.children[i].data.postTitle,
-					postID: responseData.children[i].data.postID,
-					commentID: responseData.children[i].data.commentID,
+					postId: responseData.children[i].data.postId,
+					commentId: responseData.children[i].data.commentId,
 					numOfComments: responseData.children[i].data.numOfComments,
 					isSenderUser: responseData.children[i].data.isSenderUser,
 					isReceiverUser: responseData.children[i].data.isReceiverUser,
+					isRead: responseData.children[i].data.isRead,
+					vote: responseData.children[i].data.vote,
+					postOwner: responseData.children[i].data.postOwner,
 				};
 				messages.push(message);
 			}
@@ -143,6 +145,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
 			const mentions = [];
 
@@ -162,16 +165,13 @@ export default {
 					senderUsername: responseData.children[i].data.senderUsername,
 					receiverUsername: responseData.children[i].data.receiverUsername,
 					sendAt: responseData.children[i].data.sendAt,
-					subject: responseData.children[i].data.subject,
-					type: responseData.children[i].data.type,
-					subredditName: responseData.children[i].data.subredditName,
-					isModerator: responseData.children[i].data.isModerator,
 					postTitle: responseData.children[i].data.postTitle,
-					postID: responseData.children[i].data.postID,
-					commentID: responseData.children[i].data.commentID,
+					postId: responseData.children[i].data.postId,
+					commentId: responseData.children[i].data.commentId,
 					numOfComments: responseData.children[i].data.numOfComments,
-					isSenderUser: responseData.children[i].data.isSenderUser,
-					isReceiverUser: responseData.children[i].data.isReceiverUser,
+					vote: responseData.children[i].data.vote,
+					postOwner: responseData.children[i].data.postOwner,
+					isRead: responseData.children[i].data.isRead,
 				};
 				mentions.push(mention);
 			}
@@ -208,6 +208,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
 			const messages = [];
 
@@ -220,23 +221,36 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
+			let messagesInMessage = [];
 			for (let i = 0; i < responseData.children.length; i++) {
+				for (
+					let j = 0;
+					j < responseData.children[i].data.messages.length;
+					j++
+				) {
+					const messageInMessage = {
+						msgID: responseData.children[i].data.messages[j].msgID,
+						senderUsername:
+							responseData.children[i].data.messages[j].senderUsername,
+						text: responseData.children[i].data.messages[j].text,
+						receiverUsername:
+							responseData.children[i].data.messages[j].receiverUsername,
+						sendAt: responseData.children[i].data.messages[j].sendAt,
+						subredditName:
+							responseData.children[i].data.messages[j].subredditName,
+						isSenderUser:
+							responseData.children[i].data.messages[j].isSenderUser,
+						isReceiverUser:
+							responseData.children[i].data.messages[j].isReceiverUser,
+					};
+					messagesInMessage.push(messageInMessage);
+				}
 				const message = {
 					id: responseData.children[i].id,
-					text: responseData.children[i].data.text,
-					senderUsername: responseData.children[i].data.senderUsername,
-					receiverUsername: responseData.children[i].data.receiverUsername,
-					sendAt: responseData.children[i].data.sendAt,
-					subject: responseData.children[i].data.subject,
-					type: responseData.children[i].data.type,
-					subredditName: responseData.children[i].data.subredditName,
-					isModerator: responseData.children[i].data.isModerator,
-					postTitle: responseData.children[i].data.postTitle,
-					postID: responseData.children[i].data.postID,
-					commentID: responseData.children[i].data.commentID,
-					numOfComments: responseData.children[i].data.numOfComments,
-					isSenderUser: responseData.children[i].data.isSenderUser,
-					isReceiverUser: responseData.children[i].data.isReceiverUser,
+					isUser: responseData.children[i].data.isUser,
+					subjectContent: responseData.children[i].data.subjectContent,
+					subjectTitle: responseData.children[i].data.subjectTitle,
+					messages: messagesInMessage,
 				};
 				messages.push(message);
 			}
@@ -576,6 +590,53 @@ export default {
 	},
 
 	/**
+	 * Make a request to spam user
+	 * @action spamComment=spamCommentSuccessfully
+	 * @param {object} payload An object contains baseurl, message id, message type, reason
+	 * @returns {integer} status code
+	 */
+	async spamComment(context, payload) {
+		context.commit('spamCommentSuccessfully', false);
+		const spam = {
+			id: payload.id,
+			type: payload.type,
+			reason: payload.reason,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/mark-spam', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(spam),
+		});
+
+		const responseData = await response.json();
+		if (response.status == 200) {
+			context.commit('spamCommentSuccessfully', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'The request was invalid');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to delete this thing'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Thing not found');
+			throw error;
+		} else if (response.status == 409) {
+			const error = new Error(responseData.error || 'Already marked as spam');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+
+	/**
 	 * Make a request to get suggested sender that can send message,
 	 * @action loadSuggestedSender=setSuggestedSender
 	 * @param {object} payload An object contains baseurl.
@@ -725,6 +786,49 @@ export default {
 			throw error;
 		} else if (response.status == 404) {
 			const error = new Error(responseData.error || 'Thing not found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	/**
+	 * Make a request to send private message
+	 * @action sendMessage=sentSuccessfully
+	 * @param {object} payload An object contains baseurl, message info
+	 * @returns {integer} status code
+	 */
+	async addComment(context, payload) {
+		context.commit('addSuccessfully', false);
+		const comment = {
+			content: payload.content,
+			postId: payload.postId,
+			parentId: payload.parentId,
+			parentType: payload.parentType,
+			level: payload.level,
+			subredditName: payload.subredditName,
+			haveSubreddit: payload.haveSubreddit,
+		};
+		const baseurl = payload.baseurl;
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + '/comment', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			// 'Authorization' :`Bearer ${jwToken}`
+			body: JSON.stringify(comment),
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
+			context.commit('addSuccessfully', true);
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');

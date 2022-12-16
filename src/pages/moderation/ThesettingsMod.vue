@@ -139,6 +139,8 @@
 				id="btn2"
 				style="margin-left: 15px"
 				@checked="getSendmessage"
+				:val="sendWelcomeMessage"
+				v-if="create"
 			></switch-button>
 		</span>
 		<textarea
@@ -471,6 +473,7 @@
 				id="btn2"
 				style="margin-left: 15px"
 				@checked="getNsfw"
+				:val="nsfw"
 			></switch-button>
 		</p>
 		<div v-if="communityType == 'Private'">
@@ -485,6 +488,7 @@
 					id="btn2"
 					style="margin-left: 15px"
 					@checked="getRequesttojoin"
+					v-if="create"
 				></switch-button>
 			</p>
 		</div>
@@ -526,8 +530,20 @@
 					id="btn2"
 					style="margin-left: 15px"
 					@checked="getRequeststopost"
+					v-if="create"
+					:val="acceptingRequestsToPost"
 				></switch-button>
 			</h3>
+		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
 		</div>
 	</div>
 </template>
@@ -536,7 +552,12 @@
 import BaseButton from '@/components/BaseComponents/BaseButton.vue';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
+	async created() {
+		await this.getSettings();
+		this.create = true;
+	},
 	computed: {
 		subredditName() {
 			// return this.$store.state.subredditName;
@@ -546,6 +567,7 @@ export default {
 	components: {
 		vSelect,
 		BaseButton,
+		SaveUnsavePopupMessage,
 	},
 	data() {
 		return {
@@ -653,6 +675,9 @@ export default {
 			typeChosen2: false,
 			communityType: 'Public',
 			buttonDisabled: false,
+			setting: {},
+			savedUnsavedPosts: [],
+			create: false,
 		};
 	},
 	methods: {
@@ -688,12 +713,12 @@ export default {
 		getSendmessage(value) {
 			this.sendWelcomeMessage = value;
 			console.log('this.sendWelcomeMessage');
-			console.log(this.this.sendWelcomeMessage);
+			console.log(this.sendWelcomeMessage);
 		},
 		getNsfw(value) {
 			this.nsfw = value;
 			console.log('this.NSFW');
-			console.log(this.this.NSFW);
+			console.log(this.nsfw);
 		},
 		getRequesttojoin(value) {
 			this.acceptingRequestsToJoin = value;
@@ -732,11 +757,81 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
+		},
+		async getSettings() {
+			if (this.communityName == '') this.communityName = this.subredditName;
+			const actionPayload = {
+				communityName: this.communityName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchmoderationSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = this.$store.getters['setting/getmoderationSettings'];
+			console.log(this.setting);
+			this.communityName = this.setting.communityName;
+			this.mainTopic = this.setting.mainTopic;
+			this.subTopics = this.setting.subTopics;
+			this.communityDescription = this.setting.communityDescription;
+			this.sendWelcomeMessage = this.setting.sendWelcomeMessage;
+			this.welcomeMessage = this.setting.welcomeMessage;
+			this.language = this.setting.language;
+			this.Region = this.setting.region;
+			this.nsfw = this.setting.NSFW;
+			this.communityType = this.setting.type;
+			this.acceptingRequestsToJoin = this.setting.acceptingRequestsToJoin;
+			this.acceptingRequestsToPost = this.setting.acceptingRequestsToPost;
+			this.approvedUsersHaveTheAbilityTo =
+				this.setting.approvedUsersHaveTheAbilityTo;
+		},
+		////////////////////////////////
+		doneSuccessfully(title) {
+			this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'settings',
+				state: title,
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
 		},
 	},
 };
@@ -998,6 +1093,16 @@ ol {
 	color: white;
 	padding: 10px;
 	font-size: medium;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 @media only screen and (max-width: 768px) {
 	.box {

@@ -25,6 +25,7 @@ export default {
 			//////////////INVITE MOD/////////////
 			inviteModSuccessfully: false,
 			cancelSuccessfully: false,
+			acceptSuccessfully: false,
 			//////////////SPAM/////////////////
 			listOfSpams: [],
 			approveSuccessfully: [],
@@ -46,6 +47,10 @@ export default {
 			banUserSuccessfully: false,
 			unBanUserSuccessfully: false,
 			listOfBanned: [],
+			////////////////////////////Unmoderated/////////////
+			Unmoderated: [],
+			EditedPosts: [],
+			EditedComments: [],
 		};
 	},
 	mutations,
