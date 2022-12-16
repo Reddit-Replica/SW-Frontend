@@ -53,11 +53,21 @@
 							<a href="#" :id="'subreddit-' + index">r/{{ spam.subreddit }}</a>
 						</div>
 						<span class="dot">•</span>
-						<span class="posted-by">Posted by</span>
-						<div class="poster">
-							<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-								spam.data.postedBy
-							}}</a>
+						<div v-if="!spam.commentId">
+							<span class="posted-by">Posted by</span>
+							<div class="poster">
+								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
+									spam.data.postedBy
+								}}</a>
+							</div>
+						</div>
+						<div v-else>
+							<span class="posted-by">Commened by</span>
+							<div class="poster">
+								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
+									spam.data.postedBy
+								}}</a>
+							</div>
 						</div>
 						<span class="time">{{ handleTime }}</span>
 					</div>
@@ -66,7 +76,9 @@
 					<div class="title-box">{{ spam.title }}</div>
 					<div class="body-box">{{ spam.content }}</div>
 				</div>
-				<p class="comments">{{ spam.numberOfComments }} comments</p>
+				<div v-if="!spam.commentId">
+					<p class="comments">{{ spam.numberOfComments }} comments</p>
+				</div>
 				<div class="footer">
 					<div class="removed-box" :class="approved ? 'approved-box' : ''">
 						<div>

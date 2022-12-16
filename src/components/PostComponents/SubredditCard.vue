@@ -14,7 +14,7 @@
 			<p class="para-bold">{{ subreddit.description }}</p>
 			<div class="birth">
 				<font-awesome-icon icon="fa-solid fa-cake-candles" class="icon" />
-				Created {{ subreddit.dateOfCreation }}
+				Created {{ calculateTime }}
 			</div>
 			<div class="numbers">
 				<div class="members">
@@ -91,6 +91,28 @@ export default {
 		//@arg text to be written inside button
 		hoverJoin(text) {
 			this.hoverButtonText = text;
+		},
+	},
+	computed: {
+		calculateTime() {
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.subreddit.dateOfCreation);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			return returnValue;
 		},
 	},
 };
