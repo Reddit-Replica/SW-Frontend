@@ -300,4 +300,7 @@ export default {
 		display: none;
 	}
 }
+#pinned-post-comp {
+	margin-top: 1.2rem;
+}
 </style>
