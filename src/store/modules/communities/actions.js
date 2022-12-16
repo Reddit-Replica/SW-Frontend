@@ -372,7 +372,7 @@ export default {
 
 		if (response.status == 200) {
 			return;
-		} else if (response.status == 404) {
+		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		} else if (response.status == 500) {
@@ -413,6 +413,41 @@ export default {
 
 		context.commit('setPosts', responseData['children']);
 		console.log(responseData);
+	},
+	async modSpam(_, payload) {
+		const baseurl = payload.baseurl;
+		const data = { id: payload.id, type: payload.type };
+
+		const response = await fetch(baseurl + '/mod-spam', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+			body: JSON.stringify(data),
+		});
+
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(responseData.message || 'Failed to fetch!');
+			throw error;
+		}
+
+		if (response.status == 200) {
+			return;
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Unauthorized');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
 	},
 	///////////////// moderation community norhan //////////////////
 	async getsuggestedTopics(context, payload) {
