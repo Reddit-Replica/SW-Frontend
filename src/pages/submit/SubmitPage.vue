@@ -118,6 +118,7 @@ export default {
 			choosen: null,
 			userName: null,
 			try: (this.getTitle && this.getSubreddit) || this.getUsername,
+			postData: null,
 		};
 	},
 	computed: {
@@ -324,12 +325,18 @@ export default {
 						console.log('الحمد لله زى الفل');
 						this.success = true;
 						/////r/:subredditName/comments/:postId/:postName
-						this.userData = this.$store.getters['posts/getpostData'];
+						this.postData = await this.$store.getters['posts/getpostData'];
+						console.log(this.postData);
 						if (this.inSubreddit) {
 							setTimeout(
 								() =>
 									this.$router.replace(
-										'/r/' + this.subreddit + '/comments/' + this.userData.id
+										'/r/' +
+											this.subreddit +
+											'/comments/' +
+											this.postData.id +
+											'/' +
+											this.title
 									),
 								1000
 							);
@@ -337,7 +344,12 @@ export default {
 							setTimeout(
 								() =>
 									this.$router.replace(
-										'/r/' + this.userName + '/comments/' + this.userData.id
+										'/r/' +
+											this.userName +
+											'/comments/' +
+											this.postData.id +
+											'/' +
+											this.title
 									),
 								1000
 							);

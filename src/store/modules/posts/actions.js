@@ -57,6 +57,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 201) {
+			console.log(responseData);
 			console.log(response);
 			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
