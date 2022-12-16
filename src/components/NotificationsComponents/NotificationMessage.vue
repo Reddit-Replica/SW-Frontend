@@ -1,6 +1,6 @@
 <template>
 	<li
-		id="'ntf-msg-'+index"
+		:id="'ntf-msg-' + index"
 		class="ntf-msg-li"
 		:class="{ 'not-read': !notification.isRead }"
 	>
@@ -8,10 +8,15 @@
 			:href="notification.link"
 			class="ntf-msg-routerlink"
 			@click="readNotification"
+			:id="'ntf-msg-link-' + index"
 		>
-			<span class="ntf-msg-1">
-				<img src="../../../img/default_inbox_avatar.png" alt="image" />
-				<span class="circle"
+			<span class="ntf-msg-1" id="ntf-msg-1">
+				<img
+					src="../../../img/default_inbox_avatar.png"
+					alt="image"
+					id="ntf-msg-2"
+				/>
+				<span class="circle" id="ntf-msg-3"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -26,15 +31,18 @@
 					</svg>
 				</span>
 			</span>
-			<span class="ntf-msg-2 text">
-				<div class="ntf-msg-2-1">
-					<span
-						><span class="text-title">{{ notification.title }}</span>
-						<span class="text-dot">.</span>
-						<span>{{ calcDuration(notification.sendAt) }}</span>
+			<span class="ntf-msg-2 text" id="ntf-msg-4">
+				<div class="ntf-msg-2-1" id="ntf-msg-5">
+					<span id="ntf-msg-6"
+						><span class="text-title" id="ntf-msg-7">{{
+							notification.title
+						}}</span>
+						<span class="text-dot" id="ntf-msg-8">.</span>
+						<span id="ntf-msg-9">{{ calcDuration(notification.sendAt) }}</span>
 					</span>
-					<span class="dots-icon">
+					<span class="dots-icon" id="ntf-msg-10">
 						<svg
+							id="ntf-msg-11"
 							xmlns="http://www.w3.org/2000/svg"
 							width="20"
 							height="20"
@@ -47,16 +55,26 @@
 								d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
 							/>
 						</svg>
-						<button v-if="buttonShown" @click.prevent="clickDotsButton">
+						<button
+							v-if="buttonShown"
+							@click.prevent="clickDotsButton"
+							id="ntf-msg-12"
+						>
 							{{ dotsButtonText }}
 						</button>
 					</span>
 				</div>
-				<div>
-					<div>{{ content }}</div>
-					<div class="ntf-msg-2-2">
-						<a class="reply-back" v-if="replyBack" :href="notification.link">
+				<div id="ntf-msg-13">
+					<div id="ntf-msg-14">{{ content }}</div>
+					<div class="ntf-msg-2-2" id="ntf-msg-15">
+						<a
+							class="reply-back"
+							v-if="replyBack"
+							:href="notification.link"
+							id="ntf-msg-16"
+						>
 							<svg
+								id="ntf-msg-17"
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
 								height="16"
@@ -69,7 +87,7 @@
 									d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"
 								/>
 							</svg>
-							<span>Reply Back</span>
+							<span id="ntf-msg-18">Reply Back</span>
 						</a>
 					</div>
 				</div>
