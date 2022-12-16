@@ -173,6 +173,12 @@
 			:show-reply-box="showReplyBox"
 			:index="index"
 			@hide-reply-box="replyFunction('hide')"
+			:receiver-username="childMessage.receiverUsername"
+			:sender-username="childMessage.senderUsername"
+			:id="childMessage.msgID"
+			:subject="subject"
+			:subreddit-name="childMessage.subredditName"
+			@done-successfully="doneSuccessfully()"
 		></ReplyComponent>
 	</div>
 </template>
@@ -222,6 +228,13 @@ export default {
 			required: true,
 			default: true,
 		},
+		// @vuese
+		//the subject of the message
+		subject: {
+			type: String,
+			required: true,
+			default: '',
+		},
 	},
 	computed: {
 		// @vuese
@@ -255,6 +268,12 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		//handle reload messages
+		// @type object
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
+		},
 		// @vuese
 		//calculate time
 		// @type object

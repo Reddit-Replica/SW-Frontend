@@ -55,6 +55,8 @@
 					:expandd="expandAll"
 					:child-message="childMessage"
 					:is-invitation="isInvitation"
+					:subject="subjectContent"
+					@done-successfully="doneSuccessfully()"
 				></child-message>
 				<!-- <div
 					v-for="(childMessage, index1) in message.messages"
@@ -294,6 +296,12 @@ export default {
 		// },
 	},
 	methods: {
+		// @vuese
+		//handle reload messages
+		// @type object
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
+		},
 		// @vuese
 		//calculate time
 		// @type object
