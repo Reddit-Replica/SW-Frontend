@@ -1,18 +1,20 @@
 <template>
-	<div class="ntf-top">
-		<h1 class="ntf-top-title">Notifications</h1>
-		<nav>
-			<ul>
-				<li>
-					<router-link to="/notifications"><span>Activity</span></router-link>
+	<div class="ntf-top" id="ntf-top-1">
+		<h1 class="ntf-top-title" id="ntf-top-2">Notifications</h1>
+		<nav id="ntf-top-3">
+			<ul id="ntf-top-4">
+				<li id="ntf-top-5">
+					<router-link to="/notifications" id="ntf-top-6"
+						><span>Activity</span></router-link
+					>
 				</li>
-				<li>
-					<router-link to="/message/messages"
+				<li id="ntf-top-7">
+					<router-link to="/message/messages" id="ntf-top-8"
 						><span>Messages</span></router-link
 					>
 				</li>
-				<li>
-					<button @click="markAllRead">
+				<li id="ntf-top-9">
+					<button @click="markAllRead" id="ntf-top-10">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
