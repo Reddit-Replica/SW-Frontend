@@ -14,9 +14,11 @@
 		<h6 class="description" style="margin-top: 10px">
 			Media on posts with the spoiler tag are blurred
 			<switch-button
-				id="btn2"
+				id="btn1"
 				style="margin-left: 15px"
 				@checked="getenableSpoiler"
+				:value="enableSpoiler"
+				v-if="create"
 			></switch-button>
 		</h6>
 
@@ -36,18 +38,38 @@
 			Allow comments with uploaded images.
 
 			<switch-button
+				:val="allowImagesInComment"
 				id="btn2"
 				style="margin-left: 15px"
 				@checked="getallowImagesInComment"
+				v-if="create"
 			></switch-button>
 		</h6>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.enableSpoiler);
+		console.log(this.allowImagesInComment);
+		this.create = true;
+	},
 	computed: {
 		subredditName() {
 			return this.$route.params.subredditName;
@@ -55,14 +77,17 @@ export default {
 	},
 	components: {
 		vSelect,
+		SaveUnsavePopupMessage,
 	},
 	data() {
 		return {
+			create: false,
 			enableSpoiler: false,
 			allowImagesInComment: false,
 			suggestedSort: 'none',
 			suggestedSortoptions: ['none', 'best', 'top', 'new', 'old'],
 			buttonDisabled: false,
+			savedUnsavedPosts: [],
 		};
 	},
 	methods: {
@@ -93,11 +118,74 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
+		},
+
+		async getSettings() {
+			const actionPayload = {
+				communityName: this.subredditName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetcpostandcommentsSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters[
+				'setting/getpostandcommentsSettings'
+			];
+			console.log(this.setting);
+			this.enableSpoiler = this.setting.enableSpoiler;
+			this.allowImagesInComment = this.setting.allowImagesInComment;
+			this.suggestedSort = this.setting.suggestedSort;
+			console.log(this.enableSpoiler);
+			console.log(this.allowImagesInComment);
+		},
+		////////////////////////////////
+		doneSuccessfully(title) {
+			this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'settings',
+				state: title,
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
 		},
 	},
 };
@@ -155,6 +243,16 @@ export default {
 	display: flex;
 	font-weight: 400;
 	color: #7c7c7c;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 @media only screen and (max-width: 768px) {
 	.box {

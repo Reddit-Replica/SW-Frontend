@@ -71,9 +71,12 @@
 							<div>
 								<div v-if="!(SearchedCms && SearchedCms.length == 0)">
 									<div v-for="value in SearchedCms" :key="value.id">
-										<a class="user-a" @click="gotosub(value.subredditName)"
+										<a class="user-a"
 											><div class="user-div">
-												<div class="user-details">
+												<div
+													class="user-details"
+													@click="gotosub(value.subredditName)"
+												>
 													<div class="user-img-div">
 														<div class="user-img-det"></div>
 														<div class="user-img">
@@ -94,7 +97,10 @@
 														</div>
 													</div>
 												</div>
-												<div class="people-content">
+												<a
+													class="people-content pointer"
+													@click="gotosub(value.subredditName)"
+												>
 													<div class="people-content_release">
 														<h6 class="people-name">
 															r/{{ value.subredditName }}&nbsp;
@@ -107,7 +113,7 @@
 														</p>
 													</div>
 													<p class="p-details">{{ value.description }}&nbsp;</p>
-												</div>
+												</a>
 												<div
 													class="follow"
 													v-if="value.joined"
@@ -168,7 +174,20 @@ export default {
 	// 		console.log(this.SearchedCms());
 	// 	}
 	// },
+	beforeMount() {
+		this.search();
+	},
 	methods: {
+		async search() {
+			try {
+				await this.$store.dispatch('search/SearchSubreddit', {
+					baseurl: this.$baseurl,
+					q: this.$route.query.q,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		toggle(id) {
 			for (let i = 0; i < this.SearchedCms.length; i++) {
 				if (this.SearchedCms[i].id == id) {
@@ -211,6 +230,9 @@ export default {
 	display: flex;
 	justify-content: center;
 	margin: 0 auto;
+}
+.pointer {
+	cursor: pointer;
 }
 .page-release {
 	width: 80%;
@@ -319,6 +341,7 @@ a {
 	justify-content: space-between;
 }
 .people {
+	background-color: #fff;
 	margin-bottom: 16px;
 	width: 100%;
 }

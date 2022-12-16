@@ -1965,5 +1965,19 @@
     ]
   },
   "hide-notification": [],
-  "mark-all-notifications-read": []
+  "mark-all-notifications-read": [],
+  "send-token": [
+    {
+      "clientToken": "cVwxw-EfwRrik5KrrsmtBH:APA91bHFBq8s-bB4UwZPcE5Z599XdEUCqc8rEPSnHEdawNkMFzbIeOO4-tBCDahqHHjNPTon7QIwMtKSRZQvcpsLRUEV2ZCE5AXIQJLQaiYGpP8UH47IgW29zEljuHitGVXS5kp-j-0E",
+      "id": 1
+    },
+    {
+      "clientToken": "cTRG8gm8f9twElye94mFai:APA91bG3GmwSa9xs74BWCOvNLkUU1XXhg59YVcJNpvumFoWvw5jB9PELG3d_kB3Tk_W9IKeq4Lpd0oR3b7K8atgh-29nCX4FPqyms-URC8N7F1EAhOMoAn3b8pTJqkUpLaSFJ3X9VJ3C",
+      "id": 2
+    },
+    {
+      "clientToken": "eYATUEyRJ2AAQVmGPoc2ol:APA91bF1FfE1CrGE-_QG07nb8dGCOx-igc2Ia6m2VxY19oFVM57Cn19C3g9HA0L5JfjWJGOhoSHdFoITy4NSOcHuIYJF4rMpA3AP5fB7ZgCymiEEc2ekbozvTlbRAZuKiI7IxatZTj08",
+      "id": 3
+    }
+  ]
 }

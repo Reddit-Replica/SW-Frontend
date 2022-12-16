@@ -27,4 +27,8 @@ export default {
 	setTopics(state, payload) {
 		state.topics = payload;
 	},
+	notFound(state, payload) {
+		console.log(payload);
+		state.notFound = payload;
+	},
 };

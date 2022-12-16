@@ -34,4 +34,24 @@ export default {
 	getBlockedUsersData(state) {
 		return state.blockedUsersData;
 	},
+	getUserOverviewData(state) {
+		return {
+			overviewData: state.overviewData,
+		};
+	},
+	getUserSavedData(state) {
+		return {
+			savedData: state.savedData,
+		};
+	},
+	listOfSubreddits(state) {
+		console.log(state.listOfSubreddits);
+		return state.listOfSubreddits;
+	},
+	before(state) {
+		return state.before;
+	},
+	after(state) {
+		return state.after;
+	},
 };

@@ -54,6 +54,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log('here');
 			console.log(this.subreddit);
 		},
 		async loadSubredditModerators() {

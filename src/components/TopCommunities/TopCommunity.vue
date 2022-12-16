@@ -1,6 +1,10 @@
 <template>
 	<li class="topCommunity">
-		<a href="link" class="topCommunityLink" :id="'top-community-link-' + index">
+		<a
+			:href="'r/' + name"
+			class="topCommunityLink"
+			:id="'top-community-link-' + index"
+		>
 			<div class="topCommunityBlock">
 				<span class="topCommunityIndex">{{ index + 1 }}</span>
 				<svg
@@ -23,17 +27,35 @@
 		</a>
 
 		<div class="joinBlock">
-			<base-button
+			<!-- <base-button
 				button-text="Join"
 				class="join"
 				:id="'join-top-community-' + index"
-			></base-button>
+			></base-button> -->
+			<base-button
+				class="button blue-button-2"
+				@click="joinSubreddit"
+				v-if="!isMember"
+				>Join</base-button
+			>
+			<base-button
+				class="button white-button"
+				@mouseover="hoverJoin('Leave')"
+				@mouseleave="hoverJoin('Joined')"
+				@click="leaveSubreddit"
+				v-if="isMember"
+				>{{ hoverButtonText }}</base-button
+			>
+			<span class="topCommunityName members-count" v-if="showMembers">{{
+				membersCount
+			}}</span>
 		</div>
 	</li>
 </template>
 
 <script>
 export default {
+	emits: ['reload'],
 	props: {
 		//@vuese
 		//index of community in top communities list
@@ -59,11 +81,61 @@ export default {
 			type: String,
 			default: '',
 		},
-		//@vuese
-		//Route to community page in top communities list
-		link: {
-			type: String,
-			default: '',
+		members: {
+			type: Number,
+			default: 1,
+		},
+		showMembers: {
+			type: Boolean,
+			default: false,
+		},
+		isMember: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	computed: {
+		membersCount() {
+			if (this.members >= 1000000) {
+				return parseFloat((this.members / 1000000).toFixed(1)) + ' M';
+			} else if (this.members >= 1000) {
+				return parseFloat((this.members / 1000).toFixed(1)) + ' K';
+			} else {
+				return this.members;
+			}
+		},
+	},
+	data() {
+		return {
+			hoverButtonText: 'Joined',
+		};
+	},
+	methods: {
+		hoverJoin(text) {
+			this.hoverButtonText = text;
+		},
+		async joinSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+
+			await this.$store.dispatch('community/joinSubreddit', {
+				message: this.message,
+				subredditId: this.id,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+
+			this.$emit('reload');
+		},
+		async leaveSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+
+			await this.$store.dispatch('community/leaveSubreddit', {
+				subredditName: this.name,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+
+			this.$emit('reload');
 		},
 	},
 };
@@ -139,7 +211,7 @@ export default {
 	margin-right: 12px;
 	white-space: nowrap;
 }
-.join {
+/* .join {
 	position: relative;
 	background-color: var(--color-blue-2);
 	border: none;
@@ -152,6 +224,34 @@ export default {
 	padding: 4px 16px;
 }
 .join:hover {
+	opacity: 0.92;
+} */
+.members-count {
+	width: 50px;
+	margin-left: 5px;
+	font-size: 16px;
+	vertical-align: middle;
+	text-align: center;
+}
+.button {
+	font-size: 1.4rem;
+	font-weight: 700;
+	line-height: 1.7rem;
+	padding: 0.4rem 1.6rem;
+	width: 9.6rem;
+	height: 3.2rem;
+}
+.blue-button-2 {
+	background-color: var(--color-blue-2);
+	border: none;
+	color: var(--color-white-1);
+}
+.white-button {
+	background-color: var(--color-white-1);
+	border: var(--line-5);
+	color: var(--color-blue-2);
+}
+.white-button:hover {
 	opacity: 0.92;
 }
 </style>

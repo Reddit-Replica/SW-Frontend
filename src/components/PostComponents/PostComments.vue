@@ -410,10 +410,10 @@
 						<div class="col-lg-3">
 							<subreddit-info
 								:subreddit-name="subredditName"
-								v-if="(postDetails.subreddit = '')"
+								v-if="postDetails.subreddit != undefined"
 							></subreddit-info>
 							<profile-card
-								v-else-if="userData.cakeDate != null"
+								v-else
 								:user-data="userData"
 								:state="'profile'"
 								:user-name="'menna'"

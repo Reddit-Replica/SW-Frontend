@@ -1,22 +1,27 @@
 <template>
 	<div id="sure-popup-form">
-		<base-dialog :show="sureShown" @close="hideSure()" title="Delete rule">
+		<base-dialog :show="sureShown" @close="cancelInvitation()" title="">
 			<div class="rule-dialog flex-column">
-				<div class="rule-box-p flex-column">
-					<p class="sure-text">Are you sure you want to delete this rule?</p>
+				<div class="rule-box-p flex-column center-box">
+					<div>
+						<img src="../../../img/invitiaiton-img.png" alt="Congrats" />
+					</div>
+					<p class="sure-text">
+						Congrats! You are invited to become a moderator!
+					</p>
 				</div>
 				<div class="rule-box box-buttons">
 					<base-button
-						@click="hideSure()"
+						@click="cancelInvitation()"
 						class="button-white"
 						id="cancel-button"
-						>Cancel</base-button
+						>Decline</base-button
 					>
 					<base-button
-						@click="deleteRule()"
+						@click="acceptInvitation()"
 						class="button-blue"
 						id="delete-button"
-						>Delete</base-button
+						>Accept</base-button
 					>
 				</div>
 				<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
@@ -27,55 +32,49 @@
 
 <script>
 export default {
-	emits: ['exit', 'doneSuccessfully'],
-	props: {
-		// @vuese
-		//return subreddit name
-		// @type string
-		subredditName: {
-			type: String,
-			default: '',
-			required: true,
-		},
-		// @vuese
-		//return rule id
-		// @type string
-		ruleId: {
-			type: String,
-			default: '',
-			required: true,
-		},
-	},
 	data() {
 		return {
 			sureShown: true,
 			errorResponse: null,
 		};
 	},
+	beforeMount() {
+		if (!localStorage.getItem('accessToken')) {
+			this.$router.push('/login');
+			document.title = 'reddit';
+		} else {
+			document.title = this.subredditName;
+		}
+	},
+	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
+		subredditName() {
+			// return this.$store.state.subredditName;
+			return this.$route.params.subredditName;
+		},
+	},
 	methods: {
 		//@vuese
-		//Hide dialog
+		//cancel invitation
 		//@arg no argument
-		hideSure() {
-			//@vuese
-			//Fire emit to close create community dialog
-			this.$emit('exit');
+		cancelInvitation() {
+			let route = '/r/' + this.subredditName + '/about/moderators';
+			this.$router.push(route);
 		},
-
 		//@vuese
-		//handle delete rule
+		//accept invitation
 		//@arg no argument
-		async deleteRule() {
+		async acceptInvitation() {
 			this.errorResponse = null;
 			try {
-				await this.$store.dispatch('moderation/deleteRule', {
+				await this.$store.dispatch('moderation/acceptInvitation', {
+					subreddit: this.subredditName,
 					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-					ruleId: this.ruleId,
 				});
-				if (this.$store.getters['moderation/deleteRuleSuccessfully']) {
-					this.hideSure();
-					this.$emit('doneSuccessfully');
+				if (this.$store.getters['moderation/acceptSuccessfully']) {
+					this.cancelInvitation();
 				}
 			} catch (err) {
 				console.log(err);
@@ -164,5 +163,10 @@ button {
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
+}
+.center-box {
+	align-items: center;
+	text-align: center;
+	margin: auto;
 }
 </style>

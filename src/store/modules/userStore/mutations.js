@@ -63,4 +63,23 @@ export default {
 		});
 		return -1;
 	},
+	setUserOverviewData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.overviewData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
+	setUserSavedData(state, payload) {
+		if (payload.responseStatus == 200)
+			Object.assign(state.savedData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
+	setSubreddits(state, payload) {
+		state.listOfSubreddits = payload;
+	},
+	setBefore(state, payload) {
+		state.before = payload;
+	},
+	setAfter(state, payload) {
+		state.after = payload;
+	},
 };

@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
-		<notifications-top></notifications-top>
-		<div class="ntf-section">
+		<notifications-top @reload="reloadPage"></notifications-top>
+		<div class="ntf-section" @reload="reloadPage">
 			<div>
 				<div class="ntf-list-title">Title</div>
 				<ul>
@@ -10,15 +10,7 @@
 						v-for="(notification, index) in notifications"
 						:key="notification.id"
 						:index="index"
-						:id="notification.id"
-						:title="notification.title"
-						:link="notification.link"
-						:send-at="notification.sendAt"
-						:content="notification.content"
-						:is-read="notification.isRead"
-						:small-icon="notification.smallIcon"
-						:sender-id="notification.senderID"
-						:data="notification.data"
+						:notification="notification"
 					></notification-message>
 				</ul>
 			</div>
@@ -35,7 +27,9 @@ export default {
 		NotificationMessage,
 	},
 	beforeMount() {
-		this.loadAllNotifications();
+		if (localStorage.getItem('accessToken') == null)
+			this.$router.push('/login');
+		else this.loadAllNotifications();
 	},
 	data() {
 		return {
@@ -51,6 +45,9 @@ export default {
 			});
 			this.notifications =
 				this.$store.getters['notifications/getNotifications'];
+		},
+		reloadPage() {
+			this.loadAllNotifications();
 		},
 	},
 };
