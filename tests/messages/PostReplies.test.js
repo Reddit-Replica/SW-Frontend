@@ -240,10 +240,10 @@ describe ('PostreplyComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#context-a-0').text ()).contain ('context');
+    // expect (wrapper.find ('#context-a-0').text ()).contain ('context');
   });
 
-  it ('Testing the Full Comments(5) button text is correct', () => {
+  it ('Testing the Full Comments button text is correct', () => {
     const wrapper = mount (PostReplies, {
       props: {
         message,
@@ -260,7 +260,7 @@ describe ('PostreplyComponent.vue', () => {
       },
     });
     expect (wrapper.find ('#full-comment-a-0').text ()).contain (
-      'Full Comments(5)'
+      'Full Comments'
     );
   });
 
