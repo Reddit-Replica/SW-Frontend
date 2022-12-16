@@ -10,6 +10,12 @@ export default {
 	setSubreddits(state, payload) {
 		state.subreddits = payload;
 	},
+	setlimitedUsers(state, payload) {
+		state.limitedusers = payload;
+	},
+	setlimitedSubreddits(state, payload) {
+		state.limitedsubs = payload;
+	},
 	setPosts(state, payload) {
 		state.posts = payload;
 	},

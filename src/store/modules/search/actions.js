@@ -124,7 +124,7 @@ export default {
 			response.status == 304
 		) {
 			const users = [];
-
+			const temp = [];
 			let before, after;
 			before = '';
 			after = '';
@@ -146,10 +146,12 @@ export default {
 					avatar: responseData.children[i].data.avatar,
 				};
 				users.push(user);
+				if (i > 4) temp.push(user);
 			}
 			context.commit('before', before);
 			context.commit('after', after);
 			context.commit('setUsers', users);
+			context.commit('setlimitedUsers', temp);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;
@@ -189,6 +191,7 @@ export default {
 			let before, after;
 			before = '';
 			after = '';
+			const temp = [];
 			if (responseData.before) {
 				before = responseData.before;
 			}
@@ -206,8 +209,10 @@ export default {
 					description: responseData.children[i].data.description,
 					joined: responseData.children[i].data.joined,
 				};
+				if (i > 4) temp.push(subreddit);
 				subreddits.push(subreddit);
 			}
+			context.commit('setlimitedSubreddits', temp);
 			context.commit('setSubreddits', subreddits);
 			context.commit('before', before);
 			context.commit('after', after);
