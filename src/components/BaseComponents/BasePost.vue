@@ -311,7 +311,7 @@ export default {
 			downClicked: this.post.votingType == -1 ? true : false,
 			subMenuDisplay: false,
 			shareSubMenuDisplay: false,
-			postHidden: false,
+			postHidden: this.post.hidden,
 			saved: this.post.saved,
 		};
 	},
@@ -422,8 +422,16 @@ export default {
 		},
 		//@vuese
 		//hide post action
-		hidePost() {
+		async hidePost() {
 			this.postHidden = true;
+			try {
+				await this.$store.dispatch('postCommentActions/hide', {
+					baseurl: this.$baseurl,
+					id: this.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		//@vuese
 		//save post

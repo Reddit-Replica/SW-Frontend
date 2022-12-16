@@ -212,4 +212,52 @@ export default {
 			throw error;
 		}
 	},
+	async hide(context, payload) {
+		const postInfo = {
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/hide', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async unhide(context, payload) {
+		const postInfo = {
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/unhide', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };
