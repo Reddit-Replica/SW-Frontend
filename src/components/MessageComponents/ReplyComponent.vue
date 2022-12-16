@@ -142,7 +142,7 @@ export default {
 			text: '',
 		};
 	},
-	emits: ['hideReplyBox'],
+	emits: ['hideReplyBox', 'doneSuccessfully'],
 	props: {
 		// @vuese
 		//show reply box prop
@@ -265,6 +265,7 @@ export default {
 						text: this.text,
 						senderUsername: '/u/' + this.receiverUsername,
 						receiverUsername: '/u/' + this.senderUsername,
+						subredditName: this.subredditName,
 						isReply: true,
 						subject: 're: ' + this.subject,
 						repliedMsgId: this.id,

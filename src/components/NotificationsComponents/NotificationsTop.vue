@@ -39,6 +39,7 @@
 
 <script>
 export default {
+	emits: ['reload'],
 	methods: {
 		async markAllRead() {
 			const accessToken = localStorage.getItem('accessToken');
@@ -46,6 +47,7 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.$emit('reload');
 		},
 	},
 };

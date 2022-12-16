@@ -2,7 +2,7 @@
 	<div>
 		<div class="ntf-header-list">
 			<!-- <div> -->
-			<nav class="ntf-nav">
+			<nav class="ntf-nav" @reload="reloadPage">
 				<span class="ntf-title title-black">Notification</span>
 				<span class="ntf-title-2"
 					><router-link to="message/messages" class="ntf-title title-grey flex"
@@ -28,21 +28,13 @@
 					</svg>
 				</span>
 			</nav>
-			<div v-if="!noNotifications" class="ntf-list">
+			<div v-if="!noNotifications" class="ntf-list" @reload="reloadPage">
 				<ul>
 					<notification-message
 						v-for="(notification, index) in notifications"
 						:key="notification.id"
 						:index="index"
-						:id="notification.id"
-						:title="notification.title"
-						:link="notification.link"
-						:send-at="notification.sendAt"
-						:content="notification.content"
-						:is-read="notification.isRead"
-						:small-icon="notification.smallIcon"
-						:sender-id="notification.senderID"
-						:data="notification.data"
+						:notification="notification"
 					></notification-message>
 				</ul>
 			</div>
@@ -61,7 +53,7 @@
 					}}</router-link>
 					, a popular community for discussion.
 				</p>
-				<base-button link to="subredditLink" class="button-visit"
+				<base-button link to="/notifications" class="button-visit"
 					>Visit r/{{ randomSubredditName }}</base-button
 				>
 			</div>
@@ -108,6 +100,10 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.loadAllNotifications();
+		},
+		reloadPage() {
+			this.loadAllNotifications();
 		},
 	},
 };
@@ -119,6 +115,7 @@ export default {
 	max-height: 307px; */
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 	/* height: auto; */
 }
 .ntf-nav {
