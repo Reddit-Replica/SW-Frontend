@@ -4,7 +4,7 @@
 		<div class="content">
 			<div class="image-name">
 				<div class="image" v-if="subreddit.picture != undefined">
-					<img :src="subreddit.picture" alt="" />
+					<img :src="$baseurl + '/' + subreddit.picture" alt="" />
 				</div>
 				<div class="image">
 					<img src="../../../img/default_subreddit_image.png" alt="" />
@@ -14,7 +14,7 @@
 			<p class="para-bold">{{ subreddit.description }}</p>
 			<div class="birth">
 				<font-awesome-icon icon="fa-solid fa-cake-candles" class="icon" />
-				Created {{ subreddit.dateOfCreation }}
+				Created {{ calculateTime }}
 			</div>
 			<div class="numbers">
 				<div class="members">
@@ -32,14 +32,14 @@
 			</div>
 			<base-button
 				class="join-button pink-button"
-				@click="toogleJoin"
+				@click="joinSubreddit"
 				v-if="!isJoined"
 				id="join-button"
 				>Join</base-button
 			>
 			<base-button
 				class="join-button white-button"
-				@click="toogleJoin"
+				@click="leaveSubreddit"
 				@mouseover="hoverJoin('Leave')"
 				@mouseleave="hoverJoin('Joined')"
 				v-if="isJoined"
@@ -48,7 +48,6 @@
 			>
 		</div>
 	</div>
-	<!-- <button @click="click"></button> -->
 </template>
 <script>
 export default {
@@ -60,11 +59,35 @@ export default {
 	},
 	data() {
 		return {
-			isJoined: false,
+			isJoined: this.subreddit.isMember,
 			hoverButtonText: 'Join',
 		};
 	},
 	methods: {
+		async joinSubreddit() {
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/joinSubreddit', {
+					subredditId: this.subreddit.subredditId,
+					baseurl: this.$baseurl,
+				});
+
+				this.isJoined = true;
+			} else {
+				this.$router.replace('/login');
+			}
+		},
+		async leaveSubreddit() {
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/leaveSubreddit', {
+					subredditName: this.subreddit.title,
+					baseurl: this.$baseurl,
+				});
+
+				this.isJoined = false;
+			} else {
+				this.$router.replace('/login');
+			}
+		},
 		click() {
 			console.log(this.subreddit);
 		},
@@ -91,6 +114,28 @@ export default {
 		//@arg text to be written inside button
 		hoverJoin(text) {
 			this.hoverButtonText = text;
+		},
+	},
+	computed: {
+		calculateTime() {
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.subreddit.dateOfCreation);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			return returnValue;
 		},
 	},
 };

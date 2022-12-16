@@ -1,6 +1,20 @@
 <template>
 	<div class="content">
-		<img src="../../../img/reddit-white-grey.png" alt="reddit" />
+		<!-- <img src="../../../img/reddit-white-grey.png" alt="reddit" /> -->
+		<img
+			v-if="!getUserData.userData.picture"
+			src="../../../img/default_inbox_avatar.png"
+			alt="img"
+			class="img header-user-nav-user-photo"
+			:id="'header-user-img-' + index"
+		/>
+		<img
+			v-else
+			:src="$baseurl + '/' + getUserData.userData.picture"
+			alt="img"
+			class="img header-user-nav-user-photo"
+			:id="'header-user-img-' + index"
+		/>
 		<form action="#" class="post">
 			<input
 				type="text"
@@ -28,12 +42,41 @@
 
 <script>
 export default {
+	computed: {
+		// @vuese
+		//return user data
+		// @type object
+		getUserData() {
+			// console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserData'];
+		},
+	},
+	beforeMount() {
+		this.RequestUserData();
+	},
 	methods: {
 		// @vuese
 		// Used to change router to submit page
 		// @arg no argument
 		changeRouter() {
 			this.$router.push('/submit');
+		},
+		/**
+		 * @vuese
+		 * this function send  call an action function from the store to make a get request to get user data
+		 * @arg no arg
+		 */
+		async RequestUserData() {
+			let responseStatus;
+			try {
+				await this.$store.dispatch('user/getUserData', {
+					baseurl: this.$baseurl,
+					userName: this.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			return responseStatus;
 		},
 	},
 };
@@ -108,6 +151,14 @@ button {
 .search-post:hover {
 	border: var(--line-2);
 	background-color: var(--color-white-1);
+}
+.header-user-nav-user-photo {
+	width: 3rem;
+	height: 3rem !important;
+	/* border-radius: 50%; */
+	border-radius: 10%;
+	margin-right: 0.3rem;
+	margin-left: 0.9rem;
 }
 @media only screen and (max-width: 60em) {
 	.post {
