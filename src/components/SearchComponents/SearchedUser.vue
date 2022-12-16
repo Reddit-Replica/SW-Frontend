@@ -224,6 +224,10 @@ a {
 	min-width: 32px;
 	padding: 4px 16px;
 }
+.image-user {
+	width: 60px;
+	height: 50px;
+}
 .name {
 	cursor: pointer;
 }
