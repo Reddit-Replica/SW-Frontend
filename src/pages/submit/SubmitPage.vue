@@ -323,10 +323,25 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
-						setTimeout(
-							() => this.$router.replace('/user/' + this.userName),
-							1000
-						);
+						/////r/:subredditName/comments/:postId/:postName
+						this.userData = this.$store.getters['posts/getpostData'];
+						if (this.inSubreddit) {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' + this.subreddit + '/comments/' + this.userData.id
+									),
+								1000
+							);
+						} else {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' + this.userName + '/comments/' + this.userData.id
+									),
+								1000
+							);
+						}
 					}
 				} catch (err) {
 					this.error = err;
