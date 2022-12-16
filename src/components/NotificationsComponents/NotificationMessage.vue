@@ -76,7 +76,7 @@
 							:id="'ntf-msg-16-' + index"
 						>
 							<svg
-							:id="'ntf-msg-17-' + index"
+								:id="'ntf-msg-17-' + index"
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
 								height="16"

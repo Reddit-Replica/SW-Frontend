@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="page-leaderboard-1">
 		<the-header></the-header>
 		<top-bar></top-bar>
 		<div class="top-page">
