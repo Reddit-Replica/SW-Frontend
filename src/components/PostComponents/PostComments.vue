@@ -606,6 +606,7 @@ export default {
 			this.upClicked = this.postDetails.votingType == 1 ? true : false;
 			this.downClicked = this.postDetails.votingType == -1 ? true : false;
 			this.saved = this.postDetails.saved;
+			this.postHidden = this.postDetails.hidden;
 			console.log(this.postDetails);
 		},
 		//@vuese
@@ -696,8 +697,27 @@ export default {
 		},
 		//@vuese
 		//hide post
-		hidePost() {
+		async hidePost() {
 			this.postHidden = !this.postHidden;
+			if (this.postHidden) {
+				try {
+					await this.$store.dispatch('postCommentActions/hide', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unhide', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 		//@vuese
 		//save post
