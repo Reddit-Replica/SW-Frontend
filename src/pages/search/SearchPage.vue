@@ -166,42 +166,7 @@ import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue
 export default {
 	data() {
 		return {
-			commcontent: [
-				{
-					id: 1,
-					community: 'Salah',
-					members: '12k',
-					notjoined: true,
-				},
-				{
-					id: 2,
-					community: 'Mohammed',
-					members: '23k',
-					notjoined: true,
-				},
-				{
-					id: 3,
-					community: 'Karim',
-					members: '22k',
-					notjoined: false,
-				},
-				{
-					id: 4,
-					community: 'Medo',
-					members: '2k',
-					notjoined: true,
-				},
-				// {
-				// 	id: 5,
-				// 	community: 'Deiaa',
-				// 	members: '12k',
-				// },
-				// {
-				// 	id: 6,
-				// 	community: 'Ibrahim',
-				// 	members: '12k',
-				// },
-			],
+			commcontent: [],
 			FirstitemChoice: 'Sort',
 			ShowFirstitemChoice: false,
 			SecitemChoice: 'Time',
@@ -348,6 +313,9 @@ export default {
 	computed: {
 		SearchedPosts() {
 			return this.$store.getters['search/GetPosts'];
+		},
+		SearchedUsers() {
+			return this.$store.getters['search/Getusers'];
 		},
 	},
 	watch: {

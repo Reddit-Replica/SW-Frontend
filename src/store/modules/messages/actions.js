@@ -291,6 +291,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
 			const replies = [];
 

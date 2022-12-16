@@ -4,50 +4,7 @@
 		<div>
 			<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 				<div v-for="value in SearchedUsers" :key="value.username">
-					<a class="people-status"
-						><div class="people-status-release">
-							<div class="img-release">
-								<div class="img-holder">
-									<div class="img-div">
-										<img
-											v-if="!value.avatar"
-											src="../../../img/default_inbox_avatar.png"
-											alt="img"
-											class="people-img"
-											:id="'user-avatar-' + value.id"
-										/>
-										<img
-											v-else
-											:src="$baseurl + '/' + value.avatar"
-											alt="img"
-											class="people-img"
-											:id="'user-avatar-' + value.id"
-										/>
-									</div>
-								</div>
-							</div>
-							<div class="people-content">
-								<a
-									class="people-content-release"
-									:href="'/user/' + value.username"
-								>
-									<h6 class="people-name">u/{{ value.username }}&nbsp;</h6>
-									<p class="karma-number">{{ value.karma }} Karma&nbsp;</p>
-								</a>
-							</div>
-							<div class="follow" v-if="value.following" @click="toggle">
-								<base-button
-									button-text="Follow"
-									class="follow-button"
-								></base-button>
-							</div>
-							<div class="follow" v-if="!value.following" @click="toggle">
-								<base-button
-									button-text="Unfollow"
-									class="follow-button"
-								></base-button>
-							</div></div
-					></a>
+					<base-people :value="value"></base-people>
 				</div>
 			</div>
 			<div v-else>
@@ -58,7 +15,8 @@
 </template>
 
 <script>
-import BaseButton from '../BaseComponents/BaseButton.vue';
+// import BaseButton from '../BaseComponents/BaseButton.vue';
+import BasePeople from './BasePeople.vue';
 export default {
 	data() {
 		return {
@@ -68,7 +26,7 @@ export default {
 		};
 	},
 	components: {
-		BaseButton,
+		BasePeople,
 	},
 	computed: {
 		SearchedUsers() {

@@ -8,7 +8,7 @@
 			/>
 		</div>
 		<div class="right">
-			<p>{{ type }}&nbsp;{{ state }}&nbsp;successfully</p>
+			<p>successfully {{ type }}&nbsp;{{ state }}&nbsp;</p>
 		</div>
 		<div class="undo">
 			<!-- <base-button @click="undo">Undo</base-button> -->
@@ -42,7 +42,7 @@ export default {
 		//id of pot/comment
 		typeid: {
 			type: String,
-			required: false,
+			required: true,
 			default: '',
 		},
 	},
