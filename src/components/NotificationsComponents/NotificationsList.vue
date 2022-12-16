@@ -5,7 +5,7 @@
 			<nav class="ntf-nav" @reload="reloadPage">
 				<span class="ntf-title title-black">Notification</span>
 				<span class="ntf-title-2"
-					><router-link to="message/messages" class="ntf-title title-grey flex"
+					><router-link to="/message/messages" class="ntf-title title-grey flex"
 						>Messages
 						<span class="circle-red">18</span>
 					</router-link>
