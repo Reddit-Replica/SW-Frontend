@@ -37,7 +37,7 @@
 							:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
 						>
 							<!-- <sortposts-bar></sortposts-bar> -->
-							<router-view :state="state"></router-view>
+							<router-view :state="state" @emitPopup="emitPopup"></router-view>
 						</main>
 						<aside id="profile-aside">
 							<profile-card
@@ -56,6 +56,15 @@
 			</div>
 		</div>
 	</div>
+	<div class="positioning">
+		<SaveUnsavePopupMessage
+			v-for="message in popupMessages"
+			:key="message.id"
+			:type="message.type"
+			:state="message.state"
+			:typeid="message.postid"
+		></SaveUnsavePopupMessage>
+	</div>
 </template>
 
 <script>
@@ -66,6 +75,7 @@ import UserModeratorsCard from '../../components/UserComponents/BaseUserComponen
 import UserBlockPage from '../../components/UserComponents/UserBlockPage';
 import NotFoundUserPage from './PagesComponents/NotFoundUserPage.vue';
 import TheSpinner from '@/components/BaseComponents/TheSpinner.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 
 export default {
 	props: {},
@@ -77,6 +87,7 @@ export default {
 		UserBlockPage,
 		NotFoundUserPage,
 		TheSpinner,
+		SaveUnsavePopupMessage,
 	},
 	data() {
 		return {
@@ -85,6 +96,7 @@ export default {
 			loading: false,
 			blockedFlag: false,
 			notFound: false,
+			popupMessages: [],
 		};
 	},
 	beforeMount() {
@@ -152,6 +164,17 @@ export default {
 			}
 			return responseStatus;
 		},
+		emitPopup(id, message) {
+			this.popupMessages.push({
+				id: this.popupMessages.length,
+				postid: id,
+				type: 'post',
+				state: message,
+			});
+			setTimeout(() => {
+				this.popupMessages.shift();
+			}, 10000);
+		},
 	},
 	/**
 	 * @vuese
@@ -199,6 +222,16 @@ export default {
 </script>
 
 <style scoped>
+.positioning {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
 .profilebox {
 	display: flex;
 	justify-content: center;

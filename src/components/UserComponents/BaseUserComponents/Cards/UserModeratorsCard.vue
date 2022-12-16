@@ -31,7 +31,12 @@
 						:class="[userModerator.followed ? 'joined-button' : '']"
 						@mouseover="hoverButton(userModerator.subredditName)"
 						@mouseleave="unHoverButton"
-						@click="changeButtonState(userModerator.subredditName)"
+						@click="
+							changeButtonState(
+								userModerator.subredditName,
+								userModerator.subredditId
+							)
+						"
 					></base-button>
 				</li>
 			</ul>
@@ -116,7 +121,7 @@ export default {
 		 * at clicking on the button we change it state  joined <-> join
 		 * @arg no arg
 		 */
-		changeButtonState(key) {
+		changeButtonState(key, id) {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
 				return;
@@ -125,8 +130,10 @@ export default {
 				if (element.subredditName == key) {
 					if (element.followed) {
 						element.buttonText = 'join';
+						this.leaveSubreddit(key);
 					} else {
 						element.buttonText = 'leave';
+						this.joinsubreddit(id);
 					}
 					element.followed = !element.followed;
 				}
@@ -134,17 +141,21 @@ export default {
 		},
 		async joinsubreddit(id) {
 			// this.toogleJoin();
-
 			const accessToken = localStorage.getItem('accessToken');
-
 			await this.$store.dispatch('community/joinSubreddit', {
 				message: '',
 				subredditId: id,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
-
-			this.$emit('reload');
+		},
+		async leaveSubreddit(subredditName) {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/leaveSubreddit', {
+				subredditName: subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
 		},
 	},
 };
