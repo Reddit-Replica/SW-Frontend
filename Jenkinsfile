@@ -12,7 +12,7 @@ triggers {
     stage("unit test"){
       agent {
         docker {
-            image 'node:lts'
+            image 'node:16.17.1'
             reuseNode true
         }
     }
