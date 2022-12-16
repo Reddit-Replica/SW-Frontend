@@ -44,6 +44,7 @@
 					<base-button
 						@click="submitMute()"
 						class="button-blue"
+						:disabled="muteUserName == ''"
 						:class="muteUserName == '' ? 'disabled' : ''"
 						id="mute-user-button"
 						>Mute user

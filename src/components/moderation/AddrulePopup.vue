@@ -198,6 +198,7 @@
 						v-if="edit"
 						@click="deleteRule()"
 						class="delete-button"
+						:disabled="ruleName == ''"
 						:class="ruleName == '' ? 'disabled' : ''"
 						id="delete-button"
 						>Delete</base-button
@@ -212,6 +213,7 @@
 						v-if="!edit"
 						@click="submitRule()"
 						class="button-blue"
+						:disabled="ruleName == '' || isNameTaken"
 						:class="ruleName == '' || isNameTaken ? 'disabled' : ''"
 						id="create-rule-button"
 						>Add new rule
@@ -220,6 +222,15 @@
 						v-else
 						@click="updateRule()"
 						class="button-blue"
+						:disabled="
+							(ruleName == ruleNameEdit &&
+								reportReason == reportReasonEdit &&
+								description == descriptionEdit &&
+								appliedType == appliesToEdit) ||
+							isNameTaken
+								? 'disabled'
+								: ''
+						"
 						:class="
 							(ruleName == ruleNameEdit &&
 								reportReason == reportReasonEdit &&

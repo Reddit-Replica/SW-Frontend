@@ -9,6 +9,7 @@
 				:key="message"
 				:message="message"
 				:index="index"
+				@done-successfully="doneSuccessfully()"
 			></messages-component>
 		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>

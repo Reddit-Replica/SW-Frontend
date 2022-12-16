@@ -8,7 +8,14 @@
 	>
 		<li>
 			<p class="subject-text">
-				<span>{{ message.subject }}:</span>
+				<a
+					:href="
+						'/r/' + message.subredditName + '/about/accept-moderator-invite'
+					"
+					v-if="isInvitation"
+					>link: {{ message.subject }}:</a
+				>
+				<span v-else>{{ message.subject }}:</span>
 			</p>
 			<div :class="!isRead ? 'box-unread' : ''">
 				<p class="md-details">
@@ -18,7 +25,7 @@
 							v-if="message.isSenderUser"
 							:href="'/user/' + message.senderUsername"
 							:id="'message-sender-' + index"
-							>{{ message.senderUsername }}</a
+							>/u/{{ message.senderUsername }}</a
 						>
 						<a
 							v-else
@@ -34,7 +41,7 @@
 								v-if="message.isReceiverUser"
 								:href="'/user/' + message.receiverUsername"
 								:id="'message-receiver-' + index"
-								>{{ message.receiverUsername }}</a
+								>/u/{{ message.receiverUsername }}</a
 							><a
 								v-else
 								:href="'/r/' + message.receiverUsername"
@@ -180,6 +187,7 @@
 			:sender-username="message.senderUsername"
 			:receiver-username="message.receiverUsername"
 			:subject="message.subject"
+			:subreddit-name="subredditName"
 		></ReplyComponent>
 	</div>
 </template>
@@ -192,6 +200,7 @@ export default {
 		Markdown,
 		ReplyComponent,
 	},
+	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
 		//details of message
@@ -207,13 +216,15 @@ export default {
 				subject: '',
 				type: '',
 				subredditName: '',
-				isModerator: '',
 				postTitle: '',
-				postID: '',
-				commentID: '',
+				postId: '',
+				commentId: '',
 				numOfComments: '',
 				isSenderUser: '',
 				isReceiverUser: '',
+				isRead: '',
+				vote: '',
+				postOwner: '',
 			}),
 		},
 		// @vuese
@@ -235,7 +246,7 @@ export default {
 			errorResponse: null,
 			showReplyBox: false,
 			handleTime: '',
-			isRead: true,
+			isRead: this.message.isRead,
 		};
 	},
 	// @vuese
@@ -252,6 +263,17 @@ export default {
 		// @type object
 		sendByMe() {
 			return this.message.senderUsername == localStorage.getItem('userName');
+		},
+
+		// @vuese
+		//if it's invitaion or not
+		// @arg no argument
+		isInvitation() {
+			if (this.message.subject.includes('invitation to moderate')) {
+				return true;
+			} else {
+				return false;
+			}
 		},
 	},
 	methods: {

@@ -1,6 +1,14 @@
 <template>
-	<li id="'ntf-msg-'+index" class="ntf-msg-li" :class="{ 'not-read': !isRead }">
-		<router-link to="link" class="ntf-msg-routerlink">
+	<li
+		id="'ntf-msg-'+index"
+		class="ntf-msg-li"
+		:class="{ 'not-read': !notification.isRead }"
+	>
+		<a
+			:href="notification.link"
+			class="ntf-msg-routerlink"
+			@click="readNotification"
+		>
 			<span class="ntf-msg-1">
 				<img src="../../../img/default_inbox_avatar.png" alt="image" />
 				<span class="circle"
@@ -21,9 +29,9 @@
 			<span class="ntf-msg-2 text">
 				<div class="ntf-msg-2-1">
 					<span
-						><span class="text-title">{{ title }}</span>
+						><span class="text-title">{{ notification.title }}</span>
 						<span class="text-dot">.</span>
-						<span>{{ calcDuration(sendAt) }}</span>
+						<span>{{ calcDuration(notification.sendAt) }}</span>
 					</span>
 					<span class="dots-icon">
 						<svg
@@ -45,69 +53,40 @@
 					</span>
 				</div>
 				<div>
-					{{ content }}
-					<base-button class="reply-back" v-if="replyBack" link to="link">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="currentColor"
-							class="bi bi-arrow-90deg-left"
-							viewBox="0 0 16 16"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"
-							/>
-						</svg>
-						<span>Reply Back</span></base-button
-					>
+					<div>{{ content }}</div>
+					<div class="ntf-msg-2-2">
+						<a class="reply-back" v-if="replyBack" :href="notification.link">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								fill="currentColor"
+								class="bi bi-arrow-90deg-left"
+								viewBox="0 0 16 16"
+							>
+								<path
+									fill-rule="evenodd"
+									d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"
+								/>
+							</svg>
+							<span>Reply Back</span>
+						</a>
+					</div>
 				</div>
 			</span>
-		</router-link>
+		</a>
 	</li>
 </template>
 
 <script>
 export default {
+	emits: ['reload'],
 	props: {
 		index: {
 			type: Number,
 			default: 0,
 		},
-		id: {
-			type: String,
-			default: '',
-		},
-		title: {
-			type: String,
-			default: '',
-		},
-		link: {
-			type: String,
-			default: '',
-		},
-		sendAt: {
-			type: String,
-			default: '',
-		},
-		content: {
-			type: String,
-			default: '',
-		},
-		isRead: {
-			type: Boolean,
-			default: true,
-		},
-		smallIcon: {
-			type: String,
-			default: '',
-		},
-		senderID: {
-			type: String,
-			default: '',
-		},
-		data: {
+		notification: {
 			type: Object,
 			default: () => {},
 		},
@@ -122,24 +101,32 @@ export default {
 	},
 	computed: {
 		dotsButtonText() {
-			if (this.title.includes('replied')) {
+			if (this.notification.title.includes('replied')) {
 				return this.textNoUpdates;
 			} else {
 				return this.textHide;
 			}
 		},
 		toHide() {
-			return !this.title.includes('replied');
+			return !this.notification.title.includes('replied');
 		},
 		replyBack() {
-			return this.title.includes('replied to your comment');
+			return this.notification.title.includes('comment');
+		},
+		content() {
+			return (
+				'u/' +
+				this.notification.title.substring(
+					0,
+					this.notification.title.indexOf(' ')
+				)
+			);
 		},
 	},
 
 	methods: {
 		toggleButton() {
 			this.buttonShown = !this.buttonShown;
-			this.calcDuration(this.sendAt);
 		},
 		calcDuration(date) {
 			let currDate = Date.parse(new Date());
@@ -205,10 +192,25 @@ export default {
 				await this.$store.dispatch('notifications/hideNotification', {
 					baseurl: this.$baseurl,
 					token: accessToken,
-					id: this.id,
+					notificationId: this.notification.id,
 				});
 			}
+			this.$emit('reload');
 		},
+
+		async readNotification() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/readNotification', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+				notificationId: this.notification.id,
+			});
+			this.$emit('reload');
+		},
+
+		// goToLink() {
+		// 	this.$route.push(this.notification.link);
+		// },
 	},
 };
 </script>
@@ -317,6 +319,7 @@ button:hover {
 	color: red;
 	background-color: var(--color-baby-blue);
 }
+
 .reply-back {
 	background-color: var(--color-grey-light-2);
 	color: var(--color-blue-2);
@@ -326,6 +329,10 @@ button:hover {
 	height: 36px;
 	width: fit-content;
 	display: block;
+	border-radius: 999px;
+}
+.reply-back:hover {
+	background-color: var(--color-baby-blue);
 }
 .bi-arrow-90deg-left {
 	margin-right: 8px;

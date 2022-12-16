@@ -46,6 +46,7 @@ export default {
 				await this.$store.dispatch('moderation/unModerated', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
+					sort: 'newestfirst',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

@@ -6,7 +6,15 @@
 					:href="'/user/' + message.subjectTitle"
 					:id="'message-sender-' + index"
 					class="sender-box"
+					v-if="message.isUser"
 					>/u/{{ message.subjectTitle }}</a
+				>
+				<a
+					:href="'/r/' + message.subjectTitle"
+					:id="'message-sender-' + index"
+					class="sender-box"
+					v-else
+					>/r/{{ message.subjectTitle }}</a
 				>
 				<!-- <a
 					href=""
@@ -15,7 +23,15 @@
 					v-else
 					>{{ message.receiverUsername }}</a
 				> -->
-				<span>{{ message.subjectContent }}</span>
+
+				<a
+					:href="
+						'/r/' + message.subredditName + '/about/accept-moderator-invite'
+					"
+					v-if="isInvitation"
+					>link: {{ message.subjectContent }}:</a
+				>
+				<span v-else>{{ message.subjectContent }}</span>
 			</p>
 			<p class="expand-p">
 				<span
@@ -36,7 +52,11 @@
 					v-for="(childMessage, index1) in message.messages"
 					:key="childMessage"
 					:index="index1"
+					:expandd="expandAll"
 					:child-message="childMessage"
+					:is-invitation="isInvitation"
+					:subject="subjectContent"
+					@done-successfully="doneSuccessfully()"
 				></child-message>
 				<!-- <div
 					v-for="(childMessage, index1) in message.messages"
@@ -195,25 +215,20 @@
 				</div> -->
 			</div>
 		</li>
-		<ReplyComponent
-			:show-reply-box="showReplyBox"
-			:index="index"
-			@hide-reply-box="replyFunction('hide')"
-			:expandd="expandAll"
-		></ReplyComponent>
 	</div>
 </template>
 
 <script>
 // import Markdown from 'vue3-markdown-it';
-import ReplyComponent from './ReplyComponent.vue';
+// import ReplyComponent from './ReplyComponent.vue';
 import ChildMessage from './ChildMessage.vue';
 export default {
 	components: {
 		// Markdown,
-		ReplyComponent,
+		// ReplyComponent,
 		ChildMessage,
 	},
+	emits: ['doneSuccessfully'],
 	// @vuese
 	//details of message
 	props: {
@@ -262,6 +277,17 @@ export default {
 		getUserName() {
 			return this.$store.getters.getUserName;
 		},
+
+		// @vuese
+		//if it's invitaion or not
+		// @arg no argument
+		isInvitation() {
+			if (this.message.subjectContent.includes('invitation to moderate')) {
+				return true;
+			} else {
+				return false;
+			}
+		},
 		// @vuese
 		//check if user is reciever or sender
 		// @type boolean
@@ -270,6 +296,12 @@ export default {
 		// },
 	},
 	methods: {
+		// @vuese
+		//handle reload messages
+		// @type object
+		doneSuccessfully() {
+			this.$emit('doneSuccessfully');
+		},
 		// @vuese
 		//calculate time
 		// @type object
@@ -371,12 +403,11 @@ export default {
 		//expand or collapse message details
 		// @arg The argument is a string value representing if its expand or collapse
 		expand(action) {
+			console.log('ss');
 			if (action == 'expand') {
 				this.expandAll = true;
 			} else if (action == 'collapse') {
 				this.expandAll = false;
-			} else {
-				this.expandAll = !this.expandAll;
 			}
 		},
 		// @vuese

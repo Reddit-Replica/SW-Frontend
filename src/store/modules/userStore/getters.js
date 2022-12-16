@@ -44,4 +44,14 @@ export default {
 			savedData: state.savedData,
 		};
 	},
+	listOfSubreddits(state) {
+		console.log(state.listOfSubreddits);
+		return state.listOfSubreddits;
+	},
+	before(state) {
+		return state.before;
+	},
+	after(state) {
+		return state.after;
+	},
 };

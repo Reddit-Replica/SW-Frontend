@@ -96,7 +96,10 @@
 					<div class="md" v-html="data"></div>
 					<ul class="flat-list ul-messages">
 						<li :id="'context-link-' + index">
-							<a href="#" :id="'context-a-' + index">context</a>
+							<!-- <a href="#" :id="'context-a-' + index">context</a> -->
+							<span class="link" @click="goContext()" id="'context-a-' + index"
+								>context</span
+							>
 						</li>
 						<li :id="'full-comment-link-' + index">
 							<span
@@ -323,6 +326,7 @@ export default {
 		// Markdown,
 		ReplyComponent,
 	},
+	emits: ['doneSuccessfully'],
 	props: {
 		// @vuese
 		//details of message
@@ -335,13 +339,18 @@ export default {
 				senderUsername: '',
 				receiverUsername: '',
 				sendAt: '',
+				subject: '',
+				type: '',
+				subredditName: '',
 				postTitle: '',
 				postId: '',
 				commentId: '',
 				numOfComments: '',
+				isSenderUser: '',
+				isReceiverUser: '',
+				isRead: '',
 				vote: '',
 				postOwner: '',
-				isRead: '',
 			}),
 		},
 		// @vuese
@@ -418,7 +427,7 @@ export default {
 					});
 					if (this.$store.getters['messages/blockSuccessfully']) {
 						this.disappear = true;
-						this.$emit('doneSuccessfully');
+						// this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -453,7 +462,7 @@ export default {
 					});
 					if (this.$store.getters['messages/spamCommentSuccessfully']) {
 						this.spammed = true;
-						this.$emit('doneSuccessfully');
+						// this.$emit('doneSuccessfully');
 					}
 				} catch (err) {
 					this.errorResponse = err;
@@ -524,6 +533,14 @@ export default {
 				this.message.postId +
 				'/' +
 				this.message.postTitle;
+			this.$router.push(route);
+		},
+
+		// @vuese
+		// Used to go context page
+		// @arg no argument
+		goContext() {
+			let route = '/user/' + this.message.postOwner;
 			this.$router.push(route);
 		},
 

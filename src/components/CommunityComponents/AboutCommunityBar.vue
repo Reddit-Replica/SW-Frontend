@@ -194,7 +194,7 @@
 						{{ membersCount }} Members
 					</div>
 				</div>
-				<div id="online-members-num" class="relative-flex">
+				<!-- <div id="online-members-num" class="relative-flex">
 					<div>
 						<div class="point-green"></div>
 						<span
@@ -213,7 +213,7 @@
 					>
 						{{ membersCount }} Online
 					</div>
-				</div>
+				</div> -->
 				<div></div>
 				<div></div>
 			</div>
