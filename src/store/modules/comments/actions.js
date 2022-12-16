@@ -10,31 +10,6 @@ export default {
  * @returns {void}
  
  */
-	async followPost(context, payload) {
-		const postInfo = {
-			follow: payload.follow,
-			id: payload.id,
-		};
-		const baseurl = payload.baseurl;
-
-		const response = await fetch(baseurl + '/follow-post', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-			body: JSON.stringify(postInfo),
-		});
-
-		const responseData = await response.json();
-		console.log(responseData);
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
-	},
 	async comment(context, payload) {
 		console.log(payload);
 		const newComment = {

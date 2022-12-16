@@ -91,7 +91,12 @@ export default {
 		},
 	},
 	created() {
-		document.title = 'Submit to Reddit';
+		if (!localStorage.getItem('accessToken')) {
+			this.$router.push('/login');
+			document.title = 'reddit';
+		} else {
+			document.title = 'Submit to Reddit';
+		}
 	},
 	mounted() {
 		//this.getTitle();
