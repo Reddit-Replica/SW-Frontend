@@ -9,6 +9,7 @@ export default {
 			notifications: [],
 			allRead: false,
 			hiddenSuccessfully: false,
+			readSuccessfully: false,
 
 			clientToken: null,
 		};

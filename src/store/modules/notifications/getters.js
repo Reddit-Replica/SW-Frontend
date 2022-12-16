@@ -8,6 +8,9 @@ export default {
 	getHiddenSuccessfully(state) {
 		return state.hiddenSuccessfully;
 	},
+	getReadSuccessfully(state) {
+		return state.readSuccessfully;
+	},
 	getClientToken(state) {
 		return state.clientToken;
 	},
