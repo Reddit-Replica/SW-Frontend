@@ -2,11 +2,11 @@
 	<div class="topCommunities">
 		<div :style="style" class="topCommunitiesTitleBlock">
 			<h2 class="topCommunitiesTitle">
-				<a
-					:href="topCommunitiesLink"
+				<router-link
+					:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
 					class="topCommunitiesLink"
 					id="top-communities-link"
-					>Top <span>{{ topCommunitiesCaption }}</span> Communities</a
+					>Top <span>{{ topCommunitiesCaption }}</span> Communities</router-link
 				>
 			</h2>
 		</div>
@@ -17,20 +17,22 @@
 				:key="community.id"
 				:name="community.name"
 				:image="community.image"
-				:link="community.link"
+				:members="community.members"
+				:show-members="false"
+				:is-member="community.isMember"
 			>
 			</top-community>
 		</ol>
 		<div class="viewAllBlock">
 			<base-button
 				link
-				to="/"
-				class="viewAll"
-				button-text="View All"
-				id="view-all-top-communities"
-			></base-button>
+				:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
+				class="viewAll viewAll-2"
+				id="view-all-top-communities-2"
+				>See All {{ topCommunitiesCaption }}</base-button
+			>
 		</div>
-		<div class="topCommunitiesRecommendations">
+		<!-- <div class="topCommunitiesRecommendations" v-if="!notLeaderbord">
 			<span
 				class="topRecommendations"
 				v-for="(recommendation, index) in topCommunitiesRecommendations"
@@ -44,7 +46,7 @@
 					:button-text="recommendation.name"
 				></base-button>
 			</span>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -61,12 +63,6 @@ export default {
 			default: '',
 		},
 		//@vuese
-		//Route to Top communities Page
-		topCommunitiesLink: {
-			type: String,
-			default: '',
-		},
-		//@vuese
 		//Top communities Background image URL
 		topCommunitiesImage: {
 			type: String,
@@ -75,21 +71,14 @@ export default {
 		//@vuese
 		//Top communities List
 		topCommunities: {
-			type: Object,
-			default() {
-				return {
-					index: '',
-					image: '',
-					name: '',
-					id: '',
-					link: '',
-				};
-			},
+			type: Array,
+			default: () => [],
 		},
 		//@vuese
 		//Top communities categories recommendations
 		topCommunitiesRecommendations: {
 			type: Object,
+			required: false,
 			default() {
 				return {
 					name: '',
@@ -119,7 +108,7 @@ export default {
 	border-radius: 4px;
 	overflow: visible;
 	word-wrap: break-word;
-	margin-top: 5rem;
+	/* margin-top: 5rem; */
 }
 .topCommunitiesTitleBlock {
 	background-color: var(--color-blue-2);
@@ -168,6 +157,14 @@ export default {
 	width: 100%;
 }
 .viewAll:hover {
+	opacity: 0.92;
+}
+.viewAll-2 {
+	background-color: var(--color-white-1);
+	border: var(--line-5);
+	color: var(--color-blue-2);
+}
+.viewAll-2:hover {
 	opacity: 0.92;
 }
 .topCommunitiesRecommendations {

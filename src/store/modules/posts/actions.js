@@ -58,6 +58,7 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 201) {
 			console.log(response);
+			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -96,6 +97,7 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 201) {
 			console.log(response);
+			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;
@@ -146,6 +148,7 @@ export default {
 		const responseData = await response.text();
 		if (response.status == 201) {
 			console.log(response);
+			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			console.log(responseData.body);
@@ -183,6 +186,7 @@ export default {
 		const responseData = await response.text();
 		if (response.status == 201) {
 			console.log(response);
+			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;

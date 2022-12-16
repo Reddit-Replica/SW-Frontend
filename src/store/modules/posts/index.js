@@ -39,6 +39,7 @@ export default {
 			videoOrimage: null,
 			sendReplies: false,
 			allSubreddits: [],
+			postData: {},
 		};
 	},
 	actions,

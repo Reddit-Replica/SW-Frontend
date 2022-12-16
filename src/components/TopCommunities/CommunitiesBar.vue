@@ -1,5 +1,5 @@
 <template>
-	<div class="comm-top-1">
+	<div class="comm-top-1" @reload="reloadPage">
 		<div class="comm-top-2">
 			<h2>Top</h2>
 			<span class="text-grey">Rank Change</span>
@@ -9,7 +9,11 @@
 				v-for="(community, index) in allCommunities"
 				:index="index"
 				:key="community.id"
+				:id="community.id"
 				:name="community.data.title"
+				:members="community.data.members"
+				:is-member="community.data.isMember"
+				:show-members="true"
 			>
 			</top-community>
 		</ol>
@@ -46,10 +50,9 @@ export default {
 	},
 	created() {
 		let category = this.$route.params.category;
-		console.log(category);
 		if (!category) {
-			console.log('hi null');
 			this.getAllCommunities();
+			console.log(this.$store.getters['topCommunity/getAllCommunities']);
 		}
 	},
 
@@ -72,6 +75,12 @@ export default {
 			});
 			this.allCommunities =
 				this.$store.getters['topCommunity/getCategoryCommunities'];
+		},
+		reloadPage() {
+			let category = this.$route.params.category;
+			if (!category) {
+				this.getAllCommunities();
+			} else this.getCategoryCommunities(this.$route.params.category);
 		},
 	},
 };

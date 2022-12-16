@@ -69,4 +69,8 @@ export default {
 		console.log('getters videoOrimage');
 		return state.videoOrimage;
 	},
+	getpostData(state) {
+		console.log('getters postData');
+		return state.postData;
+	},
 };

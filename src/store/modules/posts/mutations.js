@@ -73,4 +73,8 @@ export default {
 		console.log(payload);
 		state.videoOrimage = payload.videoOrimage;
 	},
+	setpostData(state, payload) {
+		console.log(payload);
+		state.postData = payload.postData;
+	},
 };
