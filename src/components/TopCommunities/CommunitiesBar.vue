@@ -1,11 +1,12 @@
 <template>
-	<div class="comm-top-1" @reload="reloadPage">
+	<div class="comm-top-1">
 		<div class="comm-top-2">
 			<h2>Top</h2>
 			<span class="text-grey">Rank Change</span>
 		</div>
 		<ol>
 			<top-community
+				@reload="reloadPage"
 				v-for="(community, index) in allCommunities"
 				:index="index"
 				:key="community.id"
@@ -71,6 +72,7 @@ export default {
 				this.$store.getters['topCommunity/getCategoryCommunities'];
 		},
 		reloadPage() {
+			console.log('reloadPage');
 			let category = this.$route.params.category;
 			if (!category) {
 				this.getAllCommunities();
