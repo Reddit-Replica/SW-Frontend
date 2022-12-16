@@ -572,6 +572,7 @@ a {
 	box-shadow: 0px 2px 4px var(--color-grey-dark-2);
 	border-radius: 5px;
 	z-index: 2;
+	width: max-content;
 }
 
 .post-card .post-content .post-services .services .sub-menu li {
@@ -685,7 +686,7 @@ a {
 .post-content {
 	padding: 8px 8px 3px 5px;
 	width: 100%;
-	overflow: auto;
+	/* overflow: auto; */
 	height: 100%;
 	word-break: break-all;
 }

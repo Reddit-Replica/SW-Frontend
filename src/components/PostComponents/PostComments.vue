@@ -567,6 +567,7 @@ export default {
 			this.isFollowed = this.postDetails.followed;
 			this.upClicked = this.postDetails.votingType == 1 ? true : false;
 			this.downClicked = this.postDetails.votingType == -1 ? true : false;
+			this.saved = this.postDetails.saved;
 			console.log(this.postDetails);
 		},
 		//@vuese
@@ -662,8 +663,29 @@ export default {
 		},
 		//@vuese
 		//save post
-		savePost() {
+		async savePost() {
 			this.saved = !this.saved;
+			if (this.saved == true) {
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: this.postDetails.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: this.postDetails.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 		//@vuese
 		//show share submenu of post
