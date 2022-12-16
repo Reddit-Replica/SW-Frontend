@@ -23,7 +23,7 @@
 				<div
 					class="comment-content"
 					:class="[
-						RemovedComment
+						RemovedComment || SpammedComment
 							? 'comment-content-removed'
 							: commentType
 							? 'comment-overview-content'
@@ -41,7 +41,7 @@
 						}}</router-link>
 						<moderation-title
 							v-if="commentContent.moderation != null"
-							:moderation="commentContent.moderation"
+							:moderation="moderation"
 							:pinned-post="false"
 						></moderation-title>
 					</div>
@@ -86,7 +86,7 @@
 										<li @click="saveComment" class="options-box-item">
 											<div class="options-box-icon">
 												<i
-													v-if="!commentContent.saved"
+													v-if="!saved"
 													style="color: rgba(135, 138, 140)"
 													class="fa-regular fa-bookmark"
 												></i>
@@ -110,7 +110,7 @@
 												</i>
 											</div>
 											<div class="options-box-text">
-												{{ !commentContent.saved ? 'Save' : 'Unsaved' }}
+												{{ !saved ? 'Save' : 'Unsaved' }}
 											</div>
 										</li>
 										<li @click="deletePost" class="options-box-item">
@@ -232,34 +232,42 @@ export default {
 			PostHybridContent: '',
 			DeletedComment: false,
 			ApprovedCommentFlag: true,
-			RemovedCommentFlag: false,
-			SpammedCommentFlag: false,
-			LockedCommentFlag: false,
+			RemovedCommentFlag: true,
+			SpammedCommentFlag: true,
+			LockedCommentFlag: true,
+			removedBy: '',
+			spammedBy: '',
+			approvedBy: '',
+			moderation: this.commentContent.moderation,
+			saved: this.commentContent.saved,
 		};
 	},
 	computed: {
 		LockedComment() {
-			return this.LockedCommentFlag && this.commentContent.moderation.lock;
+			return this.LockedCommentFlag && this.moderation && this.moderation.lock;
 		},
 		SpammedComment() {
 			return (
 				this.SpammedCommentFlag &&
-				this.commentContent.moderation.spam &&
-				this.commentContent.moderation.spam.spammedBy
+				this.moderation &&
+				this.moderation.spam &&
+				this.moderation.spam.spammedBy
 			);
 		},
 		RemovedComment() {
 			return (
 				this.RemovedCommentFlag &&
-				this.commentContent.moderation.remove &&
-				this.commentContent.moderation.remove.removedBy
+				this.moderation &&
+				this.moderation.remove &&
+				this.moderation.remove.removedBy
 			);
 		},
 		ApprovedComment() {
 			return (
 				this.ApprovedCommentFlag &&
-				this.commentContent.moderation.approve &&
-				this.commentContent.moderation.approve.approvedBy
+				this.moderation &&
+				this.moderation.approve &&
+				this.moderation.approve.approvedBy
 			);
 		},
 	},
@@ -325,9 +333,11 @@ export default {
 			return responseStatus;
 		},
 		saveComment() {
-			this.RequestSaveComment();
+			if (!this.saved) this.RequestSaveComment();
+			else this.RequestUnsaveComment();
 		},
 		async RequestSaveComment() {
+			this.saved = true;
 			let responseStatus;
 			try {
 				responseStatus = await this.$store.dispatch(
@@ -343,41 +353,104 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			return responseStatus;
+			// return responseStatus;
+			if (responseStatus != 200) {
+				this.saved = false;
+			}
 		},
-		async approveComment() {
+		async RequestUnsaveComment() {
+			let responseStatus;
+			this.saved = false;
 			try {
-				await this.$store.dispatch('userposts/approvePostOrComment', {
-					baseurl: this.$baseurl,
-					ApprovePostOrCommentData: {
-						id: this.commentContent.commentId,
-						type: 'comment',
-						username: this.$route.params.userName,
-					},
-				});
+				responseStatus = await this.$store.dispatch(
+					'userposts/unSavePostOrComment',
+					{
+						baseurl: this.$baseurl,
+						savePostOrCommentData: {
+							id: this.commentContent.commentId,
+							type: 'comment',
+						},
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+			// return responseStatus;
+			if (responseStatus != 200) {
+				this.saved = true;
+			}
+		},
+		async approveComment() {
+			this.moderation = this.moderation || {};
+			this.moderation.approve = this.moderation.approve || {};
+			this.moderation.approve.approvedBy = this.$route.params.userName;
+			this.moderation.approve.approvedDate = 'now';
+			let responseStatus;
+			if (this.moderation.remove) {
+				delete this.moderation.remove;
+			}
+			if (this.moderation.spam) {
+				delete this.moderation.spam;
+			}
+			try {
+				responseStatus = await this.$store.dispatch(
+					'userposts/approvePostOrComment',
+					{
+						baseurl: this.$baseurl,
+						ApprovePostOrCommentData: {
+							id: this.commentContent.commentId,
+							type: 'comment',
+							username: this.$route.params.userName,
+						},
+					}
+				);
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			if (responseStatus != 200) {
+				delete this.moderation.approve;
 			}
 		},
 		async removeComment() {
-			(this.RemovedComment = true), (this.ApprovedComment = false);
+			this.moderation = this.moderation || {};
+			this.moderation.remove = this.moderation.remove || {};
+			this.moderation.remove.removedBy = this.$route.params.userName;
+			this.moderation.remove.removedDate = 'now';
+			let responseStatus;
+			if (this.moderation.approve) {
+				delete this.moderation.approve;
+			}
 			console.log('removeComment');
 			try {
-				await this.$store.dispatch('userposts/removePostOrComment', {
-					baseurl: this.$baseurl,
-					removePostOrCommentData: {
-						id: this.commentContent.commentId,
-						type: 'comment',
-						username: this.$route.params.userName,
-					},
-				});
+				responseStatus = await this.$store.dispatch(
+					'userposts/removePostOrComment',
+					{
+						baseurl: this.$baseurl,
+						removePostOrCommentData: {
+							id: this.commentContent.commentId,
+							type: 'comment',
+							username: this.$route.params.userName,
+						},
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			if (responseStatus != 200) {
+				delete this.moderation.remove;
+			}
 		},
 		async spamComment() {
+			this.moderation = this.moderation || {};
+			this.moderation.spam = this.moderation.spam || {};
+			this.moderation.spam.spammedBy = this.$route.params.userName;
+			this.moderation.spam.spammedDate = 'now';
+			let responseStatus;
+			if (this.moderation.approve) {
+				delete this.moderation.approve;
+			}
 			try {
-				await this.$store.dispatch('userposts/markSpam', {
+				responseStatus = await this.$store.dispatch('userposts/markSpam', {
 					baseurl: this.$baseurl,
 					markSpamData: {
 						id: this.commentContent.commentId,
@@ -389,10 +462,17 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			if (responseStatus != 200) {
+				delete this.moderation.spam;
+			}
 		},
 		async lockUnLockComment() {
 			console.log('lock un lock clicked');
 			let key = 'lock';
+			if (this.moderation.lock) {
+				key = 'unlock';
+			}
+			this.moderation.lock = !this.moderation.lock;
 			// if (1) {
 			// 	key = 'lock';
 			// }
