@@ -23,7 +23,7 @@
 					:initial-title="$route.params.title"
 				></sortposts-bar>
 				<grow-community id="grow-community-comp"></grow-community>
-				<community-post id="pinned-post-comp"></community-post>
+				<!-- <community-post id="pinned-post-comp"></community-post> -->
 				<base-post
 					v-for="post in posts"
 					:key="post.id"
@@ -96,7 +96,7 @@ import CreatepostBar from '../../components/bars/CreatepostBar.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
-import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
+// import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 import BasePost from '../../components/BaseComponents/BasePost.vue';
@@ -110,7 +110,7 @@ export default {
 		SortpostsBar,
 		AboutCommunityBar,
 		GrowCommunity,
-		CommunityPost,
+		//CommunityPost,
 		ModeratorsBar,
 		BacktotopButton,
 		BasePost,
@@ -177,7 +177,6 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
-				console.log(this.subreddit.isFavorite);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {
