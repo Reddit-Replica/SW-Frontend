@@ -1,46 +1,99 @@
 <template>
-	<div class="people-nav">
-		<h4 class="people-word">People</h4>
-		<div>
-			<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
-				<div v-for="value in SearchedUsers" :key="value.username">
-					<base-people :value="value"></base-people>
+	<div>
+		<a class="people-status"
+			><div class="people-status-release">
+				<div class="img-release">
+					<div class="img-holder">
+						<div class="img-div">
+							<img
+								v-if="!value.avatar"
+								src="../../../img/default_inbox_avatar.png"
+								alt="img"
+								class="people-img"
+								:id="'user-avatar-' + value.id"
+								@click="gotouser(value.username)"
+							/>
+							<img
+								v-else
+								:src="$baseurl + '/' + value.avatar"
+								alt="img"
+								class="people-img"
+								:id="'user-avatar-' + value.id"
+								@click="gotouser(value.username)"
+							/>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div v-else>
-				<div class="no-res">No Results</div>
-			</div>
-		</div>
+				<div class="people-content">
+					<a class="people-content-release" :href="'/user/' + value.username">
+						<h6 class="people-name">u/{{ value.username }}&nbsp;</h6>
+						<p class="karma-number">{{ value.karma }} Karma&nbsp;</p>
+					</a>
+				</div>
+				<div class="follow">
+					<base-button
+						class="follow-button"
+						@click="toggle(value.username, !value.following)"
+						:button-text="!notFollowed ? 'Unfollow' : 'Follow'"
+					></base-button>
+				</div></div
+		></a>
 	</div>
 </template>
 
 <script>
-// import BaseButton from '../BaseComponents/BaseButton.vue';
-import BasePeople from './BasePeople.vue';
+import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
+	props: {
+		value: {
+			type: Object,
+			required: true,
+		},
+	},
 	data() {
 		return {
-			name: 'Salah',
-			karma: '124k',
 			notFollowed: true,
 		};
 	},
 	components: {
-		BasePeople,
+		BaseButton,
 	},
-	computed: {
-		SearchedUsers() {
-			console.log(this.$store.getters['search/Getusers']);
-			return this.$store.getters['search/Getusers'];
-		},
+	beforeMount() {
+		this.showuser();
 	},
 	methods: {
-		toggle() {},
+		showuser() {
+			this.notFollowed = !this.value.following;
+		},
+		async toggle(user, follow) {
+			this.notFollowed = !this.notFollowed;
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('search/follow', {
+						baseurl: this.$baseurl,
+						following: follow,
+						username: user,
+					});
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		},
+		gotoUser(name) {
+			this.$router.push('/user/' + name);
+		},
 	},
 };
 </script>
 
 <style scoped>
+div {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+}
 h4 h6 div {
 	margin: 0;
 	padding: 0;
@@ -60,21 +113,6 @@ p {
 	margin-block-end: 1em;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
-}
-.people-nav {
-	background: #fff;
-	border: thin solid var(--newCommunityTheme-postLine);
-	border-radius: 4px;
-	box-shadow: 0 2px 4px 0 rgb(0 0 0 / 6%);
-	margin-bottom: 16px;
-	max-width: 100%;
-}
-.people-word {
-	font-weight: 500;
-	font-size: 16px;
-	line-height: 20px;
-	color: rgb(39, 32, 32);
-	padding: 16px 16px 0;
 }
 .people-status {
 	display: flex;
@@ -153,10 +191,5 @@ p {
 	min-height: 32px;
 	min-width: 32px;
 	padding: 4px 16px;
-}
-.no-res {
-	color: #1c1c1c;
-	padding: 16px;
-	font-size: 16px;
 }
 </style>

@@ -14,7 +14,7 @@ export default {
 	 * @returns {void}
 	 */
 	async save(_, payload) {
-		const save = {
+		const body = {
 			id: payload.id,
 			type: payload.type,
 		};
@@ -22,12 +22,15 @@ export default {
 
 		const response = await fetch(baseurl + '/save', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(save),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(body),
 		});
 
 		const responseData = await response.json();
-
+		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -36,7 +39,7 @@ export default {
 		}
 	},
 	async unsave(_, payload) {
-		const unsave = {
+		const body = {
 			id: payload.id,
 			type: payload.type,
 		};
@@ -44,12 +47,15 @@ export default {
 
 		const response = await fetch(baseurl + '/unsave', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(unsave),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(body),
 		});
 
 		const responseData = await response.json();
-
+		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

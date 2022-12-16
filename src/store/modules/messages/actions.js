@@ -18,6 +18,8 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
+		console.log(localStorage.getItem('accessToken'));
 		if (response.status == 200) {
 			const messages = [];
 
@@ -30,6 +32,8 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
+			console.log('before', before);
+			console.log('after', after);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const message = {
 					id: responseData.children[i].id,
@@ -299,6 +303,8 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
+			console.log('before', before);
+			console.log('after', after);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const reply = {
 					id: responseData.children[i].id,

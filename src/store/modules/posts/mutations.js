@@ -75,6 +75,6 @@ export default {
 	},
 	setpostData(state, payload) {
 		console.log(payload);
-		state.postData = payload.postData;
+		state.postData = payload;
 	},
 };
