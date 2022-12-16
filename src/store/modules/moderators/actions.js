@@ -642,14 +642,14 @@ export default {
 			mediaQuery.concat('&after=' + afterMod);
 		}
 		if (sortSpam) {
-			mediaQuery.concat('&sort=' + sortSpam);
+			mediaQuery = mediaQuery + '&sort=' + sortSpam;
 		}
 		if (only) {
-			mediaQuery.concat('&only=' + only);
+			mediaQuery = mediaQuery + '&only=' + only;
 		}
 		const response = await fetch(
 			//put mediaquery ${mediaQuery}
-			baseurl + `/r/${payload.subredditName}/about/spam`,
+			baseurl + `/r/${payload.subredditName}/about/spam` + mediaQuery,
 			{
 				method: 'GET',
 				headers: {
