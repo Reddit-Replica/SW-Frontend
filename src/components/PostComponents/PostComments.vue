@@ -135,7 +135,10 @@
 									</div>
 									<div class="main">
 										<div class="content">
-											<post-content :post="postDetails"></post-content>
+											<post-content
+												:post="postDetails"
+												:blur="false"
+											></post-content>
 										</div>
 										<div class="post-services">
 											<ul
