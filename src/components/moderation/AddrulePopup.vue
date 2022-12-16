@@ -228,8 +228,6 @@
 								description == descriptionEdit &&
 								appliedType == appliesToEdit) ||
 							isNameTaken
-								? 'disabled'
-								: ''
 						"
 						:class="
 							(ruleName == ruleNameEdit &&
