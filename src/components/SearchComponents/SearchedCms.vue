@@ -40,6 +40,7 @@
 					<base-button
 						class="follow-button"
 						@click="toggle()"
+						:id="'user-button-' + value.subredditName"
 						:button-text="notFollowed ? 'Leave' : 'Join'"
 					></base-button>
 				</div>

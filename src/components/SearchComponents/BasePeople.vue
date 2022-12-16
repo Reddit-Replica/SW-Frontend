@@ -33,6 +33,7 @@
 				<div class="follow">
 					<base-button
 						class="follow-button"
+						:id="'user-button-' + value.username"
 						@click="toggle(value.username, !value.following)"
 						:button-text="!notFollowed ? 'Unfollow' : 'Follow'"
 					></base-button>
