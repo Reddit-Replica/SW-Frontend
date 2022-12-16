@@ -1,6 +1,14 @@
 <template>
-	<li id="'ntf-msg-'+index" class="ntf-msg-li" :class="{ 'not-read': !isRead }">
-		<router-link to="link" class="ntf-msg-routerlink">
+	<li
+		id="'ntf-msg-'+index"
+		class="ntf-msg-li"
+		:class="{ 'not-read': !notification.isRead }"
+	>
+		<a
+			:href="notification.link"
+			class="ntf-msg-routerlink"
+			@click="readNotification"
+		>
 			<span class="ntf-msg-1">
 				<img src="../../../img/default_inbox_avatar.png" alt="image" />
 				<span class="circle"
@@ -21,9 +29,9 @@
 			<span class="ntf-msg-2 text">
 				<div class="ntf-msg-2-1">
 					<span
-						><span class="text-title">{{ title }}</span>
+						><span class="text-title">{{ notification.title }}</span>
 						<span class="text-dot">.</span>
-						<span>{{ calcDuration(sendAt) }}</span>
+						<span>{{ calcDuration(notification.sendAt) }}</span>
 					</span>
 					<span class="dots-icon">
 						<svg
@@ -45,8 +53,12 @@
 					</span>
 				</div>
 				<div>
-					{{ content }}
-					<base-button class="reply-back" v-if="replyBack" link to="link">
+					<base-button
+						class="reply-back"
+						v-if="replyBack"
+						link
+						:to="notification.link"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -64,50 +76,19 @@
 					>
 				</div>
 			</span>
-		</router-link>
+		</a>
 	</li>
 </template>
 
 <script>
 export default {
+	emits: ['reload'],
 	props: {
 		index: {
 			type: Number,
 			default: 0,
 		},
-		id: {
-			type: String,
-			default: '',
-		},
-		title: {
-			type: String,
-			default: '',
-		},
-		link: {
-			type: String,
-			default: '',
-		},
-		sendAt: {
-			type: String,
-			default: '',
-		},
-		content: {
-			type: String,
-			default: '',
-		},
-		isRead: {
-			type: Boolean,
-			default: true,
-		},
-		smallIcon: {
-			type: String,
-			default: '',
-		},
-		senderID: {
-			type: String,
-			default: '',
-		},
-		data: {
+		notification: {
 			type: Object,
 			default: () => {},
 		},
@@ -122,24 +103,23 @@ export default {
 	},
 	computed: {
 		dotsButtonText() {
-			if (this.title.includes('replied')) {
+			if (this.notification.title.includes('replied')) {
 				return this.textNoUpdates;
 			} else {
 				return this.textHide;
 			}
 		},
 		toHide() {
-			return !this.title.includes('replied');
+			return !this.notification.title.includes('replied');
 		},
 		replyBack() {
-			return this.title.includes('replied to your comment');
+			return this.notification.title.includes('replied to your comment');
 		},
 	},
 
 	methods: {
 		toggleButton() {
 			this.buttonShown = !this.buttonShown;
-			this.calcDuration(this.sendAt);
 		},
 		calcDuration(date) {
 			let currDate = Date.parse(new Date());
@@ -205,9 +185,20 @@ export default {
 				await this.$store.dispatch('notifications/hideNotification', {
 					baseurl: this.$baseurl,
 					token: accessToken,
-					id: this.id,
+					notificationId: this.notification.id,
 				});
 			}
+			this.$emit('reload');
+		},
+
+		async readNotification() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/readNotification', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+				notificationId: this.notification.id,
+			});
+			this.$emit('reload');
 		},
 	},
 };

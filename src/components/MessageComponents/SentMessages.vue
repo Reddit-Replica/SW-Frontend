@@ -9,9 +9,17 @@
 					<span class="sender">
 						<span
 							><span>to&nbsp;</span>
-							<a href="" :id="'message-receiver-' + index">{{
-								message.receiverUsername
-							}}</a>
+							<a
+								v-if="message.isReceiverUser"
+								:href="'/user/' + message.receiverUsername"
+								:id="'message-receiver-' + index"
+								>/u/{{ message.receiverUsername }}</a
+							><a
+								v-else
+								:href="'/r/' + message.receiverUsername"
+								:id="'message-receiver-' + index"
+								>/r/{{ message.receiverUsername }}</a
+							>
 						</span></span
 					><span>&nbsp;sent&nbsp;</span
 					><time :id="'time-' + index"> {{ handleTime }}</time>

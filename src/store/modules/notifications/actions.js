@@ -22,8 +22,38 @@ export default {
 
 		const responseData = await response.json();
 
+		console.log(responseData['children']);
+
 		if (response.status == 200) {
 			context.commit('setNotifications', responseData['children']);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	async getSomeNotifications(context, payload) {
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/notifications?limit=10', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + payload.token,
+			},
+		});
+
+		const responseData = await response.json();
+
+		console.log(responseData['children']);
+
+		if (response.status == 200) {
+			context.commit('setSomeNotifications', responseData['children']);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -38,21 +68,49 @@ export default {
 	async hideNotification(context, payload) {
 		context.commit('setHiddenSuccessfully', false);
 		const baseurl = payload.baseurl;
-		const notification = { id: payload.id };
 
-		const response = await fetch(baseurl + '/hide-notification', {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + payload.token,
-			},
-			body: JSON.stringify(notification),
-		});
+		const response = await fetch(
+			baseurl + `/hide-notification/${payload.notificationId}`,
+			{
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
+		);
 
 		const responseData = await response.json();
 
 		if (response.status == 200) {
 			context.commit('setHiddenSuccessfully', true);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	async readNotification(context, payload) {
+		context.commit('setReadSuccessfully', false);
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(
+			baseurl + `/mark-notification-read/${payload.notificationId}`,
+			{
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
+		);
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('setReadSuccessfully', true);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;

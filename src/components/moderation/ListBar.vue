@@ -41,6 +41,7 @@
 				<base-button
 					class="reorder-button"
 					id="reorder-rules-button"
+					:disabled="rulesCount > 1"
 					:class="rulesCount > 1 ? '' : 'disable-button'"
 					@click="reorderRules()"
 					>Reorder rules</base-button
@@ -85,6 +86,7 @@
 				<base-button
 					class="reorder-button"
 					id="reorder-flairs-button"
+					:disabled="flairsCount > 1"
 					:class="flairsCount > 1 ? '' : 'disable-button'"
 					@click="reorderFlairs()"
 					>Reorder</base-button
@@ -93,6 +95,7 @@
 					class="base-button"
 					id="add-flair-button"
 					@click="showAddFlairFunction()"
+					:disabled="showAddFlair"
 					:class="showAddFlair ? 'disable-button ' : ''"
 					>Add flair</base-button
 				>
