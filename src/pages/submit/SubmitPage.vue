@@ -324,10 +324,24 @@ export default {
 						console.log('الحمد لله زى الفل');
 						this.success = true;
 						/////r/:subredditName/comments/:postId/:postName
-						setTimeout(
-							() => this.$router.replace('/user/' + this.userName),
-							1000
-						);
+						this.userData = this.$store.getters['posts/getpostData'];
+						if (this.inSubreddit) {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' + this.subreddit + '/comments/' + this.userData.id
+									),
+								1000
+							);
+						} else {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' + this.userName + '/comments/' + this.userData.id
+									),
+								1000
+							);
+						}
 					}
 				} catch (err) {
 					this.error = err;
