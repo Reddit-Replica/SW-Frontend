@@ -41,6 +41,7 @@
 <script>
 import BaseButton from '../../../BaseComponents/BaseButton.vue';
 export default {
+	emits: ['reload'],
 	components: {
 		BaseButton,
 	},
