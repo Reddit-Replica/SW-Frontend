@@ -25,7 +25,7 @@
 							v-if="message.isSenderUser"
 							:href="'/user/' + message.senderUsername"
 							:id="'message-sender-' + index"
-							>{{ message.senderUsername }}</a
+							>/u/{{ message.senderUsername }}</a
 						>
 						<a
 							v-else
@@ -41,7 +41,7 @@
 								v-if="message.isReceiverUser"
 								:href="'/user/' + message.receiverUsername"
 								:id="'message-receiver-' + index"
-								>{{ message.receiverUsername }}</a
+								>/u/{{ message.receiverUsername }}</a
 							><a
 								v-else
 								:href="'/r/' + message.receiverUsername"
@@ -187,6 +187,7 @@
 			:sender-username="message.senderUsername"
 			:receiver-username="message.receiverUsername"
 			:subject="message.subject"
+			:subreddit-name="subredditName"
 		></ReplyComponent>
 	</div>
 </template>
