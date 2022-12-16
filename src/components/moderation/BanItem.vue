@@ -333,14 +333,6 @@ button {
 	color: var(--color-white-1);
 	padding: 0.4rem 1.6rem;
 }
-.disabled {
-	cursor: not-allowed;
-	filter: grayscale(1);
-	border: none;
-	color: rgba(255, 255, 255, 0.5);
-	fill: rgba(255, 255, 255, 0.5);
-	background-color: var(--color-grey-light-5);
-}
 .no-messages {
 	margin-top: 2rem;
 	padding: 1rem;
