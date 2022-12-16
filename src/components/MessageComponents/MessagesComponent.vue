@@ -228,6 +228,7 @@ export default {
 		// ReplyComponent,
 		ChildMessage,
 	},
+	emits: ['doneSuccessfully'],
 	// @vuese
 	//details of message
 	props: {

@@ -200,6 +200,7 @@ export default {
 		Markdown,
 		ReplyComponent,
 	},
+	emits: ['doneSuccessfully'],
 	// @vuese
 	//details of message
 	props: {
