@@ -320,4 +320,73 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Action for joining a specific subreddit.
+	 * @action joinSubreddit
+	 * @param {Object} contains message if it is a private subreddit, subreddit id and base url.
+	 * @returns {void}
+	 */
+	async joinSubreddit(_, payload) {
+		const joinInfo = {
+			subredditId: payload.subredditId,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/join-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(joinInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200 || response.status == 304) {
+			return;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	/**
+	 * Action for leaving a specific subreddit.
+	 * @action leaveSubreddit
+	 * @param {Object} contains subreddit name and base url.
+	 * @returns {void}
+	 */
+	async leaveSubreddit(_, payload) {
+		const leaveInfo = {
+			subredditName: payload.subredditName,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/leave-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(leaveInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200 || response.status == 304) {
+			return;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
 };

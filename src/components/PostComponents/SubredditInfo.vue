@@ -1,6 +1,6 @@
 <template>
 	<div class="info">
-		<subreddit-card :subreddit="subreddit"></subreddit-card>
+		<subreddit-card :subreddit="subreddit" v-if="subreddit"></subreddit-card>
 		<div class="rules" v-if="rules.length != 0">
 			<subreddit-rules
 				:rules="subreddit.rules"
@@ -11,6 +11,7 @@
 			<subreddit-moderators :moderators="moderators" />
 		</div>
 	</div>
+	<!-- <button @click="click"></button> -->
 </template>
 <script>
 import SubredditCard from './SubredditCard.vue';
@@ -44,6 +45,9 @@ export default {
 		this.loadSubredditModerators();
 	},
 	methods: {
+		click() {
+			console.log(this.subreddit);
+		},
 		async loadSubredditInfo() {
 			try {
 				await this.$store.dispatch('community/getSubreddit', {
@@ -66,7 +70,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.subreddit = this.$store.getters['moderation/listOfModerators'];
+			this.moderators = this.$store.getters['moderation/listOfModerators'];
 		},
 		// @vuese
 		//load Rules list from the store

@@ -12,6 +12,7 @@
 		</div>
 		<ol class="topCommunitiesList">
 			<top-community
+				@reload="reloadAgain"
 				v-for="(community, index) in topCommunities"
 				:index="index"
 				:key="community.id"
@@ -55,6 +56,7 @@ import TopCommunity from '../TopCommunities/TopCommunity.vue';
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { TopCommunity, BaseButton },
+	emits: ['reloadComponent'],
 	props: {
 		//@vuese
 		//Top communities Title
@@ -93,6 +95,12 @@ export default {
 		//Set background image of top communities bar
 		style() {
 			return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
+		},
+	},
+	methods: {
+		reloadAgain() {
+			console.log('reloadComponent');
+			this.$emit('reloadComponent');
 		},
 	},
 };

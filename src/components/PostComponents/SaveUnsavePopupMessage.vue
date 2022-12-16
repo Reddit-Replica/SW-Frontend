@@ -8,7 +8,8 @@
 			/>
 		</div>
 		<div class="right">
-			<p>{{ type }}&nbsp;{{ state }}&nbsp;successfully</p>
+			<p v-if="type || state">{{ type }}&nbsp;{{ state }}&nbsp;successfully</p>
+			<p else><slot></slot></p>
 		</div>
 		<div class="undo">
 			<!-- <base-button @click="undo">Undo</base-button> -->
@@ -28,14 +29,14 @@ export default {
 		//type component being saved or unsaved
 		type: {
 			type: String,
-			required: true,
+			required: false,
 			default: '',
 		},
 		//@vuese
 		//the state of component save or unsave
 		state: {
 			type: String,
-			required: true,
+			required: false,
 			default: '',
 		},
 		//@vuese

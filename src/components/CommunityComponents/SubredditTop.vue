@@ -99,25 +99,33 @@ export default {
 		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			await this.$store.dispatch('community/joinSubreddit', {
-				message: this.message,
-				subredditId: this.subredditId,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/joinSubreddit', {
+					message: this.message,
+					subredditId: this.subredditId,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
 
-			this.$emit('reload');
+				this.$emit('reload');
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			await this.$store.dispatch('community/leaveSubreddit', {
-				subredditName: this.subredditName,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/leaveSubreddit', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
 
-			this.$emit('reload');
+				this.$emit('reload');
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 	},
 };

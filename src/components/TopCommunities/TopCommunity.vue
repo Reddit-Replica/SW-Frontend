@@ -1,7 +1,8 @@
 <template>
 	<li class="topCommunity">
-		<a
-			:href="'r/' + name"
+		<div
+			:to="'r/' + name"
+			@click.prevent="goToSubreddit(name)"
 			class="topCommunityLink"
 			:id="'top-community-link-' + index"
 		>
@@ -21,10 +22,21 @@
 						d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
 					/>
 				</svg>
-				<img class="topCommunityImage" :src="image" alt="community image" />
-				<a class="topCommunityName" href="link">{{ name }}</a>
+				<img
+					class="topCommunityImage"
+					:src="image"
+					alt="community image"
+					v-if="!noImage"
+				/>
+				<img
+					class="topCommunityImage"
+					src="../../../img/default_subreddit_image.png"
+					alt="community image"
+					v-else
+				/>
+				<a class="topCommunityName" href="link">r/{{ name }}</a>
 			</div>
-		</a>
+		</div>
 
 		<div class="joinBlock">
 			<!-- <base-button
@@ -104,6 +116,9 @@ export default {
 				return this.members;
 			}
 		},
+		noImage() {
+			return !this.image;
+		},
 	},
 	data() {
 		return {
@@ -124,7 +139,9 @@ export default {
 				token: accessToken,
 			});
 
+			console.log('reload');
 			this.$emit('reload');
+			console.log('reload2');
 		},
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
@@ -136,6 +153,9 @@ export default {
 			});
 
 			this.$emit('reload');
+		},
+		goToSubreddit(name) {
+			this.$router.replace(`/r/${name}`);
 		},
 	},
 };
