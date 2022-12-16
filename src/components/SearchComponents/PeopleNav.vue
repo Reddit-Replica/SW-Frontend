@@ -30,8 +30,8 @@ export default {
 	},
 	computed: {
 		SearchedUsers() {
-			console.log(this.$store.getters['search/Getusers']);
-			return this.$store.getters['search/Getusers'];
+			console.log(this.$store.getters['search/limitedUsers']);
+			return this.$store.getters['search/limitedUsers'];
 		},
 	},
 	methods: {

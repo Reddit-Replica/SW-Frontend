@@ -6,7 +6,9 @@ export default {
 	state() {
 		return {
 			subreddits: [],
+			limitedsubs: [],
 			users: [],
+			limitedusers: [],
 			posts: [],
 			comments: [],
 			SearchQuery: '',
