@@ -2,6 +2,7 @@
 	<div class="top-cards-1">
 		<div class="top-cards-2">
 			<top-communities
+				@reload-component="reloadPage"
 				class="top-cards-3"
 				:top-communities="firstCategoryCommunities"
 				top-communities-image="../../../img/banner-background_top.png"
@@ -9,6 +10,7 @@
 				id="top-comm-main-bar"
 			></top-communities>
 			<top-communities
+				@reload-component="reloadPage"
 				class="top-cards-4"
 				:top-communities="secondCategoryCommunities"
 				top-communities-image="../../../img/banner-background_top.png"
@@ -52,6 +54,9 @@ export default {
 			this.secondCategoryCommunities =
 				this.$store.getters['topCommunity/secondCommunities'];
 		},
+	},
+	reloadPage() {
+		this.getTwoCommunities();
 	},
 };
 </script>

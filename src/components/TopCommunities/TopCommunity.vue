@@ -1,7 +1,7 @@
 <template>
 	<li class="topCommunity">
-		<a
-			:href="'r/' + name"
+		<router-link
+			:to="'r/' + name"
 			class="topCommunityLink"
 			:id="'top-community-link-' + index"
 		>
@@ -35,7 +35,7 @@
 				/>
 				<a class="topCommunityName" href="link">{{ name }}</a>
 			</div>
-		</a>
+		</router-link>
 
 		<div class="joinBlock">
 			<!-- <base-button
@@ -138,7 +138,9 @@ export default {
 				token: accessToken,
 			});
 
+			console.log('reload');
 			this.$emit('reload');
+			console.log('reload2');
 		},
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
