@@ -2,47 +2,46 @@
 	<div>
 		<a class="user-a"
 			><div class="user-div">
-				<div class="user-details">
+				<div class="user-details" @click="gotosub(value.subredditName)">
 					<div class="user-img-div">
 						<div class="user-img-det"></div>
 						<div class="user-img">
 							<img
-								v-if="!value.avatar"
+								v-if="!value.picture"
 								src="../../../img/default_inbox_avatar.png"
 								alt="img"
 								class="image-user"
-								:id="'user-avatar' + value.id"
-								@click="gotouser(value.username)"
+								:id="'user-avatar-' + value.subredditName"
+								@click="gotosub(value.subredditName)"
 							/>
 							<img
 								v-else
-								:src="$baseurl + '/' + value.avatar"
+								:src="$baseurl + '/' + value.picture"
 								alt="img"
 								class="image-user"
-								:id="'user-avatar' + value.id"
-								@click="gotouser(value.username)"
+								:id="'user-avatar-' + value.subredditName"
+								@click="gotosub(value.subredditName)"
 							/>
 						</div>
 					</div>
 				</div>
-				<div class="people-content">
+				<a class="people-content pointer" @click="gotosub(value.subredditName)">
 					<div class="people-content_release">
-						<div class="name" @click="gotoUser(value.username)">
-							<h6 class="people-name">u/{{ value.username }}&nbsp;</h6>
-						</div>
+						<h6 class="people-name">r/{{ value.subredditName }}&nbsp;</h6>
+
 						<p class="karma-number">
 							<span class="point-span" role="presentation">&nbsp;•&nbsp;</span
-							>{{ value.karma }} Karma&nbsp;
+							>{{ value.numberOfMembers }} Members&nbsp;
 						</p>
 					</div>
-					<!-- <p class="p-details">{{ value.Pdetails }}&nbsp;</p> -->
-				</div>
+					<p class="p-details">{{ value.description }}&nbsp;</p>
+				</a>
 				<div class="follow">
 					<base-button
 						class="follow-button"
-						@click="toggle(value.username, !value.following)"
-						:id="'user-button-' + value.username"
-						:button-text="!notFollowed ? 'Unfollow' : 'Follow'"
+						@click="toggle()"
+						:id="'user-button-' + value.subredditName"
+						:button-text="notFollowed ? 'Leave' : 'Join'"
 					></base-button>
 				</div>
 			</div>
@@ -54,7 +53,7 @@
 				:type="message.type"
 				:state="message.state"
 				:typeid="message.postid"
-				@undo-action="toggle(value.username, !value.following)"
+				@undo-action="toggle()"
 			></FollowJoin>
 		</div>
 	</div>
@@ -81,9 +80,9 @@ export default {
 		FollowJoin,
 	},
 	computed: {
-		SearchedUsers() {
-			console.log(this.$store.getters['search/Getusers']);
-			return this.$store.getters['search/Getusers'];
+		SearchedCms() {
+			// console.log(this.$store.getters['search/Getsubreddits']);
+			return this.$store.getters['search/Getsubreddits'];
 		},
 	},
 	beforeMount() {
@@ -91,45 +90,54 @@ export default {
 	},
 	methods: {
 		showuser() {
-			this.notFollowed = !this.value.following;
+			this.notFollowed = !this.value.joined;
+			// console.log('Goes');
 		},
-		async toggle(user, follow) {
+		async toggle() {
 			if (localStorage.getItem('accessToken')) {
+				// console.log('Goes');
 				this.notFollowed = !this.notFollowed;
 				if (this.notFollowed) {
-					this.savedUnsavedfollow.push({
-						id: this.savedUnsavedfollow.length,
-						postid: this.value.id,
-						type: 'follow',
-						state: 'r/' + this.value.username,
-					});
-					setTimeout(() => {
-						this.savedUnsavedPosts.shift();
-					}, 10000);
+					try {
+						await this.$store.dispatch('search/joinSubreddit', {
+							baseurl: this.$baseurl,
+							subredditId: this.value.dataId,
+						});
+						this.savedUnsavedfollow.push({
+							id: this.savedUnsavedfollow.length,
+							postid: this.value.subredditId,
+							type: 'Joined',
+							state: 'r/' + this.value.subredditName,
+						});
+						setTimeout(() => {
+							this.savedUnsavedPosts.shift();
+						}, 10000);
+					} catch (error) {
+						console.log(error);
+					}
 				} else {
-					this.savedUnsavedfollow.push({
-						id: this.savedUnsavedfollow.length,
-						postid: this.value.id,
-						type: 'unfollow',
-						state: 'r/' + this.value.username,
-					});
-					setTimeout(() => {
-						this.savedUnsavedfollow.shift();
-					}, 10000);
-				}
-				try {
-					await this.$store.dispatch('search/follow', {
-						baseurl: this.$baseurl,
-						following: follow,
-						username: user,
-					});
-				} catch (error) {
-					console.log(error);
+					try {
+						await this.$store.dispatch('search/leaveSubreddit', {
+							baseurl: this.$baseurl,
+							subredditName: this.value.subredditName,
+						});
+						this.savedUnsavedfollow.push({
+							id: this.savedUnsavedfollow.length,
+							postid: this.value.subredditId,
+							type: 'Left',
+							state: 'r/' + this.value.subredditName,
+						});
+						setTimeout(() => {
+							this.savedUnsavedfollow.shift();
+						}, 10000);
+					} catch (error) {
+						console.log(error);
+					}
 				}
 			}
 		},
-		gotoUser(name) {
-			this.$router.push('/user/' + name);
+		gotosub(subredditName) {
+			this.$router.push('/r/' + subredditName);
 		},
 	},
 };
@@ -230,6 +238,6 @@ a {
 .positioning {
 	position: fixed;
 	bottom: 0;
-	right: 500px;
+	right: 400px;
 }
 </style>

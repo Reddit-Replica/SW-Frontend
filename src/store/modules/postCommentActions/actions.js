@@ -13,7 +13,7 @@ export default {
 	 * @param {Object} contains An object parameter has baseurl, post/comment id, type and direction with indicate whether it is up/dow vote .
 	 * @returns {void}
 	 */
-	async save(_, payload) {
+	async save(context, payload) {
 		const body = {
 			id: payload.id,
 			type: payload.type,
@@ -28,9 +28,8 @@ export default {
 			},
 			body: JSON.stringify(body),
 		});
-
 		const responseData = await response.json();
-		console.log(responseData);
+		context.commit('setAction', responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -38,7 +37,7 @@ export default {
 			throw error;
 		}
 	},
-	async unsave(_, payload) {
+	async unsave(context, payload) {
 		const body = {
 			id: payload.id,
 			type: payload.type,
@@ -55,7 +54,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		context.commit('setAction', responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -139,5 +138,126 @@ export default {
 			throw error;
 		}
 		context.commit('setCommentedUsers', responseData);
+	},
+	async followPost(context, payload) {
+		const postInfo = {
+			follow: payload.follow,
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/follow-post', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async followComment(context, payload) {
+		const postInfo = {
+			commentId: payload.commentId,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/follow-comment', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async unfollowComment(context, payload) {
+		const postInfo = {
+			commentId: payload.commentId,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/unfollow-comment', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async hide(context, payload) {
+		const postInfo = {
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/hide', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
+	async unhide(context, payload) {
+		const postInfo = {
+			id: payload.id,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/unhide', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+
+		const responseData = await response.json();
+		context.commit('setAction', responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
 	},
 };
