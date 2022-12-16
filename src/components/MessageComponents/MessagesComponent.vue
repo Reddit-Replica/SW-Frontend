@@ -6,7 +6,15 @@
 					:href="'/user/' + message.subjectTitle"
 					:id="'message-sender-' + index"
 					class="sender-box"
+					v-if="message.isUser"
 					>/u/{{ message.subjectTitle }}</a
+				>
+				<a
+					:href="'/r/' + message.subjectTitle"
+					:id="'message-sender-' + index"
+					class="sender-box"
+					v-else
+					>/r/{{ message.subjectTitle }}</a
 				>
 				<!-- <a
 					href=""
@@ -15,7 +23,15 @@
 					v-else
 					>{{ message.receiverUsername }}</a
 				> -->
-				<span>{{ message.subjectContent }}</span>
+
+				<a
+					:href="
+						'/r/' + message.subredditName + '/about/accept-moderator-invite'
+					"
+					v-if="isInvitation"
+					>link: {{ message.subjectContent }}:</a
+				>
+				<span v-else>{{ message.subjectContent }}</span>
 			</p>
 			<p class="expand-p">
 				<span
@@ -200,6 +216,7 @@
 			:index="index"
 			@hide-reply-box="replyFunction('hide')"
 			:expandd="expandAll"
+			:is-invitation="isInvitation"
 		></ReplyComponent>
 	</div>
 </template>
@@ -261,6 +278,17 @@ export default {
 		// @type string
 		getUserName() {
 			return this.$store.getters.getUserName;
+		},
+
+		// @vuese
+		//if it's invitaion or not
+		// @arg no argument
+		isInvitation() {
+			if (this.message.subjectContent.includes('invitation to moderate')) {
+				return true;
+			} else {
+				return false;
+			}
 		},
 		// @vuese
 		//check if user is reciever or sender

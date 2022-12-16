@@ -7,31 +7,55 @@
 			<span v-if="getUserName == childMessage.receiverUsername">
 				<span>from&nbsp;</span>
 				<span class="sender"
+					><a
+						v-if="childMessage.isSenderUser"
+						:href="'/user/' + childMessage.senderUsername"
+						:id="'message-sender-2-' + index"
+						>/u/{{ childMessage.senderUsername }}</a
+					>
+					<a
+						v-else
+						:href="'/r/' + childMessage.senderUsername"
+						:id="'message-sender-2-' + index"
+						>/r/{{ childMessage.senderUsername }}</a
+					>
+				</span>
+				<!-- <span class="sender"
 					><a href="" :id="'message-sender-2-' + index">{{
 						childMessage.senderUsername
 					}}</a>
-				</span>
+				</span> -->
 			</span>
 			<span v-else>
 				<span>to&nbsp;</span>
 				<span class="reciever"
-					><a href="" :id="'message-reciever-2-' + index">{{
-						childMessage.receiverUsername
-					}}</a>
+					><a
+						v-if="childMessage.isReceiverUser"
+						:href="'/user/' + childMessage.receiverUsername"
+						:id="'message-reciever-2-' + index"
+						>/u/{{ childMessage.receiverUsername }}</a
+					>
+					<a
+						v-else
+						:href="'/r/' + childMessage.receiverUsername"
+						:id="'message-reciever-2-' + index"
+						>/r/{{ childMessage.receiverUsername }}</a
+					>
 				</span>
 			</span>
-			&nbsp;sent&nbsp;<time :id="'time-' + index">
-				{{ handleTime[index1] }}</time
-			>
+			&nbsp;sent&nbsp;<time :id="'time-' + index"> {{ handleTime }}</time>
 		</p>
 		<div v-if="expandAll">
 			<!-- <p class="md">{{ message.text }}</p> -->
 			<Markdown class="md" :source="childMessage.text" />
-			<ul class="flat-list ul-messages">
+			<ul
+				class="flat-list ul-messages"
+				v-if="getUserName == childMessage.receiverUsername && !isInvitation"
+			>
 				<!-- <li :id="'permalink-' + index">
 							<a href="" :id="'permalink-link-' + index">Permalink</a>
 						</li> -->
-				<li v-if="getUserName == childMessage.receiverUsername">
+				<li>
 					<form action="#">
 						<input
 							type="hidden"
@@ -101,7 +125,7 @@
 					</div>
 					<div v-if="spammed">spammed</div>
 				</li>
-				<li v-if="getUserName == childMessage.receiverUsername">
+				<li>
 					<span
 						class="sure-block"
 						v-if="blockUser"
@@ -129,17 +153,10 @@
 						>Block User</span
 					>
 				</li>
-				<li
-					v-if="getUserName == childMessage.receiverUsername && isRead"
-					@click="unreadAction()"
-					:id="'unread-' + index"
-				>
+				<li v-if="isRead" @click="unreadAction()" :id="'unread-' + index">
 					<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
 				</li>
-				<li
-					v-if="getUserName == childMessage.receiverUsername"
-					:id="'reply-box-' + index"
-				>
+				<li :id="'reply-box-' + index">
 					<span
 						class="link"
 						:id="'reply-' + index"
@@ -174,11 +191,14 @@ export default {
 			type: Object,
 			required: true,
 			default: () => ({
-				isReceiverUser: '',
-				isSenderUser: '',
+				msgID: '',
+				senderUsername: '',
+				text: '',
 				receiverUsername: '',
 				sendAt: '',
-				senderUsername: '',
+				subredditName: '',
+				isSenderUser: '',
+				isReceiverUser: '',
 			}),
 		},
 		// @vuese
@@ -187,6 +207,13 @@ export default {
 			type: Number,
 			required: true,
 			default: 0,
+		},
+		// @vuese
+		//if it is an invitation or not
+		isInvitation: {
+			type: Boolean,
+			required: true,
+			default: false,
 		},
 	},
 	computed: {
@@ -208,7 +235,7 @@ export default {
 			isRead: false,
 			errorResponse: null,
 			showReplyBox: false,
-			handleTime: [],
+			handleTime: '',
 		};
 	},
 	beforeMount() {
@@ -221,26 +248,22 @@ export default {
 		calculateTime() {
 			var currentDate = new Date();
 			var returnValue = '';
-			for (let i = 0; i < this.childMessage.length; i++) {
-				var myTime = new Date(this.childMessage[i].sendAt);
-				if (currentDate.getFullYear() != myTime.getFullYear()) {
-					returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
-				} else if (currentDate.getMonth() != myTime.getMonth()) {
-					returnValue =
-						currentDate.getMonth() - myTime.getMonth() + ' Month ago';
-				} else if (currentDate.getDate() != myTime.getDate()) {
-					returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
-				} else if (currentDate.getHours() != myTime.getHours()) {
-					returnValue =
-						currentDate.getHours() - myTime.getHours() + ' Hours ago';
-				} else if (currentDate.getMinutes() != myTime.getMinutes()) {
-					returnValue =
-						currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
-				} else {
-					returnValue = 'Just now';
-				}
-				this.handleTime[i] = returnValue;
+			var myTime = new Date(this.childMessage.sendAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
 			}
+			this.handleTime = returnValue;
 		},
 		async deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
