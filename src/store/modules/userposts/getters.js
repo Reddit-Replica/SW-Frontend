@@ -20,4 +20,14 @@ export default {
 			insightsData: state.insightsData,
 		};
 	},
+	getUserOverviewData(state) {
+		return {
+			overviewData: state.overviewData,
+		};
+	},
+	getUserSavedData(state) {
+		return {
+			savedData: state.overviewData,
+		};
+	},
 };

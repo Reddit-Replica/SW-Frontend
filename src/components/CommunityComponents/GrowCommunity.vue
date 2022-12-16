@@ -1,5 +1,9 @@
 <template>
-	<div class="grow-box" id="grow-comm">
+	<div
+		class="grow-box"
+		id="grow-comm"
+		v-if="shownFirst || shownThird || shownSecond || shownForth"
+	>
 		<div class="grow-header" @click="toggleGrowBody">
 			<span>Grow your community</span>
 			<svg
@@ -67,7 +71,7 @@
 				title="Share your community"
 				content="Spread the word about your community by sharing it on different social
 				platforms."
-				link="/submit"
+				link="/help"
 				button="Start Sharing"
 				@exit="hideSecond"
 			>
@@ -93,7 +97,7 @@
 				title="Crosspost your best posts"
 				content="Build your community and attract more visitors by crossposting posts to
 				other communities."
-				link="/submit"
+				link="/help"
 				button="Learn More"
 				@exit="hideThird"
 			>
@@ -117,13 +121,14 @@
 
 			<grow-component
 				:index="3"
-				:is-shown="!shownFirst"
+				:is-shown="shownForth && (!shownFirst || !shownSecond || !shownThird)"
 				:color="green"
 				title="Recruit more members"
 				content="Learn how to use invitations to bring more members and moderators to
 				your community."
-				link="/submit"
+				link="/help"
 				button="Learn More"
+				@exit="hideForth"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -161,6 +166,7 @@ export default {
 			shownFirst: true,
 			shownSecond: true,
 			shownThird: true,
+			shownForth: true,
 		};
 	},
 	methods: {
@@ -187,6 +193,12 @@ export default {
 		//@arg no argument
 		hideThird() {
 			this.shownThird = !this.shownThird;
+		},
+		//@vuese
+		//Show/Hide third grow your community option
+		//@arg no argument
+		hideForth() {
+			this.shownForth = !this.shownForth;
 		},
 	},
 };
