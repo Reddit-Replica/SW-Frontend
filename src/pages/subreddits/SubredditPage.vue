@@ -13,10 +13,6 @@
 		<div class="subreddit-page">
 			<div class="subreddit-page-left">
 				<createpost-bar id="create-post-bar-subreddit"></createpost-bar>
-				<!-- <sort-bar-subreddit
-					:subreddit-name="subredditName"
-					id="sort-post-bar-subreddit"
-				></sort-bar-subreddit> -->
 				<sortposts-bar
 					@title="changeRoute"
 					@time="changeRouteQueryParam"
@@ -24,12 +20,14 @@
 				></sortposts-bar>
 				<grow-community id="grow-community-comp"></grow-community>
 				<!-- <community-post id="pinned-post-comp"></community-post> -->
-				<base-post
-					v-for="post in posts"
-					:key="post.id"
-					:id="post.id"
-					:post="post.data"
-				></base-post>
+				<overview-post
+					v-for="(post, index) in posts"
+					:key="index"
+					:post-data="{
+						data: post.data,
+						id: post.id,
+					}"
+				></overview-post>
 			</div>
 			<div class="subreddit-page-right">
 				<about-community-bar
@@ -92,29 +90,25 @@
 <script>
 import SubredditTop from '../../components/CommunityComponents/SubredditTop.vue';
 import CreatepostBar from '../../components/bars/CreatepostBar.vue';
-//import SortBarSubreddit from '../../components/bars/SortBarSubreddit.vue';
 import SortpostsBar from '../../components/bars/SortpostsBar.vue';
 import AboutCommunityBar from '../../components/CommunityComponents/AboutCommunityBar.vue';
 import GrowCommunity from '../../components/CommunityComponents/GrowCommunity.vue';
-// import CommunityPost from '../../components/CommunityComponents/CommunityPost.vue';
 import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
-import BasePost from '../../components/BaseComponents/BasePost.vue';
 import SubredditRules from '../../components/PostComponents/SubredditRules.vue';
+import OverviewPost from '../../components/UserComponents/BaseUserComponents/OverviewPost.vue';
 
 export default {
 	components: {
 		SubredditTop,
 		CreatepostBar,
-		//SortBarSubreddit,
 		SortpostsBar,
 		AboutCommunityBar,
 		GrowCommunity,
-		//CommunityPost,
 		ModeratorsBar,
 		BacktotopButton,
-		BasePost,
 		SubredditRules,
+		OverviewPost,
 	},
 	props: {
 		subredditName: {
