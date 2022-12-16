@@ -81,12 +81,6 @@ export default {
 			type: String,
 			default: '',
 		},
-		//@vuese
-		//Route to community page in top communities list
-		link: {
-			type: String,
-			default: '',
-		},
 		members: {
 			type: Number,
 			default: 1,
