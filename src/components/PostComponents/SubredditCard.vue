@@ -32,14 +32,14 @@
 			</div>
 			<base-button
 				class="join-button pink-button"
-				@click="toogleJoin"
+				@click="joinSubreddit"
 				v-if="!isJoined"
 				id="join-button"
 				>Join</base-button
 			>
 			<base-button
 				class="join-button white-button"
-				@click="toogleJoin"
+				@click="leaveSubreddit"
 				@mouseover="hoverJoin('Leave')"
 				@mouseleave="hoverJoin('Joined')"
 				v-if="isJoined"
@@ -48,7 +48,6 @@
 			>
 		</div>
 	</div>
-	<!-- <button @click="click"></button> -->
 </template>
 <script>
 export default {
@@ -60,11 +59,35 @@ export default {
 	},
 	data() {
 		return {
-			isJoined: false,
+			isJoined: this.subreddit.isMember,
 			hoverButtonText: 'Join',
 		};
 	},
 	methods: {
+		async joinSubreddit() {
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/joinSubreddit', {
+					subredditId: this.subreddit.subredditId,
+					baseurl: this.$baseurl,
+				});
+
+				this.isJoined = true;
+			} else {
+				this.$router.replace('/login');
+			}
+		},
+		async leaveSubreddit() {
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/leaveSubreddit', {
+					subredditName: this.subreddit.title,
+					baseurl: this.$baseurl,
+				});
+
+				this.isJoined = false;
+			} else {
+				this.$router.replace('/login');
+			}
+		},
 		click() {
 			console.log(this.subreddit);
 		},
