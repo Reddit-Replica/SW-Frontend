@@ -1,7 +1,7 @@
 <template>
-	<div class="topCommunities">
-		<div :style="style" class="topCommunitiesTitleBlock">
-			<h2 class="topCommunitiesTitle">
+	<div class="topCommunities" id="top-comm-1">
+		<div :style="style" class="topCommunitiesTitleBlock" id="top-comm-2">
+			<h2 class="topCommunitiesTitle" id="top-comm-3">
 				<router-link
 					:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
 					class="topCommunitiesLink"
@@ -10,7 +10,7 @@
 				>
 			</h2>
 		</div>
-		<ol class="topCommunitiesList">
+		<ol class="topCommunitiesList" id="top-comm-5">
 			<top-community
 				@reload="reloadAgain"
 				v-for="(community, index) in topCommunities"
@@ -24,7 +24,7 @@
 			>
 			</top-community>
 		</ol>
-		<div class="viewAllBlock">
+		<div class="viewAllBlock" id="top-comm-6">
 			<base-button
 				link
 				:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
