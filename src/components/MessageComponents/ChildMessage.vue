@@ -1,5 +1,10 @@
 <template>
-	<div :class="!isRead ? 'box-unread' : ''">
+	<div
+		:class="[
+			!isRead ? 'box-unread' : '',
+			disappear == true ? 'hide-message' : '',
+		]"
+	>
 		<p class="md-details">
 			<span class="sign" :id="'sign-' + index" @click="expand('')"
 				>[<span v-if="!expandAll">+</span><span v-else>-</span>]</span
@@ -307,7 +312,7 @@ export default {
 			if (action == 'yes') {
 				try {
 					this.$store.dispatch('messages/deleteMessage', {
-						id: this.childMessage.id,
+						id: this.childMessage.msgID,
 						type: 'message',
 						baseurl: this.$baseurl,
 					});
@@ -355,7 +360,7 @@ export default {
 			if (action == 'yes') {
 				try {
 					this.$store.dispatch('messages/spamMessage', {
-						id: this.childMessage.id,
+						id: this.childMessage.msgID,
 						type: 'message',
 						reason: '',
 						baseurl: this.$baseurl,
@@ -455,5 +460,8 @@ a:hover,
 	color: var(--color-blue);
 	font-size: 1.1rem;
 	font-weight: bold;
+}
+.hide-message {
+	display: none;
 }
 </style>
