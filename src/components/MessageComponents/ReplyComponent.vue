@@ -142,7 +142,7 @@ export default {
 			text: '',
 		};
 	},
-	emits: ['hideReplyBox'],
+	emits: ['hideReplyBox', 'doneSuccessfully'],
 	props: {
 		// @vuese
 		//show reply box prop

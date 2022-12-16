@@ -7,6 +7,7 @@
 
 <script>
 export default {
+	emits: ['checked'],
 	props: {
 		buttonText: {
 			type: String,
