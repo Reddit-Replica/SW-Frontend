@@ -384,10 +384,39 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
-						setTimeout(
-							() => this.$router.replace('/user/' + this.userName),
-							1000
-						);
+						this.postData = await this.$store.getters['posts/getpostData'];
+						console.log(this.postData);
+						let str = this.postData.split(':')[1];
+						str = str.slice(1, str.length - 2);
+						console.log(str);
+
+						if (this.inSubreddit) {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.subreddit +
+											'/comments/' +
+											str +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						} else {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.userName +
+											'/comments/' +
+											str +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						}
 					}
 				} catch (err) {
 					this.error = err;
@@ -418,10 +447,35 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
-						setTimeout(
-							() => this.$router.replace('/user/' + this.userName),
-							1000
-						);
+						this.postData = await this.$store.getters['posts/getpostData'];
+						console.log(this.postData);
+						if (this.inSubreddit) {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.subreddit +
+											'/comments/' +
+											this.postData.id +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						} else {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.userName +
+											'/comments/' +
+											this.postData.id +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						}
 					}
 				} catch (err) {
 					this.error = err;
@@ -454,10 +508,44 @@ export default {
 						console.log(response);
 						console.log('الحمد لله زى الفل');
 						this.success = true;
-						setTimeout(
-							() => this.$router.replace('/user/' + this.userName),
-							1000
-						);
+						this.postData = await this.$store.getters['posts/getpostData'];
+						//const { id } = this.postData;
+						console.log('id//////');
+						console.log(this.postData);
+						//console.log(this.postData.id);
+						console.log(this.postData.split(':')[1]);
+						let str = this.postData.split(':')[1];
+						str = str.slice(1, str.length - 2);
+						console.log(str);
+
+						console.log(this.postData.id);
+						if (this.inSubreddit) {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.subreddit +
+											'/comments/' +
+											str +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						} else {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.userName +
+											'/comments/' +
+											str +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						}
 					}
 				} catch (err) {
 					this.error = err;
