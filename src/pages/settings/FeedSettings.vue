@@ -17,6 +17,8 @@
 					<switch-button
 						id="button-one"
 						@checked="getadultContent"
+						v-if="create"
+						:val="adultContent"
 					></switch-button>
 				</div>
 			</div>
@@ -74,6 +76,8 @@
 					<switch-button
 						id="button-five"
 						@checked="getautoplayMedia"
+						:val="autoplayMedia"
+						v-if="create"
 					></switch-button>
 				</div>
 			</div>
@@ -237,6 +241,13 @@
 import SwitchButton from '../../components/BaseComponents/SwitchButton.vue';
 // import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.adultContent);
+		console.log(this.autoplayMedia);
+		this.create = true;
+	},
 	components: {
 		SwitchButton,
 		// SubMenu,
@@ -249,6 +260,7 @@ export default {
 			// ShowSecitemChoice: false,
 			adultContent: false,
 			autoplayMedia: false,
+			create: false,
 		};
 	},
 	methods: {
@@ -302,6 +314,31 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
+		},
+		async getSettings() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchAccountSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters['setting/getAccountSettings'];
+			console.log(this.setting);
+			this.adultContent = this.setting.adultContent;
+			this.autoplayMedia = this.setting.autoplayMedia;
+			console.log(this.adultContent);
+			console.log(this.autoplayMedia);
 		},
 		// itemsMenuOneFunction() {
 		// 	this.ShowFirstitemChoice = !this.ShowFirstitemChoice;

@@ -71,6 +71,8 @@
 						<switch-button
 							id="btn9"
 							@checked="getnewFollowerEmail"
+							:val="newFollowerEmail"
+							v-if="create"
 						></switch-button>
 					</div>
 				</div>
@@ -106,6 +108,8 @@
 						<switch-button
 							id="btn13"
 							@checked="getunsubscribeFromEmails"
+							:val="unsubscribeFromEmails"
+							v-if="create"
 						></switch-button>
 					</div>
 				</div>
@@ -116,8 +120,16 @@
 
 <script>
 export default {
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.newFollowerEmail);
+		console.log(this.unsubscribeFromEmails);
+		this.create = true;
+	},
 	data() {
 		return {
+			create: false,
 			newFollowerEmail: false,
 			unsubscribeFromEmails: false,
 		};
@@ -174,6 +186,31 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
+		},
+		async getSettings() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchAccountSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters['setting/getAccountSettings'];
+			console.log(this.setting);
+			this.newFollowerEmail = this.setting.newFollowerEmail;
+			this.unsubscribeFromEmails = this.setting.unsubscribeFromEmails;
+			console.log(this.newFollowerEmail);
+			console.log(this.unsubscribeFromEmails);
 		},
 	},
 };
