@@ -295,4 +295,29 @@ export default {
 			throw error;
 		}
 	},
+	async follow(context, payload) {
+		const baseurl = payload.baseurl;
+		const userInfo = {
+			username: payload.username,
+			follow: payload.following,
+		};
+		const response = await fetch(baseurl + '/follow-user', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(userInfo),
+		});
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			console.log('error in follow');
+			console.log(responseData);
+			console.log(localStorage.getItem('accessToken'));
+			throw error;
+		}
+	},
 };

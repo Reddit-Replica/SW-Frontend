@@ -783,7 +783,7 @@ export default {
 
 				await this.$store.dispatch('logout_handle');
 
-				//location.reload();
+				location.reload();
 			} catch (error) {
 				console.log('error');
 				// this.error = err;
