@@ -214,22 +214,17 @@
 			</div>
 		</li>
 		{{ expandAll }}
-		<ReplyComponent
-			:show-reply-box="showReplyBox"
-			:index="index"
-			@hide-reply-box="replyFunction('hide')"
-		></ReplyComponent>
 	</div>
 </template>
 
 <script>
 // import Markdown from 'vue3-markdown-it';
-import ReplyComponent from './ReplyComponent.vue';
+// import ReplyComponent from './ReplyComponent.vue';
 import ChildMessage from './ChildMessage.vue';
 export default {
 	components: {
 		// Markdown,
-		ReplyComponent,
+		// ReplyComponent,
 		ChildMessage,
 	},
 	// @vuese
