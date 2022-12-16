@@ -49,6 +49,10 @@
 			</div>
 
 			<!--  -->
+			<sociallinks-block
+				:social-data="userData.socialLinks"
+				v-if="userData"
+			></sociallinks-block>
 
 			<h3 class="h3-main-title">IMAGES</h3>
 
@@ -203,6 +207,8 @@
 						<switch-button
 							@checked="getNsfw"
 							id="nsfw-profile-settings"
+							v-if="create"
+							:val="nsfw"
 						></switch-button>
 						<base-dialog
 							:show="nsfwClicked"
@@ -255,6 +261,8 @@
 						<switch-button
 							id="allow-profile-settings"
 							@checked="getAllowfollow"
+							v-if="create"
+							:val="allowToFollowYou"
 						></switch-button>
 					</div>
 				</div>
@@ -308,16 +316,49 @@
 				</p>
 			</div> -->
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in savedUnsavedPosts"
+				:key="message.id"
+				:type="message.type"
+				:state="message.state"
+				:typeid="message.postid"
+				@undo-action="undoSaveUnsave"
+			></SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 
 <script>
 // import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
 // import SocialLink from './SocialLink.vue';
+import SociallinksBlock from '../../components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksBlock.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
+	// async created() {
+	// 	this.userData = await this.$store.getters['user/getUserData'];
+	// 	console.log(this.userData);
+	async created() {
+		await this.getSettings();
+		console.log('after creation');
+		console.log(this.displayName);
+		console.log(this.about);
+		console.log(this.nsfw);
+		console.log(this.allowToFollowYou);
+
+		this.create = true;
+	},
+	computed: {
+		user() {
+			return this.$store.getters['user/getUserData'];
+		},
+	},
+	// },
 	components: {
 		// BaseDialog,
 		// SocialLink,
+		SociallinksBlock,
+		SaveUnsavePopupMessage,
 	},
 	props: {},
 	data() {
@@ -325,9 +366,17 @@ export default {
 			displayName: '',
 			about: '',
 			// havePassword: false,
-			nsfw: false,
-			allowToFollowYou: false,
+			nsfw: null,
+			allowToFollowYou: null,
+			userData: null,
+			create: false,
+			savedUnsavedPosts: [],
 		};
+	},
+	watch: {
+		user(val) {
+			this.userData = val;
+		},
 	},
 	methods: {
 		//@vuese
@@ -353,6 +402,7 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				console.log(this.err);
@@ -372,6 +422,7 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				console.log(this.err);
@@ -382,7 +433,7 @@ export default {
 			console.log('this.nsfw');
 			console.log(this.nsfw);
 			const actionPayload = {
-				about: this.about,
+				nsfw: this.nsfw,
 				baseurl: this.$baseurl,
 			};
 			try {
@@ -394,6 +445,7 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				console.log(this.err);
@@ -417,10 +469,73 @@ export default {
 				if (response == 200) {
 					console.log(response);
 					console.log('الحمد لله زى الفل');
+					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
 				console.log(this.err);
 			}
+		},
+
+		async getSettings() {
+			const actionPayload = {
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'setting/fetchAccountSettings',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.setting = await this.$store.getters['setting/getAccountSettings'];
+			console.log(this.setting);
+			this.displayName = this.setting.displayName;
+			this.about = this.setting.about;
+			this.nsfw = this.setting.nsfw;
+			this.allowToFollowYou = this.setting.allowToFollowYou;
+			console.log(this.displayName);
+			console.log(this.about);
+			console.log(this.nsfw);
+			console.log(this.allowToFollowYou);
+		},
+		////////////////////////////////
+		doneSuccessfully(title) {
+			this.savePost(title);
+		},
+		// @vuese
+		// Used to show handle save action popup
+		// @arg the argument is the title used in show popup
+		savePost(title) {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'settings',
+				state: title,
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
+		},
+		// @vuese
+		// Used to show handle unsave action popup
+		// @arg no argument
+		unsavePost() {
+			this.savedUnsavedPosts.push({
+				id: this.savedUnsavedPosts.length,
+				postid: '1',
+				type: 'post',
+				state: 'unsaved',
+			});
+			setTimeout(() => {
+				this.savedUnsavedPosts.shift();
+			}, 10000);
 		},
 	},
 };
@@ -628,5 +743,15 @@ a {
 	flex: 1 1 100%;
 	width: 100%;
 	text-align: center;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	/* display: flex;
+	justify-content: left;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column; */
 }
 </style>

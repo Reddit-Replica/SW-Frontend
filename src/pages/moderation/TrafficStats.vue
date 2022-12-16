@@ -5,7 +5,7 @@
 		</div>
 		<div class="main-box">
 			<div class="main-bar">
-				<button
+				<!-- <button
 					class="button-bar"
 					:class="choosenTitle == 'Pageviews' ? 'clicked' : ''"
 					id="pageviews-button"
@@ -20,7 +20,7 @@
 					@click="chooseTitle('uniques')"
 				>
 					Uniques
-				</button>
+				</button> -->
 				<button
 					class="button-bar"
 					:class="choosenTitle == 'Members' ? 'clicked' : ''"
@@ -116,7 +116,7 @@
 export default {
 	data() {
 		return {
-			choosenTitle: 'Pageviews',
+			choosenTitle: 'Members',
 			choosenSecondTitle: 'Day',
 		};
 	},
