@@ -196,6 +196,8 @@ export default {
 				numberOfChildren: 0,
 				commentId: '',
 				level: 0,
+				votes: 1,
+				vote: 1,
 			};
 			let content = this.content;
 			var element = document.getElementsByClassName('ql-editor');

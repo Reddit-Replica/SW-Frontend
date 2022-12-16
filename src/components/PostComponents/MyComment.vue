@@ -68,7 +68,8 @@
 							>
 						</li>
 						<li>Share</li>
-						<li>Save</li>
+						<li @click="save" id="save" v-if="!comment.saved">Save</li>
+						<li @click="save" id="unsave" v-if="comment.saved">Unsave</li>
 						<li
 							@click="edit"
 							id="edit"
@@ -221,9 +222,9 @@ export default {
 	},
 	data() {
 		return {
-			upClicked: true,
-			downClicked: false,
-			voteCounter: 1,
+			upClicked: this.comment.vote == 1 ? true : false,
+			downClicked: this.comment.vote == -1 ? true : false,
+			voteCounter: this.comment.votes,
 			newComment: this.comment.commentBody,
 			replies: [],
 			edittedComment: '',
@@ -232,6 +233,8 @@ export default {
 			display: false,
 			deleted: false,
 			deleting: false,
+			savedUnsavedPosts: [],
+			saved: this.comment.saved,
 		};
 	},
 	//@vuese
@@ -240,6 +243,30 @@ export default {
 		if (this.comment.numberofChildren != 0) this.fetchPostComments();
 	},
 	methods: {
+		async save() {
+			this.saved = !this.saved;
+			if (this.saved == true) {
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: this.comment.commentId,
+						type: 'comment',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: this.comment.commentId,
+						type: 'comment',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
 		async fetchPostComments() {
 			try {
 				await this.$store.dispatch('comments/fetchPostReplies', {
