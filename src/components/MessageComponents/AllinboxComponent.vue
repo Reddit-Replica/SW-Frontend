@@ -187,6 +187,7 @@
 			:sender-username="message.senderUsername"
 			:receiver-username="message.receiverUsername"
 			:subject="message.subject"
+			:subreddit-name="subredditName"
 		></ReplyComponent>
 	</div>
 </template>
