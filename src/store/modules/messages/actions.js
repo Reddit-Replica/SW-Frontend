@@ -18,6 +18,8 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log(responseData);
+		console.log(localStorage.getItem('accessToken'));
 		if (response.status == 200) {
 			const messages = [];
 
@@ -30,6 +32,8 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
+			console.log('before', before);
+			console.log('after', after);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const message = {
 					id: responseData.children[i].id,
@@ -288,27 +292,40 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			const messages = [];
+			const replies = [];
 
-			for (const key in responseData) {
-				const message = {
-					before: responseData[key].before,
-					after: responseData[key].after,
-					id: responseData[key].children[0].id,
-					text: responseData[key].children[0].text,
-					type: responseData[key].children[0].type,
-					senderUsername: responseData[key].children[0].senderUsername,
-					receiverUsername: responseData[key].children[0].receiverUsername,
-					subredditName: responseData[key].children[0].subredditName,
-					postTitle: responseData[key].children[0].postTitle,
-					subject: responseData[key].children[0].subject,
-					sendAt: responseData[key].children[0].sendAt,
-					isReply: responseData[key].children[0].isReply,
-					isRead: responseData[key].children[0].isRead,
-				};
-				messages.push(message);
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
 			}
-			context.commit('setPostReplies', messages);
+			if (responseData.after) {
+				after = responseData.after;
+			}
+			console.log('before', before);
+			console.log('after', after);
+			for (let i = 0; i < responseData.children.length; i++) {
+				const reply = {
+					id: responseData.children[i].id,
+					text: responseData.children[i].data.text,
+					senderUsername: responseData.children[i].data.senderUsername,
+					receiverUsername: responseData.children[i].data.receiverUsername,
+					sendAt: responseData.children[i].data.sendAt,
+					subredditName: responseData.children[i].data.subredditName,
+					postTitle: responseData.children[i].data.postTitle,
+					postId: responseData.children[i].data.postId,
+					commentId: responseData.children[i].data.commentId,
+					numOfComments: responseData.children[i].data.numOfComments,
+					isRead: responseData.children[i].data.isRead,
+					vote: responseData.children[i].data.vote,
+					postOwner: responseData.children[i].data.postOwner,
+				};
+				replies.push(reply);
+			}
+			context.commit('setPostReplies', replies);
+			context.commit('before', before);
+			context.commit('after', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'

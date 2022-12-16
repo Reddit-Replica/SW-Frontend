@@ -26,7 +26,13 @@
 				</ul>
 			</div>
 		</div>
-		<div class="post-footer">Caption</div>
+		<div class="post-footer">
+			<router-link
+				style="padding: 8px; color: #1c1c1c; font-size: 12px"
+				:to="images[indexShown].link || ''"
+				>{{ images[indexShown].caption }}</router-link
+			>
+		</div>
 	</div>
 </template>
 <script>
@@ -51,6 +57,8 @@ export default {
 			const obj = {
 				left: i * 100,
 				imgUrl: this.$baseurl + '/' + this.images[i].path,
+				caption: this.images[i].caption || '',
+				link: this.images[i].link || '',
 			};
 			// eslint-disable-next-line
 			this.imagesShown.push(obj);
@@ -75,6 +83,7 @@ export default {
 			imagesShown: [],
 			lastLeftPic: 0,
 			lastRightPic: 0,
+			indexShown: 0,
 		};
 	},
 	methods: {
@@ -82,6 +91,7 @@ export default {
 			this.lastLeftPic--;
 			this.lastRightPic++;
 			console.log('clicked');
+			this.indexShown++;
 			this.imagesShown.forEach((ele) => {
 				console.log(Number(ele.left) - 100);
 				ele.left = String(Number(ele.left) - 100);
@@ -90,6 +100,7 @@ export default {
 		rightClick() {
 			this.lastRightPic--;
 			this.lastLeftPic++;
+			this.indexShown--;
 			console.log('clicked');
 			this.imagesShown.forEach((ele) => {
 				console.log(Number(ele.left) + 100);

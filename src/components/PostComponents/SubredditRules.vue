@@ -1,6 +1,6 @@
 <template>
 	<div class="rules">
-		<div class="header">
+		<div class="header" :class="{ 'blue-header': blue }">
 			<p>r/{{ subredditName }} Rules</p>
 		</div>
 		<div class="body">
@@ -30,6 +30,11 @@ export default {
 			default: '',
 			required: true,
 		},
+		blue: {
+			type: Boolean,
+			default: false,
+			required: false,
+		},
 	},
 };
 </script>
@@ -49,6 +54,10 @@ export default {
 	padding: 12px;
 	display: flex;
 	align-items: center;
+}
+.blue-header {
+	background-color: var(--color-blue-2);
+	font-size: 1.4rem;
 }
 .body {
 	padding: 12px 12px 6px 12px;
