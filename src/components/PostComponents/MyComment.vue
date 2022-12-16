@@ -68,8 +68,8 @@
 							>
 						</li>
 						<li>Share</li>
-						<li @click="save" id="save" v-if="!comment.saved">Save</li>
-						<li @click="save" id="unsave" v-if="comment.saved">Unsave</li>
+						<li @click="save" id="save" v-if="!saved">Save</li>
+						<li @click="save" id="unsave" v-else>Unsave</li>
 						<li
 							@click="edit"
 							id="edit"
@@ -77,7 +77,8 @@
 						>
 							Edit
 						</li>
-						<li>Follow</li>
+						<li @click="follow" id="follow" v-if="!followed">Follow</li>
+						<li @click="follow" id="unfollow" v-else>UnFollow</li>
 						<li
 							@click="displaySubmenu"
 							id="dots"
@@ -235,6 +236,7 @@ export default {
 			deleting: false,
 			savedUnsavedPosts: [],
 			saved: this.comment.saved,
+			followed: this.comment.followed,
 		};
 	},
 	//@vuese
@@ -243,6 +245,28 @@ export default {
 		if (this.comment.numberofChildren != 0) this.fetchPostComments();
 	},
 	methods: {
+		async follow() {
+			this.followed = !this.followed;
+			if (this.followed) {
+				try {
+					await this.$store.dispatch('postCommentActions/followComment', {
+						baseurl: this.$baseurl,
+						commentId: this.comment.commentId,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unfollowComment', {
+						baseurl: this.$baseurl,
+						commentId: this.comment.commentId,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
+		},
 		async save() {
 			this.saved = !this.saved;
 			if (this.saved == true) {
