@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'muted'"
 			@mute-user="showMuteUserFunction()"
@@ -112,6 +117,7 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import MuteItem from '../../components/moderation/MuteItem.vue';
 import SearchBar from '../../components/moderation/SearchBar.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		NoList,
@@ -120,6 +126,7 @@ export default {
 		MuteItem,
 		SearchBar,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
 	data() {
 		return {
@@ -128,10 +135,15 @@ export default {
 			count: 0,
 			savedUnsavedPosts: [],
 			noItems: false,
+			loading: false,
 		};
 	},
-	beforeMount() {
-		this.loadListOfMuted();
+	async created() {
+		this.loading = true;
+		if (localStorage.getItem('accessToken')) {
+			await this.loadListOfMuted();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese

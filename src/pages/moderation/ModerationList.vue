@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'Moderators'"
 			:subreddit-name="subredditName"
@@ -145,6 +150,7 @@ import ListItem from '../../components/moderation/ListItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import InviteModerator from '../../components/moderation/InviteModerator.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		SearchBar,
@@ -152,10 +158,15 @@ export default {
 		ListBar,
 		InviteModerator,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
-	beforeMount() {
-		this.loadListOfModerators();
-		this.loadListOfInvitedModerators();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.loadListOfInvitedModerators();
+			await this.loadListOfModerators();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese
@@ -216,6 +227,7 @@ export default {
 			showLeaveMod: false,
 			errorResponse: '',
 			savedUnsavedPosts: [],
+			loading: false,
 		};
 	},
 	methods: {

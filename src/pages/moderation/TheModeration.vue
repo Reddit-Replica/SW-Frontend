@@ -1,4 +1,7 @@
 <template>
+	<div v-if="loading">
+		<the-spinner style="position: absolute; left: 50%; top: 50%"></the-spinner>
+	</div>
 	<the-header :header-title="subredditName"></the-header>
 	<listmoderation-bar
 		:subreddit-name="subredditName"
@@ -58,6 +61,7 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
 import LeftsideBar from '../../components/moderation/LeftsideBar.vue';
 import UnmoderatorView from '../../components/moderation/UnmoderatorView.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
@@ -65,6 +69,7 @@ export default {
 			count: 0,
 			noItems: false,
 			showLiftBar: false,
+			loading: false,
 		};
 	},
 	components: {
@@ -72,18 +77,20 @@ export default {
 		LeftsideBar,
 		UnmoderatorView,
 		ListBar,
+		TheSpinner,
 	},
 	// @vuese
 	//load moderators list and change document title
-	beforeMount() {
-		if (!localStorage.getItem('accessToken')) {
+	async created() {
+		this.loading = true;
+		if (localStorage.getItem('accessToken')) {
+			document.title = this.$route.params.subredditName;
+			await this.loadListOfAllModerators();
+		} else {
 			this.$router.push('/login');
 			document.title = 'reddit';
-		} else {
-			document.title = this.$route.params.subredditName;
-			this.loadListOfAllModerators();
-			// this.loadListOfInvitedModerators();
 		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese
