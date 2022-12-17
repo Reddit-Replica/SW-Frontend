@@ -62,7 +62,7 @@
 							@click.prevent="clickDotsButton"
 							:id="'ntf-msg-12-' + index"
 						>
-							{{ dotsButtonText }}
+							{{ textHide }}
 						</button>
 					</span>
 				</div>
@@ -95,17 +95,12 @@
 				</div>
 			</span>
 		</a>
-		<save-unsave-popup-message v-if="doneHide" class="pop-up" id="pop-hide"
-			>Notification Hidden</save-unsave-popup-message
-		>
 	</li>
 </template>
 
 <script>
-import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
 export default {
-	emits: ['reload'],
-	components: { SaveUnsavePopupMessage },
+	emits: ['reload', 'showpop'],
 	props: {
 		index: {
 			type: Number,
@@ -120,7 +115,7 @@ export default {
 		return {
 			duration: '21h',
 			buttonShown: false,
-			textNoUpdates: "Don't get updates on that",
+			// textNoUpdates: "Don't get updates on that",
 			textHide: 'Hide this notification',
 			doneHide: false,
 		};
@@ -137,7 +132,7 @@ export default {
 			return !this.notification.title.includes('replied');
 		},
 		replyBack() {
-			return this.notification.title.includes('comment');
+			return this.notification.title.includes('replied');
 		},
 		content() {
 			return (
@@ -213,15 +208,16 @@ export default {
 			return duration.durationNumber + ' ' + duration.durationText;
 		},
 		async clickDotsButton() {
-			if (this.toHide) {
-				const accessToken = localStorage.getItem('accessToken');
-				await this.$store.dispatch('notifications/hideNotification', {
-					baseurl: this.$baseurl,
-					token: accessToken,
-					notificationId: this.notification.id,
-				});
-			}
-			this.doneHide = true;
+			// if (this.toHide) {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/hideNotification', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+				notificationId: this.notification.id,
+			});
+			// }
+
+			this.$emit('showpop');
 			this.$emit('reload');
 		},
 
@@ -363,10 +359,5 @@ button:hover {
 }
 .bi-arrow-90deg-left {
 	margin-right: 8px;
-}
-.pop-up {
-	bottom: 0;
-	position: fixed;
-	z-index: 1000;
 }
 </style>
