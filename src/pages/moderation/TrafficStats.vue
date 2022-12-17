@@ -69,7 +69,7 @@
 				<div class="chart">
 					<div class="inner-box-chart">
 						<div class="box-1">
-							<canvas class="canvas"></canvas>
+							<canvas class="canvas" id="myChart"></canvas>
 						</div>
 						<div class="box-color">
 							<div class="buttons">
@@ -128,7 +128,11 @@
 					<th>Members Joined</th>
 				</tr>
 				<tr v-for="day in this.traffic.days" :key="day.id">
-					<td>{{ day.day }}</td>
+					<td>
+						{{ new Date(day.day).getFullYear() }} /
+						{{ new Date(day.day).getMonth() + 1 }} /
+						{{ new Date(day.day).getDate() }}
+					</td>
 					<td :key="day.id">
 						{{ day.numberOfJoined }}
 					</td>
@@ -163,11 +167,47 @@
 </template>
 
 <script>
+import Chart from 'chart.js/auto';
 export default {
 	async created() {
 		await this.getStates();
 		console.log('after creation');
 		console.log(this.traffic);
+		let arr1 = [];
+		let arr2 = [];
+		for (let i = 0; i < this.traffic.days.length; i++) {
+			let date = new Date(this.traffic.days[i].day);
+			arr1.push(
+				date.getFullYear() +
+					' / ' +
+					date.getMonth() +
+					1 +
+					' / ' +
+					date.getDate()
+			);
+			arr2.push(this.traffic.days[i].numberOfJoined);
+		}
+		console.log(arr1);
+		console.log(arr2);
+		const ctx = document.getElementById('myChart');
+		const labels = arr1;
+		const data = {
+			labels: labels,
+			datasets: [
+				{
+					label: 'The traffic status',
+					data: arr2,
+					fill: false,
+					borderColor: 'rgb(75,192,192)',
+					tenion: 0,
+				},
+			],
+		};
+		const myChart = new Chart(ctx, {
+			type: 'line',
+			data: data,
+		});
+		myChart;
 	},
 	computed: {
 		subredditName() {
