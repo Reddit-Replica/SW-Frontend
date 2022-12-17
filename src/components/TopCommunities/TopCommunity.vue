@@ -149,9 +149,7 @@ export default {
 				token: accessToken,
 			});
 
-			console.log('reload');
 			this.$emit('reload');
-			console.log('reload2');
 		},
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
