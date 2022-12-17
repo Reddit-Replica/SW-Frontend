@@ -17,7 +17,7 @@
 				id="btn1"
 				style="margin-left: 15px"
 				@checked="getenableSpoiler"
-				:value="enableSpoiler"
+				:val="enableSpoiler"
 				v-if="create"
 			></switch-button>
 		</h6>
