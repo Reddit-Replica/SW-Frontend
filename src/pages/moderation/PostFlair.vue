@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'flair'"
 			:flairs-count="listOfFlairs.length"
@@ -210,6 +215,7 @@ import AddFlair from '../../components/moderation/AddFlair.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 import FlairItem from '../../components/moderation/FlairItem.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		AddFlair,
@@ -217,6 +223,7 @@ export default {
 		ListBar,
 		FlairItem,
 		draggable: VueDraggableNext,
+		TheSpinner,
 	},
 	data() {
 		return {
@@ -224,12 +231,15 @@ export default {
 			savedUnsavedPosts: [],
 			dragDrop: false,
 			newList: [],
+			loading: false,
 		};
 	},
-	// @vuese
-	//load List of Rules before mount
-	beforeMount() {
-		this.loadListOfFlairs();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.loadListOfFlairs();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese

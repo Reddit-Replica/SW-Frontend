@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'Rules'"
 			:rules-count="listOfRules.length"
@@ -129,6 +134,7 @@ import AddrulePopup from '../../components/moderation/AddrulePopup.vue';
 import ListRules from '../../components/moderation/ListRules.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		NoList,
@@ -137,6 +143,7 @@ export default {
 		ListRules,
 		draggable: VueDraggableNext,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
 	data() {
 		return {
@@ -145,12 +152,17 @@ export default {
 			errorResponse: null,
 			newList: [],
 			savedUnsavedPosts: [],
+			loading: false,
 		};
 	},
 	// @vuese
 	//load List of Rules before mount
-	beforeMount() {
-		this.loadListOfRules();
+	async created() {
+		this.loading = true;
+		if (localStorage.getItem('accessToken')) {
+			await this.loadListOfRules();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese
