@@ -1,10 +1,10 @@
 <template>
-	<div class="comm-top-1">
-		<div class="comm-top-2">
-			<h2>Top</h2>
+	<div class="comm-top-1" id="comm-top-1">
+		<div class="comm-top-2" id="comm-top-2">
+			<h2>{{ title }}</h2>
 			<span class="text-grey">Rank Change</span>
 		</div>
-		<ol>
+		<ol id="comm-top-3">
 			<top-community
 				@reload="reloadPage"
 				v-for="(community, index) in allCommunities"
@@ -30,6 +30,8 @@ export default {
 	data() {
 		return {
 			allCommunities: [],
+			textAll: "Today's Top Growing Communities",
+			textCategory: "Today's Top Growing in ",
 		};
 	},
 	watch: {
@@ -41,6 +43,15 @@ export default {
 					this.getAllCommunities();
 				}
 			},
+		},
+	},
+	computed: {
+		title() {
+			if (this.$route.params.category) {
+				return this.textCategory + this.$route.params.category;
+			} else {
+				return this.textAll;
+			}
 		},
 	},
 	created() {

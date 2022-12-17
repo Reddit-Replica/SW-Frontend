@@ -155,6 +155,10 @@ a {
 	color: inherit;
 	text-decoration: inherit;
 }
+.image-user {
+	height: 50px;
+	width: 60px;
+}
 .user-a {
 	margin-bottom: 0;
 	border-radius: 4px 4px 0 0;
