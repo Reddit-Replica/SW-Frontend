@@ -51,6 +51,8 @@ export default {
 			Unmoderated: [],
 			EditedPosts: [],
 			EditedComments: [],
+			//////////////traffic statas//////////////
+			trafficStatus: null,
 		};
 	},
 	mutations,

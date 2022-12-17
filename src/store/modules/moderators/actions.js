@@ -1524,4 +1524,33 @@ export default {
 			throw error;
 		}
 	},
+
+	async fetchtrafficStatus(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subreddit}/traffic-stats`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		console.log(responseData);
+		context.commit('settrafficStatus', responseData);
+		return response.status;
+	},
 };
