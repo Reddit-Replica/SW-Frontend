@@ -361,7 +361,7 @@
 											></post-options>
 										</div>
 										<div class="comment-submit">
-											<div class="comment-as-name">
+											<div class="comment-as-name" v-if="getuserName != ''">
 												Comment as
 												<router-link
 													:to="{
@@ -508,7 +508,8 @@ export default {
 		//@vuese
 		//get userName
 		getuserName() {
-			return localStorage.getItem('userName');
+			if (localStorage.getItem('userName') == null) return '';
+			else return localStorage.getItem('userName');
 		},
 		userData() {
 			// console.log(this.$store.getters['user/getUserData']);
@@ -526,7 +527,7 @@ export default {
 	//before mount fetch posts according to type of sorting
 	created() {
 		this.getPostDetails();
-		this.RequestUserData();
+		if (this.$route.params.userName != undefined) this.RequestUserData();
 		this.fetchPostComments();
 		// document.getElementById('test').addEventListener('scroll', () => {
 		// 	console.log('scroll');
@@ -534,7 +535,7 @@ export default {
 	},
 	methods: {
 		click() {
-			console.log('scrolled');
+			console.log(localStorage.getItem('userName'));
 		},
 		handleScroll: function () {
 			console.log('scroll' + window.scrollY);
@@ -564,7 +565,7 @@ export default {
 			try {
 				await this.$store.dispatch('user/getUserData', {
 					baseurl: this.$baseurl,
-					userName: this.getuserName,
+					userName: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
