@@ -145,6 +145,7 @@
 											</div>
 										</li>
 										<li
+											v-if="commentContent.inYourSubreddit"
 											id="comment-content-save-comment-delete-Post"
 											@click="deletePost"
 											class="options-box-item"
@@ -360,6 +361,10 @@ export default {
 			// }
 		},
 		deletePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.DeletedComment = true;
 			this.RequestDeleteComment();
 		},
@@ -377,6 +382,10 @@ export default {
 			return responseStatus;
 		},
 		saveComment() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			if (!this.saved) this.RequestSaveComment();
 			else this.RequestUnsaveComment();
 		},

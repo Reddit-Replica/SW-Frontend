@@ -226,6 +226,7 @@
 							@hide-post="hidePost"
 							@save-post="savePost"
 							@share-post="sharePost"
+							:state="state"
 							:page="page"
 							post-kind="ov"
 							@emit-popup="emitPopup"

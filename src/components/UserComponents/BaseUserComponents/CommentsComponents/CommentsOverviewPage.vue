@@ -16,6 +16,7 @@
 			:post-id="commentData.id"
 			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
+			:state="state"
 		></comment-content>
 	</div>
 </template>
@@ -37,6 +38,10 @@ export default {
 			required: true,
 		},
 		type: {
+			type: String,
+			required: true,
+		},
+		state: {
 			type: String,
 			required: true,
 		},
