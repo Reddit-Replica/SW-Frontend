@@ -2,17 +2,19 @@
 	<div
 		v-if="!DeletedComment"
 		class="comment-body"
+		id="comment-content-comment-body"
 		:class="[commentType ? '' : 'comment-body-hover']"
 	>
 		<div
 			class="comment-body-container"
+			id="comment-content-comment-body-container"
 			:style="[
 				commentType && 1
 					? 'padding: 0px 0px 0px 8px;'
 					: 'padding: 10px 0 8px 8px;',
 			]"
 		>
-			<div class="comment-box">
+			<div class="comment-box" id="comment-content-comment-box">
 				<div
 					class="nested-comment-order"
 					:class="[commentType ? 'nested-comment-order-ov' : '']"
@@ -21,6 +23,7 @@
 					<!-- <div></div> -->
 				</div>
 				<div
+					id="comment-content-comment-body-content"
 					class="comment-content"
 					:class="[
 						RemovedComment || SpammedComment
@@ -30,7 +33,10 @@
 							: '',
 					]"
 				>
-					<div class="comment-body-title">
+					<div
+						class="comment-body-title"
+						id="comment-content-comment-body-title"
+					>
 						<router-link :to="'/user/' + $route.params.userName">
 							{{ $route.params.userName }}</router-link
 						>
@@ -45,18 +51,35 @@
 							:pinned-post="false"
 						></moderation-title>
 					</div>
-					<div class="comment-content-data" v-html="PostHybridContent"></div>
+					<div
+						class="comment-content-data"
+						v-html="PostHybridContent"
+						id="comment-content-comment-body-content-hybrid"
+					></div>
 					<!-- <p>{{ PostHybridContent }} fdkjbfjhg skjdfnskd sjdnfksjd</p> -->
-					<div class="comment-options">
+					<div
+						class="comment-options"
+						id="comment-content-comment-body-comment-options"
+					>
 						<ul>
-							<li @click="ReplyCommentHandler" class="underline">Replay</li>
+							<li
+								@click="ReplyCommentHandler"
+								class="underline"
+								id="comment-content-comment-reply-comment"
+							>
+								Replay
+							</li>
 							<li class="underline">Share</li>
 							<li
+								id="comment-content-open-Options-BoxList"
 								class="post-option-item2"
 								style="position: relative"
 								@click="openOptionsBoxList"
 							>
-								<div class="post-options-icon three-dot-icon-box">
+								<div
+									class="post-options-icon three-dot-icon-box"
+									id="open-options-boxList-three-dot-icon-box"
+								>
 									<i>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +95,13 @@
 										</svg>
 									</i>
 								</div>
-								<div v-if="showOptionsBoxList" class="options-box-list">
+								<div
+									v-if="showOptionsBoxList"
+									class="options-box-list"
+									id="comment-content-options-box-list"
+								>
 									<ul>
-										<li @click="editPost" class="options-box-item">
+										<li v-if="0" @click="editPost" class="options-box-item">
 											<div class="options-box-icon">
 												<i
 													style="color: rgba(135, 138, 140)"
@@ -83,7 +110,11 @@
 											</div>
 											<div class="options-box-text">Edit Post</div>
 										</li>
-										<li @click="saveComment" class="options-box-item">
+										<li
+											id="comment-content-save-comment"
+											@click="saveComment"
+											class="options-box-item"
+										>
 											<div class="options-box-icon">
 												<i
 													v-if="!saved"
@@ -113,7 +144,11 @@
 												{{ !saved ? 'Save' : 'Unsaved' }}
 											</div>
 										</li>
-										<li @click="deletePost" class="options-box-item">
+										<li
+											id="comment-content-save-comment-delete-Post"
+											@click="deletePost"
+											class="options-box-item"
+										>
 											<div class="options-box-icon">
 												<i
 													style="color: rgba(135, 138, 140)"
@@ -127,19 +162,26 @@
 							</li>
 						</ul>
 						<div v-if="commentContent.inYourSubreddit" class="post-options">
-							<ul class="comment-moderator-options">
+							<ul
+								class="comment-moderator-options"
+								id="comment-moderator-options"
+							>
 								<li
 									v-if="!ApprovedComment"
 									@click="approveComment"
 									:style="['aa' == '' ? 'color: #46d160' : '']"
 									class="post-option-item"
+									id="comment-moderator-options-approved-comment"
 								>
 									<div class="post-options-icon">
 										<i class="fa-solid fa-check"></i>
 									</div>
-									<div class="post-options-text">Approve</div>
+									<div id="approve-text-comment" class="post-options-text">
+										Approve
+									</div>
 								</li>
 								<li
+									id="comment-moderator-options-remove-comment"
 									v-if="!RemovedComment"
 									@click="removeComment"
 									:style="[
@@ -152,11 +194,12 @@
 									<div class="post-options-icon">
 										<i style="color: inherit" class="fa-solid fa-ban"></i>
 									</div>
-									<div class="post-options-text">
+									<div id="remove-text-comment" class="post-options-text">
 										<p>Remove</p>
 									</div>
 								</li>
 								<li
+									id="comment-moderator-options-spam-comment"
 									v-if="!RemovedComment"
 									@click="spamComment"
 									:style="[
@@ -169,11 +212,12 @@
 									<div class="post-options-icon">
 										<i class="fa-regular fa-calendar-xmark"></i>
 									</div>
-									<div class="post-options-text">
+									<div id="spam-text-comment" class="post-options-text">
 										<p>Spam</p>
 									</div>
 								</li>
 								<li
+									id="comment-moderator-options-lock-unlock-comment"
 									@click="lockUnLockComment"
 									:style="[
 										'aa' == ''
@@ -185,7 +229,7 @@
 									<div class="post-options-icon">
 										<i class="fa-solid fa-lock"></i>
 									</div>
-									<div class="post-options-text">
+									<div id="lock-text-comment" class="post-options-text">
 										<p>{{ LockedComment ? 'unlock' : 'Lock' }}</p>
 									</div>
 								</li>
@@ -249,25 +293,25 @@ export default {
 		SpammedComment() {
 			return (
 				this.SpammedCommentFlag &&
-				this.moderation &&
-				this.moderation.spam &&
-				this.moderation.spam.spammedBy
+				this.moderation != null &&
+				this.moderation.spam != null &&
+				this.moderation.spam.spammedBy != null
 			);
 		},
 		RemovedComment() {
 			return (
 				this.RemovedCommentFlag &&
-				this.moderation &&
-				this.moderation.remove &&
-				this.moderation.remove.removedBy
+				this.moderation != null &&
+				this.moderation.remove != null &&
+				this.moderation.remove.removedBy != null
 			);
 		},
 		ApprovedComment() {
 			return (
 				this.ApprovedCommentFlag &&
-				this.moderation &&
-				this.moderation.approve &&
-				this.moderation.approve.approvedBy
+				this.moderation != null &&
+				this.moderation.approve != null &&
+				this.moderation.approve.approvedBy != null
 			);
 		},
 	},
@@ -863,5 +907,13 @@ span.post-oc {
 	padding: 4px 8px;
 	margin-top: 8px;
 	margin-right: 8px;
+}
+@media (max-width: 640px) {
+	#approve-text-comment,
+	#remove-text-comment,
+	#spam-text-comment,
+	#lock-text-comment {
+		display: none;
+	}
 }
 </style>

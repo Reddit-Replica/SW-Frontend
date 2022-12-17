@@ -37,7 +37,7 @@
 							:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
 						>
 							<!-- <sortposts-bar></sortposts-bar> -->
-							<router-view :state="state" @emitPopup="emitPopup"></router-view>
+							<router-view :state="state" @emit-popup="emitPopup"></router-view>
 						</main>
 						<aside id="profile-aside">
 							<profile-card
