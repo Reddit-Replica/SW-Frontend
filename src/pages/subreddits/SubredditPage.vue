@@ -208,6 +208,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.rules = this.$store.getters['moderation/listOfRules'];
+			console.log(this.rules);
 		},
 		reloadPage() {
 			this.getSubreddit();

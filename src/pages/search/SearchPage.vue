@@ -85,11 +85,11 @@
 										<MenuSearchVue
 											id="sub-menu-one"
 											:titles="[
-												'Relevance',
-												'Hot',
-												'New',
-												'Top',
-												'Most Comments',
+												'relevance',
+												'hot',
+												'new',
+												'top',
+												'most comments',
 											]"
 											:display="ShowFirstitemChoice"
 											@change-title="changeFirstChoiceItem"
@@ -188,8 +188,6 @@ export default {
 				await this.$store.dispatch('search/SearchPost', {
 					baseurl: this.$baseurl,
 					q: this.$route.query.q,
-					sort: 'new',
-					time: 'all',
 				});
 			} catch (error) {
 				console.log(error);
@@ -282,20 +280,26 @@ export default {
 			}
 		},
 		async searchwithtime(value) {
+			let temp;
+			if (value == 'All Time') temp = 'all';
+			else if (value == 'Last Year') temp = 'year';
+			else if (value == 'Last Week') temp = 'week';
+			else if (value == 'Last 24 Horus') temp = 'day';
+			else if (value == 'Last Hour') temp = 'hour';
 			try {
 				if (!(this.FirstitemChoice == 'Sort')) {
 					await this.$store.dispatch('search/SearchPost', {
 						baseurl: this.$baseurl,
 						q: this.$route.query.q,
 						sort: this.FirstitemChoice,
-						time: value,
+						time: temp,
 					});
 				} else {
 					await this.$store.dispatch('search/SearchPost', {
 						baseurl: this.$baseurl,
 						q: this.$route.query.q,
 						sort: 'new',
-						time: value,
+						time: temp,
 					});
 				}
 			} catch (error) {
@@ -312,6 +316,7 @@ export default {
 	},
 	computed: {
 		SearchedPosts() {
+			console.log(this.$store.getters['search/GetPosts']);
 			return this.$store.getters['search/GetPosts'];
 		},
 		SearchedUsers() {
