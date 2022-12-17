@@ -122,6 +122,42 @@
 					Month
 				</button>
 			</div>
+			<table v-if="traffic && choosenSecondTitle == 'Day'">
+				<tr>
+					<th>Day</th>
+					<th>Members Joined</th>
+				</tr>
+				<tr v-for="day in this.traffic.days" :key="day.id">
+					<td>{{ day.day }}</td>
+					<td :key="day.id">
+						{{ day.numberOfJoined }}
+					</td>
+				</tr>
+			</table>
+			<table v-if="traffic && choosenSecondTitle == 'Day of week'">
+				<tr>
+					<th>Day Of Week</th>
+					<th>Members Joined</th>
+				</tr>
+				<tr v-for="day in this.traffic.weeks" :key="day.id">
+					<td>{{ day.day }}</td>
+					<td :key="day.id">
+						{{ day.numberOfJoined }}
+					</td>
+				</tr>
+			</table>
+			<table v-if="traffic && choosenSecondTitle == 'Month'">
+				<tr>
+					<th>Month</th>
+					<th>Members Joined</th>
+				</tr>
+				<tr v-for="month in this.traffic.months" :key="month.id">
+					<td>{{ month.month }}</td>
+					<td :key="month.id">
+						{{ month.numberOfJoined }}
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </template>
@@ -356,5 +392,21 @@ export default {
 	line-height: 2.1rem;
 	color: var(--color-dark-3);
 	font-family: IBMPlexSans, Arial, sans-serif;
+}
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+th {
+	background-color: #dddddd;
+	text-align: left;
+	padding: 8px;
 }
 </style>
