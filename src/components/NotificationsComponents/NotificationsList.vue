@@ -9,7 +9,7 @@
 						class="ntf-title title-grey flex"
 						id="ntf-list-6"
 						>Messages
-						<span class="circle-red" id="ntf-list-7">18</span>
+						<!-- <span class="circle-red" id="ntf-list-7">18</span> -->
 					</router-link>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

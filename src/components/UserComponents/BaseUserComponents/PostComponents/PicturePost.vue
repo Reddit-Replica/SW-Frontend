@@ -1,17 +1,28 @@
 <template>
-	<div class="post-picture">
-		<div class="picture-container">
-			<span v-if="lastRightPic != 0" @click="rightClick" class="left-button"
+	<div id="post-picture-components" class="post-picture">
+		<div class="picture-container" id="post-picture-container">
+			<span
+				v-if="lastRightPic != 0"
+				@click="rightClick"
+				id="post-picture-components-left-button"
+				class="left-button"
 				><i class="fa-solid fa-angle-left"></i
 			></span>
-			<span v-if="lastLeftPic != 0" @click="leftClick" class="right-button"
+			<span
+				v-if="lastLeftPic != 0"
+				@click="leftClick"
+				class="right-button"
+				id="post-picture-components-right-button"
 				><i class="fa-solid fa-angle-right"></i
 			></span>
-			<div class="picture-number-box">
+			<div
+				class="picture-number-box"
+				id="post-picture-components-picture-number-box"
+			>
 				{{ lastRightPic + 1 }} / {{ images.length }}
 			</div>
-			<div class="pic-items">
-				<ul class="images">
+			<div class="pic-items" id="post-picture-components-picture-number-box">
+				<ul class="images" id="post-picture-components-images">
 					<li
 						v-for="(image, index) in imagesShown"
 						:key="index"
@@ -20,14 +31,16 @@
 						<img
 							:style="[nsfwFlag || spoilerFlag ? 'filter: blur(60px);' : '']"
 							:src="image.imgUrl"
+							:id="`image-id-${index}`"
 							alt=""
 						/>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="post-footer">
+		<div class="post-footer" id="post-picture-components-post-footer">
 			<router-link
+				id="post-picture-components-post-footer-router-link"
 				style="padding: 8px; color: #1c1c1c; font-size: 12px"
 				:to="images[indexShown].link || ''"
 				>{{ images[indexShown].caption }}</router-link

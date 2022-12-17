@@ -1,5 +1,5 @@
 <template>
-	<div style="position: relative">
+	<div style="position: relative" id="empty-box-user-page">
 		<div
 			style="display: flex; align-items: center; padding: 0"
 			class="container"

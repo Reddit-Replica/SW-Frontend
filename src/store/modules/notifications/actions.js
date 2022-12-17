@@ -12,7 +12,7 @@ export default {
 	async getAllNotifications(context, payload) {
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/notifications', {
+		const response = await fetch(baseurl + '/notifications?limit=100', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -22,10 +22,9 @@ export default {
 
 		const responseData = await response.json();
 
-		console.log(responseData['children']);
-
 		if (response.status == 200) {
 			context.commit('setNotifications', responseData['children']);
+			context.commit('setUnreadCount', responseData['unreadCount']);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -49,8 +48,6 @@ export default {
 		});
 
 		const responseData = await response.json();
-
-		console.log(responseData['children']);
 
 		if (response.status == 200) {
 			context.commit('setSomeNotifications', responseData['children']);

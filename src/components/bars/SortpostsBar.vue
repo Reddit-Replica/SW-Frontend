@@ -27,6 +27,7 @@
 		</div>
 		<div class="sort-post-box-1">
 			<div
+				v-if="best"
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'best' }"
 				@click="selectSort('best')"
@@ -205,6 +206,7 @@
 		</div>
 		<ul class="sort-post-sub-menu" v-if="showMenu">
 			<li
+				v-if="best"
 				class="sort-post-icon-box"
 				:class="{ clicked: clicked == 'best' }"
 				@click="selectSort('best')"
@@ -305,6 +307,11 @@ export default {
 			type: String,
 			required: true,
 			default: '',
+		},
+		best: {
+			type: Boolean,
+			required: false,
+			default: true,
 		},
 	},
 	data() {

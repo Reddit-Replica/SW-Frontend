@@ -19,20 +19,40 @@
 			:key="savedPostData.id"
 		>
 			<comments-overview-page
-				v-if="savedPostData.type == 'summaryPost'"
+				v-if="
+					savedPostData.type == 'comment' &&
+					savedPostData.data.comments.length != 0
+				"
 				:key="savedPostData.id"
 				:comment-data="savedPostData"
 				:id="savedPostData.id"
 				:state="state"
+				type="summarypost"
 			>
 			</comments-overview-page>
 			<base-user-post
-				v-else
+				v-else-if="savedPostData.type == 'post'"
 				:key="index"
 				:post-data="{ data: savedPostData.data.post, id: savedPostData.id }"
 				:state="state"
 				:page="'overview'"
 			></base-user-post>
+			<div v-else-if="savedPostData.type == 'postAndComment'">
+				<base-user-post
+					:key="index"
+					:post-data="{ data: savedPostData.data.post, id: savedPostData.id }"
+					:state="state"
+					:page="'overview'"
+				></base-user-post>
+				<comments-overview-page
+					:key="savedPostData.id"
+					:comment-data="savedPostData"
+					:id="savedPostData.id"
+					:state="state"
+					type="fullpost"
+				>
+				</comments-overview-page>
+			</div>
 		</div>
 	</div>
 </template>

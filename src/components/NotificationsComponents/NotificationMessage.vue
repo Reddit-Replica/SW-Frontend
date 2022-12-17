@@ -62,7 +62,7 @@
 							@click.prevent="clickDotsButton"
 							:id="'ntf-msg-12-' + index"
 						>
-							{{ dotsButtonText }}
+							{{ textHide }}
 						</button>
 					</span>
 				</div>
@@ -100,7 +100,7 @@
 
 <script>
 export default {
-	emits: ['reload'],
+	emits: ['reload', 'showpop'],
 	props: {
 		index: {
 			type: Number,
@@ -115,8 +115,9 @@ export default {
 		return {
 			duration: '21h',
 			buttonShown: false,
-			textNoUpdates: "Don't get updates on that",
+			// textNoUpdates: "Don't get updates on that",
 			textHide: 'Hide this notification',
+			doneHide: false,
 		};
 	},
 	computed: {
@@ -131,7 +132,7 @@ export default {
 			return !this.notification.title.includes('replied');
 		},
 		replyBack() {
-			return this.notification.title.includes('comment');
+			return this.notification.title.includes('replied');
 		},
 		content() {
 			return (
@@ -207,14 +208,16 @@ export default {
 			return duration.durationNumber + ' ' + duration.durationText;
 		},
 		async clickDotsButton() {
-			if (this.toHide) {
-				const accessToken = localStorage.getItem('accessToken');
-				await this.$store.dispatch('notifications/hideNotification', {
-					baseurl: this.$baseurl,
-					token: accessToken,
-					notificationId: this.notification.id,
-				});
-			}
+			// if (this.toHide) {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/hideNotification', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+				notificationId: this.notification.id,
+			});
+			// }
+
+			this.$emit('showpop');
 			this.$emit('reload');
 		},
 

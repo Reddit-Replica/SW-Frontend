@@ -1,5 +1,5 @@
 <template>
-	<video controls>
+	<video controls id="video-post-component">
 		<!-- <source src="../../../../../video/userPostTest.mp4" type="video/mp4" /> -->
 		<source :src="$baseurl + '/' + videoSrc" type="video/mp4" />
 	</video>
@@ -7,6 +7,8 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// the src of the video
 		videoSrc: {
 			type: String,
 			required: true,

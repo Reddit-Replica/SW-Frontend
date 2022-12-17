@@ -396,9 +396,10 @@
 					/>
 				</svg>
 				<span
+					v-if="!noUnreadNotifications && unreadNotificationsCount"
 					class="header-user-nav-notification"
 					id="num-notification-notification"
-					>2</span
+					>{{ unreadNotificationsCount }}</span
 				>
 			</div>
 
@@ -693,10 +694,23 @@ export default {
 			console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/listOfSubreddits'];
 		},
+		// @vuese
+		//return number of unread notifications
+		//@type Number
+		unreadNotificationsCount() {
+			return this.$store.getters['notifications/getUnreadCount'];
+		},
+		// @vuese
+		//return number of unread notifications
+		//@type Number
+		noUnreadNotifications() {
+			return this.$store.getters['notifications/unreadCount'] == 0;
+		},
 	},
 	async beforeMount() {
 		this.RequestUserData();
 		this.getUserSubreddits();
+		this.loadAllNotifications();
 	},
 	methods: {
 		// @vuese
@@ -766,12 +780,14 @@ export default {
 		//load compose messages from the store
 		// @arg no argument
 		async getUserSubreddits() {
-			try {
-				await this.$store.dispatch('user/getUserSubreddits', {
-					baseurl: this.$baseurl,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('user/getUserSubreddits', {
+						baseurl: this.$baseurl,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			}
 			// console.log('function');
 		},
@@ -820,15 +836,32 @@ export default {
 		 */
 		async RequestUserData() {
 			let responseStatus;
-			try {
-				await this.$store.dispatch('user/getUserData', {
-					baseurl: this.$baseurl,
-					userName: this.userName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('user/getUserData', {
+						baseurl: this.$baseurl,
+						userName: this.userName,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				return responseStatus;
 			}
-			return responseStatus;
+		},
+		/**
+		 * @vuese
+		 * this function send call an action function from the store to load user notifications
+		 * @arg no arg
+		 */
+		async loadAllNotifications() {
+			const accessToken = localStorage.getItem('accessToken');
+			if (localStorage.getItem('accessToken')) {
+				await this.$store.dispatch('notifications/getAllNotifications', {
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				console.log(this.$store.getters['notifications/unreadCount']);
+			}
 		},
 	},
 };

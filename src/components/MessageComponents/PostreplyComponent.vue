@@ -40,14 +40,18 @@
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
-							><a href="" :id="'message-sender-' + index">{{
-								message.senderUsername
-							}}</a>
+							><a
+								:href="'/user/' + message.senderUsername"
+								:id="'message-sender-' + index"
+								>/u/{{ message.senderUsername }}</a
+							>
 							<span
 								>&nbsp;via&nbsp;
-								<a href="" :id="'message-receiver-' + index">{{
-									message.receiverUsername
-								}}</a>
+								<a
+									:href="'/user/' + message.receiverUsername"
+									:id="'message-receiver-' + index"
+									>/u/{{ message.receiverUsername }}</a
+								>
 							</span></span
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 						><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">

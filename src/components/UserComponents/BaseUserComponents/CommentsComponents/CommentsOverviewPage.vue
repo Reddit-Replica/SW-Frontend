@@ -1,5 +1,9 @@
 <template>
-	<div id="commentId" class="comment-container" style="padding-bottom: 8px">
+	<div
+		:id="`comment-${commentData.id}`"
+		class="comment-container"
+		style="padding-bottom: 8px"
+	>
 		<comment-header
 			v-if="type == 'summarypost'"
 			:comment-data="commentData"
@@ -12,6 +16,7 @@
 			:post-id="commentData.id"
 			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
+			:state="state"
 		></comment-content>
 	</div>
 </template>
@@ -33,6 +38,10 @@ export default {
 			required: true,
 		},
 		type: {
+			type: String,
+			required: true,
+		},
+		state: {
 			type: String,
 			required: true,
 		},

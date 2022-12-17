@@ -37,15 +37,17 @@ export default {
 		BaseUserComments,
 		EmptyPage,
 	},
-	state: {
-		type: String,
-		required: true,
-	},
 	data() {
 		return {
 			loading: false,
 			errorLoading: false,
 		};
+	},
+	props: {
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	async created() {
 		let sortType;
