@@ -9,15 +9,22 @@
 <script>
 export default {
 	emits: ['checked'],
-	// created() {
-	// 	this.value = !this.val;
-	// 	console.log('this.value in switch button');
-	// 	console.log(this.value);
-	// },
+	created() {
+		// this.value = !this.val;
+		// console.log('this.value in switch button');
+		// console.log(this.val);
+		if (this.nsfw) {
+			console.log(this.val);
+		}
+	},
 	props: {
 		val: {
 			type: Boolean,
 			required: true,
+		},
+		nsfw: {
+			type: Boolean,
+			required: false,
 		},
 	},
 	data() {
