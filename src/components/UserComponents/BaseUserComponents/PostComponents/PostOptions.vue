@@ -397,7 +397,11 @@
 				class="options-box-list"
 			>
 				<ul>
-					<li @click="editPost" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="editPost"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i style="color: rgba(135, 138, 140)" class="fa-solid fa-pen"></i>
 						</div>
@@ -437,7 +441,11 @@
 							{{ !saved ? 'Save' : 'Unsaved' }}
 						</div>
 					</li>
-					<li @click="pinPostToProfile(postData.id)" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="pinPostToProfile(postData.id)"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
@@ -622,6 +630,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	mounted() {
 		window.addEventListener('click', this.clicked);
@@ -650,17 +662,30 @@ export default {
 			this.$emit('insightsToggle');
 		},
 		deletePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.$emit('deletePost');
 		},
 		hidePost() {
 			// this.$emit('hidePost');
 		},
 		sharePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				console.log('unauth');
+				return;
+			}
 			console.log('share');
 			this.$emit('sharePost');
 			this.showShareOptions = !this.showShareOptions;
 		},
 		async savePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.saved = !this.saved;
 			if (!this.postData.data.saved) {
 				try {
@@ -920,6 +945,10 @@ export default {
 			}
 		},
 		async hideUnhidePost(id) {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			let approveSatus = -1;
 			let key = 'hide';
 			if (this.page == 'hidden') key = 'unhide';

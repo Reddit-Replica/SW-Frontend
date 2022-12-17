@@ -108,6 +108,7 @@
 				<post-options
 					:post-data="{ data: pinnedPost, id: pinnedPost.id }"
 					pinned-post-flag="true"
+					:state="state"
 				></post-options>
 			</div>
 		</div>
@@ -128,6 +129,10 @@ export default {
 	props: {
 		pinnedPost: {
 			type: Object,
+			required: true,
+		},
+		state: {
+			type: String,
 			required: true,
 		},
 	},

@@ -1,6 +1,7 @@
 <template>
 	<pinned-posts
 		:pinned-posts-data="getUserPinnedPostData.pinnedPostData"
+		:state="state"
 	></pinned-posts>
 	<div style="margin-bottom: 16px">
 		<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>

@@ -7,6 +7,7 @@
 			v-for="pinnedPost in pinnedPostsData"
 			:key="pinnedPost._id"
 			:pinned-post="pinnedPost"
+			:state="state"
 		></pinned-post-content>
 	</div>
 </template>
@@ -25,6 +26,10 @@ export default {
 		// pinnedPostsData the full pinned post Data
 		pinnedPostsData: {
 			type: Object,
+			required: true,
+		},
+		state: {
+			type: String,
 			required: true,
 		},
 	},
