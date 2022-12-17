@@ -25,7 +25,6 @@
 					class="button-bar"
 					:class="choosenTitle == 'Members' ? 'clicked' : ''"
 					id="members-button"
-					@click="chooseTitle('members')"
 				>
 					Members
 				</button>
@@ -33,19 +32,34 @@
 			<div class="numbers-box">
 				<span class="number">
 					<div class="div-number">
-						<div class="num">0</div>
+						<div class="num" v-if="traffic">
+							{{
+								this.traffic.numberOfJoinedLastDay -
+								this.traffic.numberOfLeftLastDay
+							}}
+						</div>
 						<div class="desc">Total - Last 24 hours</div>
 					</div>
 				</span>
 				<span class="number">
 					<div class="div-number">
-						<div class="num">389</div>
+						<div class="num" v-if="traffic">
+							{{
+								this.traffic.numberOfJoinedLastWeek -
+								this.traffic.numberOfLeftLastWeek
+							}}
+						</div>
 						<div class="desc">Total - Last 7 days</div>
 					</div>
 				</span>
 				<span class="number">
 					<div class="div-number">
-						<div class="num">464</div>
+						<div class="num" v-if="traffic">
+							{{
+								this.traffic.numberOfJoinedLastMonth -
+								this.traffic.numberOfLeftLastMonth
+							}}
+						</div>
 						<div class="desc">Total - Last month</div>
 					</div>
 				</span>
@@ -114,25 +128,38 @@
 
 <script>
 export default {
+	async created() {
+		await this.getStates();
+		console.log('after creation');
+		console.log(this.traffic);
+	},
+	computed: {
+		subredditName() {
+			return this.$route.params.subredditName;
+		},
+	},
+
 	data() {
 		return {
 			choosenTitle: 'Members',
 			choosenSecondTitle: 'Day',
+			traffic: null,
 		};
 	},
+
 	methods: {
 		// @vuese
 		//handle choose title
 		// @arg The argument is a string value representing chosen value
-		chooseTitle(title) {
-			if (title == 'pageviews') {
-				this.choosenTitle = 'Pageviews';
-			} else if (title == 'uniques') {
-				this.choosenTitle = 'Uniques';
-			} else if (title == 'members') {
-				this.choosenTitle = 'Members';
-			}
-		},
+		// chooseTitle(title) {
+		// 	if (title == 'pageviews') {
+		// 		this.choosenTitle = 'Pageviews';
+		// 	} else if (title == 'uniques') {
+		// 		this.choosenTitle = 'Uniques';
+		// 	} else if (title == 'members') {
+		// 		this.choosenTitle = 'Members';
+		// 	}
+		// },
 		// @vuese
 		//handle choose second title
 		// @arg The argument is a string value representing chosen value
@@ -144,6 +171,28 @@ export default {
 			} else if (title == 'month') {
 				this.choosenSecondTitle = 'Month';
 			}
+		},
+		async getStates() {
+			const actionPayload = {
+				subreddit: this.subredditName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'moderation/fetchtrafficStatus',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.traffic = this.$store.getters['moderation/gettrafficStatus'];
+			//console.log(this.setting);
 		},
 	},
 };
