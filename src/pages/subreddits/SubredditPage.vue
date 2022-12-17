@@ -267,8 +267,7 @@ export default {
 			}
 		},
 		changeRoute(title) {
-			this.$router.push(`${title}`);
-			//this.$router.push(`/${title}`);
+			this.$router.push(`/r/${this.subreddit.title}/${title}`);
 		},
 		async changeRouteQueryParam(title) {
 			console.log(title);
