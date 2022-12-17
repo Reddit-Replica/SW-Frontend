@@ -1,6 +1,13 @@
 <template>
 	<div
 		id="base-user-data-moderation-spam-spammedBy"
+		v-if="moderatorFlag"
+		class="post-tooltip"
+	>
+		<i class="fa-solid fa-shield" style="color: #46d160"></i>
+	</div>
+	<div
+		id="base-user-data-moderation-spam-spammedBy"
 		v-if="moderationSpamHandler"
 		class="post-tooltip"
 	>
@@ -82,6 +89,11 @@ export default {
 		},
 		pinnedPost: {
 			type: Boolean,
+		},
+		moderatorFlag: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 	computed: {
