@@ -28,11 +28,12 @@
 				}"
 				:state="state"
 				:page="'overview'"
-				@emitPopup="emitPopup"
+				@emit-popup="emitPopup"
 			></overview-post>
 
 			<comments-overview-page
 				:key="overviewPostData.id"
+				v-if="!(overviewPostData.data.comments.length == 0)"
 				:comment-data="overviewPostData"
 				:id="overviewPostData.id"
 				:state="state"
@@ -127,6 +128,12 @@ export default {
 	methods: {
 		scroll() {
 			window.onscroll = () => {
+				console.log('window.innerHeight', window.innerHeight);
+				console.log('window.scrollY', window.scrollY);
+				console.log(
+					'document.body.offsetHeight.scrollY',
+					document.body.offsetHeight
+				);
 				// console.log('bottom');
 				// let bottomOfWindow =
 				// 	Math.max(
@@ -139,6 +146,12 @@ export default {
 
 				if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
 					// you're at the bottom of the page
+					console.log('window.innerHeight', window.innerHeight);
+					console.log('window.scrollY', window.scrollY);
+					console.log(
+						'document.body.offsetHeight.scrollY',
+						document.body.offsetHeight
+					);
 
 					// this.scrolledToBottom = true; // replace it with your code
 					console.log('bottom');

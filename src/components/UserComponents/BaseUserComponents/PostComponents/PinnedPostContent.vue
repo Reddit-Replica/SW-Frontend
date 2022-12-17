@@ -1,16 +1,25 @@
 <template>
 	<!-- <div class="pinned-post-container"> -->
-	<div class="pinned-post-item">
-		<div class="picture-post" v-if="pinnedPost.kind == 'image'">
+	<div class="pinned-post-item" id="pinned-post-comp-pinned-post-item">
+		<div
+			class="picture-post"
+			v-if="pinnedPost.kind == 'image'"
+			id="pinned-post-comp-pinned-post-item-picture-post"
+		>
 			<picture-post :images="pinnedPost.images"></picture-post>
 			<!-- <img src= alt="" /> -->
 		</div>
-		<div v-if="pinnedPost.kind == 'video'" class="video-post">
+		<div
+			v-if="pinnedPost.kind == 'video'"
+			class="video-post"
+			id="pinned-post-comp-pinned-post-item-video-post"
+		>
 			<video-post :video-src="pinnedPost.video"></video-post>
 		</div>
 		<div
 			class="content-text content-text-link link-post"
 			v-if="pinnedPost.kind === 'link'"
+			id="pinned-post-comp-pinned-post-item-link-post"
 		>
 			<div class="post-pic-box">
 				<i id="postData-data-kind-link-icon"
@@ -38,12 +47,48 @@
 			<!-- <a href="">{{ pinnedPost.link }}</a> -->
 		</div>
 		<div class="pinned-post-item2">
-			<div class="pinned-post-title">{{ pinnedPost.title }}</div>
-			<div class="post-info">
-				<div class="post-subreddit-icon">
-					<img src="../../../../../img/default_inbox_avatar.png" alt="" />
+			<div class="pinned-post-title">
+				{{ pinnedPost.title }}
+				<div class="post-status" id="base-user-post-status">
+					<span
+						id="base-user-post-content-spoiler-span"
+						v-if="pinnedPost.spoiler"
+						class="post-spoiler"
+						><p>spoiler</p></span
+					>
+					<span
+						id="base-user-post-content-nsfw-span"
+						v-if="pinnedPost.nsfw"
+						class="post-nsfw"
+						><p>nsfw</p></span
+					>
+					<span id="base-user-post-content-oc-span" class="post-oc"
+						><p>OC</p></span
+					>
 				</div>
-				<router-link :to="routerLinkSubredditHandler">
+			</div>
+			<div class="post-info">
+				<div
+					class="post-subreddit-icon"
+					id="post-picture-components-post-subreddit-icon"
+				>
+					<img
+						id="post-picture-components-post-actual-subreddit-icon"
+						v-if="getUserData.userData.picture != null"
+						:src="$baseurl + '/' + getUserData.userData.picture"
+						alt=""
+					/>
+					<img
+						id="post-picture-components-post-default-subreddit-icon"
+						v-else
+						src="../../../../../img/default_inbox_avatar.png"
+						alt=""
+					/>
+				</div>
+				<router-link
+					id="router-link-subreddit-handler"
+					:to="routerLinkSubredditHandler"
+				>
 					{{
 						pinnedPost.subreddit
 							? `r/${pinnedPost.subreddit}`
@@ -52,13 +97,14 @@
 				</router-link>
 			</div>
 			<div
+				id="pinned-post-content-post-options-hybrid-content"
 				v-html="PostHybridContent"
 				class="content-text"
 				v-if="pinnedPost.kind === 'hybrid'"
 			></div>
 
 			<div style="flex-grow: 1"></div>
-			<div class="post-options">
+			<div class="post-options" id="pinned-post-content-post-options">
 				<post-options
 					:post-data="{ data: pinnedPost, id: pinnedPost.id }"
 					pinned-post-flag="true"
@@ -83,6 +129,11 @@ export default {
 		pinnedPost: {
 			type: Object,
 			required: true,
+		},
+	},
+	computed: {
+		getUserData() {
+			return this.$store.getters['user/getUserData'];
 		},
 	},
 	data() {
@@ -270,6 +321,7 @@ header.pinned-posts h2 {
 .post-subreddit-icon img {
 	width: 100%;
 	height: 100%;
+	border-radius: 50%;
 }
 .post-link-href {
 	color: #ffffff;
@@ -281,5 +333,34 @@ a.post-link-href:hover {
 	.pinned-post-container {
 		justify-content: flex-start;
 	}
+}
+.post-status {
+	display: flex;
+	align-items: center;
+	display: inline-block;
+}
+
+.post-status span {
+	border: 1px solid #a4a7a8;
+	color: #a4a7a8;
+	display: inline-block;
+	height: 16px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	border-radius: 2px;
+	margin-right: 5px;
+	line-height: 14px;
+	padding: 0 4px;
+}
+span.post-nsfw {
+	border: 1px solid rgb(255, 88, 91) !important;
+	color: rgb(255, 88, 91) !important;
+}
+span.post-oc {
+	border: 1px solid rgb(0, 121, 211) !important;
+	background-color: rgb(0, 121, 211) !important;
+	color: rgb(255, 255, 255) !important;
+	/* text-align: center; */
 }
 </style>
