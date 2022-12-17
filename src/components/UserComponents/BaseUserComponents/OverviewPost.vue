@@ -106,7 +106,7 @@
 											postData.data.subreddit != null
 										"
 										:subreddit="subredditData"
-										:subredditName="postData.data.subreddit"
+										:subreddit-name="postData.data.subreddit"
 									></subreddit-card-mini>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
