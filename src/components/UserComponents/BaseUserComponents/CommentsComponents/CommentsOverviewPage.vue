@@ -1,5 +1,9 @@
 <template>
-	<div id="commentId" class="comment-container" style="padding-bottom: 8px">
+	<div
+		:id="`comment-${commentData.id}`"
+		class="comment-container"
+		style="padding-bottom: 8px"
+	>
 		<comment-header
 			v-if="type == 'summarypost'"
 			:comment-data="commentData"
