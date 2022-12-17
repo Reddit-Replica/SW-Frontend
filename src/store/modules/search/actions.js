@@ -124,7 +124,7 @@ export default {
 			response.status == 304
 		) {
 			const users = [];
-
+			const temp = [];
 			let before, after;
 			before = '';
 			after = '';
@@ -146,10 +146,12 @@ export default {
 					avatar: responseData.children[i].data.avatar,
 				};
 				users.push(user);
+				if (i < 4) temp.push(user);
 			}
 			context.commit('before', before);
 			context.commit('after', after);
 			context.commit('setUsers', users);
+			context.commit('setlimitedUsers', temp);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;
@@ -189,6 +191,7 @@ export default {
 			let before, after;
 			before = '';
 			after = '';
+			const temp = [];
 			if (responseData.before) {
 				before = responseData.before;
 			}
@@ -206,8 +209,10 @@ export default {
 					description: responseData.children[i].data.description,
 					joined: responseData.children[i].data.joined,
 				};
+				if (i < 4) temp.push(subreddit);
 				subreddits.push(subreddit);
 			}
+			context.commit('setlimitedSubreddits', temp);
 			context.commit('setSubreddits', subreddits);
 			context.commit('before', before);
 			context.commit('after', after);
@@ -292,6 +297,100 @@ export default {
 			context.commit('after', after);
 		} else {
 			const error = new Error(responseData.error);
+			throw error;
+		}
+	},
+	async follow(context, payload) {
+		const baseurl = payload.baseurl;
+		const userInfo = {
+			username: payload.username,
+			follow: payload.following,
+		};
+		const response = await fetch(baseurl + '/follow-user', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(userInfo),
+		});
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			console.log('error in follow');
+			console.log(responseData);
+			console.log(localStorage.getItem('accessToken'));
+			throw error;
+		}
+	},
+	/**
+	 * Action for joining a specific subreddit.
+	 * @action joinSubreddit
+	 * @param {Object} contains message if it is a private subreddit, subreddit id and base url.
+	 * @returns {void}
+	 */
+	async joinSubreddit(_, payload) {
+		const joinInfo = {
+			subredditId: payload.subredditId,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/join-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(joinInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200 || response.status == 304) {
+			return;
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	/**
+	 * Action for leaving a specific subreddit.
+	 * @action leaveSubreddit
+	 * @param {Object} contains subreddit name and base url.
+	 * @returns {void}
+	 */
+	async leaveSubreddit(_, payload) {
+		const leaveInfo = {
+			subredditName: payload.subredditName,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/leave-subreddit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(leaveInfo),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200 || response.status == 304) {
+			return;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},

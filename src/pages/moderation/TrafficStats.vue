@@ -25,7 +25,6 @@
 					class="button-bar"
 					:class="choosenTitle == 'Members' ? 'clicked' : ''"
 					id="members-button"
-					@click="chooseTitle('members')"
 				>
 					Members
 				</button>
@@ -33,19 +32,34 @@
 			<div class="numbers-box">
 				<span class="number">
 					<div class="div-number">
-						<div class="num">0</div>
+						<div class="num" v-if="traffic">
+							{{
+								this.traffic.numberOfJoinedLastDay -
+								this.traffic.numberOfLeftLastDay
+							}}
+						</div>
 						<div class="desc">Total - Last 24 hours</div>
 					</div>
 				</span>
 				<span class="number">
 					<div class="div-number">
-						<div class="num">389</div>
+						<div class="num" v-if="traffic">
+							{{
+								this.traffic.numberOfJoinedLastWeek -
+								this.traffic.numberOfLeftLastWeek
+							}}
+						</div>
 						<div class="desc">Total - Last 7 days</div>
 					</div>
 				</span>
 				<span class="number">
 					<div class="div-number">
-						<div class="num">464</div>
+						<div class="num" v-if="traffic">
+							{{
+								this.traffic.numberOfJoinedLastMonth -
+								this.traffic.numberOfLeftLastMonth
+							}}
+						</div>
 						<div class="desc">Total - Last month</div>
 					</div>
 				</span>
@@ -55,7 +69,7 @@
 				<div class="chart">
 					<div class="inner-box-chart">
 						<div class="box-1">
-							<canvas class="canvas"></canvas>
+							<canvas class="canvas" id="myChart"></canvas>
 						</div>
 						<div class="box-color">
 							<div class="buttons">
@@ -108,31 +122,120 @@
 					Month
 				</button>
 			</div>
+			<table v-if="traffic && choosenSecondTitle == 'Day'">
+				<tr>
+					<th>Day</th>
+					<th>Members Joined</th>
+				</tr>
+				<tr v-for="day in this.traffic.days" :key="day.id">
+					<td>
+						{{ new Date(day.day).getFullYear() }} /
+						{{ new Date(day.day).getMonth() + 1 }} /
+						{{ new Date(day.day).getDate() }}
+					</td>
+					<td :key="day.id">
+						{{ day.numberOfJoined }}
+					</td>
+				</tr>
+			</table>
+			<table v-if="traffic && choosenSecondTitle == 'Day of week'">
+				<tr>
+					<th>Day Of Week</th>
+					<th>Members Joined</th>
+				</tr>
+				<tr v-for="day in this.traffic.weeks" :key="day.id">
+					<td>{{ day.day }}</td>
+					<td :key="day.id">
+						{{ day.numberOfJoined }}
+					</td>
+				</tr>
+			</table>
+			<table v-if="traffic && choosenSecondTitle == 'Month'">
+				<tr>
+					<th>Month</th>
+					<th>Members Joined</th>
+				</tr>
+				<tr v-for="month in this.traffic.months" :key="month.id">
+					<td>{{ month.month }}</td>
+					<td :key="month.id">
+						{{ month.numberOfJoined }}
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </template>
 
 <script>
+import Chart from 'chart.js/auto';
 export default {
+	async created() {
+		await this.getStates();
+		console.log('after creation');
+		console.log(this.traffic);
+		let arr1 = [];
+		let arr2 = [];
+		for (let i = 0; i < this.traffic.days.length; i++) {
+			let date = new Date(this.traffic.days[i].day);
+			arr1.push(
+				date.getFullYear() +
+					' / ' +
+					date.getMonth() +
+					1 +
+					' / ' +
+					date.getDate()
+			);
+			arr2.push(this.traffic.days[i].numberOfJoined);
+		}
+		console.log(arr1);
+		console.log(arr2);
+		const ctx = document.getElementById('myChart');
+		const labels = arr1;
+		const data = {
+			labels: labels,
+			datasets: [
+				{
+					label: 'The traffic status',
+					data: arr2,
+					fill: false,
+					borderColor: 'rgb(75,192,192)',
+					tenion: 0,
+				},
+			],
+		};
+		const myChart = new Chart(ctx, {
+			type: 'line',
+			data: data,
+		});
+		myChart;
+	},
+	computed: {
+		subredditName() {
+			return this.$route.params.subredditName;
+		},
+	},
+
 	data() {
 		return {
 			choosenTitle: 'Members',
 			choosenSecondTitle: 'Day',
+			traffic: null,
 		};
 	},
+
 	methods: {
 		// @vuese
 		//handle choose title
 		// @arg The argument is a string value representing chosen value
-		chooseTitle(title) {
-			if (title == 'pageviews') {
-				this.choosenTitle = 'Pageviews';
-			} else if (title == 'uniques') {
-				this.choosenTitle = 'Uniques';
-			} else if (title == 'members') {
-				this.choosenTitle = 'Members';
-			}
-		},
+		// chooseTitle(title) {
+		// 	if (title == 'pageviews') {
+		// 		this.choosenTitle = 'Pageviews';
+		// 	} else if (title == 'uniques') {
+		// 		this.choosenTitle = 'Uniques';
+		// 	} else if (title == 'members') {
+		// 		this.choosenTitle = 'Members';
+		// 	}
+		// },
 		// @vuese
 		//handle choose second title
 		// @arg The argument is a string value representing chosen value
@@ -144,6 +247,28 @@ export default {
 			} else if (title == 'month') {
 				this.choosenSecondTitle = 'Month';
 			}
+		},
+		async getStates() {
+			const actionPayload = {
+				subreddit: this.subredditName,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'moderation/fetchtrafficStatus',
+					actionPayload
+				);
+				if (response == 200) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+			this.traffic = this.$store.getters['moderation/gettrafficStatus'];
+			//console.log(this.setting);
 		},
 	},
 };
@@ -307,5 +432,21 @@ export default {
 	line-height: 2.1rem;
 	color: var(--color-dark-3);
 	font-family: IBMPlexSans, Arial, sans-serif;
+}
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+th {
+	background-color: #dddddd;
+	text-align: left;
+	padding: 8px;
 }
 </style>

@@ -642,14 +642,14 @@ export default {
 			mediaQuery.concat('&after=' + afterMod);
 		}
 		if (sortSpam) {
-			mediaQuery.concat('&sort=' + sortSpam);
+			mediaQuery = mediaQuery + '&sort=' + sortSpam;
 		}
 		if (only) {
-			mediaQuery.concat('&only=' + only);
+			mediaQuery = mediaQuery + '&only=' + only;
 		}
 		const response = await fetch(
 			//put mediaquery ${mediaQuery}
-			baseurl + `/r/${payload.subredditName}/about/spam`,
+			baseurl + `/r/${payload.subredditName}/about/spam` + mediaQuery,
 			{
 				method: 'GET',
 				headers: {
@@ -671,13 +671,46 @@ export default {
 				after = responseData.after;
 			}
 			//update responseData
-			for (let i = 0; i < responseData[0].children.length; i++) {
-				const spam = {
-					id: responseData[0].children[i].id,
-					type: responseData[0].children[i].type,
-					data: responseData[0].children[i].data,
-				};
-				spams.push(spam);
+			if (only == 'comments') {
+				for (let i = 0; i < responseData[0].children.length; i++) {
+					const spam = {
+						id: responseData[0].children[i].postId,
+						title: responseData[0].children[i].postTitle,
+						commentId: responseData[0].children[i].comment.id,
+						subreddit: responseData[0].children[i].comment.subreddit,
+						commentedBy: responseData[0].children[i].comment.id,
+						commentedAt: responseData[0].children[i].comment.subreddit,
+						editedAt: responseData[0].children[i].comment.id,
+						spammedAt: responseData[0].children[i].comment.subreddit,
+						votes: responseData[0].children[i].comment.id,
+						vote: responseData[0].children[i].comment.subreddit,
+					};
+					spams.push(spam);
+				}
+			} else {
+				for (let i = 0; i < responseData[0].children.length; i++) {
+					const spam = {
+						id: responseData[0].children[i].id,
+						postId: responseData[0].children[i].data.id,
+						subreddit: responseData[0].children[i].data.subreddit,
+						postedBy: responseData[0].children[i].data.postedBy,
+						title: responseData[0].children[i].data.title,
+						link: responseData[0].children[i].data.link,
+						images: responseData[0].children[i].data.images,
+						video: responseData[0].children[i].data.video,
+						content: responseData[0].children[i].data.content,
+						nsfw: responseData[0].children[i].data.nsfw,
+						spoiler: responseData[0].children[i].data.spoiler,
+						votes: responseData[0].children[i].data.votes,
+						numberOfComments: responseData[0].children[i].data.numberOfComments,
+						editedAt: responseData[0].children[i].data.editedAt,
+						postedAt: responseData[0].children[i].data.postedAt,
+						spammedAt: responseData[0].children[i].data.spammedAt,
+						saved: responseData[0].children[i].data.saved,
+						vote: responseData[0].children[i].data.vote,
+					};
+					spams.push(spam);
+				}
 			}
 			context.commit('setListOfSpams', spams);
 			context.commit('setBefore', before);
@@ -1406,8 +1439,9 @@ export default {
 	async EditedPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
+		const sort = payload.sort;
 		const response = await fetch(
-			baseurl + `/r/` + sub + '/about/edited?only=posts',
+			baseurl + `/r/` + sub + '/about/edited?only=posts&sort=' + sort,
 			{
 				method: 'GET',
 				headers: {
@@ -1523,5 +1557,34 @@ export default {
 			const error = new Error(responseData.error || 'Internal Server Error');
 			throw error;
 		}
+	},
+
+	async fetchtrafficStatus(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subreddit}/traffic-stats`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		console.log(responseData);
+		context.commit('settrafficStatus', responseData);
+		return response.status;
 	},
 };

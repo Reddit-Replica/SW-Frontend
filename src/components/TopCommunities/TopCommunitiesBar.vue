@@ -1,6 +1,8 @@
 <template>
-	<div>
+	<div id="top-comm-bar-1">
 		<top-communities
+			id="top-comm-bar-2"
+			@reload-component="reloadPage"
 			:top-communities="communities"
 			top-communities-image="../../../img/banner-background_top.png"
 			:top-communities-caption="category"
@@ -33,6 +35,9 @@ export default {
 			});
 			this.communities = this.$store.getters['topCommunity/oneCategory'];
 			this.category = this.$store.getters['topCommunity/oneCommunities'];
+		},
+		reloadPage() {
+			this.getOneCommunities();
 		},
 	},
 };

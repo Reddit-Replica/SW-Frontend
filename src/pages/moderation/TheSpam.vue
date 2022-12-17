@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<queue-bar :title="'Spam'"></queue-bar>
-		<clean-queue v-if="!listOfSpams"></clean-queue>
+		<clean-queue v-if="listOfSpams && listOfSpams.length == 0"></clean-queue>
 		<div v-else>
 			<base-post
 				v-for="(spam, index) in listOfSpams"

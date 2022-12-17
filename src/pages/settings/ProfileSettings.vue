@@ -49,19 +49,90 @@
 			</div>
 
 			<!--  -->
-			<sociallinks-block
+			<!-- <sociallinks-block
 				:social-data="userData.socialLinks"
 				v-if="userData"
-			></sociallinks-block>
+			></sociallinks-block> -->
 
 			<h3 class="h3-main-title">IMAGES</h3>
 
-			<div class="box box-flex-column">
+			<!-- <img :src="image" class="one-image" alt=""  /> -->
+
+			<!-- <input
+				id="image2"
+				type="file"
+				accept="image/png,image/gif,image/jpeg,image/webp,video/mp4,video/quicktime"
+				multiple
+				hidden
+				@change="fileChange"
+			/> -->
+			<div class="box-1">
+				<h3 class="h3-title">Profile picture and banner image</h3>
+				<p class="p-title-description">Images must be .png or .jpg format</p>
+			</div>
+			<button class="add-more">
+				<input
+					id="image2"
+					type="file"
+					accept="image/png,image/jpg"
+					multiple
+					hidden
+					@change="loadProfilePic"
+				/>
+				<label class="new" for="image2" v-if="!image">
+					<svg class="svg" viewBox="0 0 20 20" version="1.1">
+						<g stroke="none">
+							<g transform="translate(-34.000000, -136.000000)" fill="inherit">
+								<path
+									d="M45.2,147.2 L48.8,147.2 C49.46272,147.2 50,146.66272 50,146 C50,145.33728 49.46272,144.8 48.8,144.8 L45.2,144.8 L45.2,141.2 C45.2,140.53728 44.66272,140 44,140 C43.33728,140 42.8,140.53728 42.8,141.2 L42.8,144.8 L39.2,144.8 C38.53728,144.8 38,145.33728 38,146 C38,146.66272 38.53728,147.2 39.2,147.2 L42.8,147.2 L42.8,150.8 C42.8,151.46272 43.33728,152 44,152 C44.66272,152 45.2,151.46272 45.2,150.8 L45.2,147.2 Z"
+								></path>
+							</g>
+						</g>
+					</svg>
+				</label>
+				<label class="new" for="image2" v-if="image">
+					<img
+						:src="image"
+						alt=""
+						id="profile-picture_user"
+						class="one-image"
+					/>
+				</label>
+			</button>
+			<button class="add-more2">
+				<input
+					id="cover-picture"
+					type="file"
+					accept="image/png,image/jpg"
+					hidden
+					@change="loadCoverPic"
+				/>
+				<label for="cover-picture" v-if="!cover">
+					<svg class="svg" viewBox="0 0 20 20" version="1.1">
+						<g stroke="none">
+							<g transform="translate(-34.000000, -136.000000)" fill="inherit">
+								<path
+									d="M45.2,147.2 L48.8,147.2 C49.46272,147.2 50,146.66272 50,146 C50,145.33728 49.46272,144.8 48.8,144.8 L45.2,144.8 L45.2,141.2 C45.2,140.53728 44.66272,140 44,140 C43.33728,140 42.8,140.53728 42.8,141.2 L42.8,144.8 L39.2,144.8 C38.53728,144.8 38,145.33728 38,146 C38,146.66272 38.53728,147.2 39.2,147.2 L42.8,147.2 L42.8,150.8 C42.8,151.46272 43.33728,152 44,152 C44.66272,152 45.2,151.46272 45.2,150.8 L45.2,147.2 Z"
+								></path>
+							</g>
+						</g>
+					</svg>
+				</label>
+				<label class="new" for="cover-picture" v-if="cover">
+					<img
+						:src="cover"
+						alt=""
+						id="profile-picture_user"
+						class="big-image"
+					/>
+				</label>
+			</button>
+			<!-- <div class="box box-flex-column">
 				<div class="box-1">
 					<h3 class="h3-title">Profile picture and banner image</h3>
 					<p class="p-title-description">Images must be .png or .jpg format</p>
 				</div>
-				<!-- <div class="box-2">
+				<div class="box-2">
 					<div class="box-images">
 						<div
 							class="box-image-1"
@@ -185,8 +256,8 @@
 							</label>
 						</div>
 					</div>
-				</div> -->
-			</div>
+				</div>
+			</div> -->
 
 			<h3 class="h3-main-title">PROFILE CATEGORY</h3>
 
@@ -332,7 +403,7 @@
 <script>
 // import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
 // import SocialLink from './SocialLink.vue';
-import SociallinksBlock from '../../components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksBlock.vue';
+// import SociallinksBlock from '../../components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksBlock.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
 	// async created() {
@@ -357,7 +428,7 @@ export default {
 	components: {
 		// BaseDialog,
 		// SocialLink,
-		SociallinksBlock,
+		// SociallinksBlock,
 		SaveUnsavePopupMessage,
 	},
 	props: {},
@@ -371,6 +442,28 @@ export default {
 			userData: null,
 			create: false,
 			savedUnsavedPosts: [],
+			image: null,
+			cover: null,
+			////////////////hoda///////////////
+			// links: [
+			// 	{
+			// 		imageUrl:
+			// 			'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
+			// 		title: 'Reddit',
+			// 		placeholder1: 'r/community, u/user',
+			// 		placeholder2: '',
+			// 	},
+			// ],
+			// images: [
+			// 	{
+			// 		image: null,
+			// 		imageUrl: null,
+			// 	},
+			// 	{
+			// 		image: null,
+			// 		imageUrl: null,
+			// 	},
+			// ],
 		};
 	},
 	watch: {
@@ -382,11 +475,11 @@ export default {
 		//@vuese
 		//Change images
 		//Index of image to change
-		onChange(e, index) {
-			const file = e.target.files[0];
-			this.images[index].image = file;
-			this.images[index].imageUrl = URL.createObjectURL(file);
-		},
+		// onChange(e, index) {
+		// 	const file = e.target.files[0];
+		// 	this.images[index].image = file;
+		// 	this.images[index].imageUrl = URL.createObjectURL(file);
+		// },
 		async getdisplayName() {
 			const actionPayload = {
 				displayName: this.displayName,
@@ -536,6 +629,64 @@ export default {
 			setTimeout(() => {
 				this.savedUnsavedPosts.shift();
 			}, 10000);
+		},
+		async loadProfilePic(e) {
+			// const file2 = await e.target.files[0];
+			const file1 = e.target.files;
+			const file = file1[0];
+			this.image = URL.createObjectURL(file);
+
+			// const file = await this.$refs.profileFile.files[0];
+			const profilePictureUrl = await URL.createObjectURL(file);
+			// console.log(profilePictureUrl);
+			// document.querySelector('#profile-picture_user').src = profilePictureUrl;
+			// document.querySelector(
+			// 	'#image2'
+			// ).style.backgroundImage = `url(${profilePictureUrl})`;
+			try {
+				await this.$store.dispatch('user/AddProfilePicture', {
+					baseurl: this.$baseurl,
+					file,
+					profilePictureUrl: this.$baseurl + profilePictureUrl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			// try {
+			// 	await this.$store.dispatch('user/getUserData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.$route.params.userName,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
+		},
+		/**
+		 * @vuese
+		 * this function for upload an Cover Image for testing only after connecting to APi
+		 * it will be removed
+		 * @arg no arg
+		 */
+		async loadCoverPic(e) {
+			const file = e.target.files[0];
+			//const file2 = this.$refs.coverFile.files[0];
+			const bannerImageUrl = URL.createObjectURL(file);
+			this.cover = URL.createObjectURL(file);
+			// const bannerImageUrl = URL.createObjectURL(file);
+			// document.querySelector(
+			// 	'#cover-picture'
+			// ).style.backgroundImage = `url(${bannerImageUrl})`;
+			let responseStatus;
+			try {
+				responseStatus = await this.$store.dispatch('user/AddProfileBanner', {
+					baseurl: this.$baseurl,
+					file,
+					bannerImageUrl,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			console.log(responseStatus);
 		},
 	},
 };
@@ -753,5 +904,134 @@ a {
 	width: 100%;
 	display: flex;
 	flex-direction: column; */
+}
+
+.add-more {
+	align-items: center;
+	border: 1px dashed #d6d6d6;
+	border-radius: 4px;
+	/*display: -ms-flexbox;
+	display: flex;*/
+	height: 100px;
+	/*-ms-flex-pack: center;
+	justify-content: center;*/
+	width: 100px;
+	background-color: white;
+	margin: 20px;
+}
+.add-more2 {
+	align-items: center;
+	border: 1px dashed #d6d6d6;
+	border-radius: 4px;
+	/*display: -ms-flexbox;
+	display: flex;*/
+	height: 100px;
+	/*-ms-flex-pack: center;
+	justify-content: center;*/
+	width: 400px;
+	background-color: white;
+	margin: 20px;
+}
+
+.svg {
+	fill: #d6d6d6;
+	height: 36px;
+	opacity: 0.8;
+	width: 36px;
+}
+.add-more:hover .svg {
+	fill: black;
+}
+.add-more2:hover .svg {
+	fill: black;
+}
+.big-image {
+	align-items: center;
+	background-color: #f6f7f8;
+	border-radius: 4px;
+	display: flex;
+	height: 250px;
+	justify-content: center;
+	margin: 12px 12px 12px 0;
+	width: 70%;
+}
+.bottom-preview .big-image img {
+	width: 100%;
+	height: 100%;
+}
+.bottom-preview {
+	position: absolute;
+	top: 40%;
+	left: 0%;
+	display: flex;
+}
+.image-caption {
+	resize: none;
+	box-sizing: border-box;
+	overflow: hidden;
+	/*display: block;*/
+	outline: none;
+	border: 1px solid #edeff1;
+	border-radius: 4px;
+	color: #878a8c;
+	margin: 10px;
+	display: flex;
+	padding: 30px;
+}
+.images-preview {
+	display: inline-flex;
+	/*display: inline-flex;*/
+	overflow-x: auto;
+	width: 100%;
+
+	position: absolute;
+	top: 5%;
+	/*display: inline-flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-wrap: wrap;*/
+	max-height: 200px;
+}
+.out {
+	overflow: auto;
+
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+}
+.one-image {
+	padding: 10px;
+	display: block;
+	box-sizing: border-box;
+	width: 100px;
+	height: 100px;
+	border-radius: 4px;
+	border: 1px solid black;
+}
+.big-image {
+	padding: 10px;
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
+	border: 1px solid black;
+}
+
+.dot {
+	text-align: center;
+	padding: 2px;
+	height: 15px;
+	color: white;
+	width: 15px;
+	background-color: black;
+	border-radius: 50%;
+	display: inline-block;
+	position: absolute;
+	text-align: center;
+	left: 85%;
+	top: 0%;
+	z-index: 1;
+	cursor: pointer;
 }
 </style>

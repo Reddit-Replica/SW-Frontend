@@ -71,6 +71,7 @@ export default {
 	},
 	getpostData(state) {
 		console.log('getters postData');
+		console.log(state.postData);
 		return state.postData;
 	},
 };

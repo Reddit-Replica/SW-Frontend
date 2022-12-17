@@ -8,8 +8,7 @@
 			/>
 		</div>
 		<div class="right">
-			<p v-if="type || state">{{ type }}&nbsp;{{ state }}&nbsp;successfully</p>
-			<p else><slot></slot></p>
+			<p>successfully {{ type }}&nbsp;{{ state }}&nbsp;</p>
 		</div>
 		<div class="undo">
 			<!-- <base-button @click="undo">Undo</base-button> -->
@@ -29,21 +28,21 @@ export default {
 		//type component being saved or unsaved
 		type: {
 			type: String,
-			required: false,
+			required: true,
 			default: '',
 		},
 		//@vuese
 		//the state of component save or unsave
 		state: {
 			type: String,
-			required: false,
+			required: true,
 			default: '',
 		},
 		//@vuese
 		//id of pot/comment
 		typeid: {
 			type: String,
-			required: false,
+			required: true,
 			default: '',
 		},
 	},

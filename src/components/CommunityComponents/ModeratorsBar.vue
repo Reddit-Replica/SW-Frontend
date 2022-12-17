@@ -3,9 +3,16 @@
 		<div class="about-header">
 			<div class="about-title"><h2 class="about-h2">Moderators</h2></div>
 		</div>
-		<div class="about-body">
+		<div class="about-body" v-if="notLoggedIn" id="mods-not-logged">
+			Moderator list hidden. <router-link to="/help">Learn More</router-link>
+		</div>
+		<div class="about-body" v-else id="mods-logged">
 			<div class="box-body" id="message-mods">
-				<base-button link to="/message/compose" class="button-message text"
+				<base-button
+					link
+					to="/message/compose"
+					class="button-message text"
+					id="mods-message"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
@@ -21,7 +28,7 @@
 					<span>Message The Mods</span>
 				</base-button>
 			</div>
-			<div class="box-body flex-start">
+			<div class="box-body flex-start" id="mods-list">
 				<router-link
 					class="mod-link"
 					v-for="(mod, index) in moderators"
@@ -32,7 +39,9 @@
 				>
 			</div>
 			<div class="box-body flex-end text text-view" id="view-mods">
-				<router-link :to="'/r/' + subredditName + '/about/moderators'"
+				<router-link
+					:to="'/r/' + subredditName + '/about/moderators'"
+					id="mods-view-all"
 					>VIEW ALL MODERATORS</router-link
 				>
 			</div>
@@ -61,11 +70,11 @@ export default {
 	data() {
 		return {};
 	},
-	// computed: {
-	// 	subredditName() {
-	// 		return this.$store.state.subredditName;
-	// 	},
-	// },
+	computed: {
+		notLoggedIn() {
+			return localStorage.getItem('accessToken') == null;
+		},
+	},
 };
 </script>
 

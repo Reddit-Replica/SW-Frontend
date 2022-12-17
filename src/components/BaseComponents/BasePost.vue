@@ -54,7 +54,7 @@
 				"
 				id="post-router-comment"
 			>
-				<post-content :post="post"></post-content>
+				<post-content :post="post" :blur="true"></post-content>
 			</router-link>
 			<div class="post-services">
 				<span class="vote-services vote-box">
@@ -311,7 +311,7 @@ export default {
 			downClicked: this.post.votingType == -1 ? true : false,
 			subMenuDisplay: false,
 			shareSubMenuDisplay: false,
-			postHidden: false,
+			postHidden: this.post.hidden,
 			saved: this.post.saved,
 		};
 	},
@@ -422,8 +422,16 @@ export default {
 		},
 		//@vuese
 		//hide post action
-		hidePost() {
+		async hidePost() {
 			this.postHidden = true;
+			try {
+				await this.$store.dispatch('postCommentActions/hide', {
+					baseurl: this.$baseurl,
+					id: this.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		//@vuese
 		//save post
@@ -572,6 +580,7 @@ a {
 	box-shadow: 0px 2px 4px var(--color-grey-dark-2);
 	border-radius: 5px;
 	z-index: 2;
+	width: max-content;
 }
 
 .post-card .post-content .post-services .services .sub-menu li {
@@ -685,7 +694,7 @@ a {
 .post-content {
 	padding: 8px 8px 3px 5px;
 	width: 100%;
-	overflow: auto;
+	/* overflow: auto; */
 	height: 100%;
 	word-break: break-all;
 }

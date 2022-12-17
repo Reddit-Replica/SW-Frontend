@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="blue-top">
-			<router-link to="/subreddit"
+			<router-link to="/subreddit" id="link-top-subreddit-page-2"
 				><div class="link" id="link-top-subreddit-page"></div
 			></router-link>
 		</div>
@@ -12,16 +12,22 @@
 						:src="subredditImageUrl"
 						alt="subredditImage"
 						v-if="subredditImageUrl"
+						id="img-top-subreddit-page"
 					/>
 					<img
 						src="../../../img/default_subreddit_image.png"
 						alt="user-img"
 						v-else
+						id="img-2-top-subreddit-page"
 					/>
 					<div class="top-title-button">
 						<div class="top-title">
-							<h1 class="title-1">{{ subredditNickname }}</h1>
-							<h2 class="title-2">r/{{ subredditName }}</h2>
+							<h1 class="title-1" id="title-top-subreddit-page">
+								{{ subredditNickname }}
+							</h1>
+							<h2 class="title-2" id="title-2-top-subreddit-page">
+								r/{{ subredditName }}
+							</h2>
 						</div>
 						<div>
 							<base-button
@@ -40,6 +46,22 @@
 								id="leave-button"
 								>{{ hoverButtonText }}</base-button
 							>
+							<save-unsave-popup-message
+								v-if="doneJoined"
+								class="pop-up"
+								id="pop-join"
+								>Successfully joined r/{{
+									subredditName
+								}}</save-unsave-popup-message
+							>
+							<save-unsave-popup-message
+								v-if="doneLeft"
+								class="pop-up"
+								id="pop-leave"
+								>Successfully left r/{{
+									subredditName
+								}}</save-unsave-popup-message
+							>
 						</div>
 					</div>
 				</div>
@@ -49,8 +71,10 @@
 </template>
 
 <script>
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
 export default {
 	emits: ['reload'],
+	components: { SaveUnsavePopupMessage },
 	props: {
 		//@vuese
 		//Subreddit ID
@@ -85,8 +109,9 @@ export default {
 	},
 	data() {
 		return {
-			// joined: false,
 			hoverButtonText: 'Joined',
+			doneJoined: false,
+			doneLeft: false,
 		};
 	},
 	methods: {
@@ -99,25 +124,35 @@ export default {
 		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			await this.$store.dispatch('community/joinSubreddit', {
-				message: this.message,
-				subredditId: this.subredditId,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/joinSubreddit', {
+					message: this.message,
+					subredditId: this.subredditId,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
 
-			this.$emit('reload');
+				this.doneJoined = true;
+				this.$emit('reload');
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			await this.$store.dispatch('community/leaveSubreddit', {
-				subredditName: this.subredditName,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/leaveSubreddit', {
+					subredditName: this.subredditName,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
 
-			this.$emit('reload');
+				this.doneLeft = true;
+				this.$emit('reload');
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 	},
 };
@@ -221,5 +256,10 @@ img {
 		max-height: 3.2rem;
 		min-width: 3.2rem;
 	}
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
 }
 </style>
