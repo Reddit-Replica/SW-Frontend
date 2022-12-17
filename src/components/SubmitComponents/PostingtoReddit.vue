@@ -253,7 +253,7 @@ export default {
 	padding: 10px;
 }
 .box1 {
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 20px;
 	-ms-flex-align: center;
 	align-items: center;
@@ -269,7 +269,7 @@ export default {
 	width: 40px;
 }
 .top-list {
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 18px;
 	list-style: decimal;
 	list-style-position: inside;
