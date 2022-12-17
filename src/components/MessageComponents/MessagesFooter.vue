@@ -73,7 +73,7 @@ export default {};
 <style scoped>
 .content {
 	text-align: center;
-	margin-top: 10rem;
+	margin-top: 25rem;
 }
 .content p a {
 	color: var(--color-grey-dark-2);
