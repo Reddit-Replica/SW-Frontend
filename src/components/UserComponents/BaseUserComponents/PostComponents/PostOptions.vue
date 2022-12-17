@@ -343,7 +343,11 @@
 					class="fa-solid fa-shield"
 				></i>
 			</div>
-			<div v-if="showSafetyOptions" class="options-box-list">
+			<div
+				v-if="showSafetyOptions"
+				id="show-Safety-Options-options-box-list"
+				class="options-box-list"
+			>
 				<ul>
 					<li @click="lockUnLockComments(postData.id)" class="options-box-item">
 						<div class="options-box-icon">
@@ -366,11 +370,13 @@
 		</li>
 		<li
 			class="post-option-item2"
+			id="post-option-item2-open-Options-BoxList"
 			style="position: relative"
 			@click="openOptionsBoxList"
 		>
 			<div
 				class="post-options-icon three-dot-icon-box"
+				id="post-options-icon-post-data-three-dot-icon-box"
 				v-if="postData.data.inYourSubreddit || pinnedPostFlag"
 			>
 				<i>
@@ -407,7 +413,11 @@
 						</div>
 						<div class="options-box-text">Edit Post</div>
 					</li>
-					<li @click="savePost" class="options-box-item">
+					<li
+						id="saved-user-options-icon"
+						@click="savePost"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i
 								v-if="!saved"
@@ -443,6 +453,7 @@
 					</li>
 					<li
 						v-if="postData.data.inYourSubreddit"
+						id="options-box-icon-pin-to-profile"
 						@click="pinPostToProfile(postData.id)"
 						class="options-box-item"
 					>
@@ -478,6 +489,7 @@
 					</li>
 					<li
 						v-if="postData.data.inYourSubreddit"
+						id="delete-post-options-box-item"
 						@click="deletePost"
 						class="options-box-item"
 					>
@@ -491,6 +503,7 @@
 					</li>
 					<li
 						v-if="postData.data.inYourSubreddit"
+						id="mark-as-oc"
 						@click="markAsOC"
 						class="options-box-item"
 					>
@@ -510,6 +523,7 @@
 					<li
 						v-if="postData.data.inYourSubreddit"
 						@click="markUnMarkAsSpoiler(postData.id)"
+						ud="mark-unmark-as-spoiler-options-box"
 						class="options-box-item"
 					>
 						<div class="options-box-icon">
@@ -528,6 +542,7 @@
 					<li
 						v-if="postData.data.inYourSubreddit"
 						@click="markUnMarkAsNSFW(postData.id)"
+						ud="mark-unmark-as-nsfw-options-box"
 						class="options-box-item"
 					>
 						<div class="options-box-icon">
@@ -567,6 +582,7 @@
 					<li
 						v-if="postData.data.inYourSubreddit"
 						@click="lockUnLockComments(postData.id)"
+						id="lock-unlock-comments-post-data"
 						class="options-box-item"
 					>
 						<div class="options-box-icon" id="lock-post-comments-options">
@@ -682,34 +698,54 @@ export default {
 			this.showShareOptions = !this.showShareOptions;
 		},
 		async savePost() {
+			let requestSatus = -1;
 			if (this.state == 'unauth') {
 				this.$router.push('/');
 				return;
 			}
 			this.saved = !this.saved;
-			if (!this.postData.data.saved) {
+			if (this.saved) {
 				try {
-					await this.$store.dispatch('userposts/savePostOrComment', {
-						baseurl: this.$baseurl,
-						savePostOrCommentData: {
-							id: this.postData.id,
-							type: 'post',
-						},
-					});
+					requestSatus = await this.$store.dispatch(
+						'userposts/savePostOrComment',
+						{
+							baseurl: this.$baseurl,
+							savePostOrCommentData: {
+								id: this.postData.id,
+								type: 'post',
+							},
+						}
+					);
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
 				try {
-					await this.$store.dispatch('userposts/unSavePostOrComment', {
-						baseurl: this.$baseurl,
-						savePostOrCommentData: {
-							id: this.postData.id,
-							type: 'post',
-						},
-					});
+					requestSatus = await this.$store.dispatch(
+						'userposts/unSavePostOrComment',
+						{
+							baseurl: this.$baseurl,
+							savePostOrCommentData: {
+								id: this.postData.id,
+								type: 'post',
+							},
+						}
+					);
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
+				}
+			}
+			if (this.saved) {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', 1, ' post saved successfully');
+				} else {
+					this.$emit('emitPopup', 1, 'failed to save');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', 1, 'post  unsaved successfully');
+				} else {
+					this.$emit('emitPopup', 1, 'failed to unsaved ');
 				}
 			}
 		},
@@ -795,13 +831,13 @@ export default {
 			}
 		},
 		async markUnMarkAsNSFW(id) {
+			let requestSatus = -1;
 			let type = 'unMark';
 			if (!this.postData.data.nsfw) {
 				type = 'mark';
 			}
-
 			try {
-				await this.$store.dispatch('userposts/markPostAsNSFW', {
+				requestSatus = await this.$store.dispatch('userposts/markPostAsNSFW', {
 					baseurl: this.$baseurl,
 					nsfwData: {
 						id: id,
@@ -813,45 +849,92 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			if (this.pinnedPostFlag) this.RequestUserPinnedPostData();
+			if (type == 'mark') {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'marked post nsfw successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to mark post as nsfw');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'unmarked post nsfw successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to unmark post as nsfw');
+				}
+			}
 		},
 		async markUnMarkAsSpoiler(id) {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			let requestSatus = -1;
 			let type = 'unMark';
 			if (!this.postData.data.spoiler) {
 				type = 'mark';
 			}
 			try {
-				await this.$store.dispatch('userposts/markUnMarkPostAsSpoiler', {
-					baseurl: this.$baseurl,
-					spoilerData: {
-						id: id,
-						type: `${type}`, // mark UnMark
-					},
-					page: this.page,
-				});
+				requestSatus = await this.$store.dispatch(
+					'userposts/markUnMarkPostAsSpoiler',
+					{
+						baseurl: this.$baseurl,
+						spoilerData: {
+							id: id,
+							type: `${type}`, // mark UnMark
+						},
+						page: this.page,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
 			if (this.pinnedPostFlag) this.RequestUserPinnedPostData();
+			if (type == 'mark') {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'marked post spoiler successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to mark post as spoiler');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'unmarked post spoiler successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to unmark post as spoiler');
+				}
+			}
 		},
 		async markUnMarkSendMeReply(id) {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			let requestSatus = -1;
 			let state = false;
 			if (!this.postData.data.sendReplies) {
 				state = true;
 			}
 			try {
-				await this.$store.dispatch('userposts/markUnMarkSendMeReply', {
-					baseurl: this.$baseurl,
-					sendReplyData: {
-						id: id,
-						type: `post`, // mark UnMark
-						state,
-					},
-					page: this.page,
-				});
+				requestSatus = await this.$store.dispatch(
+					'userposts/markUnMarkSendMeReply',
+					{
+						baseurl: this.$baseurl,
+						sendReplyData: {
+							id: id,
+							type: `post`, // mark UnMark
+							state,
+						},
+						page: this.page,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+			if (state) {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'marked post send replies successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to mark post send replie');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'unmarked post send replie successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to unmark post as send replies');
+				}
 			}
 		},
 		safetyClicked() {
