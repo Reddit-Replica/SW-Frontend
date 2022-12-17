@@ -5,50 +5,7 @@
 			<div v-if="!(SearchedCms && SearchedCms.length == 0)">
 				<div v-for="value in SearchedCms" :key="value.id">
 					<div>
-						<a class="communities-status"
-							><div class="communities-status-release">
-								<img
-									v-if="!value.picture"
-									src="../../../img/default_inbox_avatar.png"
-									alt="img"
-									class="communities-img"
-									:id="'user-avatar-' + value.subredditName"
-								/>
-								<img
-									v-else
-									:src="$baseurl + '/' + value.picture"
-									alt="img"
-									class="communities-img"
-									:id="'user-avatar-' + value.subredditName"
-								/>
-								<div class="communities-content">
-									<a
-										class="communities-content-release"
-										:href="'/r/' + value.subredditName"
-									>
-										<h6 class="communities-name">
-											r/{{ value.subredditName }}
-										</h6>
-										<p class="community-members">
-											{{ value.numberOfMembers }} Members
-										</p>
-									</a>
-								</div>
-								<div class="join" v-if="value.joined">
-									<base-button
-										button-text="Join"
-										class="join-button"
-										@click="clickedFunction(false)"
-									></base-button>
-								</div>
-								<div class="join" v-if="!value.joined">
-									<base-button
-										button-text="Leave"
-										class="join-button"
-										@click="clickedFunction(true)"
-									></base-button>
-								</div></div
-						></a>
+						<base-coms :value="value"></base-coms>
 					</div>
 				</div>
 			</div>
@@ -63,7 +20,7 @@
 </template>
 
 <script>
-import BaseButton from '../BaseComponents/BaseButton.vue';
+import BaseComs from './BaseComs.vue';
 export default {
 	props: {
 		commcontents: {
@@ -73,8 +30,8 @@ export default {
 	},
 	computed: {
 		SearchedCms() {
-			console.log(this.$store.getters['search/Getsubreddits']);
-			return this.$store.getters['search/Getsubreddits'];
+			console.log(this.$store.getters['search/limitedSubs']);
+			return this.$store.getters['search/limitedSubs'];
 		},
 	},
 	data() {
@@ -85,7 +42,7 @@ export default {
 		};
 	},
 	components: {
-		BaseButton,
+		BaseComs,
 	},
 	emits: ['change-joining'],
 	methods: {

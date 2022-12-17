@@ -71,71 +71,7 @@
 							<div>
 								<div v-if="!(SearchedCms && SearchedCms.length == 0)">
 									<div v-for="value in SearchedCms" :key="value.id">
-										<a class="user-a"
-											><div class="user-div">
-												<div
-													class="user-details"
-													@click="gotosub(value.subredditName)"
-												>
-													<div class="user-img-div">
-														<div class="user-img-det"></div>
-														<div class="user-img">
-															<img
-																v-if="!value.picture"
-																src="../../../img/default_inbox_avatar.png"
-																alt="img"
-																class="image-user"
-																:id="'user-avatar-' + value.subredditName"
-															/>
-															<img
-																v-else
-																:src="$baseurl + '/' + value.picture"
-																alt="img"
-																class="image-user"
-																:id="'user-avatar-' + value.subredditName"
-															/>
-														</div>
-													</div>
-												</div>
-												<a
-													class="people-content pointer"
-													@click="gotosub(value.subredditName)"
-												>
-													<div class="people-content_release">
-														<h6 class="people-name">
-															r/{{ value.subredditName }}&nbsp;
-														</h6>
-
-														<p class="karma-number">
-															<span class="point-span" role="presentation"
-																>&nbsp;•&nbsp;</span
-															>{{ value.numberOfMembers }} Members&nbsp;
-														</p>
-													</div>
-													<p class="p-details">{{ value.description }}&nbsp;</p>
-												</a>
-												<div
-													class="follow"
-													v-if="value.joined"
-													@click="toggle(value.id)"
-												>
-													<base-button
-														button-text="Join"
-														class="follow-button"
-													></base-button>
-												</div>
-												<div
-													class="follow"
-													v-if="!value.joined"
-													@click="toggle(value.id)"
-												>
-													<base-button
-														button-text="Leave"
-														class="follow-button"
-													></base-button>
-												</div>
-											</div>
-										</a>
+										<searched-cms :value="value"></searched-cms>
 									</div>
 								</div>
 								<div class="not-found-back" v-else>
@@ -152,7 +88,7 @@
 	</div>
 </template>
 <script>
-import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+import SearchedCms from '../../components/SearchComponents/SearchedCms.vue';
 import Notfound from '../../components/SearchComponents/NotFound.vue';
 export default {
 	data() {
@@ -217,7 +153,7 @@ export default {
 			this.$router.push('/r/' + subredditName);
 		},
 	},
-	components: { BaseButton, Notfound },
+	components: { SearchedCms, Notfound },
 };
 </script>
 

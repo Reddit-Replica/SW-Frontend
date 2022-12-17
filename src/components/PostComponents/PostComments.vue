@@ -135,7 +135,10 @@
 									</div>
 									<div class="main">
 										<div class="content">
-											<post-content :post="postDetails"></post-content>
+											<post-content
+												:post="postDetails"
+												:blur="false"
+											></post-content>
 										</div>
 										<div class="post-services">
 											<ul
@@ -396,6 +399,34 @@
 											/>
 										</div>
 									</div>
+									<div class="bell" @click="follow" id="follow">
+										<svg
+											v-if="!isFollowed"
+											xmlns="http://www.w3.org/2000/svg"
+											width="22"
+											height="22"
+											fill="currentColor"
+											class="bi bi-bell"
+											viewBox="0 0 22 22"
+										>
+											<path
+												d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
+											/>
+										</svg>
+										<svg
+											v-else
+											xmlns="http://www.w3.org/2000/svg"
+											width="22"
+											height="22"
+											fill="currentColor"
+											class="bi bi-bell-fill"
+											viewBox="0 0 22 22"
+										>
+											<path
+												d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"
+											/>
+										</svg>
+									</div>
 								</div>
 								<div class="post-comments">
 									<my-comment
@@ -424,8 +455,14 @@
 			</div>
 		</div>
 	</div>
+	<div class="positioning">
+		<SaveUnsavePopupMessage v-for="action in savedUnsavedPosts" :key="action">{{
+			action
+		}}</SaveUnsavePopupMessage>
+	</div>
 </template>
 <script>
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import SubMenu from '../BaseComponents/SubMenu.vue';
 import SubredditInfo from './SubredditInfo.vue';
 import MyComment from './MyComment.vue';
@@ -442,6 +479,7 @@ export default {
 		ProfileCard,
 		PostOptions,
 		PostContent,
+		SaveUnsavePopupMessage,
 	},
 	data() {
 		return {
@@ -479,6 +517,9 @@ export default {
 		currentSortType() {
 			if (this.$route.query.sort) return this.$route.query.sort;
 			else return 'best';
+		},
+		savedUnsavedPosts() {
+			return this.$store.getters['postCommentActions/getActions'];
 		},
 	},
 	//@vuese
@@ -567,6 +608,8 @@ export default {
 			this.isFollowed = this.postDetails.followed;
 			this.upClicked = this.postDetails.votingType == 1 ? true : false;
 			this.downClicked = this.postDetails.votingType == -1 ? true : false;
+			this.saved = this.postDetails.saved;
+			this.postHidden = this.postDetails.hidden;
 			console.log(this.postDetails);
 		},
 		//@vuese
@@ -639,7 +682,7 @@ export default {
 		//follow post
 		async follow() {
 			try {
-				await this.$store.dispatch('comments/followPost', {
+				await this.$store.dispatch('postCommentActions/followPost', {
 					baseurl: this.$baseurl,
 					id: this.$route.path.split('/')[4],
 					follow: !this.isFollowed,
@@ -657,13 +700,53 @@ export default {
 		},
 		//@vuese
 		//hide post
-		hidePost() {
+		async hidePost() {
 			this.postHidden = !this.postHidden;
+			if (this.postHidden) {
+				try {
+					await this.$store.dispatch('postCommentActions/hide', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unhide', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 		//@vuese
 		//save post
-		savePost() {
+		async savePost() {
 			this.saved = !this.saved;
+			if (this.saved == true) {
+				try {
+					await this.$store.dispatch('postCommentActions/save', {
+						baseurl: this.$baseurl,
+						id: this.postDetails.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				try {
+					await this.$store.dispatch('postCommentActions/unsave', {
+						baseurl: this.$baseurl,
+						id: this.postDetails.id,
+						type: 'post',
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			}
 		},
 		//@vuese
 		//show share submenu of post
@@ -999,5 +1082,16 @@ export default {
 	#awards {
 		display: none;
 	}
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	z-index: 4;
 }
 </style>

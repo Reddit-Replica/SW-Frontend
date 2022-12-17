@@ -1,7 +1,7 @@
 <template>
-	<div class="topCommunities">
-		<div :style="style" class="topCommunitiesTitleBlock">
-			<h2 class="topCommunitiesTitle">
+	<div class="topCommunities" id="top-comm-1">
+		<div :style="style" class="topCommunitiesTitleBlock" id="top-comm-2">
+			<h2 class="topCommunitiesTitle" id="top-comm-3">
 				<router-link
 					:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
 					class="topCommunitiesLink"
@@ -10,8 +10,9 @@
 				>
 			</h2>
 		</div>
-		<ol class="topCommunitiesList">
+		<ol class="topCommunitiesList" id="top-comm-5">
 			<top-community
+				@reload="reloadAgain"
 				v-for="(community, index) in topCommunities"
 				:index="index"
 				:key="community.id"
@@ -23,7 +24,7 @@
 			>
 			</top-community>
 		</ol>
-		<div class="viewAllBlock">
+		<div class="viewAllBlock" id="top-comm-6">
 			<base-button
 				link
 				:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
@@ -55,6 +56,7 @@ import TopCommunity from '../TopCommunities/TopCommunity.vue';
 import BaseButton from '../BaseComponents/BaseButton.vue';
 export default {
 	components: { TopCommunity, BaseButton },
+	emits: ['reloadComponent'],
 	props: {
 		//@vuese
 		//Top communities Title
@@ -93,6 +95,12 @@ export default {
 		//Set background image of top communities bar
 		style() {
 			return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
+		},
+	},
+	methods: {
+		reloadAgain() {
+			console.log('reloadComponent');
+			this.$emit('reloadComponent');
 		},
 	},
 };

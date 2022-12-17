@@ -72,7 +72,7 @@
 						/>
 					</svg>
 					<subMenu
-						:titles="['Posts And Comments', 'Posts', 'Comments']"
+						:titles="['Posts', 'Comments']"
 						:display="showSecondMenu"
 						@change-title="changeSecondTitle"
 						clicked-prop="Everyone"
@@ -159,30 +159,65 @@ export default {
 				this.unmod('old');
 			} else if (value == 'Newest First' && this.title == 'Unmoderated') {
 				this.unmod('new');
+			} else if (value == 'Older First' && this.title == 'Edited') {
+				this.edit('old');
+			} else if (value == 'Newest First' && this.title == 'Edited') {
+				this.edit('new');
+			} else if (value == 'Older First' && this.title == 'Spam') {
+				this.spam('old');
+			} else if (value == 'Newest First' && this.title == 'Spam') {
+				this.spam('new');
 			}
 		},
 		titleSecond(value) {
 			this.editing(value);
+			this.spaming(value);
 		},
 	},
 	emits: ['getarr'],
 	methods: {
+		async spaming(value) {
+			try {
+				let temp;
+				if (this.titleFirst == 'Newest First') temp = 'new';
+				else temp = 'old';
+				await this.$store.dispatch('moderation/loadListOfSpams', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					sortSpam: temp,
+					only: value,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
+		async spam(value) {
+			try {
+				let temp;
+				if (this.titleSecond == 'Posts') temp = 'posts';
+				else temp = 'comments';
+				await this.$store.dispatch('moderation/loadListOfSpams', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					sortSpam: value,
+					only: temp,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+		},
 		editing(value) {
-			if (value == 'Posts') {
-				let arr = [];
-				arr[0] = false;
-				arr[1] = true;
-				this.$emit('getarr', arr);
-			} else if (value == 'Comments') {
-				let arr = [];
-				arr[0] = true;
-				arr[1] = false;
-				this.$emit('getarr', arr);
-			} else {
-				let arr = [];
-				arr[0] = true;
-				arr[1] = true;
-				this.$emit('getarr', arr);
+			this.$emit('getarr', value);
+		},
+		async edit(val) {
+			try {
+				await this.$store.dispatch('moderation/EditedPosts', {
+					baseurl: this.$baseurl,
+					subredditName: this.subredditName,
+					sort: val,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
 		},
 		// @vuese

@@ -12,52 +12,66 @@
 				<div class="hole-post-2">
 					<div v-if="!(posts && posts.length == 0)">
 						<div class="post-release" v-for="value in posts" :key="value.id">
-							<div class="post-name-bar">
-								<div class="community-name">
-									<a class="comm-name"> r/{{ value.subreddit }} &nbsp;</a>
-									<div class="aligning"></div>
-								</div>
-								<span class="point-center" role="presentation">•&nbsp;</span>
-								<div class="posted-user">
-									<span class="posted-word" style="color: rgb(120, 124, 126)">
-										&nbsp;Posted by&nbsp;
-									</span>
-									<div>
-										<a class="posted-username" style="color: rgb(120, 124, 126)"
-											>u/{{ value.postedBy }}&nbsp;</a
-										>
+							<div
+								class="point"
+								@click="
+									gotocomment(
+										value.id,
+										value.title,
+										value.subreddit,
+										value.postedBy
+									)
+								"
+							>
+								<div class="post-name-bar">
+									<div class="community-name">
+										<a class="comm-name"> r/{{ value.subreddit }} &nbsp;</a>
+										<div class="aligning"></div>
 									</div>
-									<span class="time" style="color: rgb(120, 124, 126)"
-										>{{ this.calculateTime(value.postedAt) }}&nbsp;</span
-									>
-								</div>
-							</div>
-							<div class="written-post">
-								<div>
-									<div class="posts-words">
-										<div class="author">
-											<a class="main-post"
-												><div
-													class="inside-post"
-													style="--posttitletextcolor: #1a1a1b"
-												>
-													<h3 class="header-3">
-														{{ value.content }}
-													</h3>
-												</div></a
+									<span class="point-center" role="presentation">•&nbsp;</span>
+									<div class="posted-user">
+										<span class="posted-word" style="color: rgb(120, 124, 126)">
+											&nbsp;Posted by&nbsp;
+										</span>
+										<div>
+											<a
+												class="posted-username"
+												style="color: rgb(120, 124, 126)"
+												>u/{{ value.postedBy }}&nbsp;</a
 											>
 										</div>
-										<div class="image-class">
-											<img alt="" style="width: 1px; height: 1px" />
+										<span class="time" style="color: rgb(120, 124, 126)"
+											>{{ this.calculateTime(value.postedAt) }}&nbsp;</span
+										>
+									</div>
+								</div>
+								<div class="written-post">
+									<div>
+										<div class="posts-words">
+											<div class="author">
+												<a class="main-post"
+													><div
+														class="inside-post"
+														style="--posttitletextcolor: #1a1a1b"
+													>
+														<h3 class="header-3">
+															{{ value.content }}
+														</h3>
+													</div></a
+												>
+											</div>
+											<div class="image-class">
+												<img alt="" style="width: 1px; height: 1px" />
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="bottom-bar">
-								<span class="votes">{{ value.votes }} upvotes&nbsp;</span
-								><span class="comments"
-									>{{ value.components }} comments&nbsp;</span
-								>
+								<div class="bottom-bar">
+									<span class="votes">{{ value.votes }} upvotes&nbsp;</span
+									><span class="comments"
+										>{{ value.components }} comments&nbsp;</span
+									>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -86,6 +100,13 @@ export default {
 		};
 	},
 	methods: {
+		gotocomment(id, title, sub, postman) {
+			if (sub != null) {
+				this.$router.push(`/r/${sub}/comments/${id}/${title}`);
+			} else {
+				this.$router.push(`/user/${postman}/comments/${id}/${title}`);
+			}
+		},
 		calculateTime(time) {
 			var currentDate = new Date();
 			var returnValue = '';

@@ -1,5 +1,5 @@
 <template>
-	<header class="header">
+	<header class="header" :class="userName == null ? 'not-auth' : ''">
 		<div class="header-logo" @click="goToHome()" id="reddit-logo">
 			<img
 				src="../../../img/logo.png"
@@ -14,7 +14,12 @@
 				id="reddit-name"
 			/>
 		</div>
-		<div class="header-home" @click="showHomeSubMenu()" id="home-header">
+		<div
+			class="header-home"
+			@click="showHomeSubMenu()"
+			id="home-header"
+			v-if="userName != null"
+		>
 			<div class="header-icon-home">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -291,7 +296,7 @@
 				</svg>
 			</button>
 		</form>
-		<nav class="header-user-nav">
+		<nav class="header-user-nav" v-if="userName != null">
 			<!-- <div class="header-user-nav-icon-box header-popular" id="header-popular">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -309,7 +314,11 @@
 					/>
 				</svg>
 			</div> -->
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<div
+				class="header-user-nav-icon-box header-popular"
+				id="header-settings"
+				@click="goToSettings()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -317,7 +326,7 @@
 					fill="currentColor"
 					class="bi bi-gear header-user-nav-icon"
 					viewBox="0 0 16 16"
-					@click="goToSettings()"
+					id="header-settings-icon"
 				>
 					<title>settings</title>
 					<path
@@ -340,7 +349,11 @@
 
       | -->
 
-			<div class="header-user-nav-icon-box" id="chat-icon-box">
+			<div
+				class="header-user-nav-icon-box"
+				id="chat-icon-box"
+				@click="goToMessages()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -349,7 +362,6 @@
 					class="bi bi-chat-dots header-user-nav-icon"
 					viewBox="0 0 16 16"
 					id="chat-icon"
-					@click="goToMessages()"
 				>
 					<title>Messages</title>
 					<path
@@ -384,13 +396,18 @@
 					/>
 				</svg>
 				<span
+					v-if="!noUnreadNotifications && unreadNotificationsCount"
 					class="header-user-nav-notification"
 					id="num-notification-notification"
-					>2</span
+					>{{ unreadNotificationsCount }}</span
 				>
 			</div>
 
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<div
+				class="header-user-nav-icon-box header-popular"
+				id="header-user-page"
+				@click="goToUserPage()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -398,7 +415,7 @@
 					fill="currentColor"
 					class="bi bi-person-circle header-user-nav-icon"
 					viewBox="0 0 16 16"
-					@click="goToUserPage()"
+					id="header-user-page-icon"
 				>
 					<title>Your Profile</title>
 					<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -409,7 +426,11 @@
 				</svg>
 			</div>
 
-			<div class="header-user-nav-icon-box header-popular" id="header-popular">
+			<div
+				class="header-user-nav-icon-box header-popular"
+				id="header-go-home"
+				@click="goToHome()"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -417,6 +438,7 @@
 					fill="currentColor"
 					class="bi bi-house-door-fill header-user-nav-icon"
 					viewBox="0 0 16 16"
+					id="header-go-home-icon"
 				>
 					<title>Home</title>
 					<path
@@ -615,6 +637,9 @@
 				</ul>
 			</div>
 		</nav>
+		<div class="header-user-nav" v-else>
+			<base-button class="base-button" @click="goToLogin()">Login</base-button>
+		</div>
 		<create-community
 			v-if="createCommunityShown"
 			@exit="showCreateCommunity"
@@ -669,10 +694,23 @@ export default {
 			console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/listOfSubreddits'];
 		},
+		// @vuese
+		//return number of unread notifications
+		//@type Number
+		unreadNotificationsCount() {
+			return this.$store.getters['notifications/getUnreadCount'];
+		},
+		// @vuese
+		//return number of unread notifications
+		//@type Number
+		noUnreadNotifications() {
+			return this.$store.getters['notifications/unreadCount'] == 0;
+		},
 	},
 	async beforeMount() {
 		this.RequestUserData();
 		this.getUserSubreddits();
+		this.loadAllNotifications();
 	},
 	methods: {
 		// @vuese
@@ -694,6 +732,12 @@ export default {
 		// @arg no argument
 		goToSettings() {
 			this.$router.push('/settings');
+		},
+		// @vuese
+		// Used to go to login page
+		// @arg no argument
+		goToLogin() {
+			this.$router.push('/login');
 		},
 		// @vuese
 		// Used to go to messages page
@@ -754,6 +798,7 @@ export default {
 					name: 'searchpost',
 					query: { q: this.searchQuery },
 				});
+				// window.reload();
 			} else {
 				alert('Did not enter a word to Search');
 			}
@@ -770,7 +815,7 @@ export default {
 
 				await this.$store.dispatch('logout_handle');
 
-				//location.reload();
+				location.reload();
 			} catch (error) {
 				console.log('error');
 				// this.error = err;
@@ -798,6 +843,19 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			return responseStatus;
+		},
+		/**
+		 * @vuese
+		 * this function send call an action function from the store to load user notifications
+		 * @arg no arg
+		 */
+		async loadAllNotifications() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('notifications/getAllNotifications', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			console.log(this.$store.getters['notifications/unreadCount']);
 		},
 	},
 };
@@ -916,6 +974,9 @@ export default {
 	border: var(--line-3);
 }
 
+.not-auth {
+	grid-template-columns: 10% 60% auto;
+}
 .header-search-input:focus,
 .header-search-input:hover {
 	outline: navajowhite;
@@ -1069,6 +1130,40 @@ export default {
 	border: var(--line-3);
 	border-radius: 5px;
 	width: 16rem;
+}
+.base-button {
+	position: relative;
+	border: none;
+	color: var(--main-white-color);
+	fill: var(--main-white-color);
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: unset;
+	line-height: 1.7rem;
+	text-transform: unset;
+	min-height: 3.2rem;
+	min-width: 4.2rem;
+	padding: 4px 1.6rem;
+	-ms-flex-align: center;
+	align-items: center;
+	border-radius: 9999px;
+	box-sizing: border-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: center;
+	justify-content: center;
+	position: relative;
+	text-align: center;
+	width: auto;
+	margin-right: 0.8rem;
+	background-color: #ff4500;
+	border-color: transparent;
+	color: #fff;
+	padding: 8px 12px;
+}
+.base-button:hover {
+	background-color: #f04000;
 }
 
 .header-user-nav-user-photo {
@@ -1229,6 +1324,9 @@ export default {
 	.header {
 		grid-template-columns: max-content 20% 23% max-content;
 	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
+	}
 
 	.header-user-nav-user-name {
 		display: none;
@@ -1254,6 +1352,9 @@ export default {
 	.header {
 		grid-template-columns: max-content 10% 40% max-content;
 	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
+	}
 
 	.header-icon-home span,
 	.color-black span {
@@ -1270,12 +1371,18 @@ export default {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
 	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
+	}
 }
 
 /* 788px */
 @media only screen and (max-width: 49.25em) {
 	.header {
 		grid-template-columns: max-content 10% 30% max-content;
+	}
+	.not-auth {
+		grid-template-columns: 10% 60% auto;
 	}
 
 	.header-user-nav > * {
@@ -1310,6 +1417,9 @@ export default {
 @media only screen and (max-width: 25em) {
 	.header {
 		grid-template-columns: 10% 10% 30% auto;
+	}
+	.not-auth {
+		grid-template-columns: 20% 60% auto;
 	}
 
 	.header-box {

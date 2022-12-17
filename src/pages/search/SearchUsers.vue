@@ -69,66 +69,7 @@
 							<div class="people-results">
 								<div v-if="!(SearchedUsers && SearchedUsers.length == 0)">
 									<div v-for="value in SearchedUsers" :key="value.username">
-										<a class="user-a"
-											><div class="user-div">
-												<div class="user-details">
-													<div class="user-img-div">
-														<div class="user-img-det"></div>
-														<div class="user-img">
-															<img
-																v-if="!value.avatar"
-																src="../../../img/default_inbox_avatar.png"
-																alt="img"
-																class="image-user"
-																:id="'user-avatar' + value.id"
-															/>
-															<img
-																v-else
-																:src="$baseurl + '/' + value.avatar"
-																alt="img"
-																class="image-user"
-																:id="'user-avatar' + value.id"
-															/>
-														</div>
-													</div>
-												</div>
-												<div class="people-content">
-													<div class="people-content_release">
-														<div class="name" @click="gotoUser(value.username)">
-															<h6 class="people-name">
-																u/{{ value.username }}&nbsp;
-															</h6>
-														</div>
-														<p class="karma-number">
-															<span class="point-span" role="presentation"
-																>&nbsp;•&nbsp;</span
-															>{{ value.karma }} Karma&nbsp;
-														</p>
-													</div>
-													<!-- <p class="p-details">{{ value.Pdetails }}&nbsp;</p> -->
-												</div>
-												<div
-													class="follow"
-													v-if="value.following"
-													@click="toggle(value.dataId)"
-												>
-													<base-button
-														button-text="Follow"
-														class="follow-button"
-													></base-button>
-												</div>
-												<div
-													class="follow"
-													v-if="!value.following"
-													@click="toggle(value.dataId)"
-												>
-													<base-button
-														button-text="Unfollow"
-														class="follow-button"
-													></base-button>
-												</div>
-											</div>
-										</a>
+										<searched-user :value="value"></searched-user>
 									</div>
 								</div>
 								<div v-else>
@@ -143,17 +84,15 @@
 	</div>
 </template>
 <script>
-import BaseButton from '../../components/BaseComponents/BaseButton.vue';
+// import BaseButton from '../../components/BaseComponents/BaseButton.vue';
 import Notfound from '../../components/SearchComponents/NotFound.vue';
+import SearchedUser from '../../components/SearchComponents/SearchedUser.vue';
 export default {
 	data() {
 		return {
 			q: '',
 			notFollowed: true,
-			users: [
-				{ username: 'Abd', karma: '11k' },
-				{ username: 'Karim', karma: '11k' },
-			],
+			users: [],
 			notfounded: false,
 		};
 	},
@@ -174,6 +113,7 @@ export default {
 	},
 	beforeMount() {
 		this.search();
+		// this.intousers();
 	},
 	methods: {
 		async search() {
@@ -187,10 +127,16 @@ export default {
 			}
 		},
 		//not true just writing what will it been do in action
-		toggle(id) {
-			for (let i = 0; i < this.SearchedUsers().length; i++) {
-				if (this.SearchedUsers()[i].id == id) {
-					this.SearchedUsers()[i].joined = !this.SearchedUsers()[i].joined;
+		async toggle(user, follow) {
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('search/follow', {
+						baseurl: this.$baseurl,
+						following: follow,
+						username: user,
+					});
+				} catch (error) {
+					console.log(error);
 				}
 			}
 		},
@@ -216,7 +162,7 @@ export default {
 			this.$router.push('/user/' + name);
 		},
 	},
-	components: { BaseButton, Notfound },
+	components: { Notfound, SearchedUser },
 };
 </script>
 

@@ -19,7 +19,7 @@ export default {
 		return state.subreddit;
 	},
 	getPosts(state) {
-		return state.Posts;
+		return state.posts;
 	},
 	createdSuccessfully(state) {
 		return state.createdSuccessfully;

@@ -1,11 +1,12 @@
 <template>
-	<div class="comm-top-1" @reload="reloadPage">
-		<div class="comm-top-2">
-			<h2>Top</h2>
+	<div class="comm-top-1" id="comm-top-1">
+		<div class="comm-top-2" id="comm-top-2">
+			<h2>{{ title }}</h2>
 			<span class="text-grey">Rank Change</span>
 		</div>
-		<ol>
+		<ol id="comm-top-3">
 			<top-community
+				@reload="reloadPage"
 				v-for="(community, index) in allCommunities"
 				:index="index"
 				:key="community.id"
@@ -29,30 +30,35 @@ export default {
 	data() {
 		return {
 			allCommunities: [],
+			textAll: "Today's Top Growing Communities",
+			textCategory: "Today's Top Growing in ",
 		};
 	},
 	watch: {
 		'$route.params.category': {
 			handler: function () {
-				if (
-					this.$route.params.category == null ||
-					this.$route.params.category == ''
-				)
+				if (this.$route.params.category) {
+					this.getCategoryCommunities(this.$route.params.category);
+				} else {
 					this.getAllCommunities();
-				else this.getCategoryCommunities(this.$route.params.category);
+				}
 			},
 		},
-		// $route: {
-		// 	handler: function () {
-		// 		if (this.$route == '/subreddit/leaderboard') this.getAllCommunities();
-		// 	},
-		// },
+	},
+	computed: {
+		title() {
+			if (this.$route.params.category) {
+				return this.textCategory + this.$route.params.category;
+			} else {
+				return this.textAll;
+			}
+		},
 	},
 	created() {
-		let category = this.$route.params.category;
-		if (!category) {
+		if (this.$route.params.category) {
+			this.getCategoryCommunities(this.$route.params.category);
+		} else {
 			this.getAllCommunities();
-			console.log(this.$store.getters['topCommunity/getAllCommunities']);
 		}
 	},
 
@@ -77,6 +83,7 @@ export default {
 				this.$store.getters['topCommunity/getCategoryCommunities'];
 		},
 		reloadPage() {
+			console.log('reloadPage');
 			let category = this.$route.params.category;
 			if (!category) {
 				this.getAllCommunities();

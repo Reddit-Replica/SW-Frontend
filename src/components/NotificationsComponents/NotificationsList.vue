@@ -1,13 +1,15 @@
 <template>
-	<div>
-		<div class="ntf-header-list">
-			<!-- <div> -->
-			<nav class="ntf-nav" @reload="reloadPage">
-				<span class="ntf-title title-black">Notification</span>
-				<span class="ntf-title-2"
-					><router-link to="message/messages" class="ntf-title title-grey flex"
+	<div id="ntf-list-1">
+		<div class="ntf-header-list" id="ntf-list-2">
+			<nav class="ntf-nav" @reload="reloadPage" id="ntf-list-3">
+				<span class="ntf-title title-black" id="ntf-list-4">Notification</span>
+				<span class="ntf-title-2" id="ntf-list-5"
+					><router-link
+						to="/message/messages"
+						class="ntf-title title-grey flex"
+						id="ntf-list-6"
 						>Messages
-						<span class="circle-red">18</span>
+						<!-- <span class="circle-red" id="ntf-list-7">18</span> -->
 					</router-link>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -17,6 +19,7 @@
 						class="bi bi-bookmark-check"
 						viewBox="0 0 16 16"
 						@click="markAllRead"
+						id="ntf-list-8"
 					>
 						<path
 							fill-rule="evenodd"
@@ -28,8 +31,13 @@
 					</svg>
 				</span>
 			</nav>
-			<div v-if="!noNotifications" class="ntf-list" @reload="reloadPage">
-				<ul>
+			<div
+				v-if="!noNotifications"
+				class="ntf-list"
+				@reload="reloadPage"
+				id="ntf-list-9"
+			>
+				<ul id="ntf-list-10">
 					<notification-message
 						v-for="(notification, index) in notifications"
 						:key="notification.id"
@@ -38,28 +46,35 @@
 					></notification-message>
 				</ul>
 			</div>
-			<div v-if="!noNotifications" class="see-all-ntf">
-				<router-link to="/notifications" class="see-all-link"
+			<div v-if="!noNotifications" class="see-all-ntf" id="ntf-list-11">
+				<router-link to="/notifications" class="see-all-link" id="ntf-list-12"
 					>See All</router-link
 				>
 			</div>
-			<div v-if="noNotifications" class="no-ntf ntf-list">
-				<img src="../../../img/default_avatar.png" alt="Avatar" />
-				<h1>You don’t have any activity yet</h1>
-				<p>
+			<div v-if="noNotifications" class="no-ntf ntf-list" id="ntf-list-13">
+				<img
+					src="../../../img/default_avatar.png"
+					alt="Avatar"
+					id="ntf-list-14"
+				/>
+				<h1 id="ntf-list-15">You don’t have any activity yet</h1>
+				<p id="ntf-list-16">
 					That’s ok, maybe you just need the right inspiration. Try posting in
 					r/<router-link to="subredditLink">{{
 						randomSubredditName
 					}}</router-link>
 					, a popular community for discussion.
 				</p>
-				<base-button link to="/notifications" class="button-visit"
+				<base-button
+					link
+					to="/notifications"
+					class="button-visit"
+					id="ntf-list-17"
 					>Visit r/{{ randomSubredditName }}</base-button
 				>
 			</div>
 		</div>
 	</div>
-	<!-- </div> -->
 </template>
 <script>
 import NotificationMessage from './NotificationMessage.vue';

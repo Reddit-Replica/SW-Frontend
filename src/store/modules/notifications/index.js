@@ -11,6 +11,7 @@ export default {
 			allRead: false,
 			hiddenSuccessfully: false,
 			readSuccessfully: false,
+			unreadCount: 0,
 
 			clientToken: null,
 		};
