@@ -41,8 +41,18 @@
 						<div class="post-content" id="base-user-post-content">
 							<div class="post-user-information">
 								<div class="post-subreddit-icon">
+									<i
+										v-if="subredditPagePinned"
+										class="fa-solid fa-thumbtack"
+										style="
+											font-size: 20px;
+											transform: rotate(45deg);
+											color: rgb(70, 209, 96);
+										"
+									></i>
+
 									<img
-										v-if="getUserData.userData.picture != null"
+										v-else-if="getUserData.userData.picture != null"
 										:src="$baseurl + '/' + getUserData.userData.picture"
 										alt=""
 									/>
@@ -96,6 +106,7 @@
 										v-if="postData.data.moderation != null"
 										:moderation="postData.data.moderation"
 										:pinned-post="postData.data.pin"
+										:moderator-flag="moderatorFlag"
 									></moderation-title>
 								</div>
 							</div>
@@ -218,6 +229,7 @@
 							:page="page"
 							post-kind="ov"
 							@emit-popup="emitPopup"
+							@click="$emit('subredditPageHandler')"
 						></post-options>
 					</div>
 					<div class="post-insight" v-if="insightActive">
@@ -259,7 +271,7 @@ export default {
 		TheInsights,
 		ModerationTitle,
 	},
-	emits: ['emitPopup'],
+	emits: ['emitPopup', 'subredditPageHandler'],
 	props: {
 		// @vuese
 		// postData the full post Data
@@ -283,6 +295,16 @@ export default {
 			type: String,
 			required: false,
 			default: '',
+		},
+		subredditPagePinned: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		moderatorFlag: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 	data() {
