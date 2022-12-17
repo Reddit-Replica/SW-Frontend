@@ -1,6 +1,11 @@
 <template>
 	<!-- header component -->
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 30%; top: 50%"
+			></the-spinner>
+		</div>
 		<div :class="showPostComments ? 'back' : ''">
 			<the-header :header-title="userName"></the-header>
 			<div class="container">
@@ -61,11 +66,14 @@ import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar
 import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
-	beforeMount() {
+	async beforeMount() {
 		let title = this.$route.params.title;
 		if (title == null) title = 'best';
-		this.fetchPosts(title);
+		this.loading = true;
+		await this.fetchPosts(title);
+		this.loading = false;
 	},
 	watch: {
 		'$route.params.title': {
@@ -83,6 +91,7 @@ export default {
 		RightsideFooter,
 		BacktotopButton,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
 	computed: {
 		showPostComments() {
@@ -108,6 +117,7 @@ export default {
 			colorGreyDark2: '#0099CC',
 			posts: [],
 			showComments: false,
+			loading: false,
 		};
 	},
 	methods: {
