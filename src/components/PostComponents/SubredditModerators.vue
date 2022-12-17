@@ -1,6 +1,8 @@
 <template>
 	<div class="moderators">
-		<div class="header">Moderators</div>
+		<div class="header" :class="{ blue: isModerator, green: !isModerator }">
+			Moderators
+		</div>
 		<div class="body">
 			<base-button
 				><font-awesome-icon icon="fa-regular fa-envelope" class="icon" />Message
@@ -24,6 +26,10 @@ export default {
 			type: Array,
 			required: true,
 		},
+		isModerator: {
+			type: Boolean,
+			required: false,
+		},
 	},
 };
 </script>
@@ -34,9 +40,14 @@ export default {
 	overflow: hidden;
 	background-color: white;
 }
+.green {
+	background-color: var(--color-green-2);
+}
+.blue {
+	background-color: var(--color-blue-2);
+}
 .header {
 	height: 34px;
-	background-color: var(--color-green-2);
 	color: white;
 	font-size: 14px;
 	font-weight: 600;

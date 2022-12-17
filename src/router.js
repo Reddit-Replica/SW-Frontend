@@ -167,17 +167,17 @@ const router = createRouter({
 		}, //render user component
 		{
 			path: '/r/:subredditName',
-			// alias: '/r/:subredditName/:title',
+			alias: '/r/:subredditName/:title',
 			name: 'subreddit',
 			component: SubredditPage,
 			props: true,
-			children: [
-				{
-					path: '/r/:subredditName/:title',
-					name: 'subredditsort',
-					component: SubredditPage,
-				},
-			],
+			// children: [
+			// 	{
+			// 		path: '/r/:subredditName/:title',
+			// 		name: 'subredditsort',
+			// 		component: SubredditPage,
+			// 	},
+			// ],
 		}, //render subreddit component
 
 		{

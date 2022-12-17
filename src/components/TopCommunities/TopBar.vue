@@ -1,6 +1,6 @@
 <template>
-	<div class="top-bar-1">
-		<div class="top-bar-2">
+	<div class="top-bar-1" id="top-bar-1">
+		<div class="top-bar-2" id="top-bar-2">
 			<h1>Today's Top Growing Communities</h1>
 			<p>
 				Browse Reddit's top growing communities. Find the top communities in
