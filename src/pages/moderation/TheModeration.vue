@@ -122,7 +122,6 @@ export default {
 		//return if i'm a moderator in this subreddit or not
 		// @type boolean
 		moderatorByMe() {
-			console.log('modddd');
 			for (let i = 0; i < this.listOfAllModerators.length; i++) {
 				if (this.listOfAllModerators[i].username == this.getUserName) {
 					return true;
