@@ -5,7 +5,7 @@
 		</div>
 		<div v-if="loading">
 			<the-spinner
-				style="position: absolute; left: 50%; top: 53%; top: 270px"
+				style="position: absolute; left: 50%; top: 50%"
 			></the-spinner>
 		</div>
 		<div
