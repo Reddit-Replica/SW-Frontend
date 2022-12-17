@@ -125,4 +125,7 @@ export default {
 	setEditedComments(state, payload) {
 		state.EditedComments = payload;
 	},
+	settrafficStatus(state, payload) {
+		state.trafficStatus = payload;
+	},
 };
