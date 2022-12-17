@@ -11,20 +11,27 @@
 						:key="notification.id"
 						:index="index"
 						:notification="notification"
+						@reload="reloadPage"
+						@showpop="showPop"
 					></notification-message>
 				</ul>
 			</div>
 		</div>
+		<save-unsave-popup-message v-if="doneHide" class="pop-up" id="pop-hide"
+			>Notification Hidden</save-unsave-popup-message
+		>
 	</div>
 </template>
 
 <script>
 import NotificationsTop from '../../components/NotificationsComponents/NotificationsTop.vue';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import NotificationMessage from '@/components/NotificationsComponents/NotificationMessage.vue';
 export default {
 	components: {
 		NotificationsTop,
 		NotificationMessage,
+		SaveUnsavePopupMessage,
 	},
 	beforeMount() {
 		if (localStorage.getItem('accessToken') == null)
@@ -34,6 +41,7 @@ export default {
 	data() {
 		return {
 			notifications: [],
+			doneHide: false,
 		};
 	},
 	methods: {
@@ -48,6 +56,12 @@ export default {
 		},
 		reloadPage() {
 			this.loadAllNotifications();
+		},
+		showPop() {
+			this.doneHide = true;
+			setTimeout(() => {
+				this.doneHide = false;
+			}, 1000);
 		},
 	},
 };
@@ -74,5 +88,10 @@ ul {
 	display: flex;
 	flex-direction: column;
 	margin: 5rem auto 0rem auto;
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
 }
 </style>
