@@ -51,19 +51,41 @@
 										"
 									></i>
 
-									<img
-										v-else-if="getUserData.userData.picture != null"
-										:src="$baseurl + '/' + getUserData.userData.picture"
-										alt=""
-									/>
-									<img
-										v-else
-										src="../../../../img/default_inbox_avatar.png"
-										alt=""
-									/>
+									<span
+										style="width: 100%; height: 100%"
+										v-if="postData.data.subreddit != null"
+									>
+										<img
+											v-if="getSubredditPicture"
+											:src="$baseurl + '/' + getSubredditPicture"
+											alt=""
+										/>
+										<img
+											v-else
+											src="../../../../img/default_subreddit_image.png"
+											alt=""
+										/>
+									</span>
+									<span style="width: 100%; height: 100%" v-else>
+										<img
+											v-if="getUserData.userData.picture != null"
+											:src="$baseurl + '/' + getUserData.userData.picture"
+											alt=""
+										/>
+										<img
+											v-else
+											src="../../../../img/default_inbox_avatar.png"
+											alt=""
+										/>
+									</span>
 								</div>
-								<div class="post-user-name">
+								<div
+									@mouseleave="hideSubredditBox"
+									style="position: relative"
+									class="post-user-name"
+								>
 									<router-link
+										@mouseover="showSubredditBox"
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
@@ -76,6 +98,16 @@
 												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
+									<subreddit-card-mini
+										@mouseover="showSubredditBox"
+										v-if="
+											showSubredditBoxFlag &&
+											subredditData != null &&
+											postData.data.subreddit != null
+										"
+										:subreddit="subredditData"
+										:subredditName="postData.data.subreddit"
+									></subreddit-card-mini>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
 									<span class="posted-by-unhovered">
@@ -264,6 +296,7 @@ import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
 import ModerationTitle from './PostComponents/ModerationTitle.vue';
+import SubredditCardMini from './PostComponents/SubredditCardMini.vue';
 export default {
 	components: {
 		PostOptions,
@@ -271,6 +304,7 @@ export default {
 		PicturePost,
 		TheInsights,
 		ModerationTitle,
+		SubredditCardMini,
 	},
 	emits: ['emitPopup', 'subredditPageHandler'],
 	props: {
@@ -321,18 +355,57 @@ export default {
 			insightActive: false,
 			insightsLoading: false,
 			PostHybridContent: '',
+			subredditData: null,
+			showSubredditBoxFlag: false,
 		};
 	},
 	mounted() {
 		this.setPostHybridContent();
+	},
+	async beforeMount() {
+		if (this.postData.data.subreddit != null) {
+			await this.getSubreddit();
+			console.log('aaa', this.subredditData);
+		}
 	},
 	computed: {
 		getUserData() {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
+		getSubredditPicture() {
+			if (
+				this.subredditData != null &&
+				this.postData.data.subreddit != null &&
+				this.subredditData.picture != null
+			) {
+				return this.subredditData.picture;
+			} else return false;
+		},
 	},
 	methods: {
+		showSubredditBox() {
+			this.showSubredditBoxFlag = true;
+		},
+		hideSubredditBox() {
+			this.showSubredditBoxFlag = false;
+		},
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					subredditName: 'medoemad',
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				this.subredditData = this.$store.getters['community/getSubreddit'];
+			} catch (err) {
+				console.log(err);
+				// if (this.$store.getters['community/notFound']) {
+				// 	this.$router.push('/notFound');
+				// }
+			}
+		},
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
 		},
@@ -796,6 +869,7 @@ span {
 	line-height: 20px;
 	text-decoration: none;
 	margin-right: 3px;
+	position: relative;
 }
 span.post-nsfw {
 	border: 1px solid rgb(255, 88, 91) !important;
