@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<queue-bar :title="'Spam'"></queue-bar>
 		<clean-queue v-if="listOfSpams && listOfSpams.length == 0"></clean-queue>
 		<div v-else>
@@ -17,10 +22,20 @@
 import CleanQueue from '../../components/moderation/CleanQueue.vue';
 import BasePost from '../../components/moderation/BasePost.vue';
 import QueueBar from '../../components/moderation/QueueBar.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
-	components: { CleanQueue, BasePost, QueueBar },
-	beforeMount() {
-		this.loadListOfSpams();
+	components: { CleanQueue, BasePost, QueueBar, TheSpinner },
+	async created() {
+		this.loading = true;
+		if (localStorage.getItem('accessToken')) {
+			await this.loadListOfSpams();
+		}
+		this.loading = false;
+	},
+	data() {
+		return {
+			loading: false,
+		};
 	},
 	computed: {
 		// @vuese

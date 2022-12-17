@@ -3,6 +3,11 @@
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
 		</div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<div
 			v-for="(message, index) in inboxMessages"
 			:key="message"
@@ -35,24 +40,29 @@
 import AllinboxComponent from '../../components/MessageComponents/AllinboxComponent.vue';
 import PostreplyComponent from '../../components/MessageComponents/PostreplyComponent.vue';
 import UserMentions from '../../components/MessageComponents/UserMentions.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		AllinboxComponent,
 		PostreplyComponent,
 		UserMentions,
+		TheSpinner,
 	},
 	// @vuese
 	//change title name and load messages
-	beforeMount() {
+	async created() {
 		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
 			document.title = 'messages: inbox';
-			this.loadInboxMessages();
+			await this.loadInboxMessages();
 		}
+		this.loading = false;
 	},
 	data() {
 		return {
 			noMessages: false,
 			errorResponse: null,
+			loading: false,
 		};
 	},
 	computed: {
@@ -76,6 +86,7 @@ export default {
 		//load compose messages from the store
 		// @arg no argument
 		async loadInboxMessages() {
+			this.loading = true;
 			try {
 				await this.$store.dispatch('messages/loadInboxMessages', {
 					baseurl: this.$baseurl,
@@ -83,6 +94,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			this.loading = false;
 		},
 		// @vuese
 		//reload inbox messages from the store

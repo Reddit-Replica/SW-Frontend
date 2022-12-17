@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<queue-bar :title="'Edited'" @getarr="getdata"></queue-bar>
 		<div
 			v-if="
@@ -36,14 +41,16 @@
 import CleanQueue from '../../components/moderation/CleanQueue.vue';
 import QueueBar from '../../components/moderation/QueueBar.vue';
 import NewBasePost from '../../components/moderation/NewBasePost.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
 			posts: true,
 			comments: false,
+			loading: false,
 		};
 	},
-	components: { CleanQueue, QueueBar, NewBasePost },
+	components: { CleanQueue, QueueBar, NewBasePost, TheSpinner },
 	computed: {
 		subredditName() {
 			return this.$route.params.subredditName;
@@ -57,9 +64,13 @@ export default {
 			return this.$store.getters['moderation/EditedComments'];
 		},
 	},
-	beforeMount() {
-		this.EditPosts();
-		this.EditComments();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.EditPosts();
+			await this.EditComments();
+		}
+		this.loading = false;
 	},
 	methods: {
 		getdata(val) {

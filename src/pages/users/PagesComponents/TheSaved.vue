@@ -61,12 +61,14 @@
 import CommentsOverviewPage from '../../../components/UserComponents/BaseUserComponents/CommentsComponents/CommentsOverviewPage.vue';
 import BaseUserPost from '../../../components/UserComponents/BaseUserComponents/BaseUserPost.vue';
 // import EmptyPage from '../../../components/UserComponents/BaseUserComponents/PostComponents/EmptyPage.vue';
+import EmptyPage from '@/components/UserComponents/BaseUserComponents/PostComponents/EmptyPage.vue';
 
 // import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
 		CommentsOverviewPage,
 		BaseUserPost,
+		EmptyPage,
 		// EmptyPage,
 		// BasePost,
 	},
