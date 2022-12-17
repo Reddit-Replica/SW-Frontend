@@ -1,6 +1,9 @@
 <template>
-	<div style="position: relative">
-		<div class="unfound-paragraph">
+	<div style="position: relative" id="empty-user-page-content">
+		<div
+			id="empty-user-unfound-paragraph-page-content"
+			class="unfound-paragraph"
+		>
 			{{ pageTitle }}
 		</div>
 		<empty-box></empty-box>
