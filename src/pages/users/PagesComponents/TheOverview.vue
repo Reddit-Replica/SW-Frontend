@@ -1,12 +1,26 @@
 <template>
 	<pinned-posts
+		v-if="
+			getUserPinnedPostData.pinnedPostData != null &&
+			getUserPinnedPostData.pinnedPostData.length != null &&
+			getUserPinnedPostData.pinnedPostData.length != 0
+		"
 		:pinned-posts-data="getUserPinnedPostData.pinnedPostData"
 		:state="state"
 	></pinned-posts>
 	<div style="margin-bottom: 16px">
 		<sortposts-bar initial-title="new" @title="sortBarClicked"></sortposts-bar>
 	</div>
+	<empty-page
+		:page-title="`hmm...looks like you haven't recently viewed anything`"
+		v-if="
+			!getUserOverviewData.overviewData ||
+			!getUserOverviewData.overviewData.children ||
+			getUserOverviewData.overviewData.children.length == 0
+		"
+	></empty-page>
 	<div
+		v-else
 		style="margin-bottom: 10px"
 		v-for="overviewPostData in getUserOverviewData.overviewData.children"
 		:key="overviewPostData.id"
@@ -50,6 +64,7 @@ import SortpostsBar from '../../../components/bars/SortpostsBar.vue';
 import PinnedPosts from '../../../components/UserComponents/BaseUserComponents/PinnedPosts.vue';
 import CommentsOverviewPage from '../../../components/UserComponents/BaseUserComponents/CommentsComponents/CommentsOverviewPage.vue';
 import OverviewPost from '../../../components/UserComponents/BaseUserComponents/OverviewPost.vue';
+import EmptyPage from '@/components/UserComponents/BaseUserComponents/PostComponents/EmptyPage.vue';
 // import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
@@ -57,6 +72,7 @@ export default {
 		PinnedPosts,
 		CommentsOverviewPage,
 		OverviewPost,
+		EmptyPage,
 		// BasePost,
 	},
 	props: {
@@ -72,9 +88,11 @@ export default {
 	},
 	mounted() {
 		console.log('in overview', this.state);
-		this.scroll();
+		// this.scroll();
 	},
-
+	unmounted() {
+		window.removeEventListener('scroll', this.scroll);
+	},
 	async created() {
 		let sortType;
 		if (!this.$route.query.sort || this.$route.query.sort == 'new') {
@@ -114,6 +132,10 @@ export default {
 		// // if (requestStatus == 200) console.log('Successfully fetched data');
 		// // else if (requestStatus == 404) console.log('not found');
 		// // else if (requestStatus == 500) console.log(' internal server error');
+		this.scroll();
+		this.$nextTick(() => {
+			window.addEventListener('scroll', this.scroll);
+		});
 	},
 	emits: ['emitPopup'],
 	computed: {
@@ -126,38 +148,12 @@ export default {
 			return this.$store.getters['userposts/getUserOverviewData'];
 		},
 	},
+
 	methods: {
 		scroll() {
-			window.onscroll = () => {
-				console.log('window.innerHeight', window.innerHeight);
-				console.log('window.scrollY', window.scrollY);
-				console.log(
-					'document.body.offsetHeight.scrollY',
-					document.body.offsetHeight
-				);
-				// console.log('bottom');
-				// let bottomOfWindow =
-				// 	Math.max(
-				// 		window.pageYOffset,
-				// 		document.documentElement.scrollTop,
-				// 		document.body.scrollTop
-				// 	) +
-				// 		window.innerHeight ===
-				// 	document.documentElement.offsetHeight;
-
-				if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-					// you're at the bottom of the page
-					console.log('window.innerHeight', window.innerHeight);
-					console.log('window.scrollY', window.scrollY);
-					console.log(
-						'document.body.offsetHeight.scrollY',
-						document.body.offsetHeight
-					);
-
-					// this.scrolledToBottom = true; // replace it with your code
-					console.log('bottom');
-				}
-			};
+			if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+				console.log('bottom1');
+			}
 		},
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
@@ -203,6 +199,30 @@ export default {
 			try {
 				requestStatus = await this.$store.dispatch(
 					'userposts/getUserOverviewData',
+					{
+						baseurl: this.$baseurl,
+						userName: this.$route.params.userName,
+						params: {
+							sort: `${sortType}`,
+							time: 'all',
+							before: '',
+							after: '',
+							limit: '25',
+						},
+					}
+				);
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+				console.log('req', this.error);
+			}
+			console.log('req', requestStatus);
+			return requestStatus;
+		},
+		async RequestMoreUserOverviewData(sortType) {
+			let requestStatus = -1;
+			try {
+				requestStatus = await this.$store.dispatch(
+					'userposts/getUserMoreOverviewData',
 					{
 						baseurl: this.$baseurl,
 						userName: this.$route.params.userName,

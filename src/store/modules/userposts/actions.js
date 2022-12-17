@@ -110,6 +110,42 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserMoreOverviewData(context, payload) {
+		console.log('overvie Actions');
+
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		}); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log('overvie Actions', responseData);
+		if (response.status == 200)
+			context.commit('setUserMoreOverviewData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
 	async getUserSavedData(context, payload) {
 		console.log('overvie Actions');
 
