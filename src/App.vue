@@ -186,7 +186,7 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 
-	min-height: 100vh;
+	min-height: 100%;
 	/*overflow: auto;*/
 }
 

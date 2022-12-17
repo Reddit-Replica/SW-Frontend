@@ -57,7 +57,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">right</div>
+				<div class="col-lg-4"></div>
 			</div>
 		</div>
 		<!-- <button @click="getTitle">check</button>
