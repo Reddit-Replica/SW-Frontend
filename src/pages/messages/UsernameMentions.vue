@@ -3,6 +3,11 @@
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
 		</div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 53%; top: 270px"
+			></the-spinner>
+		</div>
 		<div>
 			<user-mentions
 				v-for="(message, index) in userMentions"
@@ -18,22 +23,27 @@
 
 <script>
 import UserMentions from '../../components/MessageComponents/UserMentions.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		UserMentions,
+		TheSpinner,
 	},
 	// @vuese
 	//change title name and load mentions
-	beforeMount() {
+	async created() {
 		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
 			document.title = 'messages: mentions';
-			this.loadUserMentions();
+			await this.loadUserMentions();
+			this.loading = false;
 		}
 	},
 	data() {
 		return {
 			noMessages: false,
 			errorResponse: null,
+			loading: false,
 		};
 	},
 	computed: {

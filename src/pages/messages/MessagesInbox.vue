@@ -3,6 +3,11 @@
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
 		</div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 53%; top: 270px"
+			></the-spinner>
+		</div>
 		<div>
 			<messages-component
 				v-for="(message, index) in userMessages"
@@ -18,22 +23,27 @@
 
 <script>
 import MessagesComponent from '../../components/MessageComponents/MessagesComponent.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		MessagesComponent,
+		TheSpinner,
 	},
 	// @vuese
 	//change title name and load messages
-	beforeMount() {
+	async created() {
 		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
 			document.title = 'messages: messages';
-			this.loadUserMessages();
+			await this.loadUserMessages();
 		}
+		this.loading = false;
 	},
 	data() {
 		return {
 			noMessages: false,
 			count: 0,
+			loading: false,
 		};
 	},
 	computed: {
