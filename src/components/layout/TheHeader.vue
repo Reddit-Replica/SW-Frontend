@@ -780,12 +780,14 @@ export default {
 		//load compose messages from the store
 		// @arg no argument
 		async getUserSubreddits() {
-			try {
-				await this.$store.dispatch('user/getUserSubreddits', {
-					baseurl: this.$baseurl,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('user/getUserSubreddits', {
+						baseurl: this.$baseurl,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			}
 			// console.log('function');
 		},
@@ -834,15 +836,17 @@ export default {
 		 */
 		async RequestUserData() {
 			let responseStatus;
-			try {
-				await this.$store.dispatch('user/getUserData', {
-					baseurl: this.$baseurl,
-					userName: this.userName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('user/getUserData', {
+						baseurl: this.$baseurl,
+						userName: this.userName,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				return responseStatus;
 			}
-			return responseStatus;
 		},
 		/**
 		 * @vuese
@@ -851,11 +855,13 @@ export default {
 		 */
 		async loadAllNotifications() {
 			const accessToken = localStorage.getItem('accessToken');
-			await this.$store.dispatch('notifications/getAllNotifications', {
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
-			console.log(this.$store.getters['notifications/unreadCount']);
+			if (localStorage.getItem('accessToken')) {
+				await this.$store.dispatch('notifications/getAllNotifications', {
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				console.log(this.$store.getters['notifications/unreadCount']);
+			}
 		},
 	},
 };
