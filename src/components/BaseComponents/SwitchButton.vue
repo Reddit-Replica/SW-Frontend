@@ -12,9 +12,8 @@ export default {
 	created() {
 		// this.value = !this.val;
 		// console.log('this.value in switch button');
-		// console.log(this.val);
 		if (this.nsfw) {
-			console.log(this.val);
+			console.log(this.nsfw, 'cdd', this.val);
 		}
 	},
 	props: {
@@ -24,6 +23,7 @@ export default {
 		},
 		nsfw: {
 			type: Boolean,
+			dafault: false,
 			required: false,
 		},
 	},
@@ -34,6 +34,7 @@ export default {
 	},
 	methods: {
 		onChecked() {
+			console.log(this.value);
 			this.$emit('checked', this.value);
 		},
 	},
