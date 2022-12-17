@@ -472,13 +472,12 @@
 		<p class="description">
 			When your community is marked as an 18+ community, users must be flagged
 			as 18+ in their user settings
-			{{ nsfw }}
 			<switch-button
-				id="btn2"
+				id="btn3"
 				style="margin-left: 15px"
 				@checked="getNsfw"
 				:val="nsfw"
-				:nsfw="true"
+				v-if="create"
 			></switch-button>
 		</p>
 		<div v-if="communityType == 'Private'">
@@ -490,7 +489,7 @@
 				to join. Users may still send your subreddit modmail whether this is on
 				or off.
 				<switch-button
-					id="btn2"
+					id="btn3"
 					style="margin-left: 15px"
 					@checked="getRequesttojoin"
 					v-if="create"
@@ -533,7 +532,7 @@
 			<h3 class="medium-font">
 				Accepting new requests to post
 				<switch-button
-					id="btn2"
+					id="btn4"
 					style="margin-left: 15px"
 					@checked="getRequeststopost"
 					v-if="create"
@@ -568,6 +567,9 @@ export default {
 		subredditName() {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
+		},
+		nsfww() {
+			return this.$store.getters['setting/getmoderationSettings'].NSFW;
 		},
 	},
 	components: {
@@ -723,8 +725,8 @@ export default {
 			// console.log(this.sendWelcomeMessage);
 		},
 		getNsfw(value) {
+			console.log('val', value);
 			this.nsfw = value;
-			// console.log('this.NSFW');
 			// console.log(this.nsfw);
 		},
 		getRequesttojoin(value) {
@@ -781,7 +783,6 @@ export default {
 				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 			};
-			// console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/communitySettings',
@@ -804,6 +805,7 @@ export default {
 				baseurl: this.$baseurl,
 			};
 			// console.log(actionPayload);
+			console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/fetchmoderationSettings',
@@ -818,7 +820,7 @@ export default {
 				console.log(err);
 			}
 			this.setting = this.$store.getters['setting/getmoderationSettings'];
-			console.log('settings', this.setting);
+			// console.log('settings', this.setting);
 			this.communityName = this.setting.communityName;
 			this.mainTopic = this.setting.mainTopic;
 			this.subTopics = this.setting.subTopics;
@@ -833,6 +835,7 @@ export default {
 			this.acceptingRequestsToPost = this.setting.acceptingRequestsToPost;
 			this.approvedUsersHaveTheAbilityTo =
 				this.setting.approvedUsersHaveTheAbilityTo;
+			console.log('this.nsfw', this.nsfw);
 		},
 		////////////////////////////////
 		doneSuccessfully(title) {
