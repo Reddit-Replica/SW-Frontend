@@ -2,7 +2,8 @@ import { app as firebaseApp } from '../../../firebase';
 import {
 	getToken,
 	getMessaging,
-	onMessage,
+	//onMessage,
+	onMessageReceived,
 	//deleteToken,
 } from 'firebase/messaging';
 // import axios from 'axios';
@@ -257,7 +258,7 @@ export default {
 			reg = await navigator.serviceWorker.getRegistration(
 				host + '/firebase-messaging-sw.js'
 			);
-		onMessage(getMessaging(firebaseApp), (payload) => {
+		onMessageReceived(getMessaging(firebaseApp), (payload) => {
 			console.log('Message received. ', payload);
 			let { notification, data } = payload;
 			let notificationTitle = 'Test title';

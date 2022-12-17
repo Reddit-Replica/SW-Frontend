@@ -40,6 +40,9 @@
 				/>
 			</svg>
 		</button>
+		<div class="no-more" v-if="!loading && !after && !noMessages">
+			No more messages...
+		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
@@ -133,5 +136,12 @@ export default {
 }
 .load-more:hover {
 	background-color: aliceblue;
+}
+.no-more {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 2rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
 }
 </style>

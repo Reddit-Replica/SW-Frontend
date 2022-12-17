@@ -16,11 +16,11 @@
 				v-for="(community, index) in topCommunities"
 				:index="index"
 				:key="community.id"
-				:name="community.name"
-				:image="community.image"
-				:members="community.members"
+				:name="community.data.title"
+				:image="community.data.picture"
+				:members="community.data.members"
 				:show-members="false"
-				:is-member="community.isMember"
+				:is-member="community.data.isMember"
 			>
 			</top-community>
 		</ol>
@@ -99,7 +99,6 @@ export default {
 	},
 	methods: {
 		reloadAgain() {
-			console.log('reloadComponent');
 			this.$emit('reloadComponent');
 		},
 	},
