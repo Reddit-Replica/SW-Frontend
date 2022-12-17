@@ -186,6 +186,16 @@ export default {
 				return 'Community Settings';
 			} else if (
 				this.$route.path ===
+				'/r/' + this.subredditName + '/about/edit/community'
+			) {
+				return 'Community Settings';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/edit/postsandcomments'
+			) {
+				return 'Post and Comment settings';
+			} else if (
+				this.$route.path ===
 				'/r/' + this.subredditName + '/about/traffic'
 			) {
 				return 'Trafic Stats';
