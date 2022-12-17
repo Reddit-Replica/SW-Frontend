@@ -3,6 +3,11 @@
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
 		</div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<div>
 			<postreply-component
 				v-for="(message, index) in postReplies"
@@ -18,21 +23,26 @@
 
 <script>
 import PostreplyComponent from '../../components/MessageComponents/PostreplyComponent.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		PostreplyComponent,
+		TheSpinner,
 	},
 	// @vuese
 	//change title name and load replies
-	beforeMount() {
+	async created() {
 		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
 			document.title = 'messages: selfreply';
-			this.loadPostReplies();
+			await this.loadPostReplies();
+			this.loading = false;
 		}
 	},
 	data() {
 		return {
 			noMessages: false,
+			loading: false,
 		};
 	},
 	computed: {

@@ -2,8 +2,7 @@
 	<div class="box">
 		<p style="text-align: right">
 			<span v-if="errorr" class="error"
-				>you must fill subTopics, mainTopic, communityDescription,
-				welcomeMessage</span
+				>you must fill Community topics, and Community Description.</span
 			>
 			<base-button
 				button-text="Save Changes"
@@ -742,29 +741,17 @@ export default {
 		async saveChanges() {
 			this.errorr = false;
 			if (this.communityName == '') this.communityName = this.subredditName;
-			if (
-				!this.subTopics ||
-				!this.mainTopic ||
-				!this.communityDescription ||
-				!this.welcomeMessage ||
-				!this.Region
-			) {
+			if (!this.subTopics || !this.mainTopic || !this.communityDescription) {
+				console.log(
+					this.subTopics,
+					this.mainTopic,
+					this.communityDescription,
+					this.Region
+				);
 				this.errorr = true;
 				return;
 			}
 			this.errorr = false;
-			if (!this.acceptingRequestsToJoin) {
-				this.acceptingRequestsToJoin = false;
-			}
-			if (!this.acceptingRequestsToPost) {
-				this.acceptingRequestsToPost = false;
-			}
-			if (!this.approvedUsersHaveTheAbilityTo) {
-				this.approvedUsersHaveTheAbilityTo = 'Post onlys';
-			}
-			if (!this.NSFW) {
-				this.NSFW = false;
-			}
 			// console.log(this.NSFW, 'nnnn');
 			const actionPayload = {
 				communityName: this.communityName,
@@ -835,7 +822,22 @@ export default {
 			this.acceptingRequestsToPost = this.setting.acceptingRequestsToPost;
 			this.approvedUsersHaveTheAbilityTo =
 				this.setting.approvedUsersHaveTheAbilityTo;
-			console.log('this.nsfw', this.nsfw);
+
+			if (!this.acceptingRequestsToJoin) {
+				this.acceptingRequestsToJoin = false;
+			}
+			if (!this.acceptingRequestsToPost) {
+				this.acceptingRequestsToPost = false;
+			}
+			if (!this.approvedUsersHaveTheAbilityTo) {
+				this.approvedUsersHaveTheAbilityTo = 'Post only';
+			}
+			if (!this.NSFW) {
+				this.NSFW = false;
+			}
+			if (!this.sendWelcomeMessage) {
+				this.sendWelcomeMessage = false;
+			}
 		},
 		////////////////////////////////
 		doneSuccessfully(title) {

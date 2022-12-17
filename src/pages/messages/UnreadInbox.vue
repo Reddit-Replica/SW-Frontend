@@ -3,6 +3,11 @@
 		<div class="no-messages" v-if="noMessages">
 			there doesn't seem to be anything here
 		</div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<div>
 			<unread-message
 				v-for="(message, index) in unreadMessages"
@@ -17,22 +22,27 @@
 
 <script>
 import UnreadMessage from '../../components/MessageComponents/UnreadMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		UnreadMessage,
+		TheSpinner,
 	},
 	// @vuese
 	//change title name and load messages
-	beforeMount() {
+	async created() {
 		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
 			document.title = 'messages: unread';
-			this.loadUnreadMessages();
+			await this.loadUnreadMessages();
+			this.loading = false;
 		}
 	},
 	data() {
 		return {
 			noMessages: false,
 			errorResponse: null,
+			loading: false,
 		};
 	},
 	computed: {
