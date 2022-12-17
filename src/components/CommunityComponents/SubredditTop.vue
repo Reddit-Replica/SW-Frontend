@@ -46,6 +46,22 @@
 								id="leave-button"
 								>{{ hoverButtonText }}</base-button
 							>
+							<save-unsave-popup-message
+								v-if="doneJoined"
+								class="pop-up"
+								id="pop-join"
+								>Successfully joined r/{{
+									subredditName
+								}}</save-unsave-popup-message
+							>
+							<save-unsave-popup-message
+								v-if="doneLeft"
+								class="pop-up"
+								id="pop-leave"
+								>Successfully left r/{{
+									subredditName
+								}}</save-unsave-popup-message
+							>
 						</div>
 					</div>
 				</div>
@@ -55,8 +71,10 @@
 </template>
 
 <script>
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
 export default {
 	emits: ['reload'],
+	components: { SaveUnsavePopupMessage },
 	props: {
 		//@vuese
 		//Subreddit ID
@@ -91,8 +109,9 @@ export default {
 	},
 	data() {
 		return {
-			// joined: false,
 			hoverButtonText: 'Joined',
+			doneJoined: false,
+			doneLeft: false,
 		};
 	},
 	methods: {
@@ -113,6 +132,7 @@ export default {
 					token: accessToken,
 				});
 
+				this.doneJoined = true;
 				this.$emit('reload');
 			} else {
 				this.$router.replace('/login');
@@ -128,6 +148,7 @@ export default {
 					token: accessToken,
 				});
 
+				this.doneLeft = true;
 				this.$emit('reload');
 			} else {
 				this.$router.replace('/login');
@@ -235,5 +256,10 @@ img {
 		max-height: 3.2rem;
 		min-width: 3.2rem;
 	}
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
 }
 </style>
