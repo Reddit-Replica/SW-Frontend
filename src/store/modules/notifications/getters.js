@@ -17,4 +17,7 @@ export default {
 	getClientToken(state) {
 		return state.clientToken;
 	},
+	getUnreadCount(state) {
+		return state.unreadCount;
+	},
 };

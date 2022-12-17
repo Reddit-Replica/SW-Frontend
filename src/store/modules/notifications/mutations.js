@@ -18,4 +18,7 @@ export default {
 	setClientToken(state, payload) {
 		state.clientToken = payload;
 	},
+	setUnreadCount(state, payload) {
+		state.unreadCount = payload;
+	},
 };

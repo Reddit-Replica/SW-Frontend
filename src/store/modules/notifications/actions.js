@@ -21,11 +21,11 @@ export default {
 		});
 
 		const responseData = await response.json();
-
-		console.log(responseData['children']);
+		console.log(responseData);
 
 		if (response.status == 200) {
 			context.commit('setNotifications', responseData['children']);
+			context.commit('setUnreadCount', responseData['unreadCount']);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
