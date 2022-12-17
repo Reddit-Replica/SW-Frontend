@@ -396,13 +396,27 @@
 				></base-button>
 			</div>
 		</div>
+		<save-unsave-popup-message v-if="doneDesc" class="pop-up" id="pop-desc"
+			>Subreddit settings updated successfully</save-unsave-popup-message
+		>
+		<save-unsave-popup-message v-if="doneTopic" class="pop-up" id="pop-topic"
+			>Successfully updated primary topic!</save-unsave-popup-message
+		>
+		<save-unsave-popup-message
+			v-if="doneSubtopic"
+			class="pop-up"
+			id="pop-subtopic"
+			>Community topics saved!</save-unsave-popup-message
+		>
 	</div>
 </template>
 
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
+
 export default {
-	components: { BaseButton },
+	components: { BaseButton, SaveUnsavePopupMessage },
 	emits: ['reload'],
 	props: {
 		//@vuese
@@ -490,6 +504,10 @@ export default {
 			subtopicsListShown: false,
 
 			subtopicsToShow: this.communitySubtopicsProp,
+
+			doneDesc: false,
+			doneTopic: false,
+			doneSubtopic: false,
 		};
 	},
 	computed: {
@@ -614,6 +632,7 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.doneDesc = true;
 			this.$emit('reload');
 		},
 		//@vuese
@@ -635,6 +654,7 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.doneTopic = true;
 			this.$emit('reload');
 		},
 		//@vuese
@@ -692,6 +712,7 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.doneSubtopic = true;
 			this.$emit('reload');
 		},
 		//@vuese
@@ -1138,5 +1159,11 @@ input {
 	width: 4px;
 	height: 4px;
 	margin-right: 2px;
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
+	right: 35%;
 }
 </style>

@@ -95,12 +95,17 @@
 				</div>
 			</span>
 		</a>
+		<save-unsave-popup-message v-if="doneHide" class="pop-up" id="pop-hide"
+			>Notification Hidden</save-unsave-popup-message
+		>
 	</li>
 </template>
 
 <script>
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
 export default {
 	emits: ['reload'],
+	components: { SaveUnsavePopupMessage },
 	props: {
 		index: {
 			type: Number,
@@ -117,6 +122,7 @@ export default {
 			buttonShown: false,
 			textNoUpdates: "Don't get updates on that",
 			textHide: 'Hide this notification',
+			doneHide: false,
 		};
 	},
 	computed: {
@@ -215,6 +221,7 @@ export default {
 					notificationId: this.notification.id,
 				});
 			}
+			this.doneHide = true;
 			this.$emit('reload');
 		},
 
@@ -356,5 +363,10 @@ button:hover {
 }
 .bi-arrow-90deg-left {
 	margin-right: 8px;
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
 }
 </style>
