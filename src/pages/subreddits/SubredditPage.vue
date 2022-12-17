@@ -17,6 +17,7 @@
 					@title="changeRoute"
 					@time="changeRouteQueryParam"
 					:initial-title="$route.params.title"
+					:best="false"
 					id="sort-posts-bar-subreddit"
 				></sortposts-bar>
 				<grow-community id="grow-community-comp"></grow-community>
