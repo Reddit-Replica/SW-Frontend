@@ -85,7 +85,7 @@ export default {
 		//@vuese
 		//post object that will get displayed in this post component
 		post: {
-			required: true,
+			required: false,
 		},
 		blur: {
 			required: false,
