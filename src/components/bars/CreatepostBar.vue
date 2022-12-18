@@ -52,7 +52,7 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.RequestUserData();
+		if (localStorage.getItem('accessToken') != null) this.RequestUserData();
 	},
 	methods: {
 		// @vuese
