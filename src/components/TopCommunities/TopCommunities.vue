@@ -1,12 +1,20 @@
 <template>
 	<div class="topCommunities" id="top-comm-1">
-		<div :style="style" class="topCommunitiesTitleBlock" id="top-comm-2">
+		<div class="topCommunitiesTitleBlock style" id="top-comm-2">
 			<h2 class="topCommunitiesTitle" id="top-comm-3">
 				<router-link
 					:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
 					class="topCommunitiesLink"
 					id="top-communities-link"
+					v-if="topCommunitiesCaption"
 					>Top <span>{{ topCommunitiesCaption }}</span> Communities</router-link
+				>
+				<router-link
+					to="/subreddits/leaderboard"
+					class="topCommunitiesLink"
+					id="top-communities-link-else"
+					v-else
+					>Trending Communities</router-link
 				>
 			</h2>
 		</div>
@@ -93,9 +101,9 @@ export default {
 	computed: {
 		//@vuese
 		//Set background image of top communities bar
-		style() {
-			return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
-		},
+		// style() {
+		// 	return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
+		// },
 	},
 	methods: {
 		reloadAgain() {
@@ -200,5 +208,8 @@ export default {
 }
 .Recommendation :hover {
 	opacity: 0.92;
+}
+.style {
+	background-image: url('../../../img/banner-background_top.png');
 }
 </style>

@@ -60,10 +60,10 @@
 		<SaveUnsavePopupMessage
 			v-for="message in popupMessages"
 			:key="message.id"
-			:type="message.type"
-			:state="message.state"
 			:typeid="message.postid"
-		></SaveUnsavePopupMessage>
+		>
+			{{ message.state }}
+		</SaveUnsavePopupMessage>
 	</div>
 </template>
 

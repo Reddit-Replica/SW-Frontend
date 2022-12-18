@@ -455,6 +455,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- <button @click="click"></button> -->
 	<div class="positioning">
 		<SaveUnsavePopupMessage v-for="action in savedUnsavedPosts" :key="action">{{
 			action
@@ -512,7 +513,6 @@ export default {
 			else return localStorage.getItem('userName');
 		},
 		userData() {
-			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'].userData;
 		},
 		currentSortType() {
@@ -525,9 +525,12 @@ export default {
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
-	created() {
-		this.getPostDetails();
-		if (this.$route.params.userName != undefined) this.RequestUserData();
+	async created() {
+		await this.getPostDetails();
+		console.log('userName');
+		this.click();
+		//if (this.$route.params.userName != undefined) this.RequestUserData();
+		//if (this.postDetails.subreddit == undefined) this.RequestUserData();
 		this.fetchPostComments();
 		// document.getElementById('test').addEventListener('scroll', () => {
 		// 	console.log('scroll');
@@ -535,7 +538,7 @@ export default {
 	},
 	methods: {
 		click() {
-			console.log(localStorage.getItem('userName'));
+			console.log(this.postDetails.subreddit == undefined);
 		},
 		handleScroll: function () {
 			console.log('scroll' + window.scrollY);
@@ -562,6 +565,7 @@ export default {
 			console.log(this.userComments);
 		},
 		async RequestUserData() {
+			console.log('inside request user data in post comment');
 			try {
 				await this.$store.dispatch('user/getUserData', {
 					baseurl: this.$baseurl,
@@ -690,16 +694,20 @@ export default {
 		//@vuese
 		//follow post
 		async follow() {
-			try {
-				await this.$store.dispatch('postCommentActions/followPost', {
-					baseurl: this.$baseurl,
-					id: this.$route.path.split('/')[4],
-					follow: !this.isFollowed,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				try {
+					await this.$store.dispatch('postCommentActions/followPost', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+						follow: !this.isFollowed,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				this.isFollowed = !this.isFollowed;
+			} else {
+				this.$router.replace('/login');
 			}
-			this.isFollowed = !this.isFollowed;
 		},
 		//@vuese
 		//show services submenu of post

@@ -51,14 +51,20 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// images array to show in the post slider
 		images: {
 			type: Array,
 			required: true,
 		},
+		// @vuese
+		// nsfw flag to blur the image
 		nsfwFlag: {
 			type: Boolean,
 			required: false,
 		},
+		// @vuese
+		// spoiler flag to blur image or not
 		spoilerFlag: {
 			type: Boolean,
 			required: false,
@@ -79,20 +85,6 @@ export default {
 	},
 	data() {
 		return {
-			images1: [
-				{
-					imgUrl: '../../../../assets/R.png',
-					left: '0',
-				},
-				{
-					imgUrl: '../../../../assets/R.png',
-					left: '100',
-				},
-				{
-					imgUrl: '../../../../assets/R.png',
-					left: '200',
-				},
-			],
 			imagesShown: [],
 			lastLeftPic: 0,
 			lastRightPic: 0,
@@ -100,6 +92,8 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// left click page handler when we click on the left button to get the left following picture
 		leftClick() {
 			this.lastLeftPic--;
 			this.lastRightPic++;
@@ -110,6 +104,8 @@ export default {
 				ele.left = String(Number(ele.left) - 100);
 			});
 		},
+		// @vuese
+		// right click page handler when we click on the right button to get the right following picture
 		rightClick() {
 			this.lastRightPic--;
 			this.lastLeftPic++;
@@ -122,6 +118,8 @@ export default {
 		},
 	},
 	computed: {
+		// @vuese
+		// handel the showing of the image
 		imageShowHandler() {
 			for (let i = 0; i < this.images.length; i++) {
 				const obj = {
@@ -141,12 +139,6 @@ img {
 	max-width: 100%;
 	max-height: 255px;
 }
-/* .post-picture {
-	width: 100%;
-}
-.post-picture-container {
-	width: 100%;
-} */
 .post-picture .picture-container {
 	width: 100%;
 	height: 256px;
