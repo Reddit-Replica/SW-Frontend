@@ -74,7 +74,9 @@
 				</div>
 				<div class="post-title">
 					<div class="title-box">{{ spam.title }}</div>
-					<div class="body-box">{{ spam.content }}</div>
+					<div class="body-box" v-if="spam.content != null">
+						{{ spam.content.ops[0].insert }}
+					</div>
 				</div>
 				<div v-if="!spam.commentId">
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
@@ -105,7 +107,9 @@
 						/> -->
 						<div class="p-box">
 							<p class="p">Removed</p>
-							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
+							<p class="p-poster">
+								u/{{ spam.postBy }} {{ calculateTime(postedAt) }}
+							</p>
 						</div>
 					</div>
 					<div class="buttons">

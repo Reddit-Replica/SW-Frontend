@@ -659,6 +659,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
+		// console.log(responseData);
 		const spams = [];
 		console.log('responseData[0]');
 		console.log(responseData);
@@ -1418,9 +1419,7 @@ export default {
 					spammedAt: responseData.children[i].data.spammedAt,
 					saved: responseData.children[i].data.saved,
 					vote: responseData.children[i].data.vote,
-					ImagePath: responseData.children[i].data.images[0].path,
-					Imagecaption: responseData.children[i].data.images[0].caption,
-					Imagelink: responseData.children[i].data.images[0].link,
+					Image: responseData.children[i].data.images,
 				};
 				unModerated.push(post);
 			}
@@ -1484,9 +1483,7 @@ export default {
 					spammedAt: responseData.children[i].data.spammedAt,
 					saved: responseData.children[i].data.saved,
 					vote: responseData.children[i].data.vote,
-					ImagePath: responseData.children[i].data.images[0].path,
-					Imagecaption: responseData.children[i].data.images[0].caption,
-					Imagelink: responseData.children[i].data.images[0].link,
+					Image: responseData.children[i].data.images,
 				};
 				EditedPosts.push(post);
 			}
