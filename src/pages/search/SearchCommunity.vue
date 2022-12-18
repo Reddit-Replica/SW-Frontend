@@ -1,6 +1,11 @@
 <template>
 	<div class="all">
-		<div class="after-all">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="after-all" v-else>
 			<the-header :header-title="userName"></the-header>
 			<div class="page-release">
 				<div class="page">
@@ -90,11 +95,13 @@
 <script>
 import SearchedCms from '../../components/SearchComponents/SearchedCms.vue';
 import Notfound from '../../components/SearchComponents/NotFound.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
 			q: '',
 			notFound: true,
+			loading: false,
 		};
 	},
 	computed: {
@@ -116,6 +123,13 @@ export default {
 	// },
 	beforeMount() {
 		this.search();
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.search();
+		}
+		this.loading = false;
 	},
 	methods: {
 		async search() {
@@ -157,7 +171,7 @@ export default {
 			this.$router.push('/r/' + subredditName);
 		},
 	},
-	components: { SearchedCms, Notfound },
+	components: { SearchedCms, Notfound, TheSpinner },
 };
 </script>
 
