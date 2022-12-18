@@ -100,7 +100,7 @@ export default {
 	methods: {
 		// @vuese
 		//load messages from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch after or before messages
 		async loadUserMessages(title) {
 			this.loading = true;
 			let afterMod = '';

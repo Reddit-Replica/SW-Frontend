@@ -115,7 +115,7 @@ export default {
 	methods: {
 		// @vuese
 		//load compose messages from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch after or before messages
 		async loadInboxMessages(title) {
 			this.loading = true;
 			let afterMod = '';

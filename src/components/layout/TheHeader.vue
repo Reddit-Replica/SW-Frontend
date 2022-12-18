@@ -638,7 +638,12 @@
 			</div>
 		</nav>
 		<div class="header-user-nav" v-else>
-			<base-button class="base-button" @click="goToLogin()">Login</base-button>
+			<base-button
+				class="base-button"
+				@click="goToLogin()"
+				id="go-to-login-page"
+				>Login</base-button
+			>
 		</div>
 		<create-community
 			v-if="createCommunityShown"
@@ -708,9 +713,11 @@ export default {
 		},
 	},
 	async beforeMount() {
-		this.RequestUserData();
-		this.getUserSubreddits();
-		this.loadAllNotifications();
+		if (localStorage.getItem('accessToken')) {
+			this.RequestUserData();
+			this.getUserSubreddits();
+			this.loadAllNotifications();
+		}
 	},
 	methods: {
 		// @vuese
@@ -777,7 +784,7 @@ export default {
 			this.createCommunityShown = !this.createCommunityShown;
 		},
 		// @vuese
-		//load compose messages from the store
+		//load user subreddits
 		// @arg no argument
 		async getUserSubreddits() {
 			if (localStorage.getItem('accessToken')) {

@@ -24,11 +24,11 @@
 					<div class="col-12 col-md-8 col-sm-12 right">
 						<router-view v-slot="slotProps">
 							<div>
-								<list-bar
+								<!-- <list-bar
 									v-if="scheduledPosts || contentControls"
 									:title="barTitle"
 									:subreddit-name="subredditName"
-								></list-bar>
+								></list-bar> -->
 								<!-- <transition name="route" mode="out-in"> -->
 								<component :is="slotProps.Component"></component>
 								<!-- </transition> -->
@@ -113,6 +113,7 @@ export default {
 		// listOfInvitedModerators() {
 		// 	return this.$store.getters['moderation/listOfInvitedModerators'];
 		// },
+
 		// @vuese
 		//return user name
 		// @type string
@@ -253,44 +254,46 @@ export default {
 				this.$route.path === '/r/' + this.subredditName + '/about/postflair'
 			);
 		},
-		// @vuese
-		// return scheduled posts bath
-		// @type boolean
-		scheduledPosts() {
-			return (
-				this.$route.path ===
-				'/r/' + this.subredditName + '/about/scheduledposts'
-			);
-		},
-		// @vuese
-		// return content controls bath
-		// @type boolean
-		contentControls() {
-			return (
-				this.$route.path === '/r/' + this.subredditName + '/about/settings'
-			);
-		},
+
+		// // @vuese
+		// // return scheduled posts bath
+		// // @type boolean
+		// scheduledPosts() {
+		// 	return (
+		// 		this.$route.path ===
+		// 		'/r/' + this.subredditName + '/about/scheduledposts'
+		// 	);
+		// },
+		// // @vuese
+		// // return content controls bath
+		// // @type boolean
+		// contentControls() {
+		// 	return (
+		// 		this.$route.path === '/r/' + this.subredditName + '/about/settings'
+		// 	);
+		// },
+
 		// @vuese
 		//return title of button in fixed bar
 		// @type string
-		barTitle() {
-			// if (
-			// 	this.$route.path ===
-			// 	'/r/' + this.subredditName + '/about/moderators'
-			// ) {
-			// 	return 'Moderators of t/' + this.subredditName;
-			// } else
-			// if (
-			// 	this.$route.path ===
-			// 	'/r/' + this.subredditName + '/about/scheduledposts'
-			// ) {
-			// 	return 'Schedule Post';
-			// } else
-			if (this.$route.path === '/r/' + this.subredditName + '/about/settings') {
-				return 'Content controls';
-			}
-			return '';
-		},
+		// barTitle() {
+		// 	// if (
+		// 	// 	this.$route.path ===
+		// 	// 	'/r/' + this.subredditName + '/about/moderators'
+		// 	// ) {
+		// 	// 	return 'Moderators of t/' + this.subredditName;
+		// 	// } else
+		// 	// if (
+		// 	// 	this.$route.path ===
+		// 	// 	'/r/' + this.subredditName + '/about/scheduledposts'
+		// 	// ) {
+		// 	// 	return 'Schedule Post';
+		// 	// } else
+		// 	if (this.$route.path === '/r/' + this.subredditName + '/about/settings') {
+		// 		return 'Content controls';
+		// 	}
+		// 	return '';
+		// },
 	},
 	methods: {
 		// @vuese
@@ -320,6 +323,7 @@ export default {
 		// 		this.error = error.message || 'Something went wrong';
 		// 	}
 		// },
+
 		// @vuese
 		// Used to handle show left bar action
 		// @arg no argument

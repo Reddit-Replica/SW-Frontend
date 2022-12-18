@@ -293,8 +293,8 @@ export default {
 			}
 		},
 		// @vuese
-		// handle load flairs instead of refreshing
-		// @arg no argument
+		// handle load approved instead of refreshing
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');
