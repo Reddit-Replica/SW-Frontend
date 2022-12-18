@@ -5,7 +5,7 @@
 				style="position: absolute; left: 30%; top: 50%"
 			></the-spinner>
 		</div>
-		<the-header :header-title="'u/asmaaadel0'"></the-header>
+		<the-header :header-title="userName"></the-header>
 		<subreddit-top
 			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
@@ -150,6 +150,9 @@ export default {
 		nickname() {
 			if (!this.subreddit.nickname) return this.subreddit.title;
 			else return this.subreddit.nickname;
+		},
+		userName() {
+			return localStorage.getItem('userName');
 		},
 	},
 	async beforeMount() {

@@ -136,6 +136,7 @@
 									<div class="main">
 										<div class="content">
 											<post-content
+												v-if="Object.keys(postDetails).length != 0"
 												:post="postDetails"
 												:blur="false"
 											></post-content>
@@ -525,7 +526,7 @@ export default {
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
-	async created() {
+	async beforeMount() {
 		await this.getPostDetails();
 		console.log('userName');
 		this.click();
@@ -619,6 +620,7 @@ export default {
 			this.downClicked = this.postDetails.votingType == -1 ? true : false;
 			this.saved = this.postDetails.saved;
 			this.postHidden = this.postDetails.hidden;
+			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah');
 			console.log(this.postDetails);
 		},
 		//@vuese
@@ -801,7 +803,7 @@ export default {
 <style scoped>
 .popup {
 	position: absolute;
-	top: 0;
+	top: 50px;
 	left: 0;
 	right: 0;
 	z-index: 2;
@@ -820,7 +822,7 @@ export default {
 .bg-grey {
 	background-color: var(--color-grey-light-8);
 	padding-top: 22px;
-	height: 94vh;
+	height: 87.6vh;
 	overflow: auto;
 }
 .post-left {

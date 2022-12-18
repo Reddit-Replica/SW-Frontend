@@ -9,17 +9,9 @@ import mockservice from '../../../mockservice.txt';
 describe ('MessagesComponent.vue', () => {
   const message = {
     id: 2,
-    text: 'hello asmaa',
-    type: 'Messages',
-    subredditName: 'subredditName',
-    postTitle: 'postTitle',
-    senderUsername: '/u/hoda_gamal',
-    receiverUsername: '/u/asmaaadel0',
-    subject: 'hi',
-    sendAt: '2019-08-24T14:15:22Z',
-    isReply: false,
-    isRead: true,
-    isSenderUser: true,
+    isUser: true,
+    subjectContent: 'subject content',
+    subjectTitle: 'sender',
     messages: [],
   };
   const index = 0;
@@ -156,58 +148,48 @@ describe ('MessagesComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.find ('#message-sender-0').text ()).contain ('/r/');
+    expect (wrapper.find ('#message-sender-0').text ()).contain ('sender');
   });
 
-  // it ('Testing the reciever name is correct', () => {
-  //   const wrapper = mount (MessagesComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('#message-receiver-0').text ()).contain (
-  //     '/u/asmaaadel0'
-  //   );
-  // });
+  it ('Testing subject is correct', () => {
+    const wrapper = mount (MessagesComponent, {
+      props: {
+        message,
+        index,
+      },
+      computed: {
+        handleTime,
+        isInvitation,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('.subject-text').text ()).contain ('subject content');
+  });
 
-  // it ('Testing subject is correct', () => {
-  //   const wrapper = mount (MessagesComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('.subject-text').text ()).contain ('hi');
-  // });
-
-  // it ('Testing text message is correct', () => {
-  //   const wrapper = mount (MessagesComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   // expect (wrapper.text ()).contain ('hi:from /r//u/hoda');
-  // });
+  it ('Testing text message is correct', () => {
+    const wrapper = mount (MessagesComponent, {
+      props: {
+        message,
+        index,
+      },
+      computed: {
+        handleTime,
+        isInvitation,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('subject');
+  });
 
   // it ('Testing the time is correct', () => {
   //   const handleTime = '2 years ago';

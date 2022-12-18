@@ -2,7 +2,7 @@
 	<div>
 		<div class="all">
 			<div class="after-all">
-				<the-header :header-title="'u/asmaaadel0'"></the-header>
+				<the-header :header-title="userName"></the-header>
 				<div class="page-release">
 					<div class="page">
 						<div>
@@ -321,6 +321,9 @@ export default {
 		},
 		SearchedUsers() {
 			return this.$store.getters['search/Getusers'];
+		},
+		userName() {
+			return localStorage.getItem('userName');
 		},
 	},
 	watch: {
