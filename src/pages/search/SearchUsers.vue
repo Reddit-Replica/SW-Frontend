@@ -1,6 +1,11 @@
 <template>
 	<div class="all">
-		<div class="after-all">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="after-all" v-else>
 			<the-header :header-title="userName"></the-header>
 			<div class="page-release">
 				<div class="page">
@@ -87,6 +92,7 @@
 // import BaseButton from '../../components/BaseComponents/BaseButton.vue';
 import Notfound from '../../components/SearchComponents/NotFound.vue';
 import SearchedUser from '../../components/SearchComponents/SearchedUser.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
@@ -94,6 +100,7 @@ export default {
 			notFollowed: true,
 			users: [],
 			notfounded: false,
+			loading: false,
 		};
 	},
 	computed: {
@@ -117,6 +124,13 @@ export default {
 	beforeMount() {
 		this.search();
 		// this.intousers();
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			this.search();
+		}
+		this.loading = false;
 	},
 	methods: {
 		async search() {
@@ -165,7 +179,7 @@ export default {
 			this.$router.push('/user/' + name);
 		},
 	},
-	components: { Notfound, SearchedUser },
+	components: { Notfound, SearchedUser, TheSpinner },
 };
 </script>
 
