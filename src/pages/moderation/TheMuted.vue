@@ -147,7 +147,7 @@ export default {
 	},
 	computed: {
 		// @vuese
-		//return list of moderators
+		//return list of muted
 		// @type object
 		listOfMuted() {
 			return this.$store.getters['moderation/listOfMuted'];
@@ -160,7 +160,7 @@ export default {
 			return this.$route.params.subredditName;
 		},
 		// @vuese
-		//return true if there is no approved, false otherwise
+		//return true if there is no muted, false otherwise
 		// @type boolean
 		noMuted() {
 			if (this.listOfMuted.length != 0) {
@@ -169,13 +169,13 @@ export default {
 			return true;
 		},
 		// @vuese
-		//return if there is approved before
+		//return if there is muted before
 		// @type string
 		before() {
 			return this.$store.getters['moderation/before'];
 		},
 		// @vuese
-		//return if there is approved after
+		//return if there is nuted after
 		// @type string
 		after() {
 			return this.$store.getters['moderation/after'];
@@ -230,7 +230,7 @@ export default {
 		},
 		// @vuese
 		// handle load muted list instead of refreshing
-		// @arg no argument
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');

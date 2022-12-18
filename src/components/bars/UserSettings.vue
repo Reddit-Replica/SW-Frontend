@@ -19,9 +19,9 @@
 		<li id="emails-settings">
 			<router-link to="/settings/emails">Emails</router-link>
 		</li>
-		<li id="messaging-settings">
+		<!-- <li id="messaging-settings">
 			<router-link to="/settings/messaging">Chat & Messaging</router-link>
-		</li>
+		</li> -->
 	</ul>
 </template>
 <style scoped>
