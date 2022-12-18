@@ -37,6 +37,11 @@
 <script>
 export default {
 	computed: {
+		/**
+		 * @vuese
+		 * get the insights data from the store
+		 * @arg no arg
+		 */
 		getInsightsData() {
 			console.log(this.$store.getters['userposts/getInsightsData']);
 			return this.$store.getters['userposts/getInsightsData'].insightsData;

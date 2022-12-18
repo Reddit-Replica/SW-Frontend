@@ -331,11 +331,16 @@ export default {
 			required: false,
 			default: '',
 		},
+		// @vuese
+		// pinned sign in the subreddit post flag
+
 		subredditPagePinned: {
 			type: Boolean,
 			required: false,
 			default: false,
 		},
+		// @vuese
+		// moderator icon flag in subreddit page
 		moderatorFlag: {
 			type: Boolean,
 			required: false,
@@ -360,8 +365,18 @@ export default {
 		};
 	},
 	mounted() {
+		/**
+		 * @vuese
+		 * set hybrid post content at mounting
+		 * @arg no arg
+		 */
 		this.setPostHybridContent();
 	},
+	/**
+	 * @vuese
+	 * before mount we request the subreddit data
+	 * @arg no arg
+	 */
 	async beforeMount() {
 		if (this.postData.data.subreddit != null) {
 			await this.getSubreddit();
@@ -369,10 +384,20 @@ export default {
 		}
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * get the user data from the store
+		 * @arg no arg
+		 */
 		getUserData() {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
+		/**
+		 * @vuese
+		 * get picture of the subreddit to show it in the post
+		 * @arg no arg
+		 */
 		getSubredditPicture() {
 			if (
 				this.subredditData != null &&
@@ -384,12 +409,27 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * show subreddit box when you hovered on subreddit name
+		 * @arg no arg
+		 */
 		showSubredditBox() {
 			this.showSubredditBoxFlag = true;
 		},
+		/**
+		 * @vuese
+		 * hide the subreddit box when unhovered
+		 * @arg no arg
+		 */
 		hideSubredditBox() {
 			this.showSubredditBoxFlag = false;
 		},
+		/**
+		 * @vuese
+		 * get subreddit information to use its picture in the post
+		 * @arg no arg
+		 */
 		async getSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
@@ -406,6 +446,11 @@ export default {
 				// }
 			}
 		},
+		/**
+		 * @vuese
+		 * emits to show popup save/unsave
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
 		},
@@ -514,26 +559,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		// savePost() {
-		// 	if (this.state == 'unauth') {
-		// 		this.$router.push('/');
-		// 		return;
-		// 	}
-		// 	console.log('save');
-		// },
-		// sharePost() {
-		// 	if (this.state == 'unauth') {
-		// 		this.$router.push('/');
-		// 		return;
-		// 	}
-		// 	console.log('share');
-		// 	// this.showShareOptions = true;
-		// },
-		// CopyPostLink() {},
-		// Crosspost() {},
-		// editPost() {
-		// 	console.log('edit');
-		// },
 		pinPostToProfile() {
 			console.log('pin');
 		},

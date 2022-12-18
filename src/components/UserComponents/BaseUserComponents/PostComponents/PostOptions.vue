@@ -630,32 +630,36 @@ export default {
 		};
 	},
 	props: {
+		// @vuese
+		// postData the full post Data
 		postData: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// to know if the type of the post use this component is pinned post
 		pinnedPostFlag: {
 			type: Boolean,
 			required: false,
 		},
+		// @vuese
+		// in which page this component
 		page: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the kind of the post
 		postKind: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the state authenticated or not
 		state: {
 			type: String,
 			required: true,
 		},
-	},
-	mounted() {
-		window.addEventListener('click', this.clicked);
-	},
-	unmounted() {
-		window.removeEventListener('click', this.clicked);
 	},
 	emits: [
 		'insightsToggle',
@@ -671,12 +675,17 @@ export default {
 	methods: {
 		/**
 		 * @vuese
-		 * this function send  call an action function from the store to make a get request to get user data
+		 * toggle the insights Post component
 		 * @arg no arg
 		 */
 		insightsPostToggle() {
 			this.$emit('insightsToggle');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the delete button to delete the post
+		 * @arg no arg
+		 */
 		deletePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -684,9 +693,19 @@ export default {
 			}
 			this.$emit('deletePost');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the hide button to hide the post
+		 * @arg no arg
+		 */
 		hidePost() {
 			// this.$emit('hidePost');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the share button to share the post
+		 * @arg no arg
+		 */
 		sharePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -697,6 +716,11 @@ export default {
 			this.$emit('sharePost');
 			this.showShareOptions = !this.showShareOptions;
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the save button to save the post to the database
+		 * @arg no arg
+		 */
 		async savePost() {
 			let requestSatus = -1;
 			if (this.state == 'unauth') {
@@ -749,13 +773,28 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the edit button to edit the post
+		 * @arg no arg
+		 */
 		editPost() {
 			console.log('edit');
 			this.$emit('editPost');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the three dots button to show more  post		options
+		 * @arg no arg
+		 */
 		openOptionsBoxList() {
 			this.showOptionsBoxList = !this.showOptionsBoxList;
 		},
+		/**
+		 * @vuese
+		 * expand the post to show more details	 emits event
+		 * @arg no arg
+		 */
 		expandPostContent() {
 			this.showPostContent = true;
 			this.$emit('expandPost');
@@ -764,6 +803,11 @@ export default {
 			this.showPostContent = false;
 			this.$emit('collapsePost');
 		},
+		/**
+		 * @vuese
+		 * collapse the post to show more details	 emits event
+		 * @arg no arg
+		 */
 		async approvePost(id) {
 			console.log('approve');
 			let approveSatus = -1;
@@ -797,6 +841,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the remove button to remove the post
+		 * @arg no arg
+		 */
 		async removePost(id) {
 			console.log('remove');
 			let approveSatus = -1;
@@ -830,6 +879,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the nsfw button to mark the post as nsfw
+		 * @arg no arg
+		 */
 		async markUnMarkAsNSFW(id) {
 			let requestSatus = -1;
 			let type = 'unMark';
@@ -863,6 +917,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the spoiler button to mark the post as spoiler
+		 * @arg no arg
+		 */
 		async markUnMarkAsSpoiler(id) {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
 			let requestSatus = -1;
@@ -900,6 +959,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the send me replies button to mark the post	to send replies
+		 * @arg no arg
+		 */
 		async markUnMarkSendMeReply(id) {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
 			let requestSatus = -1;
@@ -937,9 +1001,19 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the moderator  button to show more moderator options
+		 * @arg no arg
+		 */
 		safetyClicked() {
 			this.showSafetyOptions = !this.showSafetyOptions;
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the lock button to lock unlock the post
+		 * @arg no arg
+		 */
 		async lockUnLockComments(id) {
 			console.log('lock un lock clicked');
 			let approveSatus = -1;
@@ -987,6 +1061,11 @@ export default {
 				this.$emit('emitPopup', id, 'failed to unlock post');
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the pinned button to pin unpin the post in the pinned posts
+		 * @arg no arg
+		 */
 		async RequestUserPinnedPostData() {
 			let requestStatus = -1;
 			try {
@@ -1005,6 +1084,11 @@ export default {
 			console.log('req', requestStatus);
 			return requestStatus;
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the pin button to delete the post
+		 * @arg no arg
+		 */
 		async pinPostToProfile(id) {
 			let key = false;
 			if (!this.postData.data.pin) {
@@ -1027,6 +1111,11 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the hide button to hide un hide the post
+		 * @arg no arg
+		 */
 		async hideUnhidePost(id) {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -1061,6 +1150,11 @@ export default {
 				this.$emit('emitPopup', id, 'failed to unhide post');
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the spam button to spam the post
+		 * @arg no arg
+		 */
 		async spamPost(id) {
 			let approveSatus = -1;
 			if (
@@ -1091,6 +1185,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the upvote button to upvote the post
+		 * @arg no arg
+		 */
 		async upvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -1118,6 +1217,11 @@ export default {
 				this.counter--;
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the down button to down the post
+		 * @arg no arg
+		 */
 		async downvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -1145,6 +1249,11 @@ export default {
 				this.counter++;
 			}
 		},
+		/**
+		 * @vuese
+		 * convert numbers to its abbreviations in K or M..
+		 * @arg no arg
+		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
 			console.log(num);
