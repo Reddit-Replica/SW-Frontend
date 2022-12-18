@@ -156,22 +156,6 @@ describe ('SentMessages.vue', () => {
     expect (wrapper.find ('.subject-text').text ()).contain ('hi');
   });
 
-  // it ('Testing text message is correct', () => {
-  //   const wrapper = mount (SentMessages, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
-  // });
-
   it ('Testing the time is correct', () => {
     const handleTime = '2 years ago';
     const wrapper = mount (SentMessages, {
