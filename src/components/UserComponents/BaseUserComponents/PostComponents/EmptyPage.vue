@@ -25,6 +25,8 @@ export default {
 		EmptyBox,
 	},
 	props: {
+		// @vuese
+		// the title shown in the empty page
 		pageTitle: {
 			type: String,
 			required: true,

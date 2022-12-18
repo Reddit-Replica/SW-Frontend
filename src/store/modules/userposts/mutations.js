@@ -435,8 +435,15 @@ export default {
 		return payload.responseStatus;
 	},
 	setUserMoreOverviewData(state, payload) {
-		if (payload.responseStatus == 200)
-			Object.assign(state.overviewData, payload.responseData); // assign data to user Data
+		if (payload.responseStatus == 200) {
+			// Object.assign(state.overviewData, payload.responseData);
+			console.log('before commit', payload.responseData);
+			state.overviewData.before = payload.responseData.before;
+			state.overviewData.after = payload.responseData.after;
+			state.overviewData.children.push(...payload.responseData.children);
+			console.log('after commit', state.overviewData);
+			// assign data to user Data
+		}
 		return payload.responseStatus;
 	},
 	setUserSavedData(state, payload) {
