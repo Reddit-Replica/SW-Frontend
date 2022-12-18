@@ -41,6 +41,9 @@
 				/>
 			</svg>
 		</button>
+		<div class="no-more" v-if="!loading && !after && !noMessages">
+			No more messages...
+		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
@@ -97,7 +100,7 @@ export default {
 	methods: {
 		// @vuese
 		//load messages from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch after or before messages
 		async loadUserMessages(title) {
 			this.loading = true;
 			let afterMod = '';
@@ -139,5 +142,12 @@ export default {
 }
 .load-more:hover {
 	background-color: aliceblue;
+}
+.no-more {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 2rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
 }
 </style>

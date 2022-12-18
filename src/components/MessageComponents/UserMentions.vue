@@ -219,6 +219,7 @@ export default {
 	props: {
 		// @vuese
 		//details of message
+		// @type object
 		message: {
 			type: Object,
 			required: true,
@@ -244,6 +245,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids and background color
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -281,7 +283,7 @@ export default {
 	methods: {
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
 			var currentDate = new Date();
 			var returnValue = '';
@@ -362,6 +364,7 @@ export default {
 
 		//@vuese
 		//upvote on post
+		// @arg no argument
 		async upvote() {
 			if (this.downClicked) {
 				this.downClicked = false;
@@ -387,6 +390,7 @@ export default {
 		},
 		//@vuese
 		//down vote on post
+		// @arg no argument
 		async downvote() {
 			if (this.upClicked) {
 				this.upClicked = false;

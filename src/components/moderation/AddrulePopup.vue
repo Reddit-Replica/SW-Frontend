@@ -304,7 +304,7 @@ export default {
 		},
 		// @vuese
 		//return rule order
-		// @type string
+		// @type number
 		ruleOrder: {
 			type: Number,
 			default: 0,
@@ -320,7 +320,7 @@ export default {
 		},
 		// @vuese
 		//return if there is an edited rule
-		// @type string
+		// @type boolean
 		edit: {
 			type: Boolean,
 			default: false,
@@ -415,7 +415,7 @@ export default {
 		},
 		//@vuese
 		//Decrease characters count while typing
-		//@arg no argument
+		// @arg The argument is a string value representing the title of input we want to count char
 		charCount(title) {
 			if (this.isNameTaken) {
 				this.showError = true;

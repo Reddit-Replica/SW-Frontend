@@ -5,16 +5,16 @@
 				<ul class="list">
 					<li class="title">about</li>
 					<li>
-						<a href="#" id="blog-link">blog</a>
+						<a href="/help" id="blog-link">blog</a>
 					</li>
 					<li>
-						<a href="#" id="about-link">about</a>
+						<a href="/help" id="about-link">about</a>
 					</li>
 					<li>
-						<a href="#" id="advertising-link">advertising</a>
+						<a href="/help" id="advertising-link">advertising</a>
 					</li>
 					<li>
-						<a href="#" id="careers-link">careers</a>
+						<a href="/help" id="careers-link">careers</a>
 					</li>
 				</ul>
 			</div>
@@ -22,19 +22,19 @@
 				<ul class="list">
 					<li class="title">help</li>
 					<li>
-						<a href="#" id="site-rules-link">site rules</a>
+						<a href="/help" id="site-rules-link">site rules</a>
 					</li>
 					<li>
-						<a href="#" id="reddit-help-center-link">Reddit help center</a>
+						<a href="/help" id="reddit-help-center-link">Reddit help center</a>
 					</li>
 					<li>
-						<a href="#" id="reddiquette-link">reddiquette</a>
+						<a href="/help" id="reddiquette-link">reddiquette</a>
 					</li>
 					<li>
-						<a href="#" id="mod-guidelines-link">mod guidelines</a>
+						<a href="/help" id="mod-guidelines-link">mod guidelines</a>
 					</li>
 					<li>
-						<a href="#" id="contact-us-link">contact us</a>
+						<a href="/help" id="contact-us-link">contact us</a>
 					</li>
 				</ul>
 			</div>
@@ -42,13 +42,13 @@
 				<ul class="list">
 					<li class="title">apps & tools</li>
 					<li>
-						<a href="#" id="reddit-for-iphone">reddit for iphone</a>
+						<a href="/help" id="reddit-for-iphone">reddit for iphone</a>
 					</li>
 					<li>
-						<a href="#" id="reddit-for-android">Reddit for Android</a>
+						<a href="/help" id="reddit-for-android">Reddit for Android</a>
 					</li>
 					<li>
-						<a href="#" id="mobile-website-link">mobile website</a>
+						<a href="/help" id="mobile-website-link">mobile website</a>
 					</li>
 				</ul>
 			</div>
@@ -56,9 +56,9 @@
 		<div class="p-footer">
 			<p>
 				Use of this site constitutes acceptance of our
-				<a href="#" id="user-greement-link">User Agreement</a>
+				<a href="/help" id="user-greement-link">User Agreement</a>
 				and
-				<a href="#" id="privacy-policy-link">Privacy Policy</a>
+				<a href="/help" id="privacy-policy-link">Privacy Policy</a>
 				. © 2022 reddit inc. All rights reserved.
 			</p>
 			<p>REDDIT and the ALIEN Logo are registered trademarks of reddit inc.</p>

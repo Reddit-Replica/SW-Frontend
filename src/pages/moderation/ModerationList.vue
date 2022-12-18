@@ -208,7 +208,7 @@ export default {
 		},
 
 		// @vuese
-		//return true if there is no rules, false otherwise
+		//return true if there is an invited mod, false otherwise
 		// @type boolean
 		invitedMod() {
 			if (this.listOfInvitedModerators.length != 0) {
@@ -233,14 +233,14 @@ export default {
 	methods: {
 		// @vuese
 		// handle load flairs instead of refreshing
-		// @arg no argument
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			this.loadListOfInvitedModerators();
 			this.savePost(title);
 		},
 		// @vuese
 		//load moderators list from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch after or before messages
 		async loadListOfModerators(title) {
 			let beforeMod = '',
 				afterMod = '';
@@ -274,7 +274,7 @@ export default {
 			}
 		},
 		// @vuese
-		// Used to handle save reorder rules action
+		// Used to handle leave moderation action
 		// @arg no argument
 		async leaveModFunction() {
 			try {

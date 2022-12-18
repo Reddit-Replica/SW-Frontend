@@ -55,21 +55,32 @@
 	<div class="post-post" v-if="post.kind == 'post'">
 		<post-content :post="post.sharedPostDetails"></post-content>
 	</div>
-	<img
-		v-for="image in post.images"
-		class="post-image"
-		:key="image.id"
-		:src="this.$baseurl + '/' + image.path"
-		alt=""
-	/>
+	<div class="images">
+		<picture-post
+			:images="post.images"
+			v-if="post.images.length > 1"
+		></picture-post>
+		<img
+			v-else
+			v-for="image in post.images"
+			class="post-image"
+			:key="image.id"
+			:src="this.$baseurl + '/' + image.path"
+			alt=""
+		/>
+	</div>
 	<video width="800" height="500" controls v-if="post.video != undefined">
 		<source :src="this.$baseurl + '/' + post.video" />
 	</video>
 </template>
 <script>
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import PicturePost from '../UserComponents/BaseUserComponents/PostComponents/PicturePost.vue';
 export default {
 	name: 'PostContent',
+	components: {
+		PicturePost,
+	},
 	props: {
 		//@vuese
 		//post object that will get displayed in this post component
@@ -124,6 +135,9 @@ export default {
 };
 </script>
 <style scoped>
+.images {
+	overflow: hidden;
+}
 .post-content .post-title h3 {
 	color: black;
 	margin: 10px 0px;
