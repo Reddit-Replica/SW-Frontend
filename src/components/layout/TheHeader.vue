@@ -745,7 +745,6 @@ export default {
 		// @arg no argument
 		goToLogin() {
 			this.$router.push('/login');
-			window.location.reload();
 		},
 		// @vuese
 		// Used to go to messages page
