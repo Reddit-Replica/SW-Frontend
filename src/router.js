@@ -81,8 +81,8 @@ import GetHelp from './pages/forget/GetHelp.vue';
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '/', redirect: '/login' },
 		{ path: '/', redirect: '/main' },
+		// { path: '/', redirect: '/login' },
 		{
 			path: '/main',
 			alias: '/main/:title/',
