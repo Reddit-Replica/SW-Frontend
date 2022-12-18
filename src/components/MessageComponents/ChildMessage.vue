@@ -33,17 +33,17 @@
 			</span>
 			<span v-else>
 				<span :class="!isRead ? 'unread' : ''">to&nbsp;</span>
-				<span class="reciever"
+				<span class="receiver"
 					><a
 						v-if="childMessage.isReceiverUser"
 						:href="'/user/' + childMessage.receiverUsername"
-						:id="'message-reciever-2-' + index"
+						:id="'message-receiver-2-' + index"
 						>/u/{{ childMessage.receiverUsername }}</a
 					>
 					<a
 						v-else
 						:href="'/r/' + childMessage.receiverUsername"
-						:id="'message-reciever-2-' + index"
+						:id="'message-receiver-2-' + index"
 						>/r/{{ childMessage.receiverUsername }}</a
 					>
 				</span>
