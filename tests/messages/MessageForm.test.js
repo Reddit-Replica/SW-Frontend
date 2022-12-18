@@ -71,40 +71,73 @@ describe ('MessageForm.vue', () => {
   //--------------------------------------------------------
   //        Check the error in submitting empty fields
   //--------------------------------------------------------
-  // it ('test error in empty subject', async () => {
-  //   const wrapper = mount (MessageForm, {
-  //     props: {
-  //       suggestedSender,
-  //       userName,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //     data () {
-  //       return {
-  //         senderUsername: '/u/asmaaadel0',
-  //         receiverUsername: '',
-  //         subject: '',
-  //         text: '',
-  //       };
-  //     },
-  //   });
-  //   expect (wrapper.text ()).contain ('/u/asmaaadel0');
-  //   wrapper
-  //     .trigger ('click')
-  //     .then (() => {
-  //       expect (wrapper.text ()).contain ('please enter a username');
-  //       expect (wrapper.text ()).not.contain (
-  //         'your message has been delivered'
-  //       );
-  //     })
-  //     .catch (function () {
-  //       console.log ('Promise Rejected');
-  //     });
-  // });
+  it ('test unsername field', async () => {
+    const wrapper = mount (MessageForm, {
+      props: {
+        suggestedSender,
+        userName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+      data () {
+        return {
+          senderUsername: '/u/asmaaadel0',
+          receiverUsername: '',
+          subject: '',
+          text: '',
+        };
+      },
+    });
+    expect (wrapper.text ()).contain ('/u/');
+    wrapper
+      .trigger ('click')
+      .then (() => {
+        expect (wrapper.text ()).contain ('please enter a username');
+        expect (wrapper.text ()).not.contain (
+          'your message has been delivered'
+        );
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
+  });
+  it ('test error in empty subject', async () => {
+    const wrapper = mount (MessageForm, {
+      props: {
+        suggestedSender,
+        userName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+      data () {
+        return {
+          senderUsername: '/u/asmaaadel0',
+          receiverUsername: '',
+          subject: '',
+          text: '',
+        };
+      },
+    });
+    wrapper
+      .trigger ('click')
+      .then (() => {
+        expect (wrapper.text ()).contain ('please enter a username');
+        expect (wrapper.text ()).not.contain (
+          'your message has been delivered'
+        );
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
+  });
   it ('test error in empty fields', async () => {
     const wrapper = mount (MessageForm, {
       props: {
@@ -140,7 +173,6 @@ describe ('MessageForm.vue', () => {
         console.log ('Promise Rejected');
       });
   });
-
   it ('test error in empty text', async () => {
     const wrapper = mount (MessageForm, {
       props: {
