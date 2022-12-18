@@ -146,6 +146,7 @@ export default {
 	props: {
 		// @vuese
 		//show reply box prop
+		// @type boolean
 		showReplyBox: {
 			type: Boolean,
 			required: true,
@@ -153,6 +154,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -160,6 +162,7 @@ export default {
 		},
 		// @vuese
 		//id of the msg that this msg is a reply for
+		// @type string
 		id: {
 			type: String,
 			required: true,
@@ -167,6 +170,7 @@ export default {
 		},
 		// @vuese
 		//receiver Username
+		// @type string
 		receiverUsername: {
 			type: String,
 			required: true,
@@ -174,6 +178,7 @@ export default {
 		},
 		// @vuese
 		//sender Username
+		// @type string
 		senderUsername: {
 			type: String,
 			required: true,
@@ -181,6 +186,7 @@ export default {
 		},
 		// @vuese
 		//subject
+		// @type string
 		subject: {
 			type: String,
 			required: true,
@@ -188,6 +194,7 @@ export default {
 		},
 		// @vuese
 		//if the reply is mentions
+		// @type boolean
 		isMention: {
 			type: Boolean,
 			required: false,
@@ -195,6 +202,7 @@ export default {
 		},
 		// @vuese
 		//post id
+		// @type string
 		postId: {
 			type: String,
 			required: false,
@@ -202,6 +210,7 @@ export default {
 		},
 		// @vuese
 		//comment id
+		// @type string
 		parentId: {
 			type: String,
 			required: false,
@@ -209,6 +218,7 @@ export default {
 		},
 		// @vuese
 		//parent type
+		// @type string
 		parentType: {
 			type: String,
 			required: false,
@@ -216,6 +226,7 @@ export default {
 		},
 		// @vuese
 		//level of the comment
+		// @type number
 		level: {
 			type: Number,
 			required: false,
@@ -223,6 +234,7 @@ export default {
 		},
 		// @vuese
 		//subreddit name
+		// @type string
 		subredditName: {
 			type: String,
 			required: false,
@@ -251,7 +263,7 @@ export default {
 		},
 		// @vuese
 		//show reply box or hide it, and handle request
-		// @arg no argument
+		// @arg The argument is a string value representing if its show or hide
 		async replyFunction(title) {
 			if (title == 'hide') {
 				this.$emit('hideReplyBox', true);
