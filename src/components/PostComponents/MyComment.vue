@@ -272,27 +272,31 @@ export default {
 			}
 		},
 		async save() {
-			this.saved = !this.saved;
-			if (this.saved == true) {
-				try {
-					await this.$store.dispatch('postCommentActions/save', {
-						baseurl: this.$baseurl,
-						id: this.comment.commentId,
-						type: 'comment',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.saved = !this.saved;
+				if (this.saved == true) {
+					try {
+						await this.$store.dispatch('postCommentActions/save', {
+							baseurl: this.$baseurl,
+							id: this.comment.commentId,
+							type: 'comment',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unsave', {
+							baseurl: this.$baseurl,
+							id: this.comment.commentId,
+							type: 'comment',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: this.comment.commentId,
-						type: 'comment',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		async fetchPostComments() {
