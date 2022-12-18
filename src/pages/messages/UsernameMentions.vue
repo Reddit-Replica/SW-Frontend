@@ -101,10 +101,16 @@ export default {
 		// @vuese
 		//load user mentions from the store
 		// @arg no argument
-		async loadUserMentions() {
+		async loadUserMentions(title) {
+			this.loading = true;
+			let afterMod = '';
+			if (title == 'after') {
+				afterMod = this.after;
+			}
 			try {
 				await this.$store.dispatch('messages/loadUserMentions', {
 					baseurl: this.$baseurl,
+					afterMod: afterMod,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

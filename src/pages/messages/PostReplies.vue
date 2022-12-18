@@ -99,7 +99,7 @@ export default {
 	methods: {
 		// @vuese
 		//load post replies from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch after or before messages
 		async loadPostReplies(title) {
 			this.loading = true;
 			let afterMod = '';
