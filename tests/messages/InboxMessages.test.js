@@ -23,6 +23,7 @@ describe ('AllinboxComponent.vue', () => {
   const index = 0;
   let count = 2;
   let handleTime = '2 years ago';
+  const sendByMe = true;
 
   const messagesAction = {
     loadInboxMessages: vi.fn (),
@@ -219,55 +220,70 @@ describe ('AllinboxComponent.vue', () => {
     expect (wrapper.find ('#time-0').text ()).contain ('2019/08/24');
   });
 
-  //   // it ('Testing the Permalink button text is correct', () => {
-  //   //   const wrapper = mount (AllinboxComponent, {
-  //   //     props: {
-  //   //       message,
-  //   //       index,
-  //   //     },
-  //   //     global: {
-  //   //       // OR:
-  //   //       mocks: {
-  //   //         $store: store,
-  //   //       },
-  //   //     },
-  //   //   });
-  //   //   expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
-  //   // });
+  it ('Testing the actions not exist if Iam the sender', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+      },
+      computed: {
+        sendByMe,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text()).not.contain('Delete');
+  });
 
-    // it ('Testing the delete button text is correct', () => {
-    //   const wrapper = mount (AllinboxComponent, {
-    //     props: {
-    //       message,
-    //       index,
-    //       // count,
-    //     },
-    //     global: {
-    //       // OR:
-    //       mocks: {
-    //         $store: store,
-    //       },
-    //     },
-    //   });
-    //   expect (wrapper.find ('#click-delete-0').text ()).contain ('Delete');
-    // });
+  // it ('Testing the delete button text is correct', () => {
+  //   const wrapper = mount (AllinboxComponent, {
+  //     data () {
+  //       return {
+  //         sendByMe,
+  //       };
+  //     },
+  //     propsData: {
+  //       sendByMe,
+  //     },
+  //     props: {
+  //       message,
+  //       index,
+  //       sendByMe,
+  //       // count,
+  //     },
+  //     computed: {
+  //       sendByMe,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('#click-delete-0').text ()).contain ('Delete');
+  // });
 
-    // it ('Testing the spam button text is correct', () => {
-    //   const wrapper = mount (AllinboxComponent, {
-    //     props: {
-    //       message,
-    //       index,
-    //       count,
-    //     },
-    //     global: {
-    //       // OR:
-    //       mocks: {
-    //         $store: store,
-    //       },
-    //     },
-    //   });
-    //   // expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
-    // });
+  // it ('Testing the spam button text is correct', () => {
+  //   const wrapper = mount (AllinboxComponent, {
+  //     props: {
+  //       message,
+  //       index,
+  //       count,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   // expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
+  // });
 
   //   it ('Testing the block button text is correct', () => {
   //     const wrapper = mount (AllinboxComponent, {
