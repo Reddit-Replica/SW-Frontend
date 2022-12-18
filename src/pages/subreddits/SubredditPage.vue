@@ -28,11 +28,10 @@
 				<grow-community id="grow-community-comp"></grow-community>
 				<!-- <community-post id="pinned-post-comp"></community-post> -->
 				<overview-post
+					class="posts"
 					v-for="(post, index) in posts"
 					:key="index"
 					@subreddit-page-handler="reloadPosts"
-					:moderator-flag="true"
-					:subreddit-page-pinned="true"
 					:post-data="{
 						data: post.data,
 						id: post.id,
@@ -345,5 +344,9 @@ export default {
 }
 #pinned-post-comp {
 	margin-top: 1.2rem;
+}
+.posts {
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 </style>
