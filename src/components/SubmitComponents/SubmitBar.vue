@@ -138,11 +138,11 @@
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
 			></subreddit-card>
-			<subreddit-rules
+			<!-- <subreddit-rules
 				v-if="rules.length != 0"
 				:rules="subreddit.rules"
 				:subreddit-name="subredditTitle"
-			></subreddit-rules>
+			></subreddit-rules> -->
 		</div>
 		<div
 			v-if="inSubreddit"
@@ -174,7 +174,7 @@ import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
 import SubredditCard from '../PostComponents/SubredditCard.vue';
-import SubredditRules from '../PostComponents/SubredditRules.vue';
+// import SubredditRules from '../PostComponents/SubredditRules.vue';
 
 export default {
 	beforeMount() {
@@ -186,7 +186,7 @@ export default {
 		PostingtoReddit,
 		ProfileCard,
 		SubredditCard,
-		SubredditRules,
+		// SubredditRules,
 	},
 	data() {
 		return {
