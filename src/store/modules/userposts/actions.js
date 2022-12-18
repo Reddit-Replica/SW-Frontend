@@ -84,6 +84,7 @@ export default {
 			time: `${payload.params.time}`,
 			before: `${payload.params.before}`,
 			after: `${payload.params.after}`,
+			limit: payload.params.limit,
 		};
 		Object.keys(params).forEach((key) =>
 			url.searchParams.append(key, params[key])
@@ -120,6 +121,7 @@ export default {
 			time: `${payload.params.time}`,
 			before: `${payload.params.before}`,
 			after: `${payload.params.after}`,
+			limit: payload.params.limit,
 		};
 		Object.keys(params).forEach((key) =>
 			url.searchParams.append(key, params[key])

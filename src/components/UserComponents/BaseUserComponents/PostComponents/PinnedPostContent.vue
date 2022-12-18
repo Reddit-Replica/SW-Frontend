@@ -127,16 +127,25 @@ export default {
 		VideoPost,
 	},
 	props: {
+		// @vuese
+		// to if the component use in the pinned page
 		pinnedPost: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// to know if the user is authenticated or not
 		state: {
 			type: String,
 			required: true,
 		},
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * return the all user data in the store
+		 * @arg no arg
+		 */
 		getUserData() {
 			return this.$store.getters['user/getUserData'];
 		},
@@ -147,14 +156,29 @@ export default {
 		};
 	},
 	mounted() {
+		/**
+		 * @vuese
+		 * at the mounting we convert the post content from object to its html value
+		 * @arg no arg
+		 */
 		this.setPostHybridContent();
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * handle the click on the subreddit button
+		 * @arg no arg
+		 */
 		routerLinkSubredditHandler() {
 			if (this.pinnedPost.subreddit) {
 				return `/r/${this.pinnedPost.subreddit}`;
 			} else return `/user/${this.pinnedPost.postedBy}`;
 		},
+		/**
+		 * @vuese
+		 * at the mounting we convert the post content from object to its html value
+		 * @arg no arg
+		 */
 		setPostHybridContent() {
 			if (this.pinnedPost.kind == 'hybrid') {
 				let QuillDeltaToHtmlConverter =

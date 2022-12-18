@@ -28,6 +28,8 @@ export default {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// state to know if the user authenticated or not
 		state: {
 			type: String,
 			required: true,
