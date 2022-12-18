@@ -1,5 +1,9 @@
 <template>
-	<div id="commentId" class="comment-container" style="padding-bottom: 8px">
+	<div
+		:id="`comment-${commentData.id}`"
+		class="comment-container"
+		style="padding-bottom: 8px"
+	>
 		<comment-header
 			v-if="type == 'summarypost'"
 			:comment-data="commentData"
@@ -12,6 +16,7 @@
 			:post-id="commentData.id"
 			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
+			:state="state"
 		></comment-content>
 	</div>
 </template>
@@ -24,15 +29,27 @@ export default {
 		CommentHeader,
 	},
 	props: {
+		// @vuese
+		// the full comment data
 		commentData: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// the id of the post
 		id: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// type of the comment to know is overview comment or not
 		type: {
+			type: String,
+			required: true,
+		},
+		// @vuese
+		// to the user is authenticated or not
+		state: {
 			type: String,
 			required: true,
 		},

@@ -12,6 +12,31 @@
 				<div class="hole-post-2">
 					<div v-if="!(posts && posts.length == 0)">
 						<div class="post-release" v-for="value in posts" :key="value.id">
+							<div class="post-name-bar">
+								<div class="community-name">
+									<a class="comm-name" :href="'/r/' + value.subreddit">
+										r/{{ value.subreddit }} &nbsp;</a
+									>
+									<div class="aligning"></div>
+								</div>
+								<span class="point-center" role="presentation">•&nbsp;</span>
+								<div class="posted-user">
+									<span class="posted-word" style="color: rgb(120, 124, 126)">
+										&nbsp;Posted by&nbsp;
+									</span>
+									<div>
+										<a
+											class="posted-username"
+											style="color: rgb(120, 124, 126)"
+											:href="'/user/' + value.postedBy"
+											>u/{{ value.postedBy }}&nbsp;</a
+										>
+									</div>
+									<span class="time" style="color: rgb(120, 124, 126)"
+										>{{ this.calculateTime(value.postedAt) }}&nbsp;</span
+									>
+								</div>
+							</div>
 							<div
 								class="point"
 								@click="
@@ -23,28 +48,6 @@
 									)
 								"
 							>
-								<div class="post-name-bar">
-									<div class="community-name">
-										<a class="comm-name"> r/{{ value.subreddit }} &nbsp;</a>
-										<div class="aligning"></div>
-									</div>
-									<span class="point-center" role="presentation">•&nbsp;</span>
-									<div class="posted-user">
-										<span class="posted-word" style="color: rgb(120, 124, 126)">
-											&nbsp;Posted by&nbsp;
-										</span>
-										<div>
-											<a
-												class="posted-username"
-												style="color: rgb(120, 124, 126)"
-												>u/{{ value.postedBy }}&nbsp;</a
-											>
-										</div>
-										<span class="time" style="color: rgb(120, 124, 126)"
-											>{{ this.calculateTime(value.postedAt) }}&nbsp;</span
-										>
-									</div>
-								</div>
 								<div class="written-post">
 									<div>
 										<div class="posts-words">
@@ -55,7 +58,7 @@
 														style="--posttitletextcolor: #1a1a1b"
 													>
 														<h3 class="header-3">
-															{{ value.content }}
+															{{ value.title }}
 														</h3>
 													</div></a
 												>
@@ -98,6 +101,12 @@ export default {
 		return {
 			not_Found: false,
 		};
+	},
+	computed: {
+		SearchedPosts() {
+			console.log(this.$store.getters['search/GetPosts']);
+			return this.$store.getters['search/GetPosts'];
+		},
 	},
 	methods: {
 		gotocomment(id, title, sub, postman) {
@@ -160,7 +169,13 @@ div {
 	border: thin solid #ccc;
 	max-width: 100%;
 }
+.hole-post:hover {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
 .hole-post-2 {
+	width: 720px;
 	background: rgb(255, 255, 255);
 	position: relative;
 }
@@ -186,6 +201,11 @@ div {
 	display: inline;
 	text-decoration: none;
 	vertical-align: baseline;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.comm-name:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .aligning {
 	align-items: center;
@@ -216,6 +236,11 @@ div {
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 16px;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.posted-username:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .time {
 	display: inline-block;

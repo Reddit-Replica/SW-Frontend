@@ -660,6 +660,8 @@ export default {
 		);
 		const responseData = await response.json();
 		const spams = [];
+		console.log('responseData[0]');
+		console.log(responseData);
 		if (response.status == 200) {
 			let before, after;
 			before = '';
@@ -672,42 +674,42 @@ export default {
 			}
 			//update responseData
 			if (only == 'comments') {
-				for (let i = 0; i < responseData[0].children.length; i++) {
+				for (let i = 0; i < responseData.children.length; i++) {
 					const spam = {
-						id: responseData[0].children[i].postId,
-						title: responseData[0].children[i].postTitle,
-						commentId: responseData[0].children[i].comment.id,
-						subreddit: responseData[0].children[i].comment.subreddit,
-						commentedBy: responseData[0].children[i].comment.id,
-						commentedAt: responseData[0].children[i].comment.subreddit,
-						editedAt: responseData[0].children[i].comment.id,
-						spammedAt: responseData[0].children[i].comment.subreddit,
-						votes: responseData[0].children[i].comment.id,
-						vote: responseData[0].children[i].comment.subreddit,
+						id: responseData.children[i].postId,
+						title: responseData.children[i].postTitle,
+						commentId: responseData.children[i].comment.id,
+						subreddit: responseData.children[i].comment.subreddit,
+						commentedBy: responseData.children[i].comment.id,
+						commentedAt: responseData.children[i].comment.subreddit,
+						editedAt: responseData.children[i].comment.id,
+						spammedAt: responseData.children[i].comment.subreddit,
+						votes: responseData.children[i].comment.id,
+						vote: responseData.children[i].comment.subreddit,
 					};
 					spams.push(spam);
 				}
 			} else {
-				for (let i = 0; i < responseData[0].children.length; i++) {
+				for (let i = 0; i < responseData.children.length; i++) {
 					const spam = {
-						id: responseData[0].children[i].id,
-						postId: responseData[0].children[i].data.id,
-						subreddit: responseData[0].children[i].data.subreddit,
-						postedBy: responseData[0].children[i].data.postedBy,
-						title: responseData[0].children[i].data.title,
-						link: responseData[0].children[i].data.link,
-						images: responseData[0].children[i].data.images,
-						video: responseData[0].children[i].data.video,
-						content: responseData[0].children[i].data.content,
-						nsfw: responseData[0].children[i].data.nsfw,
-						spoiler: responseData[0].children[i].data.spoiler,
-						votes: responseData[0].children[i].data.votes,
-						numberOfComments: responseData[0].children[i].data.numberOfComments,
-						editedAt: responseData[0].children[i].data.editedAt,
-						postedAt: responseData[0].children[i].data.postedAt,
-						spammedAt: responseData[0].children[i].data.spammedAt,
-						saved: responseData[0].children[i].data.saved,
-						vote: responseData[0].children[i].data.vote,
+						id: responseData.children[i].id,
+						postId: responseData.children[i].data.id,
+						subreddit: responseData.children[i].data.subreddit,
+						postedBy: responseData.children[i].data.postedBy,
+						title: responseData.children[i].data.title,
+						link: responseData.children[i].data.link,
+						images: responseData.children[i].data.images,
+						video: responseData.children[i].data.video,
+						content: responseData.children[i].data.content,
+						nsfw: responseData.children[i].data.nsfw,
+						spoiler: responseData.children[i].data.spoiler,
+						votes: responseData.children[i].data.votes,
+						numberOfComments: responseData.children[i].data.numberOfComments,
+						editedAt: responseData.children[i].data.editedAt,
+						postedAt: responseData.children[i].data.postedAt,
+						spammedAt: responseData.children[i].data.spammedAt,
+						saved: responseData.children[i].data.saved,
+						vote: responseData.children[i].data.vote,
 					};
 					spams.push(spam);
 				}

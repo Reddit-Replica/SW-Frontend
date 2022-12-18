@@ -123,7 +123,9 @@
 					class="post-options-text"
 					id="post-options-postData-data-comments-text"
 				>
-					<p>{{ postData.data.comments + ' comments' }}</p>
+					<p>
+						{{ postData.data.comments }}{{ !pinnedPostFlag ? ' comments' : '' }}
+					</p>
 				</div>
 			</router-link>
 		</li>
@@ -325,7 +327,7 @@
 			</div>
 		</li>
 		<li
-			v-if="postData.data.inYourSubreddit && !postKind"
+			v-if="postData.data.inYourSubreddit && !postKind && !pinnedPostFlag"
 			@click="safetyClicked"
 			id="shield-user-post-button"
 			class="post-option-item post-option-item-hover2"
@@ -341,7 +343,11 @@
 					class="fa-solid fa-shield"
 				></i>
 			</div>
-			<div v-if="showSafetyOptions" class="options-box-list">
+			<div
+				v-if="showSafetyOptions"
+				id="show-Safety-Options-options-box-list"
+				class="options-box-list"
+			>
 				<ul>
 					<li @click="lockUnLockComments(postData.id)" class="options-box-item">
 						<div class="options-box-icon">
@@ -364,11 +370,13 @@
 		</li>
 		<li
 			class="post-option-item2"
+			id="post-option-item2-open-Options-BoxList"
 			style="position: relative"
 			@click="openOptionsBoxList"
 		>
 			<div
 				class="post-options-icon three-dot-icon-box"
+				id="post-options-icon-post-data-three-dot-icon-box"
 				v-if="postData.data.inYourSubreddit || pinnedPostFlag"
 			>
 				<i>
@@ -395,13 +403,21 @@
 				class="options-box-list"
 			>
 				<ul>
-					<li @click="editPost" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						@click="editPost"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i style="color: rgba(135, 138, 140)" class="fa-solid fa-pen"></i>
 						</div>
 						<div class="options-box-text">Edit Post</div>
 					</li>
-					<li @click="savePost" class="options-box-item">
+					<li
+						id="saved-user-options-icon"
+						@click="savePost"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i
 								v-if="!saved"
@@ -435,7 +451,12 @@
 							{{ !saved ? 'Save' : 'Unsaved' }}
 						</div>
 					</li>
-					<li @click="pinPostToProfile(postData.id)" class="options-box-item">
+					<li
+						v-if="postData.data.inYourSubreddit"
+						id="options-box-icon-pin-to-profile"
+						@click="pinPostToProfile(postData.id)"
+						class="options-box-item"
+					>
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
@@ -443,7 +464,8 @@
 							></i>
 						</div>
 						<div class="options-box-text">
-							{{ postData.data.pin ? 'unpin' : 'pin' }} Post to Profile
+							{{ postData.data.pin || pinnedPostFlag ? 'unpin' : 'pin' }} Post
+							to Profile
 						</div>
 					</li>
 					<li
@@ -467,6 +489,7 @@
 					</li>
 					<li
 						v-if="postData.data.inYourSubreddit"
+						id="delete-post-options-box-item"
 						@click="deletePost"
 						class="options-box-item"
 					>
@@ -480,6 +503,7 @@
 					</li>
 					<li
 						v-if="postData.data.inYourSubreddit"
+						id="mark-as-oc"
 						@click="markAsOC"
 						class="options-box-item"
 					>
@@ -499,6 +523,7 @@
 					<li
 						v-if="postData.data.inYourSubreddit"
 						@click="markUnMarkAsSpoiler(postData.id)"
+						ud="mark-unmark-as-spoiler-options-box"
 						class="options-box-item"
 					>
 						<div class="options-box-icon">
@@ -517,6 +542,7 @@
 					<li
 						v-if="postData.data.inYourSubreddit"
 						@click="markUnMarkAsNSFW(postData.id)"
+						ud="mark-unmark-as-nsfw-options-box"
 						class="options-box-item"
 					>
 						<div class="options-box-icon">
@@ -533,6 +559,7 @@
 						</div>
 					</li>
 					<li
+						v-if="postData.data.inYourSubreddit && !pinnedPostFlag"
 						@click="markUnMarkSendMeReply(postData.id)"
 						id="post-options-mark-UnMark-Send-MeReply"
 						class="options-box-item"
@@ -555,6 +582,7 @@
 					<li
 						v-if="postData.data.inYourSubreddit"
 						@click="lockUnLockComments(postData.id)"
+						id="lock-unlock-comments-post-data"
 						class="options-box-item"
 					>
 						<div class="options-box-icon" id="lock-post-comments-options">
@@ -564,7 +592,9 @@
 									id="mark-as-oc"
 									name="mark-as-oc"
 									:checked="
-										postData.data.moderation && postData.data.moderation.lock
+										(postData.data.moderation &&
+											postData.data.moderation.lock) ||
+										postData.data.locked
 									"
 							/></i>
 						</div>
@@ -600,28 +630,36 @@ export default {
 		};
 	},
 	props: {
+		// @vuese
+		// postData the full post Data
 		postData: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// to know if the type of the post use this component is pinned post
 		pinnedPostFlag: {
 			type: Boolean,
 			required: false,
 		},
+		// @vuese
+		// in which page this component
 		page: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the kind of the post
 		postKind: {
 			type: String,
 			required: true,
 		},
-	},
-	mounted() {
-		window.addEventListener('click', this.clicked);
-	},
-	unmounted() {
-		window.removeEventListener('click', this.clicked);
+		// @vuese
+		// the state authenticated or not
+		state: {
+			type: String,
+			required: true,
+		},
 	},
 	emits: [
 		'insightsToggle',
@@ -632,57 +670,131 @@ export default {
 		'savePost',
 		'sharePost',
 		'editPost',
+		'emitPopup',
 	],
 	methods: {
+		/**
+		 * @vuese
+		 * toggle the insights Post component
+		 * @arg no arg
+		 */
 		insightsPostToggle() {
 			this.$emit('insightsToggle');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the delete button to delete the post
+		 * @arg no arg
+		 */
 		deletePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.$emit('deletePost');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the hide button to hide the post
+		 * @arg no arg
+		 */
 		hidePost() {
 			// this.$emit('hidePost');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the share button to share the post
+		 * @arg no arg
+		 */
 		sharePost() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				console.log('unauth');
+				return;
+			}
 			console.log('share');
 			this.$emit('sharePost');
 			this.showShareOptions = !this.showShareOptions;
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the save button to save the post to the database
+		 * @arg no arg
+		 */
 		async savePost() {
+			let requestSatus = -1;
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.saved = !this.saved;
-			if (!this.postData.data.saved) {
+			if (this.saved) {
 				try {
-					await this.$store.dispatch('userposts/savePostOrComment', {
-						baseurl: this.$baseurl,
-						savePostOrCommentData: {
-							id: this.postData.id,
-							type: 'post',
-						},
-					});
+					requestSatus = await this.$store.dispatch(
+						'userposts/savePostOrComment',
+						{
+							baseurl: this.$baseurl,
+							savePostOrCommentData: {
+								id: this.postData.id,
+								type: 'post',
+							},
+						}
+					);
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
 				try {
-					await this.$store.dispatch('userposts/unSavePostOrComment', {
-						baseurl: this.$baseurl,
-						savePostOrCommentData: {
-							id: this.postData.id,
-							type: 'post',
-						},
-					});
+					requestSatus = await this.$store.dispatch(
+						'userposts/unSavePostOrComment',
+						{
+							baseurl: this.$baseurl,
+							savePostOrCommentData: {
+								id: this.postData.id,
+								type: 'post',
+							},
+						}
+					);
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
 			}
+			if (this.saved) {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', 1, ' post saved successfully');
+				} else {
+					this.$emit('emitPopup', 1, 'failed to save');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', 1, 'post  unsaved successfully');
+				} else {
+					this.$emit('emitPopup', 1, 'failed to unsaved ');
+				}
+			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the edit button to edit the post
+		 * @arg no arg
+		 */
 		editPost() {
 			console.log('edit');
 			this.$emit('editPost');
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the three dots button to show more  post		options
+		 * @arg no arg
+		 */
 		openOptionsBoxList() {
 			this.showOptionsBoxList = !this.showOptionsBoxList;
 		},
+		/**
+		 * @vuese
+		 * expand the post to show more details	 emits event
+		 * @arg no arg
+		 */
 		expandPostContent() {
 			this.showPostContent = true;
 			this.$emit('expandPost');
@@ -691,6 +803,11 @@ export default {
 			this.showPostContent = false;
 			this.$emit('collapsePost');
 		},
+		/**
+		 * @vuese
+		 * collapse the post to show more details	 emits event
+		 * @arg no arg
+		 */
 		async approvePost(id) {
 			console.log('approve');
 			let approveSatus = -1;
@@ -724,6 +841,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the remove button to remove the post
+		 * @arg no arg
+		 */
 		async removePost(id) {
 			console.log('remove');
 			let approveSatus = -1;
@@ -757,13 +879,19 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the nsfw button to mark the post as nsfw
+		 * @arg no arg
+		 */
 		async markUnMarkAsNSFW(id) {
+			let requestSatus = -1;
 			let type = 'unMark';
 			if (!this.postData.data.nsfw) {
 				type = 'mark';
 			}
 			try {
-				await this.$store.dispatch('userposts/markPostAsNSFW', {
+				requestSatus = await this.$store.dispatch('userposts/markPostAsNSFW', {
 					baseurl: this.$baseurl,
 					nsfwData: {
 						id: id,
@@ -774,53 +902,123 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			if (this.pinnedPostFlag) this.RequestUserPinnedPostData();
+			if (type == 'mark') {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'marked post nsfw successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to mark post as nsfw');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'unmarked post nsfw successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to unmark post as nsfw');
+				}
+			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the spoiler button to mark the post as spoiler
+		 * @arg no arg
+		 */
 		async markUnMarkAsSpoiler(id) {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			let requestSatus = -1;
 			let type = 'unMark';
 			if (!this.postData.data.spoiler) {
 				type = 'mark';
 			}
 			try {
-				await this.$store.dispatch('userposts/markUnMarkPostAsSpoiler', {
-					baseurl: this.$baseurl,
-					spoilerData: {
-						id: id,
-						type: `${type}`, // mark UnMark
-					},
-					page: this.page,
-				});
+				requestSatus = await this.$store.dispatch(
+					'userposts/markUnMarkPostAsSpoiler',
+					{
+						baseurl: this.$baseurl,
+						spoilerData: {
+							id: id,
+							type: `${type}`, // mark UnMark
+						},
+						page: this.page,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			if (this.pinnedPostFlag) this.RequestUserPinnedPostData();
+			if (type == 'mark') {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'marked post spoiler successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to mark post as spoiler');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'unmarked post spoiler successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to unmark post as spoiler');
+				}
+			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the send me replies button to mark the post	to send replies
+		 * @arg no arg
+		 */
 		async markUnMarkSendMeReply(id) {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			let requestSatus = -1;
 			let state = false;
 			if (!this.postData.data.sendReplies) {
 				state = true;
 			}
 			try {
-				await this.$store.dispatch('userposts/markUnMarkSendMeReply', {
-					baseurl: this.$baseurl,
-					sendReplyData: {
-						id: id,
-						type: `post`, // mark UnMark
-						state,
-					},
-					page: this.page,
-				});
+				requestSatus = await this.$store.dispatch(
+					'userposts/markUnMarkSendMeReply',
+					{
+						baseurl: this.$baseurl,
+						sendReplyData: {
+							id: id,
+							type: `post`, // mark UnMark
+							state,
+						},
+						page: this.page,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			if (state) {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'marked post send replies successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to mark post send replie');
+				}
+			} else {
+				if (requestSatus == 200) {
+					this.$emit('emitPopup', id, 'unmarked post send replie successfully');
+				} else {
+					this.$emit('emitPopup', id, 'failed to unmark post as send replies');
+				}
+			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the moderator  button to show more moderator options
+		 * @arg no arg
+		 */
 		safetyClicked() {
 			this.showSafetyOptions = !this.showSafetyOptions;
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the lock button to lock unlock the post
+		 * @arg no arg
+		 */
 		async lockUnLockComments(id) {
 			console.log('lock un lock clicked');
 			let approveSatus = -1;
 			let key = 'unlock';
+
 			if (
 				!this.postData.data.moderation ||
 				!this.postData.data.moderation.lock
@@ -828,6 +1026,10 @@ export default {
 				key = 'lock';
 			}
 			console.log('main', key);
+			if (this.pinnedPostFlag) {
+				if (this.postData.data.locked) key = 'unlock';
+				else key = 'lock';
+			}
 			try {
 				approveSatus = await this.$store.dispatch(
 					'userposts/lockUnLockPostOrComment',
@@ -851,15 +1053,49 @@ export default {
 					this.$emit('emitPopup', id, 'failed to lock post');
 				}
 			} else if (approveSatus == 200) {
+				if (this.pinnedPostFlag) {
+					this.RequestUserPinnedPostData();
+				}
 				this.$emit('emitPopup', id, 'post unlocked successfully');
 			} else {
 				this.$emit('emitPopup', id, 'failed to unlock post');
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the pinned button to pin unpin the post in the pinned posts
+		 * @arg no arg
+		 */
+		async RequestUserPinnedPostData() {
+			let requestStatus = -1;
+			try {
+				requestStatus = await this.$store.dispatch(
+					'userposts/getUserPinnedPostData',
+					{
+						baseurl: this.$baseurl,
+						body: {
+							username: this.$route.params.userName,
+						},
+					}
+				);
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			console.log('req', requestStatus);
+			return requestStatus;
+		},
+		/**
+		 * @vuese
+		 * triggered when click on the pin button to delete the post
+		 * @arg no arg
+		 */
 		async pinPostToProfile(id) {
 			let key = false;
 			if (!this.postData.data.pin) {
 				key = true;
+			}
+			if (this.pinPostFlag) {
+				key = false;
 			}
 			console.log('pin un pin clicked', key);
 			try {
@@ -875,7 +1111,16 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the hide button to hide un hide the post
+		 * @arg no arg
+		 */
 		async hideUnhidePost(id) {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			let approveSatus = -1;
 			let key = 'hide';
 			if (this.page == 'hidden') key = 'unhide';
@@ -905,6 +1150,11 @@ export default {
 				this.$emit('emitPopup', id, 'failed to unhide post');
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the spam button to spam the post
+		 * @arg no arg
+		 */
 		async spamPost(id) {
 			let approveSatus = -1;
 			if (
@@ -935,6 +1185,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the upvote button to upvote the post
+		 * @arg no arg
+		 */
 		async upvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -962,6 +1217,11 @@ export default {
 				this.counter--;
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when click on the down button to down the post
+		 * @arg no arg
+		 */
 		async downvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -989,6 +1249,11 @@ export default {
 				this.counter++;
 			}
 		},
+		/**
+		 * @vuese
+		 * convert numbers to its abbreviations in K or M..
+		 * @arg no arg
+		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
 			console.log(num);

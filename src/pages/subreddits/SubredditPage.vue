@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 30%; top: 50%"
+			></the-spinner>
+		</div>
 		<the-header :header-title="'u/asmaaadel0'"></the-header>
 		<subreddit-top
 			@reload="reloadPage"
@@ -23,8 +28,10 @@
 				<grow-community id="grow-community-comp"></grow-community>
 				<!-- <community-post id="pinned-post-comp"></community-post> -->
 				<overview-post
+					class="posts"
 					v-for="(post, index) in posts"
 					:key="index"
+					@subreddit-page-handler="reloadPosts"
 					:post-data="{
 						data: post.data,
 						id: post.id,
@@ -99,6 +106,7 @@ import ModeratorsBar from '../../components/CommunityComponents/ModeratorsBar.vu
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 import SubredditRules from '../../components/PostComponents/SubredditRules.vue';
 import OverviewPost from '../../components/UserComponents/BaseUserComponents/OverviewPost.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 
 export default {
 	components: {
@@ -111,6 +119,7 @@ export default {
 		BacktotopButton,
 		SubredditRules,
 		OverviewPost,
+		TheSpinner,
 	},
 	props: {
 		subredditName: {
@@ -131,6 +140,7 @@ export default {
 			moderators: [],
 			rules: [],
 			posts: [],
+			loading: false,
 		};
 	},
 	computed: {
@@ -142,19 +152,21 @@ export default {
 			else return this.subreddit.nickname;
 		},
 	},
-	beforeMount() {
+	async beforeMount() {
 		//fetch subreddit details
+		this.loading = true;
 		this.firstTimeCreated =
 			this.$store.getters['community/createdSuccessfully'];
-		this.getSubreddit();
-		this.getModerators();
-		this.getTopics();
-		this.getRules();
+		await this.getSubreddit();
+		await this.getModerators();
+		await this.getTopics();
+		await this.getRules();
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
 		if (title == null) title = 'hot';
-		this.fetchSubredditPosts(title);
+		await this.fetchSubredditPosts(title);
+		this.loading = false;
 	},
 	watch: {
 		'$route.params.title': {
@@ -164,6 +176,11 @@ export default {
 		},
 	},
 	methods: {
+		reloadPosts() {
+			let title = this.$route.params.title;
+			if (title == null) title = 'hot';
+			this.fetchSubredditPosts(title);
+		},
 		async getSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
@@ -211,12 +228,12 @@ export default {
 		},
 		reloadPage() {
 			this.getSubreddit();
+			this.getRules();
+			this.getModerators();
+			// this.fetchSubredditPosts(this.$route.params.title);
 		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
-			console.log('hide');
-			console.log(this.firstTimeCreated, this.showFirstDialog);
-			console.log(this.showDialog);
 		},
 		createPost() {
 			this.hideFirstDialog();
@@ -256,11 +273,9 @@ export default {
 			}
 		},
 		changeRoute(title) {
-			this.$router.push(`${title}`);
-			//this.$router.push(`/${title}`);
+			this.$router.push(`/r/${this.subreddit.title}/${title}`);
 		},
 		async changeRouteQueryParam(title) {
-			console.log(title);
 			await this.$router.push({
 				path: `top`,
 				query: { t: title },
@@ -329,5 +344,9 @@ export default {
 }
 #pinned-post-comp {
 	margin-top: 1.2rem;
+}
+.posts {
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 </style>

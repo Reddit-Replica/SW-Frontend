@@ -246,25 +246,29 @@ export default {
 	},
 	methods: {
 		async follow() {
-			this.followed = !this.followed;
-			if (this.followed) {
-				try {
-					await this.$store.dispatch('postCommentActions/followComment', {
-						baseurl: this.$baseurl,
-						commentId: this.comment.commentId,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				this.followed = !this.followed;
+				if (this.followed) {
+					try {
+						await this.$store.dispatch('postCommentActions/followComment', {
+							baseurl: this.$baseurl,
+							commentId: this.comment.commentId,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unfollowComment', {
+							baseurl: this.$baseurl,
+							commentId: this.comment.commentId,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unfollowComment', {
-						baseurl: this.$baseurl,
-						commentId: this.comment.commentId,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		async save() {

@@ -1,6 +1,13 @@
 <template>
 	<div
 		id="base-user-data-moderation-spam-spammedBy"
+		v-if="moderatorFlag"
+		class="post-tooltip"
+	>
+		<i class="fa-solid fa-shield" style="color: #46d160"></i>
+	</div>
+	<div
+		id="base-user-data-moderation-spam-spammedBy"
 		v-if="moderationSpamHandler"
 		class="post-tooltip"
 	>
@@ -76,15 +83,31 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// the moderation object to handel the moderation of the post
 		moderation: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// to know if the post is pinned post type or not
 		pinnedPost: {
 			type: Boolean,
 		},
+		// @vuese
+		// moderator flag handel the subreddit moderation icon
+		moderatorFlag: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * to determine show the spam icon or not
+		 * @arg no arg
+		 */
 		moderationSpamHandler() {
 			return (
 				this.moderation != null &&
@@ -92,6 +115,11 @@ export default {
 				this.moderation.spam.spammedBy != null
 			);
 		},
+		/**
+		 * @vuese
+		 * to determine show the lock icon or not
+		 * @arg no arg
+		 */
 		moderationLockHandler() {
 			return (
 				this.moderation != null &&
@@ -99,6 +127,11 @@ export default {
 				this.moderation.lock
 			);
 		},
+		/**
+		 * @vuese
+		 * to determine show the remove icon or not
+		 * @arg no arg
+		 */
 		moderationRemoveHandler() {
 			return (
 				this.moderation != null &&
@@ -106,6 +139,11 @@ export default {
 				this.moderation.remove.removedBy != null
 			);
 		},
+		/**
+		 * @vuese
+		 * to determine show the approve icon or not
+		 * @arg no arg
+		 */
 		moderationApproveHandler() {
 			return (
 				this.moderation != null &&
