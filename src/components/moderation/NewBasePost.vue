@@ -1,7 +1,6 @@
 <template>
-	<div class="item">
+	<div class="item" id="theBox">
 		<div class="box">
-			<div></div>
 			<div class="left-bar">
 				<div class="icons">
 					<div class="d-flex flex-column vote-box">
@@ -74,7 +73,9 @@
 				</div>
 				<div class="post-title">
 					<div class="title-box">{{ spam.title }}</div>
-					<div class="body-box">{{ spam.content }}</div>
+					<div class="body-box" v-if="spam.content != null">
+						{{ spam.content.ops[0].insert }}
+					</div>
 				</div>
 				<div v-if="!spam.commentId">
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
@@ -250,11 +251,12 @@ export default {
 				await this.$store.dispatch('moderation/approvedSpam', {
 					subredditName: this.subredditName,
 					baseurl: this.$baseurl,
-					id: this.spam.id,
-					type: this.spam.type,
+					id: this.spam.postId,
+					type: 'post',
 				});
 				if (this.$store.getters['moderation/approveSuccessfully']) {
 					this.approved = true;
+					document.getElementById('theBox').style.display = 'none';
 				}
 			} catch (err) {
 				console.log(err);
@@ -338,21 +340,14 @@ export default {
 	margin-right: 1rem;
 }
 .subreddit-details {
-	-ms-flex-align: center;
-	align-items: center;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-ms-flex: 1 1 auto;
-	flex: 1 1 auto;
 	overflow: hidden;
-	display: inline;
 	font-size: 12px;
-	font-weight: 400;
+	font-weight: 40;
 	line-height: 16px;
-	-ms-flex-align: center;
 	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
+	flex: 0 0 auto;
 	color: inherit;
 }
 .subreddit-name {
@@ -406,7 +401,7 @@ export default {
 }
 .post-title {
 	color: #9b9b9b;
-	margin: 0 8px;
+	margin: -10px 20px;
 	font-size: 2.5rem;
 	font-weight: 700;
 }
@@ -415,6 +410,7 @@ export default {
 	position: relative;
 	text-decoration: none;
 	word-break: break-word;
+	font-size: small;
 }
 .body-box {
 	margin-top: 8px;
