@@ -17,6 +17,10 @@ export default {
 
 			oneCategory: '',
 			oneCommunities: [],
+
+			trendingCommunities: [],
+
+			suggestedCommunity: [],
 		};
 	},
 	mutations,
