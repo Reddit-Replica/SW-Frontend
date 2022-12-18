@@ -147,9 +147,6 @@
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
-						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
-					</li>
 					<li :id="'reply-box-' + index">
 						<span
 							class="link"
@@ -309,12 +306,6 @@ export default {
 					this.disappear = false;
 				}
 			}
-		},
-		// @vuese
-		//handle unread action
-		// @arg no argument
-		unreadAction() {
-			this.isRead = false;
 		},
 		// @vuese
 		//handle spam action
