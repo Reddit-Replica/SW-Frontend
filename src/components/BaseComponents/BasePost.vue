@@ -431,14 +431,18 @@ export default {
 		//@vuese
 		//hide post action
 		async hidePost() {
-			this.postHidden = true;
-			try {
-				await this.$store.dispatch('postCommentActions/hide', {
-					baseurl: this.$baseurl,
-					id: this.id,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.postHidden = true;
+				try {
+					await this.$store.dispatch('postCommentActions/hide', {
+						baseurl: this.$baseurl,
+						id: this.id,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese

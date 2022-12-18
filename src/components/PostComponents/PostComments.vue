@@ -588,8 +588,12 @@ export default {
 			return html;
 		},
 		newComment(comment) {
-			this.userComments.unshift(comment);
-			console.log(comment);
+			if (localStorage.getItem('userName') != null) {
+				this.userComments.unshift(comment);
+				console.log(comment);
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		//@vuese
 		//fetch posts according to type of sorting
@@ -706,25 +710,29 @@ export default {
 		//@vuese
 		//hide post
 		async hidePost() {
-			this.postHidden = !this.postHidden;
-			if (this.postHidden) {
-				try {
-					await this.$store.dispatch('postCommentActions/hide', {
-						baseurl: this.$baseurl,
-						id: this.$route.path.split('/')[4],
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.postHidden = !this.postHidden;
+				if (this.postHidden) {
+					try {
+						await this.$store.dispatch('postCommentActions/hide', {
+							baseurl: this.$baseurl,
+							id: this.$route.path.split('/')[4],
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unhide', {
+							baseurl: this.$baseurl,
+							id: this.$route.path.split('/')[4],
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unhide', {
-						baseurl: this.$baseurl,
-						id: this.$route.path.split('/')[4],
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
