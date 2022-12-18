@@ -1,6 +1,6 @@
 <template>
 	<div id="ntf-page-1">
-		<the-header :header-title="'u/asmaaadel0'"></the-header>
+		<the-header :header-title="userName"></the-header>
 		<notifications-top @reload="reloadPage" id="ntf-page-2"></notifications-top>
 		<div class="ntf-section" @reload="reloadPage" id="ntf-page-3">
 			<div id="ntf-page-4">
@@ -43,6 +43,11 @@ export default {
 			notifications: [],
 			doneHide: false,
 		};
+	},
+	computed: {
+		userName() {
+			return localStorage.getItem('userName');
+		},
 	},
 	methods: {
 		async loadAllNotifications() {
