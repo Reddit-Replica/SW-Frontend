@@ -694,16 +694,20 @@ export default {
 		//@vuese
 		//follow post
 		async follow() {
-			try {
-				await this.$store.dispatch('postCommentActions/followPost', {
-					baseurl: this.$baseurl,
-					id: this.$route.path.split('/')[4],
-					follow: !this.isFollowed,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				try {
+					await this.$store.dispatch('postCommentActions/followPost', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+						follow: !this.isFollowed,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				this.isFollowed = !this.isFollowed;
+			} else {
+				this.$router.replace('/login');
 			}
-			this.isFollowed = !this.isFollowed;
 		},
 		//@vuese
 		//show services submenu of post
