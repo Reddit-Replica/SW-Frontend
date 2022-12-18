@@ -90,6 +90,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -118,14 +119,14 @@ export default {
 	},
 	methods: {
 		// @vuese
-		// Used to show add rule popup
+		// Used to show add flair popup
 		// @arg no argument
 		showAddFlairFunction() {
 			this.showAddFlair = !this.showAddFlair;
 		},
 		// @vuese
 		// handle load flairs instead of refreshing
-		// @arg no argument
+		// @arg the argument is string value representing what is done successfully
 		doneSuccessfully(title) {
 			this.$emit('doneSuccessfully', title);
 		},

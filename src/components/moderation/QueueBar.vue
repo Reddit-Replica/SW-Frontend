@@ -129,6 +129,9 @@ import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: { SubMenu },
 	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
 		subredditName() {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
