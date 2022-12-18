@@ -84,6 +84,8 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// the full comment data
 		commentData: {
 			type: Object,
 			required: true,
