@@ -4,7 +4,7 @@
 		<notifications-top @reload="reloadPage" id="ntf-page-2"></notifications-top>
 		<div class="ntf-section" @reload="reloadPage" id="ntf-page-3">
 			<div id="ntf-page-4">
-				<div class="ntf-list-title" id="ntf-page-5">Title</div>
+				<div class="ntf-list-title" id="ntf-page-5">Notifications</div>
 				<ul id="ntf-page-6">
 					<notification-message
 						v-for="(notification, index) in notifications"
