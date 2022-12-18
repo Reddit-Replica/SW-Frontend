@@ -1,6 +1,11 @@
 <template>
 	<div class="all">
-		<div class="after-all">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="after-all" v-else>
 			<the-header :header-title="userName"></the-header>
 			<div class="page-release">
 				<div class="page">
@@ -234,10 +239,12 @@
 </template>
 <script>
 import Notfound from '../../components/SearchComponents/NotFound.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
 			q: '',
+			loading: false,
 		};
 	},
 	computed: {
@@ -249,6 +256,13 @@ export default {
 		userName() {
 			return localStorage.getItem('userName');
 		},
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.search();
+		}
+		this.loading = false;
 	},
 	beforeMount() {
 		this.search();
@@ -311,7 +325,7 @@ export default {
 			}
 		},
 	},
-	components: { Notfound },
+	components: { Notfound, TheSpinner },
 };
 </script>
 

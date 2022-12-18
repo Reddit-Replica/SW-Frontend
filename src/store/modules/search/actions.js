@@ -174,15 +174,16 @@ export default {
 		// );
 		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=subreddit' + '&q=' + payload.q,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}
+			baseurl + '/search?type=subreddit' + '&q=' + payload.q
 		);
+		// {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+		// },
+		// }
+		// );
 		const responseData = await response.json();
 		// console.log(responseData);
 		if (
