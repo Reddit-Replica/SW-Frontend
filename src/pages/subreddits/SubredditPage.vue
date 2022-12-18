@@ -30,6 +30,9 @@
 				<overview-post
 					v-for="(post, index) in posts"
 					:key="index"
+					@subreddit-page-handler="reloadPosts"
+					:moderator-flag="true"
+					:subreddit-page-pinned="true"
 					:post-data="{
 						data: post.data,
 						id: post.id,
@@ -174,6 +177,11 @@ export default {
 		},
 	},
 	methods: {
+		reloadPosts() {
+			let title = this.$route.params.title;
+			if (title == null) title = 'hot';
+			this.fetchSubredditPosts(title);
+		},
 		async getSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
@@ -218,16 +226,15 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.rules = this.$store.getters['moderation/listOfRules'];
-			console.log(this.rules);
 		},
 		reloadPage() {
 			this.getSubreddit();
+			this.getRules();
+			this.getModerators();
+			// this.fetchSubredditPosts(this.$route.params.title);
 		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
-			console.log('hide');
-			console.log(this.firstTimeCreated, this.showFirstDialog);
-			console.log(this.showDialog);
 		},
 		createPost() {
 			this.hideFirstDialog();
@@ -270,7 +277,6 @@ export default {
 			this.$router.push(`/r/${this.subreddit.title}/${title}`);
 		},
 		async changeRouteQueryParam(title) {
-			console.log(title);
 			await this.$router.push({
 				path: `top`,
 				query: { t: title },
