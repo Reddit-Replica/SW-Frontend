@@ -633,6 +633,9 @@ export default {
 				token: accessToken,
 			});
 			this.doneDesc = true;
+			setTimeout(() => {
+				this.doneDesc = false;
+			}, 1000);
 			this.$emit('reload');
 		},
 		//@vuese
@@ -655,6 +658,9 @@ export default {
 				token: accessToken,
 			});
 			this.doneTopic = true;
+			setTimeout(() => {
+				this.doneTopic = false;
+			}, 1000);
 			this.$emit('reload');
 		},
 		//@vuese
@@ -713,6 +719,9 @@ export default {
 				token: accessToken,
 			});
 			this.doneSubtopic = true;
+			setTimeout(() => {
+				this.doneSubtopic = false;
+			}, 1000);
 			this.$emit('reload');
 		},
 		//@vuese
