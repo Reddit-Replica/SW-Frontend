@@ -91,6 +91,7 @@ export default {
 		},
 	},
 	created() {
+		this.subreddit = null;
 		if (!localStorage.getItem('accessToken')) {
 			this.$router.push('/login');
 			document.title = 'reddit';
@@ -349,7 +350,7 @@ export default {
 							setTimeout(
 								() =>
 									this.$router.replace(
-										'/r/' +
+										'/user/' +
 											this.userName +
 											'/comments/' +
 											this.postData.id +
@@ -412,7 +413,7 @@ export default {
 							setTimeout(
 								() =>
 									this.$router.replace(
-										'/r/' +
+										'/user/' +
 											this.userName +
 											'/comments/' +
 											str +
@@ -471,7 +472,7 @@ export default {
 							setTimeout(
 								() =>
 									this.$router.replace(
-										'/r/' +
+										'/user/' +
 											this.userName +
 											'/comments/' +
 											this.postData.id +
@@ -541,7 +542,7 @@ export default {
 							setTimeout(
 								() =>
 									this.$router.replace(
-										'/r/' +
+										'/user/' +
 											this.userName +
 											'/comments/' +
 											str +
