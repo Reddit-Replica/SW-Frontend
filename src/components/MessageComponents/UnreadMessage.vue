@@ -147,9 +147,6 @@
 							>Block User</span
 						>
 					</li>
-					<li @click="unreadAction()" v-if="isRead" :id="'unread-' + index">
-						<span class="link" :id="'mark-un-read-' + index">Mark Unread</span>
-					</li>
 					<li :id="'reply-box-' + index">
 						<span
 							class="link"
@@ -183,6 +180,7 @@ export default {
 	props: {
 		// @vuese
 		//details of message
+		// @type object
 		message: {
 			type: Object,
 			required: true,
@@ -201,6 +199,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids and background color
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -239,11 +238,8 @@ export default {
 	methods: {
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
-			// this.$store.dispatch('moderation/handleTime', {
-			// 	time: this.message.sendAt,
-			// });
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.message.sendAt);
@@ -312,12 +308,6 @@ export default {
 			}
 		},
 		// @vuese
-		//handle unread action
-		// @arg no argument
-		unreadAction() {
-			this.isRead = false;
-		},
-		// @vuese
 		//handle spam action
 		// @arg The argument is a string value representing if user click ok
 		async spamAction(action) {
@@ -341,7 +331,7 @@ export default {
 		},
 		// @vuese
 		//show reply box or hide it
-		// @arg no argument
+		// @arg The argument is a string value representing if its show or hide
 		replyFunction(title) {
 			if (title == 'show') {
 				this.showReplyBox = true;

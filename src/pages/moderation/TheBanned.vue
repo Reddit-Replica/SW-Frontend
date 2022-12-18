@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'banned'"
 			@show-ban-user="showBanUserFunction()"
@@ -114,6 +119,7 @@ import ListBar from '../../components/moderation/ListBar.vue';
 import AddBan from '../../components/moderation/AddBan.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 import BanItem from '../../components/moderation/BanItem.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		NoList,
@@ -122,6 +128,7 @@ export default {
 		SaveUnsavePopupMessage,
 		BanItem,
 		SearchBar,
+		TheSpinner,
 	},
 	data() {
 		return {
@@ -131,10 +138,15 @@ export default {
 			count: 0,
 			noItems: false,
 			errorResponse: '',
+			loading: false,
 		};
 	},
-	beforeMount() {
-		this.loadListOfBanned();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.loadListOfBanned();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese
@@ -174,8 +186,8 @@ export default {
 	},
 	methods: {
 		// @vuese
-		// handle load banned list instead of refreshing
-		// @arg the argument is the title used in show popup
+		// handle load banned instead of refreshing
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');

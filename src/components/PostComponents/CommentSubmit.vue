@@ -275,18 +275,20 @@ export default {
 		},
 	},
 	async beforeMount() {
-		try {
-			await this.$store.dispatch('postCommentActions/commentedUsers', {
-				baseurl: this.$baseurl,
-				postId: this.$route.path.split('/')[4],
-			});
-		} catch (error) {
-			this.error = error.message || 'Something went wrong';
+		if (localStorage.getItem('userName') != null) {
+			try {
+				await this.$store.dispatch('postCommentActions/commentedUsers', {
+					baseurl: this.$baseurl,
+					postId: this.$route.path.split('/')[4],
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.commentedUsers =
+				this.$store.getters['postCommentActions/getCommentedUsers'];
+			console.log('commentedUsers');
+			console.log(this.commentedUsers);
 		}
-		this.commentedUsers =
-			this.$store.getters['postCommentActions/getCommentedUsers'];
-		console.log('commentedUsers');
-		console.log(this.commentedUsers);
 	},
 };
 </script>

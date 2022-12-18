@@ -46,13 +46,21 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
-			this.firstCategory = this.$store.getters['topCommunity/firstCategory'];
-			this.secondCategory = this.$store.getters['topCommunity/secondCategory'];
+			this.firstCategory = this.$store.getters['topCommunity/getFirstCategory'];
+			this.secondCategory =
+				this.$store.getters['topCommunity/getSecondCategory'];
 
 			this.firstCategoryCommunities =
-				this.$store.getters['topCommunity/firstCommunities'];
+				this.$store.getters['topCommunity/getFirstCommunities'];
 			this.secondCategoryCommunities =
-				this.$store.getters['topCommunity/secondCommunities'];
+				this.$store.getters['topCommunity/getSecondCommunities'];
+
+			console.log(
+				this.firstCategory,
+				this.secondCategory,
+				this.firstCategoryCommunities,
+				this.secondCategoryCommunities
+			);
 		},
 	},
 	reloadPage() {

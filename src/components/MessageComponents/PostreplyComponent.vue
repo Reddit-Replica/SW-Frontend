@@ -40,14 +40,18 @@
 					<p class="md-details">
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
-							><a href="" :id="'message-sender-' + index">{{
-								message.senderUsername
-							}}</a>
+							><a
+								:href="'/user/' + message.senderUsername"
+								:id="'message-sender-' + index"
+								>/u/{{ message.senderUsername }}</a
+							>
 							<span
 								>&nbsp;via&nbsp;
-								<a href="" :id="'message-receiver-' + index">{{
-									message.receiverUsername
-								}}</a>
+								<a
+									:href="'/user/' + message.receiverUsername"
+									:id="'message-receiver-' + index"
+									>/u/{{ message.receiverUsername }}</a
+								>
 							</span></span
 						><span :class="!isRead ? 'unread' : ''">&nbsp;sent&nbsp;</span
 						><time :class="!isRead ? 'unread' : ''" :id="'time-' + index">
@@ -66,7 +70,7 @@
 						</li> -->
 						<li :id="'context-link-' + index">
 							<!-- <a href="#" :id="'context-a-' + index">context</a> -->
-							<span class="link" @click="goContext()" id="'context-a-' + index"
+							<span class="link" @click="goContext()" :id="'context-a-' + index"
 								>context</span
 							>
 						</li>
@@ -223,6 +227,7 @@ export default {
 	props: {
 		// @vuese
 		//details of message
+		// @type object
 		message: {
 			type: Object,
 			required: true,
@@ -244,6 +249,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids and background color
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -279,7 +285,7 @@ export default {
 	methods: {
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
 			var currentDate = new Date();
 			var returnValue = '';
@@ -321,6 +327,7 @@ export default {
 		// 		}
 		// 	}
 		// },
+
 		// @vuese
 		//handle block action
 		// @arg The argument is a string value representing if user click ok
@@ -393,8 +400,10 @@ export default {
 		// 		}
 		// 	}
 		// },
+
 		//@vuese
 		//upvote on post
+		// @arg no argument
 		async upvote() {
 			if (this.downClicked) {
 				this.downClicked = false;
@@ -420,6 +429,7 @@ export default {
 		},
 		//@vuese
 		//down vote on post
+		// @arg no argument
 		async downvote() {
 			if (this.upClicked) {
 				this.upClicked = false;
@@ -445,7 +455,7 @@ export default {
 		},
 		// @vuese
 		//show reply box or hide it
-		// @arg no argument
+		// @arg The argument is a string value representing if its show or hide
 		replyFunction(title) {
 			if (title == 'show') {
 				this.showReplyBox = true;

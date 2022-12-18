@@ -14,26 +14,25 @@ export default {
 	 */
 	async SearchPost(context, payload) {
 		const baseurl = payload.baseurl;
-		// const response = await fetch(
-		// 	baseurl + '/search?type=post' + '?q=' + payload.q
-		// );
-		console.log(localStorage.getItem('accessToken'));
+		const sort = payload.sort;
+		const time = payload.time;
+		let mediaQuery = '';
+		if (sort) {
+			mediaQuery = mediaQuery + '&sort=' + sort;
+		}
+		if (time) {
+			mediaQuery = mediaQuery + '&time=' + time;
+		}
+		// console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
-			baseurl +
-				'/search?type=post' +
-				'&q=' +
-				payload.q +
-				'&sort=' +
-				payload.sort +
-				'&time=' +
-				payload.time
-			// {
-			// 	method: 'GET',
-			// 	headers: {
-			// 		'Content-Type': 'application/json',
-			// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			// 	},
-			// }
+			baseurl + '/search?type=post&q=' + payload.q + mediaQuery,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
 		);
 		console.log(response);
 		const responseData = await response.json();
@@ -53,7 +52,11 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
+			console.log(responseData);
+			// console.log(responseData[0]);
 			for (let i = 0; i < responseData.children.length; i++) {
+				console.log('responseData.children.id');
+				console.log(responseData.children[i].id);
 				const post = {
 					id: responseData.children[i].id,
 					dataId: responseData.children[i].data.id,
@@ -71,15 +74,15 @@ export default {
 					postedBy: responseData.children[i].data.postedBy,
 					votes: responseData.children[i].data.votes,
 					//image
-					ImagePath: responseData.children[i].data.images[0].path,
-					ImageCaption: responseData.children[i].data.images[0].caption,
-					Imagelink: responseData.children[i].data.images[0].link,
-					//flair
-					flairId: responseData.children[i].data.flair.id,
-					flairName: responseData.children[i].data.flair.caption,
-					order: responseData.children[i].data.flair.link,
-					backgroundColor: responseData.children[i].data.flair.path,
-					textColor: responseData.children[i].data.flair.caption,
+					// ImagePath: responseData.children[i].data.images[0].path,
+					// ImageCaption: responseData.children[i].data.images[0].caption,
+					// Imagelink: responseData.children[i].data.images[0].link,
+					// //flair
+					// flairId: responseData.children[i].data.flair.id,
+					// flairName: responseData.children[i].data.flair.caption,
+					// order: responseData.children[i].data.flair.link,
+					// backgroundColor: responseData.children[i].data.flair.path,
+					// textColor: responseData.children[i].data.flair.caption,
 				};
 				posts.push(post);
 			}
@@ -105,6 +108,7 @@ export default {
 		// const response = await fetch(
 		// 	baseurl + '/search?type=user' + '?q=' + payload.q
 		// );
+		// console.log(response);
 		const response = await fetch(
 			baseurl + '/search?type=user' + '&q=' + payload.q,
 			{
@@ -117,7 +121,7 @@ export default {
 		);
 		console.log(response);
 		const responseData = await response.json();
-		console.log(responseData);
+		// console.log(responseData);
 		if (
 			response.status == 200 ||
 			response.status == 404 ||
@@ -180,7 +184,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console.log(responseData);
+		// console.log(responseData);
 		if (
 			response.status == 200 ||
 			response.status == 404 ||
@@ -235,7 +239,7 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console(responseData);
+		// console(responseData);
 		if (
 			response.status == 200 ||
 			response.status == 404 ||
@@ -243,15 +247,17 @@ export default {
 		) {
 			const comments = [];
 
-			let before, after;
-			before = '';
-			after = '';
-			if (responseData.before) {
-				before = responseData.before;
-			}
-			if (responseData.after) {
-				after = responseData.after;
-			}
+			// let before, after;
+			// before = '';
+			// after = '';
+			// if (responseData.before) {
+			// 	before = responseData.before;
+			// }
+			// if (responseData.after) {
+			// 	after = responseData.after;
+			// }
+			console.log('responseData');
+			console.log(responseData);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const comment = {
 					id: responseData.children[i].id,
@@ -261,30 +267,31 @@ export default {
 					postKind: responseData.children[i].data.post.kind,
 					postSubreddit: responseData.children[i].data.post.subreddit,
 					postlink: responseData.children[i].data.post.link,
-					postImagepath: responseData.children[i].data.post.images[0].path,
-					postImageCaption:
-						responseData.children[i].data.post.images[0].caption,
-					postImagelink: responseData.children[i].data.post.images[0].link,
+					// postImagepath: responseData.children[i].data.post.images[0].path,
+					// postImageCaption:
+					// 	responseData.children[i].data.post.images[0].caption,
+					// postImagelink: responseData.children[i].data.post.images[0].link,
 					postVideo: responseData.children[i].data.post.video,
 					postContnet: responseData.children[i].data.post.content,
 					postnfsw: responseData.children[i].data.post.nsfw,
 					postspoiler: responseData.children[i].data.post.spoiler,
 					posttitle: responseData.children[i].data.post.title,
 					postsharedId: responseData.children[i].data.post.sharePostId,
-					postFlairId: responseData.children[i].data.post.flair.id,
-					postFlairName: responseData.children[i].data.post.flair.flairName,
-					postFlairOrder: responseData.children[i].data.post.flair.order,
-					postFlairBack:
-						responseData.children[i].data.post.flair.backgroundColor,
-					postFlairtext: responseData.children[i].data.post.flair.textColor,
-					postComments: responseData.children[i].post.comments,
+					// postFlairId: responseData.children[i].data.post.flair.id,
+					// postFlairName: responseData.children[i].data.post.flair.flairName,
+					// postFlairOrder: responseData.children[i].data.post.flair.order,
+					// postFlairBack:
+					// 	responseData.children[i].data.post.flair.backgroundColor,
+					// postFlairtext: responseData.children[i].data.post.flair.textColor,
+					postComments: responseData.children[i].data.post.comments,
 					postvotes: responseData.children[i].data.post.votes,
 					postpostedAt: responseData.children[i].data.post.postedAt,
 					postpostedby: responseData.children[i].data.post.postedBy,
 					//comments
 					commentId: responseData.children[i].data.comment.id,
-					commentcontent: responseData.children[i].data.comment.content,
-					commentparentId: responseData.children[i].data.comment.parentId,
+					commentcontent:
+						responseData.children[i].data.comment.content.ops[0].insert,
+					commentparentId: responseData.children[i].data.comment.parent,
 					commentlevel: responseData.children[i].data.comment.level,
 					commentusername: responseData.children[i].data.comment.username,
 					commentcreatedAt: responseData.children[i].data.comment.createdAt,
@@ -293,8 +300,8 @@ export default {
 				comments.push(comment);
 			}
 			context.commit('setComments', comments);
-			context.commit('before', before);
-			context.commit('after', after);
+			// context.commit('before', before);
+			// context.commit('after', after);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;
@@ -320,7 +327,7 @@ export default {
 				responseData.message || 'Failed to send request.'
 			);
 			console.log('error in follow');
-			console.log(responseData);
+			// console.log(responseData);
 			console.log(localStorage.getItem('accessToken'));
 			throw error;
 		}

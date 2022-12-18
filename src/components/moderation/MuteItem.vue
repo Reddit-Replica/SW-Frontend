@@ -200,10 +200,6 @@ export default {
 			this.showUnMute = !this.showUnMute;
 		},
 		calculateTime() {
-			// this.$store.dispatch('moderation/handleTime', {
-			// 	time: this.moderator.dateOfModeration,
-			// });
-
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.mute.dateOfMute);

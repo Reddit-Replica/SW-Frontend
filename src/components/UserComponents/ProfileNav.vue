@@ -3,6 +3,7 @@
 		<div class="basecontainer" id="profile-nav-bar-container">
 			<ul id="profile-nave-bar">
 				<li
+					class="viewed"
 					v-for="profileLink in viewedLinks"
 					:key="profileLink.id"
 					:class="{ active: profileLink.active }"
@@ -34,13 +35,14 @@
 		</div>
 		<ul v-show="showLinkBox" class="linkbox">
 			<li
+				class="hidden"
 				v-for="profileLink in hiddenLinks"
 				:key="profileLink.id"
 				:class="{ active: profileLink.active }"
 				:id="`hidden-profile-link-${profileLink.linkName}`"
 			>
 				<router-link
-					:to="$route.path + profileLink.path"
+					:to="`/user/${this.$route.params.userName}` + profileLink.path"
 					:class="{ linkactive: profileLink.active }"
 				>
 					{{ profileLink.linkName }}
@@ -199,6 +201,9 @@ export default {
 						x,
 						this.profileLinks.length
 					);
+				} else if (this.state == 'user') {
+					this.viewedLinks = this.userLinks.slice(0, x);
+					this.hiddenLinks = this.userLinks.slice(x, this.userLinks.length);
 				}
 			} else {
 				if (this.state == 'profile') this.viewedLinks = this.profileLinks;
@@ -227,10 +232,15 @@ a.router-link-active {
 	color: var(--color-blue-2);
 }
 
-li:has(> a.router-link-active) {
+li.viewed:has(> a.router-link-active) {
 	box-shadow: inset 0 -2px 0 0 var(--color-blue-2);
 }
-
+/* li.hidden:has(> a.router-link-active) {
+	color: var(--color-blue-2);
+} */
+li.hidden a.router-link-active {
+	color: var(--color-blue-2);
+}
 nav {
 	position: relative;
 	width: 100%;

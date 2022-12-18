@@ -1,5 +1,10 @@
 <template>
 	<div class="container">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<div class="row justify-content-center content">
 			<h3 class="heading-3">Send A Private Message</h3>
 			<form @submit.prevent="handleSubmit()">
@@ -157,7 +162,11 @@
 </template>
 
 <script>
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
+	components: {
+		TheSpinner,
+	},
 	data() {
 		return {
 			text: '',
@@ -168,14 +177,17 @@ export default {
 			formatting: 'formatting',
 			delivered: false,
 			errorResponse: null,
+			loading: false,
 		};
 	},
 	// @vuese
 	//change title name
-	beforeMount() {
+	async created() {
 		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
 			document.title = 'messages: compose';
-			this.loadSuggestedSender();
+			await this.loadSuggestedSender();
+			this.loading = false;
 		}
 	},
 	computed: {

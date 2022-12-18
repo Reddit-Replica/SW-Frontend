@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'approved'"
 			:subreddit-name="subredditName"
@@ -149,6 +154,7 @@ import ApprovedItem from '../../components/moderation/ApprovedItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import NoList from '../../components/moderation/NoList.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		SearchBar,
@@ -156,6 +162,7 @@ export default {
 		ListBar,
 		NoList,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
 	data() {
 		return {
@@ -166,10 +173,15 @@ export default {
 			showAdd: false,
 			errorResponse: null,
 			savedUnsavedPosts: [],
+			loading: false,
 		};
 	},
-	beforeMount() {
-		this.loadListOfApproved();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.loadListOfApproved();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese
@@ -281,8 +293,8 @@ export default {
 			}
 		},
 		// @vuese
-		// handle load flairs instead of refreshing
-		// @arg no argument
+		// handle load approved instead of refreshing
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');

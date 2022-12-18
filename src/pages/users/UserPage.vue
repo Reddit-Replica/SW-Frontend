@@ -37,7 +37,7 @@
 							:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
 						>
 							<!-- <sortposts-bar></sortposts-bar> -->
-							<router-view :state="state" @emitPopup="emitPopup"></router-view>
+							<router-view :state="state" @emit-popup="emitPopup"></router-view>
 						</main>
 						<aside id="profile-aside">
 							<profile-card
@@ -60,10 +60,10 @@
 		<SaveUnsavePopupMessage
 			v-for="message in popupMessages"
 			:key="message.id"
-			:type="message.type"
-			:state="message.state"
 			:typeid="message.postid"
-		></SaveUnsavePopupMessage>
+		>
+			{{ message.state }}
+		</SaveUnsavePopupMessage>
 	</div>
 </template>
 

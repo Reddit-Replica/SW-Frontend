@@ -112,7 +112,7 @@ export default {
 	methods: {
 		// @vuese
 		//load moderators list from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch before or after
 		async loadListOfModerators(title) {
 			let beforeMod = '',
 				afterMod = '';

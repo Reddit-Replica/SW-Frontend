@@ -40,8 +40,52 @@
 					<div class="main-box">
 						<div class="post-content" id="base-user-post-content">
 							<div class="post-user-information">
-								<div class="post-user-name">
+								<div class="post-subreddit-icon">
+									<i
+										v-if="subredditPagePinned"
+										class="fa-solid fa-thumbtack"
+										style="
+											font-size: 20px;
+											transform: rotate(45deg);
+											color: rgb(70, 209, 96);
+										"
+									></i>
+
+									<span
+										style="width: 100%; height: 100%"
+										v-if="postData.data.subreddit != null"
+									>
+										<img
+											v-if="getSubredditPicture"
+											:src="$baseurl + '/' + getSubredditPicture"
+											alt=""
+										/>
+										<img
+											v-else
+											src="../../../../img/default_subreddit_image.png"
+											alt=""
+										/>
+									</span>
+									<span style="width: 100%; height: 100%" v-else>
+										<img
+											v-if="getUserData.userData.picture != null"
+											:src="$baseurl + '/' + getUserData.userData.picture"
+											alt=""
+										/>
+										<img
+											v-else
+											src="../../../../img/default_inbox_avatar.png"
+											alt=""
+										/>
+									</span>
+								</div>
+								<div
+									@mouseleave="hideSubredditBox"
+									style="position: relative"
+									class="post-user-name"
+								>
 									<router-link
+										@mouseover="showSubredditBox"
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
@@ -54,6 +98,16 @@
 												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
+									<subreddit-card-mini
+										@mouseover="showSubredditBox"
+										v-if="
+											showSubredditBoxFlag &&
+											subredditData != null &&
+											postData.data.subreddit != null
+										"
+										:subreddit="subredditData"
+										:subreddit-name="postData.data.subreddit"
+									></subreddit-card-mini>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
 									<span class="posted-by-unhovered">
@@ -84,6 +138,7 @@
 										v-if="postData.data.moderation != null"
 										:moderation="postData.data.moderation"
 										:pinned-post="postData.data.pin"
+										:moderator-flag="moderatorFlag"
 									></moderation-title>
 								</div>
 							</div>
@@ -97,7 +152,7 @@
 									id="base-user-post-data-link"
 									:href="postData.data.link"
 									target="_blank"
-									>{{ postData.data.link }}/<i
+									>{{ postData.data.link.substring(0, 20) }}/<i
 										class="fa-solid fa-arrow-up-right-from-square"
 									></i
 								></a>
@@ -107,7 +162,7 @@
 									id="base21565-user-post-data-link"
 									:href="CrossPostLinkHandler"
 									target="_blank"
-									>{{ postData.data.link }}/<i
+									>{{ postData.data.link.substring(0, 25) }}/<i
 										class="fa-solid fa-arrow-up-right-from-square"
 									></i
 								></a>
@@ -187,7 +242,7 @@
 								id="base-user-post-data-link"
 								:href="postData.data.link"
 								target="_blank"
-								>{{ postData.data.link }}/<i
+								>{{ postData.data.link.substring(0, 25) }}/<i
 									class="fa-solid fa-arrow-up-right-from-square"
 								></i
 							></a>
@@ -203,9 +258,11 @@
 							@hide-post="hidePost"
 							@save-post="savePost"
 							@share-post="sharePost"
+							:state="state"
 							:page="page"
 							post-kind="ov"
-							@emitPopup="emitPopup"
+							@emit-popup="emitPopup"
+							@click="$emit('subredditPageHandler')"
 						></post-options>
 					</div>
 					<div class="post-insight" v-if="insightActive">
@@ -239,6 +296,7 @@ import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
 import ModerationTitle from './PostComponents/ModerationTitle.vue';
+import SubredditCardMini from './PostComponents/SubredditCardMini.vue';
 export default {
 	components: {
 		PostOptions,
@@ -246,23 +304,47 @@ export default {
 		PicturePost,
 		TheInsights,
 		ModerationTitle,
+		SubredditCardMini,
 	},
-	emits: ['emitPopup'],
+	emits: ['emitPopup', 'subredditPageHandler'],
 	props: {
+		// @vuese
+		// postData the full post Data
 		postData: {
 			type: Object,
 			required: true,
 		},
 		post: {
 			type: Object,
-			required: true,
+			required: false,
 		},
+		// @vuese
+		// state authenticated or not
 		state: {
 			type: Object,
-			required: true,
+			required: false,
 		},
+		// @vuese
+		// page which page the component used
 		page: {
 			type: String,
+			required: false,
+			default: '',
+		},
+		// @vuese
+		// pinned sign in the subreddit post flag
+
+		subredditPagePinned: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		// @vuese
+		// moderator icon flag in subreddit page
+		moderatorFlag: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 	data() {
@@ -278,20 +360,105 @@ export default {
 			insightActive: false,
 			insightsLoading: false,
 			PostHybridContent: '',
+			subredditData: null,
+			showSubredditBoxFlag: false,
 		};
 	},
-
-	created() {
-		// this.lastLeftPic = this.images.length - 1;
-	},
 	mounted() {
+		/**
+		 * @vuese
+		 * set hybrid post content at mounting
+		 * @arg no arg
+		 */
 		this.setPostHybridContent();
 	},
-	computed: {},
+	/**
+	 * @vuese
+	 * before mount we request the subreddit data
+	 * @arg no arg
+	 */
+	async beforeMount() {
+		if (this.postData.data.subreddit != null) {
+			await this.getSubreddit();
+			console.log('aaa', this.subredditData);
+		}
+	},
+	computed: {
+		/**
+		 * @vuese
+		 * get the user data from the store
+		 * @arg no arg
+		 */
+		getUserData() {
+			// console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserData'];
+		},
+		/**
+		 * @vuese
+		 * get picture of the subreddit to show it in the post
+		 * @arg no arg
+		 */
+		getSubredditPicture() {
+			if (
+				this.subredditData != null &&
+				this.postData.data.subreddit != null &&
+				this.subredditData.picture != null
+			) {
+				return this.subredditData.picture;
+			} else return false;
+		},
+	},
 	methods: {
+		/**
+		 * @vuese
+		 * show subreddit box when you hovered on subreddit name
+		 * @arg no arg
+		 */
+		showSubredditBox() {
+			this.showSubredditBoxFlag = true;
+		},
+		/**
+		 * @vuese
+		 * hide the subreddit box when unhovered
+		 * @arg no arg
+		 */
+		hideSubredditBox() {
+			this.showSubredditBoxFlag = false;
+		},
+		/**
+		 * @vuese
+		 * get subreddit information to use its picture in the post
+		 * @arg no arg
+		 */
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					subredditName: 'medoemad',
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				this.subredditData = this.$store.getters['community/getSubreddit'];
+			} catch (err) {
+				console.log(err);
+				// if (this.$store.getters['community/notFound']) {
+				// 	this.$router.push('/notFound');
+				// }
+			}
+		},
+		/**
+		 * @vuese
+		 * emits to show popup save/unsave
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
 		},
+		/**
+		 * @vuese
+		 * handle the route of the cross post
+		 * @arg no arg
+		 */
 		CrossPostLinkHandler() {
 			if (this.postData.data.subreddit)
 				return (
@@ -315,6 +482,11 @@ export default {
 				);
 			}
 		},
+		/**
+		 * @vuese
+		 * handle the route of the post flair
+		 * @arg no arg
+		 */
 		postFlairRouteHandler() {
 			this.$router.push({
 				path: `/r/${this.postData.data.subreddit}`,
@@ -323,14 +495,29 @@ export default {
 				},
 			});
 		},
+		/**
+		 * @vuese
+		 * convert from standard date to the moment from now
+		 * @arg date the date to be converted
+		 */
 		getMoment(date) {
 			return moment(date).fromNow();
 		},
+		/**
+		 * @vuese
+		 * get abbreviation of the number (convert to K,M)
+		 * @arg num the number to be converted
+		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
 			console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
+		/**
+		 * @vuese
+		 * get the content of the hybrid post
+		 * @arg no arg
+		 */
 		setPostHybridContent() {
 			if (this.postData.data.kind == 'hybrid') {
 				let QuillDeltaToHtmlConverter =
@@ -343,6 +530,11 @@ export default {
 				this.PostHybridContent = converter.convert();
 			}
 		},
+		/**
+		 * @vuese
+		 * toggle the view of the insights post
+		 * @arg no arg
+		 */
 		async insightsPostToggle(id) {
 			this.insightsLoading = true;
 			this.insightActive = !this.insightActive;
@@ -350,6 +542,11 @@ export default {
 			if (this.insightActive) await this.RequestInsightsData(id);
 			this.insightsLoading = false;
 		},
+		/**
+		 * @vuese
+		 * Request the insights data
+		 * @arg no arg
+		 */
 		async RequestInsightsData(id) {
 			try {
 				await this.$store.dispatch('userposts/getInsightsData', {
@@ -362,29 +559,14 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		savePost() {
-			if (this.state == 'unauth') {
-				this.$router.push('/');
-				return;
-			}
-			console.log('save');
-		},
-		sharePost() {
-			if (this.state == 'unauth') {
-				this.$router.push('/');
-				return;
-			}
-			console.log('share');
-			// this.showShareOptions = true;
-		},
-		CopyPostLink() {},
-		Crosspost() {},
-		editPost() {
-			console.log('edit');
-		},
 		pinPostToProfile() {
 			console.log('pin');
 		},
+		/**
+		 * @vuese
+		 * hide the deleted post from the page
+		 * @arg no arg
+		 */
 		deletePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -394,6 +576,11 @@ export default {
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
+		/**
+		 * @vuese
+		 * hide the hidden post from the page
+		 * @arg no arg
+		 */
 		hidePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -403,37 +590,30 @@ export default {
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
-
-		resizePost() {
-			console.log('resize');
-		},
-		leftClick() {
-			this.lastLeftPic--;
-			this.lastRightPic++;
-			console.log('clicked');
-			this.images.forEach((ele) => {
-				console.log(Number(ele.left) - 100);
-				ele.left = String(Number(ele.left) - 100);
-			});
-		},
-		rightClick() {
-			this.lastRightPic--;
-			this.lastLeftPic++;
-			console.log('clicked');
-			this.images.forEach((ele) => {
-				console.log(Number(ele.left) + 100);
-				ele.left = String(Number(ele.left) + 100);
-			});
-		},
+		/**
+		 * @vuese
+		 * expand Post to show its content
+		 * @arg no arg
+		 */
 		expandPostContent() {
 			this.setPostHybridContent();
 			this.showPostContent = true;
 			this.insightActive = false;
 		},
+		/**
+		 * @vuese
+		 * collapse post to hide its details content
+		 * @arg no arg
+		 */
 		collapsePostContent() {
 			this.showPostContent = false;
 			this.insightActive = false;
 		},
+		/**
+		 * @vuese
+		 * handel the request upvote to the post
+		 * @arg no arg
+		 */
 		async upvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -461,6 +641,11 @@ export default {
 				this.counter--;
 			}
 		},
+		/**
+		 * @vuese
+		 * handel the request downvote to the post
+		 * @arg no arg
+		 */
 		async downvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -709,6 +894,7 @@ span {
 	line-height: 20px;
 	text-decoration: none;
 	margin-right: 3px;
+	position: relative;
 }
 span.post-nsfw {
 	border: 1px solid rgb(255, 88, 91) !important;
@@ -930,4 +1116,14 @@ a.post-link-href:hover {
 	color: unset;
 }
 /* @media (max-width: 400px;); */
+.post-subreddit-icon {
+	margin-right: 4px;
+	width: 20px;
+	height: 20px;
+}
+.post-subreddit-icon img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
 </style>

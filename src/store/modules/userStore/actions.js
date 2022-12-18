@@ -85,7 +85,11 @@ export default {
 		// const response = await fetch(baseurl + `/user-comments`); // mock server
 		let response;
 		try {
-			response = await fetch(url); // API
+			response = await fetch(url, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}); // API
 		} catch (error) {
 			console.log(error);
 		}

@@ -83,6 +83,26 @@ describe ('PostReplies', () => {
   //--------------------------------------------------------
   //                     Testing no message
   //--------------------------------------------------------
+  it ('Testing no message value is true if there is no messages', () => {
+    const data = {
+      noMessages: true,
+      loading: false,
+      after: false,
+    };
+    const wrapper = shallowMount (PostReplies, {
+      props: {
+        data,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('No more messages...');
+  });
+
   it ('Testing no message value is false if there is message', () => {
     const wrapper = shallowMount (PostReplies, {
       props: {

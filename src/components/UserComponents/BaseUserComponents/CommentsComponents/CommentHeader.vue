@@ -1,7 +1,7 @@
 <template>
 	<header>
-		<div class="content">
-			<div class="comment-icon">
+		<div class="content" id="comment-header">
+			<div class="comment-icon" id="comment-header-comment-icon">
 				<i
 					style="
 						stroke-width: 35px;
@@ -11,13 +11,16 @@
 					class="fa-solid fa-message"
 				></i>
 			</div>
-			<div class="title-container">
-				<span class="user-comment-name">
+			<div class="title-container" id="comment-header-title-container">
+				<span class="user-comment-name" id="comment-header-user-comment-name">
 					<router-link :to="`/user/${$route.params.userName}`">
 						{{ $route.params.userName }}</router-link
 					>
 				</span>
-				<span class="post-title-content">
+				<span
+					class="post-title-content"
+					id="comment-header-user-post-title-content"
+				>
 					<p>
 						commented on
 						<span class="post-title-name">{{
@@ -25,20 +28,28 @@
 						}}</span>
 					</p>
 				</span>
-				<span class="post-status">
+				<span class="post-status" id="comment-header-post-status">
 					<router-link
+						id="comment-header-post-status-flair"
 						v-if="commentData.data.post.flair != null"
 						to=""
+						@click="postFlairRouteHandler"
 						class="flair-box"
 						:style="`background-color :${commentData.data.post.flair.backgroundColor};
 										color : ${commentData.data.post.flair.textColor};
 										`"
 						>{{ commentData.data.post.flair.flairName }}</router-link
 					>
-					<span v-if="commentData.data.post.spoiler" class="post-spoiler"
+					<span
+						v-if="commentData.data.post.spoiler"
+						class="post-spoiler"
+						id="comment-header-post-post-spoiler"
 						><p>spoiler</p></span
 					>
-					<span v-if="commentData.data.post.nsfw" class="post-nsfw"
+					<span
+						v-if="commentData.data.post.nsfw"
+						class="post-nsfw"
+						id="comment-header-post-status-post-nsfw"
 						><p>nsfw</p></span
 					>
 					<span class="post-oc"><p>OC</p></span>
@@ -46,6 +57,7 @@
 				<span class="subreddit-name">
 					&nbsp;.&nbsp;
 					<router-link
+						id="comment-header-post-status-subreddit-name"
 						:to="
 							commentData.data.post.subreddit != null
 								? `/r/${commentData.data.post.subreddit}`
@@ -59,7 +71,7 @@
 						}}</router-link
 					>
 				</span>
-				<span class="posted-by">
+				<span class="posted-by" id="comment-header-post-status-posted-by">
 					posted by&nbsp;
 					<router-link :to="`user/${commentData.data.post.postedBy}`">{{
 						commentData.data.post.postedBy
@@ -72,9 +84,26 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// the full comment data
 		commentData: {
 			type: Object,
 			required: true,
+		},
+	},
+	methods: {
+		/**
+		 * @vuese
+		 * handle the route of the post flair
+		 * @arg no arg
+		 */
+		postFlairRouteHandler() {
+			this.$router.push({
+				path: `/r/${this.commentData.data.post.subreddit}`,
+				query: {
+					f: `flair_name ${this.commentData.data.post.flair.flairName}`,
+				},
+			});
 		},
 	},
 };

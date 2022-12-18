@@ -134,7 +134,7 @@ export default {
 		},
 		// @vuese
 		//index of the item
-		// @type string
+		// @type number
 		index: {
 			type: Number,
 			default: 0,
@@ -192,7 +192,7 @@ export default {
 		},
 		// @vuese
 		// handle load rules instead of refreshing
-		// @arg no argument
+		// @arg The argument is a string value representing the title of done action
 		doneSuccessfully(title) {
 			this.loadListOfRules();
 			this.$emit('doneSuccessfully', title);
