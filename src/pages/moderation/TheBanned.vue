@@ -186,8 +186,8 @@ export default {
 	},
 	methods: {
 		// @vuese
-		// handle load banned list instead of refreshing
-		// @arg the argument is the title used in show popup
+		// handle load banned instead of refreshing
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			if (!title) {
 				this.savePost('Done');
