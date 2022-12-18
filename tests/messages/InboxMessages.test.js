@@ -129,89 +129,95 @@ describe ('AllinboxComponent.vue', () => {
   //                     Testing content page
   //--------------------------------------------------------
 
-  //   it ('Testing the sender name is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#message-sender-0').text ()).contain (
-  //       '/u/hoda_gamal'
-  //     );
-  //   });
+  it ('Testing the sender name is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#message-sender-0').text ()).contain (
+      '/u/hoda_gamal'
+    );
+  });
 
-  //   it ('Testing the reciever name is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#message-receiver-0').text ()).contain (
-  //       '/u/asmaaadel0'
-  //     );
-  //   });
+  it ('Testing the reciever name is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#message-receiver-0').text ()).contain (
+      '/u/asmaaadel0'
+    );
+  });
 
-  //   it ('Testing subject is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('.subject-text').text ()).contain ('hi');
-  //   });
+  it ('Testing subject is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('.subject-text').text ()).contain ('hi');
+  });
 
-  //   // it ('Testing text message is correct', () => {
-  //   //   const wrapper = mount (AllinboxComponent, {
-  //   //     props: {
-  //   //       message,
-  //   //       index,
-  //   //     },
-  //   //     global: {
-  //   //       // OR:
-  //   //       mocks: {
-  //   //         $store: store,
-  //   //       },
-  //   //     },
-  //   //   });
-  //   //   expect (wrapper.find ('#md').text ()).contain ('hello asmaa');
-  //   // });
+  it ('Testing text message is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    // expect (wrapper.text ()).contain ('hi:from /r//u/hoda');
+  });
 
-  //   it ('Testing the time is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     // expect (wrapper.find ('#time-0').text ()).contain ('2 years ago');
-  //   });
+  it ('Testing the time is correct', () => {
+    const handleTime = '2 years ago';
+    const wrapper = mount (AllinboxComponent, {
+      data () {
+        return {
+          handleTime,
+        };
+      },
+      props: {
+        message,
+        index,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#time-0').text ()).contain ('2019/08/24');
+  });
 
   //   // it ('Testing the Permalink button text is correct', () => {
   //   //   const wrapper = mount (AllinboxComponent, {
@@ -229,39 +235,39 @@ describe ('AllinboxComponent.vue', () => {
   //   //   expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
   //   // });
 
-  //   it ('Testing the delete button text is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#click-delete-0').text ()).contain ('Delete');
-  //   });
+    // it ('Testing the delete button text is correct', () => {
+    //   const wrapper = mount (AllinboxComponent, {
+    //     props: {
+    //       message,
+    //       index,
+    //       // count,
+    //     },
+    //     global: {
+    //       // OR:
+    //       mocks: {
+    //         $store: store,
+    //       },
+    //     },
+    //   });
+    //   expect (wrapper.find ('#click-delete-0').text ()).contain ('Delete');
+    // });
 
-  //   it ('Testing the spam button text is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
-  //   });
+    // it ('Testing the spam button text is correct', () => {
+    //   const wrapper = mount (AllinboxComponent, {
+    //     props: {
+    //       message,
+    //       index,
+    //       count,
+    //     },
+    //     global: {
+    //       // OR:
+    //       mocks: {
+    //         $store: store,
+    //       },
+    //     },
+    //   });
+    //   // expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
+    // });
 
   //   it ('Testing the block button text is correct', () => {
   //     const wrapper = mount (AllinboxComponent, {
