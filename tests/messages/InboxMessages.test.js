@@ -19,6 +19,7 @@ describe ('AllinboxComponent.vue', () => {
     sendAt: '2019-08-24T14:15:22Z',
     isReply: false,
     isRead: true,
+    isSenderUser: true,
   };
   const index = 0;
   let count = 2;
@@ -220,7 +221,7 @@ describe ('AllinboxComponent.vue', () => {
     expect (wrapper.find ('#time-0').text ()).contain ('2019/08/24');
   });
 
-  it ('Testing the actions not exist if Iam the sender', () => {
+  it ('Testing the actions exist if Iam the sender', () => {
     const wrapper = mount (AllinboxComponent, {
       props: {
         message,
@@ -236,273 +237,273 @@ describe ('AllinboxComponent.vue', () => {
         },
       },
     });
-    expect (wrapper.text()).not.contain('Delete');
+    expect (wrapper.text()).contain('Delete');
   });
 
-  // it ('Testing the delete button text is correct', () => {
-  //   const wrapper = mount (AllinboxComponent, {
-  //     data () {
-  //       return {
-  //         sendByMe,
-  //       };
-  //     },
-  //     propsData: {
-  //       sendByMe,
-  //     },
-  //     props: {
-  //       message,
-  //       index,
-  //       sendByMe,
-  //       // count,
-  //     },
-  //     computed: {
-  //       sendByMe,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('#click-delete-0').text ()).contain ('Delete');
-  // });
+  it ('Testing the delete button text is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      data () {
+        return {
+          sendByMe,
+        };
+      },
+      propsData: {
+        sendByMe,
+      },
+      props: {
+        message,
+        index,
+        sendByMe,
+        // count,
+      },
+      computed: {
+        sendByMe,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#click-delete-0').text ()).contain ('Delete');
+  });
 
-  // it ('Testing the spam button text is correct', () => {
-  //   const wrapper = mount (AllinboxComponent, {
-  //     props: {
-  //       message,
-  //       index,
-  //       count,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   // expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
-  // });
+  it ('Testing the spam button text is correct', () => {
+    const wrapper = mount (AllinboxComponent, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    // expect (wrapper.find ('#click-spam-0').text ()).contain ('spam');
+  });
 
-  //   it ('Testing the block button text is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#block-user-0').text ()).contain ('Block User');
-  //   });
+    it ('Testing the block button text is correct', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+          },
+        },
+      });
+      expect (wrapper.find ('#block-user-0').text ()).contain ('Block User');
+    });
 
-  //   it ('Testing the mark un read button text is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
-  //   });
+    it ('Testing the mark un read button text is correct', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+          },
+        },
+      });
+      expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
+    });
 
-  //   it ('Testing the mark reply button text is correct', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //     });
-  //     expect (wrapper.find ('#reply-0').text ()).contain ('Reply');
-  //   });
+    it ('Testing the mark reply button text is correct', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+          },
+        },
+      });
+      expect (wrapper.find ('#reply-0').text ()).contain ('Reply');
+    });
 
-  //   //--------------------------------------------------------
-  //   //                     Testing message color background page
-  //   //--------------------------------------------------------
+    //--------------------------------------------------------
+    //                     Testing message color background page
+    //--------------------------------------------------------
 
-  //   it ('Testing block message background is white', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //         },
-  //       },
-  //       data () {
-  //         return {
-  //           backcolor: 'grey',
-  //         };
-  //       },
-  //     });
-  //     expect (this.backcolor == 'grey').toBe (false);
-  //   });
+    it ('Testing block message background is white', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+          },
+        },
+        data () {
+          return {
+            backcolor: 'grey',
+          };
+        },
+      });
+      expect (this.backcolor == 'grey').toBe (false);
+    });
 
-  //   //--------------------------------------------------------
-  //   //                     Testing clickig buttons
-  //   //--------------------------------------------------------
-  //   it ('Testing clicking delete', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //           fetch: mockservice,
-  //         },
-  //       },
-  //     });
-  //     const deleteBtn = wrapper.find ('#click-delete-0');
-  //     deleteBtn
-  //       .trigger ('click')
-  //       .then (() => {
-  //         const yesBtn = wrapper.find ('#yes-delete-user-0');
-  //         yesBtn
-  //           .trigger ('click')
-  //           .then (() => {
-  //             expect (wrapper.text ()).contain ('');
-  //           })
-  //           .catch (function () {
-  //             console.log ('Promise Rejected');
-  //           });
-  //       })
-  //       .catch (function () {
-  //         console.log ('Promise Rejected');
-  //       });
-  //     return Promise.resolve ();
-  //   });
+    //--------------------------------------------------------
+    //                     Testing clickig buttons
+    //--------------------------------------------------------
+    it ('Testing clicking delete', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+            fetch: mockservice,
+          },
+        },
+      });
+      const deleteBtn = wrapper.find ('#click-delete-0');
+      deleteBtn
+        .trigger ('click')
+        .then (() => {
+          const yesBtn = wrapper.find ('#yes-delete-user-0');
+          yesBtn
+            .trigger ('click')
+            .then (() => {
+              expect (wrapper.text ()).contain ('');
+            })
+            .catch (function () {
+              console.log ('Promise Rejected');
+            });
+        })
+        .catch (function () {
+          console.log ('Promise Rejected');
+        });
+      return Promise.resolve ();
+    });
 
-  //   it ('Testing clicking spam', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //           fetch: mockservice,
-  //         },
-  //       },
-  //       data () {
-  //         return {
-  //           isRead: false,
-  //         };
-  //       },
-  //     });
-  //     const spamBtn = wrapper.find ('#click-spam-0');
-  //     spamBtn
-  //       .trigger ('click')
-  //       .then (() => {
-  //         const yesBtn = wrapper.find ('#yes-spam-user-0');
-  //         yesBtn
-  //           .trigger ('click')
-  //           .then (() => {
-  //             expect (wrapper.text ()).contain ('spammed');
-  //           })
-  //           .catch (function () {
-  //             console.log ('Promise Rejected');
-  //           });
-  //       })
-  //       .catch (function () {
-  //         console.log ('Promise Rejected');
-  //       });
-  //   });
+    it ('Testing clicking spam', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+            fetch: mockservice,
+          },
+        },
+        data () {
+          return {
+            isRead: false,
+          };
+        },
+      });
+      const spamBtn = wrapper.find ('#click-spam-0');
+      spamBtn
+        .trigger ('click')
+        .then (() => {
+          const yesBtn = wrapper.find ('#yes-spam-user-0');
+          yesBtn
+            .trigger ('click')
+            .then (() => {
+              expect (wrapper.text ()).contain ('spammed');
+            })
+            .catch (function () {
+              console.log ('Promise Rejected');
+            });
+        })
+        .catch (function () {
+          console.log ('Promise Rejected');
+        });
+    });
 
-  //   it ('Testing clicking block', async () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //           fetch: mockservice,
-  //         },
-  //       },
-  //     });
-  //     const blockBtn = wrapper.find ('#block-user-0');
-  //     blockBtn
-  //       .trigger ('click')
-  //       .then (() => {
-  //         const yesBtn = wrapper.find ('#yes-block-user-0');
-  //         yesBtn
-  //           .trigger ('click')
-  //           .then (() => {
-  //             expect (wrapper.text ())
-  //               .contain ('')
-  //               .toBeCalledWith ('uncaughtException', expect.any (Function));
-  //           })
-  //           .catch (function () {
-  //             console.log ('Promise Rejected');
-  //           });
-  //       })
-  //       .catch (function () {
-  //         console.log ('Promise Rejected');
-  //       });
-  //   });
+    it ('Testing clicking block', async () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+            fetch: mockservice,
+          },
+        },
+      });
+      const blockBtn = wrapper.find ('#block-user-0');
+      blockBtn
+        .trigger ('click')
+        .then (() => {
+          const yesBtn = wrapper.find ('#yes-block-user-0');
+          yesBtn
+            .trigger ('click')
+            .then (() => {
+              expect (wrapper.text ())
+                .contain ('')
+                .toBeCalledWith ('uncaughtException', expect.any (Function));
+            })
+            .catch (function () {
+              console.log ('Promise Rejected');
+            });
+        })
+        .catch (function () {
+          console.log ('Promise Rejected');
+        });
+    });
 
-  //   it ('Testing clicking unread', () => {
-  //     const wrapper = mount (AllinboxComponent, {
-  //       props: {
-  //         message,
-  //         index,
-  //         count,
-  //       },
-  //       global: {
-  //         // OR:
-  //         mocks: {
-  //           $store: store,
-  //           fetch: mockservice,
-  //         },
-  //       },
-  //       data () {
-  //         return {
-  //           isRead: true,
-  //         };
-  //       },
-  //     });
-  //     const blockBtn = wrapper.find ('#unread-0');
-  //     blockBtn
-  //       .trigger ('click')
-  //       .then (() => {
-  //         expect (this.isRead == true).toBe (false);
-  //       })
-  //       .catch (function () {
-  //         console.log ('Promise Rejected');
-  //       });
-  //   });
+    it ('Testing clicking unread', () => {
+      const wrapper = mount (AllinboxComponent, {
+        props: {
+          message,
+          index,
+          count,
+        },
+        global: {
+          // OR:
+          mocks: {
+            $store: store,
+            fetch: mockservice,
+          },
+        },
+        data () {
+          return {
+            isRead: true,
+          };
+        },
+      });
+      const blockBtn = wrapper.find ('#unread-0');
+      blockBtn
+        .trigger ('click')
+        .then (() => {
+          expect (this.isRead == true).toBe (false);
+        })
+        .catch (function () {
+          console.log ('Promise Rejected');
+        });
+    });
 });
