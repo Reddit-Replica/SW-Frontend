@@ -367,51 +367,59 @@ export default {
 		//@vuese
 		//upvote on post
 		async upvote() {
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
-			if (this.upClicked == false) {
-				this.upClicked = true;
-				this.counter++;
+			if (localStorage.getItem('accessToken') != null) {
+				if (this.downClicked) {
+					this.downClicked = false;
+					this.counter++;
+				}
+				if (this.upClicked == false) {
+					this.upClicked = true;
+					this.counter++;
+				} else {
+					this.upClicked = false;
+					this.counter--;
+				}
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
-				this.upClicked = false;
-				this.counter--;
-			}
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.id,
-					type: 'post',
-					direction: 1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
 		//down vote on post
 		async downvote() {
-			if (this.upClicked) {
-				this.upClicked = false;
-				this.counter--;
-			}
-			if (this.downClicked == false) {
-				this.downClicked = true;
-				this.counter--;
+			if (localStorage.getItem('accessToken') != null) {
+				if (this.upClicked) {
+					this.upClicked = false;
+					this.counter--;
+				}
+				if (this.downClicked == false) {
+					this.downClicked = true;
+					this.counter--;
+				} else {
+					this.downClicked = false;
+					this.counter++;
+				}
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
-				this.downClicked = false;
-				this.counter++;
-			}
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.id,
-					type: 'post',
-					direction: -1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
