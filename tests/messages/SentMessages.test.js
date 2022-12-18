@@ -173,7 +173,13 @@ describe ('SentMessages.vue', () => {
   // });
 
   it ('Testing the time is correct', () => {
+    const handleTime = '2 years ago';
     const wrapper = mount (SentMessages, {
+      data () {
+        return {
+          handleTime,
+        };
+      },
       props: {
         message,
         index,
@@ -185,24 +191,8 @@ describe ('SentMessages.vue', () => {
         },
       },
     });
-    // expect (wrapper.find ('#time-0').text ()).contain ('2 years ago');
+    expect (wrapper.find ('#time-0').text ()).contain ('2019/08/24');
   });
-
-  // it ('Testing the Permalink button text is correct', () => {
-  //   const wrapper = mount (SentMessages, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('#permalink-a-0').text ()).contain ('Permalink');
-  // });
 
   //--------------------------------------------------------
   //                     Testing message color background page
