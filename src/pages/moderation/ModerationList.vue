@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<list-bar
 			:title="'Moderators'"
 			:subreddit-name="subredditName"
@@ -145,6 +150,7 @@ import ListItem from '../../components/moderation/ListItem.vue';
 import ListBar from '../../components/moderation/ListBar.vue';
 import InviteModerator from '../../components/moderation/InviteModerator.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	components: {
 		SearchBar,
@@ -152,10 +158,15 @@ export default {
 		ListBar,
 		InviteModerator,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
-	beforeMount() {
-		this.loadListOfModerators();
-		this.loadListOfInvitedModerators();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.loadListOfInvitedModerators();
+			await this.loadListOfModerators();
+		}
+		this.loading = false;
 	},
 	computed: {
 		// @vuese
@@ -197,7 +208,7 @@ export default {
 		},
 
 		// @vuese
-		//return true if there is no rules, false otherwise
+		//return true if there is an invited mod, false otherwise
 		// @type boolean
 		invitedMod() {
 			if (this.listOfInvitedModerators.length != 0) {
@@ -216,19 +227,20 @@ export default {
 			showLeaveMod: false,
 			errorResponse: '',
 			savedUnsavedPosts: [],
+			loading: false,
 		};
 	},
 	methods: {
 		// @vuese
 		// handle load flairs instead of refreshing
-		// @arg no argument
+		// @arg The argument is a string value representing what is the action that done successfully
 		doneSuccessfully(title) {
 			this.loadListOfInvitedModerators();
 			this.savePost(title);
 		},
 		// @vuese
 		//load moderators list from the store
-		// @arg no argument
+		// @arg The argument is a string value representing if i want to fetch after or before messages
 		async loadListOfModerators(title) {
 			let beforeMod = '',
 				afterMod = '';
@@ -262,7 +274,7 @@ export default {
 			}
 		},
 		// @vuese
-		// Used to handle save reorder rules action
+		// Used to handle leave moderation action
 		// @arg no argument
 		async leaveModFunction() {
 			try {

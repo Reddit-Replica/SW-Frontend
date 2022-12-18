@@ -189,22 +189,6 @@ describe ('PostreplyComponent.vue', () => {
     expect (wrapper.find ('.subject-text').text ()).contain ('hi');
   });
 
-  // it ('Testing text message is correct', () => {
-  //   const wrapper = mount (PostReplies, {
-  //     props: {
-  //       message,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('.md').text ()).contain ('hello asmaa');
-  // });
-
   it ('Testing the time is correct', () => {
     const wrapper = mount (PostReplies, {
       props: {
@@ -240,7 +224,7 @@ describe ('PostreplyComponent.vue', () => {
         },
       },
     });
-    // expect (wrapper.find ('#context-a-0').text ()).contain ('context');
+    expect (wrapper.find ('#context-a-0').text ()).contain ('context');
   });
 
   it ('Testing the Full Comments button text is correct', () => {
@@ -264,25 +248,25 @@ describe ('PostreplyComponent.vue', () => {
     );
   });
 
-  it ('Testing the delete button text is correct', () => {
-    const wrapper = mount (PostReplies, {
-      props: {
-        message,
-        index,
-        count,
-      },
-      computed: {
-        handleTime,
-      },
-      global: {
-        // OR:
-        mocks: {
-          $store: store,
-        },
-      },
-    });
-    // expect (wrapper.find ('#click-remove-0').text ()).contain ('Remove');
-  });
+  // it ('Testing the delete button text is correct', () => {
+  //   const wrapper = mount (PostReplies, {
+  //     props: {
+  //       message,
+  //       index,
+  //       count,
+  //     },
+  //     computed: {
+  //       handleTime,
+  //     },
+  //     global: {
+  //       // OR:
+  //       mocks: {
+  //         $store: store,
+  //       },
+  //     },
+  //   });
+  //   expect (wrapper.find ('#click-remove-0').text ()).contain ('Remove');
+  // });
 
   it ('Testing the spam button text is correct', () => {
     const wrapper = mount (PostReplies, {
@@ -324,25 +308,25 @@ describe ('PostreplyComponent.vue', () => {
     expect (wrapper.find ('#block-user-0').text ()).contain ('Block User');
   });
 
-  // it ('Testing the mark un read button text is correct', () => {
-  //   const wrapper = mount (PostReplies, {
-  //     props: {
-  //       message,
-  //       index,
-  //       count,
-  //     },
-  //     computed: {
-  //       handleTime,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
-  // });
+  it ('Testing the mark un read button text is correct', () => {
+    const wrapper = mount (PostReplies, {
+      props: {
+        message,
+        index,
+        count,
+      },
+      computed: {
+        handleTime,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#mark-un-read-0').text ()).contain ('Mark Unread');
+  });
 
   it ('Testing the mark un read button text is correct', () => {
     const wrapper = mount (PostReplies, {
