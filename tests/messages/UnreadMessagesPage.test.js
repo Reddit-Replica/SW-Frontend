@@ -65,6 +65,21 @@ describe ('UnreadInbox', () => {
   //--------------------------------------------------------
   //                     Rendering
   //--------------------------------------------------------
+  it ('Testing no message value is correct', () => {
+    const wrapper = shallowMount (UnreadInbox, {
+      props: {
+        message,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).not.contain ('seem to be anything here');
+  });
+
   it ('should renders if UnreadInbox content is correct', () => {
     const wrapper = shallowMount (UnreadInbox, {
       props: {
@@ -83,6 +98,26 @@ describe ('UnreadInbox', () => {
   //--------------------------------------------------------
   //                     Testing no message
   //--------------------------------------------------------
+  it ('Testing no message value is true if there is no messages', () => {
+    const data = {
+      noMessages: true,
+      loading: false,
+      after: false,
+    };
+    const wrapper = shallowMount (UnreadInbox, {
+      props: {
+        data,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('No more messages...');
+  });
+
   it ('Testing no message value is false if there is message', () => {
     const wrapper = shallowMount (UnreadInbox, {
       props: {

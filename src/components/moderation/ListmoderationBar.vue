@@ -43,14 +43,16 @@ export default {
 		},
 		// @vuese
 		//index of the item
-		// @type string
+		// @type number
 		index: {
 			type: Number,
 			default: 0,
 		},
 	},
 	beforeMount() {
-		this.getSubreddit();
+		if (localStorage.getItem('accessToken')) {
+			this.getSubreddit();
+		}
 	},
 	data() {
 		return {

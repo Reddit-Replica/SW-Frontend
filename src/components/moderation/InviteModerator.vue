@@ -148,6 +148,9 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// used to
+		// @arg the argument is string value representing what is the choosen value of the permessions
 		customMethod(title) {
 			if (title == 'everything' && this.permissionToEverything == true) {
 				this.permissionToManageUsers = true;

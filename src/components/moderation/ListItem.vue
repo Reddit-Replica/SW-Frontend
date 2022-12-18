@@ -116,8 +116,8 @@ export default {
 			default: 0,
 		},
 		// @vuese
-		//index to handle unique ids
-		// @type number
+		//if it's mod invitation
+		// @type boolean
 		invitedMod: {
 			type: Boolean,
 			required: true,

@@ -427,6 +427,9 @@ export default {
 		},
 	},
 	methods: {
+		//@vuese
+		//handle choosen value from the left side bar
+		//@arg no argument
 		showFunction() {
 			this.$emit('showFunction');
 		},
