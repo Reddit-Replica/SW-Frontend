@@ -92,6 +92,7 @@ ul {
 .pop-up {
 	bottom: 0;
 	position: fixed;
+	right: 35%;
 	z-index: 1000;
 }
 </style>

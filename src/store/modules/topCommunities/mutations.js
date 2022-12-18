@@ -23,4 +23,10 @@ export default {
 	setOneCommunities(state, payload) {
 		state.oneCommunities = payload;
 	},
+	setTrendingCommunities(state, payload) {
+		state.trendingCommunities = payload;
+	},
+	setSuggestedCommunity(state, payload) {
+		state.suggestedCommunity = payload;
+	},
 };
