@@ -170,6 +170,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -179,12 +180,8 @@ export default {
 	methods: {
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
-			// this.$store.dispatch('moderation/handleTime', {
-			// 	time: this.spam.data.publishTime,
-			// });
-
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.spam.data.publishTime);
@@ -266,6 +263,9 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
+		// @vuese
+		//handle approve action
+		// @arg no argument
 		async approveFunction() {
 			try {
 				await this.$store.dispatch('moderation/approvedSpam', {
@@ -378,7 +378,7 @@ export default {
 }
 .subreddit-name {
 	display: inline-block;
-	-ms-flex: 0 0 auto;
+	/* -ms-flex: 0 0 auto; */
 	font-size: 12px;
 	font-weight: 700;
 	line-height: 16px;

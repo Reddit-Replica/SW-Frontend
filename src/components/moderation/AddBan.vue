@@ -270,7 +270,7 @@ export default {
 		},
 		//@vuese
 		//Decrease characters count while typing
-		//@arg no argument
+		// @arg The argument is a string value representing the title of input we want to count char
 		charCount(title) {
 			if (title == 'note') {
 				this.charRemainingNote = 300 - this.modNote.length;
@@ -343,7 +343,7 @@ export default {
 			}
 		},
 		//@vuese
-		//handle delete rule
+		//handle delete ban
 		//@arg no argument
 		async deleteBan() {
 			this.hideBan();
@@ -588,7 +588,7 @@ button:hover {
 	margin: 16px -16px -16px;
 }
 .footer-p {
-	float: left;
+	/* float: left; */
 	margin-top: 6px;
 	font-size: 14px;
 	font-weight: 500;

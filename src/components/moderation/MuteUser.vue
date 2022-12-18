@@ -97,7 +97,7 @@ export default {
 			this.charRemainingNote = 300 - this.reasonNote.length;
 		},
 		//@vuese
-		//handle submit ban user
+		//handle submit mute user
 		//@arg no argument
 		async submitMute() {
 			this.errorResponse = null;
