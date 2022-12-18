@@ -175,7 +175,7 @@ export default {
 		},
 		// @vuese
 		// rules count
-		// @type string
+		// @type number
 		rulesCount: {
 			type: Number,
 			default: 0,
@@ -183,7 +183,7 @@ export default {
 		},
 		// @vuese
 		// if there is drag and drop or not
-		// @type string
+		// @type boolean
 		dragDrop: {
 			type: Boolean,
 			default: false,
@@ -191,7 +191,7 @@ export default {
 		},
 		// @vuese
 		// if clicked on add flair or not
-		// @type string
+		// @type boolean
 		showAddFlair: {
 			type: Boolean,
 			default: false,
@@ -199,7 +199,7 @@ export default {
 		},
 		// @vuese
 		// flairs count
-		// @type string
+		// @type number
 		flairsCount: {
 			type: Number,
 			default: 0,
@@ -207,7 +207,7 @@ export default {
 		},
 		// @vuese
 		// to left bar or not
-		// @type string
+		// @type boolean
 		leftBar: {
 			type: Boolean,
 			default: false,

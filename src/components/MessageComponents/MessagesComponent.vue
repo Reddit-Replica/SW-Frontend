@@ -231,6 +231,7 @@ export default {
 	emits: ['doneSuccessfully'],
 	// @vuese
 	//details of message
+	// @type object
 	props: {
 		message: {
 			type: Object,
@@ -245,6 +246,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -275,7 +277,7 @@ export default {
 		//get username from store
 		// @type string
 		getUserName() {
-			return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 
 		// @vuese
@@ -298,13 +300,13 @@ export default {
 	methods: {
 		// @vuese
 		//handle reload messages
-		// @type object
+		// @arg no argument
 		doneSuccessfully() {
 			this.$emit('doneSuccessfully');
 		},
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
 			var currentDate = new Date();
 			var returnValue = '';
@@ -412,7 +414,7 @@ export default {
 		},
 		// @vuese
 		//show reply box or hide it
-		// @arg no argument
+		// @arg The argument is a string value representing if its show or hide
 		replyFunction(title) {
 			if (title == 'show') {
 				this.showReplyBox = true;

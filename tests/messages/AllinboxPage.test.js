@@ -87,23 +87,25 @@ describe ('AllinboxPage', () => {
   //                     Testing no message
   //--------------------------------------------------------
 
-  // it ('Testing no message value is true if there is no messages', () => {
-  //   const data = {
-  //     noMessages: true,
-  //   };
-  //   const wrapper = shallowMount (AllinboxPage, {
-  //     props: {
-  //       data,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.text ()).contain ('seem to be anything here');
-  // });
+  it ('Testing no message value is true if there is no messages', () => {
+    const data = {
+      noMessages: true,
+      loading: false,
+      after: false,
+    };
+    const wrapper = shallowMount (AllinboxPage, {
+      props: {
+        data,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('No more messages...');
+  });
 
   it ('Testing no message value is false if there is message', () => {
     const data = {

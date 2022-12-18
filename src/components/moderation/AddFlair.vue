@@ -221,7 +221,7 @@ export default {
 		},
 		// @vuese
 		//return if there is an edited rule
-		// @type string
+		// @type boolean
 		edit: {
 			type: Boolean,
 			default: false,

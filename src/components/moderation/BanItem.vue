@@ -181,12 +181,8 @@ export default {
 		},
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
-			// this.$store.dispatch('moderation/handleTime', {
-			// 	time: this.moderator.dateOfModeration,
-			// });
-
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.ban.bannedAt);

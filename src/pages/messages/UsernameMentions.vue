@@ -41,6 +41,9 @@
 				/>
 			</svg>
 		</button>
+		<div class="no-more" v-if="!loading && !after && !noMessages">
+			No more messages...
+		</div>
 		<div class="no-messages" v-if="errorResponse">{{ errorResponse }}</div>
 	</div>
 </template>
@@ -98,10 +101,16 @@ export default {
 		// @vuese
 		//load user mentions from the store
 		// @arg no argument
-		async loadUserMentions() {
+		async loadUserMentions(title) {
+			this.loading = true;
+			let afterMod = '';
+			if (title == 'after') {
+				afterMod = this.after;
+			}
 			try {
 				await this.$store.dispatch('messages/loadUserMentions', {
 					baseurl: this.$baseurl,
+					afterMod: afterMod,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -133,5 +142,12 @@ export default {
 }
 .load-more:hover {
 	background-color: aliceblue;
+}
+.no-more {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 2rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
 }
 </style>

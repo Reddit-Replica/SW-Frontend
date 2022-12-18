@@ -588,8 +588,12 @@ export default {
 			return html;
 		},
 		newComment(comment) {
-			this.userComments.unshift(comment);
-			console.log(comment);
+			if (localStorage.getItem('userName') != null) {
+				this.userComments.unshift(comment);
+				console.log(comment);
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		//@vuese
 		//fetch posts according to type of sorting
@@ -632,26 +636,30 @@ export default {
 		//@vuese
 		//upvote on post
 		async upvote() {
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
-			if (this.upClicked == false) {
-				this.upClicked = true;
-				this.counter++;
+			if (localStorage.getItem('accessToken') != null) {
+				if (this.downClicked) {
+					this.downClicked = false;
+					this.counter++;
+				}
+				if (this.upClicked == false) {
+					this.upClicked = true;
+					this.counter++;
+				} else {
+					this.upClicked = false;
+					this.counter--;
+				}
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postDetails.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
-				this.upClicked = false;
-				this.counter--;
-			}
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.postDetails.id,
-					type: 'post',
-					direction: 1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
@@ -702,51 +710,59 @@ export default {
 		//@vuese
 		//hide post
 		async hidePost() {
-			this.postHidden = !this.postHidden;
-			if (this.postHidden) {
-				try {
-					await this.$store.dispatch('postCommentActions/hide', {
-						baseurl: this.$baseurl,
-						id: this.$route.path.split('/')[4],
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.postHidden = !this.postHidden;
+				if (this.postHidden) {
+					try {
+						await this.$store.dispatch('postCommentActions/hide', {
+							baseurl: this.$baseurl,
+							id: this.$route.path.split('/')[4],
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unhide', {
+							baseurl: this.$baseurl,
+							id: this.$route.path.split('/')[4],
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unhide', {
-						baseurl: this.$baseurl,
-						id: this.$route.path.split('/')[4],
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
 		//save post
 		async savePost() {
-			this.saved = !this.saved;
-			if (this.saved == true) {
-				try {
-					await this.$store.dispatch('postCommentActions/save', {
-						baseurl: this.$baseurl,
-						id: this.postDetails.id,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.saved = !this.saved;
+				if (this.saved == true) {
+					try {
+						await this.$store.dispatch('postCommentActions/save', {
+							baseurl: this.$baseurl,
+							id: this.postDetails.id,
+							type: 'post',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unsave', {
+							baseurl: this.$baseurl,
+							id: this.postDetails.id,
+							type: 'post',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: this.postDetails.id,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
