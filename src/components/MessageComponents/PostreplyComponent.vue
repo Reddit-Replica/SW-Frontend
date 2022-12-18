@@ -70,7 +70,7 @@
 						</li> -->
 						<li :id="'context-link-' + index">
 							<!-- <a href="#" :id="'context-a-' + index">context</a> -->
-							<span class="link" @click="goContext()" id="'context-a-' + index"
+							<span class="link" @click="goContext()" :id="'context-a-' + index"
 								>context</span
 							>
 						</li>
