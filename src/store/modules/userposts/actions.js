@@ -671,13 +671,16 @@ export default {
 		// 	url.searchParams.append(key, params[key])
 		// );
 		// const response = await fetch(baseurl + `/post-insights`); // mock server
-		const response = await fetch(baseurl + `/post-insights`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl + `/post-insights?id=${payload.params.id}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(

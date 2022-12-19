@@ -228,6 +228,14 @@ export default {
 	},
 	async createSharedpost(context, payload) {
 		const postInfo = {
+			title: payload.title,
+			kind: payload.kind,
+			subreddit: payload.subreddit,
+			inSubreddit: payload.inSubreddit,
+			nsfw: payload.nsfw,
+			spoiler: payload.spoiler,
+			flairId: payload.flairId,
+			sendReplies: payload.sendReplies,
 			sharePostId: payload.sharePostId,
 		};
 		//const token = localStorage.getItem('accessToken');

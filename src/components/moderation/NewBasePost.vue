@@ -90,10 +90,10 @@
 								:id="'moderator-img-' + index"
 							/>
 						</div>
-						<!-- <div class="p-box">
+						<div class="p-box">
 							<p class="p">Removed</p>
 							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
-						</div> -->
+						</div>
 					</div>
 					<div class="buttons">
 						<!-- <base-button>Add Removal Reason</base-button> -->
@@ -103,6 +103,7 @@
 							>Approve</base-button
 						>
 						<base-button
+							v-if="this.$route.matched.some(({ name }) => name === 'spam')"
 							:id="'Remove-button-' + index"
 							@click="removeFunction()"
 							>Remove</base-button
@@ -195,8 +196,14 @@ export default {
 		async upvote() {
 			if (this.upClicked == false) {
 				try {
+					let P_id = 0;
+					if (this.spam.commentId) {
+						P_id = this.spam.commentId;
+					} else {
+						P_id = this.spam.postId;
+					}
 					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
+						id: P_id,
 						direction: 1,
 						baseurl: this.$baseurl,
 					});
@@ -220,8 +227,14 @@ export default {
 		async downvote() {
 			if (this.downClicked == false) {
 				try {
+					let P_id = 0;
+					if (this.spam.commentId) {
+						P_id = this.spam.commentId;
+					} else {
+						P_id = this.spam.postId;
+					}
 					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
+						id: P_id,
 						direction: -1,
 						baseurl: this.$baseurl,
 					});
@@ -264,7 +277,7 @@ export default {
 					baseurl: this.$baseurl,
 					type: typing,
 				});
-				if (this.$store.getters['moderation/state, payload']) {
+				if (this.$store.getters['moderation/Removed']) {
 					this.removed = true;
 					document.getElementById('theBox').style.display = 'none';
 				}

@@ -29,9 +29,9 @@
 							></base-post>
 						</div>
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-3 margin">
 						<div class="right-col">
-							<div class="component component-top">
+							<div class="component" v-if="isLogedIn">
 								<top-communities-bar></top-communities-bar>
 							</div>
 							<div class="component">
@@ -107,6 +107,12 @@ export default {
 		},
 		savedUnsavedPosts() {
 			return this.$store.getters['postCommentActions/getActions'];
+		},
+		isLogedIn() {
+			if (localStorage.getItem('accessToken')) {
+				return true;
+			}
+			return false;
 		},
 	},
 	created() {
@@ -260,6 +266,9 @@ export default {
 	.right-col {
 		margin-left: 12rem;
 	}
+}
+.margin {
+	margin-top: 5rem;
 }
 
 @media only screen and (max-width: 991px) {
