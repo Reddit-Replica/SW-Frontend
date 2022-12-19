@@ -157,7 +157,7 @@
 				id="show-share-more-post-options"
 			>
 				<ul>
-					<li @click="CopyPostLink" class="options-box-item">
+					<li v-if="0" @click="CopyPostLink" class="options-box-item">
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
@@ -549,7 +549,7 @@
 						<div class="options-box-text">Delete</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit && 0"
 						id="mark-as-oc"
 						@click="markAsOC"
 						class="options-box-item"
@@ -606,7 +606,7 @@
 						</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit && !pinnedPostFlag"
+						v-if="0 && postData.data.inYourSubreddit && !pinnedPostFlag"
 						@click="markUnMarkSendMeReply(postData.id)"
 						id="post-options-mark-UnMark-Send-MeReply"
 						class="options-box-item"
@@ -808,12 +808,14 @@ export default {
 			}
 			if (this.saved) {
 				if (requestSatus == 200) {
+					this.saved = true;
 					this.$emit('emitPopup', 1, ' post saved successfully');
 				} else {
 					this.$emit('emitPopup', 1, 'failed to save');
 				}
 			} else {
 				if (requestSatus == 200) {
+					this.saved = false;
 					this.$emit('emitPopup', 1, 'post  unsaved successfully');
 				} else {
 					this.$emit('emitPopup', 1, 'failed to unsaved ');

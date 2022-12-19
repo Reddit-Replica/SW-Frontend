@@ -80,12 +80,12 @@
 									</span>
 								</div>
 								<div
-									@mouseleave="hideSubredditBox"
+									@mouseleave="hideSubredditBox(1)"
 									style="position: relative"
 									class="post-user-name"
 								>
 									<router-link
-										@mouseover="showSubredditBox"
+										@mouseover="showSubredditBox(1)"
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
@@ -99,15 +99,25 @@
 										}}</router-link
 									>
 									<subreddit-card-mini
-										@mouseover="showSubredditBox"
+										@mouseover="showSubredditBox(1)"
 										v-if="
-											showSubredditBoxFlag &&
+											showSubredditBoxFlag1 &&
 											subredditData != null &&
 											postData.data.subreddit != null
 										"
 										:subreddit="subredditData"
 										:subreddit-name="postData.data.subreddit"
 									></subreddit-card-mini>
+									<div
+										style="position: absolute; z-index: 5"
+										v-else-if="userCardData != null && showSubredditBoxFlag1"
+									>
+										<profile-card
+											:user-data="userCardData"
+											:state="UserCardState"
+											:not-post-card="false"
+										></profile-card>
+									</div>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
 									<span class="posted-by-unhovered">
@@ -126,11 +136,28 @@
 												: 'posted by'
 										}}</span
 									>
-									<router-link
-										style="margin-left: 3px"
-										:to="`/user/${postData.data.postedBy}`"
-										>{{ postData.data.postedBy }}
-									</router-link>
+									<div
+										@mouseleave="hideSubredditBox(2)"
+										style="position: relative"
+									>
+										<router-link
+											@mouseover="showSubredditBox(2)"
+											style="margin-left: 3px"
+											:to="`/user/${postData.data.postedBy}`"
+											>{{ postData.data.postedBy }}
+										</router-link>
+										<div
+											style="position: absolute; z-index: 5"
+											v-if="userCardData != null && showSubredditBoxFlag2"
+										>
+											<profile-card
+												:user-data="userCardData"
+												:state="UserCardState"
+												:not-post-card="false"
+												:user-name="postData.data.postedBy"
+											></profile-card>
+										</div>
+									</div>
 								</div>
 								<div id="base-user-post-content-posted-posted-at">
 									{{ getMoment(postData.data.postedAt) }}
@@ -190,7 +217,10 @@
 										class="post-nsfw"
 										><p>nsfw</p></span
 									>
-									<span id="base-user-post-content-oc-span" class="post-oc"
+									<span
+										v-if="0"
+										id="base-user-post-content-oc-span"
+										class="post-oc"
 										><p>OC</p></span
 									>
 								</div>
@@ -297,6 +327,7 @@ import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
 import ModerationTitle from './PostComponents/ModerationTitle.vue';
 import SubredditCardMini from './PostComponents/SubredditCardMini.vue';
+import ProfileCard from './Cards/ProfileCard.vue';
 export default {
 	components: {
 		PostOptions,
@@ -305,6 +336,7 @@ export default {
 		TheInsights,
 		ModerationTitle,
 		SubredditCardMini,
+		ProfileCard,
 	},
 	emits: ['emitPopup', 'subredditPageHandler'],
 	props: {
@@ -360,7 +392,10 @@ export default {
 			insightsLoading: false,
 			PostHybridContent: '',
 			subredditData: null,
-			showSubredditBoxFlag: false,
+			showSubredditBoxFlag1: false,
+			showSubredditBoxFlag2: false,
+			UserCardState: 'unauth',
+			userCardData: null,
 		};
 	},
 	mounted() {
@@ -370,6 +405,23 @@ export default {
 		 * @arg no arg
 		 */
 		this.setPostHybridContent();
+	},
+	created() {
+		if (this.$route.params.userName) {
+			this.loading = true;
+			if (
+				!localStorage.getItem('userName') ||
+				localStorage.getItem('userName') == ''
+			) {
+				this.UserCardState = 'unauth';
+			} else if (
+				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+				this.$route.params.userName == localStorage.getItem('userName')
+			)
+				this.UserCardState = 'profile';
+			/* means same authenticated user */ else
+				this.UserCardState = 'user'; /* means other user */
+		}
 	},
 	/**
 	 * @vuese
@@ -381,6 +433,7 @@ export default {
 			await this.getSubreddit();
 			console.log('aaa', this.subredditData);
 		}
+		await this.fetchUserCardPicture();
 	},
 	computed: {
 		/**
@@ -408,21 +461,36 @@ export default {
 		},
 	},
 	methods: {
+		async fetchUserCardPicture() {
+			let responseData = null;
+			try {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
+					baseurl: this.$baseurl,
+					userName: this.postData.data.postedBy,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			if (responseData != null) this.userCardData = responseData;
+			console.log(this.userData);
+		},
 		/**
 		 * @vuese
 		 * show subreddit box when you hovered on subreddit name
 		 * @arg no arg
 		 */
-		showSubredditBox() {
-			this.showSubredditBoxFlag = true;
+		showSubredditBox(id) {
+			if (id == 1) this.showSubredditBoxFlag1 = true;
+			else if (id == 2) this.showSubredditBoxFlag2 = true;
 		},
 		/**
 		 * @vuese
 		 * hide the subreddit box when unhovered
 		 * @arg no arg
 		 */
-		hideSubredditBox() {
-			this.showSubredditBoxFlag = false;
+		hideSubredditBox(id) {
+			if (id == 1) this.showSubredditBoxFlag1 = false;
+			else if (id == 2) this.showSubredditBoxFlag2 = false;
 		},
 		/**
 		 * @vuese
@@ -433,7 +501,7 @@ export default {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
 				await this.$store.dispatch('community/getSubreddit', {
-					subredditName: 'medoemad',
+					subredditName: this.postData.data.subreddit,
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});

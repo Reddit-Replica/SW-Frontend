@@ -178,8 +178,8 @@ export default {
 			SecitemChoice: 'Time',
 			ShowSecitemChoice: false,
 			choiceRelevant: true,
-			Queue: '',
-			loading: false,
+			// Queue: this.$router.query.q,
+			loading: true,
 			// myIndex: 0,
 			// indexTrue: true,
 		};
@@ -191,7 +191,7 @@ export default {
 			this.usersearch();
 			this.comsearch();
 		}
-		this.loading = false;
+		setTimeout((this.loading = false), 2000);
 	},
 	beforeMount() {
 		this.search();
@@ -357,7 +357,8 @@ export default {
 		SecitemChoice(value) {
 			this.searchwithtime(value);
 		},
-		// Queue() {
+		// Queue(value) {
+		// 	console.log(value);
 		// 	this.PageReload();
 		// },
 	},

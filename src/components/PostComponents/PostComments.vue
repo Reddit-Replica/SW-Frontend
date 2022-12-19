@@ -134,20 +134,42 @@
 										</div>
 									</div>
 									<div class="main">
-										<div class="content">
+										<div
+											class="content"
+											v-if="Object.keys(postDetails).length != 0"
+										>
 											<post-content
-												v-if="Object.keys(postDetails).length != 0"
+												:editing="this.$route.query.edit == 'true'"
 												:post="postDetails"
 												:blur="false"
 											></post-content>
+											<div>
+												<post-submit
+													v-if="this.$route.query.edit == 'true'"
+													:initial-content="postDetails.content"
+												></post-submit>
+												<div class="edit-post-buttons">
+													<base-button
+														button-text="cancel"
+														class="cancel"
+														@click="cancePostEditing"
+													/>
+													<base-button
+														button-text="save"
+														class="save"
+														:disabled="!savePostEditing"
+														@click="savePostEditing"
+													/>
+												</div>
+											</div>
 										</div>
 										<div class="post-services">
 											<ul
 												class="services"
 												v-if="
 													(!postDetails.inYourSubreddit &&
-														postDetails.subreddit != '') ||
-													(postDetails.subreddit == '' &&
+														postDetails.subreddit != undefined) ||
+													(postDetails.subreddit == undefined &&
 														postDetails.postedBy != getuserName)
 												"
 											>
@@ -353,10 +375,7 @@
 												</li>
 											</ul>
 											<post-options
-												v-else-if="
-													postDetails.subreddit == '' &&
-													postDetails.postedBy == getuserName
-												"
+												v-else-if="postDetails.postedBy == getuserName"
 												:post-data="{ data: postDetails }"
 												:pinned-post-flag="false"
 											></post-options>
@@ -472,8 +491,10 @@ import CommentSubmit from './CommentSubmit.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostOptions from '../UserComponents/BaseUserComponents/PostComponents/PostOptions.vue';
 import PostContent from './PostContent.vue';
+import PostSubmit from '../SubmitComponents/PostSubmit.vue';
 export default {
 	components: {
+		PostSubmit,
 		SubMenu,
 		SubredditInfo,
 		MyComment,
@@ -522,13 +543,31 @@ export default {
 		savedUnsavedPosts() {
 			return this.$store.getters['postCommentActions/getActions'];
 		},
+		savePostEditing() {
+			if (this.$store.getters['posts/getContent'] == null) return false;
+			else return true;
+		},
+	},
+	watch: {
+		async '$route.params.postId'(value) {
+			if (value != undefined) {
+				await this.getPostDetails();
+				console.log('userName');
+				//if (this.$route.params.userName != undefined) this.RequestUserData();
+				if (this.postDetails.subreddit == undefined)
+					await this.RequestUserData();
+				this.fetchPostComments();
+				// document.getElementById('test').addEventListener('scroll', () => {
+				// 	console.log('scroll');
+				// });
+			}
+		},
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
 	async beforeMount() {
 		await this.getPostDetails();
 		console.log('userName');
-		this.click();
 		//if (this.$route.params.userName != undefined) this.RequestUserData();
 		if (this.postDetails.subreddit == undefined) await this.RequestUserData();
 		this.fetchPostComments();
@@ -537,9 +576,7 @@ export default {
 		// });
 	},
 	methods: {
-		click() {
-			console.log(this.postDetails.subreddit == undefined);
-		},
+		click() {},
 		handleScroll: function () {
 			console.log('scroll' + window.scrollY);
 			if (window.scrollY > 50) {
@@ -566,15 +603,17 @@ export default {
 		},
 		async RequestUserData() {
 			console.log('inside request user data in post comment');
+			let responseData;
 			try {
-				await this.$store.dispatch('user/getUserData', {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
 					baseurl: this.$baseurl,
 					userName: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.userData = this.$store.getters['user/getUserData'].userData;
+			if (responseData != null) this.userData = responseData;
+			console.log(this.userData);
 		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
@@ -798,8 +837,12 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			if (this.$route.path.split('/')[1] == 'r') this.$router.push('/main');
-			else this.$router.back();
+			//if (this.$route.path.split('/')[1] == 'r')
+			this.$router.push('/main');
+			//else this.$router.back();
+		},
+		cancePostEditing() {
+			this.$router.push({ query: { edit: 'false' } });
 		},
 	},
 };
@@ -1089,6 +1132,43 @@ export default {
 	margin: 16px 40px 0 0px;
 	padding: 0 16px 4px 0;
 	border-bottom: 1px solid var(--color-grey-light-11);
+}
+.edit-post-buttons {
+	display: flex;
+	justify-content: end;
+}
+.edit-post-buttons .save {
+	margin: 5px 22px;
+	width: 65px;
+	height: 33px;
+	font-size: 12px;
+	font-weight: bolder;
+	color: white;
+	background: var(--color-blue-2);
+}
+.edit-post-buttons .save {
+	margin: 5px 22px 0 5px;
+	width: 65px;
+	height: 33px;
+	font-size: 12px;
+	font-weight: bolder;
+	color: white;
+	background: var(--color-blue-2);
+}
+.edit-post-buttons .save:disabled {
+	background-color: var(--color-grey-dark-4);
+}
+.edit-post-buttons .cancel {
+	margin-top: 5px;
+	width: 65px;
+	height: 33px;
+	font-size: 12px;
+	font-weight: bolder;
+	color: var(--color-blue-2);
+	background-color: white;
+}
+.edit-post-buttons .cancel:hover {
+	background-color: var(--color-grey-light-3);
 }
 @media (max-width: 1079px) {
 	.sub-menu li.post-sub-save {

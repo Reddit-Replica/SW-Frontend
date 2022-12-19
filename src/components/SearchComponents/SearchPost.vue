@@ -63,12 +63,16 @@
 													</div></a
 												>
 											</div>
-											<div
+											<!-- <div
 												class="image-class"
-												v-if="value.images && value.images.length != 0"
+												v-if="value.Image && value.Image.length != 0"
 											>
-												<img alt="" style="width: 1px; height: 1px" />
-											</div>
+												<img
+													alt="img"
+													:id="'user-avatar-' + value.id"
+													:src="$baseurl + '/' + value.Image.path"
+												/>
+											</div> -->
 											<div class="link-class" v-if="value.link">
 												<a :href="value.link">{{ value.link }}</a>
 											</div>
@@ -181,7 +185,7 @@ div {
 	border-color: black;
 }
 .hole-post-2 {
-	width: 720px;
+	width: 55rem;
 	background: rgb(255, 255, 255);
 	position: relative;
 }
