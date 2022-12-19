@@ -201,7 +201,7 @@ export default {
 				this.state = 'user'; /* means other user */
 			// console.log(this.state);
 			/* after that we fetch data fetch user data */
-			document.title = this.$store.state.userName + ' - Reddit';
+			document.title = localStorage.getItem('userName') + ' - Reddit';
 			const requestStatus = await this.RequestUserData();
 			console.log(requestStatus);
 			this.loading = false;

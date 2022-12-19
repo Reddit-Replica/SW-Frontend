@@ -119,7 +119,6 @@
 							id="profile-picture_user"
 						/>
 					</div>
-
 					<span
 						@click="addProfileImage"
 						class="add-image"

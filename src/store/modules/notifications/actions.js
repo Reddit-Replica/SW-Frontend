@@ -2,8 +2,8 @@ import { app as firebaseApp } from '../../../firebase';
 import {
 	getToken,
 	getMessaging,
-	//onMessage,
-	onMessageReceived,
+	onMessage,
+	//onMessageReceived,
 	//deleteToken,
 } from 'firebase/messaging';
 // import axios from 'axios';
@@ -146,6 +146,9 @@ export default {
 		console.log('creation');
 
 		if (localStorage.getItem('clientToken') == null) {
+			console.log(localStorage.getItem('clientToken'));
+			console.log(process.env.VUE_APP_FIREBASE_VAPIDKEY);
+			console.log(process.env.VUE_APP_FRONT_BASE);
 			await this.dispatch('notifications/registerServiceWorker', {
 				baseurl: payload.baseurl,
 				// host: payload.host,
@@ -164,7 +167,7 @@ export default {
 		// const host = payload.host;
 
 		if ('Notification' in window && navigator.serviceWorker) {
-			registerSW('/firebase-messaging-sw.js', {
+			registerSW(process.env.VUE_APP_FRONT_BASE + '/firebase-messaging-sw.js', {
 				async ready(reg) {
 					console.log('Service worker is Ready');
 					// subsctibe to FCM
@@ -255,13 +258,16 @@ export default {
 	async listenForegroundMessage(reg) {
 		// const host = payload.host;
 
-		// console.log('------------', reg);
+		console.log(process.env.VUE_APP_FRONT_BASE);
+		console.log(
+			'=============================================================================='
+		);
 		if (!reg)
 			reg = await navigator.serviceWorker.getRegistration(
-				'/firebase-messaging-sw.js'
+				process.env.VUE_APP_FRONT_BASE + '/firebase-messaging-sw.js'
 			);
-		// console.log('------------', reg);
-		onMessageReceived(getMessaging(firebaseApp), (payload) => {
+		console.log('------------', reg);
+		onMessage(getMessaging(firebaseApp), (payload) => {
 			console.log('Message received. ', payload);
 			let { notification, data } = payload;
 			let notificationTitle = 'Test title';
