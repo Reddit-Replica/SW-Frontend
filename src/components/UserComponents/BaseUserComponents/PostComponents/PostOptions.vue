@@ -253,10 +253,17 @@
 			<div class="post-options-icon">
 				<i
 					style="color: rgba(135, 138, 140); font-size: 20px"
+					:style="[postHiddenFlag ? 'color:#0079d3' : '']"
 					class="fa-regular fa-eye-slash"
 				></i>
 			</div>
-			<div style="font-size: 12px" class="post-options-text">Hide</div>
+			<div
+				style="font-size: 12px"
+				:style="[postHiddenFlag ? 'color:#0079d3' : '']"
+				class="post-options-text"
+			>
+				{{ postHiddenFlag ? 'unhide' : 'hide' }}
+			</div>
 		</li>
 
 		<li

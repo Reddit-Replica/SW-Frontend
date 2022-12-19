@@ -457,8 +457,8 @@ export default {
 				this.$router.push('/');
 				return;
 			}
-			this.DeletedComment = true;
 			this.RequestDeleteComment();
+			this.DeletedComment = true;
 		},
 		/**
 		 * @vuese
@@ -476,6 +476,11 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			// if (responseStatus == 200) {
+			// 	this.$emit('emitPopup', 1, ' comment deleted successfully :)');
+			// } else {
+			// 	this.$emit('emitPopup', 1, 'failed to delete comment :(');
+			// }
 			return responseStatus;
 		},
 		/**
@@ -517,6 +522,13 @@ export default {
 			if (responseStatus != 200) {
 				this.saved = false;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment saved successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to save comment :(');
+			}
+
+			return responseStatus;
 		},
 		/**
 		 * @vuese
@@ -543,6 +555,11 @@ export default {
 			// return responseStatus;
 			if (responseStatus != 200) {
 				this.saved = true;
+			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment unsaved successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to unsave comment :(');
 			}
 		},
 		/**
@@ -580,6 +597,11 @@ export default {
 			if (responseStatus != 200) {
 				delete this.moderation.approve;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment approved successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to approve comment :(');
+			}
 		},
 		/**
 		 * @vuese
@@ -614,6 +636,11 @@ export default {
 			if (responseStatus != 200) {
 				delete this.moderation.remove;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment removed successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to remove comment :(');
+			}
 		},
 		/**
 		 * @vuese
@@ -645,6 +672,11 @@ export default {
 			if (responseStatus != 200) {
 				delete this.moderation.spam;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment spammed successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to spam comment :(');
+			}
 		},
 		/**
 		 * @vuese
@@ -652,6 +684,7 @@ export default {
 		 *  @arg no arg
 		 */
 		async lockUnLockComment() {
+			let responseStatus = -1;
 			// console.log('lock un lock clicked');
 			let key = 'lock';
 			if (this.moderation.lock) {
@@ -660,16 +693,28 @@ export default {
 			this.moderation.lock = !this.moderation.lock;
 			console.log('main', key);
 			try {
-				await this.$store.dispatch('userposts/lockUnLockPostOrComment', {
-					baseurl: this.$baseurl,
-					lockUnlockData: {
-						id: this.commentContent.commentId,
-						type: `comment`, // mark UnMark
-					},
-					key: `${key}`,
-				});
+				responseStatus = await this.$store.dispatch(
+					'userposts/lockUnLockPostOrComment',
+					{
+						baseurl: this.$baseurl,
+						lockUnlockData: {
+							id: this.commentContent.commentId,
+							type: `comment`, // mark UnMark
+						},
+						key: `${key}`,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+			if (responseStatus == 200) {
+				if (key == 'lock')
+					this.$emit('emitPopup', 1, ' comment locked successfully :)');
+				else this.$emit('emitPopup', 1, ' comment unlocked successfully :)');
+			} else {
+				if (key == 'lock')
+					this.$emit('emitPopup', 1, 'failed to lock comment :(');
+				else this.$emit('emitPopup', 1, 'failed to unlock comment :(');
 			}
 		},
 	},

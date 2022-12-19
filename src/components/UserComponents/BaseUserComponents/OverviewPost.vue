@@ -89,12 +89,12 @@
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
-												? `/user/${$route.params.userName}`
+												? `/user/${postData.data.postedBy}`
 												: `/r/${postData.data.subreddit}`
 										"
 										>{{
 											postData.data.subreddit == null
-												? `u/${$route.params.userName}`
+												? `u/${postData.data.postedBy}`
 												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
@@ -333,7 +333,6 @@ export default {
 		},
 		// @vuese
 		// pinned sign in the subreddit post flag
-
 		subredditPagePinned: {
 			type: Boolean,
 			required: false,

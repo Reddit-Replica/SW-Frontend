@@ -62,6 +62,7 @@
 				:id="overviewPostData.id"
 				:state="state"
 				type="fullpost"
+				@emit-popup="emitPopup"
 			>
 			</comments-overview-page>
 		</div>
@@ -74,8 +75,6 @@ import PinnedPosts from '../../../components/UserComponents/BaseUserComponents/P
 import CommentsOverviewPage from '../../../components/UserComponents/BaseUserComponents/CommentsComponents/CommentsOverviewPage.vue';
 import OverviewPost from '../../../components/UserComponents/BaseUserComponents/OverviewPost.vue';
 import EmptyPage from '@/components/UserComponents/BaseUserComponents/PostComponents/EmptyPage.vue';
-// import { finished } from 'stream';
-// import BasePost from '../../../components/BaseComponents/BasePost.vue';
 export default {
 	components: {
 		SortpostsBar,
@@ -83,7 +82,6 @@ export default {
 		CommentsOverviewPage,
 		OverviewPost,
 		EmptyPage,
-		// BasePost,
 	},
 	props: {
 		state: {
@@ -195,14 +193,11 @@ export default {
 				this.MoreFetch
 			) {
 				console.log('bottom1');
-				let sortType;
-				if (!this.$route.query.sort || this.$route.query.sort == 'new') {
-					sortType = 'new';
-				} else {
-					sortType = this.$route.query.sort;
-				}
+				let sortType, t;
+				sortType = this.routeSortTypeAndTime().sortType;
+				t = this.routeSortTypeAndTime().t;
 				this.busyRequestMore = true;
-				await this.RequestMoreUserOverviewData(sortType);
+				await this.RequestMoreUserOverviewData(sortType, t);
 				if (this.getUserOverviewData.overviewData.after == '')
 					this.MoreFetch = false;
 				this.busyRequestMore = false;
@@ -288,7 +283,7 @@ export default {
 			// }
 			return requestStatus;
 		},
-		async RequestMoreUserOverviewData(sortType) {
+		async RequestMoreUserOverviewData(sortType, t) {
 			let requestStatus = -1;
 			if (this.getUserOverviewData.overviewData.after != 'noMore') {
 				try {
@@ -299,10 +294,10 @@ export default {
 							userName: this.$route.params.userName,
 							params: {
 								sort: `${sortType}`,
-								time: 'all',
+								time: `${t}`,
 								before: '',
 								after: `${this.getUserOverviewData.overviewData.after}`,
-								limit: 25,
+								limit: 10,
 							},
 						}
 					);
