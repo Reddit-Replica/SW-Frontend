@@ -203,7 +203,10 @@
 										class="post-nsfw"
 										><p>nsfw</p></span
 									>
-									<span id="base-user-post-content-oc-span" class="post-oc"
+									<span
+										v-if="0"
+										id="base-user-post-content-oc-span"
+										class="post-oc"
 										><p>OC</p></span
 									>
 								</div>
