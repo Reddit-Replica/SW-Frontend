@@ -11,10 +11,7 @@
 		</div>
 		<div v-else>
 			<div v-for="value in UnmoderatedPosts" :key="value.id">
-				<new-base-post
-					:spam="UnmoderatedPosts"
-					:index="value.id"
-				></new-base-post>
+				<new-base-post :spam="value" :index="value.id"></new-base-post>
 			</div>
 		</div>
 	</div>
@@ -38,6 +35,9 @@ export default {
 		return {
 			loading: false,
 		};
+	},
+	beforeMount() {
+		this.Unmoderate();
 	},
 	computed: {
 		// @vuese

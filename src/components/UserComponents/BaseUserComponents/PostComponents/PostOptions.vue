@@ -253,10 +253,17 @@
 			<div class="post-options-icon">
 				<i
 					style="color: rgba(135, 138, 140); font-size: 20px"
+					:style="[postHiddenFlag ? 'color:#0079d3' : '']"
 					class="fa-regular fa-eye-slash"
 				></i>
 			</div>
-			<div style="font-size: 12px" class="post-options-text">Hide</div>
+			<div
+				style="font-size: 12px"
+				:style="[postHiddenFlag ? 'color:#0079d3' : '']"
+				class="post-options-text"
+			>
+				{{ postHiddenFlag ? 'unhide' : 'hide' }}
+			</div>
 		</li>
 
 		<li
@@ -349,6 +356,46 @@
 				class="options-box-list"
 			>
 				<ul>
+					<li
+						v-if="page == 'subreddit'"
+						@click="stickyPost(postData.id)"
+						class="options-box-item"
+					>
+						<div class="options-box-icon">
+							<i>
+								<input
+									type="checkbox"
+									id="mark-as-oc"
+									name="mark-as-oc"
+									:checked="
+										postData.data.moderation && postData.data.moderation.lock
+									"
+							/></i>
+						</div>
+						<div class="options-box-text">
+							<label for="mark-as-oc">Sticky Post</label>
+						</div>
+					</li>
+					<li
+						v-if="page == 'subreddit'"
+						@click="distinguishAsMod(postData.id)"
+						class="options-box-item"
+					>
+						<div class="options-box-icon">
+							<i>
+								<input
+									type="checkbox"
+									id="mark-as-oc"
+									name="mark-as-oc"
+									:checked="
+										postData.data.moderation && postData.data.moderation.lock
+									"
+							/></i>
+						</div>
+						<div class="options-box-text">
+							<label for="mark-as-oc">DistinguishAsMod</label>
+						</div>
+					</li>
 					<li @click="lockUnLockComments(postData.id)" class="options-box-item">
 						<div class="options-box-icon">
 							<i>

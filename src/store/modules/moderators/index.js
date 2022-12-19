@@ -51,6 +51,7 @@ export default {
 			Unmoderated: [],
 			EditedPosts: [],
 			EditedComments: [],
+			Removed: '',
 			//////////////traffic statas//////////////
 			trafficStatus: null,
 		};

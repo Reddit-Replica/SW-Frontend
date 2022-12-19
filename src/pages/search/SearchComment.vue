@@ -1,7 +1,12 @@
 <template>
 	<div class="all">
-		<div class="after-all">
-			<the-header :header-title="'u/asmaaadel0'"></the-header>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="after-all" v-else>
+			<the-header :header-title="userName"></the-header>
 			<div class="page-release">
 				<div class="page">
 					<div>
@@ -71,8 +76,25 @@
 											<div class="hovering">
 												<div class="high-nav">
 													<div class="com-det">
-														<img class="comimage" />
-														<div class="sub-name" @click="gotosubred">
+														<div class="comimage">
+															<img
+																v-if="!value.picture"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="communities-img"
+																@click="gotosub(value.postSubreddit)"
+																:id="'user-avatar-' + value.postSubreddit"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.picture"
+																alt="img"
+																class="communities-img"
+																:id="'user-avatar-' + value.postSubreddit"
+																@click="gotosub(value.postSubreddit)"
+															/>
+														</div>
+														<div class="sub-name">
 															&nbsp;<a :href="'/r/' + value.postSubreddit">
 																r/{{ value.postSubreddit }} &nbsp;</a
 															>&nbsp;
@@ -156,7 +178,7 @@
 																<div class="comment-word">
 																	<div class="comment-div">
 																		<p class="p-comment">
-																			{{ value.commentcontent }}
+																			{{ value.commentcontent.ops[0].insert }}
 																		</p>
 																	</div>
 																</div>
@@ -217,19 +239,30 @@
 </template>
 <script>
 import Notfound from '../../components/SearchComponents/NotFound.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
 			q: '',
+			loading: false,
 		};
 	},
 	computed: {
 		SearchedComments() {
-			console.log(
-				this.$store.getters['search/GetComments'][0].commentcreatedAt
-			);
+			console.log(this.$store.getters['search/GetComments']);
 			return this.$store.getters['search/GetComments'];
 		},
+
+		userName() {
+			return localStorage.getItem('userName');
+		},
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.search();
+		}
+		this.loading = false;
 	},
 	beforeMount() {
 		this.search();
@@ -292,7 +325,7 @@ export default {
 			}
 		},
 	},
-	components: { Notfound },
+	components: { Notfound, TheSpinner },
 };
 </script>
 
@@ -586,6 +619,10 @@ a {
 .comment-word {
 	padding: 2px 0;
 	width: 100%;
+}
+.communities-img {
+	width: 40px;
+	height: 40px;
 }
 .comment-div {
 	font-family: Noto Sans, Arial, sans-serif;
