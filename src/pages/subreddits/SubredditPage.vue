@@ -168,6 +168,7 @@ export default {
 		await this.getModerators();
 		await this.getTopics();
 		await this.getRules();
+		document.title = 'r/ ' + this.nickname;
 
 		//set listing as hot by default
 		let title = this.$route.params.title;
