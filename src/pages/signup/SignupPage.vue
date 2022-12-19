@@ -8,13 +8,9 @@
 
 					<p class="user-agreement">
 						By continuing, you agree to our
-						<a href="https://www.redditinc.com/policies/user-agreement"
-							>User Agreement</a
-						>
+						<a href="/help">User Agreement</a>
 						and
-						<a href="https://www.redditinc.com/policies/privacy-policy"
-							>Privacy Policy</a
-						>.
+						<a href="/help">Privacy Policy</a>.
 					</p>
 
 					<form class="signing-up">
