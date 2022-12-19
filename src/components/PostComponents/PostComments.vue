@@ -445,10 +445,10 @@
 								v-if="postDetails.subreddit != undefined"
 							></subreddit-info>
 							<profile-card
-								v-else
+								v-else-if="userData"
 								:user-data="userData"
-								:state="'profile'"
-								:user-name="'menna'"
+								:state="userState"
+								:user-name="$route.params.userName"
 							></profile-card>
 						</div>
 					</div>
@@ -504,6 +504,8 @@ export default {
 			showSortByMenu: false,
 			sortByTitle: 'Best',
 			userComments: [],
+			userState: '',
+			userData: null,
 		};
 	},
 	computed: {
@@ -512,9 +514,6 @@ export default {
 		getuserName() {
 			if (localStorage.getItem('userName') == null) return '';
 			else return localStorage.getItem('userName');
-		},
-		userData() {
-			return this.$store.getters['user/getUserData'].userData;
 		},
 		currentSortType() {
 			if (this.$route.query.sort) return this.$route.query.sort;
@@ -531,7 +530,7 @@ export default {
 		console.log('userName');
 		this.click();
 		//if (this.$route.params.userName != undefined) this.RequestUserData();
-		//if (this.postDetails.subreddit == undefined) this.RequestUserData();
+		if (this.postDetails.subreddit == undefined) await this.RequestUserData();
 		this.fetchPostComments();
 		// document.getElementById('test').addEventListener('scroll', () => {
 		// 	console.log('scroll');
@@ -575,6 +574,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			this.userData = this.$store.getters['user/getUserData'].userData;
 		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
@@ -620,6 +620,10 @@ export default {
 			this.downClicked = this.postDetails.votingType == -1 ? true : false;
 			this.saved = this.postDetails.saved;
 			this.postHidden = this.postDetails.hidden;
+			this.userState =
+				localStorage.getItem('userName') == this.postDetails.postedBy
+					? 'profile'
+					: 'user';
 			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah');
 			console.log(this.postDetails);
 		},
