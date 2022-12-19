@@ -714,7 +714,7 @@ export default {
 		//return number of unread notifications
 		//@type Number
 		noUnreadNotifications() {
-			return this.$store.getters['notifications/unreadCount'] == 0;
+			return this.$store.getters['notifications/getUnreadCount'] == 0;
 		},
 	},
 	async beforeMount() {

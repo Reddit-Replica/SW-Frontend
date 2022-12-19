@@ -148,7 +148,7 @@ export default {
 		if (localStorage.getItem('clientToken') == null) {
 			await this.dispatch('notifications/registerServiceWorker', {
 				baseurl: payload.baseurl,
-				host: payload.host,
+				// host: payload.host,
 				token: payload.token,
 			});
 		} else {
@@ -159,11 +159,11 @@ export default {
 
 	async registerServiceWorker(_, payload) {
 		console.log('registerServiceWorker');
-		const host = payload.host;
-		console.log(payload);
+		// const host = payload.host;
+		// console.log(payload);
 
 		if ('Notification' in window && navigator.serviceWorker) {
-			registerSW(host + '/firebase-messaging-sw.js', {
+			registerSW('http://localhost:8081' + '/firebase-messaging-sw.js', {
 				async ready(reg) {
 					console.log('Service worker is Ready');
 					// subsctibe to FCM
@@ -188,7 +188,7 @@ export default {
 						//listen for notifications
 						store.dispatch('notifications/listenForegroundMessage', {
 							reg,
-							host: payload.host,
+							// host: payload.host,
 							token: payload.token,
 						});
 					} catch (err) {
@@ -251,12 +251,13 @@ export default {
 			throw error;
 		}
 	},
-	async listenForegroundMessage(reg, payload) {
-		const host = payload.host;
+	async listenForegroundMessage(reg) {
+		// const host = payload.host;
+		//console.log(process.env.FRONT_BASE);
 
 		if (!reg)
 			reg = await navigator.serviceWorker.getRegistration(
-				host + '/firebase-messaging-sw.js'
+				'http://localhost:8081' + '/firebase-messaging-sw.js'
 			);
 		onMessageReceived(getMessaging(firebaseApp), (payload) => {
 			console.log('Message received. ', payload);
