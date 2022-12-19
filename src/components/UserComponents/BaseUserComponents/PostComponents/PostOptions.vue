@@ -808,12 +808,14 @@ export default {
 			}
 			if (this.saved) {
 				if (requestSatus == 200) {
+					this.saved = true;
 					this.$emit('emitPopup', 1, ' post saved successfully');
 				} else {
 					this.$emit('emitPopup', 1, 'failed to save');
 				}
 			} else {
 				if (requestSatus == 200) {
+					this.saved = false;
 					this.$emit('emitPopup', 1, 'post  unsaved successfully');
 				} else {
 					this.$emit('emitPopup', 1, 'failed to unsaved ');

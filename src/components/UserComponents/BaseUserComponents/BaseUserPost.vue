@@ -209,8 +209,13 @@
 								</div>
 							</div>
 							<div class="post-user-information">
-								<div class="post-user-name">
+								<div
+									@mouseleave="hideSubredditBox(1)"
+									style="position: relative"
+									class="post-user-name"
+								>
 									<router-link
+										@mouseover="showSubredditBox(1)"
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
@@ -223,6 +228,26 @@
 												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
+									<subreddit-card-mini
+										@mouseover="showSubredditBox(1)"
+										v-if="
+											showSubredditBoxFlag1 &&
+											subredditData != null &&
+											postData.data.subreddit != null
+										"
+										:subreddit="subredditData"
+										:subreddit-name="postData.data.subreddit"
+									></subreddit-card-mini>
+									<div
+										style="position: absolute; z-index: 5"
+										v-else-if="userCardData != null && showSubredditBoxFlag1"
+									>
+										<profile-card
+											:user-data="userCardData"
+											:state="UserCardState"
+											:not-post-card="false"
+										></profile-card>
+									</div>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
 									<span class="posted-by-unhovered">
@@ -241,11 +266,27 @@
 												: 'posted by'
 										}}</span
 									>
-									<router-link
-										style="margin-left: 3px"
-										:to="`/user/${postData.data.postedBy}`"
-										>{{ postData.data.postedBy }}
-									</router-link>
+									<div
+										@mouseleave="hideSubredditBox(2)"
+										style="position: relative"
+									>
+										<router-link
+											@mouseover="showSubredditBox(2)"
+											style="margin-left: 3px"
+											:to="`/user/${postData.data.postedBy}`"
+											>{{ postData.data.postedBy }}
+										</router-link>
+										<div
+											style="position: absolute; z-index: 5"
+											v-if="userCardData != null && showSubredditBoxFlag2"
+										>
+											<profile-card
+												:user-data="userCardData"
+												:state="UserCardState"
+												:not-post-card="false"
+											></profile-card>
+										</div>
+									</div>
 								</div>
 								<div id="base-user-post-content-posted-posted-at">
 									{{ getMoment(postData.data.postedAt) }}
@@ -340,6 +381,8 @@ import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
 import ModerationTitle from './PostComponents/ModerationTitle.vue';
+import ProfileCard from './Cards/ProfileCard.vue';
+import SubredditCardMini from './PostComponents/SubredditCardMini.vue';
 export default {
 	components: {
 		PostOptions,
@@ -347,6 +390,8 @@ export default {
 		PicturePost,
 		TheInsights,
 		ModerationTitle,
+		SubredditCardMini,
+		ProfileCard,
 	},
 	props: {
 		// @vuese
@@ -384,10 +429,103 @@ export default {
 			insightActive: false,
 			insightsLoading: false,
 			PostHybridContent: '',
+			subredditData: null,
+			showSubredditBoxFlag1: false,
+			showSubredditBoxFlag2: false,
+			UserCardState: 'unauth',
+			userCardData: null,
 		};
+	},
+	async beforeMount() {
+		if (this.postData.data.subreddit != null) {
+			await this.getSubreddit();
+			console.log('aaa', this.subredditData);
+		}
+		await this.fetchUserCardPicture();
+	},
+	created() {
+		if (this.$route.params.userName) {
+			this.loading = true;
+			if (
+				!localStorage.getItem('userName') ||
+				localStorage.getItem('userName') == ''
+			) {
+				this.UserCardState = 'unauth';
+			} else if (
+				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+				this.$route.params.userName == localStorage.getItem('userName')
+			)
+				this.UserCardState = 'profile';
+			/* means same authenticated user */ else
+				this.UserCardState = 'user'; /* means other user */
+		}
+	},
+	computed: {
+		getSubredditPicture() {
+			if (
+				this.subredditData != null &&
+				this.postData.data.subreddit != null &&
+				this.subredditData.picture != null
+			) {
+				return this.subredditData.picture;
+			} else return false;
+		},
 	},
 	emits: ['emitPopup'],
 	methods: {
+		async fetchUserCardPicture() {
+			let responseData = null;
+			try {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
+					baseurl: this.$baseurl,
+					userName: this.postData.data.postedBy,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			if (responseData != null) this.userCardData = responseData;
+			console.log(this.userData);
+		},
+		/**
+		 * @vuese
+		 * show subreddit box when you hovered on subreddit name
+		 * @arg no arg
+		 */
+		showSubredditBox(id) {
+			if (id == 1) this.showSubredditBoxFlag1 = true;
+			else if (id == 2) this.showSubredditBoxFlag2 = true;
+		},
+		/**
+		/**
+		 * @vuese
+		 * hide the subreddit box when unhovered
+		 * @arg no arg
+		 */
+		hideSubredditBox(id) {
+			if (id == 1) this.showSubredditBoxFlag1 = false;
+			else if (id == 2) this.showSubredditBoxFlag2 = false;
+		},
+		/**
+		 * @vuese
+		 * get subreddit information to use its picture in the post
+		 * @arg no arg
+		 */
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					subredditName: this.postData.data.subreddit,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				this.subredditData = this.$store.getters['community/getSubreddit'];
+			} catch (err) {
+				console.log(err);
+				// if (this.$store.getters['community/notFound']) {
+				// 	this.$router.push('/notFound');
+				// }
+			}
+		},
 		/**
 		 * @vuese
 		 * emits action to show popup

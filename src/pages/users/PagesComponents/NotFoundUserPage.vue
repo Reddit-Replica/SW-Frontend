@@ -68,6 +68,7 @@ p {
 	margin-top: 0;
 	margin-bottom: 32px;
 }
+
 .go-home-button {
 	/* border: 1px solid #ccc; */
 	overflow: visible;
