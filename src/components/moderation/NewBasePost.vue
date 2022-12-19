@@ -90,10 +90,10 @@
 								:id="'moderator-img-' + index"
 							/>
 						</div>
-						<div class="p-box">
+						<!-- <div class="p-box">
 							<p class="p">Removed</p>
 							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
-						</div>
+						</div> -->
 					</div>
 					<div class="buttons">
 						<!-- <base-button>Add Removal Reason</base-button> -->
@@ -102,7 +102,11 @@
 							:id="'approve-button-' + index"
 							>Approve</base-button
 						>
-						<base-button :id="'flair-button-' + index">Flair</base-button>
+						<base-button
+							:id="'Remove-button-' + index"
+							@click="removeFunction()"
+							>Remove</base-button
+						>
 					</div>
 				</div>
 			</div>
@@ -120,6 +124,7 @@ export default {
 			errorResponse: '',
 			approved: false,
 			handleTime: '',
+			removed: false,
 		};
 	},
 	beforeMount() {
@@ -245,6 +250,28 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+		},
+		async removeFunction() {
+			try {
+				let typing = '';
+				if (this.spam.commentId) {
+					typing = 'comment';
+				} else {
+					typing = 'post';
+				}
+				await this.$store.dispatch('moderation/removeFunction', {
+					id: this.spam.id,
+					baseurl: this.$baseurl,
+					type: typing,
+				});
+				if (this.$store.getters['moderation/state, payload']) {
+					this.removed = true;
+					document.getElementById('theBox').style.display = 'none';
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 		async approveFunction() {
 			try {

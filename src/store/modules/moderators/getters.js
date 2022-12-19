@@ -127,4 +127,7 @@ export default {
 	gettrafficStatus(state) {
 		return state.trafficStatus;
 	},
+	Removed(state) {
+		return state.Removed;
+	},
 };
