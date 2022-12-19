@@ -203,7 +203,10 @@ export default {
 	height: 100%;
 	word-break: break-all;
 }
-.post-text img {
+.post-text p img {
+	width: 100%;
+}
+p img .ql-image {
 	width: 100%;
 }
 
