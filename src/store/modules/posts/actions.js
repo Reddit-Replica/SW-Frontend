@@ -226,4 +226,36 @@ export default {
 		}
 		return response.status;
 	},
+	async createSharedpost(context, payload) {
+		const postInfo = {
+			sharePostId: payload.sharePostId,
+		};
+		//const token = localStorage.getItem('accessToken');
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/submit', {
+			// mode: 'no-cors',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(postInfo),
+		});
+		const responseData = await response.json();
+		if (response.status == 201) {
+			console.log(responseData);
+			console.log(response);
+			context.commit('setpostData', responseData);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
 };
