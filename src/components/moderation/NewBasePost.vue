@@ -102,7 +102,12 @@
 							:id="'approve-button-' + index"
 							>Approve</base-button
 						>
-						<base-button :id="'flair-button-' + index">Flair</base-button>
+						<base-button
+							v-if="this.$route.matched.some(({ name }) => name === 'spam')"
+							:id="'Remove-button-' + index"
+							@click="removeFunction()"
+							>Remove</base-button
+						>
 					</div>
 				</div>
 			</div>
@@ -120,6 +125,7 @@ export default {
 			errorResponse: '',
 			approved: false,
 			handleTime: '',
+			removed: false,
 		};
 	},
 	beforeMount() {
@@ -190,8 +196,14 @@ export default {
 		async upvote() {
 			if (this.upClicked == false) {
 				try {
+					let P_id = 0;
+					if (this.spam.commentId) {
+						P_id = this.spam.commentId;
+					} else {
+						P_id = this.spam.postId;
+					}
 					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
+						id: P_id,
 						direction: 1,
 						baseurl: this.$baseurl,
 					});
@@ -215,8 +227,14 @@ export default {
 		async downvote() {
 			if (this.downClicked == false) {
 				try {
+					let P_id = 0;
+					if (this.spam.commentId) {
+						P_id = this.spam.commentId;
+					} else {
+						P_id = this.spam.postId;
+					}
 					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
+						id: P_id,
 						direction: -1,
 						baseurl: this.$baseurl,
 					});
@@ -245,6 +263,28 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+		},
+		async removeFunction() {
+			try {
+				let typing = '';
+				if (this.spam.commentId) {
+					typing = 'comment';
+				} else {
+					typing = 'post';
+				}
+				await this.$store.dispatch('moderation/removeFunction', {
+					id: this.spam.id,
+					baseurl: this.$baseurl,
+					type: typing,
+				});
+				if (this.$store.getters['moderation/Removed']) {
+					this.removed = true;
+					document.getElementById('theBox').style.display = 'none';
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
 		},
 		async approveFunction() {
 			try {

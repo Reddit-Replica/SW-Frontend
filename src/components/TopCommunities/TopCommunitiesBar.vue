@@ -22,7 +22,7 @@ export default {
 		};
 	},
 	beforeMount() {
-		this.getOneCommunities();
+		if (localStorage.getItem('accessToken')) this.getOneCommunities();
 	},
 	methods: {
 		async getOneCommunities() {

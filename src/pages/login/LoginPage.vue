@@ -189,7 +189,7 @@ export default {
 				// this.$router.replace('/main');
 
 				await this.$store.dispatch('notifications/createNotificationToken', {
-					host: 'http://localhost:8081',
+					// host: 'http://localhost:8081',
 					baseurl: this.$baseurl,
 					token: localStorage.getItem('accessToken'),
 				});

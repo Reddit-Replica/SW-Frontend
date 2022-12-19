@@ -47,7 +47,7 @@ export default {
 	data() {
 		return {
 			infoShown: false,
-			sendReplies: false,
+			sendReplies: true,
 		};
 	},
 	methods: {
