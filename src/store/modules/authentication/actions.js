@@ -348,6 +348,49 @@ export default {
 			userName: null,
 		});
 	},
+	/**
+	 * action for verify Email
+	 * @action  verifyEmail
+	 * @param {Object} payload id & token .
+	 * @returns {void}
+	 */
+	async verifyEmail(context, payload) {
+		const baseurl = payload.baseurl;
+		const id = payload.id;
+		const token = payload.token;
+
+		const response = await fetch(
+			baseurl + '/verify-email/' + id + '/' + token,
+			{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+			}
+		);
+
+		const responseData = await response.json();
+		//console.log(responseData.token);
+		if (response.status == 200) {
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
+			//this.$cookies.set('response', response.status);
+			if (responseData.token)
+				//localStorage.setItem('accessToken', responseData.token);
+				this.$cookies.set('accessToken', responseData.token);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			console.log(responseData.error);
+			throw error;
+		} else if (response.status == 403) {
+			const error = new Error('invalid token');
+
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
+	},
 };
 //get request example
 /*const response = await fetch('link');
