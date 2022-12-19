@@ -548,6 +548,21 @@ export default {
 			else return true;
 		},
 	},
+	watch: {
+		async '$route.params.postId'(value) {
+			if (value != undefined) {
+				await this.getPostDetails();
+				console.log('userName');
+				//if (this.$route.params.userName != undefined) this.RequestUserData();
+				if (this.postDetails.subreddit == undefined)
+					await this.RequestUserData();
+				this.fetchPostComments();
+				// document.getElementById('test').addEventListener('scroll', () => {
+				// 	console.log('scroll');
+				// });
+			}
+		},
+	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
 	async beforeMount() {
@@ -822,8 +837,9 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			if (this.$route.path.split('/')[1] == 'r') this.$router.push('/main');
-			else this.$router.back();
+			//if (this.$route.path.split('/')[1] == 'r')
+			this.$router.push('/main');
+			//else this.$router.back();
 		},
 		cancePostEditing() {
 			this.$router.push({ query: { edit: 'false' } });
