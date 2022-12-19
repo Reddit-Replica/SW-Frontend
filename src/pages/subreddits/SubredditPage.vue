@@ -5,7 +5,11 @@
 				style="position: absolute; left: 30%; top: 50%"
 			></the-spinner>
 		</div>
-		<the-header :header-title="'r/' + subreddit.title"></the-header>
+		<the-header
+			:header-title="'r/' + subreddit.title"
+			:header-img="subreddit.picture"
+			:is-subreddit="true"
+		></the-header>
 		<subreddit-top
 			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
