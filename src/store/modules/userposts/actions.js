@@ -18,13 +18,18 @@ export default {
 		// Object.keys(params).forEach((key) =>
 		// 	url.searchParams.append(key, params[key])
 		// );
+		// ?sort=new&time=all&before=&after=&limit=10
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(baseurl + `/user/${payload.userName}/posts`, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/posts?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -42,23 +47,26 @@ export default {
 	},
 	async getUserMorePostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/posts`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			`${baseurl}+/user/${payload.userName}/posts?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -76,17 +84,17 @@ export default {
 	},
 	async getUserPinnedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		console.log('pinned-post-body', payload.body);
-		let url = new URL(baseurl + `/pinned-posts`);
-		let params = {
-			username: payload.body.username,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// console.log('pinned-post-body', payload.body);
+		// let url = new URL(baseurl + `/pinned-posts`);
+		// let params = {
+		// 	username: payload.body.username,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		console.log('stst');
-		const response = await fetch(url, {
+		const response = await fetch(baseurl + `/pinned-posts`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -113,25 +121,29 @@ export default {
 		console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/overview`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: payload.params.limit,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
-		console.log(url);
+		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: payload.params.limit,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// console.log(url);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/overview?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -151,24 +163,28 @@ export default {
 		console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/overview`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: payload.params.limit,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: payload.params.limit,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/overview?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -188,23 +204,27 @@ export default {
 		console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/saved`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/saved?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -224,23 +244,27 @@ export default {
 		console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/saved`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/saved?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -258,23 +282,27 @@ export default {
 	},
 	async getUserHistoryPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/history`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/history`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/history?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -292,23 +320,27 @@ export default {
 	},
 	async getUserMoreHistoryPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/history`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/history`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/history?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -326,23 +358,27 @@ export default {
 	},
 	async getUserUpVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/upvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -360,24 +396,28 @@ export default {
 	},
 	async getUserMoreUpVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: `${payload.params.limit}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/upvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -395,23 +435,27 @@ export default {
 	},
 	async getUserDownVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/downvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -429,24 +473,28 @@ export default {
 	},
 	async getUserMoreDownVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: `${payload.params.limit}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/downvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -464,23 +512,27 @@ export default {
 	},
 	async getUserHiddenPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/hidden?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -498,24 +550,28 @@ export default {
 	},
 	async getUserMoreHiddenPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: `${payload.params.limit}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/hidden?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -533,23 +589,27 @@ export default {
 	},
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/comments`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/user-comments`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/comments?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -566,23 +626,27 @@ export default {
 	},
 	async getUserMoreCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/comments`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/user-comments`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/comments?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -599,15 +663,15 @@ export default {
 	},
 	async getInsightsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/post-insights`);
-		let params = {
-			id: `${payload.params.id}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/post-insights`);
+		// let params = {
+		// 	id: `${payload.params.id}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/post-insights`); // mock server
-		const response = await fetch(url, {
+		const response = await fetch(baseurl + `/post-insights`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
