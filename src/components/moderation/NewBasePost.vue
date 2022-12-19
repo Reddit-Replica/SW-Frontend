@@ -103,6 +103,7 @@
 							>Approve</base-button
 						>
 						<base-button
+							v-if="this.$route.matched.some(({ name }) => name === 'spam')"
 							:id="'Remove-button-' + index"
 							@click="removeFunction()"
 							>Remove</base-button

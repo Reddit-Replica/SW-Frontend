@@ -15,19 +15,29 @@ export default {
 		};
 	},
 	components: { TheSpinner },
-	async created() {
-		try {
-			await this.$store.dispatch('verifyEmail', actionPayload);
-			const actionPayload = {
-				id: this.id,
-				token: this.token,
-				baseurl: this.$baseurl,
-			};
+	created() {
+		this.verify();
+		// try {
+		// 	await this.verify();
+		// } catch (err) {
+		// 	this.error = err;
+		// }
+	},
+	methods: {
+		async verify() {
+			try {
+				const actionPayload = {
+					id: this.id,
+					token: this.token,
+					baseurl: this.$baseurl,
+				};
+				await this.$store.dispatch('verifyEmail', actionPayload);
 
-			this.$router.replace('/main');
-		} catch (err) {
-			this.error = err;
-		}
+				this.$router.push('/main');
+			} catch (err) {
+				this.error = err;
+			}
+		},
 	},
 };
 </script>

@@ -358,7 +358,7 @@ export default {
 		const baseurl = payload.baseurl;
 		const id = payload.id;
 		const token = payload.token;
-
+		console.log('Ahmed');
 		const response = await fetch(
 			baseurl + '/verify-email/' + id + '/' + token,
 			{
