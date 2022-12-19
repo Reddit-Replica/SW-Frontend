@@ -342,10 +342,19 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // 	true
 // );
 export default {
+	props: {
+		initialContent: {
+			type: Object,
+			required: false,
+			default() {
+				return {};
+			},
+		},
+	},
 	data() {
 		return {
 			markdownMode: false,
-			content: '',
+			content: this.initialContent,
 			data: '',
 			selected: 'dee',
 

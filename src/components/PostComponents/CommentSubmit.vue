@@ -180,7 +180,7 @@ export default {
 				// this.$refs.myQuillEditor.getContents().ops,
 				{
 					insert: 'u/' + userName,
-					attributes: { link: this.$baseurl + '/user/' + userName },
+					attributes: { link: '/user/' + userName },
 				},
 			]);
 			this.mentionedUser = '';
@@ -271,7 +271,6 @@ export default {
 				console.log(value.ops[i].insert);
 				console.log(value.ops[i].insert.search('@') != -1);
 			}
-			return false;
 		},
 	},
 	async beforeMount() {
@@ -285,7 +284,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.commentedUsers =
-				this.$store.getters['postCommentActions/getCommentedUsers'];
+				this.$store.getters['postCommentActions/getCommentedUsers'].usernames;
 			console.log('commentedUsers');
 			console.log(this.commentedUsers);
 		}
