@@ -75,7 +75,6 @@
 					id="image2"
 					type="file"
 					accept="image/png,image/jpg"
-					multiple
 					hidden
 					@change="loadProfilePic"
 				/>

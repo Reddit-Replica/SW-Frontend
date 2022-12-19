@@ -128,4 +128,7 @@ export default {
 	settrafficStatus(state, payload) {
 		state.trafficStatus = payload;
 	},
+	setRemoved(state, payload) {
+		state.Removed = payload;
+	},
 };
