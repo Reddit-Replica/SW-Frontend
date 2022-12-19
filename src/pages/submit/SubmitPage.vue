@@ -35,7 +35,7 @@
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
 							<title-input></title-input>
-
+							<!-- <post-content></post-content> -->
 							<post-submit v-if="submitTypesActive[0]"></post-submit>
 							<image-submit v-if="submitTypesActive[1]"></image-submit>
 							<link-submit v-if="submitTypesActive[2]"></link-submit>
@@ -73,7 +73,7 @@ import FooterButtons from '../../components/SubmitComponents/FooterButtons.vue';
 import LinkSubmit from '../../components/SubmitComponents/LinkSubmit.vue';
 import SubmitBar from '../../components/SubmitComponents/SubmitBar.vue';
 import SubmitFooter from '../../components/SubmitComponents/SubmitFooter.vue';
-
+// import PostContent from '../../components/PostComponents/PostContent.vue';
 export default {
 	components: {
 		TitleInput,
@@ -83,6 +83,7 @@ export default {
 		LinkSubmit,
 		SubmitBar,
 		SubmitFooter,
+		// PostContent,
 	},
 	props: {
 		subredditName: {
@@ -91,6 +92,7 @@ export default {
 		},
 	},
 	created() {
+		console.log(this.sharedId);
 		this.subreddit = null;
 		if (!localStorage.getItem('accessToken')) {
 			this.$router.push('/login');
@@ -125,6 +127,7 @@ export default {
 			userName: null,
 			try: (this.getTitle && this.getSubreddit) || this.getUsername,
 			postData: null,
+			sharedId: this.$route.query.source_id,
 		};
 	},
 	computed: {
@@ -167,6 +170,7 @@ export default {
 				if (this.title && this.title != '') this.buttonDisabled = false;
 				else this.buttonDisabled = true;
 			}
+			this.buttonDisabled = false;
 			// if (value) this.buttonDisabled = false;
 		},
 		community(value) {
@@ -241,18 +245,28 @@ export default {
 		getVideo() {
 			this.video = this.$store.getters['posts/getVideo'];
 		},
+		// @vuese
+		// get the image in the type of image post
 		getImages() {
 			this.images = this.$store.getters['posts/getImages'];
 		},
+		// @vuese
+		// get the image captions in the type of image post
 		getImageCaptions() {
 			this.imageCaptions = this.$store.getters['posts/getImageCaptions'];
 		},
+		// @vuese
+		// get the image links in the type of image post
 		getImageLinks() {
 			this.imageLinks = this.$store.getters['posts/getImageLinks'];
 		},
+		// @vuese
+		// get the user name in the  post
 		getUsername() {
 			this.userName = localStorage.getItem('userName');
 		},
+		// @vuese
+		// get the insubreddit in the  post
 		getInSubreddit() {
 			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
 		},
