@@ -214,12 +214,12 @@
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
-												? `/user/${$route.params.userName}`
+												? `/user/${postData.data.postedBy}`
 												: `/r/${postData.data.subreddit}`
 										"
 										>{{
 											postData.data.subreddit == null
-												? `u/${$route.params.userName}`
+												? `u/${postData.data.postedBy}`
 												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
@@ -268,6 +268,7 @@
 									@share-post="sharePost"
 									:page="page"
 									:state="state"
+									@emit-popup="emitPopup"
 								></post-options>
 							</div>
 						</div>
@@ -386,6 +387,14 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * emits action to show popup
+		 * @arg no arg
+		 */
+		emitPopup(id, message) {
+			this.$emit('emitPopup', id, message);
+		},
 		/**
 		 * @vuese
 		 * handle the route of the cross post

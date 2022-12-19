@@ -8,6 +8,7 @@
 			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
 			:state="state"
+			@emit-popup="emitPopup"
 		></comment-content>
 	</div>
 </template>
@@ -37,6 +38,12 @@ export default {
 		state: {
 			type: String,
 			required: true,
+		},
+	},
+	emits: ['emitPopup'],
+	methods: {
+		emitPopup(id, message) {
+			this.$emit('emitPopup', id, message);
 		},
 	},
 };
