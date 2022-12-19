@@ -33,7 +33,7 @@
 							:src="image.imgUrl"
 							:id="`image-id-${index}`"
 							alt=""
-							style="max-width: 100%; max-height: 100%"
+							style="max-width: 100%"
 						/>
 					</li>
 				</ul>
