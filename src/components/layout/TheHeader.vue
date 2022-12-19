@@ -837,12 +837,13 @@ export default {
 		// Used to go to Search page
 		// @arg no argument
 		async searchUser() {
-			if (this.searchQuery) {
+			if (this.$route.matched.some(({ name }) => name === 'searchpost')) {
+				this.$router.go(this.$router.currentRoute);
+			} else if (this.searchQuery) {
 				this.$router.push({
 					name: 'searchpost',
 					query: { q: this.searchQuery },
 				});
-				// window.reload();
 			} else {
 				alert('Did not enter a word to Search');
 			}
