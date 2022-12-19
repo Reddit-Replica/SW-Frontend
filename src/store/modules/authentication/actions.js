@@ -159,6 +159,7 @@ export default {
 				localStorage.setItem('userName', responseData.username);
 				localStorage.setItem('Password', payload.password);
 				console.log(localStorage.getItem('Password'));
+				console.log(localStorage.getItem('Password'));
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
