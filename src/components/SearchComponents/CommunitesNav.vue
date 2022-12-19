@@ -173,6 +173,11 @@ p {
 	line-height: 18px;
 	color: rgb(98, 98, 252);
 	padding: 16px;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.communities-go:hover {
+	text-decoration-color: rgb(98, 98, 252);
 }
 .no-res {
 	color: #1c1c1c;

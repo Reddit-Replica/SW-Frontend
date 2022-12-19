@@ -99,25 +99,29 @@ export default {
 
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.username}/comments`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: `${payload.params.limit}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.username}/comments`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/user-comments`); // mock server
 		let response;
 		try {
-			response = await fetch(url, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}); // API
+			response = await fetch(
+				baseurl +
+					`/user/${payload.username}/comments?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+					},
+				}
+			); // API
 		} catch (error) {
 			console.log(error);
 		}

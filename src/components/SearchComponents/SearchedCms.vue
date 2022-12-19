@@ -79,18 +79,18 @@ export default {
 		BaseButton,
 		FollowJoin,
 	},
-	computed: {
-		SearchedCms() {
-			// console.log(this.$store.getters['search/Getsubreddits']);
-			return this.$store.getters['search/Getsubreddits'];
-		},
-	},
-	beforeMount() {
+	// computed: {
+	// 	SearchedCms() {
+	// 		// console.log(this.$store.getters['search/Getsubreddits']);
+	// 		return this.$store.getters['search/Getsubreddits'];
+	// 	},
+	// },
+	created() {
 		this.showuser();
 	},
 	methods: {
 		showuser() {
-			this.notFollowed = !this.value.joined;
+			this.notFollowed = this.value.joined;
 			// console.log('Goes');
 		},
 		async toggle() {
@@ -205,6 +205,12 @@ a {
 	line-height: 16px;
 	color: rgb(58, 49, 49);
 	font-weight: 700;
+	cursor: pointer;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.people-name:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .karma-number {
 	font-size: 12px;
