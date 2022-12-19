@@ -191,7 +191,7 @@ export default {
 			this.usersearch();
 			this.comsearch();
 		}
-		this.loading = false;
+		setTimeout((this.loading = false), 2000);
 	},
 	beforeMount() {
 		this.search();

@@ -40,6 +40,7 @@ export default {
 			sendReplies: false,
 			allSubreddits: [],
 			postData: null,
+			name: null,
 		};
 	},
 	actions,

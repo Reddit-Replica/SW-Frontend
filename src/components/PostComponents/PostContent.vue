@@ -203,6 +203,12 @@ export default {
 	height: 100%;
 	word-break: break-all;
 }
+.post-text p img {
+	width: 100%;
+}
+p img .ql-image {
+	width: 100%;
+}
 
 .subreddit-info .subreddit-image {
 	padding-right: 5px;
