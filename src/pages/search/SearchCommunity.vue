@@ -114,15 +114,15 @@ export default {
 			return localStorage.getItem('userName');
 		},
 	},
-	beforeMount() {
-		this.search();
-	},
-	async created() {
+	async beforeMount() {
 		if (localStorage.getItem('accessToken')) {
 			this.loading = true;
 			await this.search();
 		}
 		this.loading = false;
+	},
+	created() {
+		this.search();
 	},
 	methods: {
 		async search() {
