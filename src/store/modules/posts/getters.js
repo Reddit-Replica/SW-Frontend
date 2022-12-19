@@ -74,4 +74,9 @@ export default {
 		console.log(state.postData);
 		return state.postData;
 	},
+	getUser(state) {
+		console.log('getters name');
+		console.log(state.name);
+		return state.name;
+	},
 };
