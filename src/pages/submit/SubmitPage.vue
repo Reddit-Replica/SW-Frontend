@@ -9,7 +9,7 @@
 						<!-- <h3 class="heading-3">Create a post</h3> -->
 						<submit-bar></submit-bar>
 						<div class="submit-container">
-							<nav id="submit-nav" class="submit-nav">
+							<nav id="submit-nav" class="submit-nav" v-if="!sharedId">
 								<ul class="submit-list" @click="selectPostType">
 									<li class="li-active">
 										<div id="0" class="clicked-button"></div>
@@ -34,11 +34,21 @@
 								</ul>
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
-							<title-input></title-input>
-							<!-- <post-content></post-content> -->
-							<post-submit v-if="submitTypesActive[0]"></post-submit>
-							<image-submit v-if="submitTypesActive[1]"></image-submit>
-							<link-submit v-if="submitTypesActive[2]"></link-submit>
+							<title-input :val="postDetails.title"> </title-input>
+							<post-content
+								:post="postDetails"
+								:shared="true"
+								v-if="sharedId"
+							></post-content>
+							<post-submit
+								v-if="submitTypesActive[0] && !sharedId"
+							></post-submit>
+							<image-submit
+								v-if="submitTypesActive[1] && !sharedId"
+							></image-submit>
+							<link-submit
+								v-if="submitTypesActive[2] && !sharedId"
+							></link-submit>
 
 							<div class="box1">
 								<footer-buttons></footer-buttons>
@@ -73,7 +83,7 @@ import FooterButtons from '../../components/SubmitComponents/FooterButtons.vue';
 import LinkSubmit from '../../components/SubmitComponents/LinkSubmit.vue';
 import SubmitBar from '../../components/SubmitComponents/SubmitBar.vue';
 import SubmitFooter from '../../components/SubmitComponents/SubmitFooter.vue';
-// import PostContent from '../../components/PostComponents/PostContent.vue';
+import PostContent from '../../components/PostComponents/PostContent.vue';
 export default {
 	components: {
 		TitleInput,
@@ -83,7 +93,7 @@ export default {
 		LinkSubmit,
 		SubmitBar,
 		SubmitFooter,
-		// PostContent,
+		PostContent,
 	},
 	props: {
 		subredditName: {
@@ -91,8 +101,10 @@ export default {
 			default: '',
 		},
 	},
-	created() {
+	async created() {
 		console.log(this.sharedId);
+
+		await this.getPostDetails();
 		this.subreddit = null;
 		if (!localStorage.getItem('accessToken')) {
 			this.$router.push('/login');
@@ -128,6 +140,7 @@ export default {
 			try: (this.getTitle && this.getSubreddit) || this.getUsername,
 			postData: null,
 			sharedId: this.$route.query.source_id,
+			postDetails: null,
 		};
 	},
 	computed: {
@@ -270,6 +283,17 @@ export default {
 		getInSubreddit() {
 			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
 		},
+		async getPostDetails() {
+			try {
+				await this.$store.dispatch('listing/postDetails', {
+					baseurl: this.$baseurl,
+					id: this.sharedId,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.postDetails = this.$store.getters['listing/getPostDetails'];
+		},
 
 		// @vuese
 		// dispatch createpost from the store
@@ -289,6 +313,7 @@ export default {
 			this.getUsername();
 			this.getSubreddit();
 			this.getInSubreddit();
+			if (this.sharedId) this.kind = 'post';
 			// this.inSubreddit = false;
 			console.log('print values');
 			console.log(this.title);
@@ -560,6 +585,66 @@ export default {
 											this.userName +
 											'/comments/' +
 											str +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						}
+					}
+				} catch (err) {
+					this.error = err;
+					console.log(this.error);
+					this.success = false;
+				}
+			} else if (this.kind == 'post') {
+				const actionPayload = {
+					title: this.title,
+					kind: this.kind,
+					subreddit: this.subreddit,
+					inSubreddit: this.inSubreddit,
+					nsfw: this.nsfw,
+					spoiler: this.spoiler,
+					flairId: this.flairId,
+					sendReplies: this.sendReplies,
+					sharePostId: this.sharedId,
+					baseurl: this.$baseurl,
+				};
+
+				try {
+					const response = await this.$store.dispatch(
+						'posts/createSharedpost',
+						actionPayload
+					);
+
+					if (response == 201) {
+						console.log(response);
+						console.log('الحمد لله زى الفل');
+						this.success = true;
+						/////r/:subredditName/comments/:postId/:postName
+						this.postData = await this.$store.getters['posts/getpostData'];
+						console.log(this.postData);
+						if (this.inSubreddit) {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/r/' +
+											this.subreddit +
+											'/comments/' +
+											this.postData.id +
+											'/' +
+											this.title
+									),
+								1000
+							);
+						} else {
+							setTimeout(
+								() =>
+									this.$router.replace(
+										'/user/' +
+											this.userName +
+											'/comments/' +
+											this.postData.id +
 											'/' +
 											this.title
 									),
