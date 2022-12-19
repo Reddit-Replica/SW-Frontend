@@ -75,18 +75,18 @@
 							<div class="buttons">
 								<button class="button">
 									<div class="color">
-										<div class="color-box-blue"></div>
-										<div class="span">
+										<!-- <div class="color-box-blue"></div> -->
+										<!-- <div class="span">
 											<span class="span-text" id="joined-button">Joined</span>
-										</div>
+										</div> -->
 									</div>
 								</button>
 								<button class="button">
 									<div class="color">
-										<div class="color-box-yellow"></div>
-										<div class="span">
+										<!-- <div class="color-box-yellow"></div> -->
+										<!-- <div class="span">
 											<span class="span-text" id="left-button"> Left</span>
-										</div>
+										</div> -->
 									</div>
 								</button>
 							</div>
@@ -189,7 +189,7 @@ export default {
 			labels: labels,
 			datasets: [
 				{
-					label: 'The traffic status',
+					label: 'members joined',
 					data: arr2,
 					fill: false,
 					borderColor: 'rgb(75,192,192)',
