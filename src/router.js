@@ -68,6 +68,7 @@ import TrafficStats from './pages/moderation/TrafficStats.vue';
 import AcceptInvitation from './pages/moderation/AcceptInvitation.vue';
 
 import NotFound from './pages/NotFound.vue';
+import InternalServer from './pages/InternalServer.vue';
 
 import PostComments from './components/PostComponents/PostComments.vue';
 
@@ -299,6 +300,7 @@ const router = createRouter({
 			],
 		},
 
+		{ path: '/enternal-error', component: InternalServer },
 		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });
