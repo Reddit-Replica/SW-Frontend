@@ -75,18 +75,18 @@
 							<div class="buttons">
 								<button class="button">
 									<div class="color">
-										<div class="color-box-blue"></div>
-										<div class="span">
+										<!-- <div class="color-box-blue"></div> -->
+										<!-- <div class="span">
 											<span class="span-text" id="joined-button">Joined</span>
-										</div>
+										</div> -->
 									</div>
 								</button>
 								<button class="button">
 									<div class="color">
-										<div class="color-box-yellow"></div>
-										<div class="span">
+										<!-- <div class="color-box-yellow"></div> -->
+										<!-- <div class="span">
 											<span class="span-text" id="left-button"> Left</span>
-										</div>
+										</div> -->
 									</div>
 								</button>
 							</div>
@@ -177,14 +177,8 @@ export default {
 		let arr2 = [];
 		for (let i = 0; i < this.traffic.days.length; i++) {
 			let date = new Date(this.traffic.days[i].day);
-			arr1.push(
-				date.getFullYear() +
-					' / ' +
-					date.getMonth() +
-					1 +
-					' / ' +
-					date.getDate()
-			);
+			let mounth = date.getMonth() + 1;
+			arr1.push(date.getFullYear() + ' / ' + mounth + ' / ' + date.getDate());
 			arr2.push(this.traffic.days[i].numberOfJoined);
 		}
 		console.log(arr1);
@@ -195,7 +189,7 @@ export default {
 			labels: labels,
 			datasets: [
 				{
-					label: 'The traffic status',
+					label: 'members joined',
 					data: arr2,
 					fill: false,
 					borderColor: 'rgb(75,192,192)',

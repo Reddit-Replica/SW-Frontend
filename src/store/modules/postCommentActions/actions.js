@@ -260,4 +260,29 @@ export default {
 			throw error;
 		}
 	},
+	async editPost(context, payload) {
+		const newComment = {
+			content: payload.content,
+			postId: payload.id,
+		};
+		console.log(newComment);
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/edit-post', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(newComment),
+		});
+
+		const responseData = await response.json();
+		console.log(responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
+			throw error;
+		}
+	},
 };

@@ -150,15 +150,17 @@
 												></post-submit>
 												<div class="edit-post-buttons">
 													<base-button
+														v-if="this.$route.query.edit == 'true'"
 														button-text="cancel"
 														class="cancel"
 														@click="cancePostEditing"
 													/>
 													<base-button
+														v-if="this.$route.query.edit == 'true'"
 														button-text="save"
 														class="save"
 														:disabled="!savePostEditing"
-														@click="savePostEditing"
+														@click="savePostEdit"
 													/>
 												</div>
 											</div>
@@ -571,18 +573,31 @@ export default {
 		//if (this.$route.params.userName != undefined) this.RequestUserData();
 		if (this.postDetails.subreddit == undefined) await this.RequestUserData();
 		this.fetchPostComments();
-		// document.getElementById('test').addEventListener('scroll', () => {
-		// 	console.log('scroll');
-		// });
+		document.getElementById('test').addEventListener('scroll', () => {
+			console.log('scroll');
+		});
 	},
 	methods: {
 		click() {},
 		handleScroll: function () {
-			console.log('scroll' + window.scrollY);
+			console.log('scroll');
 			if (window.scrollY > 50) {
 				this.fetchPostComments();
 			}
 			//return window.scrollY > 100;
+		},
+		async savePostEdit() {
+			this.$router.push({ query: { edit: 'false' } });
+			this.postDetails.content = this.$store.getters['posts/getContent'];
+			try {
+				await this.$store.dispatch('postCommentActions/editPost', {
+					baseurl: this.$baseurl,
+					content: this.$store.getters['posts/getContent'],
+					id: this.postDetails.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		async fetchPostComments() {
 			console.log(this.$route.query.sort);
