@@ -17,6 +17,7 @@
 			:post-title="commentData.data.post.title"
 			:comment-content="commentContent"
 			:state="state"
+			@emit-popup="emitPopup"
 		></comment-content>
 	</div>
 </template>
@@ -28,6 +29,7 @@ export default {
 		CommentContent,
 		CommentHeader,
 	},
+	emits: ['emitPopup'],
 	props: {
 		// @vuese
 		// the full comment data
@@ -52,6 +54,11 @@ export default {
 		state: {
 			type: String,
 			required: true,
+		},
+	},
+	methods: {
+		emitPopup(id, message) {
+			this.$emit('emitPopup', id, message);
 		},
 	},
 };

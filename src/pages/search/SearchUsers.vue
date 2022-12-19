@@ -112,15 +112,6 @@ export default {
 			return localStorage.getItem('userName');
 		},
 	},
-	watch: {
-		SearchedUsers() {
-			console.log(this.notfounded);
-			if (this.SearchedUsers().length == 0) {
-				this.notfounded = true;
-				console.log(this.SearchedUsers());
-			}
-		},
-	},
 	beforeMount() {
 		this.search();
 		// this.intousers();

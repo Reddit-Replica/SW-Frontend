@@ -5,8 +5,21 @@
 				<div class="image">
 					<router-link
 						:to="{ name: 'user', params: { userName: comment.commentedBy } }"
-						><img src="../../../img/user-image.jpg" alt="" id="user"
-					/></router-link>
+						><img
+							v-if="!userData.picture"
+							src="../../../img/default_inbox_avatar.png"
+							alt="img"
+							class="img header-user-nav-user-photo"
+							id="comment-user-img-"
+						/>
+						<img
+							v-else
+							:src="$baseurl + '/' + userData.picture"
+							alt="img"
+							class="img header-user-nav-user-photo"
+							id="comment-user-img-"
+						/>
+					</router-link>
 				</div>
 				<div class="vertical-line"></div>
 			</div>
@@ -237,14 +250,29 @@ export default {
 			savedUnsavedPosts: [],
 			saved: this.comment.saved,
 			followed: this.comment.followed,
+			userData: {},
 		};
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
 	created() {
 		if (this.comment.numberofChildren != 0) this.fetchPostComments();
+		this.fetchUserProfilePicture();
 	},
 	methods: {
+		async fetchUserProfilePicture() {
+			let responseData = null;
+			try {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
+					baseurl: this.$baseurl,
+					userName: this.comment.commentedBy,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			if (responseData != null) this.userData = responseData;
+			console.log(this.userData);
+		},
 		async follow() {
 			if (localStorage.getItem('userName') != null) {
 				this.followed = !this.followed;
