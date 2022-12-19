@@ -677,6 +677,11 @@ export default {
 			createCommunityShown: false,
 		};
 	},
+	mounted() {
+		if (this.$route.query.q) {
+			this.searchQuery = this.$route.query.q;
+		}
+	},
 	computed: {
 		// @vuese
 		// Get usename
