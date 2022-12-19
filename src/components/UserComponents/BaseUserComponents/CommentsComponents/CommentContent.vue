@@ -287,6 +287,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ['emitPopup'],
 	data() {
 		return {
 			showOptionsBoxList: false,

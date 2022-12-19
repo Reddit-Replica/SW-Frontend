@@ -1,15 +1,22 @@
 <template>
 	<div class="card-prof">
-		<div class="profile-card">
+		<div
+			class="profile-card"
+			:style="[notPostCard ? '' : 'width:250px !important']"
+		>
 			<!-- cover picture has two margins default is for picture profile and other for avatar profile -->
 			<div
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url(${$baseurl}/${userData['banner'].replace(
-					/\\/g,
-					`/`
-				)}) `"
+				:style="[
+					userData['banner']
+						? `background-image: url(${$baseurl}/${userData['banner'].replace(
+								/\\/g,
+								`/`
+						  )}) `
+						: '',
+				]"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span
@@ -262,13 +269,13 @@
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
 			<sociallinks-block
-				v-if="state == 'profile'"
+				v-if="state == 'profile' && notPostCard"
 				:social-data="userData.socialLinks"
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button
-				v-if="state == 'profile'"
+				v-if="state == 'profile' && notPostCard"
 				class="new-post"
 				@click="$router.push(`/user/${userName}/submit`)"
 				id="profile-new-post"
@@ -278,7 +285,7 @@
 			<!-- ////////////// -->
 			<!-- more options button -->
 			<button
-				v-if="!(state != 'profile' && userData.blocked)"
+				v-if="!(state != 'profile' && userData.blocked) && notPostCard"
 				id="more-options-button"
 				class="more-options"
 				@click="toggleShowMoreOptions"
@@ -289,7 +296,7 @@
 			<!-- /////////////////// -->
 			<!-- profile options -->
 			<ul
-				v-if="!(state != 'profile' && userData.blocked)"
+				v-if="!(state != 'profile' && userData.blocked) && notPostCard"
 				id="profile-options"
 				class="profile-options"
 				v-show="showMoreOptions"
@@ -306,7 +313,7 @@
 			<!-- /////////////// -->
 			<!-- more options button -->
 			<button
-				v-if="!(state != 'profile' && userData.blocked)"
+				v-if="!(state != 'profile' && userData.blocked) && notPostCard"
 				id="fewer-options-button"
 				class="fewer-options"
 				v-show="showMoreOptions"
@@ -346,6 +353,11 @@ export default {
 		state: {
 			type: String,
 			required: true,
+		},
+		notPostCard: {
+			type: Boolean,
+			required: false,
+			default: true,
 		},
 	},
 	// mounted() {

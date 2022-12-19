@@ -386,6 +386,7 @@ export default {
 			PostHybridContent: '',
 		};
 	},
+	emits: ['emitPopup'],
 	methods: {
 		/**
 		 * @vuese

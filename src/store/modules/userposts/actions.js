@@ -7,19 +7,19 @@ export default {
 	 */
 	async getUserPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-			limit: `${payload.params.limit}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/posts`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
+		const response = await fetch(baseurl + `/user/${payload.userName}/posts`, {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -124,6 +124,7 @@ export default {
 		Object.keys(params).forEach((key) =>
 			url.searchParams.append(key, params[key])
 		);
+		console.log(url);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		const response = await fetch(url, {
 			headers: {
