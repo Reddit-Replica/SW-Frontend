@@ -77,4 +77,8 @@ export default {
 		console.log(payload);
 		state.postData = payload;
 	},
+	setName(state, payload) {
+		console.log(payload);
+		state.name = payload.name;
+	},
 };
