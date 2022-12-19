@@ -1,7 +1,12 @@
 <template>
 	<div class="all">
-		<div class="after-all">
-			<the-header :header-title="'u/asmaaadel0'"></the-header>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="after-all" v-else>
+			<the-header :header-title="userName"></the-header>
 			<div class="page-release">
 				<div class="page">
 					<div>
@@ -90,17 +95,23 @@
 <script>
 import SearchedCms from '../../components/SearchComponents/SearchedCms.vue';
 import Notfound from '../../components/SearchComponents/NotFound.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
 			q: '',
 			notFound: true,
+			loading: false,
 		};
 	},
 	computed: {
 		SearchedCms() {
 			console.log(this.$store.getters['search/Getsubreddits']);
 			return this.$store.getters['search/Getsubreddits'];
+		},
+
+		userName() {
+			return localStorage.getItem('userName');
 		},
 	},
 	// created() {
@@ -112,6 +123,13 @@ export default {
 	// },
 	beforeMount() {
 		this.search();
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.search();
+		}
+		this.loading = false;
 	},
 	methods: {
 		async search() {
@@ -153,7 +171,7 @@ export default {
 			this.$router.push('/r/' + subredditName);
 		},
 	},
-	components: { SearchedCms, Notfound },
+	components: { SearchedCms, Notfound, TheSpinner },
 };
 </script>
 

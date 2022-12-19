@@ -1,8 +1,13 @@
 <template>
 	<div>
-		<div class="all">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="all" v-else>
 			<div class="after-all">
-				<the-header :header-title="'u/asmaaadel0'"></the-header>
+				<the-header :header-title="userName"></the-header>
 				<div class="page-release">
 					<div class="page">
 						<div>
@@ -163,6 +168,7 @@ import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
 import PeopleNav from '../../components/SearchComponents/PeopleNav.vue';
 import MenuSearchVue from '@/components/SearchComponents/MenuSearch.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
@@ -173,9 +179,19 @@ export default {
 			ShowSecitemChoice: false,
 			choiceRelevant: true,
 			Profile_Name: '',
+			loading: false,
 			// myIndex: 0,
 			// indexTrue: true,
 		};
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			this.search();
+			this.usersearch();
+			this.comsearch();
+		}
+		this.loading = false;
 	},
 	beforeMount() {
 		this.search();
@@ -313,6 +329,7 @@ export default {
 		PeopleNav,
 		MenuSearchVue,
 		BacktotopButton,
+		TheSpinner,
 	},
 	computed: {
 		SearchedPosts() {
@@ -321,6 +338,9 @@ export default {
 		},
 		SearchedUsers() {
 			return this.$store.getters['search/Getusers'];
+		},
+		userName() {
+			return localStorage.getItem('userName');
 		},
 	},
 	watch: {

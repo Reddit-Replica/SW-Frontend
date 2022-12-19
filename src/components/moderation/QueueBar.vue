@@ -173,8 +173,13 @@ export default {
 			}
 		},
 		titleSecond(value) {
-			this.editing(value);
-			this.spaming(value);
+			if (value == 'Posts') {
+				this.editing('posts');
+				this.spaming('posts');
+			} else {
+				this.editing('comments');
+				this.spaming('comments');
+			}
 		},
 	},
 	emits: ['getarr'],

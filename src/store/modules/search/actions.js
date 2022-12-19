@@ -174,15 +174,16 @@ export default {
 		// );
 		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=subreddit' + '&q=' + payload.q,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}
+			baseurl + '/search?type=subreddit' + '&q=' + payload.q
 		);
+		// {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+		// },
+		// }
+		// );
 		const responseData = await response.json();
 		// console.log(responseData);
 		if (
@@ -240,22 +241,18 @@ export default {
 		);
 		const responseData = await response.json();
 		// console(responseData);
-		if (
-			response.status == 200 ||
-			response.status == 404 ||
-			response.status == 304
-		) {
+		if (response.status == 200 || response.status == 304) {
 			const comments = [];
 
-			// let before, after;
-			// before = '';
-			// after = '';
-			// if (responseData.before) {
-			// 	before = responseData.before;
-			// }
-			// if (responseData.after) {
-			// 	after = responseData.after;
-			// }
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
 			console.log('responseData');
 			console.log(responseData);
 			for (let i = 0; i < responseData.children.length; i++) {
@@ -267,7 +264,7 @@ export default {
 					postKind: responseData.children[i].data.post.kind,
 					postSubreddit: responseData.children[i].data.post.subreddit,
 					postlink: responseData.children[i].data.post.link,
-					// postImagepath: responseData.children[i].data.post.images[0].path,
+					// postImage: responseData.children[i].data.post.images,
 					// postImageCaption:
 					// 	responseData.children[i].data.post.images[0].caption,
 					// postImagelink: responseData.children[i].data.post.images[0].link,
@@ -300,8 +297,8 @@ export default {
 				comments.push(comment);
 			}
 			context.commit('setComments', comments);
-			// context.commit('before', before);
-			// context.commit('after', after);
+			context.commit('before', before);
+			context.commit('after', after);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;

@@ -246,49 +246,57 @@ export default {
 	},
 	methods: {
 		async follow() {
-			this.followed = !this.followed;
-			if (this.followed) {
-				try {
-					await this.$store.dispatch('postCommentActions/followComment', {
-						baseurl: this.$baseurl,
-						commentId: this.comment.commentId,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				this.followed = !this.followed;
+				if (this.followed) {
+					try {
+						await this.$store.dispatch('postCommentActions/followComment', {
+							baseurl: this.$baseurl,
+							commentId: this.comment.commentId,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unfollowComment', {
+							baseurl: this.$baseurl,
+							commentId: this.comment.commentId,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unfollowComment', {
-						baseurl: this.$baseurl,
-						commentId: this.comment.commentId,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		async save() {
-			this.saved = !this.saved;
-			if (this.saved == true) {
-				try {
-					await this.$store.dispatch('postCommentActions/save', {
-						baseurl: this.$baseurl,
-						id: this.comment.commentId,
-						type: 'comment',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.saved = !this.saved;
+				if (this.saved == true) {
+					try {
+						await this.$store.dispatch('postCommentActions/save', {
+							baseurl: this.$baseurl,
+							id: this.comment.commentId,
+							type: 'comment',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unsave', {
+							baseurl: this.$baseurl,
+							id: this.comment.commentId,
+							type: 'comment',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: this.comment.commentId,
-						type: 'comment',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		async fetchPostComments() {
@@ -319,37 +327,45 @@ export default {
 		//@vuese
 		//called when upvote is clicked to change the style of upvote icon and increment vote counter
 		async upClick() {
-			if (this.downClicked) this.downClick();
-			this.upClicked = !this.upClicked;
-			if (this.upClicked) this.voteCounter++;
-			else this.voteCounter--;
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.comment.commentId,
-					type: 'comment',
-					direction: 1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				if (this.downClicked) this.downClick();
+				this.upClicked = !this.upClicked;
+				if (this.upClicked) this.voteCounter++;
+				else this.voteCounter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.comment.commentId,
+						type: 'comment',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
 		//called when downvote is clicked to change the style of downvote icon and decrement vote counter
 		async downClick() {
-			if (this.upClicked) this.upClick();
-			this.downClicked = !this.downClicked;
-			if (this.downClicked) this.voteCounter--;
-			else this.voteCounter++;
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.comment.commentId,
-					type: 'comment',
-					direction: -1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				if (this.upClicked) this.upClick();
+				this.downClicked = !this.downClicked;
+				if (this.downClicked) this.voteCounter--;
+				else this.voteCounter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.comment.commentId,
+						type: 'comment',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese

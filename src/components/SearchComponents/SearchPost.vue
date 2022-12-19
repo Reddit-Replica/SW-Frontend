@@ -63,8 +63,14 @@
 													</div></a
 												>
 											</div>
-											<div class="image-class">
+											<div
+												class="image-class"
+												v-if="value.images && value.images.length != 0"
+											>
 												<img alt="" style="width: 1px; height: 1px" />
+											</div>
+											<div class="link-class" v-if="value.link">
+												<a :href="value.link">{{ value.link }}</a>
 											</div>
 										</div>
 									</div>
@@ -169,7 +175,7 @@ div {
 	border: thin solid #ccc;
 	max-width: 100%;
 }
-.hole-post:hover {
+.post-release:hover {
 	border: 1px;
 	border-style: solid;
 	border-color: black;

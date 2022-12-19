@@ -795,6 +795,8 @@ export default {
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
+			} else {
+				alert('Did not enter a word to Search');
 			}
 			// console.log('function');
 		},
