@@ -280,7 +280,7 @@ export default {
 			this.inSubreddit = false;
 			this.subredditTitle = name;
 			this.communityName = name;
-			this.subreddit = '';
+			this.subreddit = null;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
