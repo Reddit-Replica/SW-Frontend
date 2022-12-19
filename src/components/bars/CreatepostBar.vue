@@ -50,8 +50,15 @@ export default {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
+		// @vuese
+		// Get usename
+		// @type string
+		userName() {
+			// return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
+		},
 	},
-	beforeMount() {
+	async beforeMount() {
 		if (localStorage.getItem('accessToken')) this.RequestUserData();
 	},
 	methods: {
@@ -68,15 +75,17 @@ export default {
 		 */
 		async RequestUserData() {
 			let responseStatus;
-			try {
-				await this.$store.dispatch('user/getUserData', {
-					baseurl: this.$baseurl,
-					userName: this.userName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (this.userName != undefined) {
+				try {
+					await this.$store.dispatch('user/getUserData', {
+						baseurl: this.$baseurl,
+						userName: this.userName,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				return responseStatus;
 			}
-			return responseStatus;
 		},
 	},
 };

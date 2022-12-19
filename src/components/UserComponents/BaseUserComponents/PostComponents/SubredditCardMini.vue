@@ -81,6 +81,7 @@ export default {
 	top: 16px;
 	padding: 8px;
 	z-index: 8;
+	max-width: 350px;
 }
 .post-subreddit-icon {
 	margin-right: 5px;
@@ -158,7 +159,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	text-align: center;
-	width: 402px;
+	/* width: 402px; */
 	position: relative;
 	margin-top: 5px;
 }

@@ -70,6 +70,7 @@ export default {
 					postedBy: responseData.children[i].data.postedBy,
 					votes: responseData.children[i].data.votes,
 					//image
+					Image: responseData.children[i].data.images,
 					// ImagePath: responseData.children[i].data.images[0].path,
 					// ImageCaption: responseData.children[i].data.images[0].caption,
 					// Imagelink: responseData.children[i].data.images[0].link,
