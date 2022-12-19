@@ -31,6 +31,27 @@ export default {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;
 		}
+		console.log(responseData.children);
+		for (let i = 0; i < responseData.children.length; i++) {
+			if (responseData.children[i].data.kind == 'post') {
+				console.log('here');
+				let r = await fetch(
+					baseurl +
+						'/post-details?id=' +
+						responseData.children[i].data.sharePostId,
+					{
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+						},
+					}
+				);
+				responseData.children[i].data.sharedPostDetails = await r.json();
+				console.log(responseData.children[i].data.sharedPostDetails);
+			}
+		}
+		console.log(responseData);
 		context.commit('setPosts', responseData);
 	},
 	async postDetails(context, payload) {
@@ -51,6 +72,20 @@ export default {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;
 		}
+		if (responseData.kind == 'post') {
+			let rr = await fetch(
+				baseurl + '/post-details?id=' + responseData.sharePostId,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+					},
+				}
+			);
+			responseData.sharedPostDetails = await rr.json();
+		}
+		console.log(responseData.sharedPostDetails);
 		context.commit('setPostDetails', responseData);
 	},
 	async deleteComment(_, payload) {
