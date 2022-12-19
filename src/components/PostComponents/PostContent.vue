@@ -53,7 +53,7 @@
 		<router-link :to="post.link">{{ post.link }}</router-link>
 	</div>
 	<div class="post-post" v-if="post.kind == 'post'">
-		<post-content :post="post.sharedPostDetails"></post-content>
+		<post-content :post="post.sharedPostDetails" :shared="true"></post-content>
 	</div>
 	<div class="images">
 		<picture-post
@@ -72,6 +72,31 @@
 	<video width="800" height="500" controls v-if="post.video != undefined">
 		<source :src="this.$baseurl + '/' + post.video" />
 	</video>
+	<div v-if="shared">
+		{{ post.votes }} points .
+		<router-link
+			:to="
+				post.subreddit != undefined
+					? {
+							name: 'comments',
+							params: {
+								postName: post.title,
+								subredditName: post.subreddit,
+								postId: post.id,
+							},
+					  }
+					: {
+							name: 'userPostComments',
+							params: {
+								userName: post.postedBy,
+								postName: post.title,
+								postId: post.id,
+							},
+					  }
+			"
+			>{{ post.comments }} comments</router-link
+		>
+	</div>
 </template>
 <script>
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
@@ -88,6 +113,10 @@ export default {
 			required: false,
 		},
 		blur: {
+			required: false,
+			type: Boolean,
+		},
+		shared: {
 			required: false,
 			type: Boolean,
 		},
@@ -202,6 +231,12 @@ video,
 }
 .post-link:hover {
 	font-size: 12px;
+	text-decoration: underline;
+}
+div:last-of-type a {
+	color: var(--color-grey-dark-2);
+}
+div:last-of-type a:hover {
 	text-decoration: underline;
 }
 </style>

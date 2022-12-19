@@ -36,11 +36,7 @@ export default {
 		);
 		console.log(response);
 		const responseData = await response.json();
-		if (
-			response.status == 200 ||
-			response.status == 404 ||
-			response.status == 304
-		) {
+		if (response.status == 200 || response.status == 304) {
 			const posts = [];
 
 			let before, after;
@@ -87,8 +83,8 @@ export default {
 				posts.push(post);
 			}
 			context.commit('setPosts', posts);
-			context.commit('after', after);
-			context.commit('before', before);
+			context.commit('setAfter', after);
+			context.commit('setBefore', before);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;
@@ -105,10 +101,6 @@ export default {
 	 */
 	async SearchUser(context, payload) {
 		const baseurl = payload.baseurl;
-		// const response = await fetch(
-		// 	baseurl + '/search?type=user' + '?q=' + payload.q
-		// );
-		// console.log(response);
 		const response = await fetch(
 			baseurl + '/search?type=user' + '&q=' + payload.q,
 			{
@@ -122,11 +114,7 @@ export default {
 		console.log(response);
 		const responseData = await response.json();
 		// console.log(responseData);
-		if (
-			response.status == 200 ||
-			response.status == 404 ||
-			response.status == 304
-		) {
+		if (response.status == 200 || response.status == 304) {
 			const users = [];
 			const temp = [];
 			let before, after;
@@ -152,8 +140,8 @@ export default {
 				users.push(user);
 				if (i < 4) temp.push(user);
 			}
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
 			context.commit('setUsers', users);
 			context.commit('setlimitedUsers', temp);
 		} else {
@@ -174,22 +162,19 @@ export default {
 		// );
 		console.log(payload.q);
 		const response = await fetch(
-			baseurl + '/search?type=subreddit' + '&q=' + payload.q,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-				},
-			}
+			baseurl + '/search?type=subreddit' + '&q=' + payload.q
 		);
+		// {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+		// },
+		// }
+		// );
 		const responseData = await response.json();
 		// console.log(responseData);
-		if (
-			response.status == 200 ||
-			response.status == 404 ||
-			response.status == 304
-		) {
+		if (response.status == 200 || response.status == 304) {
 			const subreddits = [];
 
 			let before, after;
@@ -218,8 +203,8 @@ export default {
 			}
 			context.commit('setlimitedSubreddits', temp);
 			context.commit('setSubreddits', subreddits);
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;
@@ -240,22 +225,18 @@ export default {
 		);
 		const responseData = await response.json();
 		// console(responseData);
-		if (
-			response.status == 200 ||
-			response.status == 404 ||
-			response.status == 304
-		) {
+		if (response.status == 200 || response.status == 304) {
 			const comments = [];
 
-			// let before, after;
-			// before = '';
-			// after = '';
-			// if (responseData.before) {
-			// 	before = responseData.before;
-			// }
-			// if (responseData.after) {
-			// 	after = responseData.after;
-			// }
+			let before, after;
+			before = '';
+			after = '';
+			if (responseData.before) {
+				before = responseData.before;
+			}
+			if (responseData.after) {
+				after = responseData.after;
+			}
 			console.log('responseData');
 			console.log(responseData);
 			for (let i = 0; i < responseData.children.length; i++) {
@@ -267,7 +248,7 @@ export default {
 					postKind: responseData.children[i].data.post.kind,
 					postSubreddit: responseData.children[i].data.post.subreddit,
 					postlink: responseData.children[i].data.post.link,
-					// postImagepath: responseData.children[i].data.post.images[0].path,
+					// postImage: responseData.children[i].data.post.images,
 					// postImageCaption:
 					// 	responseData.children[i].data.post.images[0].caption,
 					// postImagelink: responseData.children[i].data.post.images[0].link,
@@ -289,8 +270,7 @@ export default {
 					postpostedby: responseData.children[i].data.post.postedBy,
 					//comments
 					commentId: responseData.children[i].data.comment.id,
-					commentcontent:
-						responseData.children[i].data.comment.content.ops[0].insert,
+					commentcontent: responseData.children[i].data.comment.content,
 					commentparentId: responseData.children[i].data.comment.parent,
 					commentlevel: responseData.children[i].data.comment.level,
 					commentusername: responseData.children[i].data.comment.username,
@@ -300,8 +280,8 @@ export default {
 				comments.push(comment);
 			}
 			context.commit('setComments', comments);
-			// context.commit('before', before);
-			// context.commit('after', after);
+			context.commit('setBefore', before);
+			context.commit('setAfter', after);
 		} else {
 			const error = new Error(responseData.error);
 			throw error;

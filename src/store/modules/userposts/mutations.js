@@ -11,6 +11,18 @@ export default {
 			Object.assign(state.postData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserMorePostData(state, payload) {
+		if (payload.responseStatus == 200) {
+			// Object.assign(state.overviewData, payload.responseData);
+			console.log('before commit', payload.responseData);
+			state.postData.before = payload.responseData.before;
+			state.postData.after = payload.responseData.after;
+			state.postData.children.push(...payload.responseData.children);
+			console.log('after commit', state.postData);
+			// assign data to user Data
+		}
+		return payload.responseStatus;
+	},
 	setUserPinnedPostData(state, payload) {
 		if (payload.responseStatus == 200)
 			Object.assign(state.pinnedPostData, payload.responseData); // assign data to user Data

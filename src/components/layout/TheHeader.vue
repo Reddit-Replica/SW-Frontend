@@ -677,6 +677,11 @@ export default {
 			createCommunityShown: false,
 		};
 	},
+	mounted() {
+		if (this.$route.query.q) {
+			this.searchQuery = this.$route.query.q;
+		}
+	},
 	computed: {
 		// @vuese
 		// Get usename
@@ -745,7 +750,6 @@ export default {
 		// @arg no argument
 		goToLogin() {
 			this.$router.push('/login');
-			window.location.reload();
 		},
 		// @vuese
 		// Used to go to messages page
@@ -796,6 +800,8 @@ export default {
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
+			} else {
+				alert('Did not enter a word to Search');
 			}
 			// console.log('function');
 		},

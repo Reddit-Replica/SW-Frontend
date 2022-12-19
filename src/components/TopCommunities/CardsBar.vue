@@ -54,13 +54,6 @@ export default {
 				this.$store.getters['topCommunity/getFirstCommunities'];
 			this.secondCategoryCommunities =
 				this.$store.getters['topCommunity/getSecondCommunities'];
-
-			console.log(
-				this.firstCategory,
-				this.secondCategory,
-				this.firstCategoryCommunities,
-				this.secondCategoryCommunities
-			);
 		},
 	},
 	reloadPage() {
