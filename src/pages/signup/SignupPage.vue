@@ -8,13 +8,9 @@
 
 					<p class="user-agreement">
 						By continuing, you agree to our
-						<a href="https://www.redditinc.com/policies/user-agreement"
-							>User Agreement</a
-						>
+						<a href="/help">User Agreement</a>
 						and
-						<a href="https://www.redditinc.com/policies/privacy-policy"
-							>Privacy Policy</a
-						>.
+						<a href="/help">Privacy Policy</a>.
 					</p>
 
 					<form class="signing-up">
@@ -147,7 +143,7 @@
 					</fieldset>
 					<TheRecaptcha @verified="verifyRec" id="repatcha" />
 				</form>
-				<div class="username-generator" style="display: block">
+				<div class="username-generator">
 					<p>
 						Here are some username suggestions
 						<a
@@ -800,6 +796,9 @@ button {
 	margin-top: 8px;
 	margin-bottom: 20px;
 }
+#signup-button {
+	margin: 0 20px;
+}
 
 .all-div {
 	width: 100%;
@@ -852,6 +851,7 @@ button {
 .usernames-data-gen {
 	color: #24a0ed;
 	cursor: pointer;
+	margin: 5px 5px;
 }
 .description {
 	margin-bottom: 20px;
@@ -904,6 +904,7 @@ button {
 }
 
 .back-bottom {
+	margin: 0 20px;
 	border: none;
 }
 
@@ -913,5 +914,13 @@ button {
 
 .signup-page2 {
 	width: 3rem;
+}
+.user-generator {
+	display: block;
+}
+@media (max-width: 760px) {
+	.username-generator {
+		display: none;
+	}
 }
 </style>
