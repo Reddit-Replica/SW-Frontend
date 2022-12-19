@@ -178,7 +178,7 @@
 																<div class="comment-word">
 																	<div class="comment-div">
 																		<p class="p-comment">
-																			{{ value.commentcontent }}
+																			{{ value.commentcontent.ops[0].insert }}
 																		</p>
 																	</div>
 																</div>

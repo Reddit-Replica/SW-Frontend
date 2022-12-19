@@ -178,7 +178,7 @@ export default {
 			SecitemChoice: 'Time',
 			ShowSecitemChoice: false,
 			choiceRelevant: true,
-			Profile_Name: '',
+			Queue: '',
 			loading: false,
 			// myIndex: 0,
 			// indexTrue: true,
@@ -197,8 +197,12 @@ export default {
 		this.search();
 		this.usersearch();
 		this.comsearch();
+		// this.doSetQueue();
 	},
 	methods: {
+		// doSetQueue() {
+		// 	this.Queue = this.$router.query.q;
+		// },
 		async search() {
 			try {
 				await this.$store.dispatch('search/SearchPost', {
@@ -274,6 +278,9 @@ export default {
 				});
 			}
 		},
+		// PageReload() {
+		// 	window.reload();
+		// },
 		async searchwithSort(value) {
 			try {
 				if (!(this.SecitemChoice == 'Time')) {
@@ -350,6 +357,9 @@ export default {
 		SecitemChoice(value) {
 			this.searchwithtime(value);
 		},
+		// Queue() {
+		// 	this.PageReload();
+		// },
 	},
 };
 </script>

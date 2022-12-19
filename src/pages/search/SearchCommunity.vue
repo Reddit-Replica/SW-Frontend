@@ -114,13 +114,6 @@ export default {
 			return localStorage.getItem('userName');
 		},
 	},
-	// created() {
-	// 	console.log(this.notFound);
-	// 	if (this.SearchedCms().length == 0) {
-	// 		this.notFound = true;
-	// 		console.log(this.SearchedCms());
-	// 	}
-	// },
 	beforeMount() {
 		this.search();
 	},
