@@ -2,7 +2,7 @@
 	<div class="content">
 		<!-- <img src="../../../img/reddit-white-grey.png" alt="reddit" /> -->
 		<img
-			v-if="!getUserData.userData.picture"
+			v-if="!getUserData.picture"
 			src="../../../img/default_inbox_avatar.png"
 			alt="img"
 			class="img header-user-nav-user-photo"
@@ -10,7 +10,7 @@
 		/>
 		<img
 			v-else
-			:src="$baseurl + '/' + getUserData.userData.picture"
+			:src="$baseurl + '/' + getUserData.picture"
 			alt="img"
 			class="img header-user-nav-user-photo"
 			:id="'header-user-img-' + index"
@@ -42,14 +42,19 @@
 
 <script>
 export default {
+	data() {
+		return {
+			getUserData: {},
+		};
+	},
 	computed: {
-		// @vuese
-		//return user data
-		// @type object
-		getUserData() {
-			// console.log(this.$store.getters['user/getUserData']);
-			return this.$store.getters['user/getUserData'];
-		},
+		// // @vuese
+		// //return user data
+		// // @type object
+		// getUserData() {
+		// 	// console.log(this.$store.getters['user/getUserData']);
+		// 	return this.$store.getters['user/getUserData'];
+		// },
 		// @vuese
 		// Get usename
 		// @type string
@@ -59,7 +64,7 @@ export default {
 		},
 	},
 	async beforeMount() {
-		if (localStorage.getItem('accessToken')) this.RequestUserData();
+		if (localStorage.getItem('accessToken')) await this.RequestUserData();
 	},
 	methods: {
 		// @vuese
@@ -74,18 +79,17 @@ export default {
 		 * @arg no arg
 		 */
 		async RequestUserData() {
-			let responseStatus;
-			if (this.userName != undefined) {
-				try {
-					await this.$store.dispatch('user/getUserData', {
-						baseurl: this.$baseurl,
-						userName: this.userName,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
-				return responseStatus;
+			let responseData = null;
+			try {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
+					baseurl: this.$baseurl,
+					userName: this.userName,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
 			}
+			if (responseData != null) this.getUserData = responseData;
+			console.log(this.getUserData);
 		},
 	},
 };
