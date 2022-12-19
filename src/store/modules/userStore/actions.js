@@ -35,6 +35,33 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserTempData(context, payload) {
+		const baseurl = payload.baseurl;
+		// const response = await fetch(baseurl + `/user`);
+		const response = await fetch(baseurl + `/user/${payload.userName}/about`, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
+		const responseData = await response.json();
+		// console.log(responseData);
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to fetch User Data!'
+		// 	);
+		// 	console.log(response.status);
+		// 	throw error;
+		// }
+		// console.log('medo', response.status);
+		// console.log(responseData);
+		if (response.status == 200) return responseData;
+		// context.commit('setUserData', {
+		// 	responseData,
+		// 	responseStatus: response.status,
+		// });
+		return response.status;
+	},
 	/**
 	 * Make a request to get user posts data,
 	 * @action getUserPostData=setUserPostData

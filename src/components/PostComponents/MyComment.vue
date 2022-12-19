@@ -261,15 +261,16 @@ export default {
 	},
 	methods: {
 		async fetchUserProfilePicture() {
+			let responseData = null;
 			try {
-				await this.$store.dispatch('user/getUserData', {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
 					baseurl: this.$baseurl,
 					userName: this.comment.commentedBy,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.userData = this.$store.getters['user/getUserData'].userData;
+			if (responseData != null) this.userData = responseData;
 			console.log(this.userData);
 		},
 		async follow() {
