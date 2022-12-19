@@ -24,6 +24,7 @@
 				v-for="(community, index) in topCommunities"
 				:index="index"
 				:key="community.id"
+				:id="community.id"
 				:name="community.data.title"
 				:image="community.data.picture"
 				:members="community.data.members"
