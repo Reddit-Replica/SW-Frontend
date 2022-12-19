@@ -903,7 +903,7 @@ export default {
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
-				console.log(this.$store.getters['notifications/unreadCount']);
+				// console.log(this.$store.getters['notifications/unreadCount']);
 			}
 		},
 	},
