@@ -18,31 +18,41 @@
 			v-for="(savedPostData, index) in getUserSavedData.savedData.children"
 			:key="savedPostData.id"
 		>
-			<comments-overview-page
+			<div
+				style="margin-bottom: 4px"
 				v-if="
 					savedPostData.type == 'comment' &&
 					savedPostData.data.comments.length != 0
 				"
-				:key="savedPostData.id"
-				:comment-data="savedPostData"
-				:id="savedPostData.id"
-				:state="state"
-				type="summarypost"
 			>
-			</comments-overview-page>
+				<comments-overview-page
+					:key="savedPostData.id"
+					:comment-data="savedPostData"
+					:id="savedPostData.id"
+					:state="state"
+					type="summarypost"
+					@emit-popup="emitPopup"
+				>
+				</comments-overview-page>
+			</div>
 			<base-user-post
 				v-else-if="savedPostData.type == 'post'"
 				:key="index"
 				:post-data="{ data: savedPostData.data.post, id: savedPostData.id }"
 				:state="state"
 				:page="'overview'"
+				@emit-popup="emitPopup"
 			></base-user-post>
-			<div v-else-if="savedPostData.type == 'postAndComment'">
+			<div
+				style="margin-bottom: 4px"
+				v-else-if="savedPostData.type == 'postAndComment'"
+			>
 				<base-user-post
 					:key="index"
 					:post-data="{ data: savedPostData.data.post, id: savedPostData.id }"
 					:state="state"
 					:page="'overview'"
+					@emit-popup="emitPopup"
 				></base-user-post>
 				<comments-overview-page
 					:key="savedPostData.id"
@@ -50,6 +60,7 @@
 					:id="savedPostData.id"
 					:state="state"
 					type="fullpost"
+					@emit-popup="emitPopup"
 				>
 				</comments-overview-page>
 			</div>

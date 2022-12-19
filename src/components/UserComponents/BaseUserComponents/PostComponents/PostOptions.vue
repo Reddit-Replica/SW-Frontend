@@ -356,6 +356,46 @@
 				class="options-box-list"
 			>
 				<ul>
+					<li
+						v-if="page == 'subreddit'"
+						@click="stickyPost(postData.id)"
+						class="options-box-item"
+					>
+						<div class="options-box-icon">
+							<i>
+								<input
+									type="checkbox"
+									id="mark-as-oc"
+									name="mark-as-oc"
+									:checked="
+										postData.data.moderation && postData.data.moderation.lock
+									"
+							/></i>
+						</div>
+						<div class="options-box-text">
+							<label for="mark-as-oc">Sticky Post</label>
+						</div>
+					</li>
+					<li
+						v-if="page == 'subreddit'"
+						@click="distinguishAsMod(postData.id)"
+						class="options-box-item"
+					>
+						<div class="options-box-icon">
+							<i>
+								<input
+									type="checkbox"
+									id="mark-as-oc"
+									name="mark-as-oc"
+									:checked="
+										postData.data.moderation && postData.data.moderation.lock
+									"
+							/></i>
+						</div>
+						<div class="options-box-text">
+							<label for="mark-as-oc">DistinguishAsMod</label>
+						</div>
+					</li>
 					<li @click="lockUnLockComments(postData.id)" class="options-box-item">
 						<div class="options-box-icon">
 							<i>
