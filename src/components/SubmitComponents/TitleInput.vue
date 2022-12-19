@@ -4,7 +4,7 @@
 			<textarea
 				maxlength="300"
 				class="title-input"
-				placeholder="Title"
+				:placeholder="val ? val : 'Title'"
 				v-model="inputTitle"
 			/>
 			<span class="char-count">{{ inputCharCount }}/300</span>
@@ -14,6 +14,11 @@
 
 <script>
 export default {
+	props: {
+		val: {
+			required: false,
+		},
+	},
 	data() {
 		return {
 			inputCharCount: 0,
