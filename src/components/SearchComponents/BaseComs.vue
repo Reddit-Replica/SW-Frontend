@@ -70,12 +70,12 @@ export default {
 		BaseButton,
 		FollowJoin,
 	},
-	beforeMount() {
+	created() {
 		this.showuser();
 	},
 	methods: {
 		showuser() {
-			this.notFollowed = !this.value.joined;
+			this.notFollowed = this.value.joined;
 		},
 		async toggle() {
 			if (localStorage.getItem('accessToken')) {
@@ -147,6 +147,8 @@ a {
 	color: inherit;
 	text-decoration: inherit;
 	cursor: pointer;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
 }
 p {
 	display: block;
@@ -202,6 +204,10 @@ p {
 	line-height: 16px;
 	color: rgb(58, 49, 49);
 	font-weight: 700;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+}
+.communities-name:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .community-members {
 	font-size: 12px;
