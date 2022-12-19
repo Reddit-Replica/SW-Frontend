@@ -50,7 +50,7 @@
 						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 					/>
 				</svg>
-				<div v-else>
+				<div v-else-if="!isSubreddit">
 					<img
 						v-if="!getUserData.userData.picture"
 						src="../../../img/default_inbox_avatar.png"
@@ -61,6 +61,22 @@
 					<img
 						v-else
 						:src="$baseurl + '/' + getUserData.userData.picture"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+				</div>
+				<div v-else>
+					<img
+						v-if="!headerImg"
+						src="../../../img/default_subreddit_image.png"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+					<img
+						v-else
+						:src="$baseurl + '/' + headerImg"
 						alt="img"
 						class="img header-user-nav-user-photo"
 						:id="'header-user-img-' + index"
@@ -667,6 +683,18 @@ export default {
 			type: String,
 			default: 'Home',
 		},
+		//@vuese
+		//Subreddit Image URL
+		headerImg: {
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//if it is a Subreddit
+		isSubreddit: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -714,7 +742,7 @@ export default {
 		//return number of unread notifications
 		//@type Number
 		noUnreadNotifications() {
-			return this.$store.getters['notifications/unreadCount'] == 0;
+			return this.$store.getters['notifications/getUnreadCount'] == 0;
 		},
 	},
 	async beforeMount() {

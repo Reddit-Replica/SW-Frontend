@@ -12,7 +12,7 @@ import LoginPage from './pages/login/LoginPage.vue';
 import SignupPage from './pages/signup/SignupPage.vue';
 import LoginComp from './pages/login/loginComp.vue';
 import SignupComp from './pages/signup/SignupComp.vue';
-
+import verifyEmail from './pages/signup/VerifyEmail.vue';
 import TheSettings from './pages/settings/TheSettings.vue';
 import ProfileSettings from './pages/settings/ProfileSettings.vue';
 import PrivacySettings from './pages/settings/PrivacySettings.vue';
@@ -109,6 +109,7 @@ const router = createRouter({
 		{ path: '/signup', component: SignupPage },
 		{ path: '/logincomp', component: LoginComp },
 		{ path: '/signupcomp', component: SignupComp },
+		{ path: '/verify-email/:id/:token', component: verifyEmail },
 		{ path: '/help', component: GetHelp },
 		{
 			path: '/search/type=user',

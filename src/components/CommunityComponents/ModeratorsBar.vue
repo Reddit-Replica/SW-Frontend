@@ -33,7 +33,7 @@
 					class="mod-link"
 					v-for="(mod, index) in moderators"
 					:key="mod.id"
-					to="/user/Abdalhameed"
+					:to="'/user/' + mod.username"
 					:id="'mods-bar-' + index"
 					>u/{{ mod.username }}</router-link
 				>
