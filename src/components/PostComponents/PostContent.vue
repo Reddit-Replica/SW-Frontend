@@ -203,6 +203,9 @@ export default {
 	height: 100%;
 	word-break: break-all;
 }
+.post-text img {
+	width: 100%;
+}
 
 .subreddit-info .subreddit-image {
 	padding-right: 5px;
