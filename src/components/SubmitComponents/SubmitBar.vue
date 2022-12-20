@@ -285,8 +285,8 @@ export default {
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
 			this.path = false;
-			this.$store.commit('posts/setSubreddit', {
-				subreddit: this.subreddit,
+			this.$store.commit('posts/setName', {
+				name: localStorage.getItem('userName'),
 			});
 			this.$store.commit('posts/setinSubreddit', {
 				inSubreddit: this.inSubreddit,
