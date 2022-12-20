@@ -37,6 +37,7 @@ export default {
 	flex-direction: row;
 	justify-content: center;
 	margin: 0 auto;
+	margin-top: 2rem;
 	gap: 1.5rem;
 }
 @media (max-width: 600px) {
