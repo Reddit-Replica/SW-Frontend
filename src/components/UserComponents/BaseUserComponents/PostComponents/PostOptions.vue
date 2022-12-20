@@ -70,7 +70,7 @@
 				</a>
 			</div>
 			<div
-				v-else-if="!showPostContent"
+				v-else-if="!showPostContent && page != 'comment'"
 				@click="expandPostContent"
 				class="post-options-icon"
 				id="post-options-expand-Post-Content"
@@ -84,7 +84,7 @@
 				<i class="fa-solid fa-up-right-and-down-left-from-center"></i>
 			</div>
 			<div
-				v-else
+				v-else-if="page != 'comment'"
 				@click="collapsePostContent"
 				id="post-options-collapse-Post-Content"
 				class="post-options-icon"
@@ -130,6 +130,7 @@
 			</router-link>
 		</li>
 		<li
+			v-if="page != 'comment'"
 			style="position: relative"
 			id="share-post-options"
 			:style="pinnedPost ? 'width:fit-content;' : ''"
@@ -309,8 +310,9 @@
 		</li>
 		<li
 			v-if="
-				(!pinnedPostFlag && postData.data.inYourSubreddit) ||
-				(postedByAuthUser && !pinnedPostFlag)
+				((!pinnedPostFlag && postData.data.inYourSubreddit) ||
+					(postedByAuthUser && !pinnedPostFlag)) &&
+				page != 'comment'
 			"
 			id="insights-user-post-button"
 			@click="insightsPostToggle"
@@ -325,8 +327,9 @@
 		</li>
 		<li
 			v-if="
-				(postData.data.inYourSubreddit && !postKind && !pinnedPostFlag) ||
-				(postedByAuthUser && !pinnedPostFlag && !postKind)
+				((postData.data.inYourSubreddit && !postKind && !pinnedPostFlag) ||
+					(postedByAuthUser && !pinnedPostFlag && !postKind)) &&
+				page != 'comment'
 			"
 			@click="safetyClicked"
 			id="shield-user-post-button"
@@ -699,6 +702,7 @@ export default {
 		page: {
 			type: String,
 			required: true,
+			default: 'gg',
 		},
 		// @vuese
 		// the kind of the post
