@@ -19,7 +19,7 @@ export default {};
 	background-color: var(--color-white-1);
 	display: flex;
 	justify-content: center;
-	height: 130px;
+	height: 13rem;
 	padding: 0;
 }
 .top-bar-2 {
@@ -28,23 +28,23 @@ export default {};
 	flex: 1 1 100%;
 	flex-direction: column;
 	justify-content: center;
-	height: 170px;
-	margin: 0 24px;
-	max-width: 1200px;
-	padding: 0 16px;
+	height: 17rem;
+	margin: 0 2.4rem;
+	max-width: 120rem;
+	padding: 0 1.6rem;
 }
 h1 {
 	color: var(--color-grey-dark-1);
-	padding-bottom: 6px;
-	font-size: 22px;
+	padding-bottom: 0.6rem;
+	font-size: 2.2rem;
 	font-weight: 550;
-	line-height: 26px;
+	line-height: 2.6rem;
 }
 p {
 	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 12px;
+	font-size: 1.2rem;
 	font-weight: 400;
-	line-height: 16px;
+	line-height: 1.6rem;
 	color: var(--color-grey-dark-2);
 }
 </style>

@@ -98,6 +98,7 @@ export default {
 	flex: 1 1 100%;
 	min-width: 0;
 	width: 100%;
+	height: 100%;
 	background-color: var(--color-white-1);
 	border: var(--line-10);
 }
@@ -105,24 +106,30 @@ export default {
 	background-color: var(--color-blue-light-4);
 	color: var(--color-grey-dark-1);
 
-	font-size: 16px;
+	font-size: 1.6rem;
 	font-weight: 550;
-	line-height: 20px;
+	line-height: 2rem;
 
 	border-bottom: var(--line-10);
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
+	border-top-left-radius: 0.4rem;
+	border-top-right-radius: 0.4rem;
 
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 
-	height: 40px;
-	padding: 0 16px;
+	height: 4rem;
+	padding: 0 1.6rem;
 	position: sticky;
 }
+@media only screen and (max-width: 500px) {
+	.comm-top-2 {
+		font-size: 1.4rem;
+		font-weight: 500;
+	}
+}
 .text-grey {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
 	color: var(--color-grey-dark-2);
 }
