@@ -19,7 +19,7 @@
 				<span class="tool-tip-text">Mark as spoiler</span>
 				<base-button
 					@click="toggleSpoiler"
-					class="grey-button"
+					:class="!spoiler ? 'grey-button' : 'success'"
 					button-text="Spoiler"
 					id="footer-button-spoiler"
 					:disable-button="buttonDisabled"
@@ -31,11 +31,13 @@
 						fill="currentColor"
 						class="bi bi-plus button-icon"
 						viewBox="0 0 16 16"
+						v-if="!spoiler"
 					>
 						<path
 							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
 						/>
 					</svg>
+					<font-awesome-icon icon="fa-solid fa-check" v-if="spoiler" />
 				</base-button>
 			</div>
 			<div class="tool-tip">
@@ -43,7 +45,7 @@
 					>Mark as Not Safe For Work</span
 				>
 				<base-button
-					class="grey-button"
+					:class="!nsfw ? 'grey-button' : 'success'"
 					button-text="NSFW"
 					id="footer-button-nsfw"
 					@click="toggleNsfw"
@@ -55,11 +57,13 @@
 						fill="currentColor"
 						class="bi bi-plus button-icon"
 						viewBox="0 0 16 16"
+						v-if="!nsfw"
 					>
 						<path
 							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
 						/>
 					</svg>
+					<font-awesome-icon icon="fa-solid fa-check" v-if="nsfw" />
 				</base-button>
 			</div>
 			<!-- <base-button
@@ -382,6 +386,17 @@ export default {
 	border-radius: 20px;
 }
 
+.success {
+	border: var(--line-7);
+	color: white;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	height: 32px;
+	padding: 4px 16px;
+	background-color: red;
+	margin: 0 0.2rem;
+}
 @media (max-width: 40em) {
 	.buttons-section {
 		justify-content: center;
