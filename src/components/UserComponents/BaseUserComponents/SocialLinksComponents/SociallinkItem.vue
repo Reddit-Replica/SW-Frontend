@@ -4,7 +4,7 @@
 		<img :src="`${imgSrc}`" alt="" />
 		<span
 			>{{ text }}
-			<button @click="deleteSociallink" style="border-radius: 10px">
+			<button @click.prevent="deleteSociallink" style="border-radius: 10px">
 				x
 			</button></span
 		>

@@ -462,6 +462,7 @@ export default {
 			link: payload.link,
 		};
 		const baseurl = payload.baseurl;
+		console.log(socialInfo);
 		const response = await fetch(baseurl + '/social-link', {
 			method: 'DELETE',
 			headers: {
@@ -470,16 +471,16 @@ export default {
 			},
 			body: JSON.stringify(socialInfo),
 		});
-		const responseData = await response.json();
+		//const responseData = await response.json();
 		let type = payload.type;
 		if (response.status == 204) {
-			console.log(responseData);
+			// console.log(responseData);
 			console.log(response);
 			context.commit('deleteUserSocialLink', {
 				type,
 			});
 		} else if (response.status == 401) {
-			const error = new Error(responseData.error);
+			const error = new Error(response.error);
 			console.log(error);
 			throw error;
 		} else {
