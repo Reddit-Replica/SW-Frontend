@@ -176,14 +176,10 @@
 					</svg>
 				</h4>
 				<router-link
-					:to="`/user/${
-						state == ' profile' ? userName : this.$route.params.userName
-					}`"
+					:to="`/user/${userName}`"
 					id="profile-pic-user-name"
 					class="profile-username"
-					>u/{{
-						state == ' profile' ? userName : this.$route.params.userName
-					}}</router-link
+					>u/{{ userName }}</router-link
 				>
 			</div>
 			<!-- /////////////////////////////// -->
@@ -243,7 +239,7 @@
 				v-if="userData.followers && userData.followers.length != 0"
 			>
 				<router-link
-					:to="`/user/${$route.params.userName}/followers`"
+					:to="`/user/${userName}/followers`"
 					style="color: inherit"
 					class="i karma"
 				>
@@ -264,6 +260,7 @@
 				:blocked="userData.blocked"
 				:followed="userData.followed"
 				:state="state"
+				:user-name="userName"
 			></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
@@ -460,7 +457,7 @@ export default {
 					this.$router.push({
 						path: '/message/compose/',
 						query: {
-							to: this.$route.params.userName,
+							to: this.userName,
 						},
 					});
 				}
@@ -482,7 +479,7 @@ export default {
 				await this.$store.dispatch('user/blockUnblockUser', {
 					baseurl: this.$baseurl,
 					blockUnblockData: {
-						username: this.$route.params.userName,
+						username: this.userName,
 						block: true,
 					},
 				});

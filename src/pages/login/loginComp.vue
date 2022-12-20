@@ -146,7 +146,6 @@ export default {
 				// console.log(response);
 				if (response == 200) {
 					await this.$store.dispatch('notifications/createNotificationToken', {
-						host: 'http://localhost:8081',
 						baseurl: this.$baseurl,
 						token: localStorage.getItem('accessToken'),
 					});
