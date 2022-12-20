@@ -34,7 +34,9 @@
 								</ul>
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
-							<title-input :val="postDetails.title"> </title-input>
+							<title-input :val="postDetails.title" v-if="sharedId">
+							</title-input>
+							<title-input v-if="!sharedId"> </title-input>
 							<post-content
 								:post="postDetails"
 								:shared="true"
