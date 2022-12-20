@@ -19,12 +19,10 @@ export default {
 		console.log(payload);
 		var query;
 		if (payload.afterMod != null && payload.query != undefined)
-			query =
-				'?after=' + payload.afterMod + '&time=' + payload.query + '&limit=2';
-		else if (payload.afterMod != null)
-			query = '?after=' + payload.afterMod + '&limit=2';
-		else if (payload.query == undefined) query = '?limit=2';
-		else query = '?time=' + payload.query + '&limit=2';
+			query = '?after=' + payload.afterMod + '&time=' + payload.query;
+		else if (payload.afterMod != null) query = '?after=' + payload.afterMod;
+		else if (payload.query == undefined) query = '';
+		else query = '?time=' + payload.query;
 		const response = await fetch(baseurl + '/' + title + query, {
 			method: 'GET',
 			headers: {

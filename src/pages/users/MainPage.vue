@@ -272,7 +272,7 @@ export default {
 	margin: auto;
 	display: block;
 	height: 22px;
-    width: 72px;
+	width: 72px;
 }
 .positioning {
 	position: fixed;
