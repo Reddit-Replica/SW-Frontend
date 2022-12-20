@@ -50,14 +50,16 @@
 					</div>
 					<div class="subreddit-details">
 						<div class="subreddit-name">
-							<a href="#" :id="'subreddit-' + index">r/{{ spam.subreddit }}</a>
+							<a :href="'/r/' + spam.subreddit" :id="'subreddit-' + index"
+								>r/{{ spam.subreddit }}</a
+							>
 						</div>
 						<span class="dot">•</span>
 						<div v-if="!spam.commentId">
 							<span class="posted-by">Posted by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-									spam.postedBy
+									spam.postBy
 								}}</a>
 							</div>
 						</div>
@@ -65,20 +67,26 @@
 							<span class="posted-by">Commented by</span>
 							<div class="poster">
 								<a :href="'/user/' + spam.postBy" :id="'user-' + index">{{
-									spam.postedBy
+									spam.postBy
 								}}</a>
 							</div>
 						</div>
 						<span class="time">{{ handleTime }}</span>
 					</div>
 				</div>
-				<div class="post-title">
+				<div
+					class="post-title"
+					@click="gotocomment(spam.id, spam.title, spam.subreddit, spam.postBy)"
+				>
 					<div class="title-box">{{ spam.title }}</div>
 					<div class="body-box" v-if="spam.content != null">
 						{{ spam.content.ops[0].insert }}
 					</div>
 				</div>
-				<div v-if="!spam.commentId">
+				<div
+					v-if="!spam.commentId"
+					@click="gotocomment(spam.id, spam.title, spam.subreddit, spam.postBy)"
+				>
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
 				</div>
 				<div class="footer">
@@ -86,6 +94,9 @@
 						class="removed-box"
 						:class="approved ? 'approved-box' : ''"
 						v-if="this.$route.matched.some(({ name }) => name === 'spam')"
+						@click="
+							gotocomment(spam.id, spam.title, spam.subreddit, spam.postBy)
+						"
 					>
 						<div>
 							<img
@@ -97,7 +108,9 @@
 						</div>
 						<div class="p-box">
 							<p class="p">Removed</p>
-							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
+							<a :href="'/user/' + spam.postBy" class="p-poster"
+								>u/{{ spam.postBy }} {{ handleTime }}</a
+							>
 						</div>
 					</div>
 					<div class="buttons">
@@ -171,6 +184,15 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		// show comment pop up
+		gotocomment(id, title, sub, postman) {
+			if (sub != null) {
+				this.$router.push(`/r/${sub}/comments/${id}/${title}`);
+			} else {
+				this.$router.push(`/user/${postman}/comments/${id}/${title}`);
+			}
+		},
 		// @vuese
 		// check Voted
 		see() {
@@ -388,6 +410,11 @@ export default {
 	padding-top: 8px;
 	position: relative;
 }
+.box:hover {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
 .header-title {
 	font-size: 12px;
 	font-weight: 400;
@@ -555,6 +582,8 @@ export default {
 	margin-top: 0;
 	font-size: 12px;
 	color: #1c1c1c;
+	text-decoration: none;
+	vertical-align: baseline;
 }
 .buttons {
 	-ms-flex-direction: row;
