@@ -47,7 +47,7 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['finishLoading'],
+	emits: ['finishLoading', 'startLoading'],
 	async created() {
 		// console.log('req-insights');
 		await this.RequestInsightsData(this.id);

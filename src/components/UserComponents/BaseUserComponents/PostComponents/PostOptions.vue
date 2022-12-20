@@ -166,7 +166,7 @@
 						</div>
 						<div class="options-box-text">Copy Link</div>
 					</li>
-					<li @click="Crosspost" class="options-box-item">
+					<li v-if="0" @click="Crosspost" class="options-box-item">
 						<div class="options-box-icon">
 							<i
 								style="color: rgba(135, 138, 140)"
