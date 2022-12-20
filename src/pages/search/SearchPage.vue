@@ -19,7 +19,9 @@
 											data-testid="tab_posts"
 											aria-selected="true"
 											role="tab"
-											><button class="button-nav button-nav2">Posts</button></a
+											><button id="posts-button" class="button-nav button-nav2">
+												Posts
+											</button></a
 										>
 									</div>
 									<div class="search-nav" role="tablist">
@@ -29,6 +31,7 @@
 											aria-selected="true"
 											role="tab"
 											><button
+												id="comments-button"
 												class="button-nav button-nav2"
 												@click="goSearch('coms')"
 											>
@@ -44,6 +47,7 @@
 											aria-selected="true"
 											role="tab"
 											><button
+												id="communities-button"
 												class="button-nav button-nav2"
 												@click="goSearch('cm')"
 											>
@@ -59,6 +63,7 @@
 											aria-selected="true"
 											role="tab"
 											><button
+												id="users-button"
 												class="button-nav button-nav2"
 												@click="goSearch('people')"
 											>
@@ -152,7 +157,10 @@
 										></CommunitesNav>
 									</div>
 									<PeopleNav></PeopleNav>
-									<backtotop-button v-if="false"></backtotop-button>
+									<backtotop-button
+										id="back-buuton"
+										v-if="false"
+									></backtotop-button>
 								</div>
 							</div>
 						</div>

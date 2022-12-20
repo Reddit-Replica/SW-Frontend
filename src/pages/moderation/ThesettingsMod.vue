@@ -62,7 +62,9 @@
 			</div>
 			&nbsp;
 
-			<span style="margin-left: auto; margin-right: 2px">0/25</span></span
+			<span style="margin-left: auto; margin-right: 2px"
+				>{{ subTopics.length }}/25</span
+			></span
 		>
 		<v-select
 			style="margin: 10px; width: max-content; color: #0079d3; fill: #0079d3"

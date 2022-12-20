@@ -71,6 +71,13 @@
 									:src="this.$baseurl + '/' + this.userData.picture"
 									alt="image"
 									class="img-profile"
+									v-if="userData.picture"
+								/>
+								<img
+									src="../../../img/default_inbox_avatar.png"
+									alt="image"
+									class="img-profile"
+									v-if="!userData.picture"
 								/>
 							</div>
 							<div
@@ -642,6 +649,11 @@ button {
 	.posting2,
 	.posting3 {
 		display: none;
+	}
+}
+@media (max-width: 306px) {
+	.choose-post-community-1 {
+		width: 100px;
 	}
 }
 </style>
