@@ -52,14 +52,35 @@ app.use(Notifications);
 //app.use(VueCookieNext);
 // app.use(VueCookies);
 // app.use(Cookies);
+function initSdk(options) {
+	return new Promise((resolve) => {
+		// prettier-ignore
+		window.fbAsyncInit = function() {
+		window.FB.init(options)
+		resolve(window.FB)
+	  }; // eslint-disable-line
+		/* eslint-disable */
+	  // prettier-ignore
+	  (function (d, s, id) {
+		const fjs = d.getElementsByTagName(s)[0]
+		if (d.getElementById(id)) { return; }
+		const js = d.createElement(s); js.id = id
+		js.src = '//connect.facebook.net/en_US/sdk.js'
+		fjs.parentNode.insertBefore(js, fjs)
+	  }(document, 'script', 'facebook-jssdk'))
+	  /* eslint-enable */
+	});
+}
 
-// new Vue({
-// 	render: (h) => h(App),
-// }).$mount('#app');
-// app.use(vue3GoogleLogin, {
-// 	clientId:
-// 		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
-// });
+function initializeFacebookSDk() {
+	initSdk({
+		appId: '3257349194531334',
+		xfbml: true, // Parse social plugins on this webpage.
+		version: 'v7.0', // Use this Graph API version for this call.
+	});
+}
+
+initializeFacebookSDk();
 app.use(GAuth, {
 	clientId: `479140215540-o5bmre9kktfq6d8v54a8o031a3usff2m.apps.googleusercontent.com`,
 	scope: 'email',
