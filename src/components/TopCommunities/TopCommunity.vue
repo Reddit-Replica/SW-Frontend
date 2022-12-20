@@ -6,9 +6,12 @@
 			class="topCommunityLink"
 			:id="'top-community-link-' + index"
 		>
-			<div class="topCommunityBlock">
-				<span class="topCommunityIndex">{{ index + 1 }}</span>
+			<div class="topCommunityBlock" :id="'top-community-div-' + index">
+				<span class="topCommunityIndex" :id="'top-community-order-' + index">{{
+					index + 1
+				}}</span>
 				<svg
+					:id="'top-community-icon-' + index"
 					xmlns="http://www.w3.org/2000/svg"
 					width="20"
 					height="20"
@@ -27,14 +30,21 @@
 					:src="image"
 					alt="community image"
 					v-if="!noImage"
+					:id="'top-community-img-' + index"
 				/>
 				<img
 					class="topCommunityImage"
 					src="../../../img/default_subreddit_image.png"
 					alt="community image"
 					v-else
+					:id="'top-community-img2-' + index"
 				/>
-				<a class="topCommunityName" href="link">r/{{ name }}</a>
+				<a
+					class="topCommunityName"
+					href="link"
+					:id="'top-community-link2-' + index"
+					>r/{{ name }}</a
+				>
 			</div>
 		</div>
 
@@ -62,12 +72,28 @@
 				membersCount
 			}}</span>
 		</div>
+		<save-unsave-popup-message v-if="doneJoined" class="pop-up" id="pop-join"
+			>Successfully joined r/{{ name }}</save-unsave-popup-message
+		>
+		<save-unsave-popup-message v-if="doneLeft" class="pop-up" id="pop-leave"
+			>Successfully left r/{{ name }}</save-unsave-popup-message
+		>
+		<save-unsave-popup-message
+			v-if="notdoneLeft"
+			class="pop-up"
+			id="pop-leave-not"
+			>You can't leave r/{{ name }}, you are the
+			moderator.</save-unsave-popup-message
+		>
 	</li>
 </template>
 
 <script>
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
+
 export default {
 	emits: ['reload'],
+	components: { SaveUnsavePopupMessage },
 	props: {
 		//@vuese
 		//index of community in top communities list
@@ -123,6 +149,9 @@ export default {
 	data() {
 		return {
 			hoverButtonText: 'Joined',
+			doneJoined: false,
+			doneLeft: false,
+			notdoneLeft: false,
 		};
 	},
 	methods: {
@@ -132,27 +161,40 @@ export default {
 		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			await this.$store.dispatch('community/joinSubreddit', {
-				message: this.message,
-				subredditId: this.id,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/joinSubreddit', {
+					subredditId: this.id,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
 
-			console.log('reload');
-			this.$emit('reload');
-			console.log('reload2');
+				this.doneJoined = true;
+				this.$emit('reload');
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
-			await this.$store.dispatch('community/leaveSubreddit', {
-				subredditName: this.name,
-				baseurl: this.$baseurl,
-				token: accessToken,
-			});
+			if (localStorage.getItem('accessToken') != null) {
+				await this.$store.dispatch('community/leaveSubreddit', {
+					subredditName: this.name,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				console.log(this.$store.getters['community/getLeaveOwner']);
 
-			this.$emit('reload');
+				if (this.$store.getters['community/getLeaveOwner'] === true) {
+					this.notdoneLeft = true;
+					this.$emit('reload');
+				} else {
+					this.doneLeft = true;
+					this.$emit('reload');
+				}
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		goToSubreddit(name) {
 			this.$router.replace(`/r/${name}`);
@@ -273,5 +315,10 @@ export default {
 }
 .white-button:hover {
 	opacity: 0.92;
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
 }
 </style>

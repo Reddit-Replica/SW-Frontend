@@ -1,8 +1,13 @@
 <template>
 	<div>
-		<div class="all">
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="all" v-else>
 			<div class="after-all">
-				<the-header :header-title="'u/asmaaadel0'"></the-header>
+				<the-header :header-title="userName"></the-header>
 				<div class="page-release">
 					<div class="page">
 						<div>
@@ -85,11 +90,11 @@
 										<MenuSearchVue
 											id="sub-menu-one"
 											:titles="[
-												'Relevance',
-												'Hot',
-												'New',
-												'Top',
-												'Most Comments',
+												'relevance',
+												'hot',
+												'new',
+												'top',
+												'most comments',
 											]"
 											:display="ShowFirstitemChoice"
 											@change-title="changeFirstChoiceItem"
@@ -163,6 +168,7 @@ import CommunitesNav from '../../components/SearchComponents/CommunitesNav.vue';
 import PeopleNav from '../../components/SearchComponents/PeopleNav.vue';
 import MenuSearchVue from '@/components/SearchComponents/MenuSearch.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
@@ -172,24 +178,36 @@ export default {
 			SecitemChoice: 'Time',
 			ShowSecitemChoice: false,
 			choiceRelevant: true,
-			Profile_Name: '',
+			// Queue: this.$router.query.q,
+			loading: true,
 			// myIndex: 0,
 			// indexTrue: true,
 		};
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			this.search();
+			this.usersearch();
+			this.comsearch();
+		}
+		setTimeout((this.loading = false), 2000);
 	},
 	beforeMount() {
 		this.search();
 		this.usersearch();
 		this.comsearch();
+		// this.doSetQueue();
 	},
 	methods: {
+		// doSetQueue() {
+		// 	this.Queue = this.$router.query.q;
+		// },
 		async search() {
 			try {
 				await this.$store.dispatch('search/SearchPost', {
 					baseurl: this.$baseurl,
 					q: this.$route.query.q,
-					sort: 'new',
-					time: 'all',
 				});
 			} catch (error) {
 				console.log(error);
@@ -260,6 +278,9 @@ export default {
 				});
 			}
 		},
+		// PageReload() {
+		// 	window.reload();
+		// },
 		async searchwithSort(value) {
 			try {
 				if (!(this.SecitemChoice == 'Time')) {
@@ -282,20 +303,26 @@ export default {
 			}
 		},
 		async searchwithtime(value) {
+			let temp;
+			if (value == 'All Time') temp = 'all';
+			else if (value == 'Last Year') temp = 'year';
+			else if (value == 'Last Week') temp = 'week';
+			else if (value == 'Last 24 Horus') temp = 'day';
+			else if (value == 'Last Hour') temp = 'hour';
 			try {
 				if (!(this.FirstitemChoice == 'Sort')) {
 					await this.$store.dispatch('search/SearchPost', {
 						baseurl: this.$baseurl,
 						q: this.$route.query.q,
 						sort: this.FirstitemChoice,
-						time: value,
+						time: temp,
 					});
 				} else {
 					await this.$store.dispatch('search/SearchPost', {
 						baseurl: this.$baseurl,
 						q: this.$route.query.q,
 						sort: 'new',
-						time: value,
+						time: temp,
 					});
 				}
 			} catch (error) {
@@ -309,13 +336,18 @@ export default {
 		PeopleNav,
 		MenuSearchVue,
 		BacktotopButton,
+		TheSpinner,
 	},
 	computed: {
 		SearchedPosts() {
+			console.log(this.$store.getters['search/GetPosts']);
 			return this.$store.getters['search/GetPosts'];
 		},
 		SearchedUsers() {
 			return this.$store.getters['search/Getusers'];
+		},
+		userName() {
+			return localStorage.getItem('userName');
 		},
 	},
 	watch: {
@@ -325,6 +357,10 @@ export default {
 		SecitemChoice(value) {
 			this.searchwithtime(value);
 		},
+		// Queue(value) {
+		// 	console.log(value);
+		// 	this.PageReload();
+		// },
 	},
 };
 </script>

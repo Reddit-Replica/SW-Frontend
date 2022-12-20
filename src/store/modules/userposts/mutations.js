@@ -11,9 +11,22 @@ export default {
 			Object.assign(state.postData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserMorePostData(state, payload) {
+		if (payload.responseStatus == 200) {
+			// Object.assign(state.overviewData, payload.responseData);
+			console.log('before commit', payload.responseData);
+			state.postData.before = payload.responseData.before;
+			state.postData.after = payload.responseData.after;
+			state.postData.children.push(...payload.responseData.children);
+			console.log('after commit', state.postData);
+			// assign data to user Data
+		}
+		return payload.responseStatus;
+	},
 	setUserPinnedPostData(state, payload) {
 		if (payload.responseStatus == 200)
 			Object.assign(state.pinnedPostData, payload.responseData); // assign data to user Data
+
 		return payload.responseStatus;
 	},
 	setInsightsData(state, payload) {
@@ -431,6 +444,18 @@ export default {
 	setUserOverviewData(state, payload) {
 		if (payload.responseStatus == 200)
 			Object.assign(state.overviewData, payload.responseData); // assign data to user Data
+		return payload.responseStatus;
+	},
+	setUserMoreOverviewData(state, payload) {
+		if (payload.responseStatus == 200) {
+			// Object.assign(state.overviewData, payload.responseData);
+			console.log('before commit', payload.responseData);
+			state.overviewData.before = payload.responseData.before;
+			state.overviewData.after = payload.responseData.after;
+			state.overviewData.children.push(...payload.responseData.children);
+			console.log('after commit', state.overviewData);
+			// assign data to user Data
+		}
 		return payload.responseStatus;
 	},
 	setUserSavedData(state, payload) {

@@ -124,4 +124,10 @@ export default {
 	EditedComments(state) {
 		return state.EditedComments;
 	},
+	gettrafficStatus(state) {
+		return state.trafficStatus;
+	},
+	Removed(state) {
+		return state.Removed;
+	},
 };

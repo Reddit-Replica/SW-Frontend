@@ -2,11 +2,11 @@
 	<div class="follow-chat-div">
 		<base-button
 			v-if="(!blocked && state == 'user') || state == 'unauth'"
-			:button-text="followed ? 'Unfollow' : 'Follow'"
+			:button-text="FollowedUser ? 'Unfollow' : 'Follow'"
 			class="chat-follow-button"
 			id="profile-follow-button"
 			@click="toggleFollowed"
-			:class="[followed ? 'chat-unfollow-button' : '']"
+			:class="[FollowedUser ? 'chat-unfollow-button' : '']"
 		></base-button>
 		<base-button
 			v-if="(!blocked && state == 'user') || state == 'unauth'"
@@ -53,6 +53,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		userName: {
+			type: String,
+			required: true,
+		},
 	},
 	components: {
 		BaseButton,
@@ -60,7 +64,7 @@ export default {
 	data() {
 		return {
 			blockedText: 'Blocked',
-			// Followed: false,
+			FollowedUser: this.followed,
 		};
 	},
 	mounted() {
@@ -76,12 +80,13 @@ export default {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
 			}
+			this.FollowedUser = !this.FollowedUser;
 			try {
 				await this.$store.dispatch('user/followUnfollowUser', {
 					baseurl: this.$baseurl,
 					followUnfollowData: {
-						follow: !this.followed,
-						username: this.$route.params.userName,
+						follow: this.FollowedUser,
+						username: this.userName,
 					},
 				});
 			} catch (error) {
@@ -98,7 +103,7 @@ export default {
 				await this.$store.dispatch('user/blockUnblockUser', {
 					baseurl: this.$baseurl,
 					blockUnblockData: {
-						username: this.$route.params.userName,
+						username: this.userName,
 						block: !this.blocked,
 					},
 				});

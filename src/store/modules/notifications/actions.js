@@ -2,7 +2,8 @@ import { app as firebaseApp } from '../../../firebase';
 import {
 	getToken,
 	getMessaging,
-	onMessage,
+	//onMessage,
+	onMessageReceived,
 	//deleteToken,
 } from 'firebase/messaging';
 // import axios from 'axios';
@@ -12,7 +13,7 @@ export default {
 	async getAllNotifications(context, payload) {
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/notifications', {
+		const response = await fetch(baseurl + '/notifications?limit=100', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -22,10 +23,9 @@ export default {
 
 		const responseData = await response.json();
 
-		console.log(responseData['children']);
-
 		if (response.status == 200) {
 			context.commit('setNotifications', responseData['children']);
+			context.commit('setUnreadCount', responseData['unreadCount']);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -49,8 +49,6 @@ export default {
 		});
 
 		const responseData = await response.json();
-
-		console.log(responseData['children']);
 
 		if (response.status == 200) {
 			context.commit('setSomeNotifications', responseData['children']);
@@ -150,22 +148,20 @@ export default {
 		if (localStorage.getItem('clientToken') == null) {
 			await this.dispatch('notifications/registerServiceWorker', {
 				baseurl: payload.baseurl,
-				host: payload.host,
+				// host: payload.host,
 				token: payload.token,
 			});
 		} else {
-			console.log(localStorage.getItem('clientToken'));
 			context.commit('setClientToken', localStorage.getItem('clientToken'));
 		}
 	},
 
 	async registerServiceWorker(_, payload) {
 		console.log('registerServiceWorker');
-		const host = payload.host;
-		console.log(payload);
+		// const host = payload.host;
 
 		if ('Notification' in window && navigator.serviceWorker) {
-			registerSW(host + '/firebase-messaging-sw.js', {
+			registerSW('/firebase-messaging-sw.js', {
 				async ready(reg) {
 					console.log('Service worker is Ready');
 					// subsctibe to FCM
@@ -190,7 +186,7 @@ export default {
 						//listen for notifications
 						store.dispatch('notifications/listenForegroundMessage', {
 							reg,
-							host: payload.host,
+							// host: payload.host,
 							token: payload.token,
 						});
 					} catch (err) {
@@ -253,14 +249,13 @@ export default {
 			throw error;
 		}
 	},
-	async listenForegroundMessage(reg, payload) {
-		const host = payload.host;
-
+	async listenForegroundMessage(reg) {
+		// const host = payload.host;
 		if (!reg)
 			reg = await navigator.serviceWorker.getRegistration(
-				host + '/firebase-messaging-sw.js'
+				'/firebase-messaging-sw.js'
 			);
-		onMessage(getMessaging(firebaseApp), (payload) => {
+		onMessageReceived(getMessaging(firebaseApp), (payload) => {
 			console.log('Message received. ', payload);
 			let { notification, data } = payload;
 			let notificationTitle = 'Test title';

@@ -5,8 +5,21 @@
 				<div class="image">
 					<router-link
 						:to="{ name: 'user', params: { userName: comment.commentedBy } }"
-						><img src="../../../img/user-image.jpg" alt="" id="user"
-					/></router-link>
+						><img
+							v-if="!userData.picture"
+							src="../../../img/default_inbox_avatar.png"
+							alt="img"
+							class="img header-user-nav-user-photo"
+							id="comment-user-img-"
+						/>
+						<img
+							v-else
+							:src="$baseurl + '/' + userData.picture"
+							alt="img"
+							class="img header-user-nav-user-photo"
+							id="comment-user-img-"
+						/>
+					</router-link>
 				</div>
 				<div class="vertical-line"></div>
 			</div>
@@ -237,58 +250,81 @@ export default {
 			savedUnsavedPosts: [],
 			saved: this.comment.saved,
 			followed: this.comment.followed,
+			userData: {},
 		};
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
 	created() {
 		if (this.comment.numberofChildren != 0) this.fetchPostComments();
+		this.fetchUserProfilePicture();
 	},
 	methods: {
+		async fetchUserProfilePicture() {
+			let responseData = null;
+			try {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
+					baseurl: this.$baseurl,
+					userName: this.comment.commentedBy,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			if (responseData != null) this.userData = responseData;
+			console.log(this.userData);
+		},
 		async follow() {
-			this.followed = !this.followed;
-			if (this.followed) {
-				try {
-					await this.$store.dispatch('postCommentActions/followComment', {
-						baseurl: this.$baseurl,
-						commentId: this.comment.commentId,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				this.followed = !this.followed;
+				if (this.followed) {
+					try {
+						await this.$store.dispatch('postCommentActions/followComment', {
+							baseurl: this.$baseurl,
+							commentId: this.comment.commentId,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unfollowComment', {
+							baseurl: this.$baseurl,
+							commentId: this.comment.commentId,
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unfollowComment', {
-						baseurl: this.$baseurl,
-						commentId: this.comment.commentId,
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		async save() {
-			this.saved = !this.saved;
-			if (this.saved == true) {
-				try {
-					await this.$store.dispatch('postCommentActions/save', {
-						baseurl: this.$baseurl,
-						id: this.comment.commentId,
-						type: 'comment',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.saved = !this.saved;
+				if (this.saved == true) {
+					try {
+						await this.$store.dispatch('postCommentActions/save', {
+							baseurl: this.$baseurl,
+							id: this.comment.commentId,
+							type: 'comment',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unsave', {
+							baseurl: this.$baseurl,
+							id: this.comment.commentId,
+							type: 'comment',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: this.comment.commentId,
-						type: 'comment',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		async fetchPostComments() {
@@ -319,37 +355,45 @@ export default {
 		//@vuese
 		//called when upvote is clicked to change the style of upvote icon and increment vote counter
 		async upClick() {
-			if (this.downClicked) this.downClick();
-			this.upClicked = !this.upClicked;
-			if (this.upClicked) this.voteCounter++;
-			else this.voteCounter--;
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.comment.commentId,
-					type: 'comment',
-					direction: 1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				if (this.downClicked) this.downClick();
+				this.upClicked = !this.upClicked;
+				if (this.upClicked) this.voteCounter++;
+				else this.voteCounter--;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.comment.commentId,
+						type: 'comment',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
 		//called when downvote is clicked to change the style of downvote icon and decrement vote counter
 		async downClick() {
-			if (this.upClicked) this.upClick();
-			this.downClicked = !this.downClicked;
-			if (this.downClicked) this.voteCounter--;
-			else this.voteCounter++;
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.comment.commentId,
-					type: 'comment',
-					direction: -1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				if (this.upClicked) this.upClick();
+				this.downClicked = !this.downClicked;
+				if (this.downClicked) this.voteCounter--;
+				else this.voteCounter++;
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.comment.commentId,
+						type: 'comment',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese

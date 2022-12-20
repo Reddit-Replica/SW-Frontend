@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="blue-top">
-			<router-link to="/subreddit"
+			<router-link to="/subreddit" id="link-top-subreddit-page-2"
 				><div class="link" id="link-top-subreddit-page"></div
 			></router-link>
 		</div>
@@ -12,16 +12,22 @@
 						:src="subredditImageUrl"
 						alt="subredditImage"
 						v-if="subredditImageUrl"
+						id="img-top-subreddit-page"
 					/>
 					<img
 						src="../../../img/default_subreddit_image.png"
 						alt="user-img"
 						v-else
+						id="img-2-top-subreddit-page"
 					/>
 					<div class="top-title-button">
 						<div class="top-title">
-							<h1 class="title-1">{{ subredditNickname }}</h1>
-							<h2 class="title-2">r/{{ subredditName }}</h2>
+							<h1 class="title-1" id="title-top-subreddit-page">
+								{{ subredditNickname }}
+							</h1>
+							<h2 class="title-2" id="title-2-top-subreddit-page">
+								r/{{ subredditName }}
+							</h2>
 						</div>
 						<div>
 							<base-button
@@ -40,6 +46,29 @@
 								id="leave-button"
 								>{{ hoverButtonText }}</base-button
 							>
+							<save-unsave-popup-message
+								v-if="doneJoined"
+								class="pop-up"
+								id="pop-join"
+								>Successfully joined r/{{
+									subredditName
+								}}</save-unsave-popup-message
+							>
+							<save-unsave-popup-message
+								v-if="doneLeft"
+								class="pop-up"
+								id="pop-leave"
+								>Successfully left r/{{
+									subredditName
+								}}</save-unsave-popup-message
+							>
+							<save-unsave-popup-message
+								v-if="notdoneLeft"
+								class="pop-up"
+								id="pop-leave-not"
+								>You can't leave r/{{ subredditName }}, you are the
+								moderator.</save-unsave-popup-message
+							>
 						</div>
 					</div>
 				</div>
@@ -49,8 +78,10 @@
 </template>
 
 <script>
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
 export default {
 	emits: ['reload'],
+	components: { SaveUnsavePopupMessage },
 	props: {
 		//@vuese
 		//Subreddit ID
@@ -85,8 +116,10 @@ export default {
 	},
 	data() {
 		return {
-			// joined: false,
 			hoverButtonText: 'Joined',
+			doneJoined: false,
+			doneLeft: false,
+			notdoneLeft: false,
 		};
 	},
 	methods: {
@@ -107,6 +140,7 @@ export default {
 					token: accessToken,
 				});
 
+				this.doneJoined = true;
 				this.$emit('reload');
 			} else {
 				this.$router.replace('/login');
@@ -121,8 +155,15 @@ export default {
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
+				console.log(this.$store.getters['community/getLeaveOwner']);
 
-				this.$emit('reload');
+				if (this.$store.getters['community/getLeaveOwner'] === true) {
+					this.notdoneLeft = true;
+					this.$emit('reload');
+				} else {
+					this.doneLeft = true;
+					this.$emit('reload');
+				}
 			} else {
 				this.$router.replace('/login');
 			}
@@ -174,11 +215,9 @@ img {
 	padding-left: 1.6rem;
 	margin-top: 2.4rem;
 	justify-content: space-between;
-	/* width: calc(100% - 80px); */
 }
 .top-title {
 	display: inline-block;
-	/* max-width: calc(100% - 96px); */
 	padding-right: 2.4rem;
 }
 .title-1 {
@@ -229,5 +268,10 @@ img {
 		max-height: 3.2rem;
 		min-width: 3.2rem;
 	}
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
 }
 </style>

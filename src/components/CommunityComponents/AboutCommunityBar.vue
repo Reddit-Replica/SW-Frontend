@@ -37,14 +37,7 @@
 						d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
 					/>
 				</svg>
-				<div class="box-options" v-if="dotsClicked">
-					<!-- <button
-						class="button-option"
-						@click="addToCustomFeed"
-						id="add-to-custom-feed"
-					>
-						Add To Custom Feed
-					</button> -->
+				<div class="box-options" v-if="dotsClicked" id="dots-list">
 					<button
 						class="button-option"
 						@click="toogleFavourite"
@@ -115,6 +108,7 @@
 					class="bi bi-pencil"
 					viewBox="0 0 16 16"
 					v-if="isModerator"
+					id="pencil"
 				>
 					<path
 						d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
@@ -194,28 +188,6 @@
 						{{ membersCount }} Members
 					</div>
 				</div>
-				<!-- <div id="online-members-num" class="relative-flex">
-					<div>
-						<div class="point-green"></div>
-						<span
-							class="text-bold"
-							id="comm-online-mem"
-							@mouseover="toogleOnlineMembersCountBox"
-							@mouseleave="toogleOnlineMembersCountBox"
-							>{{ calculateMembers(membersCount) }}
-						</span>
-					</div>
-					<div class="text-grey">Online</div>
-					<div
-						class="box arrow-top box-arrow-3"
-						id="comm-online-mem-hover"
-						v-if="onlineMembersCountBoxShown"
-					>
-						{{ membersCount }} Online
-					</div>
-				</div> -->
-				<div></div>
-				<div></div>
 			</div>
 
 			<div class="line"></div>
@@ -317,7 +289,9 @@
 								d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 							/>
 						</svg>
-						<span class="text span-save" @click="showBoth">Add subtopic</span>
+						<span class="text span-save" @click="showBoth" id="show-both"
+							>Add subtopic</span
+						>
 					</base-button>
 				</div>
 
@@ -422,13 +396,27 @@
 				></base-button>
 			</div>
 		</div>
+		<save-unsave-popup-message v-if="doneDesc" class="pop-up" id="pop-desc"
+			>Subreddit settings updated successfully</save-unsave-popup-message
+		>
+		<save-unsave-popup-message v-if="doneTopic" class="pop-up" id="pop-topic"
+			>Successfully updated primary topic!</save-unsave-popup-message
+		>
+		<save-unsave-popup-message
+			v-if="doneSubtopic"
+			class="pop-up"
+			id="pop-subtopic"
+			>Community topics saved!</save-unsave-popup-message
+		>
 	</div>
 </template>
 
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';
+import SaveUnsavePopupMessage from '../PostComponents/SaveUnsavePopupMessage.vue';
+
 export default {
-	components: { BaseButton },
+	components: { BaseButton, SaveUnsavePopupMessage },
 	emits: ['reload'],
 	props: {
 		//@vuese
@@ -516,6 +504,10 @@ export default {
 			subtopicsListShown: false,
 
 			subtopicsToShow: this.communitySubtopicsProp,
+
+			doneDesc: false,
+			doneTopic: false,
+			doneSubtopic: false,
 		};
 	},
 	computed: {
@@ -640,6 +632,10 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.doneDesc = true;
+			setTimeout(() => {
+				this.doneDesc = false;
+			}, 1000);
 			this.$emit('reload');
 		},
 		//@vuese
@@ -661,6 +657,10 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.doneTopic = true;
+			setTimeout(() => {
+				this.doneTopic = false;
+			}, 1000);
 			this.$emit('reload');
 		},
 		//@vuese
@@ -718,6 +718,10 @@ export default {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			this.doneSubtopic = true;
+			setTimeout(() => {
+				this.doneSubtopic = false;
+			}, 1000);
 			this.$emit('reload');
 		},
 		//@vuese
@@ -1082,9 +1086,9 @@ input {
 }
 .box-buttons {
 	background-color: var(--color-grey-light-2);
-	padding: 16px;
-	margin: 16px -16px -16px;
-	border-bottom-right-radius: 4px;
+	padding: 1.6rem;
+	margin: 1.6rem -1.6rem -1.6rem;
+	border-bottom-right-radius: 0.4rem;
 	display: flex;
 	justify-content: flex-end;
 	box-sizing: border-box;
@@ -1161,8 +1165,14 @@ input {
 	background-color: var(--color-green);
 	display: inline-block;
 	border-radius: 50%;
-	width: 4px;
-	height: 4px;
-	margin-right: 2px;
+	width: 0.4rem;
+	height: 0.4rem;
+	margin-right: 0.2rem;
+}
+.pop-up {
+	bottom: 0;
+	position: fixed;
+	z-index: 1000;
+	right: 35%;
 }
 </style>

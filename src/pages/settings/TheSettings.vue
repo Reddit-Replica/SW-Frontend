@@ -32,7 +32,12 @@ export default {
 		UserSettings,
 	},
 	created() {
-		document.title = 'Reddit Settings';
+		if (!localStorage.getItem('accessToken')) {
+			this.$router.push('/login');
+			document.title = 'reddit';
+		} else {
+			document.title = 'Reddit Settings';
+		}
 	},
 };
 </script>

@@ -22,7 +22,7 @@
 						v-model="displayName"
 						@blur="getdisplayName"
 					/>
-					<div class="p-comment">30 Characters remaining</div>
+					<div class="p-comment">{{ nameCount }} Characters remaining</div>
 				</div>
 			</div>
 
@@ -40,11 +40,11 @@
 						name="about"
 						id="about"
 						rows="4"
-						class="text-area-field"
+						style="resize: vertical; display: block; width: 100%; padding: 10px"
 						v-model="about"
 						@blur="getAbout"
 					></textarea>
-					<div class="p-comment">200 Characters remaining</div>
+					<div class="p-comment">{{ aboutCount }} Characters remaining</div>
 				</div>
 			</div>
 
@@ -75,7 +75,6 @@
 					id="image2"
 					type="file"
 					accept="image/png,image/jpg"
-					multiple
 					hidden
 					@change="loadProfilePic"
 				/>
@@ -444,7 +443,8 @@ export default {
 			savedUnsavedPosts: [],
 			image: null,
 			cover: null,
-			////////////////hoda///////////////
+			nameCount: 30,
+			aboutCount: 200,
 			// links: [
 			// 	{
 			// 		imageUrl:
@@ -469,6 +469,16 @@ export default {
 	watch: {
 		user(val) {
 			this.userData = val;
+		},
+		displayName(value) {
+			this.nameCount = 30;
+			this.displayName = value;
+			this.nameCount = this.nameCount - this.displayName.length;
+		},
+		about(value) {
+			this.aboutCount = 200;
+			this.about = value;
+			this.aboutCount = this.aboutCount - this.about.length;
 		},
 	},
 	methods: {

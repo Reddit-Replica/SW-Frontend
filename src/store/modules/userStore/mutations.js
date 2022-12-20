@@ -28,6 +28,17 @@ export default {
 			Object.assign(state.commentsData, payload.responseData); // assign data to user Data
 		return payload.responseStatus;
 	},
+	setUserMoreCommentsData(state, payload) {
+		if (payload.responseStatus == 200) {
+			// Object.assign(state.commentsData, payload.responseData); // assign data to user Data
+			console.log('before commit', payload.responseData);
+			state.commentsData.before = payload.responseData.before;
+			state.commentsData.after = payload.responseData.after;
+			state.commentsData.children.push(...payload.responseData.children);
+			console.log('after commit', state.postData);
+		}
+		return payload.responseStatus;
+	},
 	addUserSocialLink(state, payload) {
 		state.userData.socialLinks.push(payload.newSocialLink);
 	},

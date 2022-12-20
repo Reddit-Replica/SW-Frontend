@@ -659,7 +659,10 @@ export default {
 			}
 		);
 		const responseData = await response.json();
+		// console.log(responseData);
 		const spams = [];
+		console.log('responseData[0]');
+		console.log(responseData);
 		if (response.status == 200) {
 			let before, after;
 			before = '';
@@ -672,42 +675,42 @@ export default {
 			}
 			//update responseData
 			if (only == 'comments') {
-				for (let i = 0; i < responseData[0].children.length; i++) {
+				for (let i = 0; i < responseData.children.length; i++) {
 					const spam = {
-						id: responseData[0].children[i].postId,
-						title: responseData[0].children[i].postTitle,
-						commentId: responseData[0].children[i].comment.id,
-						subreddit: responseData[0].children[i].comment.subreddit,
-						commentedBy: responseData[0].children[i].comment.id,
-						commentedAt: responseData[0].children[i].comment.subreddit,
-						editedAt: responseData[0].children[i].comment.id,
-						spammedAt: responseData[0].children[i].comment.subreddit,
-						votes: responseData[0].children[i].comment.id,
-						vote: responseData[0].children[i].comment.subreddit,
+						id: responseData.children[i].postId,
+						title: responseData.children[i].postTitle,
+						commentId: responseData.children[i].comment.id,
+						subreddit: responseData.children[i].comment.subreddit,
+						commentedBy: responseData.children[i].comment.id,
+						commentedAt: responseData.children[i].comment.subreddit,
+						editedAt: responseData.children[i].comment.id,
+						spammedAt: responseData.children[i].comment.subreddit,
+						votes: responseData.children[i].comment.id,
+						vote: responseData.children[i].comment.subreddit,
 					};
 					spams.push(spam);
 				}
 			} else {
-				for (let i = 0; i < responseData[0].children.length; i++) {
+				for (let i = 0; i < responseData.children.length; i++) {
 					const spam = {
-						id: responseData[0].children[i].id,
-						postId: responseData[0].children[i].data.id,
-						subreddit: responseData[0].children[i].data.subreddit,
-						postedBy: responseData[0].children[i].data.postedBy,
-						title: responseData[0].children[i].data.title,
-						link: responseData[0].children[i].data.link,
-						images: responseData[0].children[i].data.images,
-						video: responseData[0].children[i].data.video,
-						content: responseData[0].children[i].data.content,
-						nsfw: responseData[0].children[i].data.nsfw,
-						spoiler: responseData[0].children[i].data.spoiler,
-						votes: responseData[0].children[i].data.votes,
-						numberOfComments: responseData[0].children[i].data.numberOfComments,
-						editedAt: responseData[0].children[i].data.editedAt,
-						postedAt: responseData[0].children[i].data.postedAt,
-						spammedAt: responseData[0].children[i].data.spammedAt,
-						saved: responseData[0].children[i].data.saved,
-						vote: responseData[0].children[i].data.vote,
+						id: responseData.children[i].id,
+						postId: responseData.children[i].data.id,
+						subreddit: responseData.children[i].data.subreddit,
+						postedBy: responseData.children[i].data.postedBy,
+						title: responseData.children[i].data.title,
+						link: responseData.children[i].data.link,
+						images: responseData.children[i].data.images,
+						video: responseData.children[i].data.video,
+						content: responseData.children[i].data.content,
+						nsfw: responseData.children[i].data.nsfw,
+						spoiler: responseData.children[i].data.spoiler,
+						votes: responseData.children[i].data.votes,
+						numberOfComments: responseData.children[i].data.numberOfComments,
+						editedAt: responseData.children[i].data.editedAt,
+						postedAt: responseData.children[i].data.postedAt,
+						spammedAt: responseData.children[i].data.spammedAt,
+						saved: responseData.children[i].data.saved,
+						vote: responseData.children[i].data.vote,
 					};
 					spams.push(spam);
 				}
@@ -1416,9 +1419,7 @@ export default {
 					spammedAt: responseData.children[i].data.spammedAt,
 					saved: responseData.children[i].data.saved,
 					vote: responseData.children[i].data.vote,
-					ImagePath: responseData.children[i].data.images[0].path,
-					Imagecaption: responseData.children[i].data.images[0].caption,
-					Imagelink: responseData.children[i].data.images[0].link,
+					Image: responseData.children[i].data.images,
 				};
 				unModerated.push(post);
 			}
@@ -1482,9 +1483,7 @@ export default {
 					spammedAt: responseData.children[i].data.spammedAt,
 					saved: responseData.children[i].data.saved,
 					vote: responseData.children[i].data.vote,
-					ImagePath: responseData.children[i].data.images[0].path,
-					Imagecaption: responseData.children[i].data.images[0].caption,
-					Imagelink: responseData.children[i].data.images[0].link,
+					Image: responseData.children[i].data.images,
 				};
 				EditedPosts.push(post);
 			}
@@ -1555,6 +1554,102 @@ export default {
 			throw error;
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Internal Server Error');
+			throw error;
+		}
+	},
+
+	async fetchtrafficStatus(context, payload) {
+		const baseurl = payload.baseurl;
+		const response = await fetch(
+			baseurl + `/r/${payload.subreddit}/traffic-stats`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			console.log(response);
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		console.log(responseData);
+		context.commit('settrafficStatus', responseData);
+		return response.status;
+	},
+	async removeFunction(context, payload) {
+		const baseurl = payload.baseurl;
+		// const id = payload.id;
+		// const type = payload.type;
+		const TheBody = {
+			id: payload.id,
+			// username: 'asmaa',
+			type: payload.type,
+		};
+		const accessToken = localStorage.getItem('accessToken');
+		// const accessToken =
+		// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzY4ZjI4ZTMxMWFmMTk0ZmQ2Mjg1YTQiLCJ1c2VybmFtZSI6InpleWFkdGFyZWtrIiwiaWF0IjoxNjY3ODIyMjIyfQ.TdmE3BaMI8rxQRoc7Ccm1dSAhfcyolyr0G-us7MObpQ';
+		const response = await fetch(baseurl + '/remove', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify(TheBody),
+		});
+
+		const responseData = await response.json();
+
+		if (response.status == 200) {
+			context.commit('setRemoved', true);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error || 'Bad Request');
+			throw error;
+		} else if (response.status == 401) {
+			const error = new Error(
+				responseData.error || 'Unauthorized to send a message'
+			);
+			throw error;
+		} else if (response.status == 404) {
+			const error = new Error(responseData.error || 'Not Found');
+			throw error;
+		} else if (response.status == 500) {
+			const error = new Error(responseData.error || 'Server Error');
+			throw error;
+		}
+	},
+	async vote(_, payload) {
+		const vote = {
+			id: payload.id,
+			type: payload.type,
+			direction: payload.direction,
+		};
+		const baseurl = payload.baseurl;
+
+		const response = await fetch(baseurl + '/vote', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(vote),
+		});
+
+		const responseData = await response.json();
+		console.log(responseData);
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
 			throw error;
 		}
 	},

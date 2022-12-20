@@ -1,11 +1,10 @@
 <template>
-	<div>
+	<div id="top-comm-bar-1">
 		<top-communities
+			id="top-comm-bar-2"
 			@reload-component="reloadPage"
 			:top-communities="communities"
-			top-communities-image="../../../img/banner-background_top.png"
 			:top-communities-caption="category"
-			src="../../../img/banner-background_top.png"
 		></top-communities>
 	</div>
 </template>
@@ -23,17 +22,24 @@ export default {
 		};
 	},
 	beforeMount() {
-		this.getOneCommunities();
+		if (localStorage.getItem('accessToken')) this.getOneCommunities();
 	},
 	methods: {
 		async getOneCommunities() {
 			const accessToken = localStorage.getItem('accessToken');
-			await this.$store.dispatch('topCommunity/getOneCommunities', {
+			// await this.$store.dispatch('topCommunity/getOneCommunities', {
+			// 	baseurl: this.$baseurl,
+			// 	token: accessToken,
+			// });
+			// this.communities = this.$store.getters['topCommunity/oneCategory'];
+			// this.category = this.$store.getters['topCommunity/oneCommunities'];
+
+			await this.$store.dispatch('topCommunity/getTrendingCommunities', {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
-			this.communities = this.$store.getters['topCommunity/oneCategory'];
-			this.category = this.$store.getters['topCommunity/oneCommunities'];
+			this.communities =
+				this.$store.getters['topCommunity/getTrendingCommunities'];
 		},
 		reloadPage() {
 			this.getOneCommunities();

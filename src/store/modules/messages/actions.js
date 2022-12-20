@@ -10,7 +10,14 @@ export default {
 	 */
 	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/inbox', {
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (afterMod) {
+			mediaQuery = '?limit=25&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=25';
+		}
+		const response = await fetch(baseurl + `/message/inbox${mediaQuery}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -18,22 +25,14 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
-		console.log(localStorage.getItem('accessToken'));
 		if (response.status == 200) {
 			const messages = [];
 
-			let before, after;
-			before = '';
+			let after;
 			after = '';
-			if (responseData.before) {
-				before = responseData.before;
-			}
 			if (responseData.after) {
 				after = responseData.after;
 			}
-			console.log('before', before);
-			console.log('after', after);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const message = {
 					id: responseData.children[i].id,
@@ -57,8 +56,7 @@ export default {
 				messages.push(message);
 			}
 			context.commit('setInboxMessages', messages);
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setAfter', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
@@ -81,7 +79,14 @@ export default {
 	 */
 	async loadUnreadMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/unread', {
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (afterMod) {
+			mediaQuery = '?limit=25&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=25';
+		}
+		const response = await fetch(baseurl + `/message/unread${mediaQuery}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -92,12 +97,8 @@ export default {
 		if (response.status == 200) {
 			const messages = [];
 
-			let before, after;
-			before = '';
+			let after;
 			after = '';
-			if (responseData.before) {
-				before = responseData.before;
-			}
 			if (responseData.after) {
 				after = responseData.after;
 			}
@@ -117,8 +118,7 @@ export default {
 				messages.push(message);
 			}
 			context.commit('setUnreadMessages', messages);
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setAfter', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
@@ -149,7 +149,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		// console.log(responseData);
 		if (response.status == 200) {
 			const mentions = [];
 
@@ -204,7 +204,14 @@ export default {
 	 */
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/messages', {
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (afterMod) {
+			mediaQuery = '?limit=25&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=25';
+		}
+		const response = await fetch(baseurl + `/message/messages${mediaQuery}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -212,16 +219,12 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		// console.log(responseData);
 		if (response.status == 200) {
 			const messages = [];
 
-			let before, after;
-			before = '';
+			let after;
 			after = '';
-			if (responseData.before) {
-				before = responseData.before;
-			}
 			if (responseData.after) {
 				after = responseData.after;
 			}
@@ -259,8 +262,7 @@ export default {
 				messages.push(message);
 			}
 			context.commit('setUserMessages', messages);
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setAfter', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
@@ -283,7 +285,14 @@ export default {
 	 */
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/post-reply', {
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (afterMod) {
+			mediaQuery = '?limit=25&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=25';
+		}
+		const response = await fetch(baseurl + `/message/post-reply${mediaQuery}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -291,21 +300,15 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		// console.log(responseData);
 		if (response.status == 200) {
 			const replies = [];
 
-			let before, after;
-			before = '';
+			let after;
 			after = '';
-			if (responseData.before) {
-				before = responseData.before;
-			}
 			if (responseData.after) {
 				after = responseData.after;
 			}
-			console.log('before', before);
-			console.log('after', after);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const reply = {
 					id: responseData.children[i].id,
@@ -325,8 +328,7 @@ export default {
 				replies.push(reply);
 			}
 			context.commit('setPostReplies', replies);
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setAfter', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
@@ -349,7 +351,14 @@ export default {
 	 */
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
-		const response = await fetch(baseurl + '/message/sent', {
+		const afterMod = payload.afterMod;
+		let mediaQuery;
+		if (afterMod) {
+			mediaQuery = '?limit=25&after=' + afterMod;
+		} else {
+			mediaQuery = '?limit=25';
+		}
+		const response = await fetch(baseurl + `/message/sent${mediaQuery}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -359,12 +368,9 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			const messages = [];
-			let before, after;
-			before = '';
+
+			let after;
 			after = '';
-			if (responseData.before) {
-				before = responseData.before;
-			}
 			if (responseData.after) {
 				after = responseData.after;
 			}
@@ -384,8 +390,7 @@ export default {
 				messages.push(message);
 			}
 			context.commit('setSentMessages', messages);
-			context.commit('before', before);
-			context.commit('after', after);
+			context.commit('setAfter', after);
 		} else if (response.status == 401) {
 			const error = new Error(
 				responseData.error || 'Unauthorized to view this info'
@@ -513,7 +518,7 @@ export default {
 			);
 			throw error;
 		} else if (response.status == 500) {
-			const error = new Error(responseData.error || 'Internal Server Error');
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},

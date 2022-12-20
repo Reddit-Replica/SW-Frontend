@@ -157,8 +157,9 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				localStorage.setItem('Password', payload.password);
-				console.log(localStorage.getItem('Password'));
+				// localStorage.setItem('Password', payload.password);
+				// console.log(localStorage.getItem('Password'));
+				// console.log(localStorage.getItem('Password'));
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
@@ -204,8 +205,8 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				localStorage.setItem('Password', payload.password);
-				console.log(localStorage.getItem('Password'));
+				// localStorage.setItem('Password', payload.password);
+				// console.log(localStorage.getItem('Password'));
 				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
@@ -319,9 +320,13 @@ export default {
 			baseurl + '/email-available' + '?email=' + payload.email
 		);
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		console.log(response.status);
-		if (response.ok) {
+		if (
+			response.status == 200 ||
+			response.status == 201 ||
+			response.status == 304
+		) {
 			if (!responseData.Error) {
 				context.commit('setUser', {
 					response: response.status,
@@ -346,6 +351,49 @@ export default {
 			accessToken: null,
 			userName: null,
 		});
+	},
+	/**
+	 * action for verify Email
+	 * @action  verifyEmail
+	 * @param {Object} payload id & token .
+	 * @returns {void}
+	 */
+	async verifyEmail(context, payload) {
+		const baseurl = payload.baseurl;
+		const id = payload.id;
+		const token = payload.token;
+		console.log('Ahmed');
+		const response = await fetch(
+			baseurl + '/verify-email/' + id + '/' + token,
+			{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+			}
+		);
+
+		const responseData = await response.json();
+		//console.log(responseData.token);
+		if (response.status == 200) {
+			//localStorage.setItem('response', response.status);
+			context.commit('setResponse', {
+				response: response.status,
+			});
+			//this.$cookies.set('response', response.status);
+			if (responseData.token)
+				localStorage.setItem('accessToken', responseData.token);
+			// this.$cookies.set('accessToken', responseData.token);
+		} else if (response.status == 400) {
+			const error = new Error(responseData.error);
+			console.log(responseData.error);
+			throw error;
+		} else if (response.status == 403) {
+			const error = new Error('invalid token');
+
+			throw error;
+		} else {
+			const error = new Error('server error');
+			throw error;
+		}
 	},
 };
 //get request example

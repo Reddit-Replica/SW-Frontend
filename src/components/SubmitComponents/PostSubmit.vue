@@ -241,24 +241,76 @@
 							<span class="tool-tip-text strike">Add a video</span>
 							<button class="icon ql-video"></button>
 						</div>
-						<div class="icon" data-v-72dd2826="">
-							<svg
-								class="svg-inline--fa fa-ellipsis"
-								aria-hidden="true"
-								focusable="false"
-								data-prefix="fas"
-								data-icon="ellipsis"
-								role="img"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 448 512"
-								data-v-72dd2826=""
+						<div class="dropdown icon-dot">
+							<button
+								class="btn btn-secondary dropdown-toggle"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
-								<path
-									class=""
-									fill="currentColor"
-									d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"
-								></path>
-							</svg>
+								<svg
+									class="svg-inline--fa fa-ellipsis"
+									aria-hidden="true"
+									focusable="false"
+									data-prefix="fas"
+									data-icon="ellipsis"
+									role="img"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 448 512"
+									data-v-72dd2826=""
+								>
+									<path
+										class=""
+										fill="currentColor"
+										d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"
+									></path>
+								</svg>
+							</button>
+							<ul class="dropdown-menu dropdown">
+								<li><button class="icon dropdown-item ql-bold"></button></li>
+								<li><button class="icon dropdown-item ql-italic"></button></li>
+								<li><button class="icon dropdown-item ql-link"></button></li>
+								<li><button class="icon dropdown-item ql-strike"></button></li>
+								<li><button class="icon dropdown-item ql-code"></button></li>
+								<li>
+									<button
+										class="icon dropdown-item ql-script"
+										value="super"
+									></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-header"
+										value="1"
+									></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-list"
+										value="bullet"
+									></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-list"
+										value="ordered"
+									></button>
+								</li>
+								<li>
+									<button class="icon dropdown-item ql-blockquote"></button>
+								</li>
+								<li>
+									<button class="icon dropdown-item ql-code-block"></button>
+								</li>
+								<li><button class="icon dropdown-item ql-image"></button></li>
+								<li><button class="icon dropdown-item ql-video"></button></li>
+								<li>
+									<button class="icon dropdown-item ql-blockquote"></button>
+								</li>
+								<li>
+									<button class="icon dropdown-item ql-blockquote"></button>
+								</li>
+							</ul>
 						</div>
 						<div></div>
 					</div>
@@ -275,6 +327,8 @@
 </template>
 
 <script>
+// import vSelect from 'vue-select';
+// import 'vue-select/dist/vue-select.css';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // import renderer from 'quilljs-renderer';
@@ -287,13 +341,22 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // 	},
 // 	true
 // );
-
 export default {
+	props: {
+		initialContent: {
+			type: Object,
+			required: false,
+			default() {
+				return {};
+			},
+		},
+	},
 	data() {
 		return {
 			markdownMode: false,
-			content: '',
+			content: this.initialContent,
 			data: '',
+			selected: 'dee',
 
 			// editorOption: {
 			// 	theme: 'snow',
@@ -342,6 +405,7 @@ export default {
 	},
 	components: {
 		QuillEditor,
+		// vSelect,
 	},
 	computed: {},
 	watch: {
@@ -638,6 +702,9 @@ button {
 	resize: vertical;
 	color: #000;
 }
+.icon-dot {
+	display: none;
+}
 
 /*@media (max-width: 1600px) {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(13),
@@ -826,6 +893,9 @@ button {
 	}
 	.icons-box .tool-tip:last-of-type li:nth-of-type(3) {
 		display: flex;
+	}
+	.icon-dot {
+		display: block;
 	}
 }
 @media (max-width: 510px) {

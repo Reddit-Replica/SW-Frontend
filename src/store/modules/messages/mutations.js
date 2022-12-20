@@ -62,9 +62,6 @@ export default {
 	addSuccessfully(state, payload) {
 		state.addSuccessfully = payload;
 	},
-	setBefore(state, payload) {
-		state.before = payload;
-	},
 	setAfter(state, payload) {
 		state.after = payload;
 	},

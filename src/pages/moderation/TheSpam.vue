@@ -1,26 +1,44 @@
 <template>
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
 		<queue-bar :title="'Spam'"></queue-bar>
 		<clean-queue v-if="listOfSpams && listOfSpams.length == 0"></clean-queue>
 		<div v-else>
-			<base-post
-				v-for="(spam, index) in listOfSpams"
-				:key="spam"
-				:spam="spam"
+			<div v-for="value in listOfSpams" :key="value.id">
+				<new-base-post :spam="value" :index="value.id"></new-base-post>
+			</div>
+			<!-- <base-post
+				v-for="value in listOfSpams"
+				:key="value.id"
+				:spam="value"
 				:index="index"
-			></base-post>
+			></base-post> -->
 		</div>
 	</div>
 </template>
 
 <script>
 import CleanQueue from '../../components/moderation/CleanQueue.vue';
-import BasePost from '../../components/moderation/BasePost.vue';
+import NewBasePost from '../../components/moderation/NewBasePost.vue';
 import QueueBar from '../../components/moderation/QueueBar.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
-	components: { CleanQueue, BasePost, QueueBar },
-	beforeMount() {
-		this.loadListOfSpams();
+	components: { CleanQueue, NewBasePost, QueueBar, TheSpinner },
+	async created() {
+		this.loading = true;
+		if (localStorage.getItem('accessToken')) {
+			await this.loadListOfSpams();
+		}
+		this.loading = false;
+	},
+	data() {
+		return {
+			loading: false,
+		};
 	},
 	computed: {
 		// @vuese
@@ -34,6 +52,7 @@ export default {
 		//return list of spams
 		// @type object
 		listOfSpams() {
+			console.log(this.$store.getters['moderation/listOfSpams']);
 			return this.$store.getters['moderation/listOfSpams'];
 		},
 	},
@@ -41,20 +60,20 @@ export default {
 		// @vuese
 		//load spam list from the store
 		// @arg no argument
-		async loadListOfSpams(title) {
-			let beforeMod = '',
-				afterMod = '';
-			if (title == 'before') {
-				beforeMod = this.before;
-			} else if (title == 'after') {
-				afterMod = this.after;
-			}
+		async loadListOfSpams() {
+			// let beforeMod = '',
+			// 	afterMod = '';
+			// if (title == 'before') {
+			// 	beforeMod = this.before;
+			// } else if (title == 'after') {
+			// 	afterMod = this.after;
+			// }
 			try {
 				await this.$store.dispatch('moderation/loadListOfSpams', {
 					baseurl: this.$baseurl,
 					subredditName: this.subredditName,
-					beforeMod: beforeMod,
-					afterMod: afterMod,
+					// beforeMod: beforeMod,
+					// afterMod: afterMod,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

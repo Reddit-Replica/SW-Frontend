@@ -7,23 +7,29 @@ export default {
 	 */
 	async getUserPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/posts`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// ?sort=new&time=all&before=&after=&limit=10
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/posts?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -39,25 +45,65 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserMorePostData(context, payload) {
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/posts`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			`${baseurl}+/user/${payload.userName}/posts?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserMorePostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
 	async getUserPinnedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		console.log('pinned-post-body', payload.body);
-		let url = new URL(baseurl + `/pinned-posts`);
-		let params = {
-			username: payload.body.username,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// console.log('pinned-post-body', payload.body);
+		// let url = new URL(baseurl + `/pinned-posts`);
+		// let params = {
+		// 	username: payload.body.username,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		console.log('stst');
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl + `/pinned-posts?username=${payload.body.username}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -78,23 +124,29 @@ export default {
 		console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/overview`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: payload.params.limit,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// console.log(url);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/overview?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -110,27 +162,72 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserMoreOverviewData(context, payload) {
+		console.log('overvie Actions');
+
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: payload.params.limit,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/overview?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log('overvie Actions', responseData);
+		if (response.status == 200)
+			context.commit('setUserMoreOverviewData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
 	async getUserSavedData(context, payload) {
 		console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/saved`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/saved?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -146,25 +243,69 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserMoreSavedData(context, payload) {
+		console.log('overvie Actions');
+
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/saved?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log('saved Actions', responseData);
+		if (response.status == 200)
+			context.commit('setUserMoreOverviewData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
 	async getUserHistoryPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/history`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/history`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/history?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -175,6 +316,44 @@ export default {
 		console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserMoreHistoryPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/history`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/history?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserMorePostData', {
 				responseData,
 				responseStatus: response.status,
 			});
@@ -182,23 +361,27 @@ export default {
 	},
 	async getUserUpVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/upvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -209,6 +392,45 @@ export default {
 		console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserMoreUpVotedPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/upvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserMorePostData', {
 				responseData,
 				responseStatus: response.status,
 			});
@@ -216,23 +438,27 @@ export default {
 	},
 	async getUserDownVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/downvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -243,6 +469,45 @@ export default {
 		console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+	async getUserMoreDownVotedPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/downvoted?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setUserMorePostData', {
 				responseData,
 				responseStatus: response.status,
 			});
@@ -250,23 +515,27 @@ export default {
 	},
 	async getUserHiddenPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/hidden?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -282,25 +551,68 @@ export default {
 			});
 		return response.status;
 	},
+	async getUserMoreHiddenPostData(context, payload) {
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/userpostdata`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/hidden?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		console.log(responseData);
+		if (response.status == 200)
+			context.commit('setMoreUserPostData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.userName}/comments`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/user-comments`); // mock server
-		const response = await fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/comments?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
@@ -315,23 +627,63 @@ export default {
 		});
 		return response.status;
 	},
+	async getUserMoreCommentsData(context, payload) {
+		const baseurl = payload.baseurl;
+		// let url = new URL(baseurl + `/user/${payload.userName}/comments`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
+		// const response = await fetch(baseurl + `/user-comments`); // mock server
+		const response = await fetch(
+			baseurl +
+				`/user/${payload.userName}/comments?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			throw error;
+		}
+		// if (response.status == 200)
+		context.commit('setUserMoreCommentsData', {
+			responseData,
+			responseStatus: response.status,
+		});
+		return response.status;
+	},
 	async getInsightsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/post-insights`);
-		let params = {
-			id: `${payload.params.id}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/post-insights`);
+		// let params = {
+		// 	id: `${payload.params.id}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/post-insights`); // mock server
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl + `/post-insights?id=${payload.params.id}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(

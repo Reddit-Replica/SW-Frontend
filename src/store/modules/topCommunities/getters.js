@@ -23,4 +23,10 @@ export default {
 	getOneCommunities(state) {
 		return state.oneCommunities;
 	},
+	getTrendingCommunities(state) {
+		return state.trendingCommunities;
+	},
+	getSuggestedCommunity(state) {
+		return state.suggestedCommunity;
+	},
 };

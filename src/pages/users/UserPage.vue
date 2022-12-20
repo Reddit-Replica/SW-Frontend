@@ -37,11 +37,11 @@
 							:style="checkInOverviewPage ? 'flex-grow: 0;' : 'flex-grow : 2 ;'"
 						>
 							<!-- <sortposts-bar></sortposts-bar> -->
-							<router-view :state="state" @emitPopup="emitPopup"></router-view>
+							<router-view :state="state" @emit-popup="emitPopup"></router-view>
 						</main>
 						<aside id="profile-aside">
 							<profile-card
-								:user-name="getUserName"
+								:user-name="this.$route.params.userName"
 								:state="state"
 								:user-data="getUserData.userData"
 							/>
@@ -60,10 +60,10 @@
 		<SaveUnsavePopupMessage
 			v-for="message in popupMessages"
 			:key="message.id"
-			:type="message.type"
-			:state="message.state"
 			:typeid="message.postid"
-		></SaveUnsavePopupMessage>
+		>
+			{{ message.state }}
+		</SaveUnsavePopupMessage>
 	</div>
 </template>
 
@@ -158,6 +158,7 @@ export default {
 				responseStatus = await this.$store.dispatch('user/getUserData', {
 					baseurl: this.$baseurl,
 					userName: this.$route.params.userName,
+					auth: 'medo',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -201,7 +202,7 @@ export default {
 				this.state = 'user'; /* means other user */
 			// console.log(this.state);
 			/* after that we fetch data fetch user data */
-			document.title = this.$store.state.userName + ' - Reddit';
+			document.title = localStorage.getItem('userName') + ' - Reddit';
 			const requestStatus = await this.RequestUserData();
 			console.log(requestStatus);
 			this.loading = false;

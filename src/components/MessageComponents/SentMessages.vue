@@ -45,6 +45,7 @@ export default {
 	props: {
 		// @vuese
 		//details of message
+		// @type object
 		message: {
 			type: Object,
 			required: true,
@@ -58,6 +59,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -81,7 +83,7 @@ export default {
 	methods: {
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
 			// this.$store.dispatch('moderation/handleTime', {
 			// 	time: this.message.sendAt,

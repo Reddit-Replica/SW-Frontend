@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="page-leaderboard-1">
 		<the-header></the-header>
 		<top-bar></top-bar>
 		<div class="top-page">
@@ -21,6 +21,10 @@ export default {
 		CategoriesBar,
 		CommunitiesBar,
 		CardsBar,
+	},
+	beforeMount() {
+		if (localStorage.getItem('accessToken') == null)
+			this.$router.push('/login');
 	},
 };
 </script>

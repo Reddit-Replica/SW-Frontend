@@ -129,6 +129,9 @@ import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 export default {
 	components: { SubMenu },
 	computed: {
+		// @vuese
+		//return subreddit name
+		// @type string
 		subredditName() {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
@@ -170,8 +173,13 @@ export default {
 			}
 		},
 		titleSecond(value) {
-			this.editing(value);
-			this.spaming(value);
+			if (value == 'Posts') {
+				this.editing('posts');
+				this.spaming('posts');
+			} else {
+				this.editing('comments');
+				this.spaming('comments');
+			}
 		},
 	},
 	emits: ['getarr'],

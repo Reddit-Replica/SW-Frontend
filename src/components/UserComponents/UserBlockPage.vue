@@ -143,10 +143,14 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// username of the blocked user
 		username: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// picture of the blocked user
 		pic: {
 			type: String,
 			required: true,
@@ -154,10 +158,20 @@ export default {
 	},
 	emits: ['continueClicked', 'gobackClicked'],
 	methods: {
+		/**
+		 * @vuese
+		 * continue clicked handler to continue to the blocked user page
+		 * @arg no arg
+		 */
 		continueClicked() {
 			this.$emit('continueClicked');
 			console.log('continueClicked');
 		},
+		/**
+		 * @vuese
+		 * go back click handler to not continue to the blocked user page and go back
+		 * @arg no arg
+		 */
 		goBackClicked() {
 			this.$emit('gobackClicked');
 			console.log('gobackClicked');

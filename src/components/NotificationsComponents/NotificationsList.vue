@@ -9,7 +9,7 @@
 						class="ntf-title title-grey flex"
 						id="ntf-list-6"
 						>Messages
-						<span class="circle-red" id="ntf-list-7">18</span>
+						<!-- <span class="circle-red" id="ntf-list-7">18</span> -->
 					</router-link>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -60,14 +60,14 @@
 				<h1 id="ntf-list-15">You don’t have any activity yet</h1>
 				<p id="ntf-list-16">
 					That’s ok, maybe you just need the right inspiration. Try posting in
-					r/<router-link to="subredditLink">{{
+					r/<router-link :to="linkSubreddit">{{
 						randomSubredditName
 					}}</router-link>
 					, a popular community for discussion.
 				</p>
 				<base-button
 					link
-					to="/notifications"
+					:to="linkSubreddit"
 					class="button-visit"
 					id="ntf-list-17"
 					>Visit r/{{ randomSubredditName }}</base-button
@@ -84,11 +84,12 @@ export default {
 	},
 	beforeMount() {
 		this.loadAllNotifications();
+		this.getSuggestedCommunity();
 	},
 	data() {
 		return {
 			notifications: [],
-			randomSubredditName: 'subreddit_new',
+			suggestedCommunity: [],
 		};
 	},
 	computed: {
@@ -98,16 +99,22 @@ export default {
 		subredditLink() {
 			return 'r/' + this.randomSubredditName;
 		},
+		randomSubredditName() {
+			return this.suggestedCommunity[0].data.title;
+		},
+		linkSubreddit() {
+			return '/r/' + this.suggestedCommunity[0].data.title;
+		},
 	},
 	methods: {
 		async loadAllNotifications() {
 			const accessToken = localStorage.getItem('accessToken');
-			await this.$store.dispatch('notifications/getAllNotifications', {
+			await this.$store.dispatch('notifications/getSomeNotifications', {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
 			this.notifications =
-				this.$store.getters['notifications/getNotifications'];
+				this.$store.getters['notifications/getSomeNotifications'];
 		},
 		async markAllRead() {
 			const accessToken = localStorage.getItem('accessToken');
@@ -120,32 +127,39 @@ export default {
 		reloadPage() {
 			this.loadAllNotifications();
 		},
+		async getSuggestedCommunity() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('topCommunity/getSuggestedCommunity', {
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.suggestedCommunity =
+				this.$store.getters['topCommunity/getSuggestedCommunity'];
+			console.log(this.suggestedCommunity);
+		},
 	},
 };
 </script>
 
 <style scoped>
 .ntf-header-list {
-	/* height: 307px;
-	max-height: 307px; */
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	/* height: auto; */
 }
 .ntf-nav {
 	display: flex;
 	justify-content: space-between;
-	padding: 16px;
+	padding: 1.6rem;
 }
 .ntf-title {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
-	line-height: 18px;
+	line-height: 1.8rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	margin-right: 12px;
+	margin-right: 1.2rem;
 }
 .ntf-title-2 {
 	align-items: center;
@@ -155,7 +169,7 @@ export default {
 }
 .bi-bookmark-check {
 	border-left: var(--line-7);
-	padding-left: 8px;
+	padding-left: 0.8rem;
 	width: fit-content;
 	fill: var(--color-grey-dark-10);
 }
@@ -166,33 +180,33 @@ export default {
 	color: var(--color-dark-3);
 }
 .ntf-list-title {
-	font-size: 18px;
+	font-size: 1.8rem;
 	font-weight: 550;
-	line-height: 22px;
-	letter-spacing: 0.5px;
+	line-height: 2.2rem;
+	letter-spacing: 0.5rem;
 	color: var(--color-dark-3);
-	padding: 8px 16px;
+	padding: 0.8rem 1.6rem;
 }
 ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	font-size: 12px !important;
+	font-size: 1.2rem !important;
 }
 .see-all-ntf {
 	align-items: center;
 	background-color: var(--color-grey-light-3);
-	border-radius: 0 0 4px 4px;
+	border-radius: 0 0 0.4rem 0.4rem;
 	display: flex;
-	height: 49px;
+	height: 4.9rem;
 	justify-content: center;
-	padding: 0 12px;
+	padding: 0 1.2rem;
 }
 .see-all-link {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 700;
-	letter-spacing: 0.5px;
-	line-height: 32px;
+	letter-spacing: 0.05rem;
+	line-height: 3.2rem;
 	text-transform: uppercase;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -209,14 +223,14 @@ ul {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-left: 8px;
+	margin-left: 0.8rem;
 }
 .flex {
 	display: flex;
 }
 .ntf-list {
-	height: 307px;
-	max-height: 307px;
+	height: 30.7rem;
+	max-height: 30.7rem;
 	overflow: hidden;
 	overflow-y: scroll;
 }
@@ -229,41 +243,47 @@ ul {
 	overflow-y: hidden;
 }
 img {
-	height: 128px;
+	height: 12.8rem;
 }
 h1 {
-	font-size: 18px;
+	font-size: 1.8rem;
 	font-weight: 400;
-	line-height: 22px;
+	line-height: 2.2rem;
 	font-weight: 500;
-	margin-top: 5px;
+	margin-top: 0.5rem;
 }
 p {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 400;
-	line-height: 18px;
+	line-height: 1.8rem;
 	color: var(--color-grey-dark-10);
 	text-align: center;
-	margin: 0 40px;
-	margin-top: 5px;
+	margin: 0 4rem;
+	margin-top: 0.5rem;
 	width: 65%;
 }
 .button-visit {
 	font-style: normal;
 	font-weight: 700;
-	font-size: 14px;
-	line-height: 18px;
+	font-size: 1.4rem;
+	line-height: 1.8rem;
 
 	width: fit-content;
-	height: 40px;
+	height: 4rem;
 
 	color: var(--color-white-1);
 	background: var(--color-blue-2);
-	margin-top: 10px;
-	padding: 20px;
+	margin-top: 1rem;
+	padding: 2rem;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+@media only screen and (max-width: 1100px) {
+	#ntf-list-1 {
+		padding: 0;
+		height: auto;
+	}
 }
 </style>

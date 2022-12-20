@@ -1,7 +1,6 @@
 <template>
-	<div class="item">
+	<div class="item" id="theBox">
 		<div class="box">
-			<div></div>
 			<div class="left-bar">
 				<div class="icons">
 					<div class="d-flex flex-column vote-box">
@@ -14,6 +13,7 @@
 								<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
 						</div>
+						<div class="count">{{ counter }}</div>
 						<div
 							class="downvote"
 							@click="downvote"
@@ -74,13 +74,19 @@
 				</div>
 				<div class="post-title">
 					<div class="title-box">{{ spam.title }}</div>
-					<div class="body-box">{{ spam.content }}</div>
+					<div class="body-box" v-if="spam.content != null">
+						{{ spam.content.ops[0].insert }}
+					</div>
 				</div>
 				<div v-if="!spam.commentId">
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
 				</div>
 				<div class="footer">
-					<div class="removed-box" :class="approved ? 'approved-box' : ''">
+					<div
+						class="removed-box"
+						:class="approved ? 'approved-box' : ''"
+						v-if="this.$route.matched.some(({ name }) => name === 'spam')"
+					>
 						<div>
 							<img
 								src="../../../img/default_inbox_avatar.png"
@@ -101,7 +107,12 @@
 							:id="'approve-button-' + index"
 							>Approve</base-button
 						>
-						<base-button :id="'flair-button-' + index">Flair</base-button>
+						<base-button
+							v-if="!this.$route.matched.some(({ name }) => name === 'spam')"
+							:id="'Remove-button-' + index"
+							@click="removeFunction()"
+							>Remove</base-button
+						>
 					</div>
 				</div>
 			</div>
@@ -115,15 +126,19 @@ export default {
 	data() {
 		return {
 			downClicked: false,
+			upClicked: false,
 			subreddit: {},
 			errorResponse: '',
 			approved: false,
 			handleTime: '',
+			removed: false,
+			counter: this.spam.votes,
 		};
 	},
 	beforeMount() {
 		this.getSubreddit();
 		this.calculateTime();
+		this.see();
 	},
 	computed: {
 		// @vuese
@@ -157,6 +172,15 @@ export default {
 	},
 	methods: {
 		// @vuese
+		// check Voted
+		see() {
+			if (this.spam.vote == 1) {
+				this.upClicked = true;
+			} else if (this.spam.vote == -1) {
+				this.downClicked = true;
+			}
+		},
+		// @vuese
 		//calculate time
 		// @type object
 		calculateTime() {
@@ -189,22 +213,30 @@ export default {
 		async upvote() {
 			if (this.upClicked == false) {
 				try {
-					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
+					let P_id = 0;
+					let P_type = '';
+					if (this.spam.commentId) {
+						P_id = this.spam.commentId;
+						P_type = 'comment';
+					} else {
+						P_id = this.spam.postId;
+						P_type = 'post';
+					}
+					this.$store.dispatch('moderation/vote', {
+						id: P_id,
+						type: P_type,
 						direction: 1,
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.upClicked = true;
-					}
+					this.upClicked = true;
+					this.counter += 1;
 				} catch (err) {
 					this.errorResponse = err;
 					this.upClicked = false;
 				}
-			} else {
-				this.upClicked = false;
 			}
-			if (this.downClicked) {
+			if (this.downClicked == true) {
+				this.counter += 1;
 				this.downClicked = false;
 			}
 		},
@@ -214,22 +246,33 @@ export default {
 		async downvote() {
 			if (this.downClicked == false) {
 				try {
-					this.$store.dispatch('messages/voteComment', {
-						id: this.message.id,
+					let P_id = 0;
+					let P_type = '';
+					if (this.spam.commentId) {
+						P_id = this.spam.commentId;
+						P_type = 'comment';
+					} else {
+						P_id = this.spam.postId;
+						P_type = 'post';
+					}
+					this.$store.dispatch('moderation/vote', {
+						id: P_id,
 						direction: -1,
+						type: P_type,
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.downClicked = true;
-					}
+					this.downClicked = true;
+					this.counter = this.counter - 1;
 				} catch (err) {
 					this.errorResponse = err;
 					this.downClicked = false;
 				}
-			} else {
-				this.downClicked = false;
 			}
-			if (this.upClicked) {
+			// else {
+			// 	this.downClicked = false;
+			// }
+			if (this.upClicked == true) {
+				this.counter -= 1;
 				this.upClicked = false;
 			}
 		},
@@ -245,16 +288,39 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
+		async removeFunction() {
+			try {
+				let typing = '';
+				if (this.spam.commentId) {
+					typing = 'comment';
+				} else {
+					typing = 'post';
+				}
+				await this.$store.dispatch('moderation/removeFunction', {
+					id: this.spam.id,
+					baseurl: this.$baseurl,
+					type: typing,
+				});
+				if (this.$store.getters['moderation/Removed']) {
+					this.removed = true;
+					document.getElementById('theBox').style.display = 'none';
+				}
+			} catch (err) {
+				console.log(err);
+				this.errorResponse = err;
+			}
+		},
 		async approveFunction() {
 			try {
 				await this.$store.dispatch('moderation/approvedSpam', {
 					subredditName: this.subredditName,
 					baseurl: this.$baseurl,
-					id: this.spam.id,
-					type: this.spam.type,
+					id: this.spam.postId,
+					type: 'post',
 				});
 				if (this.$store.getters['moderation/approveSuccessfully']) {
 					this.approved = true;
+					document.getElementById('theBox').style.display = 'none';
 				}
 			} catch (err) {
 				console.log(err);
@@ -314,6 +380,9 @@ export default {
 	height: 2.4rem;
 	width: 2.4rem;
 }
+.icon:hover {
+	color: orange;
+}
 .right-bar {
 	background: #ffffff;
 	padding-top: 8px;
@@ -338,21 +407,14 @@ export default {
 	margin-right: 1rem;
 }
 .subreddit-details {
-	-ms-flex-align: center;
-	align-items: center;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-wrap: wrap;
-	flex-wrap: wrap;
-	-ms-flex: 1 1 auto;
-	flex: 1 1 auto;
 	overflow: hidden;
-	display: inline;
 	font-size: 12px;
-	font-weight: 400;
+	font-weight: 40;
 	line-height: 16px;
-	-ms-flex-align: center;
 	align-items: center;
+	display: flex;
+	flex-flow: row wrap;
+	flex: 0 0 auto;
 	color: inherit;
 }
 .subreddit-name {
@@ -406,7 +468,7 @@ export default {
 }
 .post-title {
 	color: #9b9b9b;
-	margin: 0 8px;
+	margin: -10px 20px;
 	font-size: 2.5rem;
 	font-weight: 700;
 }
@@ -415,6 +477,7 @@ export default {
 	position: relative;
 	text-decoration: none;
 	word-break: break-word;
+	font-size: small;
 }
 .body-box {
 	margin-top: 8px;
@@ -531,6 +594,15 @@ button {
 }
 button:hover {
 	border: 1px solid var(--color-dark-3);
+}
+.up-clicked {
+	color: orange;
+}
+.down-clicked {
+	color: orange;
+}
+.upvote:hover {
+	color: orange;
 }
 .approved-box {
 	background-color: rgba(70, 209, 96, 0.2);

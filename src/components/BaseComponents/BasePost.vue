@@ -140,20 +140,12 @@
 							/>
 						</svg>
 						Share
-						<ul class="sub-menu" v-if="shareSubMenuDisplay">
+						<ul class="sub-menu" v-if="shareSubMenuDisplay" @click="share">
 							<li>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									fill="currentColor"
-									class="bi bi-signpost-2"
-									viewBox="0 0 16 16"
-								>
-									<path
-										d="M7 1.414V2H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h5v1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H7v5h2v-5h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H9V6h4.5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.3 2.4a1 1 0 0 0-.8-.4H9v-.586a1 1 0 0 0-2 0zM13.5 3l.75 1-.75 1H2V3h11.5zm.5 5v2H2.5l-.75-1 .75-1H14z"
-									/>
-								</svg>
+								<font-awesome-icon
+									icon="fa-solid fa-code-branch"
+									class="crosspost-icon"
+								/>
 								Crosspost
 							</li>
 						</ul>
@@ -358,6 +350,12 @@ export default {
 		},
 	},
 	methods: {
+		share() {
+			this.$router.push({
+				path: '/submit',
+				query: { source_id: this.post.id },
+			});
+		},
 		//@vuese
 		//show post comments
 		showPostComments() {
@@ -367,51 +365,59 @@ export default {
 		//@vuese
 		//upvote on post
 		async upvote() {
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
-			if (this.upClicked == false) {
-				this.upClicked = true;
-				this.counter++;
+			if (localStorage.getItem('accessToken') != null) {
+				if (this.downClicked) {
+					this.downClicked = false;
+					this.counter++;
+				}
+				if (this.upClicked == false) {
+					this.upClicked = true;
+					this.counter++;
+				} else {
+					this.upClicked = false;
+					this.counter--;
+				}
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
-				this.upClicked = false;
-				this.counter--;
-			}
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.id,
-					type: 'post',
-					direction: 1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
 		//down vote on post
 		async downvote() {
-			if (this.upClicked) {
-				this.upClicked = false;
-				this.counter--;
-			}
-			if (this.downClicked == false) {
-				this.downClicked = true;
-				this.counter--;
+			if (localStorage.getItem('accessToken') != null) {
+				if (this.upClicked) {
+					this.upClicked = false;
+					this.counter--;
+				}
+				if (this.downClicked == false) {
+					this.downClicked = true;
+					this.counter--;
+				} else {
+					this.downClicked = false;
+					this.counter++;
+				}
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.id,
+						type: 'post',
+						direction: -1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
-				this.downClicked = false;
-				this.counter++;
-			}
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.id,
-					type: 'post',
-					direction: -1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
@@ -423,42 +429,50 @@ export default {
 		//@vuese
 		//hide post action
 		async hidePost() {
-			this.postHidden = true;
-			try {
-				await this.$store.dispatch('postCommentActions/hide', {
-					baseurl: this.$baseurl,
-					id: this.id,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-		},
-		//@vuese
-		//save post
-		async savePost() {
-			this.saved = !this.saved;
-			if (this.saved == true) {
-				this.$emit('saved', this.post.id);
+			if (localStorage.getItem('accessToken') != null) {
+				this.postHidden = true;
 				try {
-					await this.$store.dispatch('postCommentActions/save', {
+					await this.$store.dispatch('postCommentActions/hide', {
 						baseurl: this.$baseurl,
-						id: this.post.id,
-						type: 'post',
+						id: this.id,
 					});
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
 			} else {
-				this.$emit('unsaved', this.post.id);
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: this.post.id,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
+			}
+		},
+		//@vuese
+		//save post
+		async savePost() {
+			if (localStorage.getItem('accessToken') != null) {
+				this.saved = !this.saved;
+				if (this.saved == true) {
+					this.$emit('saved', this.post.id);
+					try {
+						await this.$store.dispatch('postCommentActions/save', {
+							baseurl: this.$baseurl,
+							id: this.post.id,
+							type: 'post',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					this.$emit('unsaved', this.post.id);
+					try {
+						await this.$store.dispatch('postCommentActions/unsave', {
+							baseurl: this.$baseurl,
+							id: this.post.id,
+							type: 'post',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
+			} else {
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
@@ -651,7 +665,9 @@ a {
 .post-content .post-services .services .sub-menu li.awards-item-in-sub-menu {
 	display: none;
 }
-
+.crosspost-icon {
+	transform: rotate(90deg);
+}
 @media (max-width: 1079px) {
 	.post-card .post-content .post-services .services .sub-menu li.post-sub-save {
 		display: flex;

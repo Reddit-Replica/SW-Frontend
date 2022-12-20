@@ -1,6 +1,9 @@
 <template>
 	<div class="box">
 		<p style="text-align: right">
+			<span v-if="errorr" class="error"
+				>you must fill Community topics, and Community Description.</span
+			>
 			<base-button
 				button-text="Save Changes"
 				:disable-button="buttonDisabled"
@@ -12,13 +15,15 @@
 		<h3 class="secondary-title">COMMUNITY PROFILE</h3>
 		<h3 class="medium-font">Community name</h3>
 		<input
-			maxlength="100"
+			maxlength="93"
 			type="text"
 			class="community-name-input"
 			v-model="communityName"
 			:placeholder="subredditName"
 		/>
-		<div class="Characters-remaining">93 Characters remaining</div>
+		<div class="Characters-remaining">
+			{{ communityNamecount }} Characters remaining
+		</div>
 		<h3 class="medium-font">Community topics</h3>
 		<span class="description"
 			>This will help Reddit recommend your community to relevant users and
@@ -96,7 +101,9 @@
 			style="margin-bottom: 0px"
 			v-model="communityDescription"
 		></textarea>
-		<div class="Characters-remaining">500 Characters remaining</div>
+		<div class="Characters-remaining">
+			{{ communityDescriptioncount }} Characters remaining
+		</div>
 		<h3 class="medium-font">Send welcome message to new members</h3>
 		<span class="description"
 			>Create a custom welcome message to greet people the instant they join
@@ -468,12 +475,12 @@
 		<p class="description">
 			When your community is marked as an 18+ community, users must be flagged
 			as 18+ in their user settings
-
 			<switch-button
-				id="btn2"
+				id="btn3"
 				style="margin-left: 15px"
 				@checked="getNsfw"
 				:val="nsfw"
+				v-if="create"
 			></switch-button>
 		</p>
 		<div v-if="communityType == 'Private'">
@@ -485,10 +492,11 @@
 				to join. Users may still send your subreddit modmail whether this is on
 				or off.
 				<switch-button
-					id="btn2"
+					id="btn3"
 					style="margin-left: 15px"
 					@checked="getRequesttojoin"
 					v-if="create"
+					:val="acceptingRequestsToJoin"
 				></switch-button>
 			</p>
 		</div>
@@ -527,7 +535,7 @@
 			<h3 class="medium-font">
 				Accepting new requests to post
 				<switch-button
-					id="btn2"
+					id="btn4"
 					style="margin-left: 15px"
 					@checked="getRequeststopost"
 					v-if="create"
@@ -554,6 +562,20 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
+	watch: {
+		communityName(value) {
+			this.communityNamecount = 93;
+			this.communityName = value;
+			this.communityNamecount =
+				this.communityNamecount - this.communityName.length;
+		},
+		communityDescription(value) {
+			this.communityDescriptioncount = 500;
+			this.communityDescription = value;
+			this.communityDescriptioncount =
+				this.communityDescriptioncount - this.communityDescription.length;
+		},
+	},
 	async created() {
 		await this.getSettings();
 		this.create = true;
@@ -563,6 +585,9 @@ export default {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
 		},
+		nsfww() {
+			return this.$store.getters['setting/getmoderationSettings'].NSFW;
+		},
 	},
 	components: {
 		vSelect,
@@ -571,6 +596,7 @@ export default {
 	},
 	data() {
 		return {
+			errorr: false,
 			communityName: '',
 			mainTopic: '',
 			subTopics: [],
@@ -678,6 +704,8 @@ export default {
 			setting: {},
 			savedUnsavedPosts: [],
 			create: false,
+			communityNamecount: 93,
+			communityDescriptioncount: 500,
 		};
 	},
 	methods: {
@@ -712,26 +740,39 @@ export default {
 		},
 		getSendmessage(value) {
 			this.sendWelcomeMessage = value;
-			console.log('this.sendWelcomeMessage');
-			console.log(this.sendWelcomeMessage);
+			// console.log('this.sendWelcomeMessage');
+			// console.log(this.sendWelcomeMessage);
 		},
 		getNsfw(value) {
+			console.log('val', value);
 			this.nsfw = value;
-			console.log('this.NSFW');
-			console.log(this.nsfw);
+			// console.log(this.nsfw);
 		},
 		getRequesttojoin(value) {
 			this.acceptingRequestsToJoin = value;
-			console.log('this.acceptingRequestsToJoin');
-			console.log(this.acceptingRequestsToJoin);
+			// console.log('this.acceptingRequestsToJoin');
+			// console.log(this.acceptingRequestsToJoin);
 		},
 		getRequeststopost(value) {
 			this.acceptingRequestsToPost = value;
-			console.log('this.acceptingRequestsToPost');
-			console.log(this.acceptingRequestsToPost);
+			// console.log('this.acceptingRequestsToPost');
+			// console.log(this.acceptingRequestsToPost);
 		},
 		async saveChanges() {
+			this.errorr = false;
 			if (this.communityName == '') this.communityName = this.subredditName;
+			if (!this.subTopics || !this.mainTopic || !this.communityDescription) {
+				console.log(
+					this.subTopics,
+					this.mainTopic,
+					this.communityDescription,
+					this.Region
+				);
+				this.errorr = true;
+				return;
+			}
+			this.errorr = false;
+			// console.log(this.NSFW, 'nnnn');
 			const actionPayload = {
 				communityName: this.communityName,
 				mainTopic: this.mainTopic,
@@ -746,17 +787,17 @@ export default {
 				acceptingRequestsToJoin: this.acceptingRequestsToJoin,
 				acceptingRequestsToPost: this.acceptingRequestsToPost,
 				approvedUsersHaveTheAbilityTo: this.approvedUsersHaveTheAbilityTo,
+				subredditName: this.subredditName,
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/communitySettings',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					// console.log(response);
+					// console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
@@ -770,6 +811,7 @@ export default {
 				communityName: this.communityName,
 				baseurl: this.$baseurl,
 			};
+			// console.log(actionPayload);
 			console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
@@ -777,15 +819,15 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					// console.log(response);
+					// console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
 			this.setting = this.$store.getters['setting/getmoderationSettings'];
-			console.log(this.setting);
+			// console.log('settings', this.setting);
 			this.communityName = this.setting.communityName;
 			this.mainTopic = this.setting.mainTopic;
 			this.subTopics = this.setting.subTopics;
@@ -800,6 +842,22 @@ export default {
 			this.acceptingRequestsToPost = this.setting.acceptingRequestsToPost;
 			this.approvedUsersHaveTheAbilityTo =
 				this.setting.approvedUsersHaveTheAbilityTo;
+
+			if (!this.acceptingRequestsToJoin) {
+				this.acceptingRequestsToJoin = false;
+			}
+			if (!this.acceptingRequestsToPost) {
+				this.acceptingRequestsToPost = false;
+			}
+			if (!this.approvedUsersHaveTheAbilityTo) {
+				this.approvedUsersHaveTheAbilityTo = 'Post only';
+			}
+			if (!this.NSFW) {
+				this.NSFW = false;
+			}
+			if (!this.sendWelcomeMessage) {
+				this.sendWelcomeMessage = false;
+			}
 		},
 		////////////////////////////////
 		doneSuccessfully(title) {
@@ -1108,5 +1166,12 @@ ol {
 	.box {
 		padding: 86px 24px;
 	}
+}
+.error {
+	color: var(--color-red-dark-1);
+	font-size: 1.2rem;
+	font-weight: 400;
+	line-height: 1.6rem;
+	margin: 0rem 2rem;
 }
 </style>

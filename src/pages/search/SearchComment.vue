@@ -1,7 +1,12 @@
 <template>
 	<div class="all">
-		<div class="after-all">
-			<the-header :header-title="'u/asmaaadel0'"></the-header>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 50%; top: 50%"
+			></the-spinner>
+		</div>
+		<div class="after-all" v-else>
+			<the-header :header-title="userName"></the-header>
 			<div class="page-release">
 				<div class="page">
 					<div>
@@ -68,93 +73,155 @@
 										v-if="!(SearchedComments && SearchedComments.length == 0)"
 									>
 										<div v-for="value in SearchedComments" :key="value.id">
-											<div class="high-nav">
-												<div class="com-det">
-													<img class="comimage" />
-													<div class="sub-name">
-														&nbsp;r/{{ value.postSubreddit }}&nbsp;
-													</div>
-												</div>
-												<span class="dot" role="presentation">•&nbsp;</span>
-												<div class="post-det">
-													<span
-														class="posted-by"
-														style="color: rgb(120, 124, 126)"
-														>Posted by</span
-													>
-													<div class="user-info">
-														<div id="user-name">
-															<a
-																class="user-name-info"
-																style="color: rgb(120, 124, 126)"
-																>u/{{ value.postpostedby }}</a
-															>
+											<div class="hovering">
+												<div class="high-nav">
+													<div class="com-det">
+														<div class="comimage">
+															<img
+																v-if="!value.picture"
+																src="../../../img/default_inbox_avatar.png"
+																alt="img"
+																class="communities-img"
+																@click="gotosub(value.postSubreddit)"
+																:id="'user-avatar-' + value.postSubreddit"
+															/>
+															<img
+																v-else
+																:src="$baseurl + '/' + value.picture"
+																alt="img"
+																class="communities-img"
+																:id="'user-avatar-' + value.postSubreddit"
+																@click="gotosub(value.postSubreddit)"
+															/>
+														</div>
+														<div class="sub-name">
+															&nbsp;<a :href="'/r/' + value.postSubreddit">
+																r/{{ value.postSubreddit }} &nbsp;</a
+															>&nbsp;
 														</div>
 													</div>
-													<span
-														class="posted-at"
-														style="color: rgb(120, 124, 126)"
-														>{{ this.calculateTime(value.postpostedAt) }}</span
-													>
-												</div>
-											</div>
-											<div>
-												<div class="comment">
-													<div class="post-content">
-														<div class="the-content">
-															<h3 class="the-words">
-																{{ value.postContnet }}
-															</h3>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="bording">
-												<div class="blue-one">
-													<div class="the-pic"></div>
-													<div class="the-rest">
-														<div class="user-commentes">
-															<span class="the-span"
-																><div class="div-name">
-																	<div class="div-name-2">
-																		<div id="user-info">
-																			<a class="name-commented">{{
-																				value.commentusername
-																			}}</a>
-																		</div>
-																	</div>
-																</div>
-																<span class="dot" role="presentation"
-																	>•&nbsp;</span
-																><a class="commented_at">{{
-																	this.calculateTime(value.commentcreatedAt)
-																}}</a>
-															</span>
-														</div>
-														<div class="comment-word">
-															<div class="comment-div">
-																<p class="p-comment">
-																	{{ value.commentcontent }}
-																</p>
+													<span class="dot" role="presentation">•&nbsp;</span>
+													<div class="post-det">
+														<span
+															class="posted-by"
+															style="color: rgb(120, 124, 126)"
+															>Posted by</span
+														>
+														<div class="user-info">
+															<div id="user-name">
+																<a
+																	class="user-name-info"
+																	style="color: rgb(120, 124, 126)"
+																	:href="'/user/' + value.postpostedby"
+																	>u/{{ value.postpostedby }}</a
+																>
 															</div>
 														</div>
-														<div class="down-nav">
-															<span class="votes"
-																>{{ value.commentvotes }} upvotes</span
-															>
+														<span
+															class="posted-at"
+															style="color: rgb(120, 124, 126)"
+															>{{
+																this.calculateTime(value.postpostedAt)
+															}}</span
+														>
+													</div>
+												</div>
+
+												<div>
+													<div class="comment">
+														<div class="post-content">
+															<div class="the-content">
+																<h3 class="the-words">
+																	{{ value.posttitle }}
+																</h3>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<a class="go-to-thread" role="button" tabindex="0"
-												>Go to thread</a
-											>
-											<div class="post-in">
-												<span class="no-cm-posts"
-													>{{ value.postvotes }} upvotes</span
-												><span class="no-cm-posts"
-													>{{ value.postComments }} comments</span
+												<div class="bording">
+													<div class="blue-one">
+														<div class="the-pic"></div>
+														<div class="the-rest">
+															<div class="user-commentes">
+																<span class="the-span"
+																	><div class="div-name">
+																		<div class="div-name-2">
+																			<div id="user-info">
+																				<a
+																					class="name-commented"
+																					:href="
+																						'/user/' + value.commentusername
+																					"
+																					>{{ value.commentusername }}</a
+																				>
+																			</div>
+																		</div>
+																	</div>
+																	<span class="dot" role="presentation"
+																		>•&nbsp;</span
+																	><a class="commented_at">{{
+																		this.calculateTime(value.commentcreatedAt)
+																	}}</a>
+																</span>
+															</div>
+															<div
+																class="point"
+																@click="
+																	gotocomment(
+																		value.id,
+																		value.title,
+																		value.subreddit,
+																		value.postedBy
+																	)
+																"
+															>
+																<div class="comment-word">
+																	<div class="comment-div">
+																		<p class="p-comment">
+																			{{ value.commentcontent.ops[0].insert }}
+																		</p>
+																	</div>
+																</div>
+																<div class="down-nav">
+																	<span class="votes"
+																		>{{ value.commentvotes }} upvotes</span
+																	>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<a
+													class="go-to-thread"
+													role="button"
+													tabindex="0"
+													@click="
+														gotocomment(
+															value.id,
+															value.title,
+															value.subreddit,
+															value.postedBy
+														)
+													"
+													>Go to thread</a
 												>
+												<div
+													class="post-in"
+													@click="
+														gotocomment(
+															value.id,
+															value.title,
+															value.subreddit,
+															value.postedBy
+														)
+													"
+												>
+													<span class="no-cm-posts"
+														>{{ value.postvotes }} upvotes</span
+													><span class="no-cm-posts"
+														>{{ value.postComments }} comments</span
+													>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -172,10 +239,12 @@
 </template>
 <script>
 import Notfound from '../../components/SearchComponents/NotFound.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
 	data() {
 		return {
 			q: '',
+			loading: false,
 		};
 	},
 	computed: {
@@ -183,6 +252,17 @@ export default {
 			console.log(this.$store.getters['search/GetComments']);
 			return this.$store.getters['search/GetComments'];
 		},
+
+		userName() {
+			return localStorage.getItem('userName');
+		},
+	},
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			this.loading = true;
+			await this.search();
+		}
+		this.loading = false;
 	},
 	beforeMount() {
 		this.search();
@@ -192,9 +272,10 @@ export default {
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(time);
-			if (currentDate.getFullYear() != myTime.getFullYear()) {
-				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
-			} else if (currentDate.getMonth() != myTime.getMonth()) {
+			// if (currentDate.getFullYear() != myTime.getFullYear()) {
+			// 	returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			// } else
+			if (currentDate.getMonth() != myTime.getMonth()) {
 				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
 			} else if (currentDate.getDate() != myTime.getDate()) {
 				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
@@ -218,14 +299,6 @@ export default {
 				console.log(error);
 			}
 		},
-		//not true just writing what will it been do in action
-		toggle(id) {
-			for (let i = 0; i < this.SearchedUsers().length; i++) {
-				if (this.SearchedUsers()[i].id == id) {
-					this.SearchedUsers()[i].joined = !this.SearchedUsers()[i].joined;
-				}
-			}
-		},
 		goSearch(value) {
 			if (value == 'cm') {
 				this.$router.replace({
@@ -244,8 +317,15 @@ export default {
 				});
 			}
 		},
+		gotocomment(id, title, sub, postman) {
+			if (sub != null) {
+				this.$router.push(`/r/${sub}/comments/${id}/${title}`);
+			} else {
+				this.$router.push(`/user/${postman}/comments/${id}/${title}`);
+			}
+		},
 	},
-	components: { Notfound },
+	components: { Notfound, TheSpinner },
 };
 </script>
 
@@ -349,6 +429,11 @@ a {
 	display: flex;
 	padding-top: 8px;
 }
+.hovering:hover {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
 .user-a {
 	margin-bottom: 0;
 	border-radius: 4px 4px 0 0;
@@ -409,6 +494,11 @@ a {
 	display: inline;
 	text-decoration: none;
 	vertical-align: baseline;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.sub-name:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .dot {
 	color: #7c7c7c;
@@ -439,6 +529,11 @@ a {
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 16px;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.user-name-info:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .comment {
 	padding: 0 16px;
@@ -508,6 +603,11 @@ a {
 	font-weight: 500;
 	line-height: 16px;
 	color: #1a1a1b;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.name-commented:hover {
+	text-decoration-color: rgba(0, 0, 0, 1);
 }
 .commented_at {
 	font-family: Noto Sans, Arial, sans-serif;
@@ -519,6 +619,10 @@ a {
 .comment-word {
 	padding: 2px 0;
 	width: 100%;
+}
+.communities-img {
+	width: 40px;
+	height: 40px;
 }
 .comment-div {
 	font-family: Noto Sans, Arial, sans-serif;
@@ -566,6 +670,11 @@ a {
 	min-width: 32px;
 	padding-left: 16px;
 	padding-right: 16px;
+	text-decoration: underline 0.15px rgba(0, 0, 0, 0);
+	transition: text-decoration-color 100ms;
+}
+.go-to-thread:hover {
+	text-decoration-color: rgb(111, 127, 221);
 }
 .post-in {
 	padding-left: 16px;

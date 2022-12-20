@@ -74,7 +74,9 @@
 				</div>
 				<div class="post-title">
 					<div class="title-box">{{ spam.title }}</div>
-					<div class="body-box">{{ spam.content }}</div>
+					<div class="body-box" v-if="spam.content != null">
+						{{ spam.content.ops[0].insert }}
+					</div>
 				</div>
 				<div v-if="!spam.commentId">
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
@@ -105,7 +107,9 @@
 						/> -->
 						<div class="p-box">
 							<p class="p">Removed</p>
-							<p class="p-poster">u/{{ spam.postBy }} {{ handleTime }}</p>
+							<p class="p-poster">
+								u/{{ spam.postBy }} {{ calculateTime(postedAt) }}
+							</p>
 						</div>
 					</div>
 					<div class="buttons">
@@ -170,6 +174,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -179,12 +184,8 @@ export default {
 	methods: {
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
-			// this.$store.dispatch('moderation/handleTime', {
-			// 	time: this.spam.data.publishTime,
-			// });
-
 			var currentDate = new Date();
 			var returnValue = '';
 			var myTime = new Date(this.spam.data.publishTime);
@@ -266,6 +267,9 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
+		// @vuese
+		//handle approve action
+		// @arg no argument
 		async approveFunction() {
 			try {
 				await this.$store.dispatch('moderation/approvedSpam', {
@@ -378,7 +382,7 @@ export default {
 }
 .subreddit-name {
 	display: inline-block;
-	-ms-flex: 0 0 auto;
+	/* -ms-flex: 0 0 auto; */
 	font-size: 12px;
 	font-weight: 700;
 	line-height: 16px;

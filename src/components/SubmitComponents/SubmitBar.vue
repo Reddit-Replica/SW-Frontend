@@ -138,11 +138,11 @@
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
 			></subreddit-card>
-			<subreddit-rules
+			<!-- <subreddit-rules
 				v-if="rules.length != 0"
 				:rules="subreddit.rules"
 				:subreddit-name="subredditTitle"
-			></subreddit-rules>
+			></subreddit-rules> -->
 		</div>
 		<div
 			v-if="inSubreddit"
@@ -174,19 +174,19 @@ import CreateCommunity from '../CommunityComponents/CreateCommunity.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostingtoReddit from './PostingtoReddit.vue';
 import SubredditCard from '../PostComponents/SubredditCard.vue';
-import SubredditRules from '../PostComponents/SubredditRules.vue';
+// import SubredditRules from '../PostComponents/SubredditRules.vue';
 
 export default {
-	beforeMount() {
-		this.loadListOfRules();
-	},
+	// beforeMount() {
+	// 	this.loadListOfRules();
+	// },
 	components: {
 		CreateCommunity,
 		// SubredditInfo,
 		PostingtoReddit,
 		ProfileCard,
 		SubredditCard,
-		SubredditRules,
+		// SubredditRules,
 	},
 	data() {
 		return {
@@ -280,13 +280,13 @@ export default {
 			this.inSubreddit = false;
 			this.subredditTitle = name;
 			this.communityName = name;
-			this.subreddit = '';
+			this.subreddit = null;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
 			this.path = false;
-			this.$store.commit('posts/setSubreddit', {
-				subreddit: this.subreddit,
+			this.$store.commit('posts/setName', {
+				name: localStorage.getItem('userName'),
 			});
 			this.$store.commit('posts/setinSubreddit', {
 				inSubreddit: this.inSubreddit,
@@ -344,17 +344,17 @@ export default {
 		// @vuese
 		//load Rules list from the store
 		// @arg no argument
-		async loadListOfRules() {
-			try {
-				await this.$store.dispatch('moderation/loadListOfRules', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			this.rules = this.$store.getters['moderation/listOfRules'];
-		},
+		// async loadListOfRules() {
+		// 	try {
+		// 		await this.$store.dispatch('moderation/loadListOfRules', {
+		// 			baseurl: this.$baseurl,
+		// 			subredditName: this.subredditName,
+		// 		});
+		// 	} catch (error) {
+		// 		this.error = error.message || 'Something went wrong';
+		// 	}
+		// 	this.rules = this.$store.getters['moderation/listOfRules'];
+		// },
 	},
 	computed: {
 		// @vuese
@@ -629,7 +629,7 @@ button {
 	position: absolute;
 	left: 103%;
 	width: 300px;
-	top: 450px;
+	top: 433px;
 }
 
 .big-box {
@@ -638,7 +638,8 @@ button {
 @media (max-width: 1255px) {
 	.subreddit-info,
 	.posting1,
-	.posting2 {
+	.posting2,
+	.posting3 {
 		display: none;
 	}
 }

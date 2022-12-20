@@ -11,13 +11,9 @@
 
 					<p class="user-agreement">
 						By continuing, you agree to our
-						<a href="https://www.redditinc.com/policies/user-agreement"
-							>User Agreement</a
-						>
+						<a href="/help">User Agreement</a>
 						and
-						<a href="https://www.redditinc.com/policies/privacy-policy"
-							>Privacy Policy</a
-						>.
+						<a href="/help">Privacy Policy</a>.
 					</p>
 
 					<form class="logining-in" @submit.prevent="handleSubmit">
@@ -189,7 +185,6 @@ export default {
 				// this.$router.replace('/main');
 
 				await this.$store.dispatch('notifications/createNotificationToken', {
-					host: 'http://localhost:8081',
 					baseurl: this.$baseurl,
 					token: localStorage.getItem('accessToken'),
 				});

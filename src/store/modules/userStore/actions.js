@@ -9,6 +9,37 @@ export default {
 	 * @returns {integer} status code
 	 */
 	async getUserData(context, payload) {
+		console.log('kkk', payload);
+		const baseurl = payload.baseurl;
+		// const response = await fetch(baseurl + `/user`);
+		const response = await fetch(baseurl + `/user/${payload.userName}/about`, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+		});
+		const responseData = await response.json();
+		console.log('kkk', responseData);
+		// console.log(responseData);
+		// if (!response.ok) {
+		// 	const error = new Error(
+		// 		responseData.message || 'Failed to fetch User Data!'
+		// 	);
+		// 	console.log(response.status);
+		// 	throw error;
+		// }
+		// console.log('medo', response.status);
+		// console.log(responseData);
+		if (payload.auth == 'medo') {
+			if (response.status == 200)
+				context.commit('setUserData', {
+					responseData,
+					responseStatus: response.status,
+				});
+		}
+		return response.status;
+	},
+	async getUserTempData(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
 		const response = await fetch(baseurl + `/user/${payload.userName}/about`, {
@@ -28,11 +59,11 @@ export default {
 		// }
 		// console.log('medo', response.status);
 		// console.log(responseData);
-		if (response.status == 200)
-			context.commit('setUserData', {
-				responseData,
-				responseStatus: response.status,
-			});
+		if (response.status == 200) return responseData;
+		// context.commit('setUserData', {
+		// 	responseData,
+		// 	responseStatus: response.status,
+		// });
 		return response.status;
 	},
 	/**
@@ -42,6 +73,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserPostData(context, payload) {
+		console.log('ggg', payload.userName);
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
 		let params = {
@@ -72,20 +104,29 @@ export default {
 
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
-		let url = new URL(baseurl + `/user/${payload.username}/comments`);
-		let params = {
-			sort: `${payload.params.sort}`,
-			time: `${payload.params.time}`,
-			before: `${payload.params.before}`,
-			after: `${payload.params.after}`,
-		};
-		Object.keys(params).forEach((key) =>
-			url.searchParams.append(key, params[key])
-		);
+		// let url = new URL(baseurl + `/user/${payload.username}/comments`);
+		// let params = {
+		// 	sort: `${payload.params.sort}`,
+		// 	time: `${payload.params.time}`,
+		// 	before: `${payload.params.before}`,
+		// 	after: `${payload.params.after}`,
+		// 	limit: `${payload.params.limit}`,
+		// };
+		// Object.keys(params).forEach((key) =>
+		// 	url.searchParams.append(key, params[key])
+		// );
 		// const response = await fetch(baseurl + `/user-comments`); // mock server
 		let response;
 		try {
-			response = await fetch(url); // API
+			response = await fetch(
+				baseurl +
+					`/user/${payload.username}/comments?sort=${payload.params.sort}&time=${payload.params.time}&before=${payload.params.before}&after=${payload.params.after}&limit=${payload.params.limit}`,
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+					},
+				}
+			); // API
 		} catch (error) {
 			console.log(error);
 		}
@@ -97,11 +138,51 @@ export default {
 			console.log(error);
 		}
 		console.log(responseData.message);
-		// if (response.status == 200)
-		context.commit('setUserCommentsData', {
-			responseData,
-			responseStatus: response.status,
-		});
+		if (response.status == 200)
+			context.commit('setUserCommentsData', {
+				responseData,
+				responseStatus: response.status,
+			});
+		return response.status;
+	},
+
+	async getUserMoreCommentsData(context, payload) {
+		const baseurl = payload.baseurl;
+		let url = new URL(baseurl + `/user/${payload.username}/comments`);
+		let params = {
+			sort: `${payload.params.sort}`,
+			time: `${payload.params.time}`,
+			before: `${payload.params.before}`,
+			after: `${payload.params.after}`,
+			limit: `${payload.params.limit}`,
+		};
+		Object.keys(params).forEach((key) =>
+			url.searchParams.append(key, params[key])
+		);
+		// const response = await fetch(baseurl + `/user-comments`); // mock server
+		let response;
+		try {
+			response = await fetch(url, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}); // API
+		} catch (error) {
+			console.log(error);
+		}
+		const responseData = await response.json();
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch User Data!'
+			);
+			console.log(error);
+		}
+		console.log(responseData.message);
+		if (response.status == 200)
+			context.commit('setUserMoreCommentsData', {
+				responseData,
+				responseStatus: response.status,
+			});
 		return response.status;
 	},
 
@@ -228,6 +309,7 @@ export default {
 	 */
 	async followUnfollowUser(context, payload) {
 		const followUnfollowData = payload.followUnfollowData;
+		console.log('actiom', followUnfollowData);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/follow-user', {
 			method: 'POST',

@@ -134,19 +134,44 @@
 										</div>
 									</div>
 									<div class="main">
-										<div class="content">
+										<div
+											class="content"
+											v-if="Object.keys(postDetails).length != 0"
+										>
 											<post-content
+												:editing="this.$route.query.edit == 'true'"
 												:post="postDetails"
 												:blur="false"
 											></post-content>
+											<div>
+												<post-submit
+													v-if="this.$route.query.edit == 'true'"
+													:initial-content="postDetails.content"
+												></post-submit>
+												<div class="edit-post-buttons">
+													<base-button
+														v-if="this.$route.query.edit == 'true'"
+														button-text="cancel"
+														class="cancel"
+														@click="cancePostEditing"
+													/>
+													<base-button
+														v-if="this.$route.query.edit == 'true'"
+														button-text="save"
+														class="save"
+														:disabled="!savePostEditing"
+														@click="savePostEdit"
+													/>
+												</div>
+											</div>
 										</div>
 										<div class="post-services">
 											<ul
 												class="services"
 												v-if="
 													(!postDetails.inYourSubreddit &&
-														postDetails.subreddit != '') ||
-													(postDetails.subreddit == '' &&
+														postDetails.subreddit != undefined) ||
+													(postDetails.subreddit == undefined &&
 														postDetails.postedBy != getuserName)
 												"
 											>
@@ -352,16 +377,13 @@
 												</li>
 											</ul>
 											<post-options
-												v-else-if="
-													postDetails.subreddit == '' &&
-													postDetails.postedBy == getuserName
-												"
+												v-else-if="postDetails.postedBy == getuserName"
 												:post-data="{ data: postDetails }"
 												:pinned-post-flag="false"
 											></post-options>
 										</div>
 										<div class="comment-submit">
-											<div class="comment-as-name">
+											<div class="comment-as-name" v-if="getuserName != ''">
 												Comment as
 												<router-link
 													:to="{
@@ -444,10 +466,10 @@
 								v-if="postDetails.subreddit != undefined"
 							></subreddit-info>
 							<profile-card
-								v-else
+								v-else-if="userData"
 								:user-data="userData"
-								:state="'profile'"
-								:user-name="'menna'"
+								:state="userState"
+								:user-name="$route.params.userName"
 							></profile-card>
 						</div>
 					</div>
@@ -455,6 +477,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- <button @click="click"></button> -->
 	<div class="positioning">
 		<SaveUnsavePopupMessage v-for="action in savedUnsavedPosts" :key="action">{{
 			action
@@ -470,8 +493,10 @@ import CommentSubmit from './CommentSubmit.vue';
 import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
 import PostOptions from '../UserComponents/BaseUserComponents/PostComponents/PostOptions.vue';
 import PostContent from './PostContent.vue';
+import PostSubmit from '../SubmitComponents/PostSubmit.vue';
 export default {
 	components: {
+		PostSubmit,
 		SubMenu,
 		SubredditInfo,
 		MyComment,
@@ -502,17 +527,16 @@ export default {
 			showSortByMenu: false,
 			sortByTitle: 'Best',
 			userComments: [],
+			userState: '',
+			userData: null,
 		};
 	},
 	computed: {
 		//@vuese
 		//get userName
 		getuserName() {
-			return localStorage.getItem('userName');
-		},
-		userData() {
-			// console.log(this.$store.getters['user/getUserData']);
-			return this.$store.getters['user/getUserData'].userData;
+			if (localStorage.getItem('userName') == null) return '';
+			else return localStorage.getItem('userName');
 		},
 		currentSortType() {
 			if (this.$route.query.sort) return this.$route.query.sort;
@@ -521,27 +545,59 @@ export default {
 		savedUnsavedPosts() {
 			return this.$store.getters['postCommentActions/getActions'];
 		},
+		savePostEditing() {
+			if (this.$store.getters['posts/getContent'] == null) return false;
+			else return true;
+		},
+	},
+	watch: {
+		async '$route.params.postId'(value) {
+			if (value != undefined) {
+				await this.getPostDetails();
+				console.log('userName');
+				//if (this.$route.params.userName != undefined) this.RequestUserData();
+				if (this.postDetails.subreddit == undefined)
+					await this.RequestUserData();
+				this.fetchPostComments();
+				// document.getElementById('test').addEventListener('scroll', () => {
+				// 	console.log('scroll');
+				// });
+			}
+		},
 	},
 	//@vuese
 	//before mount fetch posts according to type of sorting
-	created() {
-		this.getPostDetails();
-		this.RequestUserData();
+	async beforeMount() {
+		await this.getPostDetails();
+		console.log('userName');
+		//if (this.$route.params.userName != undefined) this.RequestUserData();
+		if (this.postDetails.subreddit == undefined) await this.RequestUserData();
 		this.fetchPostComments();
-		// document.getElementById('test').addEventListener('scroll', () => {
-		// 	console.log('scroll');
-		// });
+		document.getElementById('test').addEventListener('scroll', () => {
+			console.log('scroll');
+		});
 	},
 	methods: {
-		click() {
-			console.log('scrolled');
-		},
+		click() {},
 		handleScroll: function () {
-			console.log('scroll' + window.scrollY);
+			console.log('scroll');
 			if (window.scrollY > 50) {
 				this.fetchPostComments();
 			}
 			//return window.scrollY > 100;
+		},
+		async savePostEdit() {
+			this.$router.push({ query: { edit: 'false' } });
+			this.postDetails.content = this.$store.getters['posts/getContent'];
+			try {
+				await this.$store.dispatch('postCommentActions/editPost', {
+					baseurl: this.$baseurl,
+					content: this.$store.getters['posts/getContent'],
+					id: this.postDetails.id,
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
 		},
 		async fetchPostComments() {
 			console.log(this.$route.query.sort);
@@ -561,14 +617,18 @@ export default {
 			console.log(this.userComments);
 		},
 		async RequestUserData() {
+			console.log('inside request user data in post comment');
+			let responseData;
 			try {
-				await this.$store.dispatch('user/getUserData', {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
 					baseurl: this.$baseurl,
-					userName: this.getuserName,
+					userName: this.$route.params.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			if (responseData != null) this.userData = responseData;
+			console.log(this.userData);
 		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
@@ -587,8 +647,12 @@ export default {
 			return html;
 		},
 		newComment(comment) {
-			this.userComments.unshift(comment);
-			console.log(comment);
+			if (localStorage.getItem('userName') != null) {
+				this.userComments.unshift(comment);
+				console.log(comment);
+			} else {
+				this.$router.replace('/login');
+			}
 		},
 		//@vuese
 		//fetch posts according to type of sorting
@@ -610,6 +674,11 @@ export default {
 			this.downClicked = this.postDetails.votingType == -1 ? true : false;
 			this.saved = this.postDetails.saved;
 			this.postHidden = this.postDetails.hidden;
+			this.userState =
+				localStorage.getItem('userName') == this.postDetails.postedBy
+					? 'profile'
+					: 'user';
+			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah');
 			console.log(this.postDetails);
 		},
 		//@vuese
@@ -631,26 +700,30 @@ export default {
 		//@vuese
 		//upvote on post
 		async upvote() {
-			if (this.downClicked) {
-				this.downClicked = false;
-				this.counter++;
-			}
-			if (this.upClicked == false) {
-				this.upClicked = true;
-				this.counter++;
+			if (localStorage.getItem('accessToken') != null) {
+				if (this.downClicked) {
+					this.downClicked = false;
+					this.counter++;
+				}
+				if (this.upClicked == false) {
+					this.upClicked = true;
+					this.counter++;
+				} else {
+					this.upClicked = false;
+					this.counter--;
+				}
+				try {
+					await this.$store.dispatch('postCommentActions/vote', {
+						baseurl: this.$baseurl,
+						id: this.postDetails.id,
+						type: 'post',
+						direction: 1,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
 			} else {
-				this.upClicked = false;
-				this.counter--;
-			}
-			try {
-				await this.$store.dispatch('postCommentActions/vote', {
-					baseurl: this.$baseurl,
-					id: this.postDetails.id,
-					type: 'post',
-					direction: 1,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
@@ -681,16 +754,20 @@ export default {
 		//@vuese
 		//follow post
 		async follow() {
-			try {
-				await this.$store.dispatch('postCommentActions/followPost', {
-					baseurl: this.$baseurl,
-					id: this.$route.path.split('/')[4],
-					follow: !this.isFollowed,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('userName') != null) {
+				try {
+					await this.$store.dispatch('postCommentActions/followPost', {
+						baseurl: this.$baseurl,
+						id: this.$route.path.split('/')[4],
+						follow: !this.isFollowed,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				this.isFollowed = !this.isFollowed;
+			} else {
+				this.$router.replace('/login');
 			}
-			this.isFollowed = !this.isFollowed;
 		},
 		//@vuese
 		//show services submenu of post
@@ -701,51 +778,59 @@ export default {
 		//@vuese
 		//hide post
 		async hidePost() {
-			this.postHidden = !this.postHidden;
-			if (this.postHidden) {
-				try {
-					await this.$store.dispatch('postCommentActions/hide', {
-						baseurl: this.$baseurl,
-						id: this.$route.path.split('/')[4],
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.postHidden = !this.postHidden;
+				if (this.postHidden) {
+					try {
+						await this.$store.dispatch('postCommentActions/hide', {
+							baseurl: this.$baseurl,
+							id: this.$route.path.split('/')[4],
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unhide', {
+							baseurl: this.$baseurl,
+							id: this.$route.path.split('/')[4],
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unhide', {
-						baseurl: this.$baseurl,
-						id: this.$route.path.split('/')[4],
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
 		//save post
 		async savePost() {
-			this.saved = !this.saved;
-			if (this.saved == true) {
-				try {
-					await this.$store.dispatch('postCommentActions/save', {
-						baseurl: this.$baseurl,
-						id: this.postDetails.id,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken') != null) {
+				this.saved = !this.saved;
+				if (this.saved == true) {
+					try {
+						await this.$store.dispatch('postCommentActions/save', {
+							baseurl: this.$baseurl,
+							id: this.postDetails.id,
+							type: 'post',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
+				} else {
+					try {
+						await this.$store.dispatch('postCommentActions/unsave', {
+							baseurl: this.$baseurl,
+							id: this.postDetails.id,
+							type: 'post',
+						});
+					} catch (error) {
+						this.error = error.message || 'Something went wrong';
+					}
 				}
 			} else {
-				try {
-					await this.$store.dispatch('postCommentActions/unsave', {
-						baseurl: this.$baseurl,
-						id: this.postDetails.id,
-						type: 'post',
-					});
-				} catch (error) {
-					this.error = error.message || 'Something went wrong';
-				}
+				this.$router.replace('/login');
 			}
 		},
 		//@vuese
@@ -767,8 +852,12 @@ export default {
 		//@vuese
 		//close comments page
 		closeComments() {
-			if (this.$route.path.split('/')[1] == 'r') this.$router.push('/main');
-			else this.$router.back();
+			//if (this.$route.path.split('/')[1] == 'r')
+			this.$router.push('/main');
+			//else this.$router.back();
+		},
+		cancePostEditing() {
+			this.$router.push({ query: { edit: 'false' } });
 		},
 	},
 };
@@ -776,7 +865,7 @@ export default {
 <style scoped>
 .popup {
 	position: absolute;
-	top: 0;
+	top: 50px;
 	left: 0;
 	right: 0;
 	z-index: 2;
@@ -795,7 +884,7 @@ export default {
 .bg-grey {
 	background-color: var(--color-grey-light-8);
 	padding-top: 22px;
-	height: 94vh;
+	height: 87.6vh;
 	overflow: auto;
 }
 .post-left {
@@ -1058,6 +1147,43 @@ export default {
 	margin: 16px 40px 0 0px;
 	padding: 0 16px 4px 0;
 	border-bottom: 1px solid var(--color-grey-light-11);
+}
+.edit-post-buttons {
+	display: flex;
+	justify-content: end;
+}
+.edit-post-buttons .save {
+	margin: 5px 22px;
+	width: 65px;
+	height: 33px;
+	font-size: 12px;
+	font-weight: bolder;
+	color: white;
+	background: var(--color-blue-2);
+}
+.edit-post-buttons .save {
+	margin: 5px 22px 0 5px;
+	width: 65px;
+	height: 33px;
+	font-size: 12px;
+	font-weight: bolder;
+	color: white;
+	background: var(--color-blue-2);
+}
+.edit-post-buttons .save:disabled {
+	background-color: var(--color-grey-dark-4);
+}
+.edit-post-buttons .cancel {
+	margin-top: 5px;
+	width: 65px;
+	height: 33px;
+	font-size: 12px;
+	font-weight: bolder;
+	color: var(--color-blue-2);
+	background-color: white;
+}
+.edit-post-buttons .cancel:hover {
+	background-color: var(--color-grey-light-3);
 }
 @media (max-width: 1079px) {
 	.sub-menu li.post-sub-save {

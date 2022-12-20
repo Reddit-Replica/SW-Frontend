@@ -233,8 +233,8 @@ export default {
 	//////////////////// this part for moderation setting //////////////////////////
 
 	async communitySettings(context, payload) {
-		console.log('welcome message');
-		console.log(payload.welcomeMessage);
+		// console.log('welcome message');
+		// console.log(payload);
 		const setting = {
 			communityName: payload.communityName,
 			mainTopic: payload.mainTopic,
@@ -250,10 +250,10 @@ export default {
 			acceptingRequestsToPost: payload.acceptingRequestsToPost,
 			approvedUsersHaveTheAbilityTo: payload.approvedUsersHaveTheAbilityTo,
 		};
-
+		console.log(setting);
 		const baseurl = payload.baseurl;
 		const response = await fetch(
-			baseurl + `/r/${payload.communityName}/about/edit`,
+			baseurl + `/r/${payload.subredditName}/about/edit`,
 			{
 				method: 'PUT',
 				headers: {
@@ -264,8 +264,9 @@ export default {
 			}
 		);
 		const responseData = await response.json();
+		console.log(responseData);
 		if (response.status == 200) {
-			console.log(response);
+			// console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -286,7 +287,7 @@ export default {
 		};
 
 		const baseurl = payload.baseurl;
-		console.log(localStorage.getItem('accessToken'));
+		// console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
 			baseurl + `/r/${payload.communityName}/about/edit-post-settings`,
 			{
@@ -567,5 +568,35 @@ export default {
 			throw error;
 		}
 		return response.status;
+	},
+	async changeEmail(context, payload) {
+		const setting = {
+			currentPassword: payload.currentPassword,
+			newEmail: payload.newEmail,
+		};
+
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/change-email', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(setting),
+		});
+		const responseData = await response.json();
+		console.log(responseData);
+		// if (response.status == 200) {
+		// 	console.log(response);
+		// } else if (response.status == 401) {
+		// 	const error = new Error(responseData.error);
+		// 	console.log(error);
+		// 	throw error;
+		// } else {
+		// 	const error = new Error('server error');
+		// 	console.log(error);
+		// 	throw error;
+		// }
+		return { status: response.status, responseData: responseData };
 	},
 };

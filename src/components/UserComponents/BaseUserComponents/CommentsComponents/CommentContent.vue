@@ -2,17 +2,19 @@
 	<div
 		v-if="!DeletedComment"
 		class="comment-body"
+		id="comment-content-comment-body"
 		:class="[commentType ? '' : 'comment-body-hover']"
 	>
 		<div
 			class="comment-body-container"
+			id="comment-content-comment-body-container"
 			:style="[
 				commentType && 1
 					? 'padding: 0px 0px 0px 8px;'
 					: 'padding: 10px 0 8px 8px;',
 			]"
 		>
-			<div class="comment-box">
+			<div class="comment-box" id="comment-content-comment-box">
 				<div
 					class="nested-comment-order"
 					:class="[commentType ? 'nested-comment-order-ov' : '']"
@@ -21,6 +23,7 @@
 					<!-- <div></div> -->
 				</div>
 				<div
+					id="comment-content-comment-body-content"
 					class="comment-content"
 					:class="[
 						RemovedComment || SpammedComment
@@ -30,33 +33,59 @@
 							: '',
 					]"
 				>
-					<div class="comment-body-title">
-						<router-link :to="'/user/' + $route.params.userName">
+					<div
+						class="comment-body-title"
+						id="comment-content-comment-body-title"
+					>
+						<router-link
+							id="comment-content-comment-user-name"
+							:to="'/user/' + $route.params.userName"
+						>
 							{{ $route.params.userName }}</router-link
 						>
 						<span class="comment-op">op</span>
 						<p>{{ commentContent.points }} point</p>
-						<router-link class="comment-date" to="">{{
-							getMoment(commentContent.publishTime)
-						}}</router-link>
+						<router-link
+							id="comment-content-comment-Content-publish-Time"
+							class="comment-date"
+							to=""
+							>{{ getMoment(commentContent.publishTime) }}</router-link
+						>
 						<moderation-title
 							v-if="commentContent.moderation != null"
 							:moderation="moderation"
 							:pinned-post="false"
 						></moderation-title>
 					</div>
-					<div class="comment-content-data" v-html="PostHybridContent"></div>
+					<div
+						class="comment-content-data"
+						v-html="PostHybridContent"
+						id="comment-content-comment-body-content-hybrid"
+					></div>
 					<!-- <p>{{ PostHybridContent }} fdkjbfjhg skjdfnskd sjdnfksjd</p> -->
-					<div class="comment-options">
+					<div
+						class="comment-options"
+						id="comment-content-comment-body-comment-options"
+					>
 						<ul>
-							<li @click="ReplyCommentHandler" class="underline">Replay</li>
-							<li class="underline">Share</li>
 							<li
+								@click="ReplyCommentHandler"
+								class="underline"
+								id="comment-content-comment-reply-comment"
+							>
+								Replay
+							</li>
+							<li v-if="0" class="underline">Share</li>
+							<li
+								id="comment-content-open-Options-BoxList"
 								class="post-option-item2"
 								style="position: relative"
 								@click="openOptionsBoxList"
 							>
-								<div class="post-options-icon three-dot-icon-box">
+								<div
+									class="post-options-icon three-dot-icon-box"
+									id="open-options-boxList-three-dot-icon-box"
+								>
 									<i>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -72,18 +101,26 @@
 										</svg>
 									</i>
 								</div>
-								<div v-if="showOptionsBoxList" class="options-box-list">
+								<div
+									v-if="showOptionsBoxList"
+									class="options-box-list"
+									id="comment-content-options-box-list"
+								>
 									<ul>
-										<li @click="editPost" class="options-box-item">
+										<li @click="editComment" class="options-box-item">
 											<div class="options-box-icon">
 												<i
 													style="color: rgba(135, 138, 140)"
 													class="fa-solid fa-pen"
 												></i>
 											</div>
-											<div class="options-box-text">Edit Post</div>
+											<div class="options-box-text">Edit Comment</div>
 										</li>
-										<li @click="saveComment" class="options-box-item">
+										<li
+											id="comment-content-save-comment"
+											@click="saveComment"
+											class="options-box-item"
+										>
 											<div class="options-box-icon">
 												<i
 													v-if="!saved"
@@ -113,7 +150,12 @@
 												{{ !saved ? 'Save' : 'Unsaved' }}
 											</div>
 										</li>
-										<li @click="deletePost" class="options-box-item">
+										<li
+											v-if="commentContent.inYourSubreddit"
+											id="comment-content-save-comment-delete-Post"
+											@click="deletePost"
+											class="options-box-item"
+										>
 											<div class="options-box-icon">
 												<i
 													style="color: rgba(135, 138, 140)"
@@ -127,19 +169,26 @@
 							</li>
 						</ul>
 						<div v-if="commentContent.inYourSubreddit" class="post-options">
-							<ul class="comment-moderator-options">
+							<ul
+								class="comment-moderator-options"
+								id="comment-moderator-options"
+							>
 								<li
 									v-if="!ApprovedComment"
 									@click="approveComment"
 									:style="['aa' == '' ? 'color: #46d160' : '']"
 									class="post-option-item"
+									id="comment-moderator-options-approved-comment"
 								>
 									<div class="post-options-icon">
 										<i class="fa-solid fa-check"></i>
 									</div>
-									<div class="post-options-text">Approve</div>
+									<div id="approve-text-comment" class="post-options-text">
+										Approve
+									</div>
 								</li>
 								<li
+									id="comment-moderator-options-remove-comment"
 									v-if="!RemovedComment"
 									@click="removeComment"
 									:style="[
@@ -152,11 +201,12 @@
 									<div class="post-options-icon">
 										<i style="color: inherit" class="fa-solid fa-ban"></i>
 									</div>
-									<div class="post-options-text">
+									<div id="remove-text-comment" class="post-options-text">
 										<p>Remove</p>
 									</div>
 								</li>
 								<li
+									id="comment-moderator-options-spam-comment"
 									v-if="!RemovedComment"
 									@click="spamComment"
 									:style="[
@@ -169,11 +219,12 @@
 									<div class="post-options-icon">
 										<i class="fa-regular fa-calendar-xmark"></i>
 									</div>
-									<div class="post-options-text">
+									<div id="spam-text-comment" class="post-options-text">
 										<p>Spam</p>
 									</div>
 								</li>
 								<li
+									id="comment-moderator-options-lock-unlock-comment"
 									@click="lockUnLockComment"
 									:style="[
 										'aa' == ''
@@ -185,7 +236,7 @@
 									<div class="post-options-icon">
 										<i class="fa-solid fa-lock"></i>
 									</div>
-									<div class="post-options-text">
+									<div id="lock-text-comment" class="post-options-text">
 										<p>{{ LockedComment ? 'unlock' : 'Lock' }}</p>
 									</div>
 								</li>
@@ -205,27 +256,38 @@ export default {
 		ModerationTitle,
 	},
 	props: {
+		// @vuese
+		// commentContent the full comment data
 		commentContent: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// commentContent the type of comment to if its overview comment or not
 		commentType: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the post id of the comment
 		postId: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the post title
 		postTitle: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the state to if  the user is authenticated or not
 		state: {
 			type: String,
 			required: true,
 		},
 	},
+	emits: ['emitPopup'],
 	data() {
 		return {
 			showOptionsBoxList: false,
@@ -243,62 +305,133 @@ export default {
 		};
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * locked comment computed flag to know the comment is locked or not
+		 * @arg no arg
+		 */
 		LockedComment() {
 			return this.LockedCommentFlag && this.moderation && this.moderation.lock;
 		},
+		/**
+		 * @vuese
+		 * spammed comment computed flag to know the comment is spammed or not
+		 * @arg no arg
+		 */
 		SpammedComment() {
 			return (
 				this.SpammedCommentFlag &&
-				this.moderation &&
-				this.moderation.spam &&
-				this.moderation.spam.spammedBy
+				this.moderation != null &&
+				this.moderation.spam != null &&
+				this.moderation.spam.spammedBy != null
 			);
 		},
+		/**
+		 * @vuese
+		 * removed comment computed flag to know the comment is removed or not
+		 * @arg no arg
+		 */
 		RemovedComment() {
 			return (
 				this.RemovedCommentFlag &&
-				this.moderation &&
-				this.moderation.remove &&
-				this.moderation.remove.removedBy
+				this.moderation != null &&
+				this.moderation.remove != null &&
+				this.moderation.remove.removedBy != null
 			);
 		},
+		/**
+		 * @vuese
+		 * approved comment computed flag to know the comment is approved or not
+		 * @arg no arg
+		 */
 		ApprovedComment() {
 			return (
 				this.ApprovedCommentFlag &&
-				this.moderation &&
-				this.moderation.approve &&
-				this.moderation.approve.approvedBy
+				this.moderation != null &&
+				this.moderation.approve != null &&
+				this.moderation.approve.approvedBy != null
 			);
 		},
 	},
+	/**
+	 * @vuese
+	 * at mounted we convert the comment content to its html value
+	 * @arg no arg
+	 */
 	mounted() {
 		this.setPostHybridContent();
 	},
 	methods: {
-		editPost() {
+		/**
+		 * @vuese
+		 * triggered when we click on the edit  button
+		 * @arg no arg
+		 */
+		editComment() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
 				return;
 			}
-		},
-		ReplyCommentHandler() {
-			console.log('reply clicked', this.postId);
 			if (!this.commentContent.subreddit) {
+				// this.$router.push(
+				// 	`/user/${this.$route.params.userName}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+				// );
 				this.$router.push(
-					`/user/${this.$route.params.userName}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+					`/user/${this.$route.params.userName}/comments/${this.postId}/${this.postTitle}`
 				);
 			} else {
+				// this.$router.push(
+				// 	`/r/${this.commentContent.subreddit}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+				// );
 				this.$router.push(
-					`/r/${this.commentContent.subreddit}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+					`/r/${this.commentContent.subreddit}/comments/${this.postTitle}`
 				);
 			}
 		},
+		/**
+		 * @vuese
+		 * triggered when we click on the reply comment  button
+		 * @arg no arg
+		 */
+		ReplyCommentHandler() {
+			console.log('reply clicked', this.postId);
+			if (!this.commentContent.subreddit) {
+				// this.$router.push(
+				// 	`/user/${this.$route.params.userName}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+				// );
+				this.$router.push(
+					`/user/${this.$route.params.userName}/comments/${this.postId}/${this.postTitle}`
+				);
+			} else {
+				// this.$router.push(
+				// 	`/r/${this.commentContent.subreddit}/comments/${this.postId}/comment/${this.commentContent.commentId}`
+				// );
+				this.$router.push(
+					`/r/${this.commentContent.subreddit}/comments/${this.postTitle}`
+				);
+			}
+		},
+		/**
+		 * @vuese
+		 * triggered when we click on three dots icon to show more options
+		 * @arg no arg
+		 */
 		openOptionsBoxList() {
 			this.showOptionsBoxList = !this.showOptionsBoxList;
 		},
+		/**
+		 * @vuese
+		 * convert from standard data to the moment from now
+		 * @arg date the date that we want to convert
+		 */
 		getMoment(date) {
 			return moment(date).fromNow();
 		},
+		/**
+		 * @vuese
+		 *  convert the comment content to its html value
+		 * @arg no arg
+		 */
 		setPostHybridContent() {
 			// if (this.postData.data.kind == 'hybrid') {
 			if (this.commentContent.commentBody) {
@@ -315,10 +448,24 @@ export default {
 			}
 			// }
 		},
+		/**
+		 * @vuese
+		 *  delete the comment
+		 * @arg no arg
+		 */
 		deletePost() {
-			this.DeletedComment = true;
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			this.RequestDeleteComment();
+			this.DeletedComment = true;
 		},
+		/**
+		 * @vuese
+		 *  the Request to Delete this Comment
+		 * @arg no arg
+		 */
 		async RequestDeleteComment() {
 			let responseStatus;
 			try {
@@ -330,12 +477,31 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			// if (responseStatus == 200) {
+			// 	this.$emit('emitPopup', 1, ' comment deleted successfully :)');
+			// } else {
+			// 	this.$emit('emitPopup', 1, 'failed to delete comment :(');
+			// }
 			return responseStatus;
 		},
+		/**
+		 * @vuese
+		 *  triggered when we click on the save button
+		 * @arg no arg
+		 */
 		saveComment() {
+			if (this.state == 'unauth') {
+				this.$router.push('/');
+				return;
+			}
 			if (!this.saved) this.RequestSaveComment();
 			else this.RequestUnsaveComment();
 		},
+		/**
+		 * @vuese
+		 *  the Request to Delete this Comment
+		 *  @arg no arg
+		 */
 		async RequestSaveComment() {
 			this.saved = true;
 			let responseStatus;
@@ -357,7 +523,19 @@ export default {
 			if (responseStatus != 200) {
 				this.saved = false;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment saved successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to save comment :(');
+			}
+
+			return responseStatus;
 		},
+		/**
+		 * @vuese
+		 *  the Request to un save  this Comment
+		 *  @arg no arg
+		 */
 		async RequestUnsaveComment() {
 			let responseStatus;
 			this.saved = false;
@@ -379,7 +557,17 @@ export default {
 			if (responseStatus != 200) {
 				this.saved = true;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment unsaved successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to unsave comment :(');
+			}
 		},
+		/**
+		 * @vuese
+		 *  the Request to approve this Comment
+		 *  @arg no arg
+		 */
 		async approveComment() {
 			this.moderation = this.moderation || {};
 			this.moderation.approve = this.moderation.approve || {};
@@ -410,7 +598,17 @@ export default {
 			if (responseStatus != 200) {
 				delete this.moderation.approve;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment approved successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to approve comment :(');
+			}
 		},
+		/**
+		 * @vuese
+		 *  the Request to remove this Comment
+		 *  @arg no arg
+		 */
 		async removeComment() {
 			this.moderation = this.moderation || {};
 			this.moderation.remove = this.moderation.remove || {};
@@ -439,7 +637,17 @@ export default {
 			if (responseStatus != 200) {
 				delete this.moderation.remove;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment removed successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to remove comment :(');
+			}
 		},
+		/**
+		 * @vuese
+		 *  the Request to spam this Comment
+		 *  @arg no arg
+		 */
 		async spamComment() {
 			this.moderation = this.moderation || {};
 			this.moderation.spam = this.moderation.spam || {};
@@ -465,29 +673,49 @@ export default {
 			if (responseStatus != 200) {
 				delete this.moderation.spam;
 			}
+			if (responseStatus == 200) {
+				this.$emit('emitPopup', 1, ' comment spammed successfully :)');
+			} else {
+				this.$emit('emitPopup', 1, 'failed to spam comment :(');
+			}
 		},
+		/**
+		 * @vuese
+		 *  the Request to lockunlock this Comment
+		 *  @arg no arg
+		 */
 		async lockUnLockComment() {
-			console.log('lock un lock clicked');
+			let responseStatus = -1;
+			// console.log('lock un lock clicked');
 			let key = 'lock';
 			if (this.moderation.lock) {
 				key = 'unlock';
 			}
 			this.moderation.lock = !this.moderation.lock;
-			// if (1) {
-			// 	key = 'lock';
-			// }
 			console.log('main', key);
 			try {
-				await this.$store.dispatch('userposts/lockUnLockPostOrComment', {
-					baseurl: this.$baseurl,
-					lockUnlockData: {
-						id: this.commentContent.commentId,
-						type: `comment`, // mark UnMark
-					},
-					key: `${key}`,
-				});
+				responseStatus = await this.$store.dispatch(
+					'userposts/lockUnLockPostOrComment',
+					{
+						baseurl: this.$baseurl,
+						lockUnlockData: {
+							id: this.commentContent.commentId,
+							type: `comment`, // mark UnMark
+						},
+						key: `${key}`,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+			}
+			if (responseStatus == 200) {
+				if (key == 'lock')
+					this.$emit('emitPopup', 1, ' comment locked successfully :)');
+				else this.$emit('emitPopup', 1, ' comment unlocked successfully :)');
+			} else {
+				if (key == 'lock')
+					this.$emit('emitPopup', 1, 'failed to lock comment :(');
+				else this.$emit('emitPopup', 1, 'failed to unlock comment :(');
 			}
 		},
 	},
@@ -863,5 +1091,13 @@ span.post-oc {
 	padding: 4px 8px;
 	margin-top: 8px;
 	margin-right: 8px;
+}
+@media (max-width: 640px) {
+	#approve-text-comment,
+	#remove-text-comment,
+	#spam-text-comment,
+	#lock-text-comment {
+		display: none;
+	}
 }
 </style>

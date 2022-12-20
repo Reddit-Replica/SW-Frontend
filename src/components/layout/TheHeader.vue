@@ -50,9 +50,9 @@
 						d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
 					/>
 				</svg>
-				<div v-else>
+				<div v-else-if="!isSubreddit">
 					<img
-						v-if="!getUserData.userData.picture"
+						v-if="!getUserData.picture"
 						src="../../../img/default_inbox_avatar.png"
 						alt="img"
 						class="img header-user-nav-user-photo"
@@ -60,7 +60,23 @@
 					/>
 					<img
 						v-else
-						:src="$baseurl + '/' + getUserData.userData.picture"
+						:src="$baseurl + '/' + getUserData.picture"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+				</div>
+				<div v-else>
+					<img
+						v-if="!headerImg"
+						src="../../../img/default_subreddit_image.png"
+						alt="img"
+						class="img header-user-nav-user-photo"
+						:id="'header-user-img-' + index"
+					/>
+					<img
+						v-else
+						:src="$baseurl + '/' + headerImg"
 						alt="img"
 						class="img header-user-nav-user-photo"
 						:id="'header-user-img-' + index"
@@ -241,7 +257,7 @@
 				>
 					<div>
 						<img
-							v-if="!getUserData.userData.picture"
+							v-if="!getUserData.picture"
 							src="../../../img/default_inbox_avatar.png"
 							alt="img"
 							class="users-img"
@@ -249,7 +265,7 @@
 						/>
 						<img
 							v-else
-							:src="$baseurl + '/' + getUserData.userData.picture"
+							:src="$baseurl + '/' + getUserData.picture"
 							alt="img"
 							class="users-img"
 							:id="'header-user-img-' + index"
@@ -396,9 +412,10 @@
 					/>
 				</svg>
 				<span
+					v-if="!noUnreadNotifications && unreadNotificationsCount"
 					class="header-user-nav-notification"
 					id="num-notification-notification"
-					>2</span
+					>{{ unreadNotificationsCount }}</span
 				>
 			</div>
 
@@ -496,7 +513,7 @@
 				id="show-settings-submenu"
 			>
 				<img
-					v-if="!getUserData.userData.picture"
+					v-if="!getUserData.picture"
 					src="../../../img/default_inbox_avatar.png"
 					alt="img"
 					class="img header-user-nav-user-photo"
@@ -504,7 +521,7 @@
 				/>
 				<img
 					v-else
-					:src="$baseurl + '/' + getUserData.userData.picture"
+					:src="$baseurl + '/' + getUserData.picture"
 					alt="img"
 					class="img header-user-nav-user-photo"
 					:id="'header-user-img-' + index"
@@ -536,7 +553,7 @@
 								d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"
 							/>
 						</svg>
-						{{ getUserData.userData.karma }} karma
+						{{ getUserData.karma }} karma
 					</span>
 				</div>
 				<ul class="sub-menu" v-if="settingsSubMenuDisplay" id="sub-menu-2">
@@ -637,7 +654,12 @@
 			</div>
 		</nav>
 		<div class="header-user-nav" v-else>
-			<base-button class="base-button" @click="goToLogin()">Login</base-button>
+			<base-button
+				class="base-button"
+				@click="goToLogin()"
+				id="go-to-login-page"
+				>Login</base-button
+			>
 		</div>
 		<create-community
 			v-if="createCommunityShown"
@@ -661,6 +683,18 @@ export default {
 			type: String,
 			default: 'Home',
 		},
+		//@vuese
+		//Subreddit Image URL
+		headerImg: {
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//if it is a Subreddit
+		isSubreddit: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -669,7 +703,13 @@ export default {
 			searchQuery: '',
 			notificationsListShown: false,
 			createCommunityShown: false,
+			getUserData: {},
 		};
+	},
+	mounted() {
+		if (this.$route.query.q) {
+			this.searchQuery = this.$route.query.q;
+		}
 	},
 	computed: {
 		// @vuese
@@ -679,13 +719,13 @@ export default {
 			// return this.$store.getters.getUserName;
 			return localStorage.getItem('userName');
 		},
-		// @vuese
-		//return user data
-		// @type object
-		getUserData() {
-			// console.log(this.$store.getters['user/getUserData']);
-			return this.$store.getters['user/getUserData'];
-		},
+		// // @vuese
+		// //return user data
+		// // @type object
+		// getUserData() {
+		// 	// console.log(this.$store.getters['user/getUserData']);
+		// 	return this.$store.getters['user/getUserData'];
+		// },
 		// @vuese
 		//return user communities
 		// @type object
@@ -693,10 +733,25 @@ export default {
 			console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/listOfSubreddits'];
 		},
+		// @vuese
+		//return number of unread notifications
+		//@type Number
+		unreadNotificationsCount() {
+			return this.$store.getters['notifications/getUnreadCount'];
+		},
+		// @vuese
+		//return number of unread notifications
+		//@type Number
+		noUnreadNotifications() {
+			return this.$store.getters['notifications/getUnreadCount'] == 0;
+		},
 	},
-	async beforeMount() {
-		this.RequestUserData();
-		this.getUserSubreddits();
+	async created() {
+		if (localStorage.getItem('accessToken')) {
+			await this.RequestUserData();
+			await this.getUserSubreddits();
+			await this.loadAllNotifications();
+		}
 	},
 	methods: {
 		// @vuese
@@ -763,15 +818,19 @@ export default {
 			this.createCommunityShown = !this.createCommunityShown;
 		},
 		// @vuese
-		//load compose messages from the store
+		//load user subreddits
 		// @arg no argument
 		async getUserSubreddits() {
-			try {
-				await this.$store.dispatch('user/getUserSubreddits', {
-					baseurl: this.$baseurl,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (localStorage.getItem('accessToken')) {
+				try {
+					await this.$store.dispatch('user/getUserSubreddits', {
+						baseurl: this.$baseurl,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+			} else {
+				alert('Did not enter a word to Search');
 			}
 			// console.log('function');
 		},
@@ -779,12 +838,13 @@ export default {
 		// Used to go to Search page
 		// @arg no argument
 		async searchUser() {
-			if (this.searchQuery) {
+			if (this.$route.matched.some(({ name }) => name === 'searchpost')) {
+				this.$router.go(this.$router.currentRoute);
+			} else if (this.searchQuery) {
 				this.$router.push({
 					name: 'searchpost',
 					query: { q: this.searchQuery },
 				});
-				// window.reload();
 			} else {
 				alert('Did not enter a word to Search');
 			}
@@ -819,16 +879,32 @@ export default {
 		 * @arg no arg
 		 */
 		async RequestUserData() {
-			let responseStatus;
+			let responseData = null;
 			try {
-				await this.$store.dispatch('user/getUserData', {
+				responseData = await this.$store.dispatch('user/getUserTempData', {
 					baseurl: this.$baseurl,
 					userName: this.userName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			return responseStatus;
+			if (responseData != null) this.getUserData = responseData;
+			console.log(this.getUserData);
+		},
+		/**
+		 * @vuese
+		 * this function send call an action function from the store to load user notifications
+		 * @arg no arg
+		 */
+		async loadAllNotifications() {
+			const accessToken = localStorage.getItem('accessToken');
+			if (localStorage.getItem('accessToken')) {
+				await this.$store.dispatch('notifications/getAllNotifications', {
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				// console.log(this.$store.getters['notifications/unreadCount']);
+			}
 		},
 	},
 };

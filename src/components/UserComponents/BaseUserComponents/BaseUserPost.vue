@@ -165,7 +165,7 @@
 									id="base-user-post-data-link"
 									:href="postData.data.link"
 									target="_blank"
-									>{{ postData.data.link }}/<i
+									>{{ postData.data.link.substring(0, 20) }}/<i
 										class="fa-solid fa-arrow-up-right-from-square"
 									></i
 								></a>
@@ -175,7 +175,7 @@
 									id="base21565-user-post-data-link"
 									:href="CrossPostLinkHandler"
 									target="_blank"
-									>{{ postData.data.link }}/<i
+									>{{ postData.data.link.substring(0, 20) }}/<i
 										class="fa-solid fa-arrow-up-right-from-square"
 									></i
 								></a>
@@ -203,26 +203,55 @@
 										class="post-nsfw"
 										><p>nsfw</p></span
 									>
-									<span id="base-user-post-content-oc-span" class="post-oc"
+									<span
+										v-if="0"
+										id="base-user-post-content-oc-span"
+										class="post-oc"
 										><p>OC</p></span
 									>
 								</div>
 							</div>
 							<div class="post-user-information">
-								<div class="post-user-name">
+								<div
+									@mouseleave="hideSubredditBox(1)"
+									style="position: relative"
+									class="post-user-name"
+								>
 									<router-link
+										@mouseover="showSubredditBox(1)"
 										id="base-user-post-content-post-user-name"
 										:to="
 											postData.data.subreddit == null
-												? `/user/${$route.params.userName}`
+												? `/user/${postData.data.postedBy}`
 												: `/r/${postData.data.subreddit}`
 										"
 										>{{
 											postData.data.subreddit == null
-												? `u/${$route.params.userName}`
+												? `u/${postData.data.postedBy}`
 												: `r/${postData.data.subreddit}`
 										}}</router-link
 									>
+									<subreddit-card-mini
+										@mouseover="showSubredditBox(1)"
+										v-if="
+											showSubredditBoxFlag1 &&
+											subredditData != null &&
+											postData.data.subreddit != null
+										"
+										:subreddit="subredditData"
+										:subreddit-name="postData.data.subreddit"
+									></subreddit-card-mini>
+									<div
+										style="position: absolute; z-index: 5"
+										v-else-if="userCardData != null && showSubredditBoxFlag1"
+									>
+										<profile-card
+											:user-data="userCardData"
+											:state="UserCardState"
+											:not-post-card="false"
+											:user-name="postData.data.postedBy"
+										></profile-card>
+									</div>
 								</div>
 								<div class="posted-by" id="base-user-post-content-posted-by">
 									<span class="posted-by-unhovered">
@@ -241,11 +270,28 @@
 												: 'posted by'
 										}}</span
 									>
-									<router-link
-										style="margin-left: 3px"
-										:to="`/user/${postData.data.postedBy}`"
-										>{{ postData.data.postedBy }}
-									</router-link>
+									<div
+										@mouseleave="hideSubredditBox(2)"
+										style="position: relative"
+									>
+										<router-link
+											@mouseover="showSubredditBox(2)"
+											style="margin-left: 3px"
+											:to="`/user/${postData.data.postedBy}`"
+											>{{ postData.data.postedBy }}
+										</router-link>
+										<div
+											style="position: absolute; z-index: 5"
+											v-if="userCardData != null && showSubredditBoxFlag2"
+										>
+											<profile-card
+												:user-data="userCardData"
+												:state="UserCardState"
+												:not-post-card="false"
+												:user-name="postData.data.postedBy"
+											></profile-card>
+										</div>
+									</div>
 								</div>
 								<div id="base-user-post-content-posted-posted-at">
 									{{ getMoment(postData.data.postedAt) }}
@@ -254,100 +300,6 @@
 										:moderation="postData.data.moderation"
 										:pinned-post="postData.data.pin"
 									></moderation-title>
-									<!-- <div
-										id="base-user-data-moderation-spam-spammedBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.spam != null &&
-											postData.data.moderation.spam.spammedBy != null
-										"
-										class="post-tooltip"
-									>
-										<i
-											class="fa-regular fa-calendar-xmark"
-											style="color: #ff585b"
-										></i>
-										<span
-											class="post-tooltiptext"
-											id="base-user-post-data-moderation-spam-spammedBy-tool-tip"
-											>Spammed by
-											{{ postData.data.moderation.spam.spammedBy }} at
-											{{ postData.data.moderation.spam.spammedDate }}</span
-										>
-									</div>
-									<div
-										id="base-user-data-moderation-lock-lockedBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.lock != null &&
-											postData.data.moderation.lock
-										"
-										class="post-tooltip"
-									>
-										<i
-											id="base-user-data-moderation-lock-lockedBy-icon"
-											class="fa-solid fa-lock"
-											style="color: #ffd635"
-										></i>
-										<span
-											id="base-user-data-moderation-lock-lockedBy-tool-tip"
-											class="post-tooltiptext"
-											>Comments are locked</span
-										>
-									</div>
-									<div
-										id="base-user-data-moderation-pin-pinnedBy"
-										v-if="postData.data.pin"
-										class="post-tooltip"
-									>
-										<i class="fa-solid fa-thumbtack" style="color: #46d160"></i>
-										<span class="post-tooltiptext">post are Pinned</span>
-									</div>
-									<div
-										id="base-user-data-moderation-remove-removedBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.remove != null &&
-											postData.data.moderation.remove.removedBy != null
-										"
-										class="post-tooltip"
-									>
-										<i
-											id="base-user-data-moderation-icon-removedBy"
-											style="color: #ff585b"
-											class="fa-solid fa-ban"
-										></i>
-										<span
-											class="post-tooltiptext"
-											id="base-user-data-moderation-remove-removedBy-tool-tip"
-											>Removed by
-											{{ postData.data.moderation.remove.removedBy }} at
-											{{ postData.data.moderation.remove.removedDate }}</span
-										>
-									</div>
-									<div
-										id="base-user-data-moderation-approve-approveBy"
-										v-if="
-											postData.data.moderation != null &&
-											postData.data.moderation.approve != null &&
-											postData.data.moderation.approve.approvedBy != null
-										"
-										class="post-tooltip"
-									>
-										<i
-											id="base-user-data-moderation-approve-approvedBy-icon"
-											class="fa-solid fa-check"
-											style="color: #46d160"
-										></i>
-										<span
-											class="post-tooltiptext"
-											id="base-user-data-moderation-approve-approvedBy-tool-tip"
-											>Approved by
-											{{ postData.data.moderation.approve.approvedBy }}
-											at
-											{{ postData.data.moderation.approve.approvedDate }}</span
-										>
-									</div> -->
 								</div>
 							</div>
 							<div class="post-options">
@@ -361,6 +313,8 @@
 									@save-post="savePost"
 									@share-post="sharePost"
 									:page="page"
+									:state="state"
+									@emit-popup="emitPopup"
 								></post-options>
 							</div>
 						</div>
@@ -432,6 +386,8 @@ import VideoPost from './PostComponents/VideoPost.vue';
 import PicturePost from './PostComponents/PicturePost.vue';
 import TheInsights from './PostComponents/TheInsights.vue';
 import ModerationTitle from './PostComponents/ModerationTitle.vue';
+import ProfileCard from './Cards/ProfileCard.vue';
+import SubredditCardMini from './PostComponents/SubredditCardMini.vue';
 export default {
 	components: {
 		PostOptions,
@@ -439,9 +395,12 @@ export default {
 		PicturePost,
 		TheInsights,
 		ModerationTitle,
+		SubredditCardMini,
+		ProfileCard,
 	},
-	emits: ['showComments'],
 	props: {
+		// @vuese
+		// postData the full post Data
 		postData: {
 			type: Object,
 			required: true,
@@ -450,10 +409,14 @@ export default {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// state authenticated or not
 		state: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// page which page the component used
 		page: {
 			type: String,
 		},
@@ -466,33 +429,126 @@ export default {
 			postHidden: false,
 			showPostContent: false,
 			deletedHiddenPost: false,
-			// images: [
-			// 	{
-			// 		imgUrl: '../../../assets/R.png',
-			// 		left: '0',
-			// 	},
-			// 	{
-			// 		imgUrl: '../../../assets/R.png',
-			// 		left: '100',
-			// 	},
-			// 	{
-			// 		imgUrl: '../../../assets/R.png',
-			// 		left: '200',
-			// 	},
-			// ],
 			lastLeftPic: 0,
 			lastRightPic: 0,
 			insightActive: false,
 			insightsLoading: false,
 			PostHybridContent: '',
+			subredditData: null,
+			showSubredditBoxFlag1: false,
+			showSubredditBoxFlag2: false,
+			UserCardState: 'unauth',
+			userCardData: null,
 		};
 	},
-	created() {
-		// this.lastLeftPic = this.images.length - 1;
+	async beforeMount() {
+		if (this.postData.data.subreddit != null) {
+			await this.getSubreddit();
+			console.log('aaa', this.subredditData);
+		}
+		await this.fetchUserCardPicture();
 	},
-	mounted() {},
-	computed: {},
+	created() {
+		this.loading = true;
+		if (
+			!localStorage.getItem('userName') ||
+			localStorage.getItem('userName') == ''
+		) {
+			this.UserCardState = 'unauth';
+		} else if (
+			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+			this.postData.data.postedBy == localStorage.getItem('userName')
+		)
+			this.UserCardState = 'profile';
+		/* means same authenticated user */ else
+			this.UserCardState = 'user'; /* means other user */
+	},
+	computed: {
+		getSubredditPicture() {
+			if (
+				this.subredditData != null &&
+				this.postData.data.subreddit != null &&
+				this.subredditData.picture != null
+			) {
+				return this.subredditData.picture;
+			} else return false;
+		},
+	},
+	emits: ['emitPopup'],
 	methods: {
+		async fetchUserCardPicture() {
+			// let responseData = null;
+			if (this.postData.data.postedBy == localStorage.getItem('username'))
+				console.log('same');
+			// try {
+			// 	responseData = await this.$store.dispatch('user/getUserTempData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.postData.data.postedBy,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
+			// if (responseData != null) this.userCardData = responseData;
+			// console.log(this.userCardData);
+		},
+		/**
+		 * @vuese
+		 * show subreddit box when you hovered on subreddit name
+		 * @arg no arg
+		 */
+		async showSubredditBox(id) {
+			// if (this.postData.data.subreddit != null) {
+			// 	await this.getSubreddit();
+			// 	console.log('aaa', this.subredditData);
+			// }
+			// await this.fetchUserCardPicture();
+			if (id == 1) this.showSubredditBoxFlag1 = true;
+			else if (id == 2) this.showSubredditBoxFlag2 = true;
+		},
+		/**
+		/**
+		 * @vuese
+		 * hide the subreddit box when unhovered
+		 * @arg no arg
+		 */
+		hideSubredditBox(id) {
+			if (id == 1) this.showSubredditBoxFlag1 = false;
+			else if (id == 2) this.showSubredditBoxFlag2 = false;
+		},
+		/**
+		 * @vuese
+		 * get subreddit information to use its picture in the post
+		 * @arg no arg
+		 */
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			try {
+				await this.$store.dispatch('community/getSubreddit', {
+					subredditName: this.postData.data.subreddit,
+					baseurl: this.$baseurl,
+					token: accessToken,
+				});
+				this.subredditData = this.$store.getters['community/getSubreddit'];
+			} catch (err) {
+				console.log(err);
+				// if (this.$store.getters['community/notFound']) {
+				// 	this.$router.push('/notFound');
+				// }
+			}
+		},
+		/**
+		 * @vuese
+		 * emits action to show popup
+		 * @arg no arg
+		 */
+		emitPopup(id, message) {
+			this.$emit('emitPopup', id, message);
+		},
+		/**
+		 * @vuese
+		 * handle the route of the cross post
+		 * @arg no arg
+		 */
 		CrossPostLinkHandler() {
 			if (this.postData.data.subreddit)
 				return (
@@ -516,6 +572,11 @@ export default {
 				);
 			}
 		},
+		/**
+		 * @vuese
+		 * handle the route of the post flair
+		 * @arg no arg
+		 */
 		postFlairRouteHandler() {
 			this.$router.push({
 				path: `/r/${this.postData.data.subreddit}`,
@@ -524,14 +585,29 @@ export default {
 				},
 			});
 		},
+		/**
+		 * @vuese
+		 * convert from standard date to the moment from now
+		 * @arg date the date to be converted
+		 */
 		getMoment(date) {
 			return moment(date).fromNow();
 		},
+		/**
+		 * @vuese
+		 * get abbreviation of the number (convert to K,M)
+		 * @arg num the number to be converted
+		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
 			console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
+		/**
+		 * @vuese
+		 * get the content of the hybrid post
+		 * @arg no arg
+		 */
 		setPostHybridContent() {
 			if (this.postData.data.kind == 'hybrid') {
 				let QuillDeltaToHtmlConverter =
@@ -544,6 +620,11 @@ export default {
 				this.PostHybridContent = converter.convert();
 			}
 		},
+		/**
+		 * @vuese
+		 * toggle the view of the insights post
+		 * @arg no arg
+		 */
 		async insightsPostToggle(id) {
 			this.insightsLoading = true;
 			this.insightActive = !this.insightActive;
@@ -551,6 +632,11 @@ export default {
 			if (this.insightActive) await this.RequestInsightsData(id);
 			this.insightsLoading = false;
 		},
+		/**
+		 * @vuese
+		 * Request the insights data
+		 * @arg no arg
+		 */
 		async RequestInsightsData(id) {
 			try {
 				await this.$store.dispatch('userposts/getInsightsData', {
@@ -563,32 +649,26 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		savePost() {
-			if (this.state == 'unauth') {
-				this.$router.push('/');
-				return;
-			}
-			console.log('save');
-		},
-		// removePost() {
-		// 	console.log('remove');
+		// savePost() {
+		// 	if (this.state == 'unauth') {
+		// 		this.$router.push('/');
+		// 		return;
+		// 	}
+		// 	console.log('save');
 		// },
-		sharePost() {
-			if (this.state == 'unauth') {
-				this.$router.push('/');
-				return;
-			}
-			console.log('share');
-			// this.showShareOptions = true;
-		},
-		CopyPostLink() {},
-		Crosspost() {},
-		editPost() {
-			console.log('edit');
-		},
-		pinPostToProfile() {
-			console.log('pin');
-		},
+		// sharePost() {
+		// 	if (this.state == 'unauth') {
+		// 		this.$router.push('/');
+		// 		return;
+		// 	}
+		// 	console.log('share');
+		// 	// this.showShareOptions = true;
+		// },
+		/**
+		 * @vuese
+		 * hide the deleted post from the page
+		 * @arg no arg
+		 */
 		deletePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -598,6 +678,11 @@ export default {
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
+		/**
+		 * @vuese
+		 * hide the hidden post from the page
+		 * @arg no arg
+		 */
 		hidePost() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -607,46 +692,30 @@ export default {
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
-		// markAsOC() {
-		// 	console.log('mark as os');
-		// },
-		// markAsSpoiler() {
-		// 	console.log('mark as spoiler');
-		// },
-		// markAsNSFW() {
-		// 	console.log('mark as nsfw');
-		// },
-
-		resizePost() {
-			console.log('resize');
-		},
-		leftClick() {
-			this.lastLeftPic--;
-			this.lastRightPic++;
-			console.log('clicked');
-			this.images.forEach((ele) => {
-				console.log(Number(ele.left) - 100);
-				ele.left = String(Number(ele.left) - 100);
-			});
-		},
-		rightClick() {
-			this.lastRightPic--;
-			this.lastLeftPic++;
-			console.log('clicked');
-			this.images.forEach((ele) => {
-				console.log(Number(ele.left) + 100);
-				ele.left = String(Number(ele.left) + 100);
-			});
-		},
+		/**
+		 * @vuese
+		 * expand Post to show its content
+		 * @arg no arg
+		 */
 		expandPostContent() {
 			this.setPostHybridContent();
 			this.showPostContent = true;
 			this.insightActive = false;
 		},
+		/**
+		 * @vuese
+		 * collapse post to hide its details content
+		 * @arg no arg
+		 */
 		collapsePostContent() {
 			this.showPostContent = false;
 			this.insightActive = false;
 		},
+		/**
+		 * @vuese
+		 * handel the request upvote to the post
+		 * @arg no arg
+		 */
 		async upvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -674,6 +743,11 @@ export default {
 				this.counter--;
 			}
 		},
+		/**
+		 * @vuese
+		 * handel the request downvote to the post
+		 * @arg no arg
+		 */
 		async downvote() {
 			if (this.state == 'unauth') {
 				this.$router.push('/');
@@ -701,41 +775,6 @@ export default {
 				this.counter++;
 			}
 		},
-		// showSubMenu() {
-		// 	this.subMenuDisplay = !this.subMenuDisplay;
-		// 	this.shareSubMenuDisplay = false;
-		// },
-		// hidePost() {
-		// 	this.postHidden = true;
-		// },
-		// async savePost() {
-		// 	this.saved = !this.saved;
-		// 	if (this.saved == true) {
-		// 		try {
-		// 			await this.$store.dispatch('postCommentActions/save', {
-		// 				baseurl: this.$baseurl,
-		// 				id: this.id,
-		// 				type: 'post',
-		// 			});
-		// 		} catch (error) {
-		// 			this.error = error.message || 'Something went wrong';
-		// 		}
-		// 	} else {
-		// 		try {
-		// 			await this.$store.dispatch('postCommentActions/unsave', {
-		// 				baseurl: this.$baseurl,
-		// 				id: this.id,
-		// 				type: 'post',
-		// 			});
-		// 		} catch (error) {
-		// 			this.error = error.message || 'Something went wrong';
-		// 		}
-		// 	}
-		// },
-		// showShareSubMenu() {
-		// 	this.shareSubMenuDisplay = !this.shareSubMenuDisplay;
-		// 	this.subMenuDisplay = false;
-		// },
 	},
 };
 </script>
@@ -747,30 +786,18 @@ span {
 	margin: 0;
 	padding: 0;
 }
-/* .sort-post-content {
-	margin-top: 2px !important;
-} */
 .base-profile-post .box {
 	border: thin solid #ccc;
-	/* border-radius: 5px; */
 	margin-bottom: -1px;
-	/* background-color: rgba(255, 255, 255, 0.8); */
-	/* border-radius: 5px; */
 	cursor: pointer;
-	/* background-color: #ffffff; */
 	background-color: var(--color-grey-light-2);
 	transition: color 0.5s, fill 0.5s, box-shadow 0.5s;
-	/* border-bottom-left-radius: 4px; */
-	/* border-bottom-right-radius: 4px; */
-	/* border-bottom-width: 1px; */
-	/* padding-bottom: 0; */
 }
 .base-profile-post {
 	position: relative;
 }
 .base-profile-post .box {
 	position: relative;
-	/* z-index: 0; */
 }
 .base-profile-post .box:hover {
 	border: thin solid #898989;
@@ -786,23 +813,16 @@ span {
 .vote-box {
 	width: 40px;
 	display: flex;
-	/* align-items: center; */
 	justify-content: flex-start;
 	background-color: #ccc;
-	/* background-color: rgba(255, 255, 255, 0.8); */
 	background-color: var(--color-grey-light-2);
 	padding: 8px 0px 8px 0px;
-
-	/* opacity: 0.4; */
 }
 
 .post-card div.vote-box {
-	/* background-color: var(--color-grey-light-2); */
 	text-align: center;
 	border-radius: 0px 0px 0px 0px !important;
 	background-color: var(--color-grey-light-2);
-	/* width: 40px; */
-	/* padding-top: 10px; */
 }
 div.vote-box {
 	border-radius: 0px 0px 0px 0px !important;
@@ -912,10 +932,6 @@ div.vote-box {
 	div.left-vote-box {
 		display: none !important;
 	}
-	/* .post-pic-box {
-		position: absolute;
-		right: 16px;
-	} */
 	.main-box {
 		flex-direction: row-reverse;
 	}
@@ -1049,205 +1065,9 @@ li.post-option-item-hover2:hover,
 li.post-option-item {
 	display: flex;
 }
-/* .post-options ul li,
-.post-options ul li a {
-	color: inherit;
-	list-style: none;
-	text-decoration: none;
-	height: 36px;
-	min-width: 36px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.post-options ul li.post-option-item,
-.post-option-item-hover {
-	padding: 0 8px 0 8px;
-	margin-right: 4px;
-	border-radius: 2px;
-}
-
-.post-options ul li.post-option-item .post-options-text,
-.post-option-item-hover .post-options-text {
-	margin-left: 6px;
-}
-@media (max-width: 800px) {
-	.post-options-text {
-		display: none;
-	}
-}
-.post-options ul li.post-option-item p,
-.post-option-item-hover p {
-	font-size: 12px;
-}
-.post-options ul li.post-option-item:hover,
-.post-option-item-hover:hover {
-	background-color: rgba(26, 26, 27, 0.1);
-}
-.post-options-icon {
-	font-size: 20px;
-}
-.post-options ul {
-	display: flex;
-	flex-wrap: wrap;
-}
-.post-options ul li.post-option-item {
-	display: flex;
-}
-.three-dot-icon-box {
-	position: relative;
-	display: flex;
-	padding: 0 8px 0 8px;
-	margin-right: 4px;
-	border-radius: 2px;
-}
-.three-dot-icon-box:hover {
-	background-color: rgba(26, 26, 27, 0.1);
-}
-.options-box-list {
-	position: absolute;
-	top: 35px;
-	left: 0px;
-	z-index: 15;
-	border: 1px solid #edeff1;
-	border-radius: 4px;
-	box-shadow: 0 2px 4px 0 rgba(28, 28, 28, 0.2);
-	color: #1c1c1c;
-	overflow: hidden;
-	background-color: #ffffff;
-}
-.options-box-list ul {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-}
-.options-box-list i input[type='checkbox'] {
-	width: 14px !important;
-	height: 14px !important;
-	display: flex !important;
-}
-.options-box-list .options-box-text label {
-	position: relative;
-	bottom: -0.4px;
-}
-.options-box-list ul li.options-box-item {
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 18px;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	text-transform: capitalize;
-	white-space: nowrap;
-	color: #878a8c;
-	cursor: pointer;
-	padding: 8px 16px 8px 8px;
-	text-align: left;
-	width: 100%;
-}
-.options-box-list ul li.options-box-item:not(:first-child) {
-	border-top: 1px solid #edeff1;
-}
-.options-box-list ul li.options-box-item:hover {
-	color: #1c1c1c;
-	background-color: #e9f5fd;
-}
-.options-box-list ul li.options-box-item .options-box-icon {
-	margin-right: 10px;
-	font-size: 14px;
-	display: flex;
-} */
-/* end-post-options */
-
-/* Post picture */
-/* .post-picture {
-	width: 100%;
-} */
 .post-picture-container {
 	width: 100%;
 }
-/* .post-picture .picture-container {
-	width: 100%;
-	height: 256px;
-	position: relative;
-}
-.post-picture .picture-container .left-button,
-.post-picture .picture-container .right-button {
-	position: absolute;
-}
-.post-picture .picture-container .left-button {
-	left: 16px;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 24px;
-	z-index: 2;
-	height: 44px;
-	width: 44px;
-	padding: 16px;
-	cursor: pointer;
-	background: #fff;
-	border-radius: 40px;
-	box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.post-picture .picture-container .right-button {
-	right: 16px;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 24px;
-	z-index: 2;
-	height: 44px;
-	width: 44px;
-	padding: 16px;
-	cursor: pointer;
-	background: #fff;
-	border-radius: 40px;
-	box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.picture-number-box {
-	display: flex;
-	align-items: center;
-	backdrop-filter: blur(40px);
-	background: rgba(0, 0, 0, 0.5);
-	border-radius: 50px;
-	color: #fff;
-	font-size: 12px;
-	padding: 4px 8px;
-	position: absolute;
-	right: 16px;
-	top: 16px;
-	z-index: 5;
-}
-.post-picture .picture-container .pic-items ul {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	justify-content: center;
-}
-.post-picture .picture-container .pic-items li {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	position: absolute;
-	transition: left 0.25s;
-}
-.post-picture .post-footer {
-	height: 40px;
-	background-color: #edeff1;
-	color: #222222;
-	display: flex;
-	width: 100%;
-	align-items: center;
-} */
-/* end post picture  */
-
-/* tool tip  */
 .post-tooltip {
 	position: relative;
 	display: inline-block;
@@ -1304,8 +1124,6 @@ li.post-option-item {
 	display: inline-block;
 	margin-right: 5px;
 	overflow: hidden;
-	/* background-color: rgb(100, 109, 115);
-	color: rgb(255, 255, 255); */
 	width: fit-content;
 	transition: background-color 0.25s;
 	/* display: flex; */
@@ -1402,5 +1220,4 @@ span {
 a.post-link-href:hover {
 	color: unset;
 }
-/* @media (max-width: 400px;); */
 </style>

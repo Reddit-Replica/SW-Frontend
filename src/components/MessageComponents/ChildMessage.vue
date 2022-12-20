@@ -33,17 +33,17 @@
 			</span>
 			<span v-else>
 				<span :class="!isRead ? 'unread' : ''">to&nbsp;</span>
-				<span class="reciever"
+				<span class="receiver"
 					><a
 						v-if="childMessage.isReceiverUser"
 						:href="'/user/' + childMessage.receiverUsername"
-						:id="'message-reciever-2-' + index"
+						:id="'message-receiver-2-' + index"
 						>/u/{{ childMessage.receiverUsername }}</a
 					>
 					<a
 						v-else
 						:href="'/r/' + childMessage.receiverUsername"
-						:id="'message-reciever-2-' + index"
+						:id="'message-receiver-2-' + index"
 						>/r/{{ childMessage.receiverUsername }}</a
 					>
 				</span>
@@ -201,9 +201,10 @@ export default {
 		ReplyComponent,
 	},
 	emits: ['doneSuccessfully'],
-	// @vuese
-	//details of message
 	props: {
+		// @vuese
+		//details of message
+		// @type object
 		childMessage: {
 			type: Object,
 			required: true,
@@ -220,6 +221,7 @@ export default {
 		},
 		// @vuese
 		//index to handle unique ids
+		// @type number
 		index: {
 			type: Number,
 			required: true,
@@ -227,6 +229,7 @@ export default {
 		},
 		// @vuese
 		//if it is an invitation or not
+		// @type boolean
 		isInvitation: {
 			type: Boolean,
 			required: true,
@@ -234,6 +237,7 @@ export default {
 		},
 		// @vuese
 		//if it is expand or collapse
+		// @type boolean
 		expandd: {
 			type: Boolean,
 			required: true,
@@ -241,6 +245,7 @@ export default {
 		},
 		// @vuese
 		//the subject of the message
+		// @type string
 		subject: {
 			type: String,
 			required: true,
@@ -249,10 +254,10 @@ export default {
 	},
 	computed: {
 		// @vuese
-		//get username from store
+		//get username from local storage
 		// @type string
 		getUserName() {
-			return this.$store.getters.getUserName;
+			return localStorage.getItem('userName');
 		},
 	},
 	data() {
@@ -274,20 +279,19 @@ export default {
 	},
 	watch: {
 		expandd() {
-			console.log('watch');
 			this.expandAll = this.expandd;
 		},
 	},
 	methods: {
 		// @vuese
 		//handle reload messages
-		// @type object
+		// @arg no argument
 		doneSuccessfully() {
 			this.$emit('doneSuccessfully');
 		},
 		// @vuese
 		//calculate time
-		// @type object
+		// @arg no argument
 		calculateTime() {
 			var currentDate = new Date();
 			var returnValue = '';
@@ -308,6 +312,10 @@ export default {
 			}
 			this.handleTime = returnValue;
 		},
+
+		// @vuese
+		//handle delete action
+		// @arg The argument is a string value representing if user click ok
 		async deleteAction(action) {
 			this.deleteUser = !this.deleteUser;
 			if (action == 'yes') {

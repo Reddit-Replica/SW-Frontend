@@ -1,15 +1,22 @@
 <template>
 	<div class="card-prof">
-		<div class="profile-card">
+		<div
+			class="profile-card"
+			:style="[notPostCard ? '' : 'width:250px !important']"
+		>
 			<!-- cover picture has two margins default is for picture profile and other for avatar profile -->
 			<div
 				class="cover-pic"
 				:class="[isAvatar ? 'avatar-margin' : '']"
 				id="cover-picture"
-				:style="`background-image: url(${$baseurl}/${userData['banner'].replace(
-					/\\/g,
-					`/`
-				)}) `"
+				:style="[
+					userData['banner']
+						? `background-image: url(${$baseurl}/${userData['banner'].replace(
+								/\\/g,
+								`/`
+						  )}) `
+						: '',
+				]"
 			>
 				<!-- add image icon at click it trigger input file which is hidden -->
 				<span
@@ -112,7 +119,6 @@
 							id="profile-picture_user"
 						/>
 					</div>
-
 					<span
 						@click="addProfileImage"
 						class="add-image"
@@ -170,14 +176,10 @@
 					</svg>
 				</h4>
 				<router-link
-					:to="`/user/${
-						state == ' profile' ? userName : this.$route.params.userName
-					}`"
+					:to="`/user/${userName}`"
 					id="profile-pic-user-name"
 					class="profile-username"
-					>u/{{
-						state == ' profile' ? userName : this.$route.params.userName
-					}}</router-link
+					>u/{{ userName }}</router-link
 				>
 			</div>
 			<!-- /////////////////////////////// -->
@@ -237,7 +239,7 @@
 				v-if="userData.followers && userData.followers.length != 0"
 			>
 				<router-link
-					:to="`/user/${$route.params.userName}/followers`"
+					:to="`/user/${userName}/followers`"
 					style="color: inherit"
 					class="i karma"
 				>
@@ -258,17 +260,18 @@
 				:blocked="userData.blocked"
 				:followed="userData.followed"
 				:state="state"
+				:user-name="userName"
 			></follow-chat-component>
 			<!-- /////////////////////////// -->
 			<!-- Social link block  -->
 			<sociallinks-block
-				v-if="state == 'profile'"
+				v-if="state == 'profile' && notPostCard"
 				:social-data="userData.socialLinks"
 			></sociallinks-block>
 			<!-- ///////////////// -->
 			<!-- New post button -->
 			<button
-				v-if="state == 'profile'"
+				v-if="state == 'profile' && notPostCard"
 				class="new-post"
 				@click="$router.push(`/user/${userName}/submit`)"
 				id="profile-new-post"
@@ -278,7 +281,7 @@
 			<!-- ////////////// -->
 			<!-- more options button -->
 			<button
-				v-if="!(state != 'profile' && userData.blocked)"
+				v-if="!(state != 'profile' && userData.blocked) && notPostCard"
 				id="more-options-button"
 				class="more-options"
 				@click="toggleShowMoreOptions"
@@ -289,7 +292,7 @@
 			<!-- /////////////////// -->
 			<!-- profile options -->
 			<ul
-				v-if="!(state != 'profile' && userData.blocked)"
+				v-if="!(state != 'profile' && userData.blocked) && notPostCard"
 				id="profile-options"
 				class="profile-options"
 				v-show="showMoreOptions"
@@ -306,7 +309,7 @@
 			<!-- /////////////// -->
 			<!-- more options button -->
 			<button
-				v-if="!(state != 'profile' && userData.blocked)"
+				v-if="!(state != 'profile' && userData.blocked) && notPostCard"
 				id="fewer-options-button"
 				class="fewer-options"
 				v-show="showMoreOptions"
@@ -346,6 +349,11 @@ export default {
 		state: {
 			type: String,
 			required: true,
+		},
+		notPostCard: {
+			type: Boolean,
+			required: false,
+			default: true,
 		},
 	},
 	// mounted() {
@@ -449,7 +457,7 @@ export default {
 					this.$router.push({
 						path: '/message/compose/',
 						query: {
-							to: this.$route.params.userName,
+							to: this.userName,
 						},
 					});
 				}
@@ -471,7 +479,7 @@ export default {
 				await this.$store.dispatch('user/blockUnblockUser', {
 					baseurl: this.$baseurl,
 					blockUnblockData: {
-						username: this.$route.params.userName,
+						username: this.userName,
 						block: true,
 					},
 				});

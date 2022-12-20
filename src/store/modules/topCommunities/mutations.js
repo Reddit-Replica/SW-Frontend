@@ -9,7 +9,7 @@ export default {
 		state.firstCommunities = payload;
 	},
 	setSecondCommunities(state, payload) {
-		state.firstCommunities = payload;
+		state.secondCommunities = payload;
 	},
 	setFirstCategory(state, payload) {
 		state.firstCategory = payload;
@@ -22,5 +22,11 @@ export default {
 	},
 	setOneCommunities(state, payload) {
 		state.oneCommunities = payload;
+	},
+	setTrendingCommunities(state, payload) {
+		state.trendingCommunities = payload;
+	},
+	setSuggestedCommunity(state, payload) {
+		state.suggestedCommunity = payload;
 	},
 };

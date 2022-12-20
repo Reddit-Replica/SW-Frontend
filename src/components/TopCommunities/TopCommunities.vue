@@ -1,30 +1,39 @@
 <template>
-	<div class="topCommunities">
-		<div :style="style" class="topCommunitiesTitleBlock">
-			<h2 class="topCommunitiesTitle">
+	<div class="topCommunities" id="top-comm-1" v-if="!noCommunities">
+		<div class="topCommunitiesTitleBlock style" id="top-comm-2">
+			<h2 class="topCommunitiesTitle" id="top-comm-3">
 				<router-link
 					:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
 					class="topCommunitiesLink"
 					id="top-communities-link"
+					v-if="topCommunitiesCaption"
 					>Top <span>{{ topCommunitiesCaption }}</span> Communities</router-link
+				>
+				<router-link
+					to="/subreddits/leaderboard"
+					class="topCommunitiesLink"
+					id="top-communities-link-else"
+					v-else
+					>Trending Communities</router-link
 				>
 			</h2>
 		</div>
-		<ol class="topCommunitiesList">
+		<ol class="topCommunitiesList" id="top-comm-5">
 			<top-community
 				@reload="reloadAgain"
 				v-for="(community, index) in topCommunities"
 				:index="index"
 				:key="community.id"
-				:name="community.name"
-				:image="community.image"
-				:members="community.members"
+				:id="community.id"
+				:name="community.data.title"
+				:image="community.data.picture"
+				:members="community.data.members"
 				:show-members="false"
-				:is-member="community.isMember"
+				:is-member="community.data.isMember"
 			>
 			</top-community>
 		</ol>
-		<div class="viewAllBlock">
+		<div class="viewAllBlock" id="top-comm-6">
 			<base-button
 				link
 				:to="'/subreddits/leaderboard/' + topCommunitiesCaption"
@@ -91,15 +100,18 @@ export default {
 		},
 	},
 	computed: {
-		//@vuese
-		//Set background image of top communities bar
-		style() {
-			return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
+		noCommunities() {
+			return this.topCommunities.length === 0;
 		},
+	},
+	mounted() {
+		console.log(this.topCommunities);
+		console.log(this.thereCommunities);
+		console.log(this.topCommunities !== []);
+		console.log(!this.topCommunities);
 	},
 	methods: {
 		reloadAgain() {
-			console.log('reloadComponent');
 			this.$emit('reloadComponent');
 		},
 	},
@@ -201,5 +213,8 @@ export default {
 }
 .Recommendation :hover {
 	opacity: 0.92;
+}
+.style {
+	background-image: url('../../../img/banner-background_top.png');
 }
 </style>

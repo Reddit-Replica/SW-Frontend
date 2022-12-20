@@ -1,8 +1,13 @@
 <template>
 	<!-- header component -->
 	<div>
+		<div v-if="loading">
+			<the-spinner
+				style="position: absolute; left: 30%; top: 50%"
+			></the-spinner>
+		</div>
 		<div :class="showPostComments ? 'back' : ''">
-			<the-header :header-title="userName"></the-header>
+			<the-header :header-title="'Home'"></the-header>
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6">
@@ -24,9 +29,9 @@
 							></base-post>
 						</div>
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-3 margin">
 						<div class="right-col">
-							<div class="component component-top">
+							<div class="component" v-if="isLogedIn">
 								<top-communities-bar></top-communities-bar>
 							</div>
 							<div class="component">
@@ -61,11 +66,14 @@ import CreatepostSidebar from '../../components/BaseComponents/CreatepostSidebar
 import RightsideFooter from '../../components/BaseComponents/RightsideFooter.vue';
 import BacktotopButton from '../../components/BaseComponents/BacktotopButton.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+import TheSpinner from '../../components/BaseComponents/TheSpinner.vue';
 export default {
-	beforeMount() {
+	async beforeMount() {
 		let title = this.$route.params.title;
 		if (title == null) title = 'best';
-		this.fetchPosts(title);
+		this.loading = true;
+		await this.fetchPosts(title);
+		this.loading = false;
 	},
 	watch: {
 		'$route.params.title': {
@@ -83,6 +91,7 @@ export default {
 		RightsideFooter,
 		BacktotopButton,
 		SaveUnsavePopupMessage,
+		TheSpinner,
 	},
 	computed: {
 		showPostComments() {
@@ -99,6 +108,12 @@ export default {
 		savedUnsavedPosts() {
 			return this.$store.getters['postCommentActions/getActions'];
 		},
+		isLogedIn() {
+			if (localStorage.getItem('accessToken')) {
+				return true;
+			}
+			return false;
+		},
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
@@ -108,6 +123,7 @@ export default {
 			colorGreyDark2: '#0099CC',
 			posts: [],
 			showComments: false,
+			loading: false,
 		};
 	},
 	methods: {
@@ -250,6 +266,9 @@ export default {
 	.right-col {
 		margin-left: 12rem;
 	}
+}
+.margin {
+	margin-top: 5rem;
 }
 
 @media only screen and (max-width: 991px) {

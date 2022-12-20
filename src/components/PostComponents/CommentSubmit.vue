@@ -180,7 +180,7 @@ export default {
 				// this.$refs.myQuillEditor.getContents().ops,
 				{
 					insert: 'u/' + userName,
-					attributes: { link: this.$baseurl + '/user/' + userName },
+					attributes: { link: '/user/' + userName },
 				},
 			]);
 			this.mentionedUser = '';
@@ -271,22 +271,23 @@ export default {
 				console.log(value.ops[i].insert);
 				console.log(value.ops[i].insert.search('@') != -1);
 			}
-			return false;
 		},
 	},
 	async beforeMount() {
-		try {
-			await this.$store.dispatch('postCommentActions/commentedUsers', {
-				baseurl: this.$baseurl,
-				postId: this.$route.path.split('/')[4],
-			});
-		} catch (error) {
-			this.error = error.message || 'Something went wrong';
+		if (localStorage.getItem('userName') != null) {
+			try {
+				await this.$store.dispatch('postCommentActions/commentedUsers', {
+					baseurl: this.$baseurl,
+					postId: this.$route.path.split('/')[4],
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.commentedUsers =
+				this.$store.getters['postCommentActions/getCommentedUsers'].usernames;
+			console.log('commentedUsers');
+			console.log(this.commentedUsers);
 		}
-		this.commentedUsers =
-			this.$store.getters['postCommentActions/getCommentedUsers'];
-		console.log('commentedUsers');
-		console.log(this.commentedUsers);
 	},
 };
 </script>
