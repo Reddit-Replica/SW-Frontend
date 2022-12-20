@@ -300,5 +300,6 @@ img.ql-image {
 	font-size: 9px;
 	width: max-content;
 	height: max-content;
+	background-color: white;
 }
 </style>
