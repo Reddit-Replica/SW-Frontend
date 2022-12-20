@@ -32,7 +32,7 @@
 					id="post-by-router"
 				>
 					{{ post.postedBy }} </router-link
-				>&nbsp;{{ calculateTime }} ago
+				>&nbsp;{{ calculateTime }}
 			</span>
 		</div>
 
@@ -43,10 +43,10 @@
 					v-if="post.flair != undefined || post.flair != null"
 					class="flair"
 					:button-text="post.flair.flairName"
-					style="
-						color: post.flair.textColor;
-						background-color: post.flair.backgroundColor;
-					"
+					:style="{
+						color: flair.textColor,
+						background: flair.backgroundColor,
+					}"
 				/>
 			</h3>
 		</div>
