@@ -10,7 +10,7 @@ import App from './App.vue';
 // import vue3GoogleLogin from 'vue3-google-login';
 //import VueCookies from 'vue3-cookies';
 //import { useCookies } from "vue3-cookies";
-// import GAuth from 'vue3-google-oauth2';
+import GAuth from 'vue3-google-oauth2';
 import TheSpinner from './components/BaseComponents/TheSpinner.vue';
 import BaseButton from './components/BaseComponents/BaseButton.vue';
 import SwitchButton from './components/BaseComponents/SwitchButton.vue';
@@ -60,12 +60,12 @@ app.use(Notifications);
 // 	clientId:
 // 		'515357456544-54g7cngbtccge8qvcvifnrg57gkcbgfk.apps.googleusercontent.com',
 // });
-// app.use(GAuth, {
-// 	clientId: `479140215540-o5bmre9kktfq6d8v54a8o031a3usff2m.apps.googleusercontent.com`,
-// 	scope: 'email',
-// 	prompt: 'consent',
-// 	plugin_name: `Web client 1  Readit`,
-// });
+app.use(GAuth, {
+	clientId: `479140215540-o5bmre9kktfq6d8v54a8o031a3usff2m.apps.googleusercontent.com`,
+	scope: 'email',
+	prompt: 'consent',
+	plugin_name: `Web client 1  Readit`,
+});
 
 app.component('BaseButton', BaseButton);
 app.component('SwitchButton', SwitchButton);

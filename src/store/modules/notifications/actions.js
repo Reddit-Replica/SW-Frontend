@@ -22,6 +22,7 @@ export default {
 		});
 
 		const responseData = await response.json();
+		console.log(responseData['children']);
 
 		if (response.status == 200) {
 			context.commit('setNotifications', responseData['children']);
