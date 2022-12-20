@@ -59,7 +59,7 @@
 				></about-community-bar>
 				<subreddit-rules
 					:rules="rules"
-					:subreddit-name="subredditName"
+					:subreddit-name="subreddit.title"
 					:blue="true"
 				></subreddit-rules>
 				<moderators-bar
@@ -217,22 +217,25 @@ export default {
 		async getModerators() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('moderation/loadListOfModerators', {
-				subredditName: this.subredditName,
+				subredditName: this.subreddit.title,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
 			this.moderators = this.$store.getters['moderation/listOfModerators'];
 		},
 		async getRules() {
+			const accessToken = localStorage.getItem('accessToken');
 			try {
 				await this.$store.dispatch('moderation/loadListOfRules', {
 					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
+					subredditName: this.subreddit.title,
+					token: accessToken,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.rules = this.$store.getters['moderation/listOfRules'];
+			console.log(this.rules);
 		},
 		reloadPage() {
 			this.getSubreddit();
@@ -298,7 +301,7 @@ export default {
 .subreddit-page {
 	max-width: 100%;
 	height: 100%;
-	min-height: 2000px;
+	min-height: 200rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -325,9 +328,9 @@ export default {
 }
 .box-buttons {
 	background-color: var(--color-grey-light-2);
-	padding: 16px;
-	margin: 16px -16px -16px;
-	border-bottom-right-radius: 4px;
+	padding: 1.6rem;
+	margin: 1.6rem -1.6rem -1.6rem;
+	border-bottom-right-radius: 0.4rem;
 	display: flex;
 	justify-content: flex-end;
 	box-sizing: border-box;
@@ -383,7 +386,7 @@ export default {
 	margin-top: 1.2rem;
 }
 .posts {
-	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
 }
 </style>

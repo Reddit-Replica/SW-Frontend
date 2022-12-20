@@ -7,7 +7,7 @@
 		</div>
 		<div class="all" v-else>
 			<div class="after-all">
-				<the-header :header-title="userName"></the-header>
+				<the-header :header-title="'Search Results'"></the-header>
 				<div class="page-release">
 					<div class="page">
 						<div>
@@ -353,9 +353,6 @@ export default {
 		},
 		SearchedUsers() {
 			return this.$store.getters['search/Getusers'];
-		},
-		userName() {
-			return localStorage.getItem('userName');
 		},
 	},
 	watch: {

@@ -25,11 +25,11 @@
 				:index="index"
 				:key="community.id"
 				:id="community.id"
-				:name="community.title"
-				:image="community.picture"
-				:members="community.members"
+				:name="community.data.title"
+				:image="community.data.image"
+				:members="community.data.members"
 				:show-members="false"
-				:is-member="community.joined"
+				:is-member="community.data.joined"
 			>
 			</top-community>
 		</ol>
