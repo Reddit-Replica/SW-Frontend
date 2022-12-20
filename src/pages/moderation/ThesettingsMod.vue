@@ -5,6 +5,7 @@
 				>you must fill Community topics, and Community Description.</span
 			>
 			<base-button
+				id="save"
 				button-text="Save Changes"
 				:disable-button="buttonDisabled"
 				class="save-button"
@@ -15,6 +16,7 @@
 		<h3 class="secondary-title">COMMUNITY PROFILE</h3>
 		<h3 class="medium-font">Community name</h3>
 		<input
+			id="community-name-input"
 			maxlength="93"
 			type="text"
 			class="community-name-input"
@@ -36,6 +38,7 @@
 				waprocessedid="a53wog"
 				waprocessedanchor="true"
 				style="display: inline-block"
+				id="des"
 				>Learn more.</a
 			>
 			<div
@@ -71,6 +74,7 @@
 			:options="topics"
 			v-model="mainTopic"
 			@click="getsuggestedTopics()"
+			id="select-main"
 		></v-select>
 		<v-select
 			class=""
@@ -79,6 +83,7 @@
 			v-model="subTopics"
 			multiple
 			@click="getsuggestedTopics()"
+			id="select-sub"
 		></v-select>
 		<!-- <div class="_1oREjd5ToMFah-VfX5Zt1z">
 			<div class="_1PLoXiZH4WKzHTfmYIt34X qWs3cMcSjquK-OXl-9jH5">
@@ -102,6 +107,7 @@
 			class="text-area"
 			style="margin-bottom: 0px"
 			v-model="communityDescription"
+			id="comm-des"
 		></textarea>
 		<div class="Characters-remaining">
 			{{ communityDescriptioncount }} Characters remaining
@@ -119,6 +125,7 @@
 				waprocessedid="a53wog"
 				waprocessedanchor="true"
 				style="display: inline-block"
+				id="mess"
 				>Learn more.</a
 			>
 			<div
@@ -153,6 +160,7 @@
 			></switch-button>
 		</span>
 		<textarea
+			id="welcome"
 			v-if="sendWelcomeMessage"
 			maxlength="50000"
 			rows="5"
@@ -182,6 +190,7 @@
 			value="English"
 		/> -->
 		<v-select
+			id="lang"
 			class="land-drop"
 			:options="languages"
 			v-model="language"
@@ -295,6 +304,7 @@
 				</svg>
 			</label>
 			<input
+				id="loca"
 				class="location-input"
 				name="location"
 				placeholder="Add location"
@@ -308,7 +318,7 @@
 				<h3 class="title-black">Community type</h3>
 			</div>
 			<div class="community-box-input flex-column" role="radiogroup">
-				<input type="hidden" />
+				<input id="check" type="hidden" />
 				<div
 					class="type-item"
 					role="radio"
@@ -478,7 +488,7 @@
 			When your community is marked as an 18+ community, users must be flagged
 			as 18+ in their user settings
 			<switch-button
-				id="btn3"
+				id="btn500"
 				style="margin-left: 15px"
 				@checked="getNsfw"
 				:val="nsfw"
@@ -494,7 +504,7 @@
 				to join. Users may still send your subreddit modmail whether this is on
 				or off.
 				<switch-button
-					id="btn3"
+					id="btn1001"
 					style="margin-left: 15px"
 					@checked="getRequesttojoin"
 					v-if="create"
@@ -508,6 +518,7 @@
 				Approved users have the ability to
 				<!-- <p style="text-align: right"> -->
 				<v-select
+					id="approve"
 					class=""
 					style="margin-left: 50px"
 					:options="approvedUsers"
@@ -537,7 +548,7 @@
 			<h3 class="medium-font">
 				Accepting new requests to post
 				<switch-button
-					id="btn4"
+					id="btn3000"
 					style="margin-left: 15px"
 					@checked="getRequeststopost"
 					v-if="create"
@@ -553,6 +564,7 @@
 				:state="message.state"
 				:typeid="message.postid"
 				@undo-action="undoSaveUnsave"
+				id="popup"
 			></SaveUnsavePopupMessage>
 		</div>
 	</div>

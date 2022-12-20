@@ -174,6 +174,7 @@
 				placeholder="Text (optional)"
 				style="color: black"
 				ref="myQuillEditor"
+				id="edit"
 				v-model:content="content"
 			>
 				<template #toolbar>
@@ -182,50 +183,50 @@
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Bold</span>
 
-							<button class="icon ql-bold"></button>
+							<button class="icon ql-bold" id="1"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Italics</span>
-							<button class="icon ql-italic"></button>
+							<button class="icon ql-italic" id="2"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text-small">Link</span>
-							<button class="icon ql-link"></button>
+							<button class="icon ql-link" id="3"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Strikethrough</span>
-							<button class="icon ql-strike"></button>
+							<button class="icon ql-strike" id="4"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Inline Code</span>
-							<button class="icon ql-code"></button>
+							<button class="icon ql-code" id="5"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Superscript</span>
-							<button class="icon ql-script" value="super"></button>
+							<button class="icon ql-script" value="super" id="6"></button>
 						</div>
 						<!-- <button class="ql-spoiler"></button> -->
 						<div class="space-in"></div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Heading</span>
-							<button class="icon ql-header" value="1"></button>
+							<button class="icon ql-header" value="1" id="7"></button>
 						</div>
 
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Bulleted List</span>
-							<button class="icon ql-list" value="bullet"></button>
+							<button class="icon ql-list" value="bullet" id="8"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Numbered List</span>
-							<button class="icon ql-list" value="ordered"></button>
+							<button class="icon ql-list" value="ordered" id="9"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Quote Block</span>
-							<button class="icon ql-blockquote"></button>
+							<button class="icon ql-blockquote" id="10"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Code Block</span>
-							<button class="icon ql-code-block"></button>
+							<button class="icon ql-code-block" id="11"></button>
 						</div>
 						<div class="space-in"></div>
 						<!-- <button class="icons" id="" @click="insertTable">
@@ -235,11 +236,11 @@
 					</button> -->
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Add an image</span>
-							<button class="icon ql-image"></button>
+							<button class="icon ql-image" id="12"></button>
 						</div>
 						<div class="tool-tip">
 							<span class="tool-tip-text strike">Add a video</span>
-							<button class="icon ql-video"></button>
+							<button class="icon ql-video" id="13"></button>
 						</div>
 						<div class="dropdown icon-dot">
 							<button
@@ -247,6 +248,7 @@
 								type="button"
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
+								id="tog"
 							>
 								<svg
 									class="svg-inline--fa fa-ellipsis"
@@ -267,48 +269,84 @@
 								</svg>
 							</button>
 							<ul class="dropdown-menu dropdown">
-								<li><button class="icon dropdown-item ql-bold"></button></li>
-								<li><button class="icon dropdown-item ql-italic"></button></li>
-								<li><button class="icon dropdown-item ql-link"></button></li>
-								<li><button class="icon dropdown-item ql-strike"></button></li>
-								<li><button class="icon dropdown-item ql-code"></button></li>
+								<li>
+									<button class="icon dropdown-item ql-bold" id="101"></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-italic"
+										id="102"
+									></button>
+								</li>
+								<li>
+									<button class="icon dropdown-item ql-link" id="103"></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-strike"
+										id="104"
+									></button>
+								</li>
+								<li>
+									<button class="icon dropdown-item ql-code" id="105"></button>
+								</li>
 								<li>
 									<button
 										class="icon dropdown-item ql-script"
 										value="super"
+										id="106"
 									></button>
 								</li>
 								<li>
 									<button
 										class="icon dropdown-item ql-header"
 										value="1"
+										id="107"
 									></button>
 								</li>
 								<li>
 									<button
 										class="icon dropdown-item ql-list"
 										value="bullet"
+										id="108"
 									></button>
 								</li>
 								<li>
 									<button
 										class="icon dropdown-item ql-list"
 										value="ordered"
+										id="109"
 									></button>
 								</li>
 								<li>
-									<button class="icon dropdown-item ql-blockquote"></button>
+									<button
+										class="icon dropdown-item ql-blockquote"
+										id="110"
+									></button>
 								</li>
 								<li>
-									<button class="icon dropdown-item ql-code-block"></button>
-								</li>
-								<li><button class="icon dropdown-item ql-image"></button></li>
-								<li><button class="icon dropdown-item ql-video"></button></li>
-								<li>
-									<button class="icon dropdown-item ql-blockquote"></button>
+									<button
+										class="icon dropdown-item ql-code-block"
+										id="111"
+									></button>
 								</li>
 								<li>
-									<button class="icon dropdown-item ql-blockquote"></button>
+									<button class="icon dropdown-item ql-image" id="112"></button>
+								</li>
+								<li>
+									<button class="icon dropdown-item ql-video" id="113"></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-blockquote"
+										id="114"
+									></button>
+								</li>
+								<li>
+									<button
+										class="icon dropdown-item ql-blockquote"
+										id="115"
+									></button>
 								</li>
 							</ul>
 						</div>

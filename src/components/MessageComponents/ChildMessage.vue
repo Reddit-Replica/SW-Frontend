@@ -14,7 +14,7 @@
 				<span class="sender"
 					><a
 						v-if="childMessage.isSenderUser"
-						:href="'/user/' + childMessage.senderUsername"
+						:href="'/user/' + childMessage.senderUsername + '/'"
 						:id="'message-sender-2-' + index"
 						>/u/{{ childMessage.senderUsername }}</a
 					>
@@ -36,7 +36,7 @@
 				<span class="receiver"
 					><a
 						v-if="childMessage.isReceiverUser"
-						:href="'/user/' + childMessage.receiverUsername"
+						:href="'/user/' + childMessage.receiverUsername + '/'"
 						:id="'message-receiver-2-' + index"
 						>/u/{{ childMessage.receiverUsername }}</a
 					>

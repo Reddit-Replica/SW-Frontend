@@ -240,7 +240,7 @@ export default {
 	<div class="content" @dragover.prevent @drop.prevent @drop="dragFile">
 		<!-- <div class="out"> -->
 		<div v-if="postType == 'video'">
-			<video width="800" height="500" controls>
+			<video width="800" height="500" controls id="vid101">
 				<source :src="video" />
 			</video>
 		</div>
@@ -286,11 +286,13 @@ export default {
 							class="image-caption"
 							rows="1"
 							v-model="caption"
+							id="text"
 						>
 						</textarea>
 						<span class="char-count">{{ inputCharCount }}/180</span>
 					</div>
 					<textarea
+						id="text2"
 						maxlength="180"
 						placeholder="Add a Link ..."
 						class="image-caption"
