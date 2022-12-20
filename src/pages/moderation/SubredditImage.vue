@@ -219,7 +219,9 @@ export default {
 
 <style scoped>
 .settings-block {
-	margin-top: 5rem;
+	/* margin-top: 5rem; */
+	display: block;
+	padding: 1rem 1.6rem;
 }
 .bi-plus {
 	margin-right: 8px;
@@ -511,6 +513,9 @@ a {
 @media only screen and (max-width: 768px) {
 	.settings-block {
 		margin-top: 10rem;
+	}
+	.h3-title {
+		font-size: 1.5rem;
 	}
 }
 </style>

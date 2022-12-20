@@ -365,6 +365,7 @@
 												v-else-if="postDetails.postedBy == getuserName"
 												:post-data="{ data: postDetails, id: postDetails.id }"
 												:pinned-post-flag="false"
+												page="comment"
 											></post-options>
 										</div>
 										<div class="comment-submit">

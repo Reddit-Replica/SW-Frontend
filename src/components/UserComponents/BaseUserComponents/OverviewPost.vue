@@ -314,6 +314,7 @@
 							<the-insights
 								:id="postData.id"
 								@finish-loading="finishInsightLoading"
+								@start-loadin="startInsightLoading"
 							></the-insights>
 						</div>
 					</div>
@@ -627,13 +628,17 @@ export default {
 		 * @arg no arg
 		 */
 		async insightsPostToggle() {
-			this.insightsLoading = true;
+			// this.insightsLoading = true;
 			this.insightActive = !this.insightActive;
 			this.showPostContent = false;
 			// if (this.insightActive) await this.RequestInsightsData(id);
-			this.insightsLoading = false;
+			// this.insightsLoading = false;
+		},
+		startInsightLoading() {
+			this.insightsLoading = true;
 		},
 		finishInsightLoading() {
+			console.log('emits');
 			this.insightsLoading = false;
 		},
 		/**

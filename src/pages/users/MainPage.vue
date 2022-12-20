@@ -28,6 +28,11 @@
 								@unsaved="unsavePost"
 							></base-post>
 						</div>
+						<base-button
+							@click="fetchPosts"
+							class="load-more"
+							button-text="load more"
+						/>
 					</div>
 					<div class="col-lg-3 margin">
 						<div class="right-col">
@@ -72,13 +77,13 @@ export default {
 		let title = this.$route.params.title;
 		if (title == null) title = 'best';
 		this.loading = true;
-		await this.fetchPosts(title);
+		await this.fetchPosts();
 		this.loading = false;
 	},
 	watch: {
 		'$route.params.title': {
 			handler: function () {
-				this.fetchPosts(this.$route.params.title);
+				this.fetchPosts();
 			},
 		},
 	},
@@ -131,7 +136,7 @@ export default {
 			posts: [],
 			showComments: false,
 			loading: false,
-			afterMod: '',
+			afterMod: null,
 			MoreFetch: false,
 			busyRequestMore: false,
 		};
@@ -147,7 +152,7 @@ export default {
 				let title = this.$route.params.title;
 				if (title == null) title = 'best';
 				this.loading = true;
-				await this.fetchPosts(title);
+				await this.fetchPosts();
 				this.loading = false;
 				this.busyRequestMore = true;
 				if (this.afterMod == '') this.MoreFetch = false;
@@ -220,8 +225,10 @@ export default {
 				}
 			}
 		},
-		async fetchPosts(title) {
+		async fetchPosts() {
 			try {
+				let title = this.$route.params.title;
+				if (title == null) title = 'best';
 				await this.$store.dispatch('listing/fetchPosts', {
 					baseurl: this.$baseurl,
 					title: title,
@@ -231,9 +238,11 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.posts = this.$store.getters['listing/getPosts'].children;
+			this.posts = this.posts.concat(
+				this.$store.getters['listing/getPosts'].children
+			);
 			this.afterMod = this.$store.getters['listing/getPosts'].after;
-			console.log(this.posts);
+			console.log(this.afterMod);
 		},
 		changeRoute(title) {
 			this.$router.push('/main/' + title);
@@ -255,6 +264,15 @@ export default {
 } */
 .left-col {
 	margin-top: 6.5rem;
+}
+.load-more {
+	color: black;
+	font-weight: 600;
+	background-color: white;
+	margin: auto;
+	display: block;
+	height: 22px;
+	width: 72px;
 }
 .positioning {
 	position: fixed;

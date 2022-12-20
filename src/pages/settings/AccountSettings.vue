@@ -965,7 +965,6 @@ export default {
 	padding: 10px 0px;
 }
 #div-1 > div:fir {
-
 }
 .section div:first-of-type h3 span {
 	color: #ff2c00;
