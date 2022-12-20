@@ -581,34 +581,34 @@ export default {
 }
 .community-dialog {
 	max-height: 100%;
-	max-width: 492px;
+	max-width: 49.2rem;
 }
 .community-box {
-	margin-bottom: 20px;
+	margin-bottom: 2rem;
 }
 .community-box-title {
 	max-width: 100%;
-	margin-bottom: -4px;
-	margin-right: 8px;
+	margin-bottom: -0.4rem;
+	margin-right: 0.8rem;
 }
 .bi-info-circle {
-	padding-left: 4px;
+	padding-left: 0.4rem;
 	/* color: var(--color-grey-dark-2); */
 	position: absolute;
 }
 .title-black {
-	font-size: 16px;
+	font-size: 1.6rem;
 	font-weight: 500;
-	line-height: 20px;
+	line-height: 2rem;
 	color: var(--color-dark-1);
 	display: flex;
-	margin-bottom: 4px;
+	margin-bottom: 0.4rem;
 }
 .title-grey {
 	font-weight: 400;
 	color: var(--color-grey-dark-2);
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 1.2rem;
+	line-height: 1.6rem;
 }
 .title-red {
 	color: red;
@@ -616,76 +616,85 @@ export default {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+@media only screen and (max-width: 500px) {
+	.title-red {
+		white-space: wrap;
+	}
+	select {
+		width: 30rem;
+		max-width: 30rem;
+	}
+}
 .more-text {
 	text-decoration: underline;
 	cursor: pointer;
-	padding-left: 4px;
+	padding-left: 0.4rem;
 }
 .name-error {
 	display: flex;
 }
 .community-box-input {
 	align-items: flex-start;
-	margin-top: 12px;
+	margin-top: 1.2rem;
 }
 .box {
-	width: 150px;
+	width: 15rem;
 	background-color: var(--color-dark-1);
 	color: var(--color-white-1);
-	font-size: 9px;
-	padding: 10px;
+	font-size: 0.9rem;
+	padding: 1rem;
 	position: absolute;
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	text-align: center;
 	pointer-events: none;
 	transform: translateX(-50%);
 	z-index: 100;
-	right: -160px;
+	right: -16rem;
 }
 .box.arrow-top {
-	margin-top: 10px;
+	margin-top: 1rem;
 }
 .box.arrow-top:after {
 	content: ' ';
 	position: absolute;
-	right: 60px;
-	top: -5px;
+	right: 6rem;
+	top: -0.5rem;
 	border-top: none;
-	border-right: 15px solid transparent;
-	border-left: 15px solid transparent;
-	border-bottom: 15px solid black;
+	border-right: 1.5rem solid transparent;
+	border-left: 1.5rem solid transparent;
+	border-bottom: 1.5rem solid black;
 }
 .r-span {
 	color: var(--color-grey-dark-2);
 	position: relative;
-	top: 26px;
-	left: 12px;
+	top: 2.6rem;
+	left: 1.2rem;
 }
 .span-info {
 	position: relative;
 }
 .input-name {
-	border: 1px solid var(--color-grey-light-2);
-	max-height: 37px;
-	padding: 4px 24px;
+	border: 0.1rem solid var(--color-grey-light-2);
+	max-height: 3.7rem;
+	padding: 0.4rem 2.4rem;
 	background-color: var(--color-white-1);
 	color: var(--color-dark-1);
 	box-sizing: border-box;
-	height: 48px;
-	margin-bottom: 8px;
-	border-radius: 4px;
+	height: 4.8rem;
+	margin-bottom: 0.8rem;
+	border-radius: 0.4rem;
 	width: 100%;
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 400;
-	line-height: 21px;
+	line-height: 2.1rem;
 }
 .type-item {
 	outline: 0 none;
 	align-items: flex-start;
-	margin-bottom: 16px;
+	margin-bottom: 1.6rem;
 	display: flex;
 	flex-direction: row;
-	column-gap: 5px;
+	column-gap: 0.5rem;
 }
 .bi {
 	color: var(--color-grey-dark-2);
@@ -701,58 +710,58 @@ export default {
 	align-items: center;
 }
 .red-block {
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 1.2rem;
+	line-height: 1.6rem;
 	background-color: #ff585b;
-	border-radius: 2px;
-	padding: 0 4px;
+	border-radius: 0.2rem;
+	padding: 0 0.4rem;
 	color: var(--color-white-1);
 	font-weight: 500;
 }
 .box-buttons {
 	background-color: var(--color-grey-light-2);
-	padding: 16px;
-	margin: 16px -16px -16px;
+	padding: 1.6rem;
+	margin: 1.6rem -1.6rem -1.6rem;
 	display: flex;
 	justify-content: flex-end;
-	border-bottom-right-radius: 4px;
+	border-bottom-right-radius: 0.4rem;
 	box-sizing: border-box;
 }
 button {
-	min-height: 32px;
-	min-width: 32px;
-	padding: 4px 16px;
-	margin-left: 8px;
-	font-size: 14px;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
+	margin-left: 0.8rem;
+	font-size: 1.4rem;
 	font-weight: 700;
 }
 button:hover {
 	opacity: 0.92;
 }
 .button-white {
-	border: 1px solid var(--color-blue-2);
+	border: 0.1rem solid var(--color-blue-2);
 	color: var(--color-blue-2);
-	padding: 4px 16px;
+	padding: 0.4rem 1.6rem;
 }
 .button-blue {
 	background-color: var(--color-blue-2);
 	border: none;
 	color: var(--color-white-1);
-	padding: 4px 16px;
+	padding: 0.4rem 1.6rem;
 }
 .error-text {
 	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 400;
-	line-height: 21px;
+	line-height: 2.1rem;
 	max-height: 50vh;
 	overflow-wrap: break-word;
 	overflow: auto;
 }
 .error-dialog {
-	width: 318px;
+	width: 31.8rem;
 }
 .box-ok {
-	padding: 8px 5px;
+	padding: 0.8rem 0.5rem;
 }
 </style>

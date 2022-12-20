@@ -49,12 +49,17 @@
 			</div>
 
 			<!--  -->
-			<!-- <sociallinks-block
-				:social-data="userData.socialLinks"
+			<h3 class="h3-title">Social links (5 max)</h3>
+			<p class="p-title-description">
+				People who visit your profile will see your social links.
+			</p>
+			<sociallinks-block
+				style="margin: 20px 0"
+				:social-data="userData.userData.socialLinks"
 				v-if="userData"
-			></sociallinks-block> -->
+			></sociallinks-block>
 
-			<h3 class="h3-main-title">IMAGES</h3>
+			<h3 class="h3-main-title" style="margin-top: 20px">IMAGES</h3>
 
 			<!-- <img :src="image" class="one-image" alt=""  /> -->
 
@@ -402,7 +407,7 @@
 <script>
 // import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
 // import SocialLink from './SocialLink.vue';
-// import SociallinksBlock from '../../components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksBlock.vue';
+import SociallinksBlock from '../../components/UserComponents/BaseUserComponents/SocialLinksComponents/SociallinksBlock.vue';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
 	// async created() {
@@ -410,7 +415,9 @@ export default {
 	// 	console.log(this.userData);
 	async created() {
 		await this.getSettings();
+		await this.getUserData();
 		console.log('after creation');
+		console.log(this.userData);
 		console.log(this.displayName);
 		console.log(this.about);
 		console.log(this.nsfw);
@@ -427,7 +434,7 @@ export default {
 	components: {
 		// BaseDialog,
 		// SocialLink,
-		// SociallinksBlock,
+		SociallinksBlock,
 		SaveUnsavePopupMessage,
 	},
 	props: {},
@@ -697,6 +704,27 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			console.log(responseStatus);
+		},
+		async getUserData() {
+			const actionPayload = {
+				userName: localStorage.getItem('userName'),
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'user/getUserData',
+					actionPayload
+				);
+				if (response == 200) {
+					this.userData = this.$store.getters['user/getUserData'];
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
 		},
 	},
 };

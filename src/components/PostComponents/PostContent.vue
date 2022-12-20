@@ -295,6 +295,11 @@ img.ql-image {
 	width: 5px;
 }
 .flair {
-	font-size: 5px;
+	min-height: 10px;
+	min-width: 30px;
+	font-size: 9px;
+	width: max-content;
+	height: max-content;
+	padding: 2px;
 }
 </style>
