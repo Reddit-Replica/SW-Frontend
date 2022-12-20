@@ -1,5 +1,8 @@
 pipeline {
   agent any
+triggers {
+    githubPush()
+  }
 
   	environment {
 		DOCKERHUB_CREDENTIALS=credentials('Dockerhub')
@@ -9,7 +12,7 @@ pipeline {
     stage("unit test"){
       agent {
         docker {
-            image 'node:lts'
+            image 'node:16.17.1'
             reuseNode true
         }
     }
@@ -24,7 +27,7 @@ pipeline {
 
   stage("intgration testing"){
     steps {
-              echo "till get its waerrrrrrrrrrrrr"
+              echo "till get its waerrrrrrrrsrrrrr"
       }
   }
 
