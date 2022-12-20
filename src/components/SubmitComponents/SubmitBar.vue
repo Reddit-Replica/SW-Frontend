@@ -442,10 +442,10 @@ export default {
 	align-items: center;
 }
 .choose-post-community-2 {
-	margin-right: 16px;
+	margin-right: 1rem;
 	position: relative;
 	box-sizing: border-box;
-	min-width: 300px;
+	min-width: 50%;
 	height: 40px;
 	border-radius: 4px;
 	transition: box-shadow 0.2s ease;
@@ -663,11 +663,6 @@ button {
 	.posting2,
 	.posting3 {
 		display: none;
-	}
-}
-@media (max-width: 306px) {
-	.choose-post-community-1 {
-		width: 100px;
 	}
 }
 </style>

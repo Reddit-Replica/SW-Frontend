@@ -860,4 +860,14 @@ nav ul li:hover {
 		left: 50%;
 	}
 }
+@media (max-width: 400px) {
+	.submit-list {
+		display: block;
+		font-size: 1rem !important;
+		/* flex-direction: row; */
+	}
+	nav ul li {
+		font-size: 1.2rem;
+	}
+}
 </style>
