@@ -14,7 +14,7 @@
 			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
 			:subreddit-nickname="subreddit.nickname"
-			:subreddit-image-url="subreddit.image"
+			:subreddit-image-url="subreddit.picture"
 			:subreddit-banner-url="subreddit.banner"
 			:joined="subreddit.isMember"
 			:subreddit-id="subreddit.subredditId"
@@ -31,7 +31,15 @@
 					id="sort-posts-bar-subreddit"
 				></sortposts-bar>
 				<grow-community id="grow-community-comp"></grow-community>
-				<!-- <community-post id="pinned-post-comp"></community-post> -->
+				<!-- <overview-post
+					class="posts"
+					:key="index"
+					@subreddit-page-handler="reloadPosts"
+					:post-data="{
+						data: postPin.data,
+						id: postPin.id,
+					}"
+				></overview-post> -->
 				<overview-post
 					class="posts"
 					v-for="(post, index) in posts"
@@ -57,6 +65,7 @@
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
 					:community-subtopics-prop="subreddit.subTopics"
+					:nsfw="subreddit.nsfw"
 				></about-community-bar>
 				<subreddit-rules
 					v-if="!noRules"
@@ -203,6 +212,7 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
+				console.log(this.subreddit);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {

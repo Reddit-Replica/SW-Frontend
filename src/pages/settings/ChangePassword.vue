@@ -107,6 +107,7 @@
 // @vuese
 // @it is forget password component
 export default {
+	emits: ['close'],
 	data() {
 		return {
 			oldPassword: '',
@@ -131,6 +132,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			this.$emit('close');
 		},
 		savePassword() {
 			if (this.oldPassword == '') {

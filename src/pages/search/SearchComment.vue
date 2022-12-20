@@ -317,17 +317,17 @@ export default {
 		},
 		goSearch(value) {
 			if (value == 'cm') {
-				this.$router.replace({
+				this.$router.push({
 					name: 'searchcm',
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'posts') {
-				this.$router.replace({
+				this.$router.push({
 					name: 'searchpost',
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'users') {
-				this.$router.replace({
+				this.$router.push({
 					name: 'searchuser',
 					query: { q: this.$route.query.q },
 				});
