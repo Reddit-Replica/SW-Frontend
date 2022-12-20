@@ -638,7 +638,8 @@ button {
 @media (max-width: 1255px) {
 	.subreddit-info,
 	.posting1,
-	.posting2 {
+	.posting2,
+	.posting3 {
 		display: none;
 	}
 }
