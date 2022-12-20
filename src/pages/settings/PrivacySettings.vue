@@ -74,8 +74,8 @@
 					<switch-button id="show-up-search-results"></switch-button>
 				
 				</div>
-			</div>
-			<div class="privacy-item">
+			</div> -->
+			<!-- <div class="privacy-item">
 				<div class="privacy-desc">
 					<label for="">
 						<h3>
@@ -106,8 +106,8 @@
 				<div class="privacy-button">
 					<switch-button id="Personalize-ads-information"></switch-button>
 				</div>
-			</div>
-			<div class="privacy-item">
+			</div> -->
+			<!-- <div class="privacy-item">
 				<div class="privacy-desc">
 					<label for="">
 						<h3>Personalize ads based on your activity with our partners</h3>
@@ -121,8 +121,8 @@
 					<switch-button id="Personalize-ads-activity "></switch-button>
 				
 				</div>
-			</div>
-			<div class="privacy-item">
+			</div> -->
+			<!-- <div class="privacy-item">
 				<div class="privacy-desc">
 					<label for="">
 						<h3>Personalize recommendations based on your general location</h3>
@@ -138,8 +138,8 @@
 					></switch-button>
 					
 				</div>
-			</div>
-			<div class="privacy-item">
+			</div> -->
+			<!-- <div class="privacy-item">
 				<div class="privacy-desc">
 					<label for="">
 						<h3>
@@ -158,8 +158,8 @@
 					></switch-button>
 			
 				</div>
-			</div>
-			<h3 class="h3-main-title" text-transform="capitalize">
+			</div> -->
+			<!-- <h3 class="h3-main-title" text-transform="capitalize">
 				Advanced security
 			</h3>
 			<div class="privacy-item">
@@ -176,8 +176,8 @@
 					<switch-button id="Use-two-factor-authentication"></switch-button>
 				
 				</div>
-			</div>
-			<div class="privacy-item">
+			</div> -->
+			<!-- <div class="privacy-item">
 				<div class="privacy-desc">
 					<a href="">
 						<h3 id="third-party">
@@ -193,6 +193,7 @@
 						<i id="third-party-button" class="fa-solid fa-arrow-right"></i>
 					</a>
 				</div>
+			</div> -->
 			</div> -->
 		</div>
 	</div>
@@ -433,9 +434,7 @@ li {
 	position: absolute;
 	/* top: 18px; */
 }
-.input-area:has(> input:focus) {
-	border-color: #0079d3;
-}
+
 .focus-out {
 	top: 18px;
 }

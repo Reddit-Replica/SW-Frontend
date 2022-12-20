@@ -1,5 +1,5 @@
 <template>
-	<div class="topCommunities" id="top-comm-1">
+	<div class="topCommunities" id="top-comm-1" v-if="!noCommunities">
 		<div class="topCommunitiesTitleBlock style" id="top-comm-2">
 			<h2 class="topCommunitiesTitle" id="top-comm-3">
 				<router-link
@@ -100,11 +100,15 @@ export default {
 		},
 	},
 	computed: {
-		//@vuese
-		//Set background image of top communities bar
-		// style() {
-		// 	return 'background-image: ' + `url('${this.topCommunitiesImage}')`;
-		// },
+		noCommunities() {
+			return this.topCommunities.length === 0;
+		},
+	},
+	mounted() {
+		console.log(this.topCommunities);
+		console.log(this.thereCommunities);
+		console.log(this.topCommunities !== []);
+		console.log(!this.topCommunities);
 	},
 	methods: {
 		reloadAgain() {

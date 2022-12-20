@@ -275,9 +275,6 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log('fetch data');
-		console.log(responseData);
-		console.log(responseData);
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
@@ -353,7 +350,8 @@ export default {
 	 * @param {Object} contains subreddit name and base url.
 	 * @returns {void}
 	 */
-	async leaveSubreddit(_, payload) {
+	async leaveSubreddit(context, payload) {
+		context.commit('setLeaveOwner', false);
 		const leaveInfo = {
 			subredditName: payload.subredditName,
 		};
@@ -374,10 +372,17 @@ export default {
 			return;
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
-			throw error;
+			if (error.message == 'Owner of the subreddit can not leave') {
+				context.commit('setLeaveOwner', true);
+				return;
+				//throw error;
+			}
 		} else if (response.status == 500) {
 			const error = new Error(responseData.error || 'Server Error');
-			throw error;
+			if (error.message == 'Owner of the subreddit can not leave') {
+				context.commit('setLeaveOwner', true);
+				throw error;
+			}
 		}
 	},
 	/**

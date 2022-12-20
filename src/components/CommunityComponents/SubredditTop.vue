@@ -62,6 +62,13 @@
 									subredditName
 								}}</save-unsave-popup-message
 							>
+							<save-unsave-popup-message
+								v-if="notdoneLeft"
+								class="pop-up"
+								id="pop-leave-not"
+								>You can't leave r/{{ subredditName }}, you are the
+								moderator.</save-unsave-popup-message
+							>
 						</div>
 					</div>
 				</div>
@@ -112,6 +119,7 @@ export default {
 			hoverButtonText: 'Joined',
 			doneJoined: false,
 			doneLeft: false,
+			notdoneLeft: false,
 		};
 	},
 	methods: {
@@ -147,9 +155,15 @@ export default {
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
+				console.log(this.$store.getters['community/getLeaveOwner']);
 
-				this.doneLeft = true;
-				this.$emit('reload');
+				if (this.$store.getters['community/getLeaveOwner'] === true) {
+					this.notdoneLeft = true;
+					this.$emit('reload');
+				} else {
+					this.doneLeft = true;
+					this.$emit('reload');
+				}
 			} else {
 				this.$router.replace('/login');
 			}
@@ -201,11 +215,9 @@ img {
 	padding-left: 1.6rem;
 	margin-top: 2.4rem;
 	justify-content: space-between;
-	/* width: calc(100% - 80px); */
 }
 .top-title {
 	display: inline-block;
-	/* max-width: calc(100% - 96px); */
 	padding-right: 2.4rem;
 }
 .title-1 {

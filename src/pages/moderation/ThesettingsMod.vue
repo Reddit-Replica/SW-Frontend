@@ -15,13 +15,15 @@
 		<h3 class="secondary-title">COMMUNITY PROFILE</h3>
 		<h3 class="medium-font">Community name</h3>
 		<input
-			maxlength="100"
+			maxlength="93"
 			type="text"
 			class="community-name-input"
 			v-model="communityName"
 			:placeholder="subredditName"
 		/>
-		<div class="Characters-remaining">93 Characters remaining</div>
+		<div class="Characters-remaining">
+			{{ communityNamecount }} Characters remaining
+		</div>
 		<h3 class="medium-font">Community topics</h3>
 		<span class="description"
 			>This will help Reddit recommend your community to relevant users and
@@ -99,7 +101,9 @@
 			style="margin-bottom: 0px"
 			v-model="communityDescription"
 		></textarea>
-		<div class="Characters-remaining">500 Characters remaining</div>
+		<div class="Characters-remaining">
+			{{ communityDescriptioncount }} Characters remaining
+		</div>
 		<h3 class="medium-font">Send welcome message to new members</h3>
 		<span class="description"
 			>Create a custom welcome message to greet people the instant they join
@@ -558,6 +562,20 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
+	watch: {
+		communityName(value) {
+			this.communityNamecount = 93;
+			this.communityName = value;
+			this.communityNamecount =
+				this.communityNamecount - this.communityName.length;
+		},
+		communityDescription(value) {
+			this.communityDescriptioncount = 500;
+			this.communityDescription = value;
+			this.communityDescriptioncount =
+				this.communityDescriptioncount - this.communityDescription.length;
+		},
+	},
 	async created() {
 		await this.getSettings();
 		this.create = true;
@@ -686,6 +704,8 @@ export default {
 			setting: {},
 			savedUnsavedPosts: [],
 			create: false,
+			communityNamecount: 93,
+			communityDescriptioncount: 500,
 		};
 	},
 	methods: {

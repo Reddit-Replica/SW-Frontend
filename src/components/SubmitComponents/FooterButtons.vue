@@ -19,7 +19,7 @@
 				<span class="tool-tip-text">Mark as spoiler</span>
 				<base-button
 					@click="toggleSpoiler"
-					class="grey-button"
+					:class="!spoiler ? 'grey-button' : 'success'"
 					button-text="Spoiler"
 					id="footer-button-spoiler"
 					:disable-button="buttonDisabled"
@@ -31,11 +31,13 @@
 						fill="currentColor"
 						class="bi bi-plus button-icon"
 						viewBox="0 0 16 16"
+						v-if="!spoiler"
 					>
 						<path
 							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
 						/>
 					</svg>
+					<font-awesome-icon icon="fa-solid fa-check" v-if="spoiler" />
 				</base-button>
 			</div>
 			<div class="tool-tip">
@@ -43,7 +45,7 @@
 					>Mark as Not Safe For Work</span
 				>
 				<base-button
-					class="grey-button"
+					:class="!nsfw ? 'grey-button' : 'success'"
 					button-text="NSFW"
 					id="footer-button-nsfw"
 					@click="toggleNsfw"
@@ -55,11 +57,13 @@
 						fill="currentColor"
 						class="bi bi-plus button-icon"
 						viewBox="0 0 16 16"
+						v-if="!nsfw"
 					>
 						<path
 							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
 						/>
 					</svg>
+					<font-awesome-icon icon="fa-solid fa-check" v-if="nsfw" />
 				</base-button>
 			</div>
 			<!-- <base-button
@@ -100,15 +104,22 @@
 			> -->
 			<div class="tool-tip">
 				<span class="tool-tip-text-small strike1">Add flair</span>
+				<!-- <span class="tool-tip-text-small strike1" v-if="flairs.length == 0"
+					>Not available for this community</span
+				>
+				<span class="tool-tip-text-small strike1" v-if="!flairs"
+					>Select a subreddit to enable flairs</span
+				> -->
 				<select
 					@click="getFlairs()"
 					v-model="flairId"
-					style="
-						margin-left: 10px;
-						width: max-content;
-						height: 35px;
-						border-radius: 20px;
-					"
+					class="select-flair"
+					@change="switchSelect($event)"
+					:style="{
+						color: this.flairColor ? this.flairColor : 'black',
+						background: this.flairBackground ? this.flairBackground : 'white',
+					}"
+					:disabled="!flairs || flairs.length == 0 ? true : false"
 				>
 					<!-- <option value="" disabled selected>Choose a drink</option> -->
 					<option
@@ -116,6 +127,10 @@
 						:id="'message-from-options-' + flair.flairId"
 						:key="flair.flairId"
 						:value="flair.flairId"
+						:style="{
+							color: flair.textColor,
+							background: flair.backgroundColor,
+						}"
 					>
 						{{ flair.flairName }}
 					</option>
@@ -123,7 +138,7 @@
 			</div>
 		</div>
 
-		{{ flairId }}
+		<!-- {{ flairId }} -->
 	</div>
 </template>
 
@@ -138,12 +153,14 @@ export default {
 		return {
 			nsfw: false,
 			spoiler: false,
-			flairs: [],
+			flairs: null,
 			flairId: null,
 			subreddit: null,
 			buttonDisabled: true,
 			insubreddit: null,
 			disabled: true,
+			flairBackground: null,
+			flairColor: null,
 		};
 	},
 	watch: {
@@ -218,6 +235,21 @@ export default {
 				if (this.flairs.length == 0) this.disabled = false;
 				else this.disabled = true;
 			} else this.buttonDisabled = true;
+		},
+		// setflairStyle(textColor, backgroundColor) {
+		// 	this.flairColor = textColor;
+		// 	this.flairBackground = backgroundColor;
+		// 	console.log(this.flairColor);
+		// 	console.log(this.flairBackground);
+		// },
+		switchSelect(event) {
+			let selected = event.target.value;
+			for (let i = 0; i < this.flairs.length; i++) {
+				if (selected === this.flairs[i].flairId) {
+					this.flairColor = this.flairs[i].textColor;
+					this.flairBackground = this.flairs[i].backgroundColor;
+				}
+			}
 		},
 	},
 };
@@ -347,7 +379,23 @@ export default {
 	visibility: visible;
 	opacity: 1;
 }
-.disable-Flair {
+.select-flair {
+	margin-left: 10px;
+	width: max-content;
+	height: 35px;
+	border-radius: 20px;
+}
+
+.success {
+	border: var(--line-7);
+	color: white;
+	font-family: Noto Sans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	height: 32px;
+	padding: 4px 16px;
+	background-color: red;
+	margin: 0 0.2rem;
 }
 @media (max-width: 40em) {
 	.buttons-section {

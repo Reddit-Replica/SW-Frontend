@@ -24,6 +24,9 @@ export default {
 	createdSuccessfully(state) {
 		return state.createdSuccessfully;
 	},
+	getLeaveOwner(state) {
+		return state.leaveOwner;
+	},
 	///////////////norhan///////////////
 	getTopics(state) {
 		return state.topics;
