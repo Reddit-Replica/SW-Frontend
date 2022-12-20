@@ -41,8 +41,10 @@
 								:post="postDetails"
 								:shared="true"
 								v-if="sharedId"
+								id="post-con"
 							></post-content>
 							<post-submit
+								id="post-sub"
 								v-if="submitTypesActive[0] && !sharedId"
 							></post-submit>
 							<image-submit
