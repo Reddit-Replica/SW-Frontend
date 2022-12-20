@@ -9,6 +9,7 @@ export default {
 	 * @returns {integer} status code
 	 */
 	async getUserData(context, payload) {
+		console.log('kkk', payload);
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
 		const response = await fetch(baseurl + `/user/${payload.userName}/about`, {
@@ -18,6 +19,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
+		console.log('kkk', responseData);
 		// console.log(responseData);
 		// if (!response.ok) {
 		// 	const error = new Error(
@@ -28,11 +30,13 @@ export default {
 		// }
 		// console.log('medo', response.status);
 		// console.log(responseData);
-		if (response.status == 200)
-			context.commit('setUserData', {
-				responseData,
-				responseStatus: response.status,
-			});
+		if (payload.auth == 'medo') {
+			if (response.status == 200)
+				context.commit('setUserData', {
+					responseData,
+					responseStatus: response.status,
+				});
+		}
 		return response.status;
 	},
 	async getUserTempData(context, payload) {
@@ -69,6 +73,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserPostData(context, payload) {
+		console.log('ggg', payload.userName);
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
 		let params = {
@@ -304,6 +309,7 @@ export default {
 	 */
 	async followUnfollowUser(context, payload) {
 		const followUnfollowData = payload.followUnfollowData;
+		console.log('actiom', followUnfollowData);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/follow-user', {
 			method: 'POST',

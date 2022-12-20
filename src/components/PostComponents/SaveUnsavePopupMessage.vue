@@ -74,6 +74,7 @@ export default {
 	border: 1px solid var(--color-grey-dark-10);
 	background-color: white;
 	margin: 10px 0;
+	z-index: 50;
 }
 .left {
 	width: 26px;

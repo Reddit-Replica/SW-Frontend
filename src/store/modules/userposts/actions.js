@@ -94,13 +94,16 @@ export default {
 		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		console.log('stst');
-		const response = await fetch(baseurl + `/pinned-posts`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		}); // API
+		const response = await fetch(
+			baseurl + `/pinned-posts?username=${payload.body.username}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		); // API
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
