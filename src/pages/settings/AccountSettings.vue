@@ -19,7 +19,7 @@
 					</div>
 					<div>
 						<h3 class="h3-title">Change Password</h3>
-						<p class="p-title-description">here write description</p>
+						<p class="p-title-description">Change your current password</p>
 					</div>
 					<div>
 						<base-button
