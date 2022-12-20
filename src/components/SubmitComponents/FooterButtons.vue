@@ -109,12 +109,12 @@
 				<select
 					@click="getFlairs()"
 					v-model="flairId"
-					style="
-						margin-left: 10px;
-						width: max-content;
-						height: 35px;
-						border-radius: 20px;
-					"
+					class="select-flair"
+					@change="switchSelect($event)"
+					:style="{
+						color: this.flairColor ? this.flairColor : 'black',
+						background: this.flairBackground ? this.flairBackground : 'white',
+					}"
 					:disabled="!flairs || flairs.length == 0 ? true : false"
 				>
 					<!-- <option value="" disabled selected>Choose a drink</option> -->
@@ -155,8 +155,8 @@ export default {
 			buttonDisabled: true,
 			insubreddit: null,
 			disabled: true,
-			flairBackground: '',
-			flairColor: '',
+			flairBackground: null,
+			flairColor: null,
 		};
 	},
 	watch: {
@@ -231,6 +231,21 @@ export default {
 				if (this.flairs.length == 0) this.disabled = false;
 				else this.disabled = true;
 			} else this.buttonDisabled = true;
+		},
+		// setflairStyle(textColor, backgroundColor) {
+		// 	this.flairColor = textColor;
+		// 	this.flairBackground = backgroundColor;
+		// 	console.log(this.flairColor);
+		// 	console.log(this.flairBackground);
+		// },
+		switchSelect(event) {
+			let selected = event.target.value;
+			for (let i = 0; i < this.flairs.length; i++) {
+				if (selected === this.flairs[i].flairId) {
+					this.flairColor = this.flairs[i].textColor;
+					this.flairBackground = this.flairs[i].backgroundColor;
+				}
+			}
 		},
 	},
 };
@@ -359,6 +374,12 @@ export default {
 	top: -40px;
 	visibility: visible;
 	opacity: 1;
+}
+.select-flair {
+	margin-left: 10px;
+	width: max-content;
+	height: 35px;
+	border-radius: 20px;
 }
 
 @media (max-width: 40em) {

@@ -105,8 +105,7 @@ export default {
 	},
 	async created() {
 		console.log(this.sharedId);
-
-		await this.getPostDetails();
+		if (this.sharedId) await this.getPostDetails();
 		this.subreddit = null;
 		if (!localStorage.getItem('accessToken')) {
 			this.$router.push('/login');
