@@ -1,6 +1,6 @@
 <template>
 	<div id="ntf-page-1">
-		<the-header :header-title="userName"></the-header>
+		<the-header :header-title="'Notifications'"></the-header>
 		<notifications-top @reload="reloadPage" id="ntf-page-2"></notifications-top>
 		<div class="ntf-section" @reload="reloadPage" id="ntf-page-3">
 			<div id="ntf-page-4">
@@ -36,7 +36,10 @@ export default {
 	beforeMount() {
 		if (localStorage.getItem('accessToken') == null)
 			this.$router.push('/login');
-		else this.loadAllNotifications();
+		else {
+			document.title = 'Notifications';
+			this.loadAllNotifications();
+		}
 	},
 	data() {
 		return {

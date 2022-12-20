@@ -524,7 +524,7 @@ export default {
 }
 .comments {
 	display: inline-block;
-	margin: 10px 0 10px 8px;
+	margin: 20px 0 0px 8px;
 	font-size: 12px;
 	line-height: 15px;
 }

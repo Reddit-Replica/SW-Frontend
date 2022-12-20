@@ -72,7 +72,7 @@
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
 							><a
-								:href="'/user/' + message.senderUsername"
+								:href="'/user/' + message.senderUsername + '/'"
 								:id="'message-sender-' + index"
 								>{{ message.senderUsername }}</a
 							>

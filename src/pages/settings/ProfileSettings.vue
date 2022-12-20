@@ -1,17 +1,17 @@
 <template>
-	<div class="settings-page" style="min-height: 100vh">
-		<div class="settings-block">
-			<h2 class="h2-main-title">Customize profile</h2>
-			<h3 class="h3-main-title">PROFILE INFORMATION</h3>
+	<div class="settings-page" id="1">
+		<div class="settings-block" id="2">
+			<h2 class="h2-main-title" id="3">Customize profile</h2>
+			<h3 class="h3-main-title" id="4">PROFILE INFORMATION</h3>
 
-			<div class="box box-flex-column">
+			<div class="box box-flex-column" id="5">
 				<div class="box-1">
-					<h3 class="h3-title">Display name (optional)</h3>
-					<p class="p-title-description">
+					<h3 class="h3-title" id="6">Display name (optional)</h3>
+					<p class="p-title-description" id="7">
 						Set a display name. This does not change your username.
 					</p>
 				</div>
-				<div class="box-2">
+				<div class="box-2" id="8">
 					<input
 						placeholder="Display name (optional)"
 						maxlength="30"
@@ -22,18 +22,20 @@
 						v-model="displayName"
 						@blur="getdisplayName"
 					/>
-					<div class="p-comment">{{ nameCount }} Characters remaining</div>
+					<div class="p-comment" id="9">
+						{{ nameCount }} Characters remaining
+					</div>
 				</div>
 			</div>
 
-			<div class="box box-flex-column">
-				<div class="box-1">
-					<h3 class="h3-title">About (optional)</h3>
-					<p class="p-title-description">
+			<div class="box box-flex-column" id="10">
+				<div class="box-1" id="11">
+					<h3 class="h3-title" id="12">About (optional)</h3>
+					<p class="p-title-description" id="13">
 						A brief description of yourself shown on your profile.
 					</p>
 				</div>
-				<div class="box-2">
+				<div class="box-2" id="14">
 					<textarea
 						placeholder="About (optional)"
 						maxlength="200"
@@ -49,17 +51,18 @@
 			</div>
 
 			<!--  -->
-			<h3 class="h3-title">Social links (5 max)</h3>
-			<p class="p-title-description">
+			<h3 class="h3-title" id="15">Social links (5 max)</h3>
+			<p class="p-title-description" id="16">
 				People who visit your profile will see your social links.
 			</p>
 			<sociallinks-block
 				style="margin: 20px 0"
-				:social-data="userData.userData.socialLinks"
-				v-if="userData"
+				:social-data="socialData.userData.socialLinks"
+				v-if="socialData"
+				id="17"
 			></sociallinks-block>
 
-			<h3 class="h3-main-title" style="margin-top: 20px">IMAGES</h3>
+			<h3 class="h3-main-title" style="margin-top: 20px" id="18">IMAGES</h3>
 
 			<!-- <img :src="image" class="one-image" alt=""  /> -->
 
@@ -71,11 +74,13 @@
 				hidden
 				@change="fileChange"
 			/> -->
-			<div class="box-1">
-				<h3 class="h3-title">Profile picture and banner image</h3>
-				<p class="p-title-description">Images must be .png or .jpg format</p>
+			<div class="box-1" id="19">
+				<h3 class="h3-title" id="20">Profile picture and banner image</h3>
+				<p class="p-title-description" id="21">
+					Images must be .png or .jpg format
+				</p>
 			</div>
-			<button class="add-more">
+			<button class="add-more" id="22">
 				<input
 					id="image2"
 					type="file"
@@ -94,12 +99,12 @@
 						</g>
 					</svg>
 				</label>
-				<label class="new" for="image2" v-if="image">
+				<label class="one-image" for="image2" v-if="image">
 					<img
 						:src="image"
 						alt=""
 						id="profile-picture_user"
-						class="one-image"
+						style="width: 100%; height: 100%"
 					/>
 				</label>
 			</button>
@@ -122,12 +127,12 @@
 						</g>
 					</svg>
 				</label>
-				<label class="new" for="cover-picture" v-if="cover">
+				<label class="big-image" for="cover-picture" v-if="cover">
 					<img
 						:src="cover"
 						alt=""
 						id="profile-picture_user"
-						class="big-image"
+						style="width: 100%; height: 100%"
 					/>
 				</label>
 			</button>
@@ -399,6 +404,7 @@
 				:state="message.state"
 				:typeid="message.postid"
 				@undo-action="undoSaveUnsave"
+				id="save"
 			></SaveUnsavePopupMessage>
 		</div>
 	</div>
@@ -416,6 +422,13 @@ export default {
 	async created() {
 		await this.getSettings();
 		await this.getUserData();
+		this.socialData = await this.$store.getters['user/getUserData'];
+		if (this.userData) {
+			if (this.userData.picture != '')
+				this.image = this.$baseurl + '/' + this.userData.picture;
+			if (this.userData.banner != '')
+				this.cover = this.$baseurl + '/' + this.userData.banner;
+		}
 		console.log('after creation');
 		console.log(this.userData);
 		console.log(this.displayName);
@@ -452,6 +465,7 @@ export default {
 			cover: null,
 			nameCount: 30,
 			aboutCount: 200,
+			socialData: null,
 			// links: [
 			// 	{
 			// 		imageUrl:
@@ -711,13 +725,15 @@ export default {
 				baseurl: this.$baseurl,
 			};
 			console.log(actionPayload);
+			let response = null;
 			try {
-				const response = await this.$store.dispatch(
-					'user/getUserData',
+				response = await this.$store.dispatch(
+					'user/getUserTempData',
 					actionPayload
 				);
-				if (response == 200) {
-					this.userData = this.$store.getters['user/getUserData'];
+				if (response) {
+					// this.userData = this.$store.getters['user/getUserData'];
+					this.userData = response;
 					console.log(response);
 					console.log('الحمد لله زى الفل');
 				}
@@ -983,7 +999,7 @@ a {
 .add-more2:hover .svg {
 	fill: black;
 }
-.big-image {
+/*.big-image {
 	align-items: center;
 	background-color: #f6f7f8;
 	border-radius: 4px;
@@ -992,7 +1008,7 @@ a {
 	justify-content: center;
 	margin: 12px 12px 12px 0;
 	width: 70%;
-}
+}*/
 .bottom-preview .big-image img {
 	width: 100%;
 	height: 100%;
@@ -1050,8 +1066,8 @@ a {
 	padding: 10px;
 	display: block;
 	box-sizing: border-box;
-	width: 100%;
-	height: 100%;
+	width: 400px;
+	height: 100px;
 	border-radius: 4px;
 	border: 1px solid black;
 }

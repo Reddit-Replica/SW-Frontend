@@ -445,7 +445,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-3">
+						<div class="col-lg-3 left-left">
 							<subreddit-info
 								:subreddit-name="subredditName"
 								v-if="postDetails.subreddit != undefined"
@@ -1175,6 +1175,11 @@ export default {
 		display: flex;
 	}
 	#post-direct-save {
+		display: none;
+	}
+}
+@media (max-width: 991px) {
+	.left-left {
 		display: none;
 	}
 }

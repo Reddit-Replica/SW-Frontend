@@ -1,5 +1,5 @@
 <template>
-	<div class="page-container">
+	<div class="page-container" style="min-height: 100vh">
 		<div class="page-box">
 			<h2 class="h2-main-title">Safety & Privacy</h2>
 			<p class="main-trans-p">

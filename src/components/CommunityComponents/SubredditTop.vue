@@ -1,7 +1,16 @@
 <template>
 	<div>
-		<div class="blue-top">
-			<router-link to="/subreddit" id="link-top-subreddit-page-2"
+		<div
+			class="top-banner"
+			v-if="subredditBannerUrl"
+			:style="'background-image: ' + $baseurl + '/' + subredditBannerUrl"
+		>
+			<router-link :to="'/r/' + subredditName" id="link-top-subreddit-page-2"
+				><div class="link" id="link-top-subreddit-page"></div
+			></router-link>
+		</div>
+		<div class="blue-top" v-else>
+			<router-link :to="'/r/' + subredditName" id="link-top-subreddit-page-2"
 				><div class="link" id="link-top-subreddit-page"></div
 			></router-link>
 		</div>
@@ -9,7 +18,7 @@
 			<div class="flex-start">
 				<div class="top flex-start">
 					<img
-						:src="subredditImageUrl"
+						:src="$baseurl + '/' + subredditImageUrl"
 						alt="subredditImage"
 						v-if="subredditImageUrl"
 						id="img-top-subreddit-page"
@@ -107,6 +116,10 @@ export default {
 			type: String,
 			default: '',
 		},
+		subredditBannerUrl: {
+			type: String,
+			default: '',
+		},
 		//@vuese
 		//Is this user joined in subreddit or not
 		joined: {
@@ -175,6 +188,11 @@ export default {
 <style scoped>
 .blue-top {
 	background: var(--color-blue-light-3);
+	height: 8rem;
+	width: 100%;
+	margin-top: 5rem;
+}
+.top-banner {
 	height: 8rem;
 	width: 100%;
 	margin-top: 5rem;

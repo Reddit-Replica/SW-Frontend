@@ -444,4 +444,73 @@ export default {
 		}
 		return response.status;
 	},
+	////////// Subreddit pictures //////////
+	async addSubredditPicture(context, payload) {
+		const file = payload.file;
+		const baseurl = payload.baseurl;
+		const postInfo = new FormData();
+		postInfo.append('avatar', file);
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/profile-picture`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: postInfo,
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+		} else if (response.status == 400) {
+			const error = new Error(responseData);
+			console.log(responseData);
+			throw error;
+		} else {
+			console.log(error);
+			const error = new Error('server error');
+			throw error;
+		}
+		let profilePictureUrl = responseData.path;
+		if (response.status == 200)
+			context.commit('setSubredditPicture', {
+				profilePictureUrl,
+			});
+		return response.status;
+	},
+	async addSubredditBanner(context, payload) {
+		const file = payload.file;
+		const baseurl = payload.baseurl;
+		const postInfo = new FormData();
+		postInfo.append('avatar', file);
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/banner-image`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: postInfo,
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+		} else if (response.status == 400) {
+			const error = new Error(responseData);
+			console.log(responseData);
+			throw error;
+		} else {
+			console.log(error);
+			const error = new Error('server error');
+			throw error;
+		}
+		let profilePictureUrl = responseData.path;
+		if (response.status == 200)
+			context.commit('setSubredditBanner', {
+				profilePictureUrl,
+			});
+		return response.status;
+	},
 };

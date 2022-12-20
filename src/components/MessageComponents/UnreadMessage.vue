@@ -16,7 +16,7 @@
 					<span class="sender"
 						><a
 							v-if="message.isSenderUser"
-							:href="'/user/' + message.senderUsername"
+							:href="'/user/' + message.senderUsername + '/'"
 							:id="'message-sender-' + index"
 							>{{ message.senderUsername }}</a
 						>
@@ -30,7 +30,7 @@
 							><span class="unread">&nbsp;via&nbsp;</span>
 							<a
 								v-if="message.isReceiverUser"
-								:href="'/user/' + message.receiverUsername"
+								:href="'/user/' + message.receiverUsername + '/'"
 								:id="'message-receiver-' + index"
 								>{{ message.receiverUsername }}</a
 							><a

@@ -43,7 +43,7 @@
 					@mouseover="showPCardM"
 					@mouseleave="hidePCardM"
 					v-if="post.postedBy != undefined"
-					:to="{ name: 'user', params: { userName: post.postedBy } }"
+					:to="'/user/' + post.postedBy + '/'"
 					id="post-by-router"
 				>
 					{{ post.postedBy }}
@@ -358,6 +358,7 @@ img.ql-image {
 	width: max-content;
 	height: max-content;
 	padding: 2px;
+	background-color: white;
 }
 .sub-card {
 	top: 10px;

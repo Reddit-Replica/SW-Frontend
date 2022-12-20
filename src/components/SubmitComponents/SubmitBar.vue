@@ -16,6 +16,7 @@
 						alt="image"
 						class="img-profile"
 						v-if="isSet && !path"
+						id="101"
 					/>
 
 					<img
@@ -23,6 +24,7 @@
 						alt="image"
 						class="img-profile"
 						v-if="isSet && path"
+						id="102"
 					/>
 					<svg
 						v-if="inputFocused & !isSet"
@@ -46,6 +48,7 @@
 						<input
 							class="choose-community-input"
 							:placeholder="communityName"
+							id="communityName"
 						/>
 					</div>
 					<svg
@@ -71,11 +74,21 @@
 									:src="this.$baseurl + '/' + this.userData.picture"
 									alt="image"
 									class="img-profile"
+									v-if="userData.picture"
+									id="102568"
+								/>
+								<img
+									src="../../../img/default_inbox_avatar.png"
+									alt="image"
+									class="img-profile"
+									v-if="!userData.picture"
+									id="1500"
 								/>
 							</div>
 							<div
 								class="name-box"
 								@click="setName(userName, this.userData.picture)"
+								id="lablab"
 							>
 								<span class="name"> u/{{ userName }}</span>
 							</div>
@@ -94,6 +107,7 @@
 						<create-community
 							v-if="createCommunityShown"
 							@exit="showCreateCommunity"
+							id="create"
 						></create-community>
 
 						<div
@@ -101,6 +115,7 @@
 							v-for="subreddit in subreddits"
 							:key="subreddit.id"
 							@click="setsubreddit(subreddit.title, subreddit.picture)"
+							id="set1"
 						>
 							<div class="image-box">
 								<img
@@ -108,17 +123,19 @@
 									:src="subreddit.picture"
 									alt="image"
 									class="img-community"
+									id="img=comm"
 								/>
 								<img
 									v-else
 									src="../../../img/default_subreddit_image.png"
 									alt="image"
 									class="img-community"
+									id="img-comm2"
 								/>
 							</div>
 							<div class="comm-box">
-								<span class="name">r/{{ subreddit.title }}</span>
-								<span class="name members-count"
+								<span class="name" id="r2">r/{{ subreddit.title }}</span>
+								<span class="name members-count" id="r3"
 									>{{ subreddit.members }} members</span
 								>
 							</div>
@@ -137,6 +154,7 @@
 			<subreddit-card
 				:subreddit="subreddit"
 				v-if="isSet & inSubreddit"
+				id="1400"
 			></subreddit-card>
 			<!-- <subreddit-rules
 				v-if="rules.length != 0"
@@ -145,12 +163,14 @@
 			></subreddit-rules> -->
 		</div>
 		<div
+			id="pos1"
 			v-if="inSubreddit"
 			:class="isSet & inSubreddit ? 'col-lg-3 posting1' : 'col-lg-3 posting2'"
 		>
 			<postingto-reddit></postingto-reddit>
 		</div>
 		<div
+			id="pos2"
 			v-if="!inSubreddit"
 			:class="isSet & !inSubreddit ? 'col-lg-3 posting3' : 'col-lg-3 posting2'"
 		>
@@ -159,6 +179,7 @@
 
 		<div class="col-lg-3 subreddit-info">
 			<profile-card
+				id="card"
 				v-if="isSet & !inSubreddit & (userData.cakeDate != null)"
 				:user-name="userName"
 				:user-data="userData"
@@ -642,6 +663,11 @@ button {
 	.posting2,
 	.posting3 {
 		display: none;
+	}
+}
+@media (max-width: 306px) {
+	.choose-post-community-1 {
+		width: 100px;
 	}
 }
 </style>
