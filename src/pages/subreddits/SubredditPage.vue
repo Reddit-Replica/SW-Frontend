@@ -212,7 +212,7 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
-				console.log(this.subreddit);
+				//console.log(this.subreddit);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {
@@ -250,7 +250,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.rules = this.$store.getters['moderation/listOfRules'];
-			console.log(this.rules);
 		},
 		reloadPage() {
 			this.getSubreddit();

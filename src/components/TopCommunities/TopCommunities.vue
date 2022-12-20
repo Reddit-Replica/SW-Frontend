@@ -29,7 +29,7 @@
 				:image="community.data.image"
 				:members="community.data.members"
 				:show-members="false"
-				:is-member="community.data.joined"
+				:is-member="community.data.isMember"
 			>
 			</top-community>
 		</ol>
