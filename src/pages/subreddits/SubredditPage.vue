@@ -14,7 +14,7 @@
 			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
 			:subreddit-nickname="subreddit.nickname"
-			:subreddit-image-url="subreddit.image"
+			:subreddit-image-url="subreddit.picture"
 			:subreddit-banner-url="subreddit.banner"
 			:joined="subreddit.isMember"
 			:subreddit-id="subreddit.subredditId"
@@ -203,6 +203,7 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
+				console.log(this.subreddit);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {

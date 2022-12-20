@@ -1,10 +1,7 @@
 <template>
 	<div>
-		<div
-			class="top-banner"
-			v-if="subredditBannerUrl"
-			:style="'background-image: ' + $baseurl + '/' + subredditBannerUrl"
-		>
+		<div class="top-banner" v-if="subredditBannerUrl">
+			<img :src="$baseurl + '/' + subredditBannerUrl" class="top-banner-img" />
 			<router-link :to="'/r/' + subredditName" id="link-top-subreddit-page-2"
 				><div class="link" id="link-top-subreddit-page"></div
 			></router-link>
@@ -196,6 +193,12 @@ export default {
 	height: 8rem;
 	width: 100%;
 	margin-top: 5rem;
+}
+.top-banner-img {
+	height: 8rem;
+	width: 100%;
+	border: none;
+	border-radius: 0;
 }
 .link {
 	height: 100%;
