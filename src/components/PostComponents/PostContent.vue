@@ -278,4 +278,7 @@ div:last-of-type a:hover {
 img.ql-image {
 	width: 5px;
 }
+.flair {
+	font-size: 5px;
+}
 </style>
