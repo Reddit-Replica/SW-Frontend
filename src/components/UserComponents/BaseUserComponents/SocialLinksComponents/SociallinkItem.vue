@@ -52,6 +52,16 @@ export default {
 			default: '',
 			required: true,
 		},
+		type: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		link: {
+			type: String,
+			default: '',
+			required: true,
+		},
 		// @vuese
 		//  alternate text in case off unloaded or unfounded image
 		alt: {

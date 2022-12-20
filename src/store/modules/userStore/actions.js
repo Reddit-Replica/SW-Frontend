@@ -475,7 +475,6 @@ export default {
 		if (response.status == 204) {
 			console.log(responseData);
 			console.log(response);
-			context.commit('setpostData', responseData);
 			context.commit('deleteUserSocialLink', {
 				type,
 			});

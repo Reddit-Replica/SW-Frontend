@@ -55,7 +55,7 @@
 			</p>
 			<sociallinks-block
 				style="margin: 20px 0"
-				:social-data="userData.userData.socialLinks"
+				:social-data="userData.socialLinks"
 				v-if="userData"
 			></sociallinks-block>
 
@@ -94,12 +94,12 @@
 						</g>
 					</svg>
 				</label>
-				<label class="new" for="image2" v-if="image">
+				<label class="one-image" for="image2" v-if="image">
 					<img
 						:src="image"
 						alt=""
 						id="profile-picture_user"
-						class="one-image"
+						style="width: 100%; height: 100%"
 					/>
 				</label>
 			</button>
@@ -122,12 +122,12 @@
 						</g>
 					</svg>
 				</label>
-				<label class="new" for="cover-picture" v-if="cover">
+				<label class="big-image" for="cover-picture" v-if="cover">
 					<img
 						:src="cover"
 						alt=""
 						id="profile-picture_user"
-						class="big-image"
+						style="width: 100%; height: 100%"
 					/>
 				</label>
 			</button>
@@ -416,6 +416,12 @@ export default {
 	async created() {
 		await this.getSettings();
 		await this.getUserData();
+		if (this.userData) {
+			if (this.userData.picture != '')
+				this.image = this.$baseurl + '/' + this.userData.picture;
+			if (this.userData.banner != '')
+				this.cover = this.$baseurl + '/' + this.userData.banner;
+		}
 		console.log('after creation');
 		console.log(this.userData);
 		console.log(this.displayName);
@@ -711,13 +717,15 @@ export default {
 				baseurl: this.$baseurl,
 			};
 			console.log(actionPayload);
+			let response = null;
 			try {
-				const response = await this.$store.dispatch(
-					'user/getUserData',
+				response = await this.$store.dispatch(
+					'user/getUserTempData',
 					actionPayload
 				);
-				if (response == 200) {
-					this.userData = this.$store.getters['user/getUserData'];
+				if (response) {
+					// this.userData = this.$store.getters['user/getUserData'];
+					this.userData = response;
 					console.log(response);
 					console.log('الحمد لله زى الفل');
 				}

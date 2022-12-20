@@ -94,6 +94,11 @@ export default {
 		state.after = payload;
 	},
 	deleteUserSocialLink(state, payload) {
-		state.userData.socialLinks.pop(payload.newSocialLink);
+		let index = state.userData.socialLinks.findIndex(
+			(res) => res.displayText === payload.displayText
+		);
+		state.userData.socialLinks.splice(index, 1);
+
+		//state.userData.socialLinks.pop(payload.newSocialLink);
 	},
 };

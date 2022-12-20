@@ -12,6 +12,8 @@
 				<sociallink-item
 					:img-src="getImgSrc(data.type)"
 					:text="data.displayText"
+					:type="data.type"
+					:link="data.link"
 				></sociallink-item>
 			</a>
 			<li>

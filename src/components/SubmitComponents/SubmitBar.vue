@@ -644,4 +644,9 @@ button {
 		display: none;
 	}
 }
+@media (max-width: 306px) {
+	.choose-post-community-1 {
+		width: 100px;
+	}
+}
 </style>
