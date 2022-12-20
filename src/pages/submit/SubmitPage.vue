@@ -48,14 +48,16 @@
 								v-if="submitTypesActive[0] && !sharedId"
 							></post-submit>
 							<image-submit
+								id="post-img"
 								v-if="submitTypesActive[1] && !sharedId"
 							></image-submit>
 							<link-submit
+								id="link-post"
 								v-if="submitTypesActive[2] && !sharedId"
 							></link-submit>
 
 							<div class="box1">
-								<footer-buttons></footer-buttons>
+								<footer-buttons id="foot"></footer-buttons>
 							</div>
 							<div class="border-bottom"></div>
 							<div class="down-row">
@@ -64,6 +66,7 @@
 									:class="buttonDisabled ? 'post-button' : 'success'"
 									button-text="Post"
 									:disable-button="buttonDisabled"
+									id="submit"
 								></base-button>
 							</div>
 
