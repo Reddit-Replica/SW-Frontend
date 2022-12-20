@@ -22,6 +22,7 @@ export default {
 			haveSubreddit: payload.haveSubreddit,
 		};
 		const baseurl = payload.baseurl;
+		console.log(newComment);
 		const response = await fetch(baseurl + '/comment', {
 			method: 'POST',
 			headers: {
