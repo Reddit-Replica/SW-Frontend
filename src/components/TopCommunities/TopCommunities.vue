@@ -123,9 +123,9 @@ export default {
 	background-color: var(--color-white-1);
 	color: var(--color-dark-1);
 	fill: var(--color-dark-1);
-	width: 310px;
-	border: 1px solid var(--color-grey-light-4);
-	border-radius: 4px;
+	width: 31rem;
+	border: 0.1rem solid var(--color-grey-light-4);
+	border-radius: 0.4rem;
 	overflow: visible;
 	word-wrap: break-word;
 	/* margin-top: 5rem; */
@@ -134,19 +134,19 @@ export default {
 	background-color: var(--color-blue-2);
 	background-position: 50%;
 	background-repeat: no-repeat;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	height: 80px;
+	border-top-left-radius: 0.4rem;
+	border-top-right-radius: 0.4rem;
+	height: 8rem;
 	/* width: 310px; */
 	position: relative;
 }
 .topCommunitiesTitle {
-	font-size: 16px;
+	font-size: 1.6rem;
 	font-weight: 500;
-	line-height: 20px;
-	bottom: 8px;
+	line-height: 2rem;
+	bottom: 0.8rem;
 	color: var(--main-white-color);
-	left: 16px;
+	left: 1.6rem;
 	position: absolute;
 }
 .topCommunitiesLink {
@@ -156,10 +156,10 @@ export default {
 
 .topCommunitiesList {
 	list-style: none;
-	padding: 0px;
+	padding: 0;
 }
 .viewAllBlock {
-	padding: 12px;
+	padding: 1.2rem;
 }
 .viewAll {
 	position: relative;
@@ -169,11 +169,11 @@ export default {
 	fill: var(--main-white-color);
 
 	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 700;
-	min-height: 32px;
-	min-width: 32px;
-	padding: 4px 16px;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
 	width: 100%;
 }
 .viewAll:hover {
@@ -190,26 +190,26 @@ export default {
 .topCommunitiesRecommendations {
 	flex-flow: row wrap;
 	justify-content: flex-start;
-	padding: 0 8px 12px;
+	padding: 0 0.8rem 1.2rem;
 	display: flex;
 }
 .topRecommendations {
 	display: flex;
-	margin: 4px;
+	margin: 0.4rem;
 }
 .Recommendation {
 	position: relative;
 	background-color: var(--color-grey-light-2);
-	border: 1px solid transparent;
+	border: 0.1rem solid transparent;
 	color: var(--color-blue-2);
 	fill: var(--color-blue-2);
 
 	font-family: Noto Sans, Arial, sans-serif;
-	font-size: 12px;
+	font-size: 1.2rem;
 	font-weight: 700;
-	min-height: 24px;
-	min-width: 24px;
-	padding: 4px 8px;
+	min-height: 2.4rem;
+	min-width: 2.4rem;
+	padding: 0.4rem 0.8rem;
 }
 .Recommendation :hover {
 	opacity: 0.92;

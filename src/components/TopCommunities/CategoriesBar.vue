@@ -91,43 +91,43 @@ export default {
 
 	max-height: none;
 	height: 100%;
-	width: 192px;
+	width: 19.2rem;
 
 	background-color: var(--color-white-1);
 	color: var(--color-grey-dark-1);
 	fill: var(--color-grey-dark-1);
 	border: var(--line-10);
 
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	overflow: visible;
 	word-wrap: break-word;
 	padding: 0;
 }
 .catg-bar-2 {
-	font-size: 16px;
+	font-size: 1.6rem;
 	font-weight: 550;
-	line-height: 20px;
+	line-height: 2rem;
 
 	background-color: var(--color-blue-light-4);
 	color: var(--color-grey-dark-1);
 
 	border-bottom: var(--line-10);
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
+	border-top-left-radius: 0.4rem;
+	border-top-right-radius: 0.4rem;
 
 	display: flex;
 	align-items: center;
-	height: 40px;
-	padding-left: 16px;
+	height: 4rem;
+	padding-left: 1.6rem;
 }
 .button {
 	width: 100%;
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 700;
-	line-height: 17px;
-	min-height: 32px;
-	min-width: 32px;
-	padding: 4px 16px;
+	line-height: 1.7rem;
+	min-height: 3.2rem;
+	min-width: 3.2rem;
+	padding: 0.4rem 1.6rem;
 
 	background-color: transparent;
 	color: var(--color-blue-2);
@@ -141,29 +141,29 @@ ul {
 	transition: height 0.3s ease-out;
 }
 .small-ul {
-	height: 432px;
+	height: 43.2rem;
 	overflow: hidden;
 }
 .large-ul {
-	height: 1111px;
+	height: 111.1rem;
 	overflow: auto;
 }
 .catg-links {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
-	line-height: 16px;
+	line-height: 1.6rem;
 	display: flex;
 	align-items: center;
 	color: var(--color-grey-dark-1) !important;
-	height: 36px;
-	padding-left: 16px;
+	height: 3.6rem;
+	padding-left: 1.2rem;
 }
 .catg-links:hover {
 	background-color: var(--color-blue-light-4);
 }
 .catg-selected {
 	background-color: var(--color-blue-light-4);
-	border-left: 5px solid var(--color-blue-2);
+	border-left: 0.5rem solid var(--color-blue-2);
 	font-weight: 550;
 }
 </style>
