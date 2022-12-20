@@ -2,13 +2,16 @@ export default {
 	async getAllCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/subreddits/leaderboard?limit=50', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + payload.token,
-			},
-		});
+		const response = await fetch(
+			baseurl + '/subreddits/leaderboard?limit=100',
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + payload.token,
+				},
+			}
+		);
 
 		const responseData = await response.json();
 
