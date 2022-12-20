@@ -993,7 +993,7 @@ a {
 .add-more2:hover .svg {
 	fill: black;
 }
-.big-image {
+/*.big-image {
 	align-items: center;
 	background-color: #f6f7f8;
 	border-radius: 4px;
@@ -1002,7 +1002,7 @@ a {
 	justify-content: center;
 	margin: 12px 12px 12px 0;
 	width: 70%;
-}
+}*/
 .bottom-preview .big-image img {
 	width: 100%;
 	height: 100%;
@@ -1060,8 +1060,8 @@ a {
 	padding: 10px;
 	display: block;
 	box-sizing: border-box;
-	width: 100%;
-	height: 100%;
+	width: 400px;
+	height: 100px;
 	border-radius: 4px;
 	border: 1px solid black;
 }
