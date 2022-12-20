@@ -31,7 +31,15 @@
 					id="sort-posts-bar-subreddit"
 				></sortposts-bar>
 				<grow-community id="grow-community-comp"></grow-community>
-				<!-- <community-post id="pinned-post-comp"></community-post> -->
+				<!-- <overview-post
+					class="posts"
+					:key="index"
+					@subreddit-page-handler="reloadPosts"
+					:post-data="{
+						data: postPin.data,
+						id: postPin.id,
+					}"
+				></overview-post> -->
 				<overview-post
 					class="posts"
 					v-for="(post, index) in posts"
@@ -57,6 +65,7 @@
 					:community-description-prop="subreddit.description"
 					:community-topic-prop="subreddit.mainTopic"
 					:community-subtopics-prop="subreddit.subTopics"
+					:nsfw="subreddit.nsfw"
 				></about-community-bar>
 				<subreddit-rules
 					v-if="!noRules"

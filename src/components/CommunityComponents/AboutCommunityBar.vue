@@ -145,6 +145,11 @@
 				</div>
 			</div>
 
+			<div class="box-body" id="is-nsfw" v-if="nsfw">
+				<span class="span-new span-nsfw">NSFW</span>
+				<span class="span-new">Adult content</span>
+			</div>
+
 			<div class="box-body" id="created-type" v-if="notPublic">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -478,6 +483,10 @@ export default {
 			default: false,
 		},
 		isModerator: {
+			type: Boolean,
+			default: false,
+		},
+		nsfw: {
 			type: Boolean,
 			default: false,
 		},
@@ -1174,5 +1183,10 @@ input {
 	position: fixed;
 	z-index: 1000;
 	right: 35%;
+}
+.span-nsfw {
+	border: 0.1rem solid red;
+	border-radius: 0.4rem;
+	padding: 0.2rem;
 }
 </style>
