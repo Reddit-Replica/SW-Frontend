@@ -57,7 +57,7 @@
 			</p>
 			<sociallinks-block
 				style="margin: 20px 0"
-				:social-data="socialData.userData.socialLinks"
+				:social-data="getUserDataGetter.userData.socialLinks"
 				v-if="socialData"
 				id="17"
 			></sociallinks-block>
@@ -438,11 +438,6 @@ export default {
 
 		this.create = true;
 	},
-	computed: {
-		user() {
-			return this.$store.getters['user/getUserData'];
-		},
-	},
 	// },
 	components: {
 		// BaseDialog,
@@ -486,6 +481,12 @@ export default {
 			// 	},
 			// ],
 		};
+	},
+	computed: {
+		getUserDataGetter() {
+			// console.log(this.$store.getters['user/getUserData']);
+			return this.$store.getters['user/getUserData'];
+		},
 	},
 	watch: {
 		user(val) {
