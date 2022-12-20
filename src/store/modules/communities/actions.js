@@ -400,7 +400,7 @@ export default {
 		else query = '?time=' + payload.query;
 
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/${title}${query}`,
+			baseurl + `/r/${payload.subredditName}/${title}${query}?limit=100`,
 			{
 				method: 'GET',
 				headers: {

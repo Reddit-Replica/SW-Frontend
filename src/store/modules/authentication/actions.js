@@ -157,7 +157,7 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				// localStorage.setItem('Password', payload.password);
+				localStorage.setItem('Password', payload.password);
 				// console.log(localStorage.getItem('Password'));
 				// console.log(localStorage.getItem('Password'));
 				context.commit('setUser', {
@@ -205,7 +205,7 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				// localStorage.setItem('Password', payload.password);
+				localStorage.setItem('Password', payload.password);
 				// console.log(localStorage.getItem('Password'));
 				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
