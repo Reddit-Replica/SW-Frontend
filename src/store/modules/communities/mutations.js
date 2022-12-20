@@ -24,6 +24,9 @@ export default {
 	createdSuccessfully(state, payload) {
 		state.createdSuccessfully = payload;
 	},
+	setLeaveOwner(state, payload) {
+		state.leaveOwner = payload;
+	},
 	setTopics(state, payload) {
 		state.topics = payload;
 	},

@@ -41,7 +41,7 @@
 						</main>
 						<aside id="profile-aside">
 							<profile-card
-								:user-name="getUserName"
+								:user-name="this.$route.params.userName"
 								:state="state"
 								:user-data="getUserData.userData"
 							/>
@@ -158,6 +158,7 @@ export default {
 				responseStatus = await this.$store.dispatch('user/getUserData', {
 					baseurl: this.$baseurl,
 					userName: this.$route.params.userName,
+					auth: 'medo',
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

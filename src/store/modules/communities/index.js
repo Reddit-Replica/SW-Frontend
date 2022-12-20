@@ -23,6 +23,7 @@ export default {
 			createdSuccessfully: false,
 			topics: [],
 			notFound: false,
+			leaveOwner: false,
 		};
 	},
 	mutations,

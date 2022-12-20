@@ -68,7 +68,7 @@
 									</span>
 									<span style="width: 100%; height: 100%" v-else>
 										<img
-											v-if="getUserData.userData.picture != null"
+											v-if="0 && getUserData.userData.picture != null"
 											:src="$baseurl + '/' + getUserData.userData.picture"
 											alt=""
 										/>
@@ -116,6 +116,7 @@
 											:user-data="userCardData"
 											:state="UserCardState"
 											:not-post-card="false"
+											:user-name="postData.data.postedBy"
 										></profile-card>
 									</div>
 								</div>
@@ -407,21 +408,19 @@ export default {
 		this.setPostHybridContent();
 	},
 	created() {
-		if (this.$route.params.userName) {
-			this.loading = true;
-			if (
-				!localStorage.getItem('userName') ||
-				localStorage.getItem('userName') == ''
-			) {
-				this.UserCardState = 'unauth';
-			} else if (
-				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
-				this.$route.params.userName == localStorage.getItem('userName')
-			)
-				this.UserCardState = 'profile';
-			/* means same authenticated user */ else
-				this.UserCardState = 'user'; /* means other user */
-		}
+		this.loading = true;
+		if (
+			!localStorage.getItem('userName') ||
+			localStorage.getItem('userName') == ''
+		) {
+			this.UserCardState = 'unauth';
+		} else if (
+			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+			this.postData.data.postedBy == localStorage.getItem('userName')
+		)
+			this.UserCardState = 'profile';
+		/* means same authenticated user */ else
+			this.UserCardState = 'user'; /* means other user */
 	},
 	/**
 	 * @vuese
@@ -429,11 +428,14 @@ export default {
 	 * @arg no arg
 	 */
 	async beforeMount() {
-		if (this.postData.data.subreddit != null) {
-			await this.getSubreddit();
-			console.log('aaa', this.subredditData);
-		}
-		await this.fetchUserCardPicture();
+		// if (
+		// 	this.postData.data.subreddit != null &&
+		// 	this.postData.data.subreddit != 'string'
+		// ) {
+		// 	await this.getSubreddit();
+		// 	console.log('aaa', this.subredditData);
+		// }
+		// await this.fetchUserCardPicture();
 	},
 	computed: {
 		/**
@@ -462,24 +464,29 @@ export default {
 	},
 	methods: {
 		async fetchUserCardPicture() {
-			let responseData = null;
-			try {
-				responseData = await this.$store.dispatch('user/getUserTempData', {
-					baseurl: this.$baseurl,
-					userName: this.postData.data.postedBy,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			if (responseData != null) this.userCardData = responseData;
-			console.log(this.userData);
+			// let responseData = null;
+			// try {
+			// 	responseData = await this.$store.dispatch('user/getUserTempData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.postData.data.postedBy,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
+			// if (responseData != null) this.userCardData = responseData;
+			// console.log(this.userData);
 		},
 		/**
 		 * @vuese
 		 * show subreddit box when you hovered on subreddit name
 		 * @arg no arg
 		 */
-		showSubredditBox(id) {
+		async showSubredditBox(id) {
+			// if (this.postData.data.subreddit != null) {
+			// 	await this.getSubreddit();
+			// 	console.log('aaa', this.subredditData);
+			// }
+			// await this.fetchUserCardPicture();
 			if (id == 1) this.showSubredditBoxFlag1 = true;
 			else if (id == 2) this.showSubredditBoxFlag2 = true;
 		},

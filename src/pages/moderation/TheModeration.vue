@@ -57,7 +57,6 @@
 </template>
 
 <script>
-//
 import ListBar from '../../components/moderation/ListBar.vue';
 import ListmoderationBar from '../../components/moderation/ListmoderationBar.vue';
 import LeftsideBar from '../../components/moderation/LeftsideBar.vue';

@@ -22,6 +22,10 @@ export default {
 		CommunitiesBar,
 		CardsBar,
 	},
+	beforeMount() {
+		if (localStorage.getItem('accessToken') == null)
+			this.$router.push('/login');
+	},
 };
 </script>
 

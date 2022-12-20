@@ -157,9 +157,9 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				localStorage.setItem('Password', payload.password);
-				console.log(localStorage.getItem('Password'));
-				console.log(localStorage.getItem('Password'));
+				// localStorage.setItem('Password', payload.password);
+				// console.log(localStorage.getItem('Password'));
+				// console.log(localStorage.getItem('Password'));
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
@@ -205,8 +205,8 @@ export default {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
-				localStorage.setItem('Password', payload.password);
-				console.log(localStorage.getItem('Password'));
+				// localStorage.setItem('Password', payload.password);
+				// console.log(localStorage.getItem('Password'));
 				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
@@ -320,9 +320,13 @@ export default {
 			baseurl + '/email-available' + '?email=' + payload.email
 		);
 		const responseData = await response.json();
-		localStorage.setItem('response', response.status);
+		// localStorage.setItem('response', response.status);
 		console.log(response.status);
-		if (response.ok) {
+		if (
+			response.status == 200 ||
+			response.status == 201 ||
+			response.status == 304
+		) {
 			if (!responseData.Error) {
 				context.commit('setUser', {
 					response: response.status,
@@ -376,8 +380,8 @@ export default {
 			});
 			//this.$cookies.set('response', response.status);
 			if (responseData.token)
-				//localStorage.setItem('accessToken', responseData.token);
-				this.$cookies.set('accessToken', responseData.token);
+				localStorage.setItem('accessToken', responseData.token);
+			// this.$cookies.set('accessToken', responseData.token);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			console.log(responseData.error);

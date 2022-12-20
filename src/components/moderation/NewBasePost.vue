@@ -13,6 +13,7 @@
 								<use xlink:href="../../../img/vote.svg#icon-arrow-up"></use>
 							</svg>
 						</div>
+						<div class="count">{{ counter }}</div>
 						<div
 							class="downvote"
 							@click="downvote"
@@ -81,7 +82,11 @@
 					<p class="comments">{{ spam.numberOfComments }} comments</p>
 				</div>
 				<div class="footer">
-					<div class="removed-box" :class="approved ? 'approved-box' : ''">
+					<div
+						class="removed-box"
+						:class="approved ? 'approved-box' : ''"
+						v-if="this.$route.matched.some(({ name }) => name === 'spam')"
+					>
 						<div>
 							<img
 								src="../../../img/default_inbox_avatar.png"
@@ -103,7 +108,7 @@
 							>Approve</base-button
 						>
 						<base-button
-							v-if="this.$route.matched.some(({ name }) => name === 'spam')"
+							v-if="!this.$route.matched.some(({ name }) => name === 'spam')"
 							:id="'Remove-button-' + index"
 							@click="removeFunction()"
 							>Remove</base-button
@@ -121,16 +126,19 @@ export default {
 	data() {
 		return {
 			downClicked: false,
+			upClicked: false,
 			subreddit: {},
 			errorResponse: '',
 			approved: false,
 			handleTime: '',
 			removed: false,
+			counter: this.spam.votes,
 		};
 	},
 	beforeMount() {
 		this.getSubreddit();
 		this.calculateTime();
+		this.see();
 	},
 	computed: {
 		// @vuese
@@ -163,6 +171,15 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		// check Voted
+		see() {
+			if (this.spam.vote == 1) {
+				this.upClicked = true;
+			} else if (this.spam.vote == -1) {
+				this.downClicked = true;
+			}
+		},
 		// @vuese
 		//calculate time
 		// @type object
@@ -197,27 +214,29 @@ export default {
 			if (this.upClicked == false) {
 				try {
 					let P_id = 0;
+					let P_type = '';
 					if (this.spam.commentId) {
 						P_id = this.spam.commentId;
+						P_type = 'comment';
 					} else {
 						P_id = this.spam.postId;
+						P_type = 'post';
 					}
-					this.$store.dispatch('messages/voteComment', {
+					this.$store.dispatch('moderation/vote', {
 						id: P_id,
+						type: P_type,
 						direction: 1,
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.upClicked = true;
-					}
+					this.upClicked = true;
+					this.counter += 1;
 				} catch (err) {
 					this.errorResponse = err;
 					this.upClicked = false;
 				}
-			} else {
-				this.upClicked = false;
 			}
-			if (this.downClicked) {
+			if (this.downClicked == true) {
+				this.counter += 1;
 				this.downClicked = false;
 			}
 		},
@@ -228,27 +247,32 @@ export default {
 			if (this.downClicked == false) {
 				try {
 					let P_id = 0;
+					let P_type = '';
 					if (this.spam.commentId) {
 						P_id = this.spam.commentId;
+						P_type = 'comment';
 					} else {
 						P_id = this.spam.postId;
+						P_type = 'post';
 					}
-					this.$store.dispatch('messages/voteComment', {
+					this.$store.dispatch('moderation/vote', {
 						id: P_id,
 						direction: -1,
+						type: P_type,
 						baseurl: this.$baseurl,
 					});
-					if (this.$store.getters['messages/votedSuccessfully']) {
-						this.downClicked = true;
-					}
+					this.downClicked = true;
+					this.counter = this.counter - 1;
 				} catch (err) {
 					this.errorResponse = err;
 					this.downClicked = false;
 				}
-			} else {
-				this.downClicked = false;
 			}
-			if (this.upClicked) {
+			// else {
+			// 	this.downClicked = false;
+			// }
+			if (this.upClicked == true) {
+				this.counter -= 1;
 				this.upClicked = false;
 			}
 		},
@@ -355,6 +379,9 @@ export default {
 .icon {
 	height: 2.4rem;
 	width: 2.4rem;
+}
+.icon:hover {
+	color: orange;
 }
 .right-bar {
 	background: #ffffff;
@@ -567,6 +594,15 @@ button {
 }
 button:hover {
 	border: 1px solid var(--color-dark-3);
+}
+.up-clicked {
+	color: orange;
+}
+.down-clicked {
+	color: orange;
+}
+.upvote:hover {
+	color: orange;
 }
 .approved-box {
 	background-color: rgba(70, 209, 96, 0.2);

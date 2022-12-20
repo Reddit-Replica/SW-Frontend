@@ -3,14 +3,16 @@
 		<div class="subreddit-info">
 			<span class="subreddit-image">
 				<img
-					v-if="post.subreddit != undefined && post.picture != undefined"
-					:src="$baseurl + '/' + post.picture"
-					alt=""
-				/>
-				<img
 					src="../../../img/default_subreddit_image.png"
 					alt=""
-					v-if="post.subreddit != undefined && post.picture == undefined"
+					v-if="post.subreddit != undefined && subreddit.picture == undefined"
+				/>
+				<img
+					v-else-if="
+						post.subreddit != undefined && subreddit.picture != undefined
+					"
+					:src="$baseurl + '/' + post.picture"
+					alt=""
 				/>
 			</span>
 			<span class="subreddit-name" v-if="post.subreddit != undefined">
@@ -32,12 +34,23 @@
 					id="post-by-router"
 				>
 					{{ post.postedBy }} </router-link
-				>&nbsp;{{ calculateTime }} ago
+				>&nbsp;{{ calculateTime }}
 			</span>
 		</div>
 
 		<div class="post-title">
-			<h3>{{ post.title }}</h3>
+			<h3>
+				{{ post.title }}
+				<base-button
+					v-if="post.flair != undefined || post.flair != null"
+					class="flair"
+					:button-text="post.flair.flairName"
+					:style="{
+						color: post.flair.textColor,
+						background: post.flair.backgroundColor,
+					}"
+				/>
+			</h3>
 		</div>
 		<div v-if="!editing">
 			<div
@@ -109,6 +122,27 @@ export default {
 
 	// 	}
 	// },
+	async beforeMount() {
+		//document.querySelector('img.ql-image').style.width = '100%';
+		//var element = document.querySelector('img.ql-image');
+		// var element = document.querySelector('img');
+		// Set style attribute with properties for the selected element
+		// element.setAttribute('style', 'width:100%');
+		if (this.post.subreddit != undefined) {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: this.post.subreddit,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+		}
+	},
+	data() {
+		return {
+			subreddit: {},
+		};
+	},
 	name: 'PostContent',
 	components: {
 		PicturePost,
@@ -256,5 +290,15 @@ div:last-of-type a {
 }
 div:last-of-type a:hover {
 	text-decoration: underline;
+}
+img.ql-image {
+	width: 5px;
+}
+.flair {
+	min-height: 10px;
+	min-width: 30px;
+	font-size: 9px;
+	width: max-content;
+	height: max-content;
 }
 </style>

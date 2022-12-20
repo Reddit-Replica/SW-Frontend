@@ -34,7 +34,9 @@
 								</ul>
 							</nav>
 							<!-- todo here add the components 0->post 1->image 2->...... -->
-							<title-input :val="postDetails.title"> </title-input>
+							<title-input :val="postDetails.title" v-if="sharedId">
+							</title-input>
+							<title-input v-if="!sharedId"> </title-input>
 							<post-content
 								:post="postDetails"
 								:shared="true"
@@ -103,8 +105,7 @@ export default {
 	},
 	async created() {
 		console.log(this.sharedId);
-
-		await this.getPostDetails();
+		if (this.sharedId) await this.getPostDetails();
 		this.subreddit = null;
 		if (!localStorage.getItem('accessToken')) {
 			this.$router.push('/login');
@@ -154,8 +155,11 @@ export default {
 		community() {
 			return this.$store.getters['posts/getSubreddit'];
 		},
-		incommunity() {
-			return this.$store.getters['posts/getinSubreddit'];
+		user() {
+			return this.$store.getters['posts/getUser'];
+		},
+		combination() {
+			return this.getTitle() && (this.getSubreddit || this.getUsername());
 		},
 	},
 	watch: {
@@ -170,27 +174,44 @@ export default {
 			this.title = value;
 			// if(value=='')
 			//  this.title=null;
-			if (this.inSubreddit && this.inSubreddit != '') {
-				if (
-					this.title &&
-					this.title != '' &&
-					this.subreddit &&
-					this.subreddit != ''
-				)
-					this.buttonDisabled = false;
-				else this.buttonDisabled = true;
-			} else {
-				if (this.title && this.title != '') this.buttonDisabled = false;
-				else this.buttonDisabled = true;
-			}
-			this.buttonDisabled = false;
+			// if (this.inSubreddit && this.inSubreddit != '') {
+			// 	if (
+			// 		this.title &&
+			// 		this.title != '' &&
+			// 		this.subreddit &&
+			// 		this.subreddit != ''
+			// 	)
+			// 		this.buttonDisabled = false;
+			// 	else this.buttonDisabled = true;
+			// } else {
+			// 	if (this.title && this.title != '') this.buttonDisabled = false;
+			// 	else this.buttonDisabled = true;
+			// }
+			// this.buttonDisabled = false;
+			this.getUsername();
+			this.getSubreddit();
+			if (this.title && (this.userName || this.subreddit))
+				this.buttonDisabled = false;
+			else this.buttonDisabled = true;
+
 			// if (value) this.buttonDisabled = false;
 		},
+
 		community(value) {
 			this.subreddit = value;
+			this.getUsername();
+			this.getTitle();
+			if (this.title && (this.userName || this.subreddit))
+				this.buttonDisabled = false;
+			else this.buttonDisabled = true;
 		},
-		incommunity(value) {
-			this.inSubreddit = value;
+		user(value) {
+			this.userName = value;
+			this.getTitle();
+			this.getSubreddit();
+			if (this.title && (this.userName || this.subreddit))
+				this.buttonDisabled = false;
+			else this.buttonDisabled = true;
 		},
 
 		// try(value) {
@@ -276,7 +297,7 @@ export default {
 		// @vuese
 		// get the user name in the  post
 		getUsername() {
-			this.userName = localStorage.getItem('userName');
+			this.userName = this.$store.getters['posts/getUser'];
 		},
 		// @vuese
 		// get the insubreddit in the  post

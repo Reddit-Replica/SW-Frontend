@@ -84,6 +84,8 @@ export default {
 		// BasePost,
 	},
 	props: {
+		// @vuese
+		// sate to know you authenticated or not
 		state: {
 			type: String,
 			required: true,
@@ -99,6 +101,12 @@ export default {
 	mounted() {
 		console.log('in saved', this.state);
 	},
+	/**
+	 * @vuese
+	 * at creation we set an scroll event , and get the query from the route ti know which sort
+	 * you want at make the request to get the downvoted posts data
+	 * @arg no arg
+	 */
 	async created() {
 		let sortType, t;
 		sortType = this.routeSortTypeAndTime().sortType;
@@ -137,14 +145,34 @@ export default {
 			window.addEventListener('scroll', this.scroll);
 		});
 	},
+	// @vuese
+	// emits popup action to show it
 	emits: ['emitPopup'],
 	computed: {
+		/**
+		 * @vuese
+		 * get user saved post data from the store
+		 * @arg no arg
+		 */
 		getUserSavedData() {
 			// console.log(this.$store.getters['userposts/getUserData']);
 			return this.$store.getters['userposts/getUserSavedData'];
 		},
 	},
+	/**
+	 * @vuese
+	 * at un mounting we remove scroll event
+	 * @arg no arg
+	 */
+	unmounted() {
+		window.removeEventListener('scroll', this.scroll);
+	},
 	methods: {
+		/**
+		 * @vuese
+		 * get the query from the route
+		 * @arg no arg
+		 */
 		routeSortTypeAndTime() {
 			let sortType, t;
 			if (!this.$route.query.sort || this.$route.query.sort == 'new') {
@@ -161,6 +189,11 @@ export default {
 			}
 			return { sortType, t };
 		},
+		/**
+		 * @vuese
+		 * fetch more contents when get at the bottom of the page
+		 * @arg no arg
+		 */
 		async scroll() {
 			if (
 				window.innerHeight + window.scrollY >= document.body.offsetHeight &&
@@ -179,9 +212,19 @@ export default {
 				console.log('bottom2');
 			}
 		},
+		/**
+		 * @vuese
+		 * emitts actions to show a popup
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
 		},
+		/**
+		 * @vuese
+		 * handel  when you clicked on the sort bar
+		 * @arg no arg
+		 */
 		async sortBarClicked(sortType) {
 			this.$router.push({
 				path: `/user/${this.$route.params.userName}/submitted`,
@@ -193,6 +236,11 @@ export default {
 			this.requestStatusHandler(reqStatus, `user ${sortType} posts`);
 			this.loading = false;
 		},
+		/**
+		 * @vuese
+		 * handel a click of time when click on the sort bar
+		 * @arg no arg
+		 */
 		async sortBarClickedTime(t) {
 			this.$router.push({
 				path: `/user/${this.$route.params.userName}/`,
@@ -205,6 +253,11 @@ export default {
 			this.loading = false;
 			console.log('f', t);
 		},
+		/**
+		 * @vuese
+		 * handel the response from the request
+		 * @arg no arg
+		 */
 		requestStatusHandler(requestStatus, st) {
 			if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
 			else if (requestStatus == 404) console.log(`Not found  ${st} `);
@@ -212,6 +265,11 @@ export default {
 			else if (requestStatus == 401) console.log(' access denied');
 			else console.log(`Error !!!!  ${st} !!!!!`);
 		},
+		/**
+		 * @vuese
+		 * request saved posts from the store
+		 * @arg no arg
+		 */
 		async RequestUserSavedData(sortType, t) {
 			let requestStatus = -1;
 			try {
@@ -235,6 +293,11 @@ export default {
 			console.log('req', requestStatus);
 			return requestStatus;
 		},
+		/**
+		 * @vuese
+		 * request more saved posts in case you at the bottom of the page
+		 * @arg no arg
+		 */
 		async RequestMoreUserSavedData(sortType, t) {
 			let requestStatus = -1;
 			if (this.getUserOverviewData.overviewData.after != 'noMore') {

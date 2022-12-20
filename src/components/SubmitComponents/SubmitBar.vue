@@ -177,9 +177,9 @@ import SubredditCard from '../PostComponents/SubredditCard.vue';
 // import SubredditRules from '../PostComponents/SubredditRules.vue';
 
 export default {
-	beforeMount() {
-		this.loadListOfRules();
-	},
+	// beforeMount() {
+	// 	this.loadListOfRules();
+	// },
 	components: {
 		CreateCommunity,
 		// SubredditInfo,
@@ -285,8 +285,8 @@ export default {
 			this.isSet = true;
 			this.image = this.$baseurl + '/' + this.userData.picture;
 			this.path = false;
-			this.$store.commit('posts/setSubreddit', {
-				subreddit: this.subreddit,
+			this.$store.commit('posts/setName', {
+				name: localStorage.getItem('userName'),
 			});
 			this.$store.commit('posts/setinSubreddit', {
 				inSubreddit: this.inSubreddit,
@@ -304,20 +304,21 @@ export default {
 				baseurl: this.$baseurl,
 			};
 			console.log('enter get user data');
+			let response;
 			try {
-				const response = await this.$store.dispatch(
-					'user/getUserData',
+				response = await this.$store.dispatch(
+					'user/getUserTempData',
 					actionPayload
 				);
 
-				if (response == 200) {
-					console.log(response);
-					console.log('    user data الحمد لله زى الفل');
-				}
+				// if (response == 200) {
+				// 	console.log(response);
+				// 	console.log('    user data الحمد لله زى الفل');
+				// }
 			} catch (err) {
 				console.log(this.err);
 			}
-			this.userData = this.$store.getters['user/getUserData'].userData;
+			this.userData = response;
 		},
 		async loadSubredditInfo() {
 			console.log('hello');
@@ -344,17 +345,17 @@ export default {
 		// @vuese
 		//load Rules list from the store
 		// @arg no argument
-		async loadListOfRules() {
-			try {
-				await this.$store.dispatch('moderation/loadListOfRules', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			this.rules = this.$store.getters['moderation/listOfRules'];
-		},
+		// async loadListOfRules() {
+		// 	try {
+		// 		await this.$store.dispatch('moderation/loadListOfRules', {
+		// 			baseurl: this.$baseurl,
+		// 			subredditName: this.subredditName,
+		// 		});
+		// 	} catch (error) {
+		// 		this.error = error.message || 'Something went wrong';
+		// 	}
+		// 	this.rules = this.$store.getters['moderation/listOfRules'];
+		// },
 	},
 	computed: {
 		// @vuese
@@ -638,7 +639,8 @@ button {
 @media (max-width: 1255px) {
 	.subreddit-info,
 	.posting1,
-	.posting2 {
+	.posting2,
+	.posting3 {
 		display: none;
 	}
 }

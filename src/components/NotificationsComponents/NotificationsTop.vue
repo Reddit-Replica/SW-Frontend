@@ -57,21 +57,17 @@ export default {
 
 <style scoped>
 .ntf-top {
-	/* height: 13rem; */
 	margin: 5rem auto 0rem auto;
 	width: 65rem;
 	font-family: Arial, Helvetica, sans-serif;
 }
 .ntf-top-title {
 	color: var(--color-dark-3);
-	/* padding: 4rem 0 2rem;
+	padding: 4rem 0 2rem;
 	font-size: 2.2rem;
-	line-height: 2.6rem; */
-	padding: 40px 0 20px;
+	line-height: 2.6rem;
 	margin: 0;
-	font-size: 22px;
-	line-height: 26px;
-	letter-spacing: 0.5px;
+	letter-spacing: 0.05rem;
 	font-weight: 550;
 }
 ul {
@@ -81,13 +77,13 @@ ul {
 li {
 	position: relative;
 	cursor: pointer;
-	padding: 15px 12px;
-	margin-right: 8px;
+	padding: 1.5rem 1.2rem;
+	margin-right: 0.8rem;
 }
 span {
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 700;
-	line-height: 18px;
+	line-height: 1.8rem;
 	border-bottom: none;
 	color: var(--color-grey-dark-10);
 	display: inline-block;
@@ -98,18 +94,29 @@ button {
 }
 svg {
 	color: var(--color-grey-dark-10);
-	margin-right: 6px;
+	margin-right: 0.6rem;
 	vertical-align: top;
 }
 li:last-of-type {
 	margin-left: auto;
+}
+@media only screen and (max-width: 850px) {
+	li:last-of-type {
+		margin-left: 0;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+	.ntf-top-title {
+		margin-left: 3rem;
+	}
 }
 span:hover {
 	color: var(--color-dark-3);
 }
 li:first-of-type {
 	border-bottom: var(--line-5);
-	border-width: 3px;
+	border-width: 0.3rem;
 }
 li:first-of-type span {
 	color: var(--color-dark-3);

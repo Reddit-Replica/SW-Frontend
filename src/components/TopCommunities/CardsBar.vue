@@ -39,6 +39,18 @@ export default {
 	beforeMount() {
 		this.getTwoCommunities();
 	},
+	computed: {
+		emptyCommunitiesFirst() {
+			return (
+				this.firstCategoryCommunities === [] || !this.firstCategoryCommunities
+			);
+		},
+		emptyCommunitiesSecond() {
+			return (
+				this.secondCategoryCommunities === [] || !this.secondCategoryCommunities
+			);
+		},
+	},
 	methods: {
 		async getTwoCommunities() {
 			const accessToken = localStorage.getItem('accessToken');
