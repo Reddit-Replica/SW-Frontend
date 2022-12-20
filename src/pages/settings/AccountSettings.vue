@@ -4,30 +4,34 @@
 			<div class="settings-block">
 				<h2 class="h2-main-title">Account settings</h2>
 				<h3 class="h3-main-title">ACCOUNT PREFERENCES</h3>
-				<div class="section">
+				<div class="section" id="div-1">
 					<div>
-						<h3 class="h3-title">Email address</h3>
-						<p class="p-title-description">{{ email }}</p>
+						<div>
+							<h3 class="h3-title">Email address</h3>
+							<p class="p-title-description">{{ email }}</p>
+						</div>
+						<div>
+							<base-button
+								class="blue-button"
+								button-text="Change"
+								id="change"
+								@click="openChangeEmailDialog"
+							/>
+						</div>
 					</div>
 					<div>
-						<base-button
-							class="blue-button"
-							button-text="Change"
-							id="change"
-							@click="openChangeEmailDialog"
-						/>
-					</div>
-					<div>
-						<h3 class="h3-title">Change Password</h3>
-						<p class="p-title-description">Change your current password</p>
-					</div>
-					<div>
-						<base-button
-							class="blue-button"
-							button-text="Change"
-							id="change"
-							@click="showChangePasswordDialog"
-						/>
+						<div>
+							<h3 class="h3-title">Change Password</h3>
+							<p class="p-title-description">Change your current password</p>
+						</div>
+						<div>
+							<base-button
+								class="blue-button"
+								button-text="Change"
+								id="change"
+								@click="showChangePasswordDialog"
+							/>
+						</div>
 					</div>
 				</div>
 				<div class="section">
@@ -528,7 +532,7 @@
 			@close="cancelChangePassword"
 			class="change-password-dialog"
 		>
-			<change-password></change-password>
+			<change-password @close="cancelChangePassword" />
 			<!-- <div class="change-password-left"></div>
 			<div class="delete-account change-password">
 				<img src="" alt="" />
@@ -701,6 +705,8 @@ export default {
 						response.responseData.error != undefined
 							? response.responseData.error
 							: response.responseData;
+				this.email = this.newEmail;
+				this.changeEmailDialog = false;
 				console.log(response);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
@@ -946,8 +952,20 @@ export default {
 	margin-bottom: 32px;
 	justify-content: space-between;
 }
-.section div:first-of-type {
+#div-1 {
 	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+#div-1 > div {
+	max-width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10px 0px;
+}
+#div-1 > div:fir {
+
 }
 .section div:first-of-type h3 span {
 	color: #ff2c00;
