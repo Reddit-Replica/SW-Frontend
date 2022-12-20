@@ -109,6 +109,13 @@ export default {
 
 	// 	}
 	// },
+	created() {
+		//document.querySelector('img.ql-image').style.width = '100%';
+		//var element = document.querySelector('img.ql-image');
+		// var element = document.querySelector('img');
+		// Set style attribute with properties for the selected element
+		// element.setAttribute('style', 'width:100%');
+	},
 	name: 'PostContent',
 	components: {
 		PicturePost,

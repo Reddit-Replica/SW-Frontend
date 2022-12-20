@@ -449,7 +449,7 @@
 						/>
 					</div>
 				</div>
-				<h3 class="h3-main-title">BETA TESTS</h3>
+				<!-- <h3 class="h3-main-title">BETA TESTS</h3>
 				<div class="section">
 					<div>
 						<h3 class="h3-title">Opt into beta tests</h3>
@@ -471,7 +471,7 @@
 					<div>
 						<switch-button id="sb-1" />
 					</div>
-				</div>
+				</div> -->
 				<h3 class="h3-main-title">DELETE ACCOUNT</h3>
 				<div class="section">
 					<div id="delete-account" @click="deletingAccount">
