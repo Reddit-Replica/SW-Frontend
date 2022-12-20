@@ -16,9 +16,15 @@ export default {
 	async fetchPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const title = payload.title;
+		console.log(payload);
 		var query;
-		if (payload.query == undefined) query = '?limit=100';
-		else query = '?time=' + payload.query + '&limit=100';
+		if (payload.afterMod != null && payload.query != undefined)
+			query =
+				'?after=' + payload.afterMod + '&time=' + payload.query + '&limit=2';
+		else if (payload.afterMod != null)
+			query = '?after=' + payload.afterMod + '&limit=2';
+		else if (payload.query == undefined) query = '?limit=2';
+		else query = '?time=' + payload.query + '&limit=2';
 		const response = await fetch(baseurl + '/' + title + query, {
 			method: 'GET',
 			headers: {
