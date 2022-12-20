@@ -93,4 +93,7 @@ export default {
 	setAfter(state, payload) {
 		state.after = payload;
 	},
+	deleteUserSocialLink(state, payload) {
+		state.userData.socialLinks.pop(payload.newSocialLink);
+	},
 };
