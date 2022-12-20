@@ -1086,9 +1086,9 @@ input {
 }
 .box-buttons {
 	background-color: var(--color-grey-light-2);
-	padding: 16px;
-	margin: 16px -16px -16px;
-	border-bottom-right-radius: 4px;
+	padding: 1.6rem;
+	margin: 1.6rem -1.6rem -1.6rem;
+	border-bottom-right-radius: 0.4rem;
 	display: flex;
 	justify-content: flex-end;
 	box-sizing: border-box;
@@ -1165,9 +1165,9 @@ input {
 	background-color: var(--color-green);
 	display: inline-block;
 	border-radius: 50%;
-	width: 4px;
-	height: 4px;
-	margin-right: 2px;
+	width: 0.4rem;
+	height: 0.4rem;
+	margin-right: 0.2rem;
 }
 .pop-up {
 	bottom: 0;

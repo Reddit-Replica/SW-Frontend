@@ -215,11 +215,9 @@ img {
 	padding-left: 1.6rem;
 	margin-top: 2.4rem;
 	justify-content: space-between;
-	/* width: calc(100% - 80px); */
 }
 .top-title {
 	display: inline-block;
-	/* max-width: calc(100% - 96px); */
 	padding-right: 2.4rem;
 }
 .title-1 {
