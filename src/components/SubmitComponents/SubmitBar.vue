@@ -177,9 +177,9 @@ import SubredditCard from '../PostComponents/SubredditCard.vue';
 // import SubredditRules from '../PostComponents/SubredditRules.vue';
 
 export default {
-	beforeMount() {
-		this.loadListOfRules();
-	},
+	// beforeMount() {
+	// 	this.loadListOfRules();
+	// },
 	components: {
 		CreateCommunity,
 		// SubredditInfo,
@@ -344,17 +344,17 @@ export default {
 		// @vuese
 		//load Rules list from the store
 		// @arg no argument
-		async loadListOfRules() {
-			try {
-				await this.$store.dispatch('moderation/loadListOfRules', {
-					baseurl: this.$baseurl,
-					subredditName: this.subredditName,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			this.rules = this.$store.getters['moderation/listOfRules'];
-		},
+		// async loadListOfRules() {
+		// 	try {
+		// 		await this.$store.dispatch('moderation/loadListOfRules', {
+		// 			baseurl: this.$baseurl,
+		// 			subredditName: this.subredditName,
+		// 		});
+		// 	} catch (error) {
+		// 		this.error = error.message || 'Something went wrong';
+		// 	}
+		// 	this.rules = this.$store.getters['moderation/listOfRules'];
+		// },
 	},
 	computed: {
 		// @vuese

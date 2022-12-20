@@ -100,6 +100,12 @@
 			> -->
 			<div class="tool-tip">
 				<span class="tool-tip-text-small strike1">Add flair</span>
+				<!-- <span class="tool-tip-text-small strike1" v-if="flairs.length == 0"
+					>Not available for this community</span
+				>
+				<span class="tool-tip-text-small strike1" v-if="!flairs"
+					>Select a subreddit to enable flairs</span
+				> -->
 				<select
 					@click="getFlairs()"
 					v-model="flairId"
