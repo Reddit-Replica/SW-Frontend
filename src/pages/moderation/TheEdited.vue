@@ -19,18 +19,12 @@
 		<div v-else>
 			<div v-if="posts">
 				<div v-for="value in EditedPosts" :key="value.id">
-					<new-base-post
-						:spam="UnmoderatedPosts"
-						:index="value.id"
-					></new-base-post>
+					<new-base-post :spam="value" :index="value.id"></new-base-post>
 				</div>
 			</div>
 			<div v-if="comments">
 				<div v-for="value in EditedComments" :key="value.id">
-					<new-base-post
-						:spam="EditedComments"
-						:index="value.id"
-					></new-base-post>
+					<new-base-post :spam="value" :index="value.id"></new-base-post>
 				</div>
 			</div>
 		</div>

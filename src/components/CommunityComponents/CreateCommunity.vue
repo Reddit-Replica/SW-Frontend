@@ -609,17 +609,18 @@ export default {
 	color: var(--color-grey-dark-2);
 	font-size: 1.2rem;
 	line-height: 1.6rem;
+	height: 2.6rem;
 }
 .title-red {
 	color: red;
-	white-space: nowrap;
+	white-space: wrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-@media only screen and (max-width: 500px) {
-	.title-red {
+@media only screen and (min-width: 500px) {
+	/* .title-red {
 		white-space: wrap;
-	}
+	} */
 	select {
 		width: 30rem;
 		max-width: 30rem;

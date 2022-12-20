@@ -13,6 +13,7 @@
 			<subreddit-rules
 				:rules="subreddit.rules"
 				:subreddit-name="subredditName"
+				:blue="subreddit.isModerator"
 			></subreddit-rules>
 		</div>
 		<div class="moderators" v-if="moderators.length != 0">

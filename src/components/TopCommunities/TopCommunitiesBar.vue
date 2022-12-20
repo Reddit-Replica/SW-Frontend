@@ -40,6 +40,7 @@ export default {
 			});
 			this.communities =
 				this.$store.getters['topCommunity/getTrendingCommunities'];
+			console.log(this.communities);
 		},
 		reloadPage() {
 			this.getOneCommunities();

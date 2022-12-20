@@ -93,6 +93,9 @@ export default {
 		SaveUnsavePopupMessage,
 		TheSpinner,
 	},
+	unmounted() {
+		window.removeEventListener('scroll', this.scroll);
+	},
 	computed: {
 		showPostComments() {
 			if (this.$route.path.split('/')[3] == 'comments') return true;
@@ -117,6 +120,10 @@ export default {
 	},
 	created() {
 		document.title = 'Reddit - Dive into anything';
+		this.scroll();
+		this.$nextTick(() => {
+			window.addEventListener('scroll', this.scroll);
+		});
 	},
 	data() {
 		return {
@@ -124,9 +131,30 @@ export default {
 			posts: [],
 			showComments: false,
 			loading: false,
+			afterMod: '',
+			MoreFetch: false,
+			busyRequestMore: false,
 		};
 	},
 	methods: {
+		async scroll() {
+			if (
+				window.innerHeight + window.scrollY >= document.body.offsetHeight &&
+				!this.busyRequestMore &&
+				this.MoreFetch
+			) {
+				console.log('bottom1');
+				let title = this.$route.params.title;
+				if (title == null) title = 'best';
+				this.loading = true;
+				await this.fetchPosts(title);
+				this.loading = false;
+				this.busyRequestMore = true;
+				if (this.afterMod == '') this.MoreFetch = false;
+				this.busyRequestMore = false;
+				console.log('bottom2');
+			}
+		},
 		test() {
 			fetch(this.$baseurl + '/users')
 				.then((response) => {
@@ -197,12 +225,14 @@ export default {
 				await this.$store.dispatch('listing/fetchPosts', {
 					baseurl: this.$baseurl,
 					title: title,
+					afterMod: this.afterMod,
 					query: this.$route.query.t,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.posts = this.$store.getters['listing/getPosts'].children;
+			this.afterMod = this.$store.getters['listing/getPosts'].after;
 			console.log(this.posts);
 		},
 		changeRoute(title) {

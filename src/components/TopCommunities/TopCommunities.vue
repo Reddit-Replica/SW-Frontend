@@ -25,11 +25,11 @@
 				:index="index"
 				:key="community.id"
 				:id="community.id"
-				:name="community.data.title"
-				:image="community.data.picture"
-				:members="community.data.members"
+				:name="community.title"
+				:image="community.picture"
+				:members="community.members"
 				:show-members="false"
-				:is-member="community.data.isMember"
+				:is-member="community.joined"
 			>
 			</top-community>
 		</ol>
@@ -103,12 +103,6 @@ export default {
 		noCommunities() {
 			return this.topCommunities.length === 0;
 		},
-	},
-	mounted() {
-		console.log(this.topCommunities);
-		console.log(this.thereCommunities);
-		console.log(this.topCommunities !== []);
-		console.log(!this.topCommunities);
 	},
 	methods: {
 		reloadAgain() {
