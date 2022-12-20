@@ -2,7 +2,12 @@
 	<div id="ntf-page-1">
 		<the-header :header-title="'Notifications'"></the-header>
 		<notifications-top @reload="reloadPage" id="ntf-page-2"></notifications-top>
-		<div class="ntf-section" @reload="reloadPage" id="ntf-page-3">
+		<div
+			class="ntf-section"
+			@reload="reloadPage"
+			id="ntf-page-3"
+			v-if="!noNotifications"
+		>
 			<div id="ntf-page-4">
 				<div class="ntf-list-title" id="ntf-page-5">Notifications</div>
 				<ul id="ntf-page-6">
@@ -16,6 +21,10 @@
 					></notification-message>
 				</ul>
 			</div>
+		</div>
+		<div class="center-no">
+			<!-- <img src="../../../img/default_avatar.png" class="default-img" /> -->
+			<h1>No Notifications</h1>
 		</div>
 		<save-unsave-popup-message v-if="doneHide" class="pop-up" id="pop-hide"
 			>Notification Hidden</save-unsave-popup-message
@@ -50,6 +59,9 @@ export default {
 	computed: {
 		userName() {
 			return localStorage.getItem('userName');
+		},
+		noNotifications() {
+			return this.notifications.length === 0;
 		},
 	},
 	methods: {
@@ -103,6 +115,14 @@ ul {
 		width: 65rem;
 	}
 }
+.center-no {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: black;
+}
+
 .pop-up {
 	bottom: 0;
 	position: fixed;

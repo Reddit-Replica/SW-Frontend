@@ -32,7 +32,7 @@
 			<div class="numbers-box">
 				<span class="number">
 					<div class="div-number">
-						<div class="num" v-if="traffic">
+						<div class="num" v-if="traffic" id="day">
 							{{
 								this.traffic.numberOfJoinedLastDay -
 								this.traffic.numberOfLeftLastDay
@@ -43,7 +43,7 @@
 				</span>
 				<span class="number">
 					<div class="div-number">
-						<div class="num" v-if="traffic">
+						<div class="num" v-if="traffic" id="week">
 							{{
 								this.traffic.numberOfJoinedLastWeek -
 								this.traffic.numberOfLeftLastWeek
@@ -54,7 +54,7 @@
 				</span>
 				<span class="number">
 					<div class="div-number">
-						<div class="num" v-if="traffic">
+						<div class="num" v-if="traffic" id="month">
 							{{
 								this.traffic.numberOfJoinedLastMonth -
 								this.traffic.numberOfLeftLastMonth
@@ -65,7 +65,7 @@
 				</span>
 			</div>
 			<div class="chart-box">
-				<span class="chart-title">{{ choosenTitle }}</span>
+				<span class="chart-title" id="title">{{ choosenTitle }}</span>
 				<div class="chart">
 					<div class="inner-box-chart">
 						<div class="box-1">
@@ -73,7 +73,7 @@
 						</div>
 						<div class="box-color">
 							<div class="buttons">
-								<button class="button">
+								<button class="button" id="btn1500">
 									<div class="color">
 										<!-- <div class="color-box-blue"></div> -->
 										<!-- <div class="span">
@@ -81,7 +81,7 @@
 										</div> -->
 									</div>
 								</button>
-								<button class="button">
+								<button class="button" id="2002">
 									<div class="color">
 										<!-- <div class="color-box-yellow"></div> -->
 										<!-- <div class="span">
@@ -122,13 +122,13 @@
 					Month
 				</button>
 			</div>
-			<table v-if="traffic && choosenSecondTitle == 'Day'">
+			<table v-if="traffic && choosenSecondTitle == 'Day'" id="table-day">
 				<tr>
 					<th>Day</th>
 					<th>Members Joined</th>
 				</tr>
 				<tr v-for="day in this.traffic.days" :key="day.id">
-					<td>
+					<td id="date-day">
 						{{ new Date(day.day).getFullYear() }} /
 						{{ new Date(day.day).getMonth() + 1 }} /
 						{{ new Date(day.day).getDate() }}
@@ -138,24 +138,31 @@
 					</td>
 				</tr>
 			</table>
-			<table v-if="traffic && choosenSecondTitle == 'Day of week'">
+			<table
+				v-if="traffic && choosenSecondTitle == 'Day of week'"
+				id="table-week"
+			>
 				<tr>
 					<th>Day Of Week</th>
 					<th>Members Joined</th>
 				</tr>
-				<tr v-for="day in this.traffic.weeks" :key="day.id">
+				<tr v-for="day in this.traffic.weeks" :key="day.id" id="week-date">
 					<td>{{ day.day }}</td>
 					<td :key="day.id">
 						{{ day.numberOfJoined }}
 					</td>
 				</tr>
 			</table>
-			<table v-if="traffic && choosenSecondTitle == 'Month'">
+			<table v-if="traffic && choosenSecondTitle == 'Month'" id="month-table">
 				<tr>
 					<th>Month</th>
 					<th>Members Joined</th>
 				</tr>
-				<tr v-for="month in this.traffic.months" :key="month.id">
+				<tr
+					v-for="month in this.traffic.months"
+					:key="month.id"
+					id="joined-month"
+				>
 					<td>{{ month.month }}</td>
 					<td :key="month.id">
 						{{ month.numberOfJoined }}

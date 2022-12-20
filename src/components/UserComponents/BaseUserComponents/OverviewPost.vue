@@ -395,7 +395,7 @@ export default {
 			subredditData: null,
 			showSubredditBoxFlag1: false,
 			showSubredditBoxFlag2: false,
-			UserCardState: 'unauth',
+			// UserCardState: 'unauth',
 			userCardData: null,
 		};
 	},
@@ -407,21 +407,8 @@ export default {
 		 */
 		this.setPostHybridContent();
 	},
-	created() {
-		this.loading = true;
-		if (
-			!localStorage.getItem('userName') ||
-			localStorage.getItem('userName') == ''
-		) {
-			this.UserCardState = 'unauth';
-		} else if (
-			/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
-			this.postData.data.postedBy == localStorage.getItem('userName')
-		)
-			this.UserCardState = 'profile';
-		/* means same authenticated user */ else
-			this.UserCardState = 'user'; /* means other user */
-	},
+
+	created() {},
 	/**
 	 * @vuese
 	 * before mount we request the subreddit data
@@ -438,6 +425,21 @@ export default {
 		// await this.fetchUserCardPicture();
 	},
 	computed: {
+		UserCardState() {
+			if (
+				!localStorage.getItem('userName') ||
+				localStorage.getItem('userName') == ''
+			) {
+				return 'unauth';
+			} else if (
+				/* at creation and before mounting the page we check for the name if it's same authenticated user or other user */
+				this.postData.data.postedBy == localStorage.getItem('userName')
+			)
+				return 'profile';
+			/* means same authenticated user */ else
+				return 'user'; /* means other user */
+		},
+
 		/**
 		 * @vuese
 		 * get the user data from the store

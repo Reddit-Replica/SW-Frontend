@@ -332,7 +332,7 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			return;
+			return 200;
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -369,7 +369,7 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			return;
+			return 200;
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			if (error.message == 'Owner of the subreddit can not leave') {
@@ -400,7 +400,7 @@ export default {
 		else query = '?time=' + payload.query;
 
 		const response = await fetch(
-			baseurl + `/r/${payload.subredditName}/${title}${query}`,
+			baseurl + `/r/${payload.subredditName}/${title}${query}?limit=100`,
 			{
 				method: 'GET',
 				headers: {
@@ -442,6 +442,75 @@ export default {
 			const error = new Error('server error');
 			throw error;
 		}
+		return response.status;
+	},
+	////////// Subreddit pictures //////////
+	async addSubredditPicture(context, payload) {
+		const file = payload.file;
+		const baseurl = payload.baseurl;
+		const postInfo = new FormData();
+		postInfo.append('avatar', file);
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/profile-picture`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: postInfo,
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+		} else if (response.status == 400) {
+			const error = new Error(responseData);
+			console.log(responseData);
+			throw error;
+		} else {
+			console.log(error);
+			const error = new Error('server error');
+			throw error;
+		}
+		let profilePictureUrl = responseData.path;
+		if (response.status == 200)
+			context.commit('setSubredditPicture', {
+				profilePictureUrl,
+			});
+		return response.status;
+	},
+	async addSubredditBanner(context, payload) {
+		const file = payload.file;
+		const baseurl = payload.baseurl;
+		const postInfo = new FormData();
+		postInfo.append('banner', file);
+		const response = await fetch(
+			baseurl + `/r/${payload.subredditName}/banner-image`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+				body: postInfo,
+			}
+		);
+		const responseData = await response.json();
+		if (response.status == 200) {
+			localStorage.setItem('response', response.status);
+		} else if (response.status == 400) {
+			const error = new Error(responseData);
+			console.log(responseData);
+			throw error;
+		} else {
+			console.log(error);
+			const error = new Error('server error');
+			throw error;
+		}
+		let profilePictureUrl = responseData.path;
+		if (response.status == 200)
+			context.commit('setSubredditBanner', {
+				profilePictureUrl,
+			});
 		return response.status;
 	},
 };

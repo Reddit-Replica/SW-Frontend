@@ -206,6 +206,13 @@
 					<use xlink:href="../../../img/sprite.svg#icon-chevron-thin-right" />
 				</svg>
 			</router-link>
+			<router-link
+				:to="'/r/' + subredditName + '/about/change-images'"
+				class="options"
+				id="rules-button"
+				@click="showFunction()"
+				>Change subreddit images</router-link
+			>
 		</div>
 		<!-- Modmail -->
 		<!-- <div class="box">

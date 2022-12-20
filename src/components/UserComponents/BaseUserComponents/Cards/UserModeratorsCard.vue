@@ -2,7 +2,13 @@
 	<div class="mod-card" id="user-moderator-card">
 		<div class="mod-header" id="user-moderator-header">
 			<div style="padding: 12px 0 0">
-				<h2>You're a moderator of these communities</h2>
+				<h2>
+					{{
+						state == 'profile'
+							? "You're a moderator of these communities"
+							: 'Moderator of these communities'
+					}}
+				</h2>
 			</div>
 		</div>
 		<div class="mod-list" id="user-moderator-list">
@@ -41,14 +47,26 @@
 				</li>
 			</ul>
 		</div>
+		<div class="positioning">
+			<SaveUnsavePopupMessage
+				v-for="message in popupMessages"
+				:key="message.id"
+				:typeid="message.postid"
+			>
+				{{ message.state }}
+			</SaveUnsavePopupMessage>
+		</div>
 	</div>
 </template>
 <script>
 import BaseButton from '../../../BaseComponents/BaseButton.vue';
+import SaveUnsavePopupMessage from '../../../../components/PostComponents/SaveUnsavePopupMessage.vue';
+
 export default {
 	emits: ['reload'],
 	components: {
 		BaseButton,
+		SaveUnsavePopupMessage,
 	},
 	// @vuese
 	// userModerators is an array of useModerators subreddit (name of subreddit , number of members , joined or not )
@@ -74,6 +92,7 @@ export default {
 	data() {
 		return {
 			// userModerators: '',
+			popupMessages: [],
 		};
 	},
 	watch: {
@@ -134,29 +153,73 @@ export default {
 						this.leaveSubreddit(key);
 					} else {
 						element.buttonText = 'leave';
-						this.joinsubreddit(id);
+						this.joinsubreddit(id, key);
 					}
 					element.followed = !element.followed;
 				}
 			});
 		},
-		async joinsubreddit(id) {
+		emitPopup(id, message) {
+			this.popupMessages.push({
+				id: this.popupMessages.length,
+				postid: id,
+				type: 'post',
+				state: message,
+			});
+			setTimeout(() => {
+				this.popupMessages.shift();
+			}, 10000);
+		},
+		async joinsubreddit(id, key) {
 			// this.toogleJoin();
+			console.log('join');
+			let response = -1;
 			const accessToken = localStorage.getItem('accessToken');
-			await this.$store.dispatch('community/joinSubreddit', {
+			response = await this.$store.dispatch('community/joinSubreddit', {
 				message: '',
 				subredditId: id,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			if (response == 200) {
+				this.emitPopup('1', `Successfully joined ${key}`);
+			} else {
+				this.emitPopup('1', 'error occured');
+				this.userModerators.forEach((element) => {
+					if (element.subredditName == key) {
+						if (element.followed) {
+							element.buttonText = 'join';
+						} else {
+							element.buttonText = 'leave';
+						}
+						element.followed = !element.followed;
+					}
+				});
+			}
 		},
 		async leaveSubreddit(subredditName) {
+			let response;
 			const accessToken = localStorage.getItem('accessToken');
-			await this.$store.dispatch('community/leaveSubreddit', {
+			response = await this.$store.dispatch('community/leaveSubreddit', {
 				subredditName: subredditName,
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			if (response == 200) {
+				this.emitPopup('1', `Successfully left ${subredditName}`);
+			} else {
+				this.emitPopup('1', 'error owner cannot left');
+				this.userModerators.forEach((element) => {
+					if (element.subredditName == subredditName) {
+						if (element.followed) {
+							element.buttonText = 'join';
+						} else {
+							element.buttonText = 'leave';
+						}
+						element.followed = !element.followed;
+					}
+				});
+			}
 		},
 	},
 };
@@ -298,5 +361,17 @@ span.post-nsfw {
 }
 span.post-nsfw p {
 	color: rgb(255, 88, 91) !important;
+}
+.positioning {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	/* right: 2000px; */
+	left: 0;
+	display: flex;
+	flex-direction: column;
 }
 </style>

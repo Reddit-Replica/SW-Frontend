@@ -207,6 +207,11 @@ export default {
 				'/r/' + this.subredditName + '/about/traffic'
 			) {
 				return 'Trafic Stats';
+			} else if (
+				this.$route.path ===
+				'/r/' + this.subredditName + '/about/change-images'
+			) {
+				return 'Subreddit Image';
 			}
 			return '';
 		},

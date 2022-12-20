@@ -273,7 +273,7 @@
 			<button
 				v-if="state == 'profile' && notPostCard"
 				class="new-post"
-				@click="$router.push(`/user/${userName}/submit`)"
+				@click="$router.push(`/submit`)"
 				id="profile-new-post"
 			>
 				New post

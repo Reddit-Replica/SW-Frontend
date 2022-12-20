@@ -27,6 +27,12 @@ export default {
 	setLeaveOwner(state, payload) {
 		state.leaveOwner = payload;
 	},
+	setSubredditPicture(state, payload) {
+		state.subredditPicture = payload;
+	},
+	setSubredditBanner(state, payload) {
+		state.subredditBanner = payload;
+	},
 	setTopics(state, payload) {
 		state.topics = payload;
 	},

@@ -8,17 +8,13 @@
 		</div>
 		<div class="footer-item">
 			<div class="item item-2">
-				<router-link to="/settings/account" target="_blank"
+				<router-link to="/settings/account" target="_blank" id="connect"
 					>Connect accounts to share your post
 				</router-link>
 
 				<div class="info-1">
 					<div class="info-2">
-						<div class="info-box" v-if="infoShown">
-							Connect a Twitter account in your User Settings. With a connected
-							account you can choose to share new posts you make directly to
-							Twitter.
-						</div>
+						<div class="info-box" v-if="infoShown" id="set">go to settings</div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"

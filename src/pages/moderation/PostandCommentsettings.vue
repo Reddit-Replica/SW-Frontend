@@ -6,6 +6,7 @@
 				:disable-button="buttonDisabled"
 				class="save-button"
 				@click="saveChanges"
+				id="save"
 			></base-button>
 		</p>
 		<h3 class="main-title">Post and Comment settings</h3>
@@ -14,7 +15,7 @@
 		<h6 class="description" style="margin-top: 10px">
 			Media on posts with the spoiler tag are blurred
 			<switch-button
-				id="btn1"
+				id="btn101"
 				style="margin-left: 15px"
 				@checked="getenableSpoiler"
 				:val="enableSpoiler"
@@ -31,6 +32,7 @@
 				style="margin-left: 10px; height: 50px; width: max-content"
 				:options="suggestedSortoptions"
 				v-model="suggestedSort"
+				id="202"
 			></v-select>
 		</h6>
 		<h4 class="main-title">Images</h4>
@@ -39,7 +41,7 @@
 
 			<switch-button
 				:val="allowImagesInComment"
-				id="btn2"
+				id="btnimageincomment"
 				style="margin-left: 15px"
 				@checked="getallowImagesInComment"
 				v-if="create"
@@ -53,6 +55,7 @@
 				:state="message.state"
 				:typeid="message.postid"
 				@undo-action="undoSaveUnsave"
+				id="popup"
 			></SaveUnsavePopupMessage>
 		</div>
 	</div>

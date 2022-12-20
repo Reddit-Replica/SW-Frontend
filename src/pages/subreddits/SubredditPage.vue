@@ -14,7 +14,8 @@
 			@reload="reloadPage"
 			:subreddit-name="subreddit.title"
 			:subreddit-nickname="subreddit.nickname"
-			:subreddit-image-url="subreddit.picture"
+			:subreddit-image-url="subreddit.image"
+			:subreddit-banner-url="subreddit.banner"
 			:joined="subreddit.isMember"
 			:subreddit-id="subreddit.subredditId"
 			id="community-header"
@@ -58,6 +59,7 @@
 					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
 				<subreddit-rules
+					v-if="!noRules"
 					:rules="rules"
 					:subreddit-name="subreddit.title"
 					:blue="true"
@@ -158,6 +160,9 @@ export default {
 		userName() {
 			return localStorage.getItem('userName');
 		},
+		noRules() {
+			return this.rules.length === 0;
+		},
 	},
 	async beforeMount() {
 		//fetch subreddit details
@@ -245,6 +250,7 @@ export default {
 		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
+			location.reload();
 		},
 		createPost() {
 			this.hideFirstDialog();

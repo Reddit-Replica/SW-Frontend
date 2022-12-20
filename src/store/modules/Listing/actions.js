@@ -17,10 +17,7 @@ export default {
 		const baseurl = payload.baseurl;
 		const title = payload.title;
 		var query;
-		if (payload.afterMod) {
-			query =
-				'?after=' + payload.afterMod + '&time=' + payload.query + '&limit=100';
-		} else if (payload.query == undefined) query = '?limit=100';
+		if (payload.query == undefined) query = '?limit=100';
 		else query = '?time=' + payload.query + '&limit=100';
 		const response = await fetch(baseurl + '/' + title + query, {
 			method: 'GET',
