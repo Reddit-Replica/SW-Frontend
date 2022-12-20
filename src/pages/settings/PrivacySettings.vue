@@ -59,7 +59,7 @@
 				</div>
 			</div>
 
-			<h3 class="h3-main-title" text-transform="capitalize">privacy</h3>
+			<!-- <h3 class="h3-main-title" text-transform="capitalize">privacy</h3>
 			<div class="privacy-item">
 				<div class="privacy-desc">
 					<label for="">
@@ -72,9 +72,7 @@
 				</div>
 				<div class="privacy-button">
 					<switch-button id="show-up-search-results"></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
+				
 				</div>
 			</div>
 			<div class="privacy-item">
@@ -92,9 +90,7 @@
 				</div>
 				<div class="privacy-button">
 					<switch-button id="Personalize-outbound-links"></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
+					
 				</div>
 			</div>
 			<div class="privacy-item">
@@ -109,9 +105,6 @@
 				</div>
 				<div class="privacy-button">
 					<switch-button id="Personalize-ads-information"></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
 				</div>
 			</div>
 			<div class="privacy-item">
@@ -126,9 +119,7 @@
 				</div>
 				<div class="privacy-button">
 					<switch-button id="Personalize-ads-activity "></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
+				
 				</div>
 			</div>
 			<div class="privacy-item">
@@ -145,9 +136,7 @@
 					<switch-button
 						id="Personalize-recommendations-general"
 					></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
+					
 				</div>
 			</div>
 			<div class="privacy-item">
@@ -167,9 +156,7 @@
 					<switch-button
 						id="Personalize-recommendations-activity"
 					></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
+			
 				</div>
 			</div>
 			<h3 class="h3-main-title" text-transform="capitalize">
@@ -187,9 +174,7 @@
 				</div>
 				<div class="privacy-button">
 					<switch-button id="Use-two-factor-authentication"></switch-button>
-					<!-- <div class="switch-button">
-						<div class="switch-button-key"></div>
-					</div> -->
+				
 				</div>
 			</div>
 			<div class="privacy-item">
@@ -208,7 +193,7 @@
 						<i id="third-party-button" class="fa-solid fa-arrow-right"></i>
 					</a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
