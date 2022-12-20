@@ -82,14 +82,15 @@ export default {
 	components: {
 		NotificationMessage,
 	},
-	beforeMount() {
-		this.loadAllNotifications();
-		this.getSuggestedCommunity();
+	async beforeMount() {
+		await this.loadAllNotifications();
+		await this.getSuggestedCommunity();
 	},
 	data() {
 		return {
 			notifications: [],
 			suggestedCommunity: [],
+			randomSubredditName: '',
 		};
 	},
 	computed: {
@@ -98,12 +99,6 @@ export default {
 		},
 		subredditLink() {
 			return 'r/' + this.randomSubredditName;
-		},
-		randomSubredditName() {
-			// return this.suggestedCommunity[0].data.title;
-			let firstcomm = this.suggestedCommunity[0];
-			let data = firstcomm.data;
-			return data.title;
 		},
 		linkSubreddit() {
 			return '/r/' + this.suggestedCommunity[0].data.title;
@@ -138,7 +133,11 @@ export default {
 			});
 			this.suggestedCommunity =
 				this.$store.getters['topCommunity/getSuggestedCommunity'];
-			console.log(this.suggestedCommunity[0].data.title);
+
+			let firstcomm = this.suggestedCommunity[0];
+			let data = firstcomm.data;
+			let title = data.title;
+			this.randomSubredditName = title;
 		},
 	},
 };
