@@ -518,7 +518,7 @@ export default {
 			);
 			throw error;
 		} else if (response.status == 500) {
-			const error = new Error(responseData.error || 'Internal Server Error');
+			const error = new Error(responseData.error || 'Server Error');
 			throw error;
 		}
 	},

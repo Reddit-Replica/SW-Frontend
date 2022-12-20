@@ -113,6 +113,9 @@ export default {
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+				if (error.message == 'Server Error') {
+					this.$router.push('/internal-server-error');
+				}
 			}
 			this.postReplies = this.postReplies.concat(
 				this.$store.getters['messages/postReplies']
