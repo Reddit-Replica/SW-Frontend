@@ -759,6 +759,9 @@ subMenu {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(3) {
 		display: flex;
 	}
+	.icon-dot {
+		display: block;
+	}
 }
 @media (max-width: 510px) {
 	.icons-box div.tool-tip:nth-of-type(3) {
@@ -783,5 +786,15 @@ subMenu {
 	.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
 		display: flex;
 	}
+}
+@container .big-box (inline-size > 45em) {
+	@media (max-width: 400px) {
+	.icons-box div.tool-tip:nth-of-type(1) {
+		display: none;
+	}
+	.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
+		display: flex;
+	}
+}
 }
 </style>
