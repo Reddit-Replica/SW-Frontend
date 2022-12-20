@@ -55,8 +55,8 @@
 			</p>
 			<sociallinks-block
 				style="margin: 20px 0"
-				:social-data="userData.socialLinks"
-				v-if="userData"
+				:social-data="socialData.userData.socialLinks"
+				v-if="socialData"
 			></sociallinks-block>
 
 			<h3 class="h3-main-title" style="margin-top: 20px">IMAGES</h3>
@@ -416,6 +416,7 @@ export default {
 	async created() {
 		await this.getSettings();
 		await this.getUserData();
+		this.socialData = await this.$store.getters['user/getUserData'];
 		if (this.userData) {
 			if (this.userData.picture != '')
 				this.image = this.$baseurl + '/' + this.userData.picture;
@@ -458,6 +459,7 @@ export default {
 			cover: null,
 			nameCount: 30,
 			aboutCount: 200,
+			socialData: null,
 			// links: [
 			// 	{
 			// 		imageUrl:

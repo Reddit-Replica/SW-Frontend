@@ -37,7 +37,7 @@ export default {
 			images: [],
 			video: null,
 			videoOrimage: null,
-			sendReplies: false,
+			sendReplies: true,
 			allSubreddits: [],
 			postData: null,
 			name: null,

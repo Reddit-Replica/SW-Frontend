@@ -71,6 +71,13 @@
 									:src="this.$baseurl + '/' + this.userData.picture"
 									alt="image"
 									class="img-profile"
+									v-if="userData.picture"
+								/>
+								<img
+									src="../../../img/default_inbox_avatar.png"
+									alt="image"
+									class="img-profile"
+									v-if="!userData.picture"
 								/>
 							</div>
 							<div
