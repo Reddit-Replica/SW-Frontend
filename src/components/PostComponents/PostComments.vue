@@ -378,7 +378,7 @@
 											</ul>
 											<post-options
 												v-else-if="postDetails.postedBy == getuserName"
-												:post-data="{ data: postDetails }"
+												:post-data="{ data: postDetails, id: postDetails.id }"
 												:pinned-post-flag="false"
 											></post-options>
 										</div>

@@ -789,12 +789,12 @@ subMenu {
 }
 @container .big-box (inline-size > 45em) {
 	@media (max-width: 400px) {
-	.icons-box div.tool-tip:nth-of-type(1) {
-		display: none;
+		.icons-box div.tool-tip:nth-of-type(1) {
+			display: none;
+		}
+		.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
+			display: flex;
+		}
 	}
-	.icons-box .tool-tip:last-of-type li:nth-of-type(1) {
-		display: flex;
-	}
-}
 }
 </style>
