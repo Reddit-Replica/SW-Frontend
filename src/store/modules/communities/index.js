@@ -24,6 +24,8 @@ export default {
 			topics: [],
 			notFound: false,
 			leaveOwner: false,
+			subredditPicture: '',
+			subredditBanner: '',
 		};
 	},
 	mutations,

@@ -27,6 +27,12 @@ export default {
 	getLeaveOwner(state) {
 		return state.leaveOwner;
 	},
+	getSubredditPicture(state) {
+		return state.subredditPicture;
+	},
+	getSubredditBanner(state) {
+		return state.subredditBanner;
+	},
 	///////////////norhan///////////////
 	getTopics(state) {
 		return state.topics;
