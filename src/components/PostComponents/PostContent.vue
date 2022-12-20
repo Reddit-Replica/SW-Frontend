@@ -3,14 +3,16 @@
 		<div class="subreddit-info">
 			<span class="subreddit-image">
 				<img
-					v-if="post.subreddit != undefined && subreddit.picture != undefined"
-					:src="$baseurl + '/' + post.picture"
-					alt=""
-				/>
-				<img
 					src="../../../img/default_subreddit_image.png"
 					alt=""
 					v-if="post.subreddit != undefined && subreddit.picture == undefined"
+				/>
+				<img
+					v-else-if="
+						post.subreddit != undefined && subreddit.picture != undefined
+					"
+					:src="$baseurl + '/' + post.picture"
+					alt=""
 				/>
 			</span>
 			<span class="subreddit-name" v-if="post.subreddit != undefined">
@@ -120,7 +122,7 @@ export default {
 
 	// 	}
 	// },
-	async created() {
+	async beforeMount() {
 		//document.querySelector('img.ql-image').style.width = '100%';
 		//var element = document.querySelector('img.ql-image');
 		// var element = document.querySelector('img');
@@ -135,6 +137,11 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		}
+	},
+	data() {
+		return {
+			subreddit: {},
+		};
 	},
 	name: 'PostContent',
 	components: {
