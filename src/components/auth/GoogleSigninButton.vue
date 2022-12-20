@@ -22,7 +22,7 @@ export default {
 				console.log(googleUser);
 				const actionPayload = {
 					type: 'google',
-					id_token: googleUser.Bc.access_token,
+					id_token: googleUser.Bc.id_token,
 					baseurl: this.$baseurl,
 				};
 				try {

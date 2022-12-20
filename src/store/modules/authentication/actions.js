@@ -256,8 +256,9 @@ export default {
 		const response = await fetch(baseurl + '/signin/google', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(userInfo.accessToken),
+			body: JSON.stringify({ accessToken: userInfo.accessToken }),
 		});
+		console.log(payload.id_token);
 		const responseData = await response.json();
 		if (response.status == 200 || response.status == 201) {
 			localStorage.setItem('accessToken', responseData.token);
