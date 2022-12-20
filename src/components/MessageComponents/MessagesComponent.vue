@@ -47,7 +47,7 @@
 					>collapse all</span
 				>
 			</p>
-			<div class="box" :class="!isRead ? 'box-unread' : ''">
+			<div class="box">
 				<child-message
 					v-for="(childMessage, index1) in message.messages"
 					:key="childMessage"
@@ -441,8 +441,8 @@ ul {
 .box {
 	display: flex;
 	flex-direction: column;
-	margin: 0;
-	border-left: var(--line-dashed-3);
+	margin: 1rem;
+	border-left: var(--line-dashed-3) !important;
 }
 .box-unread {
 	margin: 1rem;

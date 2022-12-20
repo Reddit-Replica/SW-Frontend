@@ -39,9 +39,10 @@ export default {
 	margin: 0 auto;
 	gap: 1.5rem;
 }
-@media (min-width: 640px) {
+@media (max-width: 600px) {
 	.top-page {
 		padding: 2rem 2.4rem;
+		flex-direction: column;
 	}
 }
 </style>
