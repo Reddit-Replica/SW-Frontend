@@ -477,17 +477,19 @@ export default {
 	emits: ['emitPopup'],
 	methods: {
 		async fetchUserCardPicture() {
-			let responseData = null;
-			try {
-				responseData = await this.$store.dispatch('user/getUserTempData', {
-					baseurl: this.$baseurl,
-					userName: this.postData.data.postedBy,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			if (responseData != null) this.userCardData = responseData;
-			console.log(this.userCardData);
+			// let responseData = null;
+			if (this.postData.data.postedBy == localStorage.getItem('username'))
+				console.log('same');
+			// try {
+			// 	responseData = await this.$store.dispatch('user/getUserTempData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.postData.data.postedBy,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
+			// if (responseData != null) this.userCardData = responseData;
+			// console.log(this.userCardData);
 		},
 		/**
 		 * @vuese
@@ -495,11 +497,11 @@ export default {
 		 * @arg no arg
 		 */
 		async showSubredditBox(id) {
-			if (this.postData.data.subreddit != null) {
-				await this.getSubreddit();
-				console.log('aaa', this.subredditData);
-			}
-			await this.fetchUserCardPicture();
+			// if (this.postData.data.subreddit != null) {
+			// 	await this.getSubreddit();
+			// 	console.log('aaa', this.subredditData);
+			// }
+			// await this.fetchUserCardPicture();
 			if (id == 1) this.showSubredditBoxFlag1 = true;
 			else if (id == 2) this.showSubredditBoxFlag2 = true;
 		},

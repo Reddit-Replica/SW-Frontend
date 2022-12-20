@@ -829,7 +829,17 @@ export default {
 		 */
 		editPost() {
 			console.log('edit');
-			this.$emit('editPost');
+			// this.$emit('editPost');
+			let path =
+				this.postData.data.subreddit != null
+					? `/r/${this.postData.data.subreddit}/comments/${this.postData.id}/${this.postData.data.title}`
+					: `/user/${this.postData.data.postedBy}/comments/${this.postData.id}/${this.postData.data.title}`;
+			this.$router.push({
+				path: path,
+				query: {
+					edit: true,
+				},
+			});
 		},
 		/**
 		 * @vuese

@@ -1,5 +1,5 @@
 <template>
-	<teleport to="body" :disabled="isMobile()">
+	<teleport to="body">
 		<div
 			v-if="show"
 			class="backdrop"
@@ -80,11 +80,11 @@ export default {
 			//Fire exit event when clicking on exit icon
 			this.$emit('close');
 		},
-		//@vuese
-		//Check if screen is mobile
-		isMobile() {
-			return screen.width <= 780;
-		},
+		// //@vuese
+		// //Check if screen is mobile
+		// isMobile() {
+		// 	return screen.width <= 780;
+		// },
 	},
 };
 </script>

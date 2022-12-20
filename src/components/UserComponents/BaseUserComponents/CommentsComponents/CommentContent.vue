@@ -75,7 +75,7 @@
 							>
 								Replay
 							</li>
-							<li class="underline">Share</li>
+							<li v-if="0" class="underline">Share</li>
 							<li
 								id="comment-content-open-Options-BoxList"
 								class="post-option-item2"
