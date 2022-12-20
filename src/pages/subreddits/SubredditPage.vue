@@ -59,6 +59,7 @@
 					:community-subtopics-prop="subreddit.subTopics"
 				></about-community-bar>
 				<subreddit-rules
+					v-if="!noRules"
 					:rules="rules"
 					:subreddit-name="subreddit.title"
 					:blue="true"
@@ -159,6 +160,9 @@ export default {
 		userName() {
 			return localStorage.getItem('userName');
 		},
+		noRules() {
+			return this.rules.length === 0;
+		},
 	},
 	async beforeMount() {
 		//fetch subreddit details
@@ -246,6 +250,7 @@ export default {
 		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
+			location.reload();
 		},
 		createPost() {
 			this.hideFirstDialog();

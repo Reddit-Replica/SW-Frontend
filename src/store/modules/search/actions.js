@@ -61,8 +61,6 @@ export default {
 					link: responseData.children[i].data.link,
 					video: responseData.children[i].data.video,
 					content: responseData.children[i].data.content,
-					nsfw: responseData.children[i].data.nsfw,
-					spoiler: responseData.children[i].data.spoiler,
 					title: responseData.children[i].data.title,
 					sharePostId: responseData.children[i].data.sharePostId,
 					comments: responseData.children[i].data.comments,
@@ -71,15 +69,6 @@ export default {
 					votes: responseData.children[i].data.votes,
 					//image
 					Image: responseData.children[i].data.images,
-					// ImagePath: responseData.children[i].data.images[0].path,
-					// ImageCaption: responseData.children[i].data.images[0].caption,
-					// Imagelink: responseData.children[i].data.images[0].link,
-					// //flair
-					// flairId: responseData.children[i].data.flair.id,
-					// flairName: responseData.children[i].data.flair.caption,
-					// order: responseData.children[i].data.flair.link,
-					// backgroundColor: responseData.children[i].data.flair.path,
-					// textColor: responseData.children[i].data.flair.caption,
 				};
 				posts.push(post);
 			}
@@ -165,14 +154,6 @@ export default {
 		const response = await fetch(
 			baseurl + '/search?type=subreddit' + '&q=' + payload.q
 		);
-		// {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-		// },
-		// }
-		// );
 		const responseData = await response.json();
 		// console.log(responseData);
 		if (response.status == 200 || response.status == 304) {
@@ -249,22 +230,13 @@ export default {
 					postKind: responseData.children[i].data.post.kind,
 					postSubreddit: responseData.children[i].data.post.subreddit,
 					postlink: responseData.children[i].data.post.link,
-					// postImage: responseData.children[i].data.post.images,
-					// postImageCaption:
-					// 	responseData.children[i].data.post.images[0].caption,
-					// postImagelink: responseData.children[i].data.post.images[0].link,
+					postImage: responseData.children[i].data.post.images,
 					postVideo: responseData.children[i].data.post.video,
 					postContnet: responseData.children[i].data.post.content,
 					postnfsw: responseData.children[i].data.post.nsfw,
 					postspoiler: responseData.children[i].data.post.spoiler,
 					posttitle: responseData.children[i].data.post.title,
 					postsharedId: responseData.children[i].data.post.sharePostId,
-					// postFlairId: responseData.children[i].data.post.flair.id,
-					// postFlairName: responseData.children[i].data.post.flair.flairName,
-					// postFlairOrder: responseData.children[i].data.post.flair.order,
-					// postFlairBack:
-					// 	responseData.children[i].data.post.flair.backgroundColor,
-					// postFlairtext: responseData.children[i].data.post.flair.textColor,
 					postComments: responseData.children[i].data.post.comments,
 					postvotes: responseData.children[i].data.post.votes,
 					postpostedAt: responseData.children[i].data.post.postedAt,

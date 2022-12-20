@@ -79,207 +79,18 @@
 <script>
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
 export default {
-	async created() {
-		await this.getSettings();
-		await this.getUserData();
-		this.socialData = await this.$store.getters['user/getUserData'];
-		if (this.userData) {
-			if (this.userData.picture != '')
-				this.image = this.$baseurl + '/' + this.userData.picture;
-			if (this.userData.banner != '')
-				this.cover = this.$baseurl + '/' + this.userData.banner;
-		}
-
-		this.create = true;
-	},
-	computed: {
-		user() {
-			return this.$store.getters['user/getUserData'];
-		},
-	},
-	// },
 	components: {
 		SaveUnsavePopupMessage,
 	},
 	props: {},
 	data() {
 		return {
-			displayName: '',
-			about: '',
-			// havePassword: false,
-			nsfw: null,
-			allowToFollowYou: null,
-			userData: null,
-			create: false,
 			savedUnsavedPosts: [],
 			image: null,
 			cover: null,
-			nameCount: 30,
-			aboutCount: 200,
-			socialData: null,
-			// links: [
-			// 	{
-			// 		imageUrl:
-			// 			'https://www.redditstatic.com/desktop2x/img/social-links/reddit.png',
-			// 		title: 'Reddit',
-			// 		placeholder1: 'r/community, u/user',
-			// 		placeholder2: '',
-			// 	},
-			// ],
-			// images: [
-			// 	{
-			// 		image: null,
-			// 		imageUrl: null,
-			// 	},
-			// 	{
-			// 		image: null,
-			// 		imageUrl: null,
-			// 	},
-			// ],
 		};
 	},
-	watch: {
-		user(val) {
-			this.userData = val;
-		},
-		displayName(value) {
-			this.nameCount = 30;
-			this.displayName = value;
-			this.nameCount = this.nameCount - this.displayName.length;
-		},
-		about(value) {
-			this.aboutCount = 200;
-			this.about = value;
-			this.aboutCount = this.aboutCount - this.about.length;
-		},
-	},
 	methods: {
-		//@vuese
-		//Change images
-		//Index of image to change
-		// onChange(e, index) {
-		// 	const file = e.target.files[0];
-		// 	this.images[index].image = file;
-		// 	this.images[index].imageUrl = URL.createObjectURL(file);
-		// },
-		async getdisplayName() {
-			const actionPayload = {
-				displayName: this.displayName,
-				baseurl: this.$baseurl,
-			};
-			console.log('enter get user data');
-			try {
-				const response = await this.$store.dispatch(
-					'setting/changedisplayName',
-					actionPayload
-				);
-
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-					this.doneSuccessfully('changed');
-				}
-			} catch (err) {
-				console.log(this.err);
-			}
-		},
-		async getAbout() {
-			const actionPayload = {
-				about: this.about,
-				baseurl: this.$baseurl,
-			};
-			try {
-				const response = await this.$store.dispatch(
-					'setting/changeAbout',
-					actionPayload
-				);
-
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-					this.doneSuccessfully('changed');
-				}
-			} catch (err) {
-				console.log(this.err);
-			}
-		},
-		async getNsfw(value) {
-			this.nsfw = value;
-			console.log('this.nsfw');
-			console.log(this.nsfw);
-			const actionPayload = {
-				nsfw: this.nsfw,
-				baseurl: this.$baseurl,
-			};
-			try {
-				const response = await this.$store.dispatch(
-					'setting/changeNsfw',
-					actionPayload
-				);
-
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-					this.doneSuccessfully('changed');
-				}
-			} catch (err) {
-				console.log(this.err);
-			}
-		},
-
-		async getAllowfollow(value) {
-			this.allowToFollowYou = value;
-			console.log('this.allowToFollowYou');
-			console.log(this.allowToFollowYou);
-			const actionPayload = {
-				allowToFollowYou: this.allowToFollowYou,
-				baseurl: this.$baseurl,
-			};
-			try {
-				const response = await this.$store.dispatch(
-					'setting/changeAllowfollow',
-					actionPayload
-				);
-
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-					this.doneSuccessfully('changed');
-				}
-			} catch (err) {
-				console.log(this.err);
-			}
-		},
-
-		async getSettings() {
-			const actionPayload = {
-				baseurl: this.$baseurl,
-			};
-			console.log(actionPayload);
-			try {
-				const response = await this.$store.dispatch(
-					'setting/fetchAccountSettings',
-					actionPayload
-				);
-				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-				}
-			} catch (err) {
-				this.error = err;
-				console.log(err);
-			}
-			this.setting = await this.$store.getters['setting/getAccountSettings'];
-			console.log(this.setting);
-			this.displayName = this.setting.displayName;
-			this.about = this.setting.about;
-			this.nsfw = this.setting.nsfw;
-			this.allowToFollowYou = this.setting.allowToFollowYou;
-			console.log(this.displayName);
-			console.log(this.about);
-			console.log(this.nsfw);
-			console.log(this.allowToFollowYou);
-		},
 		////////////////////////////////
 		doneSuccessfully(title) {
 			this.savePost(title);
@@ -291,7 +102,7 @@ export default {
 			this.savedUnsavedPosts.push({
 				id: this.savedUnsavedPosts.length,
 				postid: '1',
-				type: 'settings',
+				type: 'Done',
 				state: title,
 			});
 			setTimeout(() => {
@@ -313,35 +124,22 @@ export default {
 			}, 10000);
 		},
 		async loadProfilePic(e) {
-			// const file2 = await e.target.files[0];
 			const file1 = e.target.files;
 			const file = file1[0];
 			this.image = URL.createObjectURL(file);
-
-			// const file = await this.$refs.profileFile.files[0];
+			const subredditName = this.$route.params.subredditName;
 			const profilePictureUrl = await URL.createObjectURL(file);
-			// console.log(profilePictureUrl);
-			// document.querySelector('#profile-picture_user').src = profilePictureUrl;
-			// document.querySelector(
-			// 	'#image2'
-			// ).style.backgroundImage = `url(${profilePictureUrl})`;
 			try {
-				await this.$store.dispatch('user/AddProfilePicture', {
+				await this.$store.dispatch('community/addSubredditPicture', {
 					baseurl: this.$baseurl,
 					file,
 					profilePictureUrl: this.$baseurl + profilePictureUrl,
+					subredditName: subredditName,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			// try {
-			// 	await this.$store.dispatch('user/getUserData', {
-			// 		baseurl: this.$baseurl,
-			// 		userName: this.$route.params.userName,
-			// 	});
-			// } catch (error) {
-			// 	this.error = error.message || 'Something went wrong';
-			// }
+			this.doneSuccessfully();
 		},
 		/**
 		 * @vuese
@@ -351,47 +149,25 @@ export default {
 		 */
 		async loadCoverPic(e) {
 			const file = e.target.files[0];
-			//const file2 = this.$refs.coverFile.files[0];
 			const bannerImageUrl = URL.createObjectURL(file);
+			const subredditName = this.$route.params.subredditName;
 			this.cover = URL.createObjectURL(file);
-			// const bannerImageUrl = URL.createObjectURL(file);
-			// document.querySelector(
-			// 	'#cover-picture'
-			// ).style.backgroundImage = `url(${bannerImageUrl})`;
 			let responseStatus;
 			try {
-				responseStatus = await this.$store.dispatch('user/AddProfileBanner', {
-					baseurl: this.$baseurl,
-					file,
-					bannerImageUrl,
-				});
+				responseStatus = await this.$store.dispatch(
+					'community/addSubredditBanner',
+					{
+						baseurl: this.$baseurl,
+						file,
+						bannerImageUrl,
+						subredditName: subredditName,
+					}
+				);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			this.doneSuccessfully();
 			console.log(responseStatus);
-		},
-		async getUserData() {
-			const actionPayload = {
-				userName: localStorage.getItem('userName'),
-				baseurl: this.$baseurl,
-			};
-			console.log(actionPayload);
-			let response = null;
-			try {
-				response = await this.$store.dispatch(
-					'user/getUserTempData',
-					actionPayload
-				);
-				if (response) {
-					// this.userData = this.$store.getters['user/getUserData'];
-					this.userData = response;
-					console.log(response);
-					console.log('الحمد لله زى الفل');
-				}
-			} catch (err) {
-				this.error = err;
-				console.log(err);
-			}
 		},
 	},
 };
@@ -535,26 +311,6 @@ a {
 	display: flex;
 	flex-wrap: wrap;
 }
-/* .social-link {
-	margin: 6px 2px;
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 16px;
-	align-items: center;
-	background-color: var(--color-grey-light-2);
-	border-radius: 100px;
-	color: var(--color-dark-1);
-	cursor: pointer;
-	display: flex;
-	height: 20px;
-	margin-right: 8px;
-	padding: 10px 12px;
-	white-space: nowrap;
-	box-sizing: content-box;
-} */
-/* .social-link-image {
-	margin-right: 8px;
-} */
 .bi-arrow-left {
 	cursor: pointer;
 	color: var(--color-grey-dark-1);

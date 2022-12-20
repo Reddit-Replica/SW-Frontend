@@ -186,7 +186,13 @@
 															>
 																<div class="comment-word">
 																	<div class="comment-div">
-																		<p class="p-comment">
+																		<p
+																			class="p-comment"
+																			v-if="
+																				value.commentcontent &&
+																				value.commentcontent.length != 0
+																			"
+																		>
 																			{{ value.commentcontent.ops[0].insert }}
 																		</p>
 																	</div>
