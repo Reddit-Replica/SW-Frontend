@@ -230,10 +230,6 @@ export default {
 			});
 			this.$emit('reload');
 		},
-
-		// goToLink() {
-		// 	this.$route.push(this.notification.link);
-		// },
 	},
 };
 </script>
@@ -245,10 +241,10 @@ export default {
 }
 .ntf-msg-routerlink {
 	display: flex;
-	padding: 16px;
+	padding: 1.6rem;
 }
 .ntf-msg-1 {
-	padding-right: 8px;
+	padding-right: 0.8rem;
 	position: relative;
 }
 .ntf-msg-2 {
@@ -256,8 +252,8 @@ export default {
 }
 img {
 	border-radius: 50%;
-	height: 32px;
-	width: 32px;
+	height: 3.2rem;
+	width: 3.2rem;
 	background-color: var(--color-grey-dark-4);
 	display: block;
 	object-fit: cover;
@@ -267,32 +263,32 @@ img {
 	box-shadow: var(--shadow-light);
 	border: var(--line-10);
 	border-radius: 50%;
-	height: 20px;
-	width: 20px;
-	left: 12px;
-	top: 18px;
+	height: 2rem;
+	width: 2rem;
+	left: 1.2rem;
+	top: 1.8rem;
 	position: absolute;
 }
 .bi-bell-fill {
 	fill: var(--color-blue-7);
-	font-size: 12px;
-	height: 12px;
-	width: 12px;
-	left: 3px;
-	top: 3px;
+	font-size: 1.2rem;
+	height: 1.2rem;
+	width: 1.2rem;
+	left: 0.3rem;
+	top: 0.3rem;
 	position: absolute;
 }
 .ntf-msg-2-1 {
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 4px;
+	margin-bottom: 0.4rem;
 }
 .text {
 	font-family: Noto Sans, Arial, sans-serif;
 	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
+	font-size: 1.6rem;
+	line-height: 2rem;
 	color: var(--color-grey-dark-10);
 }
 .text-title {
@@ -300,16 +296,16 @@ img {
 	overflow-wrap: anywhere;
 }
 .text-dot {
-	margin: 0 4px;
+	margin: 0 0.4rem;
 }
 .dots-icon {
 	align-items: center;
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	display: flex;
 	justify-content: center;
-	width: 32px;
-	margin-left: 10px;
-	flex: 0 0 32px;
+	width: 3.2rem;
+	margin-left: 1rem;
+	flex: 0 0 3.2rem;
 
 	position: relative;
 }
@@ -320,17 +316,17 @@ button {
 	background-color: var(--main-white-color);
 	color: var(--color-dark-3);
 	box-shadow: var(--shadow-menu);
-	border-radius: 4px;
+	border-radius: 0.4rem;
 	border: none;
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
-	line-height: 18px;
+	line-height: 1.8rem;
 	display: block;
-	padding: 8px;
+	padding: 0.8rem;
 	text-align: left;
 	width: max-content;
-	top: 20px;
-	right: 20px;
+	top: 2rem;
+	right: 2rem;
 
 	position: absolute;
 	z-index: 10;
@@ -347,17 +343,17 @@ button:hover {
 	background-color: var(--color-grey-light-2);
 	color: var(--color-blue-2);
 	fill: var(--color-blue-2);
-	margin-top: 8px;
-	padding: 4px 16px;
-	height: 36px;
+	margin-top: 0.8rem;
+	padding: 0.4rem 1.6rem;
+	height: 3.6rem;
 	width: fit-content;
 	display: block;
-	border-radius: 999px;
+	border-radius: 999rem;
 }
 .reply-back:hover {
 	background-color: var(--color-baby-blue);
 }
 .bi-arrow-90deg-left {
-	margin-right: 8px;
+	margin-right: 0.8rem;
 }
 </style>

@@ -74,12 +74,12 @@ export default {
 
 <style scoped>
 .ntf-list-title {
-	font-size: 18px;
+	font-size: 1.8rem;
 	font-weight: 550;
-	line-height: 22px;
-	letter-spacing: 0.5px;
+	line-height: 2.2rem;
+	letter-spacing: 0.05rem;
 	color: var(--color-dark-3);
-	padding: 8px 16px;
+	padding: 0.8rem 1.6rem;
 }
 ul {
 	list-style: none;
@@ -88,11 +88,17 @@ ul {
 }
 .ntf-section {
 	background-color: var(--main-white-color);
-	border-radius: 4px;
-	width: 650px;
+	border-radius: 0.4rem;
+	/* width: 65rem; */
+	width: auto;
 	display: flex;
 	flex-direction: column;
 	margin: 5rem auto 0rem auto;
+}
+@media only screen and (min-width: 900px) {
+	.ntf-section {
+		width: 65rem;
+	}
 }
 .pop-up {
 	bottom: 0;
