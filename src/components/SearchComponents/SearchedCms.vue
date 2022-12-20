@@ -8,7 +8,7 @@
 						<div class="user-img">
 							<img
 								v-if="!value.picture"
-								src="../../../img/default_inbox_avatar.png"
+								src="../../../img/default_subreddit_image.png"
 								alt="img"
 								class="image-user"
 								:id="'user-avatar-' + value.subredditName"

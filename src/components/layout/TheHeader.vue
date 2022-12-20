@@ -52,7 +52,7 @@
 				</svg>
 				<div v-else-if="!isSubreddit">
 					<img
-						v-if="!getUserData.picture"
+						v-if="!userPicture"
 						src="../../../img/default_inbox_avatar.png"
 						alt="img"
 						class="img header-user-nav-user-photo"
@@ -60,7 +60,7 @@
 					/>
 					<img
 						v-else
-						:src="$baseurl + '/' + getUserData.picture"
+						:src="$baseurl + '/' + userPicture"
 						alt="img"
 						class="img header-user-nav-user-photo"
 						:id="'header-user-img-' + index"
@@ -686,6 +686,12 @@ export default {
 		//@vuese
 		//Subreddit Image URL
 		headerImg: {
+			type: String,
+			default: '',
+		},
+		//@vuese
+		//user picture URL
+		userPicture: {
 			type: String,
 			default: '',
 		},
