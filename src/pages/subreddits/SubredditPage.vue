@@ -250,6 +250,7 @@ export default {
 		},
 		hideFirstDialog() {
 			this.showFirstDialog = false;
+			location.reload();
 		},
 		createPost() {
 			this.hideFirstDialog();
