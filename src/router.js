@@ -61,11 +61,12 @@ import ModerationList from './pages/moderation/ModerationList.vue';
 import PostFlair from './pages/moderation/PostFlair.vue';
 import TheRules from './pages/moderation/TheRules.vue';
 import ContentControls from './pages/moderation/ContentControls.vue';
-import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
+// import ScheduledPosts from './pages/moderation/ScheduledPosts.vue';
 import ThesettingsMod from './pages/moderation/ThesettingsMod.vue';
 import PostandCommentsettings from './pages/moderation/PostandCommentsettings.vue';
 import TrafficStats from './pages/moderation/TrafficStats.vue';
 import AcceptInvitation from './pages/moderation/AcceptInvitation.vue';
+import SubredditImage from './pages/moderation/SubredditImage.vue';
 
 import NotFound from './pages/NotFound.vue';
 import InternalServer from './pages/InternalServer.vue';
@@ -220,8 +221,8 @@ const router = createRouter({
 					component: ContentControls,
 				},
 				{
-					path: '/r/:subredditName/about/scheduledposts',
-					component: ScheduledPosts,
+					path: '/r/:subredditName/about/change-images',
+					component: SubredditImage,
 				},
 				{
 					path: '/r/:subredditName/about/edit/community',
@@ -233,6 +234,10 @@ const router = createRouter({
 				},
 				// //?page=community ?page=posts ?page=notifications
 				{ path: '/r/:subredditName/about/traffic', component: TrafficStats },
+				{
+					path: '/r/:subredditName/about/about/change-images',
+					component: SubredditImage,
+				},
 				// { path: '/hc/en-us', component: TheHistory },
 				// { path: '/reddithelp', component: TheHistory },
 				// { path: '/policies/moderator-guidelines', component: TheHistory },
