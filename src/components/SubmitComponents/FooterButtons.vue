@@ -109,6 +109,7 @@
 						height: 35px;
 						border-radius: 20px;
 					"
+					:disabled="!flairs || flairs.length == 0 ? true : false"
 				>
 					<!-- <option value="" disabled selected>Choose a drink</option> -->
 					<option
@@ -116,6 +117,10 @@
 						:id="'message-from-options-' + flair.flairId"
 						:key="flair.flairId"
 						:value="flair.flairId"
+						:style="{
+							color: flair.textColor,
+							background: flair.backgroundColor,
+						}"
 					>
 						{{ flair.flairName }}
 					</option>
@@ -123,7 +128,7 @@
 			</div>
 		</div>
 
-		{{ flairId }}
+		<!-- {{ flairId }} -->
 	</div>
 </template>
 
@@ -138,12 +143,14 @@ export default {
 		return {
 			nsfw: false,
 			spoiler: false,
-			flairs: [],
+			flairs: null,
 			flairId: null,
 			subreddit: null,
 			buttonDisabled: true,
 			insubreddit: null,
 			disabled: true,
+			flairBackground: '',
+			flairColor: '',
 		};
 	},
 	watch: {
@@ -347,8 +354,7 @@ export default {
 	visibility: visible;
 	opacity: 1;
 }
-.disable-Flair {
-}
+
 @media (max-width: 40em) {
 	.buttons-section {
 		justify-content: center;
