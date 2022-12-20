@@ -41,14 +41,14 @@
 						<span :class="!isRead ? 'unread' : ''">from&nbsp;</span>
 						<span class="sender"
 							><a
-								:href="'/user/' + message.senderUsername"
+								:href="'/user/' + message.senderUsername + '/'"
 								:id="'message-sender-' + index"
 								>/u/{{ message.senderUsername }}</a
 							>
 							<span
 								>&nbsp;via&nbsp;
 								<a
-									:href="'/user/' + message.receiverUsername"
+									:href="'/user/' + message.receiverUsername + '/'"
 									:id="'message-receiver-' + index"
 									>/u/{{ message.receiverUsername }}</a
 								>

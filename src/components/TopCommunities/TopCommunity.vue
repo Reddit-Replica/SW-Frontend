@@ -305,5 +305,6 @@ export default {
 	bottom: 0;
 	position: fixed;
 	z-index: 1000;
+	right: 35%;
 }
 </style>

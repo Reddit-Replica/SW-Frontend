@@ -1,63 +1,69 @@
 <template>
-	<div id="facebook-login" class="log-google log-ag" @click="facebookLogin()">
-		<div><img src="../../../img/Facebook_f_logo_(2021).svg.png" alt="" /></div>
-		<div class="cont">continue with Facebook</div>
+	<div id="facebook-login" @click="facebookLogin()">
+		<div>
+			<img
+				class="marigned"
+				src="../../../img/Facebook_f_logo_(2021).svg.png"
+				alt=""
+			/>
+		</div>
+		<!-- <div class="cont">continue with Facebook</div> -->
+		<v-btn
+			id="fb-sign-btn"
+			rounded
+			color="#3B5998"
+			style="font-size: 14px"
+			large
+			block
+			@click="signUpWithFacebook"
+			>Continue with Facebook</v-btn
+		>
 	</div>
-	<!-- <facebook-login
-		class="button"
-		app-id="3257349194531334"
-		@login="getUserData"
-		@logout="onLogout"
-		@sdk-loaded="sdkLoaded"
-		@get-initial-status="getUserData"
-	>
-	</facebook-login> -->
 </template>
 <script>
-// import facebookLogin from 'facebook-login-vuejs';
 export default {
 	data() {
 		return {};
 	},
 	methods: {
-		getUserData() {
-			this.FB.api(
-				'/me',
-				'GET',
-				{ fields: 'id,name,email' },
-				(userInformation) => {
-					console.warn('Get data from FB', userInformation);
-					this.personalID = userInformation.personalID;
-					this.email = userInformation.email;
-					this.name = userInformation.name;
-				}
+		async signUpWithFacebook() {
+			this.errorMessage = '';
+			this.errorState = false;
+			this.fbErrorState = false;
+			this.fbErrorMessage = '';
+			window.FB.login(
+				(response) => {
+					if (response.status == 'connected') {
+						this.loading = true;
+						console.log(response.authResponse);
+						this.sendAccessToken(response.authResponse.signedRequest);
+					} else {
+						this.fbErrorState = true;
+						this.fbErrorMessage =
+							'cannot connect to facebook ... Please try again later';
+					}
+				},
+				{ scope: 'public_profile,email' }
 			);
 		},
-		sdkLoaded(payload) {
-			this.isConnected = payload.isConnected;
-			this.FB = payload.FB;
-			if (this.isConnected) {
-				this.getUserData();
+		async sendAccessToken(token) {
+			try {
+				const actionPayload = {
+					type: 'facebook',
+					id_token: token,
+					baseurl: this.$baseurl,
+				};
+				try {
+					await this.$store.dispatch('googleSign', actionPayload);
+					this.$router.push('/main');
+				} catch (err) {
+					this.error = err;
+				}
+			} catch (error) {
+				console.log(error);
 			}
 		},
-		onLogin() {
-			this.isConnected = true;
-			this.getUserData();
-		},
-		async facebookLogin() {},
-		handleSdkInit({ FB, scope }) {
-			this.FB = FB;
-			this.scope = scope;
-			console.log('saaf');
-		},
-		OnFacebookAuthSuccess(idToken) {
-			console.log(idToken);
-		},
-		OnFacebookAuthFail(error) {
-			console.log(error);
-		},
 	},
-	// components: { facebookLogin },
 };
 </script>
 <style scoped>
@@ -66,6 +72,7 @@ img {
 	height: 22px;
 	margin-left: 12px;
 	background-color: white;
+	margin-right: 8px;
 }
 .log-google {
 	align-items: center;

@@ -253,7 +253,7 @@ export default {
 			type: payload.type,
 			accessToken: payload.id_token,
 		};
-		const response = await fetch(baseurl + '/signin/google', {
+		const response = await fetch(baseurl + '/signin/' + userInfo.type, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ accessToken: userInfo.accessToken }),
@@ -267,7 +267,8 @@ export default {
 				userName: responseData.username,
 				accessToken: responseData.token,
 			});
-			context.commit('settype', 'google');
+			if (userInfo.type == 'google') context.commit('settype', 'google');
+			else context.commit('settype', 'facebook');
 		} else {
 			const error = new Error(responseData.error);
 			console.log(error);
