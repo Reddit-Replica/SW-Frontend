@@ -185,6 +185,7 @@ export default {
 		}
 		console.log(arr1);
 		console.log(arr2);
+		console.log(arr3);
 		const ctx = document.getElementById('myChart');
 		const labels = arr1;
 		const data = {
