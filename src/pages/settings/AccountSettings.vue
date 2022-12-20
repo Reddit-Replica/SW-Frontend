@@ -523,7 +523,13 @@
 				</div>
 			</div>
 		</base-dialog>
-		<base-dialog :show="changePasswordDialog" @close="cancelChangePassword">
+		<base-dialog
+			:show="changePasswordDialog"
+			@close="cancelChangePassword"
+			class="change-password-dialog"
+		>
+			<change-password></change-password>
+			<!-- <div class="change-password-left"></div>
 			<div class="delete-account change-password">
 				<img src="" alt="" />
 				<p>Update your password</p>
@@ -554,7 +560,7 @@
 				<div class="buttons">
 					<base-button button-text="Save" @click="savePassword" id="save" />
 				</div>
-			</div>
+			</div> -->
 		</base-dialog>
 		<base-dialog :show="changeEmailDialog" @close="cancelChangeEmail">
 			<template #header>
@@ -630,10 +636,12 @@
 <script>
 import SubMenu from '../../components/BaseComponents/SubMenu.vue';
 import BaseDialog from '../../components/BaseComponents/BaseDialog.vue';
+import ChangePassword from './ChangePassword.vue';
 export default {
 	components: {
 		SubMenu,
 		BaseDialog,
+		ChangePassword,
 	},
 	data() {
 		return {
@@ -1226,7 +1234,11 @@ p.change-email-error {
 .CE-header div:first-of-type {
 	display: flex;
 }
-.change-password {
+/* .change-password {
 	width: 400px;
+} */
+.change-password-dialog {
+	width: 800px;
+	display: flex;
 }
 </style>
