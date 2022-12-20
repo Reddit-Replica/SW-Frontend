@@ -100,6 +100,12 @@
 			> -->
 			<div class="tool-tip">
 				<span class="tool-tip-text-small strike1">Add flair</span>
+				<!-- <span class="tool-tip-text-small strike1" v-if="flairs.length == 0"
+					>Not available for this community</span
+				>
+				<span class="tool-tip-text-small strike1" v-if="!flairs"
+					>Select a subreddit to enable flairs</span
+				> -->
 				<select
 					@click="getFlairs()"
 					v-model="flairId"
@@ -109,6 +115,7 @@
 						height: 35px;
 						border-radius: 20px;
 					"
+					:disabled="!flairs || flairs.length == 0 ? true : false"
 				>
 					<!-- <option value="" disabled selected>Choose a drink</option> -->
 					<option
@@ -116,6 +123,10 @@
 						:id="'message-from-options-' + flair.flairId"
 						:key="flair.flairId"
 						:value="flair.flairId"
+						:style="{
+							color: flair.textColor,
+							background: flair.backgroundColor,
+						}"
 					>
 						{{ flair.flairName }}
 					</option>
@@ -123,7 +134,7 @@
 			</div>
 		</div>
 
-		{{ flairId }}
+		<!-- {{ flairId }} -->
 	</div>
 </template>
 
@@ -138,12 +149,14 @@ export default {
 		return {
 			nsfw: false,
 			spoiler: false,
-			flairs: [],
+			flairs: null,
 			flairId: null,
 			subreddit: null,
 			buttonDisabled: true,
 			insubreddit: null,
 			disabled: true,
+			flairBackground: '',
+			flairColor: '',
 		};
 	},
 	watch: {
@@ -347,8 +360,7 @@ export default {
 	visibility: visible;
 	opacity: 1;
 }
-.disable-Flair {
-}
+
 @media (max-width: 40em) {
 	.buttons-section {
 		justify-content: center;
