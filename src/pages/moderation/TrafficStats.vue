@@ -175,14 +175,17 @@ export default {
 		console.log(this.traffic);
 		let arr1 = [];
 		let arr2 = [];
+		let arr3 = [];
 		for (let i = 0; i < this.traffic.days.length; i++) {
 			let date = new Date(this.traffic.days[i].day);
 			let mounth = date.getMonth() + 1;
 			arr1.push(date.getFullYear() + ' / ' + mounth + ' / ' + date.getDate());
 			arr2.push(this.traffic.days[i].numberOfJoined);
+			arr3.push(this.traffic.days[i].numberOfLeft);
 		}
 		console.log(arr1);
 		console.log(arr2);
+		console.log(arr3);
 		const ctx = document.getElementById('myChart');
 		const labels = arr1;
 		const data = {
@@ -192,7 +195,16 @@ export default {
 					label: 'members joined',
 					data: arr2,
 					fill: false,
-					borderColor: 'rgb(75,192,192)',
+					borderColor: 'rgb(0, 121, 211)',
+					backgroundColor: 'rgb(0, 121, 211)',
+					tenion: 0,
+				},
+				{
+					label: 'members left',
+					data: arr3,
+					fill: false,
+					borderColor: 'rgb(255, 176, 0)',
+					backgroundColor: 'rgb(255, 176, 0)',
 					tenion: 0,
 				},
 			],

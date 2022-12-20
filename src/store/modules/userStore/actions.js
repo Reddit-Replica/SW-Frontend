@@ -455,4 +455,39 @@ export default {
 			throw error;
 		}
 	},
+	async DeleteSocialLink(context, payload) {
+		const socialInfo = {
+			type: payload.type,
+			displayText: payload.displayText,
+			link: payload.link,
+		};
+		const baseurl = payload.baseurl;
+		const response = await fetch(baseurl + '/social-link', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+			},
+			body: JSON.stringify(socialInfo),
+		});
+		const responseData = await response.json();
+		let type = payload.type;
+		if (response.status == 204) {
+			console.log(responseData);
+			console.log(response);
+			context.commit('setpostData', responseData);
+			context.commit('deleteUserSocialLink', {
+				type,
+			});
+		} else if (response.status == 401) {
+			const error = new Error(responseData.error);
+			console.log(error);
+			throw error;
+		} else {
+			const error = new Error('server error');
+			console.log(error);
+			throw error;
+		}
+		return response.status;
+	},
 };

@@ -8,7 +8,8 @@
 		</div>
 		<div v-else>
 			<the-header
-				:header-title="`u/${this.$route.params.userName}`"
+				:header-title="`${this.$route.params.userName}`"
+				:user-picture="getUserData.userData.picture"
 			></the-header>
 			<div v-if="notFound">
 				<not-found-user-page></not-found-user-page>
