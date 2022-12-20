@@ -49,11 +49,6 @@
 		</div>
 
 		<div class="joinBlock">
-			<!-- <base-button
-				button-text="Join"
-				class="join"
-				:id="'join-top-community-' + index"
-			></base-button> -->
 			<base-button
 				class="button blue-button-2"
 				@click="joinSubreddit"
@@ -212,17 +207,17 @@ export default {
 	position: relative;
 	background-color: var(--main-white-color);
 	/* width: 310px; */
-	height: 48px;
+	height: 4.8rem;
 }
 .topCommunity:not(:last-of-type) {
 	border-bottom: thin solid var(--color-grey-light-4);
 }
 .topCommunityLink {
 	padding: 0;
-	margin: 0 12px;
+	margin: 0 1.2rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	height: 48px;
+	height: 4.8rem;
 	align-items: center;
 	display: flex;
 }
@@ -234,64 +229,49 @@ export default {
 .topCommunityIndex {
 	color: var(--color-dark-1);
 	text-align: right;
-	min-width: 20px;
-	font-size: 14px;
+	min-width: 2rem;
+	font-size: 1.4rem;
 	font-weight: 500;
 }
 .topCommunityImage {
 	background-position: 50%;
 	background-repeat: no-repeat;
 	background-size: 100%;
-	border-radius: 24px;
-	font-size: 32px;
-	height: 32px;
-	margin: 0 8px;
-	width: 32px;
+	border-radius: 2.4rem;
+	font-size: 3.2rem;
+	height: 3.2rem;
+	margin: 0 0.8rem;
+	width: 3.2rem;
 }
 
 .bi-chevron-up {
 	color: var(--color-green);
-	font-size: 20px;
+	font-size: 2rem;
 	font-weight: 400;
-	height: 20px;
+	height: 2rem;
 	vertical-align: middle;
-	width: 20px;
-	margin-left: 8px;
+	width: 2rem;
+	margin-left: 0.8rem;
 }
 .topCommunityName {
-	max-width: 125px;
+	max-width: 12.5rem;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 	display: inline-block;
 	text-decoration: none;
 	color: var(--color-dark-1);
-	font-size: 14px;
+	font-size: 1.4rem;
 	font-weight: 500;
 }
 .joinBlock {
-	margin-right: 12px;
+	margin-right: 1.2rem;
 	white-space: nowrap;
 }
-/* .join {
-	position: relative;
-	background-color: var(--color-blue-2);
-	border: none;
-	color: var(--main-white-color);
-	fill: var(--main-white-color);
-	font-size: 12px;
-	font-weight: 700;
-	min-height: 24px;
-	min-width: 24px;
-	padding: 4px 16px;
-}
-.join:hover {
-	opacity: 0.92;
-} */
 .members-count {
-	width: 50px;
-	margin-left: 5px;
-	font-size: 16px;
+	width: 5rem;
+	margin-left: 0.5rem;
+	font-size: 1.6rem;
 	vertical-align: middle;
 	text-align: center;
 }
@@ -302,6 +282,11 @@ export default {
 	padding: 0.4rem 1.6rem;
 	width: 9.6rem;
 	height: 3.2rem;
+}
+@media only screen and (max-width: 500px) {
+	.button {
+		width: 6.4rem;
+	}
 }
 .blue-button-2 {
 	background-color: var(--color-blue-2);

@@ -76,14 +76,19 @@ export default {
 
 <style scoped>
 .top-cards-1 {
-	flex: 0 0 312px;
-	margin-left: 24px;
-	width: 312px;
+	flex: 0 0 31.2rem;
+	margin-left: 2.4rem;
+	width: 31.2rem;
 }
 .top-cards-2 {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	gap: 15px;
+	gap: 1.5rem;
+}
+@media only screen and (max-width: 850px) {
+	.top-cards-1 {
+		display: none;
+	}
 }
 </style>
