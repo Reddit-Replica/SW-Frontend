@@ -36,16 +36,50 @@
 </template>
 <script>
 export default {
+	data() {
+		return {
+			getInsightsData: {},
+		};
+	},
+	props: {
+		id: {
+			type: String,
+			required: true,
+		},
+	},
+	emits: ['finishLoading'],
+	async created() {
+		// console.log('req-insights');
+		await this.RequestInsightsData(this.id);
+	},
+	methods: {
+		async RequestInsightsData(id) {
+			let response = null;
+			try {
+				response = await this.$store.dispatch('userposts/getInsightsData', {
+					baseurl: this.$baseurl,
+					params: {
+						id: `${id}`,
+					},
+				});
+			} catch (error) {
+				this.error = error.message || 'Something went wrong';
+			}
+			this.$emit('finishLoading');
+			console.log(response);
+			this.getInsightsData = response;
+		},
+	},
 	computed: {
 		/**
 		 * @vuese
 		 * get the insights data from the store
 		 * @arg no arg
 		 */
-		getInsightsData() {
-			console.log(this.$store.getters['userposts/getInsightsData']);
-			return this.$store.getters['userposts/getInsightsData'].insightsData;
-		},
+		// getInsightsData() {
+		// 	console.log(this.$store.getters['userposts/getInsightsData']);
+		// 	return this.$store.getters['userposts/getInsightsData'].insightsData;
+		// },
 	},
 };
 </script>

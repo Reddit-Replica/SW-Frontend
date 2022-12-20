@@ -370,7 +370,10 @@
 							class="insights-content"
 							id="base-user-data-post-insights-content"
 						>
-							<the-insights></the-insights>
+							<the-insights
+								:id="postData.id"
+								@finish-loading="finishInsightLoading"
+							></the-insights>
 						</div>
 					</div>
 				</div>
@@ -477,6 +480,9 @@ export default {
 	},
 	emits: ['emitPopup'],
 	methods: {
+		finishInsightLoading() {
+			this.insightsLoading = false;
+		},
 		async fetchUserCardPicture() {
 			let responseData = null;
 			console.log(
@@ -636,11 +642,12 @@ export default {
 		 * toggle the view of the insights post
 		 * @arg no arg
 		 */
-		async insightsPostToggle(id) {
+		async insightsPostToggle() {
+			// id
 			this.insightsLoading = true;
 			this.insightActive = !this.insightActive;
 			this.showPostContent = false;
-			if (this.insightActive) await this.RequestInsightsData(id);
+			// if (this.insightActive) await this.RequestInsightsData(id);
 			this.insightsLoading = false;
 		},
 		/**

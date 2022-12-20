@@ -2,7 +2,11 @@
 	<div v-if="loading">
 		<the-spinner style="position: absolute; left: 50%; top: 50%"></the-spinner>
 	</div>
-	<the-header :header-title="subredditName"></the-header>
+	<the-header
+		:header-title="'r/' + subreddit.title"
+		:header-img="subreddit.picture"
+		:is-subreddit="true"
+	></the-header>
 	<listmoderation-bar
 		:subreddit-name="subredditName"
 		:title="title"
@@ -71,6 +75,7 @@ export default {
 			noItems: false,
 			showLiftBar: false,
 			loading: false,
+			subreddit: {},
 		};
 	},
 	components: {
@@ -87,6 +92,7 @@ export default {
 		if (localStorage.getItem('accessToken')) {
 			document.title = this.$route.params.subredditName;
 			await this.loadListOfAllModerators();
+			await this.getSubreddit();
 		} else {
 			this.$router.push('/login');
 			document.title = 'reddit';
@@ -334,6 +340,18 @@ export default {
 		// @arg no argument
 		showBarFunction() {
 			this.showLiftBar = !this.showLiftBar;
+		},
+		// @vuese
+		//load subreddit img
+		// @arg no argument
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: this.subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
 	},
 };

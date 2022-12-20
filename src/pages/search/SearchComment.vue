@@ -186,7 +186,13 @@
 															>
 																<div class="comment-word">
 																	<div class="comment-div">
-																		<p class="p-comment">
+																		<p
+																			class="p-comment"
+																			v-if="
+																				value.commentcontent &&
+																				value.commentcontent.length != 0
+																			"
+																		>
 																			{{ value.commentcontent.ops[0].insert }}
 																		</p>
 																	</div>
@@ -311,17 +317,17 @@ export default {
 		},
 		goSearch(value) {
 			if (value == 'cm') {
-				this.$router.replace({
+				this.$router.push({
 					name: 'searchcm',
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'posts') {
-				this.$router.replace({
+				this.$router.push({
 					name: 'searchpost',
 					query: { q: this.$route.query.q },
 				});
 			} else if (value == 'users') {
-				this.$router.replace({
+				this.$router.push({
 					name: 'searchuser',
 					query: { q: this.$route.query.q },
 				});
