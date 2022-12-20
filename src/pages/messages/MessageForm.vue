@@ -253,6 +253,9 @@ export default {
 				}
 			} catch (err) {
 				console.log(err);
+				if (err.message == 'Server Error') {
+					this.$router.push('/internal-server-error');
+				}
 				this.errorResponse = err;
 				this.delivered = false;
 			}
@@ -274,6 +277,9 @@ export default {
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
+				if (error.message == 'Server Error') {
+					this.$router.push('/internal-server-error');
+				}
 			}
 		},
 	},

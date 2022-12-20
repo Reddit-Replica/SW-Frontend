@@ -300,7 +300,7 @@ const router = createRouter({
 			],
 		},
 
-		{ path: '/enternal-error', component: InternalServer },
+		{ path: '/internal-server-error', component: InternalServer },
 		{ path: '/:notFound(.*)', component: NotFound },
 	],
 });
