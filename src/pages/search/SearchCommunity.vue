@@ -19,6 +19,7 @@
 										aria-selected="true"
 										role="tab"
 										><button
+											id="posts-button"
 											class="button-nav button-nav2"
 											@click="goSearch('posts')"
 										>
@@ -33,6 +34,7 @@
 										aria-selected="true"
 										role="tab"
 										><button
+											id="comments-button"
 											class="button-nav button-nav2"
 											@click="goSearch('coms')"
 										>
@@ -47,7 +49,10 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										><button class="button-nav button-nav2">
+										><button
+											id="communtites-button"
+											class="button-nav button-nav2"
+										>
 											Communities
 										</button></a
 									>
@@ -60,6 +65,7 @@
 										aria-selected="true"
 										role="tab"
 										><button
+											id="users-button"
 											class="button-nav button-nav2"
 											@click="goSearch('people')"
 										>

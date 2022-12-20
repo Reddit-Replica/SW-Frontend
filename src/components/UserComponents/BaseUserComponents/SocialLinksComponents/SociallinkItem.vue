@@ -4,7 +4,7 @@
 		<img :src="`${imgSrc}`" alt="" />
 		<span
 			>{{ text }}
-			<button @click="deleteSociallink" style="border-radius: 10px">
+			<button @click.prevent="deleteSociallink" style="border-radius: 10px">
 				x
 			</button></span
 		>
@@ -48,6 +48,16 @@ export default {
 		// @vuese
 		// display text for social link
 		text: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		type: {
+			type: String,
+			default: '',
+			required: true,
+		},
+		link: {
 			type: String,
 			default: '',
 			required: true,

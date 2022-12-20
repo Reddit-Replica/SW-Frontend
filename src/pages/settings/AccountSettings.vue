@@ -395,7 +395,7 @@
 					</div>
 				</div>
 				<h3 class="h3-main-title">CONNECTED ACCOUNTS</h3>
-				<div class="section">
+				<!-- <div class="section">
 					<div>
 						<h3 class="h3-title">Connect to Facebook</h3>
 						<div>
@@ -422,7 +422,7 @@
 							v-else
 						/>
 					</div>
-				</div>
+				</div> -->
 				<div class="section">
 					<div>
 						<h3 class="h3-title">Connect to Google</h3>
@@ -444,34 +444,11 @@
 							button-text="(disconnect)"
 							id="google"
 							class="disconnect-button"
-							@click="disconnectToGoogle"
+							@click="changeGoogleDialog"
 							v-else
 						/>
 					</div>
 				</div>
-				<!-- <h3 class="h3-main-title">BETA TESTS</h3>
-				<div class="section">
-					<div>
-						<h3 class="h3-title">Opt into beta tests</h3>
-						<p class="p-title-description">
-							See the newest features from Reddit and join the r/beta community
-						</p>
-					</div>
-					<div>
-						<switch-button id="sb-2" />
-					</div>
-				</div>
-				<div class="section">
-					<div>
-						<h3 class="h3-title">Opt out of the redesign</h3>
-						<p class="p-title-description">
-							Revert back to old Reddit for the time being
-						</p>
-					</div>
-					<div>
-						<switch-button id="sb-1" />
-					</div>
-				</div> -->
 				<h3 class="h3-main-title">DELETE ACCOUNT</h3>
 				<div class="section">
 					<div id="delete-account" @click="deletingAccount">
@@ -547,7 +524,7 @@
 			</div>
 		</base-dialog>
 		<base-dialog :show="changePasswordDialog" @close="cancelChangePassword">
-			<div class="delete-account">
+			<div class="delete-account change-password">
 				<img src="" alt="" />
 				<p>Update your password</p>
 				<input
@@ -617,6 +594,36 @@
 				/>
 			</div>
 		</base-dialog>
+		<base-dialog :show="changeGoogleDialog1" @close="cancelGoogle">
+			<template #header>
+				<div class="d-flex CE-header">
+					<div>
+						<font-awesome-icon
+							icon="fa-solid fa-envelope-circle-check"
+							class="change-email-header-icon"
+						/>
+						<p class="change-email-header">Disconnect your Google Account</p>
+					</div>
+					<div>
+						<font-awesome-icon icon="fa-solid fa-x" @click="cancelGoogle" />
+					</div>
+				</div>
+			</template>
+			<div class="change-email">
+				<p>To continue, confirm your password.</p>
+				<input
+					type="password"
+					placeholder="CURRENT PASSWORD"
+					v-model="newPass"
+				/>
+				<p class="change-email-error">{{ googleError }}</p>
+				<base-button
+					button-text="Continue"
+					@click="disconnectToGoogle"
+					id="saveEmailid1"
+				/>
+			</div>
+		</base-dialog>
 	</div>
 </template>
 
@@ -632,6 +639,8 @@ export default {
 		return {
 			changeEmailError: '',
 			changeEmailDialog: false,
+			changeGoogleError: '',
+			changeGoogleDialog1: false,
 			incorrectPassword: '',
 			fieldEmpty: '',
 			shortPassword: '',
@@ -654,6 +663,8 @@ export default {
 			changePasswordDialog: false,
 			oldMatchNew: false,
 			newEmail: '',
+			disconnectPassword: '',
+			googleError: '',
 		};
 	},
 	created() {},
@@ -663,6 +674,13 @@ export default {
 		else this.fetchAccountSettings();
 	},
 	methods: {
+		Continue() {},
+		changeGoogleDialog() {
+			this.changeGoogleDialog1 = true;
+		},
+		cancelGoogle() {
+			this.changeGoogleDialog1 = false;
+		},
 		async saveEmail() {
 			try {
 				let response = await this.$store.dispatch('setting/changeEmail', {
@@ -768,16 +786,22 @@ export default {
 			}
 		},
 		async disconnectToGoogle() {
-			this.connectedToGoogle = !this.connectedToGoogle;
 			try {
-				const googleUser = await this.$gAuth.signIn();
-				console.log(localStorage.getItem('Password'));
-				await this.$store.dispatch('setting/disconnect', {
+				let response = await this.$store.dispatch('setting/disconnect', {
 					baseurl: this.$baseurl,
 					type: 'google',
-					accessToken: googleUser.Bc.id_token,
-					password: localStorage.getItem('Password'),
+					password: this.disconnectPassword,
 				});
+				if (response.status != 200)
+					this.googleError =
+						response.responseData.error != undefined
+							? response.responseData.error
+							: response.responseData;
+				else {
+					this.changeGoogleDialog1 = false;
+					this.connectedToGoogle = false;
+				}
+				console.log(response);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
@@ -809,6 +833,8 @@ export default {
 			this.country = accountSettings.country;
 			this.gender = accountSettings.gender;
 			this.email = accountSettings.email;
+			this.connectedToGoogle =
+				accountSettings.googleEmail == undefined ? false : true;
 		},
 		//@vuese
 		//show gender menu
@@ -1151,6 +1177,11 @@ span.error {
 	flex-direction: column;
 	width: 350px;
 }
+
+.change-email p {
+	text-align: left;
+	width: 100%;
+}
 .change-email button {
 	width: 92px;
 	height: 32px;
@@ -1194,5 +1225,8 @@ p.change-email-error {
 }
 .CE-header div:first-of-type {
 	display: flex;
+}
+.change-password {
+	width: 400px;
 }
 </style>

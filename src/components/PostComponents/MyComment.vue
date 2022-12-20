@@ -80,7 +80,7 @@
 								>Reply</span
 							>
 						</li>
-						<li>Share</li>
+						<!-- <li>Share</li> -->
 						<li @click="save" id="save" v-if="!saved">Save</li>
 						<li @click="save" id="unsave" v-else>Unsave</li>
 						<li

@@ -213,8 +213,8 @@ export default {
 					parentId: this.parentId,
 					parentType: this.parentType,
 					level: this.level,
-					subredditName: this.subredditName,
-					haveSubreddit: this.subredditName != '',
+					subredditName: this.$route.params.subredditName,
+					haveSubreddit: this.$route.params.subredditName != undefined,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

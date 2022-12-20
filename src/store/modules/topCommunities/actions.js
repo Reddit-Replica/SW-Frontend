@@ -74,7 +74,7 @@ export default {
 	async getTwoCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/random-category?limit=5', {
+		const response = await fetch(baseurl + '/custom-random-category', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -83,7 +83,6 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -92,16 +91,17 @@ export default {
 		}
 
 		if (response.status == 200) {
-			context.commit(
-				'setFirstCommunities',
-				responseData['firstCategoryChildren']
-			);
-			context.commit(
-				'setSecondCommunities',
-				responseData['secondCategoryChildren']
-			);
-			context.commit('setFirstCategory', responseData['firstCategory']);
-			context.commit('setSecondCategory', responseData['secondCategory']);
+			let first = responseData['first'];
+			let firstCat = first['category'];
+			let firstCom = first['subreddits'];
+			context.commit('setFirstCommunities', firstCom);
+			context.commit('setFirstCategory', firstCat);
+
+			let second = responseData['second'];
+			let secondCat = second['category'];
+			let secondCom = second['subreddits'];
+			context.commit('setSecondCommunities', secondCom);
+			context.commit('setSecondCategory', secondCat);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Unauthorized');
 			throw error;
@@ -113,40 +113,82 @@ export default {
 			throw error;
 		}
 	},
-	async getOneCommunities(context, payload) {
-		const baseurl = payload.baseurl;
+	// async getTwoCommunities(context, payload) {
+	// 	const baseurl = payload.baseurl;
 
-		const response = await fetch(baseurl + '/custom-random-category?limit=5', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + payload.token,
-			},
-		});
+	// 	const response = await fetch(baseurl + '/random-category?limit=5', {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			Authorization: 'Bearer ' + payload.token,
+	// 		},
+	// 	});
 
-		const responseData = await response.json();
+	// 	const responseData = await response.json();
+	// 	console.log(responseData);
+	// 	if (!response.ok) {
+	// 		const error = new Error(
+	// 			responseData.message || 'Failed to send request.'
+	// 		);
+	// 		throw error;
+	// 	}
 
-		if (!response.ok) {
-			const error = new Error(
-				responseData.message || 'Failed to send request.'
-			);
-			throw error;
-		}
+	// 	if (response.status == 200) {
+	// 		context.commit(
+	// 			'setFirstCommunities',
+	// 			responseData['firstCategoryChildren']
+	// 		);
+	// 		context.commit(
+	// 			'setSecondCommunities',
+	// 			responseData['secondCategoryChildren']
+	// 		);
+	// 		context.commit('setFirstCategory', responseData['firstCategory']);
+	// 		context.commit('setSecondCategory', responseData['secondCategory']);
+	// 	} else if (response.status == 401) {
+	// 		const error = new Error(responseData.error || 'Unauthorized');
+	// 		throw error;
+	// 	} else if (response.status == 404) {
+	// 		const error = new Error(responseData.error || 'Not Found');
+	// 		throw error;
+	// 	} else if (response.status == 500) {
+	// 		const error = new Error(responseData.error || 'Server Error');
+	// 		throw error;
+	// 	}
+	// },
+	// async getOneCommunities(context, payload) {
+	// 	const baseurl = payload.baseurl;
 
-		if (response.status == 200) {
-			//context.commit('setOneCategory', responseData['firstCategory']);
-			context.commit('setOneCommunities', responseData['children']);
-		} else if (response.status == 401) {
-			const error = new Error(responseData.error || 'Unauthorized');
-			throw error;
-		} else if (response.status == 404) {
-			const error = new Error(responseData.error || 'Not Found');
-			throw error;
-		} else if (response.status == 500) {
-			const error = new Error(responseData.error || 'Server Error');
-			throw error;
-		}
-	},
+	// 	const response = await fetch(baseurl + '/custom-random-category?limit=5', {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			Authorization: 'Bearer ' + payload.token,
+	// 		},
+	// 	});
+
+	// 	const responseData = await response.json();
+
+	// 	if (!response.ok) {
+	// 		const error = new Error(
+	// 			responseData.message || 'Failed to send request.'
+	// 		);
+	// 		throw error;
+	// 	}
+
+	// 	if (response.status == 200) {
+	// 		//context.commit('setOneCategory', responseData['firstCategory']);
+	// 		context.commit('setOneCommunities', responseData['children']);
+	// 	} else if (response.status == 401) {
+	// 		const error = new Error(responseData.error || 'Unauthorized');
+	// 		throw error;
+	// 	} else if (response.status == 404) {
+	// 		const error = new Error(responseData.error || 'Not Found');
+	// 		throw error;
+	// 	} else if (response.status == 500) {
+	// 		const error = new Error(responseData.error || 'Server Error');
+	// 		throw error;
+	// 	}
+	// },
 	async getTrendingCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
