@@ -68,8 +68,8 @@
 									</span>
 									<span style="width: 100%; height: 100%" v-else>
 										<img
-											v-if="0 && getUserData.userData.picture != null"
-											:src="$baseurl + '/' + getUserData.userData.picture"
+											v-if="userCardData != null"
+											:src="$baseurl + '/' + userCardData.picture"
 											alt=""
 										/>
 										<img
@@ -464,17 +464,26 @@ export default {
 	},
 	methods: {
 		async fetchUserCardPicture() {
-			// let responseData = null;
-			// try {
-			// 	responseData = await this.$store.dispatch('user/getUserTempData', {
-			// 		baseurl: this.$baseurl,
-			// 		userName: this.postData.data.postedBy,
-			// 	});
-			// } catch (error) {
-			// 	this.error = error.message || 'Something went wrong';
-			// }
-			// if (responseData != null) this.userCardData = responseData;
-			// console.log(this.userData);
+			let responseData = null;
+			console.log(
+				localStorage.getItem('username'),
+				this.postData.data.postedBy
+			);
+			if (this.postData.data.postedBy == localStorage.getItem('userName')) {
+				this.userCardData = this.$store.getters['user/getUserData'].userData;
+				console.log('same');
+			} else {
+				try {
+					responseData = await this.$store.dispatch('user/getUserTempData', {
+						baseurl: this.$baseurl,
+						userName: this.postData.data.postedBy,
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				if (responseData != null) this.userCardData = responseData;
+				console.log(this.userCardData);
+			}
 		},
 		/**
 		 * @vuese
@@ -482,11 +491,14 @@ export default {
 		 * @arg no arg
 		 */
 		async showSubredditBox(id) {
-			// if (this.postData.data.subreddit != null) {
-			// 	await this.getSubreddit();
-			// 	console.log('aaa', this.subredditData);
-			// }
-			// await this.fetchUserCardPicture();
+			if (!this.once) {
+				if (this.postData.data.subreddit != null) {
+					await this.getSubreddit();
+					console.log('aaa', this.subredditData);
+				}
+				await this.fetchUserCardPicture();
+				this.once = true;
+			}
 			if (id == 1) this.showSubredditBoxFlag1 = true;
 			else if (id == 2) this.showSubredditBoxFlag2 = true;
 		},
