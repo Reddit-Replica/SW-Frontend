@@ -395,7 +395,7 @@
 					</div>
 				</div>
 				<h3 class="h3-main-title">CONNECTED ACCOUNTS</h3>
-				<div class="section">
+				<!-- <div class="section">
 					<div>
 						<h3 class="h3-title">Connect to Facebook</h3>
 						<div>
@@ -422,7 +422,7 @@
 							v-else
 						/>
 					</div>
-				</div>
+				</div> -->
 				<div class="section">
 					<div>
 						<h3 class="h3-title">Connect to Google</h3>

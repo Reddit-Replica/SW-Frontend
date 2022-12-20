@@ -179,21 +179,16 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
+			v-if="
+				(!pinnedPostFlag && postData.data.inYourSubreddit) ||
+				(postedByAuthUser && !pinnedPostFlag)
+			"
 			id="approve-user-post-button"
 			@click="approvePost(postData.id)"
-			:style="[
-				postData.data.moderation != null &&
-				postData.data.moderation.approve != null &&
-				postData.data.moderation.approve.approvedBy != null
-					? 'color: #46d160'
-					: '',
-			]"
+			:style="[ApprovedPostFlag ? 'color: #46d160' : '']"
 			class="post-option-item"
 			:class="[
-				postData.data.moderation != null &&
-				postData.data.moderation.approve != null &&
-				postData.data.moderation.approve.approvedBy != null
+				ApprovedPostFlag
 					? 'post-option-item-unhover'
 					: 'post-option-item-hover2',
 			]"
@@ -204,7 +199,10 @@
 			<div class="post-options-text">Approve</div>
 		</li>
 		<li
-			v-if="!postData.data.inYourSubreddit && !pinnedPostFlag"
+			v-if="
+				(!postData.data.inYourSubreddit && !pinnedPostFlag) ||
+				(!postedByAuthUser && !pinnedPostFlag)
+			"
 			id="savepost-ann-user-user-post-button"
 			@click="savePost(postData.id)"
 			class="post-option-item post-option-item-hover2"
@@ -245,7 +243,10 @@
 			</div>
 		</li>
 		<li
-			v-if="!postData.data.inYourSubreddit && !pinnedPostFlag"
+			v-if="
+				(!postData.data.inYourSubreddit && !pinnedPostFlag) ||
+				(!postedByAuthUser && !pinnedPostFlag)
+			"
 			id="savepost-ann-user-user-post-button"
 			@click="hideUnhidePost(postData.id)"
 			class="post-option-item post-option-item-hover2"
@@ -267,24 +268,17 @@
 		</li>
 
 		<li
-			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
+			v-if="
+				(!pinnedPostFlag && postData.data.inYourSubreddit) ||
+				(postedByAuthUser && !pinnedPostFlag)
+			"
 			id="remove-user-post-button"
 			@click="removePost(postData.id)"
 			:style="[
-				postData.data.moderation != null &&
-				postData.data.moderation.remove != null &&
-				postData.data.moderation.remove.removedBy != null
-					? 'color: #ff585b'
-					: 'color: rgba(135, 138, 140)',
+				RemovedPostFlag ? 'color: #ff585b' : 'color: rgba(135, 138, 140)',
 			]"
 			class="post-option-item"
-			:class="[
-				postData.data.moderation != null &&
-				postData.data.moderation.remove != null &&
-				postData.data.moderation.remove.removedBy != null
-					? ''
-					: 'post-option-item-hover2',
-			]"
+			:class="[RemovedPostFlag ? '' : 'post-option-item-hover2']"
 		>
 			<div class="post-options-icon">
 				<i style="color: inherit" class="fa-solid fa-ban"></i>
@@ -294,24 +288,17 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
+			v-if="
+				(!pinnedPostFlag && postData.data.inYourSubreddit) ||
+				(postedByAuthUser && !pinnedPostFlag)
+			"
 			id="spam-user-post-button"
 			@click="spamPost(postData.id)"
 			:style="[
-				postData.data.moderation != null &&
-				postData.data.moderation.spam != null &&
-				postData.data.moderation.spam.spammedBy != null
-					? 'color: #ff585b'
-					: 'color: rgba(135, 138, 140)',
+				SpammedPostFlag ? 'color: #ff585b' : 'color: rgba(135, 138, 140)',
 			]"
 			class="post-option-item"
-			:class="[
-				postData.data.moderation != null &&
-				postData.data.moderation.spam != null &&
-				postData.data.moderation.spam.spammedBy != null
-					? ''
-					: 'post-option-item-hover2',
-			]"
+			:class="[SpammedPostFlag ? '' : 'post-option-item-hover2']"
 		>
 			<div class="post-options-icon">
 				<i class="fa-regular fa-calendar-xmark"></i>
@@ -321,7 +308,10 @@
 			</div>
 		</li>
 		<li
-			v-if="!pinnedPostFlag && postData.data.inYourSubreddit"
+			v-if="
+				(!pinnedPostFlag && postData.data.inYourSubreddit) ||
+				(postedByAuthUser && !pinnedPostFlag)
+			"
 			id="insights-user-post-button"
 			@click="insightsPostToggle"
 			class="post-option-item post-option-item-hover2"
@@ -334,7 +324,10 @@
 			</div>
 		</li>
 		<li
-			v-if="postData.data.inYourSubreddit && !postKind && !pinnedPostFlag"
+			v-if="
+				(postData.data.inYourSubreddit && !postKind && !pinnedPostFlag) ||
+				(postedByAuthUser && !pinnedPostFlag && !postKind)
+			"
 			@click="safetyClicked"
 			id="shield-user-post-button"
 			class="post-option-item post-option-item-hover2"
@@ -367,9 +360,7 @@
 									type="checkbox"
 									id="mark-as-oc"
 									name="mark-as-oc"
-									:checked="
-										postData.data.moderation && postData.data.moderation.lock
-									"
+									:checked="LockedPostFlag"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -387,9 +378,7 @@
 									type="checkbox"
 									id="mark-as-oc"
 									name="mark-as-oc"
-									:checked="
-										postData.data.moderation && postData.data.moderation.lock
-									"
+									:checked="LockedPostFlag"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -403,9 +392,7 @@
 									type="checkbox"
 									id="mark-as-oc"
 									name="mark-as-oc"
-									:checked="
-										postData.data.moderation && postData.data.moderation.lock
-									"
+									:checked="LockedPostFlag"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -424,7 +411,9 @@
 			<div
 				class="post-options-icon three-dot-icon-box"
 				id="post-options-icon-post-data-three-dot-icon-box"
-				v-if="postData.data.inYourSubreddit || pinnedPostFlag"
+				v-if="
+					postData.data.inYourSubreddit || pinnedPostFlag || postedByAuthUser
+				"
 			>
 				<i>
 					<svg
@@ -445,13 +434,14 @@
 				id="show-dots-options-BoxList"
 				v-if="
 					(showOptionsBoxList && postData.data.inYourSubreddit) ||
-					(pinnedPostFlag && showOptionsBoxList)
+					(pinnedPostFlag && showOptionsBoxList) ||
+					(postedByAuthUser && showOptionsBoxList)
 				"
 				class="options-box-list"
 			>
 				<ul>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit || postedByAuthUser"
 						@click="editPost"
 						class="options-box-item"
 					>
@@ -499,7 +489,7 @@
 						</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit || postedByAuthUser"
 						id="options-box-icon-pin-to-profile"
 						@click="pinPostToProfile(postData.id)"
 						class="options-box-item"
@@ -535,7 +525,7 @@
 						</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit || postedByAuthUser"
 						id="delete-post-options-box-item"
 						@click="deletePost"
 						class="options-box-item"
@@ -568,7 +558,7 @@
 						</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit || postedByAuthUser"
 						@click="markUnMarkAsSpoiler(postData.id)"
 						ud="mark-unmark-as-spoiler-options-box"
 						class="options-box-item"
@@ -579,7 +569,7 @@
 									type="checkbox"
 									id="mark-as-spoiler"
 									name="mark-as-spoiler"
-									:checked="postData.data.spoiler"
+									:checked="MarkSpoilerFlag ? true : false"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -587,7 +577,7 @@
 						</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit || postedByAuthUser"
 						@click="markUnMarkAsNSFW(postData.id)"
 						ud="mark-unmark-as-nsfw-options-box"
 						class="options-box-item"
@@ -598,7 +588,7 @@
 									type="checkbox"
 									id="mark-as-nsfw"
 									name="mark-as-nsfw"
-									:checked="postData.data.nsfw"
+									:checked="MarknsfwFlag"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -627,7 +617,7 @@
 						</div>
 					</li>
 					<li
-						v-if="postData.data.inYourSubreddit"
+						v-if="postData.data.inYourSubreddit || postedByAuthUser"
 						@click="lockUnLockComments(postData.id)"
 						id="lock-unlock-comments-post-data"
 						class="options-box-item"
@@ -638,11 +628,7 @@
 									type="checkbox"
 									id="mark-as-oc"
 									name="mark-as-oc"
-									:checked="
-										(postData.data.moderation &&
-											postData.data.moderation.lock) ||
-										postData.data.locked
-									"
+									:checked="LockedPostFlag || postData.data.locked"
 							/></i>
 						</div>
 						<div class="options-box-text">
@@ -674,6 +660,25 @@ export default {
 			showSafetyOptions: false,
 			saved: this.postData.data.saved,
 			postHiddenFlag: this.page == 'hidden' || this.postData.data.hidden,
+
+			LockedPostFlag:
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.lock,
+			SpammedPostFlag:
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.spam != null &&
+				this.postData.data.moderation.spam.spammedBy != null,
+			RemovedPostFlag:
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.remove != null &&
+				this.postData.data.moderation.remove.removedBy != null,
+			ApprovedPostFlag:
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.approve != null &&
+				this.postData.data.moderation.approve.approvedBy != null,
+			MarknsfwFlag: this.postData.data.nsfw != null && this.postData.data.nsfw,
+			MarkSpoilerFlag:
+				this.postData.data.spoiler != null && this.postData.data.spoiler,
 		};
 	},
 	props: {
@@ -719,7 +724,59 @@ export default {
 		'editPost',
 		'emitPopup',
 	],
+	async mounted() {
+		// await this.updatd();
+	},
+	computed: {
+		postedByAuthUser() {
+			if (localStorage.getItem('userName') == this.postData.data.postedBy)
+				return 1;
+			else return 0;
+		},
+		// async updatd() {
+		// 	this.LockedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.lock;
+		// 	this.SpammedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.spam != null &&
+		// 		this.postData.data.moderation.spam.spammedBy != null;
+		// 	this.RemovedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.remove != null &&
+		// 		this.postData.data.moderation.remove.removedBy != null;
+		// 	this.ApprovedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.approve != null &&
+		// 		this.postData.data.moderation.approve.approvedBy != null;
+		// 	this.MarknsfwFlag =
+		// 		this.postData.data.nsfw != null && this.postData.data.nsfw;
+		// 	this.MarkSpoilerFlag =
+		// 		this.postData.data.spoiler != null && this.postData.data.spoiler;
+		// },
+	},
 	methods: {
+		// async updatd() {
+		// 	this.LockedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.lock;
+		// 	this.SpammedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.spam != null &&
+		// 		this.postData.data.moderation.spam.spammedBy != null;
+		// 	this.RemovedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.remove != null &&
+		// 		this.postData.data.moderation.remove.removedBy != null;
+		// 	this.ApprovedPostFlag =
+		// 		this.postData.data.moderation != null &&
+		// 		this.postData.data.moderation.approve != null &&
+		// 		this.postData.data.moderation.approve.approvedBy != null;
+		// 	this.MarknsfwFlag =
+		// 		this.postData.data.nsfw != null && this.postData.data.nsfw;
+		// 	this.MarkSpoilerFlag =
+		// 		this.postData.data.spoiler != null && this.postData.data.spoiler;
+		// },
 		/**
 		 * @vuese
 		 * toggle the insights Post component
@@ -870,13 +927,11 @@ export default {
 		async approvePost(id) {
 			console.log('approve');
 			let approveSatus = -1;
-			if (
-				!(
-					this.postData.data.moderation != null &&
-					this.postData.data.moderation.approve != null &&
-					this.postData.data.moderation.approve.approvedBy != null
-				)
-			) {
+			// this.ApprovedPostFlag = true;
+			if (!this.ApprovedPostFlag) {
+				this.ApprovedPostFlag = true;
+				this.RemovedPostFlag = false;
+				this.SpammedPostFlag = false;
 				try {
 					approveSatus = await this.$store.dispatch(
 						'userposts/approvePostOrComment',
@@ -894,8 +949,10 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 				if (approveSatus == 200) {
+					// this.ApprovedPostFlag = true;
 					this.$emit('emitPopup', id, 'approved post successfully');
 				} else {
+					// this.ApprovedPostFlag = false;
 					this.$emit('emitPopup', id, 'failed to approve post');
 				}
 			}
@@ -908,13 +965,10 @@ export default {
 		async removePost(id) {
 			console.log('remove');
 			let approveSatus = -1;
-			if (
-				!(
-					this.postData.data.moderation != null &&
-					this.postData.data.moderation.remove != null &&
-					this.postData.data.moderation.remove.removedBy != null
-				)
-			) {
+			if (!this.RemovedPostFlag) {
+				this.RemovedPostFlag = true;
+				console.log(this.RemovedPostFlag);
+				this.ApprovedPostFlag = false;
 				try {
 					approveSatus = await this.$store.dispatch(
 						'userposts/removePostOrComment',
@@ -932,8 +986,11 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 				if (approveSatus == 200) {
+					// this.RemovedPostFlag = true;
+					// this.ApprovedPostFlag = false;
 					this.$emit('emitPopup', id, 'removed post successfully');
 				} else {
+					// this.RemovedPostFlag = false;
 					this.$emit('emitPopup', id, 'failed to remove post');
 				}
 			}
@@ -946,8 +1003,11 @@ export default {
 		async markUnMarkAsNSFW(id) {
 			let requestSatus = -1;
 			let type = 'unMark';
-			if (!this.postData.data.nsfw) {
+			if (!this.MarknsfwFlag) {
 				type = 'mark';
+				this.MarknsfwFlag = true;
+			} else {
+				this.MarknsfwFlag = false;
 			}
 			try {
 				requestSatus = await this.$store.dispatch('userposts/markPostAsNSFW', {
@@ -985,8 +1045,11 @@ export default {
 			// console.log('MarkUnMArk', this.nsfwCheckBox);
 			let requestSatus = -1;
 			let type = 'unMark';
-			if (!this.postData.data.spoiler) {
+			if (!this.MarkSpoilerFlag) {
 				type = 'mark';
+				this.MarkSpoilerFlag = true;
+			} else {
+				this.MarkSpoilerFlag = false;
 			}
 			try {
 				requestSatus = await this.$store.dispatch(
@@ -1078,10 +1141,7 @@ export default {
 			let approveSatus = -1;
 			let key = 'unlock';
 
-			if (
-				!this.postData.data.moderation ||
-				!this.postData.data.moderation.lock
-			) {
+			if (!this.LockedPostFlag) {
 				key = 'lock';
 			}
 			console.log('main', key);
@@ -1089,6 +1149,8 @@ export default {
 				if (this.postData.data.locked) key = 'unlock';
 				else key = 'lock';
 			}
+			if (key == 'lock') this.LockedPostFlag = true;
+			else this.LockedPostFlag = false;
 			try {
 				approveSatus = await this.$store.dispatch(
 					'userposts/lockUnLockPostOrComment',
@@ -1107,17 +1169,21 @@ export default {
 			}
 			if (key == 'lock') {
 				if (approveSatus == 200) {
+					this.LockedPostFlag = true;
 					this.$emit('emitPopup', id, 'post locked successfully');
 				} else {
 					this.$emit('emitPopup', id, 'failed to lock post');
+					this.LockedPostFlag = false;
 				}
 			} else if (approveSatus == 200) {
 				if (this.pinnedPostFlag) {
 					this.RequestUserPinnedPostData();
 				}
+				this.LockedPostFlag = false;
 				this.$emit('emitPopup', id, 'post unlocked successfully');
 			} else {
 				this.$emit('emitPopup', id, 'failed to unlock post');
+				this.LockedPostFlag = false;
 			}
 		},
 		/**
@@ -1216,13 +1282,9 @@ export default {
 		 */
 		async spamPost(id) {
 			let approveSatus = -1;
-			if (
-				!(
-					this.postData.data.moderation != null &&
-					this.postData.data.moderation.spam != null &&
-					this.postData.data.moderation.spam.spammedBy != null
-				)
-			) {
+			if (!this.SpammedPostFlag) {
+				this.SpammedPostFlag = true;
+				this.ApprovedPostFlag = false;
 				try {
 					approveSatus = await this.$store.dispatch('userposts/markSpam', {
 						baseurl: this.$baseurl,
@@ -1238,8 +1300,10 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 				if (approveSatus == 200) {
+					// this.SpammedPostFlag = true;
 					this.$emit('emitPopup', id, 'Spammed post successfully');
 				} else {
+					// this.SpammedPostFlag = false;
 					this.$emit('emitPopup', id, 'failed to Spam post');
 				}
 			}
@@ -1317,6 +1381,29 @@ export default {
 			var abbreviate = require('number-abbreviate');
 			console.log(num);
 			return abbreviate(num, 2); // => 1k
+		},
+	},
+	watch: {
+		postData() {
+			this.LockedPostFlag =
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.lock;
+			this.SpammedPostFlag =
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.spam != null &&
+				this.postData.data.moderation.spam.spammedBy != null;
+			this.RemovedPostFlag =
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.remove != null &&
+				this.postData.data.moderation.remove.removedBy != null;
+			this.ApprovedPostFlag =
+				this.postData.data.moderation != null &&
+				this.postData.data.moderation.approve != null &&
+				this.postData.data.moderation.approve.approvedBy != null;
+			this.MarknsfwFlag =
+				this.postData.data.nsfw != null && this.postData.data.nsfw;
+			this.MarkSpoilerFlag =
+				this.postData.data.spoiler != null && this.postData.data.spoiler;
 		},
 	},
 };
