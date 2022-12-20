@@ -11,7 +11,7 @@
 							><span>to&nbsp;</span>
 							<a
 								v-if="message.isReceiverUser"
-								:href="'/user/' + message.receiverUsername"
+								:href="'/user/' + message.receiverUsername + '/'"
 								:id="'message-receiver-' + index"
 								>/u/{{ message.receiverUsername }}</a
 							><a

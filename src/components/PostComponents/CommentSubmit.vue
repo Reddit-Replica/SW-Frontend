@@ -180,7 +180,7 @@ export default {
 				// this.$refs.myQuillEditor.getContents().ops,
 				{
 					insert: 'u/' + userName,
-					attributes: { link: '/user/' + userName },
+					attributes: { link: '/user/' + userName + '/' },
 				},
 			]);
 			this.mentionedUser = '';

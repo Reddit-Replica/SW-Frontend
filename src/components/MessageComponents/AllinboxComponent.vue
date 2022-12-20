@@ -23,7 +23,7 @@
 					<span class="sender"
 						><a
 							v-if="message.isSenderUser"
-							:href="'/user/' + message.senderUsername"
+							:href="'/user/' + message.senderUsername + '/'"
 							:id="'message-sender-' + index"
 							>/u/{{ message.senderUsername }}</a
 						>
@@ -39,7 +39,7 @@
 							><span>&nbsp;via&nbsp;</span>
 							<a
 								v-if="message.isReceiverUser"
-								:href="'/user/' + message.receiverUsername"
+								:href="'/user/' + message.receiverUsername + '/'"
 								:id="'message-receiver-' + index"
 								>/u/{{ message.receiverUsername }}</a
 							><a
