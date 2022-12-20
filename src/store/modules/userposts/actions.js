@@ -691,11 +691,11 @@ export default {
 			);
 			throw error;
 		}
-		// if (response.status == 200)
-		context.commit('setInsightsData', {
-			responseData,
-		});
-		return response.status;
+		if (response.status == 200)
+			context.commit('setInsightsData', {
+				responseData,
+			});
+		return responseData;
 	},
 	async approvePostOrComment(context, payload) {
 		const ApprovePostOrCommentData = payload.ApprovePostOrCommentData; // id ,type
