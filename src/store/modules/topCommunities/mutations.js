@@ -9,7 +9,7 @@ export default {
 		state.firstCommunities = payload;
 	},
 	setSecondCommunities(state, payload) {
-		state.firstCommunities = payload;
+		state.secondCommunities = payload;
 	},
 	setFirstCategory(state, payload) {
 		state.firstCategory = payload;
