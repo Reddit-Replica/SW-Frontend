@@ -4,7 +4,11 @@
 		<img :src="`${imgSrc}`" alt="" />
 		<span
 			>{{ text }}
-			<button @click.prevent="deleteSociallink" style="border-radius: 10px">
+			<button
+				@click.prevent="deleteSociallink"
+				style="border-radius: 10px"
+				v-if="enable"
+			>
 				x
 			</button></span
 		>
@@ -13,6 +17,15 @@
 
 <script>
 export default {
+	data() {
+		return {
+			enable: false,
+		};
+	},
+	created() {
+		console.log(this.$route.fullPath == '/settings/profile');
+		if (this.$route.fullPath == '/settings/profile') this.enable = true;
+	},
 	methods: {
 		async deleteSociallink() {
 			const actionPayload = {
@@ -35,6 +48,11 @@ export default {
 				this.error = err;
 				console.log(err);
 			}
+		},
+		watch: {
+			$route(newr) {
+				if (newr.path == 'profile/settings') console.log('profileSettings');
+			},
 		},
 	},
 	props: {
