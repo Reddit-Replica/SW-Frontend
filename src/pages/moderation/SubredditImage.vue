@@ -25,9 +25,17 @@
 						</g>
 					</svg>
 				</label>
-				<label class="one-image" for="image2" v-if="image">
+				<label class="one-image" for="image2" v-if="image && loaded1">
 					<img
 						:src="image"
+						alt=""
+						id="profile-picture_user"
+						style="width: 100%; height: 100%"
+					/>
+				</label>
+				<label class="one-image" for="image2" v-if="image && !loaded1">
+					<img
+						:src="$baseurl + '/' + image"
 						alt=""
 						id="profile-picture_user"
 						style="width: 100%; height: 100%"
@@ -53,9 +61,17 @@
 						</g>
 					</svg>
 				</label>
-				<label class="big-image" for="cover-picture" v-if="cover">
+				<label class="big-image" for="cover-picture" v-if="cover && loaded2">
 					<img
 						:src="cover"
+						alt=""
+						id="profile-picture_user"
+						style="width: 100%; height: 100%"
+					/>
+				</label>
+				<label class="big-image" for="cover-picture" v-if="cover && !loaded2">
+					<img
+						:src="$baseurl + '/' + cover"
 						alt=""
 						id="profile-picture_user"
 						style="width: 100%; height: 100%"
@@ -82,12 +98,18 @@ export default {
 	components: {
 		SaveUnsavePopupMessage,
 	},
+	async beforeMount() {
+		await this.getSubreddit();
+	},
 	props: {},
 	data() {
 		return {
 			savedUnsavedPosts: [],
 			image: null,
 			cover: null,
+			subreddit: {},
+			loaded1: false,
+			loaded2: false,
 		};
 	},
 	methods: {
@@ -129,6 +151,7 @@ export default {
 			this.image = URL.createObjectURL(file);
 			const subredditName = this.$route.params.subredditName;
 			const profilePictureUrl = await URL.createObjectURL(file);
+			this.loaded1 = false;
 			try {
 				await this.$store.dispatch('community/addSubredditPicture', {
 					baseurl: this.$baseurl,
@@ -139,6 +162,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			this.loaded1 = true;
 			this.doneSuccessfully();
 		},
 		/**
@@ -152,6 +176,7 @@ export default {
 			const bannerImageUrl = URL.createObjectURL(file);
 			const subredditName = this.$route.params.subredditName;
 			this.cover = URL.createObjectURL(file);
+			this.loaded2 = false;
 			let responseStatus;
 			try {
 				responseStatus = await this.$store.dispatch(
@@ -167,7 +192,26 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.doneSuccessfully();
+			this.loaded2 = true;
 			console.log(responseStatus);
+		},
+		// @vuese
+		//load subreddit img
+		// @arg no argument
+		async getSubreddit() {
+			const accessToken = localStorage.getItem('accessToken');
+			const subredditName = this.$route.params.subredditName;
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: subredditName,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+			console.log(this.subreddit);
+			this.image = this.subreddit.picture;
+			this.cover = this.subreddit.banner;
+			console.log(this.image);
+			console.log(this.cover);
 		},
 	},
 };
