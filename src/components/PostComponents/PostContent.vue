@@ -37,7 +37,18 @@
 		</div>
 
 		<div class="post-title">
-			<h3>{{ post.title }}</h3>
+			<h3>
+				{{ post.title }}
+				<base-button
+					v-if="post.flair != undefined || post.flair != null"
+					class="flair"
+					:button-text="post.flair.flairName"
+					style="
+						color: post.flair.textColor;
+						background-color: post.flair.backgroundColor;
+					"
+				/>
+			</h3>
 		</div>
 		<div v-if="!editing">
 			<div
@@ -263,5 +274,8 @@ div:last-of-type a {
 }
 div:last-of-type a:hover {
 	text-decoration: underline;
+}
+img.ql-image {
+	width: 5px;
 }
 </style>
