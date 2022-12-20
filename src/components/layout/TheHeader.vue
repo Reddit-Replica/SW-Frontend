@@ -951,7 +951,7 @@ export default {
 		// @arg no argument
 		async searchUser() {
 			if (this.$route.matched.some(({ name }) => name === 'searchpost')) {
-				this.$router.go(this.$router.currentRoute);
+				this.$router.go({ name: 'search', query: { q: this.searchQuery } });
 			} else if (this.searchQuery) {
 				this.$router.push({
 					name: 'searchpost',

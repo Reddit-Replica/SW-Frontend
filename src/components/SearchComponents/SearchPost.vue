@@ -63,28 +63,28 @@
 													</div></a
 												>
 											</div>
-											<!-- <div
-												class="image-class"
-												v-if="value.Image && value.Image.length != 0"
-											>
-												<img
-													alt="img"
-													:id="'user-avatar-' + value.id"
-													:src="$baseurl + '/' + value.Image.path"
-												/>
-											</div> -->
-											<div class="link-class" v-if="value.link">
-												<a :href="value.link">{{ value.link }}</a>
-											</div>
 										</div>
 									</div>
 								</div>
-								<div class="bottom-bar">
-									<span class="votes">{{ value.votes }} upvotes&nbsp;</span
-									><span class="comments"
-										>{{ value.components }} comments&nbsp;</span
-									>
+								<div
+									class="image-class"
+									v-if="value.Image && value.Image.length != 0"
+								>
+									<img
+										alt="img"
+										:id="'user-image-' + value.id"
+										:src="$baseurl + '/' + value.Image[0].path"
+									/>
 								</div>
+								<div class="link-class" v-if="value.link">
+									<a :href="value.link">{{ value.link }}</a>
+								</div>
+							</div>
+							<div class="bottom-bar">
+								<span class="votes">{{ value.votes }} upvotes&nbsp;</span
+								><span class="comments"
+									>{{ value.comments }} comments&nbsp;</span
+								>
 							</div>
 						</div>
 					</div>
@@ -222,6 +222,9 @@ div {
 	display: flex;
 	flex-flow: row wrap;
 }
+.point {
+	display: flex;
+}
 .point-center {
 	color: rgb(54, 46, 46);
 	font-size: 6px;
@@ -260,7 +263,7 @@ div {
 	padding-left: 16px;
 	padding-right: 16px;
 	display: flex;
-	justify-content: space-between;
+	width: 44rem;
 }
 .posts-words {
 	--postTitle-VisitedLinkColor: #979798;
@@ -307,5 +310,16 @@ div {
 	width: 70rem;
 	display: flex;
 	flex-direction: column;
+}
+.image-class {
+	display: flex;
+	padding-right: 8px;
+	border-radius: 4px;
+	flex: 1;
+	height: 98px;
+	width: 98px;
+	overflow: hidden;
+	position: relative;
+	vertical-align: bottom;
 }
 </style>
