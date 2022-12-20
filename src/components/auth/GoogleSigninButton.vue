@@ -20,9 +20,6 @@ export default {
 			try {
 				const googleUser = await this.$gAuth.signIn();
 				console.log(googleUser);
-				this.$store.state.userName = googleUser.kv.KX;
-				this.$store.state.id_token = googleUser.Bc.access_token;
-				console.log(this.$store.getters.getUserName);
 				const actionPayload = {
 					type: 'google',
 					id_token: googleUser.Bc.access_token,
