@@ -97,6 +97,10 @@ export default {
 		let index = state.userData.socialLinks.findIndex(
 			(res) => res.displayText === payload.displayText
 		);
+		console.log('delete social link');
+		console.log(index);
+		console.log(payload.displayText);
+		console.log(state.userData.socialLinks.displayText);
 		state.userData.socialLinks.splice(index, 1);
 
 		//state.userData.socialLinks.pop(payload.newSocialLink);

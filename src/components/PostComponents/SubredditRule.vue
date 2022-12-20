@@ -5,7 +5,7 @@
 			<font-awesome-icon icon="fa-solid fa-chevron-down" v-if="!clicked" />
 			<font-awesome-icon icon="fa-solid fa-chevron-up" v-else />
 		</div>
-		<p v-if="clicked">{{ rule.ruleDescription }}</p>
+		<p v-if="clicked">{{ rule.description }}</p>
 	</div>
 </template>
 <script>
@@ -32,7 +32,7 @@ export default {
 	},
 	computed: {
 		textDisplayed() {
-			return this.index + '.' + this.rule.ruleTitle;
+			return this.index + '.' + this.rule.ruleName;
 		},
 	},
 };

@@ -60,14 +60,14 @@
 				<h1 id="ntf-list-15">You don’t have any activity yet</h1>
 				<p id="ntf-list-16">
 					That’s ok, maybe you just need the right inspiration. Try posting in
-					r/<router-link :to="linkSubreddit">{{
+					r/<router-link :to="'/r/' + randomSubredditName">{{
 						randomSubredditName
 					}}</router-link>
 					, a popular community for discussion.
 				</p>
 				<base-button
 					link
-					:to="linkSubreddit"
+					:to="'/r/' + randomSubredditName"
 					class="button-visit"
 					id="ntf-list-17"
 					>Visit r/{{ randomSubredditName }}</base-button
@@ -82,14 +82,15 @@ export default {
 	components: {
 		NotificationMessage,
 	},
-	beforeMount() {
-		this.loadAllNotifications();
-		this.getSuggestedCommunity();
+	async beforeMount() {
+		await this.loadAllNotifications();
+		await this.getSuggestedCommunity();
 	},
 	data() {
 		return {
 			notifications: [],
 			suggestedCommunity: [],
+			randomSubredditName: '',
 		};
 	},
 	computed: {
@@ -98,9 +99,6 @@ export default {
 		},
 		subredditLink() {
 			return 'r/' + this.randomSubredditName;
-		},
-		randomSubredditName() {
-			return this.suggestedCommunity[0].data.title;
 		},
 		linkSubreddit() {
 			return '/r/' + this.suggestedCommunity[0].data.title;
@@ -135,7 +133,11 @@ export default {
 			});
 			this.suggestedCommunity =
 				this.$store.getters['topCommunity/getSuggestedCommunity'];
-			console.log(this.suggestedCommunity);
+
+			let firstcomm = this.suggestedCommunity[0];
+			let data = firstcomm.data;
+			let title = data.title;
+			this.randomSubredditName = title;
 		},
 	},
 };
