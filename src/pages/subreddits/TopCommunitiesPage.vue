@@ -31,17 +31,19 @@ export default {
 
 <style scoped>
 .top-page {
-	max-width: 1248px;
+	max-width: 124.8rem;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	margin: 0 auto;
-	gap: 15px;
+	margin-top: 2rem;
+	gap: 1.5rem;
 }
-@media (min-width: 640px) {
+@media (max-width: 600px) {
 	.top-page {
-		padding: 20px 24px;
+		padding: 2rem 2.4rem;
+		flex-direction: column;
 	}
 }
 </style>

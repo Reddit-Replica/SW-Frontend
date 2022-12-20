@@ -96,7 +96,7 @@ export default {
 	display: flex;
 	height: 100%;
 	overflow: auto;
-	padding: 75px 30px 20px;
+	padding: 7.5rem 3rem 2rem;
 	/* pointer-events: none; */
 	position: fixed;
 	top: 0;
@@ -106,39 +106,39 @@ export default {
 }
 dialog {
 	background-color: var(--color-white-1);
-	border: 1px solid var(--color-grey-light-1);
-	border-radius: 4px;
-	box-shadow: 0 2px 20px 0 rgb(0 0 0 / 30%);
+	border: 0.1rem solid var(--color-grey-light-1);
+	border-radius: 0.4rem;
+	box-shadow: 0 0.2rem 2rem 0 rgb(0 0 0 / 30%);
 	margin: auto;
 	pointer-events: auto;
 	z-index: 55;
 	position: relative;
 }
 header {
-	border-bottom: 1px solid var(--color-grey-light-2);
-	border-top-right-radius: 4px;
-	border-top-left-radius: 4px;
-	padding: 16px;
+	border-bottom: 0.1rem solid var(--color-grey-light-2);
+	border-top-right-radius: 0.4rem;
+	border-top-left-radius: 0.4rem;
+	padding: 1.6rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
 header h2 {
 	color: var(--color-dark-1);
-	font-size: 16px;
+	font-size: 1.6rem;
 	font-weight: 500;
-	line-height: 20px;
+	line-height: 2rem;
 	margin: 0;
 	flex: 1 1 100%;
 	width: 100%;
 }
 section {
-	padding: 16px;
+	padding: 1.6rem;
 }
 .bi-x {
 	color: var(--color-grey-dark-2);
-	width: 20px;
-	height: 20px;
+	width: 2rem;
+	height: 2rem;
 	cursor: pointer;
 }
 .header-center {

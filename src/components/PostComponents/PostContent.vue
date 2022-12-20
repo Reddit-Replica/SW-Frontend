@@ -15,9 +15,20 @@
 					alt=""
 				/>
 			</span>
-			<span class="subreddit-name" v-if="post.subreddit != undefined">
-				<router-link :to="'/r/' + post.subreddit" id="subreddit-route"
-					>{{ post.subreddit }} </router-link
+			<span
+				class="subreddit-name"
+				v-if="post.subreddit != undefined"
+				@mouseover="showCardM"
+				@mouseleave="hideCardM"
+			>
+				<router-link :to="'/r/' + post.subreddit" id="subreddit-route">
+					<subreddit-card-mini
+						:subreddit="subreddit"
+						:subreddit-name="subreddit.title"
+						class="sub-card"
+						v-if="showCard"
+					></subreddit-card-mini>
+					{{ post.subreddit }} </router-link
 				>.
 			</span>
 			<span>
@@ -29,11 +40,21 @@
 				</span>
 				<span v-else>Posted by .</span>
 				<router-link
+					@mouseover="showPCardM"
+					@mouseleave="hidePCardM"
 					v-if="post.postedBy != undefined"
 					:to="{ name: 'user', params: { userName: post.postedBy } }"
 					id="post-by-router"
 				>
-					{{ post.postedBy }} </router-link
+					{{ post.postedBy }}
+					<profile-card
+						class="pro-card"
+						v-if="showPCard"
+						:user-data="getUserData"
+						state="user"
+						:user-name="post.postedBy"
+						:not-post-card="false"
+					></profile-card></router-link
 				>&nbsp;{{ calculateTime }}
 			</span>
 		</div>
@@ -116,6 +137,8 @@
 <script>
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import PicturePost from '../UserComponents/BaseUserComponents/PostComponents/PicturePost.vue';
+import ProfileCard from '../UserComponents/BaseUserComponents/Cards/ProfileCard.vue';
+import SubredditCardMini from '../UserComponents/BaseUserComponents/PostComponents/SubredditCardMini.vue';
 export default {
 	// beforeMount() {
 	// 	if(post.kind=='post') {
@@ -137,15 +160,31 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		}
+		let responseData = null;
+		try {
+			responseData = await this.$store.dispatch('user/getUserTempData', {
+				baseurl: this.$baseurl,
+				userName: this.post.postedBy,
+			});
+		} catch (error) {
+			this.error = error.message || 'Something went wrong';
+		}
+		if (responseData != null) this.getUserData = responseData;
+		console.log(this.getUserData);
 	},
 	data() {
 		return {
 			subreddit: {},
+			showCard: false,
+			showPCard: false,
+			getUserData: {},
 		};
 	},
 	name: 'PostContent',
 	components: {
 		PicturePost,
+		ProfileCard,
+		SubredditCardMini,
 	},
 	props: {
 		//@vuese
@@ -203,6 +242,22 @@ export default {
 		},
 	},
 	methods: {
+		showCardM() {
+			console.log('hover');
+			this.showCard = true;
+		},
+		hideCardM() {
+			console.log('hover');
+			this.showCard = false;
+		},
+		showPCardM() {
+			console.log('hover');
+			this.showPCard = true;
+		},
+		hidePCardM() {
+			console.log('hover');
+			this.showPCard = false;
+		},
 		click() {
 			console.log(this.subreddit);
 		},
@@ -247,7 +302,9 @@ p img .ql-image {
 .subreddit-info .subreddit-image {
 	padding-right: 5px;
 }
-
+.subreddit-name {
+	position: relative;
+}
 .subreddit-info .subreddit-name a {
 	font-weight: 700;
 	color: black;
@@ -300,5 +357,23 @@ img.ql-image {
 	font-size: 9px;
 	width: max-content;
 	height: max-content;
+	padding: 2px;
+}
+.sub-card {
+	top: 10px;
+	position: absolute;
+	width: 200px;
+	z-index: 5;
+	border: 1px solid black;
+}
+.pro-card {
+	top: 10px;
+	position: absolute;
+	width: 200px;
+	z-index: 5;
+	border: 1px solid black;
+}
+#post-by-router {
+	position: relative;
 }
 </style>

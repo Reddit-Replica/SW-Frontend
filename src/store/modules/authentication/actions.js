@@ -253,25 +253,22 @@ export default {
 			type: payload.type,
 			accessToken: payload.id_token,
 		};
-		console.log('hamada');
-		console.log(userInfo.accessToken);
 		const response = await fetch(baseurl + '/signin/google', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(userInfo.accessToken),
+			body: JSON.stringify({ accessToken: userInfo.accessToken }),
 		});
+		console.log(payload.id_token);
 		const responseData = await response.json();
-		// localStorage.setItem('response', response.status);
 		if (response.status == 200 || response.status == 201) {
 			localStorage.setItem('accessToken', responseData.token);
 			localStorage.setItem('userName', responseData.username);
 			context.commit('setUser', {
 				userName: responseData.username,
 				accessToken: responseData.token,
-				response: response.status,
 			});
 			context.commit('settype', 'google');
-		} else if (!response.ok) {
+		} else {
 			const error = new Error(responseData.error);
 			console.log(error);
 			throw error;
