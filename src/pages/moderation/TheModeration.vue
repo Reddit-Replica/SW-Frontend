@@ -3,7 +3,7 @@
 		<the-spinner style="position: absolute; left: 50%; top: 50%"></the-spinner>
 	</div>
 	<the-header
-		:header-title="'r/' + subredditName"
+		:header-title="'r/' + subreddit.title"
 		:header-img="subreddit.picture"
 		:is-subreddit="true"
 	></the-header>
@@ -91,6 +91,7 @@ export default {
 		if (localStorage.getItem('accessToken')) {
 			document.title = this.$route.params.subredditName;
 			await this.loadListOfAllModerators();
+			await this.getSubreddit();
 		} else {
 			this.$router.push('/login');
 			document.title = 'reddit';

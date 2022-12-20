@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="content" @click="goToSubreddit()">
 		<img
 			v-if="!subreddit.picture"
 			src="../../../img/default_subreddit_image.png"
@@ -71,6 +71,9 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
+		},
+		goToSubreddit() {
+			this.$router.push('/r/' + this.subredditName);
 		},
 	},
 };
