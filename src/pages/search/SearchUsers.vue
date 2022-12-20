@@ -19,6 +19,7 @@
 										aria-selected="true"
 										role="tab"
 										><button
+											id="posts-button"
 											class="button-nav button-nav2"
 											@click="goSearch('posts')"
 										>
@@ -33,6 +34,7 @@
 										aria-selected="true"
 										role="tab"
 										><button
+											id="comments-button"
 											class="button-nav button-nav2"
 											@click="goSearch('coms')"
 										>
@@ -48,6 +50,7 @@
 										aria-selected="true"
 										role="tab"
 										><button
+											id="communities-button"
 											class="button-nav button-nav2"
 											@click="goSearch('cm')"
 										>
@@ -62,7 +65,9 @@
 										data-testid="tab_posts"
 										aria-selected="true"
 										role="tab"
-										><button class="button-nav button-nav2">People</button></a
+										><button id="users-button" class="button-nav button-nav2">
+											People
+										</button></a
 									>
 								</div>
 								<!-- href="/search/?q=Query&amp;type=ppl" -->
