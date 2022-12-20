@@ -495,18 +495,7 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		if (response.status == 200) {
-			console.log(response);
-		} else if (response.status == 401) {
-			const error = new Error(responseData.error);
-			console.log(error);
-			throw error;
-		} else {
-			const error = new Error('server error');
-			console.log(error);
-			throw error;
-		}
-		return response.status;
+		return { status: response.status, responseData: responseData };
 	},
 	async deleteAccount(_, payload) {
 		const baseurl = payload.baseurl;

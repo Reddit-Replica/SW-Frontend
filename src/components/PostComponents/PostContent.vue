@@ -358,6 +358,7 @@ img.ql-image {
 	width: max-content;
 	height: max-content;
 	padding: 2px;
+	background-color: white;
 }
 .sub-card {
 	top: 10px;
