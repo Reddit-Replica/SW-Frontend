@@ -2,12 +2,41 @@
 	<!-- this Component for item (Button) Social Link  -->
 	<div :id="`link-item-${text}`" class="link-item">
 		<img :src="`${imgSrc}`" alt="" />
-		{{ text }}
+		<span
+			>{{ text }}
+			<button @click="deleteSociallink" style="border-radius: 10px">
+				x
+			</button></span
+		>
 	</div>
 </template>
 
 <script>
 export default {
+	methods: {
+		async deleteSociallink() {
+			const actionPayload = {
+				type: this.type,
+				displayText: this.text,
+				link: this.link,
+				baseurl: this.$baseurl,
+			};
+			console.log(actionPayload);
+			try {
+				const response = await this.$store.dispatch(
+					'user/DeleteSocialLink',
+					actionPayload
+				);
+				if (response == 204) {
+					console.log(response);
+					console.log('الحمد لله زى الفل');
+				}
+			} catch (err) {
+				this.error = err;
+				console.log(err);
+			}
+		},
+	},
 	props: {
 		// @vuese
 		// link for displayed image of social link

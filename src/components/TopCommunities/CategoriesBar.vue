@@ -166,4 +166,20 @@ ul {
 	border-left: 0.5rem solid var(--color-blue-2);
 	font-weight: 550;
 }
+@media (max-width: 600px) {
+	.catg-bar-1 {
+		width: 100%;
+	}
+	ul {
+		display: flex;
+		/* flex-direction: column; */
+		flex-wrap: wrap;
+	}
+	li {
+		flex: 1 0 21%;
+	}
+	.button {
+		display: none;
+	}
+}
 </style>

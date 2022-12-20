@@ -4,7 +4,7 @@
 			><div class="communities-status-release">
 				<img
 					v-if="!value.picture"
-					src="../../../img/default_inbox_avatar.png"
+					src="../../../img/default_subreddit_image.png"
 					alt="img"
 					class="communities-img"
 					@click="gotosub(value.subredditName)"
@@ -23,7 +23,20 @@
 						class="communities-content-release"
 						:href="'/r/' + value.subredditName"
 					>
-						<h6 class="communities-name">r/{{ value.subredditName }}</h6>
+						<h6
+							@mouseover="showitem"
+							@mouseout="notShowitem"
+							class="communities-name"
+						>
+							r/{{ value.subredditName }}
+						</h6>
+
+						<!-- <CardCommunity
+							id="Card"
+							:subreddit="value"
+							class="card_item"
+						></CardCommunity> -->
+
 						<p class="community-members">{{ value.numberOfMembers }} Members</p>
 					</a>
 				</div>
@@ -52,6 +65,7 @@
 <script>
 import BaseButton from '../BaseComponents/BaseButton.vue';
 import FollowJoin from './FollowJoin.vue';
+// import CardCommunity from './CardCommunity.vue';
 // import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
 export default {
 	props: {
@@ -69,11 +83,18 @@ export default {
 	components: {
 		BaseButton,
 		FollowJoin,
+		// CardCommunity,
 	},
 	created() {
 		this.showuser();
 	},
 	methods: {
+		notShowitem() {
+			document.getElementById('Card').style.display = 'none';
+		},
+		showitem() {
+			document.getElementById('Card').style.display = 'block';
+		},
 		showuser() {
 			this.notFollowed = this.value.joined;
 		},
@@ -236,5 +257,10 @@ p {
 	position: fixed;
 	bottom: 0;
 	right: 500px;
+}
+.card_item {
+	width: 10rem;
+	position: absolute;
+	display: none;
 }
 </style>
