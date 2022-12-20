@@ -12,6 +12,13 @@
 		>
 			<span class="ntf-msg-1" id="ntf-msg-1">
 				<img
+					v-if="notification.photo"
+					:src="$baseurl + '/' + notification.photo"
+					alt="image"
+					:id="'ntf-msg-2-photo-' + index"
+				/>
+				<img
+					v-else
 					src="../../../img/default_inbox_avatar.png"
 					alt="image"
 					:id="'ntf-msg-2-' + index"
