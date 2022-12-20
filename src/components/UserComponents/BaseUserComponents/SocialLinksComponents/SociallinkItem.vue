@@ -49,6 +49,11 @@ export default {
 				console.log(err);
 			}
 		},
+		watch: {
+			$route(newr) {
+				if (newr.path == 'profile/settings') console.log('profileSettings');
+			},
+		},
 	},
 	props: {
 		// @vuese

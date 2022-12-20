@@ -373,6 +373,7 @@
 							<the-insights
 								:id="postData.id"
 								@finish-loading="finishInsightLoading"
+								@start-loadin="startInsightLoading"
 							></the-insights>
 						</div>
 					</div>
@@ -480,6 +481,9 @@ export default {
 	},
 	emits: ['emitPopup'],
 	methods: {
+		startInsightLoading() {
+			this.insightsLoading = true;
+		},
 		finishInsightLoading() {
 			this.insightsLoading = false;
 		},
@@ -644,11 +648,12 @@ export default {
 		 */
 		async insightsPostToggle() {
 			// id
-			this.insightsLoading = true;
+			// this.insightsLoading = false;
+			// this.insightsLoading = true;
 			this.insightActive = !this.insightActive;
 			this.showPostContent = false;
 			// if (this.insightActive) await this.RequestInsightsData(id);
-			this.insightsLoading = false;
+			// this.insightsLoading = false;
 		},
 		/**
 		 * @vuese

@@ -47,13 +47,14 @@ export default {
 			required: true,
 		},
 	},
-	emits: ['finishLoading'],
+	emits: ['finishLoading', 'startLoading'],
 	async created() {
 		// console.log('req-insights');
 		await this.RequestInsightsData(this.id);
 	},
 	methods: {
 		async RequestInsightsData(id) {
+			this.$emit('startLoading', 5);
 			let response = null;
 			try {
 				response = await this.$store.dispatch('userposts/getInsightsData', {
@@ -65,8 +66,8 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.$emit('finishLoading');
-			console.log(response);
+			this.$emit('finishLoading', 5);
+			console.log('dd', response);
 			this.getInsightsData = response;
 		},
 	},

@@ -402,5 +402,8 @@ export default {
 		justify-content: center;
 		flex-wrap: wrap;
 	}
+	.buttons-section {
+		display: block;
+	}
 }
 </style>
