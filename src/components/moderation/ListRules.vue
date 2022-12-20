@@ -73,7 +73,7 @@
 				</div>
 				<div class="applies-to">
 					<div class="details-title">Created</div>
-					<div class="details-value">{{ rule.createdAt }}</div>
+					<div class="details-value">{{ handleTime }}</div>
 				</div>
 			</span>
 			<span class="box-span">
@@ -156,14 +156,45 @@ export default {
 			return this.$store.getters['moderation/listOfRules'];
 		},
 	},
+	beforeMount() {
+		this.calculateTime();
+	},
 	data() {
 		return {
 			viewDetails: false,
 			showAddRule: false,
 			showSureDelete: false,
+			handleTime: '',
 		};
 	},
 	methods: {
+		// @vuese
+		//calculate time
+		// @type object
+		calculateTime() {
+			// this.$store.dispatch('moderation/handleTime', {
+			// 	time: this.moderator.dateOfModeration,
+			// });
+
+			var currentDate = new Date();
+			var returnValue = '';
+			var myTime = new Date(this.rule.createdAt);
+			if (currentDate.getFullYear() != myTime.getFullYear()) {
+				returnValue = myTime.toJSON().slice(0, 10).replace(/-/g, '/');
+			} else if (currentDate.getMonth() != myTime.getMonth()) {
+				returnValue = currentDate.getMonth() - myTime.getMonth() + ' Month ago';
+			} else if (currentDate.getDate() != myTime.getDate()) {
+				returnValue = currentDate.getDate() - myTime.getDate() + ' Days ago';
+			} else if (currentDate.getHours() != myTime.getHours()) {
+				returnValue = currentDate.getHours() - myTime.getHours() + ' Hours ago';
+			} else if (currentDate.getMinutes() != myTime.getMinutes()) {
+				returnValue =
+					currentDate.getMinutes() - myTime.getMinutes() + ' Minutes ago';
+			} else {
+				returnValue = 'Just now';
+			}
+			this.handleTime = returnValue;
+		},
 		// @vuese
 		// Used to show rule details
 		// @arg no argument
