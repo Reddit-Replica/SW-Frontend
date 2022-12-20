@@ -483,7 +483,7 @@ export default {
 		const file = payload.file;
 		const baseurl = payload.baseurl;
 		const postInfo = new FormData();
-		postInfo.append('avatar', file);
+		postInfo.append('banner', file);
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/banner-image`,
 			{
