@@ -370,7 +370,7 @@ export default {
 				{
 					id: 0,
 					name: 'Profile Moderation',
-					toLink: '/about/edit/moderation',
+					toLink: '',
 				},
 				{
 					id: 1,
