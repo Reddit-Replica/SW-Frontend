@@ -586,17 +586,17 @@ export default {
 		});
 		const responseData = await response.json();
 		console.log(responseData);
-		if (response.status == 200) {
-			console.log(response);
-		} else if (response.status == 401) {
-			const error = new Error(responseData.error);
-			console.log(error);
-			throw error;
-		} else {
-			const error = new Error('server error');
-			console.log(error);
-			throw error;
-		}
-		return response.status;
+		// if (response.status == 200) {
+		// 	console.log(response);
+		// } else if (response.status == 401) {
+		// 	const error = new Error(responseData.error);
+		// 	console.log(error);
+		// 	throw error;
+		// } else {
+		// 	const error = new Error('server error');
+		// 	console.log(error);
+		// 	throw error;
+		// }
+		return { status: response.status, responseData: responseData };
 	},
 };
