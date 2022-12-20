@@ -34,10 +34,7 @@
 						</button>
 					</div>
 					<ul class="blocked-users">
-						<li
-							v-for="blockedUser in blockedUsersData.children"
-							:key="blockedUser.userId"
-						>
+						<li v-for="blockedUser in blockedUsers" :key="blockedUser.userId">
 							<div class="blocked-container">
 								<router-link
 									:to="`/user/${blockedUser.username}`"
@@ -195,17 +192,33 @@
 				</div>
 			</div> -->
 			<!-- </div> -->
+			<div class="positioning">
+				<SaveUnsavePopupMessage
+					v-for="message in popupMessages"
+					:key="message.id"
+					:typeid="message.postid"
+				>
+					{{ message.state }}
+				</SaveUnsavePopupMessage>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 import * as moment from 'moment';
+import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue';
+
 export default {
+	components: {
+		SaveUnsavePopupMessage,
+	},
 	data() {
 		return {
 			BlockedNewUserName: '',
 			focusInOut: 'focus-out',
+			popupMessages: [],
+			blockedUsers: [],
 			// blockedUsers: [
 			// 	{
 			// 		id: 1,
@@ -233,7 +246,8 @@ export default {
 		this.loading = true;
 		const requestStatus = await this.RequestListOfBlockedUsersData();
 		this.loading = false;
-		this.requestStatusHandler(requestStatus, 'ListOfBlockedUsersData');
+		if (requestStatus == 200) console.log('done fetched alist of users');
+		// this.requestStatusHandler(requestStatus, 'ListOfBlockedUsersData');
 	},
 	methods: {
 		/**
@@ -242,11 +256,23 @@ export default {
 		 * @arg no arg
 		 */
 		requestStatusHandler(requestStatus, st) {
-			if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
-			else if (requestStatus == 404) console.log(`Not found  ${st} `);
-			else if (requestStatus == 500) console.log(' internal server error');
-			else if (requestStatus == 401) console.log(' access denied');
-			else console.log(`Error !!!!  ${st} !!!!!`);
+			if (requestStatus == 200) {
+				// this.emitPopup('11', `Successfully  ${st}  a user`);
+				console.log(`Successfully fetched ${st} data`);
+			} else if (requestStatus == 404) {
+				console.log(`Not found  ${st} user `);
+				// this.emitPopup('11', `Not found a user with that name`);
+			} else if (requestStatus == 500) {
+				console.log(' internal server error');
+				// this.emitPopup('11', `internal server error`);
+			} else if (requestStatus == 401) {
+				console.log(' access denied');
+				// this.emitPopup('11', `access denied`);
+			} else {
+				console.log(`Error !!!!  ${st} !!!!!`);
+				// this.emitPopup('11', `Error !!!!  ${st} !!!!!`);
+			}
+			// this.emitPopup('11', `Error !!!!  ${st} !!!!!`);
 		},
 		/**
 		 * @vuese
@@ -273,6 +299,8 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
+			this.blockedUsers =
+				this.$store.getters['user/getBlockedUsersData'].children;
 			return requestStatus;
 		},
 		/**
@@ -282,21 +310,30 @@ export default {
 		 */
 		async addBlockedUser() {
 			let requestStatus = -1;
-			try {
-				requestStatus = await this.$store.dispatch('user/blockUnblockUser', {
-					baseurl: this.$baseurl,
-					blockUnblockData: {
-						username: this.BlockedNewUserName,
-						block: true,
-					},
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
+			if (this.activeAddButton) {
+				try {
+					requestStatus = await this.$store.dispatch('user/blockUnblockUser', {
+						baseurl: this.$baseurl,
+						blockUnblockData: {
+							username: this.BlockedNewUserName,
+							block: true,
+						},
+					});
+				} catch (error) {
+					this.error = error.message || 'Something went wrong';
+				}
+				if (requestStatus == 200)
+					this.emitPopup('1', `${this.BlockedNewUserName} is now blocked`);
+				else {
+					this.emitPopup('1', `An error has occured. Please try again later`);
+				}
+				this.BlockedNewUserName = '';
+				this.focusInOut = 'focus-out';
+				this.requestStatusHandler(requestStatus, 'block');
+				await this.RequestListOfBlockedUsersData();
+				this.blockedUsers =
+					this.$store.getters['user/getBlockedUsersData'].children;
 			}
-			this.RequestListOfBlockedUsersData();
-			this.BlockedNewUserName = '';
-			this.focusInOut = 'focus-out';
-			this.requestStatusHandler(requestStatus, 'blockUnblockUser');
 		},
 		/**
 		 * @vuese
@@ -316,7 +353,20 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			this.requestStatusHandler(requestStatus, 'removeBlockedUser');
+			this.requestStatusHandler(requestStatus, 'remove');
+			if (requestStatus == 200)
+				this.emitPopup('1', `${blockUsername} is now unblocked`);
+			else {
+				this.emitPopup('1', `An error has occured. Please try again later`);
+			}
+			if (requestStatus == 200) {
+				for (let i = 0; i < this.blockedUsers.length; i++) {
+					if (this.blockedUsers[i].username == blockUsername) {
+						this.blockedUsers.splice(i, 1);
+					}
+					break;
+				}
+			}
 		},
 		/**
 		 * @vuese
@@ -329,6 +379,17 @@ export default {
 			} else {
 				this.focusInOut = 'focus-in';
 			}
+		},
+		emitPopup(id, message) {
+			this.popupMessages.push({
+				id: this.popupMessages.length,
+				postid: id,
+				type: 'post',
+				state: message,
+			});
+			setTimeout(() => {
+				this.popupMessages.shift();
+			}, 10000);
 		},
 	},
 	computed: {
@@ -349,6 +410,7 @@ export default {
 		 * @arg no arg
 		 */
 		blockedUsersData() {
+			// this.blockedUser = this.$store.getters['user/getBlockedUsersData'];
 			return this.$store.getters['user/getBlockedUsersData'];
 		},
 	},

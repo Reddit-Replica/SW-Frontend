@@ -332,7 +332,7 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			return;
+			return 200;
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -369,7 +369,7 @@ export default {
 		const responseData = await response.json();
 
 		if (response.status == 200) {
-			return;
+			return 200;
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error || 'Bad Request');
 			if (error.message == 'Owner of the subreddit can not leave') {

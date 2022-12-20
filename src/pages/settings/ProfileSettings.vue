@@ -1,5 +1,5 @@
 <template>
-	<div class="settings-page">
+	<div class="settings-page" style="min-height: 100vh">
 		<div class="settings-block">
 			<h2 class="h2-main-title">Customize profile</h2>
 			<h3 class="h3-main-title">PROFILE INFORMATION</h3>
