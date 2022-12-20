@@ -304,20 +304,21 @@ export default {
 				baseurl: this.$baseurl,
 			};
 			console.log('enter get user data');
+			let response;
 			try {
-				const response = await this.$store.dispatch(
-					'user/getUserData',
+				response = await this.$store.dispatch(
+					'user/getUserTempData',
 					actionPayload
 				);
 
-				if (response == 200) {
-					console.log(response);
-					console.log('    user data الحمد لله زى الفل');
-				}
+				// if (response == 200) {
+				// 	console.log(response);
+				// 	console.log('    user data الحمد لله زى الفل');
+				// }
 			} catch (err) {
 				console.log(this.err);
 			}
-			this.userData = this.$store.getters['user/getUserData'].userData;
+			this.userData = response;
 		},
 		async loadSubredditInfo() {
 			console.log('hello');
