@@ -43,7 +43,7 @@
 					@mouseover="showPCardM"
 					@mouseleave="hidePCardM"
 					v-if="post.postedBy != undefined"
-					:to="{ name: 'user', params: { userName: post.postedBy } }"
+					:to="'/user/' + post.postedBy + '/'"
 					id="post-by-router"
 				>
 					{{ post.postedBy }}
