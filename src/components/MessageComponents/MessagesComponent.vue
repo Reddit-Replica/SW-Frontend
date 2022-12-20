@@ -3,7 +3,7 @@
 		<li>
 			<p class="subject-text">
 				<a
-					:href="'/user/' + message.subjectTitle"
+					:href="'/user/' + message.subjectTitle + '/'"
 					:id="'message-sender-' + index"
 					class="sender-box"
 					v-if="message.isUser"

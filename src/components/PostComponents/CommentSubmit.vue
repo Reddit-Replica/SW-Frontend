@@ -180,7 +180,7 @@ export default {
 				// this.$refs.myQuillEditor.getContents().ops,
 				{
 					insert: 'u/' + userName,
-					attributes: { link: '/user/' + userName },
+					attributes: { link: '/user/' + userName + '/' },
 				},
 			]);
 			this.mentionedUser = '';
@@ -213,8 +213,8 @@ export default {
 					parentId: this.parentId,
 					parentType: this.parentType,
 					level: this.level,
-					subredditName: this.subredditName,
-					haveSubreddit: this.subredditName != '',
+					subredditName: this.$route.params.subredditName,
+					haveSubreddit: this.$route.params.subredditName != undefined,
 				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';

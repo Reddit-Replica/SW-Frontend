@@ -122,6 +122,7 @@
 					:current-text="newComment"
 					@save-editing="saveEditing"
 					@cancel-editing="cancelEditing"
+					:subreddit-name="this.$route.params.subredditName"
 				/>
 				<comment-submit
 					type="Reply"
