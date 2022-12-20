@@ -3,14 +3,16 @@
 		<div class="subreddit-info">
 			<span class="subreddit-image">
 				<img
-					v-if="post.subreddit != undefined && post.picture != undefined"
-					:src="$baseurl + '/' + post.picture"
-					alt=""
-				/>
-				<img
 					src="../../../img/default_subreddit_image.png"
 					alt=""
-					v-if="post.subreddit != undefined && post.picture == undefined"
+					v-if="post.subreddit != undefined && subreddit.picture == undefined"
+				/>
+				<img
+					v-else-if="
+						post.subreddit != undefined && subreddit.picture != undefined
+					"
+					:src="$baseurl + '/' + post.picture"
+					alt=""
 				/>
 			</span>
 			<span class="subreddit-name" v-if="post.subreddit != undefined">
@@ -44,8 +46,8 @@
 					class="flair"
 					:button-text="post.flair.flairName"
 					:style="{
-						color: flair.textColor,
-						background: flair.backgroundColor,
+						color: post.flair.textColor,
+						background: post.flair.backgroundColor,
 					}"
 				/>
 			</h3>
@@ -120,12 +122,26 @@ export default {
 
 	// 	}
 	// },
-	created() {
+	async beforeMount() {
 		//document.querySelector('img.ql-image').style.width = '100%';
 		//var element = document.querySelector('img.ql-image');
 		// var element = document.querySelector('img');
 		// Set style attribute with properties for the selected element
 		// element.setAttribute('style', 'width:100%');
+		if (this.post.subreddit != undefined) {
+			const accessToken = localStorage.getItem('accessToken');
+			await this.$store.dispatch('community/getSubreddit', {
+				subredditName: this.post.subreddit,
+				baseurl: this.$baseurl,
+				token: accessToken,
+			});
+			this.subreddit = this.$store.getters['community/getSubreddit'];
+		}
+	},
+	data() {
+		return {
+			subreddit: {},
+		};
 	},
 	name: 'PostContent',
 	components: {

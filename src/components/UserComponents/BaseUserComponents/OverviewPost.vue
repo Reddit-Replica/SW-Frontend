@@ -68,7 +68,7 @@
 									</span>
 									<span style="width: 100%; height: 100%" v-else>
 										<img
-											v-if="getUserData.userData.picture != null"
+											v-if="0 && getUserData.userData.picture != null"
 											:src="$baseurl + '/' + getUserData.userData.picture"
 											alt=""
 										/>
@@ -428,11 +428,14 @@ export default {
 	 * @arg no arg
 	 */
 	async beforeMount() {
-		if (this.postData.data.subreddit != null) {
-			await this.getSubreddit();
-			console.log('aaa', this.subredditData);
-		}
-		await this.fetchUserCardPicture();
+		// if (
+		// 	this.postData.data.subreddit != null &&
+		// 	this.postData.data.subreddit != 'string'
+		// ) {
+		// 	await this.getSubreddit();
+		// 	console.log('aaa', this.subredditData);
+		// }
+		// await this.fetchUserCardPicture();
 	},
 	computed: {
 		/**
@@ -461,17 +464,17 @@ export default {
 	},
 	methods: {
 		async fetchUserCardPicture() {
-			let responseData = null;
-			try {
-				responseData = await this.$store.dispatch('user/getUserTempData', {
-					baseurl: this.$baseurl,
-					userName: this.postData.data.postedBy,
-				});
-			} catch (error) {
-				this.error = error.message || 'Something went wrong';
-			}
-			if (responseData != null) this.userCardData = responseData;
-			console.log(this.userData);
+			// let responseData = null;
+			// try {
+			// 	responseData = await this.$store.dispatch('user/getUserTempData', {
+			// 		baseurl: this.$baseurl,
+			// 		userName: this.postData.data.postedBy,
+			// 	});
+			// } catch (error) {
+			// 	this.error = error.message || 'Something went wrong';
+			// }
+			// if (responseData != null) this.userCardData = responseData;
+			// console.log(this.userData);
 		},
 		/**
 		 * @vuese
