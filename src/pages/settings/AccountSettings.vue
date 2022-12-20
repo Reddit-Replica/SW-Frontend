@@ -581,11 +581,21 @@
 		</base-dialog>
 		<base-dialog :show="changeEmailDialog" @close="cancelChangeEmail">
 			<template #header>
-				<font-awesome-icon
-					icon="fa-solid fa-envelope-circle-check"
-					class="change-email-header-icon"
-				/>
-				<p class="change-email-header">Update your email</p>
+				<div class="d-flex CE-header">
+					<div>
+						<font-awesome-icon
+							icon="fa-solid fa-envelope-circle-check"
+							class="change-email-header-icon"
+						/>
+						<p class="change-email-header">Update your email</p>
+					</div>
+					<div>
+						<font-awesome-icon
+							icon="fa-solid fa-x"
+							@click="cancelChangeEmail"
+						/>
+					</div>
+				</div>
 			</template>
 			<div class="change-email">
 				<p>
@@ -597,6 +607,7 @@
 					placeholder="CURRENT PASSWORD"
 					v-model="newPass"
 				/>
+				<p class="change-email-error">{{ changeEmailError }}</p>
 				<input type="email" placeholder="NEW EMAIL" v-model="newEmail" />
 				<base-button
 					button-text="Save email"
@@ -619,6 +630,7 @@ export default {
 	},
 	data() {
 		return {
+			changeEmailError: '',
 			changeEmailDialog: false,
 			incorrectPassword: '',
 			fieldEmpty: '',
@@ -653,11 +665,17 @@ export default {
 	methods: {
 		async saveEmail() {
 			try {
-				await this.$store.dispatch('setting/changeEmail', {
+				let response = await this.$store.dispatch('setting/changeEmail', {
 					baseurl: this.$baseurl,
 					currentPassword: this.newPass,
 					newEmail: this.newEmail,
 				});
+				if (response.status != 200)
+					this.changeEmailError =
+						response.responseData.error != undefined
+							? response.responseData.error
+							: response.responseData;
+				console.log(response);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
@@ -1151,6 +1169,7 @@ span.error {
 	border: 1px solid var(--color-grey-dark-5);
 	border-radius: 6px;
 	margin: 10px 0;
+	font-size: 12px;
 }
 .change-email p {
 	font-size: 14px;
@@ -1163,5 +1182,17 @@ span.error {
 	font-size: 34px;
 	color: var(--color-blue-3);
 	padding: 2px;
+}
+p.change-email-error {
+	margin-right: auto;
+	font-size: 8px;
+	color: red;
+}
+.CE-header {
+	width: 100%;
+	justify-content: space-between;
+}
+.CE-header div:first-of-type {
+	display: flex;
 }
 </style>
