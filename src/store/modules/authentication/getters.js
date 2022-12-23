@@ -6,6 +6,7 @@
  * @getter {object} getAccessToken=accessToken Returns The access Token.
  * @getter {object} getResponse=response Returns response from API.
  * @getter {object} getRandomUsers=RandomUsers Returns the random users.
+ * @getter {object} gettype=type Returns the Typed The user Signed In.
  */
 export default {
 	getUserName(state) {

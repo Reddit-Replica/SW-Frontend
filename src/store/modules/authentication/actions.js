@@ -242,9 +242,9 @@ export default {
 		}
 	},
 	/**
-	 * action for LogIn and signup with google and send request
+	 * action for LogIn and signup with google or FaceBook and send request
 	 * @action  googleSign
-	 * @param {Object} payload type and id_token from google .
+	 * @param {Object} payload type and id_token from google or faceBook .
 	 * @returns {void}
 	 */
 	async googleSign(context, payload) {
@@ -353,7 +353,7 @@ export default {
 	/**
 	 * action for verify Email
 	 * @action  verifyEmail
-	 * @param {Object} payload id & token .
+	 * @param {Object} payload Userid & token .
 	 * @returns {void}
 	 */
 	async verifyEmail(context, payload) {

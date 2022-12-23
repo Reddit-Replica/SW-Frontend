@@ -9,7 +9,7 @@ export default {
 	/**
 	 * action for Search for Posts
 	 * @action  SearchPost
-	 * @param {Object} payload querey .
+	 * @param {Object} payload querey, sorting, time Types.
 	 * @returns {void}
 	 */
 	async SearchPost(context, payload) {
@@ -300,7 +300,7 @@ export default {
 	/**
 	 * Action for joining a specific subreddit.
 	 * @action joinSubreddit
-	 * @param {Object} contains subreddit id and base url.
+	 * @param {Object} payload subreddit id.
 	 * @returns {void}
 	 */
 	async joinSubreddit(_, payload) {
@@ -336,7 +336,7 @@ export default {
 	/**
 	 * Action for leaving a specific subreddit.
 	 * @action leaveSubreddit
-	 * @param {Object} contains subreddit name and base url.
+	 * @param {Object} payload subreddit name.
 	 * @returns {void}
 	 */
 	async leaveSubreddit(_, payload) {
