@@ -164,15 +164,24 @@ export default {
 		};
 	},
 	watch: {
+		// @vuese
+		// watch Subreddit
+		// @arg The argument is an string value representing Subreddit
 		getSubreddit(value) {
 			this.subreddit = value;
 			this.getPostsettings();
 		},
+		// @vuese
+		// watch flairId
+		// @arg The argument is an string value representing flairId
 		flairId(value) {
 			this.flairId = value;
 			this.setFlairId();
 		},
 	},
+	// @vuese
+		//return the Subreddit
+		// @type string
 	computed: {
 		getSubreddit() {
 			var a = this.$store.getters['posts/getSubreddit'];
@@ -180,29 +189,38 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		// toggle Nsfw
 		toggleNsfw() {
 			this.nsfw = !this.nsfw;
 			this.$store.commit('posts/setNsfw', {
 				nsfw: this.nsfw,
 			});
 		},
+		// @vuese
+		// toggle Spoiler
 		toggleSpoiler() {
 			this.spoiler = !this.spoiler;
 			this.$store.commit('posts/setSpoiler', {
 				spoiler: this.spoiler,
 			});
 		},
+		// @vuese
+		// set FlairId
 		setFlairId() {
 			this.$store.commit('posts/setFlairId', {
 				flairId: this.flairId,
 			});
 		},
+		// @vuese
+		// get Flairs
 		getFlairs() {
 			this.flairs = this.$store.getters['moderation/listOfFlairs'];
 			console.log('this.flairs');
 			console.log(this.flairs);
 		},
-
+        // @vuese
+		// get Post settings
 		async getPostsettings() {
 			this.insubreddit = await this.$store.getters['posts/getinSubreddit'];
 			if (this.insubreddit) {
@@ -242,6 +260,9 @@ export default {
 		// 	console.log(this.flairColor);
 		// 	console.log(this.flairBackground);
 		// },
+
+		  // @vuese
+		// switch Select
 		switchSelect(event) {
 			let selected = event.target.value;
 			for (let i = 0; i < this.flairs.length; i++) {
