@@ -42,6 +42,8 @@ export default {
 		NotificationMessage,
 		SaveUnsavePopupMessage,
 	},
+	//@vuese
+	//Check if user not logged in to redirect to login page or to load notifications
 	beforeMount() {
 		if (localStorage.getItem('accessToken') == null)
 			this.$router.push('/login');
@@ -57,14 +59,21 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//username of logged in user
 		userName() {
 			return localStorage.getItem('userName');
 		},
+		//@vuese
+		//check if ther is no notification
 		noNotifications() {
 			return this.notifications.length === 0;
 		},
 	},
 	methods: {
+		//@vuese
+		//load all notifications
+		//@arg no argument
 		async loadAllNotifications() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('notifications/getAllNotifications', {
@@ -74,9 +83,15 @@ export default {
 			this.notifications =
 				this.$store.getters['notifications/getNotifications'];
 		},
+		//@vuese
+		//reload and get notifications to get new data
+		//@arg no argument
 		reloadPage() {
 			this.loadAllNotifications();
 		},
+		//@vuese
+		//show pop up to confirm action
+		//@arg no argument
 		showPop() {
 			this.doneHide = true;
 			setTimeout(() => {

@@ -105,7 +105,7 @@ export default {
 			console.log('this.enableSpoiler');
 			console.log(this.enableSpoiler);
 		},
-         // @vuese
+		// @vuese
 		// get allow Images In Comment
 		// @arg The argument is a Boolean value representing allow Images In Comment
 		getallowImagesInComment(value) {
@@ -139,7 +139,7 @@ export default {
 				console.log(err);
 			}
 		},
-         	// @vuese
+		// @vuese
 		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {

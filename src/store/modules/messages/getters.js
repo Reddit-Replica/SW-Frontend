@@ -15,6 +15,9 @@
  * @getter {boolean} blockSuccessfully=blockSuccessfully Returns boolean contain if block Successfully.
  * @getter {boolean} votedSuccessfully=votedSuccessfully Returns boolean contain if voted Successfully.
  * @getter {boolean} replyMessageSuccessfully=replyMessageSuccessfully Returns boolean contain if reply Message Successfully.
+ * @getter {boolean} addSuccessfully=addSuccessfully Returns boolean contain if reply comment Successfully.
+ * @getter {string} before=before Returns string contain id of the element I want to get before
+ * @getter {string} after=after Returns string contain id of the element I want to get after
  */
 
 export default {

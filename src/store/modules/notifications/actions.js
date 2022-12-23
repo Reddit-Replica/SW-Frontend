@@ -9,7 +9,13 @@ import {
 // import axios from 'axios';
 import { register as registerSW } from 'register-service-worker';
 import store from '@/store';
+
 export default {
+	/**
+	 * Action for getting all notifications .
+	 * @action getAllNotifications=setNotifications, setUnreadCount
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getAllNotifications(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -37,6 +43,11 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Action for getting ten notifications .
+	 * @action getSomeNotifications=setSomeNotifications
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getSomeNotifications(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -63,6 +74,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for hiding a notification .
+	 * @action hideNotification=setHiddenSuccessfully
+	 * @param {Object} contains notification id and base url.
+	 * @returns {void} */
 	async hideNotification(context, payload) {
 		context.commit('setHiddenSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -90,6 +107,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for reading a notification .
+	 * @action readNotification=setReadSuccessfully
+	 * @param {Object} contains notification id and base url.
+	 * @returns {void} */
 	async readNotification(context, payload) {
 		context.commit('setReadSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -117,6 +140,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for reading all notifications.
+	 * @action markAllRead=setAllRead
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async markAllRead(context, payload) {
 		context.commit('setAllRead', false);
 		const baseurl = payload.baseurl;
@@ -142,6 +171,11 @@ export default {
 		}
 	},
 
+	/**
+	 * Action for checking if notifications token exists or not.
+	 * @action createNotificationToken=setClientToken
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async createNotificationToken(context, payload) {
 		console.log('creation');
 
@@ -156,6 +190,11 @@ export default {
 		}
 	},
 
+	/**
+	 * Action for creating notifications token.
+	 * @action registerServiceWorker
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async registerServiceWorker(_, payload) {
 		console.log('registerServiceWorker');
 		// const host = payload.host;
@@ -222,6 +261,12 @@ export default {
 			});
 		}
 	},
+
+	/**
+	 * Action for sending notifications token to the server if signed up.
+	 * @action sendTokenToServer
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async sendTokenToServer(_, payload) {
 		console.log('send');
 
@@ -249,6 +294,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for listenning and showing notifications messages.
+	 * @action listenForegroundMessage
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async listenForegroundMessage(reg) {
 		// const host = payload.host;
 		if (!reg)
@@ -284,6 +335,12 @@ export default {
 				);
 		});
 	},
+
+	/**
+	 * Action for removing notifications token from the server if logged out.
+	 * @action sendTokenToServer
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async removeNotificationToken(_, payload) {
 		console.log('removing');
 

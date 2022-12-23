@@ -277,7 +277,7 @@ export default {
 		};
 	},
 	methods: {
-		 // @vuese
+		// @vuese
 		// get adult Content
 		// @arg The argument is a Boolean value representing adult Content
 		getadultContent(value) {
@@ -286,7 +286,7 @@ export default {
 			console.log(this.adultContent);
 			this.changeadultContent();
 		},
-		 // @vuese
+		// @vuese
 		// get autoplay Media
 		// @arg The argument is a Boolean value representing  autoplay Media
 		getautoplayMedia(value) {
@@ -340,7 +340,7 @@ export default {
 				console.log(err);
 			}
 		},
-			// @vuese
+		// @vuese
 		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
@@ -367,7 +367,7 @@ export default {
 			console.log(this.adultContent);
 			console.log(this.autoplayMedia);
 		},
-			// @vuese
+		// @vuese
 		//send a request to get the settings
 		doneSuccessfully(title) {
 			this.savePost(title);
