@@ -151,7 +151,7 @@ export default {
 	},
 	// emits: ['checked'],
 	methods: {
-		 // @vuese
+		// @vuese
 		// get new Follower Email
 		// @arg The argument is a Boolean value representing new Follower Email
 		getnewFollowerEmail(value) {
@@ -160,7 +160,7 @@ export default {
 			console.log(this.newFollowerEmail);
 			this.changenewFollowerEmail();
 		},
-		 // @vuese
+		// @vuese
 		// get unsubscribe From Emails
 		// @arg The argument is a Boolean value representing unsubscribe From Emails
 		getunsubscribeFromEmails(value) {
@@ -214,7 +214,7 @@ export default {
 				console.log(err);
 			}
 		},
-			// @vuese
+		// @vuese
 		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
@@ -242,7 +242,7 @@ export default {
 			console.log(this.unsubscribeFromEmails);
 		},
 		////////////////////////////////
-			// @vuese
+		// @vuese
 		//send a request to get the settings
 		doneSuccessfully(title) {
 			this.savePost(title);

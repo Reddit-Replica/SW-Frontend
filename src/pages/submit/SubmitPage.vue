@@ -186,7 +186,6 @@ export default {
 		// 	if (value) this.buttonDisabled = false;
 		// },
 
-
 		Title(value) {
 			console.log(value);
 			// this.enable();
