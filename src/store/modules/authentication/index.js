@@ -8,10 +8,11 @@ export default {
 	 * The Vuex 'AuthenticationState' object.
 	 * @name AuthenticationState
 	 * @type {object}
-	 * @property {Object} userName contains User-Name logged In .
-	 * @property {Object} accessToken contains Access Token.
-	 * @property {Object} response This is the response from Server.
+	 * @property {String} userName contains User-Name logged In .
+	 * @property {String} accessToken contains Access Token.
+	 * @property {String} response This is the response from Server.
 	 * @property {Object} RandomUsers This is the RandomUsers from Sign-Up Page to sign up.
+	 * @property {String} type This is the Type The user Signed In.
 	 */
 	state() {
 		return {

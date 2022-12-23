@@ -25,8 +25,8 @@ export default {
 		}
 	},
 	/**
-	 * Action for creating Post
-	 * @action createPost
+	 * Action for createpostHybrid
+	 * @action  createpostHybrid
 	 * @param {Object} payload post data and base url.
 	 * @returns {void}
 	 */
@@ -71,6 +71,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for createpostLink
+	 * @action  createpostLink
+	 * @param {Object} payload post data and base url.
+	 * @returns {void}
+	 */
 	async createpostLink(context, payload) {
 		const postInfo = {
 			title: payload.title,
@@ -108,6 +114,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for createpostImage
+	 * @action  createpostImage
+	 * @param {Object} payload post data and base url.
+	 * @returns {void}
+	 */
 	async createpostImage(context, payload) {
 		const postInfo = new FormData();
 		postInfo.append('title', payload.title);
@@ -162,6 +174,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for createpostVideo
+	 * @action  createpostVideo
+	 * @param {Object} payload post data and base url.
+	 * @returns {void}
+	 */
 	async createpostVideo(context, payload) {
 		const postInfo = new FormData();
 		let videos = [];
@@ -200,7 +218,7 @@ export default {
 		return response.status;
 	},
 	/**
-	 * Action for checking if subreddit name is used before.
+	 * Action for get Allsubreddits that the user is member in
 	 * @action getAllsubreddits
 	 * @param {Object} payload base url.
 	 * @returns {void}
@@ -226,6 +244,12 @@ export default {
 		}
 		return response.status;
 	},
+		/**
+	 * Action for createSharedpost
+	 * @action  createSharedpost
+	 * @param {Object} payload post data and base url.
+	 * @returns {void}
+	 */
 	async createSharedpost(context, payload) {
 		const postInfo = {
 			title: payload.title,
