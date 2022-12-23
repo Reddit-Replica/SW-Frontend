@@ -261,6 +261,8 @@ export default {
 				this.choosenSecondTitle = 'Month';
 			}
 		},
+		// @vuese
+		// get the traffic status
 		async getStates() {
 			const actionPayload = {
 				subreddit: this.subredditName,
