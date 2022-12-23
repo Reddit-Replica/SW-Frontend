@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import SearchPage from '../../src/pages/search/SearchPage.vue';
+import SearchPage from '../../src/pages/search/SearchUsers.vue';
 import Vuex from 'vuex';
 
 import { describe, it, expect } from 'vitest';
@@ -9,7 +9,7 @@ describe('SearchPage', () => {
             searchingModule: {
                 namespaced: true,
                 state: {
-                    post: {
+                    posts: {
                         id: '2sd22das',
                         dataId: '2sd22das',
                         postId: 'sdf2321f',
@@ -19,7 +19,7 @@ describe('SearchPage', () => {
                         votes: 32,
                         postedBy: 'karimsaqer',
                         postedAt: '2022-08-24',
-                    },
+                    }
                 },
             },
         },
@@ -48,7 +48,7 @@ describe('SearchPage', () => {
                 // OR:
                 mocks: {
                     $route: {
-                        name: 'searchcoms',
+                        name: 'search',
                     },
                     $store: store,
                 },
