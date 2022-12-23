@@ -1,5 +1,6 @@
 /**
  * The module 'setters' object.
+<<<<<<< HEAD
  * @name ModerartorsMutations
  * @type {object}
  * @mutator {object} setListOfModerators=listOfModerators Sets the state object property.
@@ -33,6 +34,16 @@
  * @mutator {object} setListOfBanned=listOfBanned Sets the state object property.
  * @mutator {boolean} banUserSuccessfully=banUserSuccessfully Sets the state boolean property.
  * @mutator {boolean} unBanUserSuccessfully=unBanUserSuccessfully Sets the state boolean property.
+=======
+ * @name ModeratorsMutations
+ * @type {object}
+ * @mutator {object} setListOfSpams=Spams Sets the state object property.
+ * @mutator {object} approveSuccessfully=approveSuccessfully Sets the state object property.
+ * @mutator {object} setUnmoderated=Unmoderated Sets the state object property.
+ * @mutator {object} setEditedPosts=EditedPosts Sets the state object property.
+ * @mutator {object} setEditedComments=EditedComments Sets the state object property.
+ * @mutator {Object} setRemoved=Removed Sets the state object property.
+>>>>>>> db2e657711a80da19269a61fd2728c2a5df11ab5
  */
 export default {
 	setListOfModerators(state, payload) {

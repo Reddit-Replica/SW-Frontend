@@ -310,6 +310,11 @@ export default {
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
 		},
+		/**
+		 * @vuese
+		 * Request Remove Post or Comment.
+		 * @arg No arg.
+		 */
 		async removeFunction() {
 			try {
 				let typing = '';
@@ -332,6 +337,11 @@ export default {
 				this.errorResponse = err;
 			}
 		},
+		/**
+		 * @vuese
+		 * Request Approve Post or Comment.
+		 * @arg No arg.
+		 */
 		async approveFunction() {
 			try {
 				await this.$store.dispatch('moderation/approvedSpam', {

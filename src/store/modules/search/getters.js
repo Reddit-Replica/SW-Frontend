@@ -2,6 +2,13 @@
  * The module 'MessagesStore' object.
  * @name SearchGetters
  * @type {object}
+ * @getter {object} Getsubreddits=subreddits Returns Object contain subreddits.
+ * @getter {object} Getusers=users Returns Object contain users.
+ * @getter {object} GetPosts=posts Returns Object contain posts.
+ * @getter {object} GetComments=comments Returns Object contain commetns.
+ * @getter {String} GetQuery=Query Returns String contain query.
+ * @getter {object} limitedSubs=limitedsubs Returns Object contain limitedSubs.
+ * @getter {object} limitedUsers=limitedusers Returns Object contain limitedusers.
  */
 export default {
 	Getsubreddits(state) {

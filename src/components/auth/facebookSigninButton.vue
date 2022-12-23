@@ -26,6 +26,11 @@ export default {
 		return {};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * Request To Sign With FaceBook.
+		 * @arg No arg.
+		 */
 		async signUpWithFacebook() {
 			this.errorMessage = '';
 			this.errorState = false;
@@ -46,6 +51,11 @@ export default {
 				{ scope: 'public_profile,email' }
 			);
 		},
+		/**
+		 * @vuese
+		 * Request To Send AccessToken From FaceBook.
+		 * @arg No arg.
+		 */
 		async sendAccessToken(token) {
 			try {
 				const actionPayload = {

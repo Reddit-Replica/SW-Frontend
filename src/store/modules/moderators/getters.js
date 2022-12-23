@@ -1,4 +1,5 @@
 /**
+<<<<<<< HEAD
  * The module 'MessagesStore' object.
  * @name ModeratorsGetters
  * @type {object}
@@ -31,6 +32,17 @@
  * @getter {boolean} updateFlairsSuccessfully=updateFlairsSuccessfully Returns boolean contain if flairs order updated Successfully.
  * @getter {boolean} banUserSuccessfully=banUserSuccessfully Returns boolean contain if banned user Successfully.
  * @getter {boolean} unBanUserSuccessfully=unBanUserSuccessfully Returns boolean contain if unbann user Successfully.
+=======
+ * The module 'Moderators' object.
+ * @name moderatorsGetters
+ * @type {object}
+ * @getter {object} listOfSpams=Spams Returns Object contain Spams.
+ * @getter {object} approveSuccessfully=approvesSuccess Returns Object contain approvesSuccess Posts and Comments.
+ * @getter {object} Unmoderated=Unmoderatedposts Returns Object contain Unmoderated posts and comments.
+ * @getter {object} EditedPosts=EditedPosts Returns Object contain EditedPosts.
+ * @getter {Object} EditedComments=EditedComments Returns object contain EditedComments.
+ * @getter {object} Removed=Removed Returns Object contain Removed posts or comments.
+>>>>>>> db2e657711a80da19269a61fd2728c2a5df11ab5
  */
 export default {
 	listOfModerators(state) {

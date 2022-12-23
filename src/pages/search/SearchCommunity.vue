@@ -111,15 +111,25 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		// Get The Search Results of Communities
+		// @arg no argument
+		// @type Object
 		SearchedCms() {
 			console.log(this.$store.getters['search/Getsubreddits']);
 			return this.$store.getters['search/Getsubreddits'];
 		},
-
+		// @vuese
+		// Get The UserName
+		// @arg no argument
+		// @type String
 		userName() {
 			return localStorage.getItem('userName');
 		},
 	},
+	// @vuese
+	// before Mount check the accessToken then load the search results
+	// @arg no argument
 	async beforeMount() {
 		if (localStorage.getItem('accessToken')) {
 			this.loading = true;
@@ -127,10 +137,16 @@ export default {
 		}
 		this.loading = false;
 	},
+	// @vuese
+	// while create do the search
+	// @arg no argument
 	created() {
 		this.search();
 	},
 	methods: {
+		// @vuese
+		// request the Searched Subreddits with the query
+		// @arg no argument
 		async search() {
 			try {
 				await this.$store.dispatch('search/SearchSubreddit', {
@@ -141,6 +157,9 @@ export default {
 				console.log(error);
 			}
 		},
+		// @vuese
+		// Joined toggling
+		// @arg Data "the new value joined or not"
 		toggle(id) {
 			for (let i = 0; i < this.SearchedCms.length; i++) {
 				if (this.SearchedCms[i].id == id) {
@@ -148,6 +167,9 @@ export default {
 				}
 			}
 		},
+		// @vuese
+		// Go to Next type of data URL
+		// @arg value "Next type of data Name"
 		goSearch(value) {
 			if (value == 'posts') {
 				this.$router.push({
@@ -166,6 +188,9 @@ export default {
 				});
 			}
 		},
+		// @vuese
+		// Go to Subreddit URL
+		// @arg value "Subreddit Name"
 		gotosub(subredditName) {
 			this.$router.push('/r/' + subredditName);
 		},

@@ -2,6 +2,13 @@
  * The module 'setters' object.
  * @name SearchMutations
  * @type {object}
+ * @mutator {object} setUsers=users Sets the state object property.
+ * @mutator {object} setSubreddits=subreddits Sets the state object property.
+ * @mutator {object} setlimitedUsers=limitedusers Sets the state object property.
+ * @mutator {object} setlimitedSubreddits=limitedsubreddits Sets the state object property.
+ * @mutator {object} setPosts=posts Sets the state object property.
+ * @mutator {String} setSearchQuery=searchingQuery Sets the state object property.
+ * @mutator {object} setComments=Comments Sets the state object property.
  */
 export default {
 	setUsers(state, payload) {

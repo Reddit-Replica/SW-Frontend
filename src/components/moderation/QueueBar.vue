@@ -157,6 +157,11 @@ export default {
 		};
 	},
 	watch: {
+		/**
+		 * @vuese
+		 * Filter The Spaming and Editing.
+		 * @arg Value of first Title.
+		 */
 		titleFirst(value) {
 			if (value == 'Older First' && this.title == 'Unmoderated') {
 				this.unmod('old');
@@ -172,6 +177,11 @@ export default {
 				this.spam('new');
 			}
 		},
+		/**
+		 * @vuese
+		 * Filter The Spaming and Editing.
+		 * @arg Value of second Title.
+		 */
 		titleSecond(value) {
 			if (value == 'Posts') {
 				this.editing('posts');
@@ -184,6 +194,11 @@ export default {
 	},
 	emits: ['getarr'],
 	methods: {
+		/**
+		 * @vuese
+		 * Request Spaming with only filter.
+		 * @arg Value of only.
+		 */
 		async spaming(value) {
 			try {
 				let temp;
@@ -199,6 +214,11 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		/**
+		 * @vuese
+		 * Request Spaming with Time filter.
+		 * @arg Value of time.
+		 */
 		async spam(value) {
 			try {
 				let temp;
@@ -214,6 +234,11 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
+		/**
+		 * @vuese
+		 * Emitting the editing array.
+		 * @arg Value of array.
+		 */
 		editing(value) {
 			this.$emit('getarr', value);
 		},
@@ -264,6 +289,11 @@ export default {
 		changeSecondTitle(title) {
 			this.titleSecond = title;
 		},
+		/**
+		 * @vuese
+		 * Request UnModerate Posts and Comments.
+		 * @arg Value of Sort Type.
+		 */
 		async unmod(value) {
 			try {
 				await this.$store.dispatch('moderation/unModerated', {
