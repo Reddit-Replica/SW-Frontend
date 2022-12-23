@@ -408,6 +408,8 @@ export default {
 	},
 
 	methods: {
+		 // @vuese
+		// used to check the render text of text editor
 		renderContent() {
 			// console.log('hello');
 			// // var renderer = require('quilljs-renderer');
@@ -428,6 +430,7 @@ export default {
 
 			this.data = converter.convert();
 		},
+		// this feature is cancelled
 		switchMode() {
 			this.markdownMode = !this.markdownMode;
 		},
