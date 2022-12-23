@@ -1389,7 +1389,7 @@ export default {
 		/**
 		 * @vuese
 		 * convert numbers to its abbreviations in K or M..
-		 * @arg no arg
+		 * @arg num the number which want to convert
 		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
@@ -1398,9 +1398,9 @@ export default {
 		},
 	},
 	watch: {
-			/**
+		/**
 		 * @vuese
-		 * watch the change of the postData and reassign post data 
+		 * watch the change of the postData and reassign post data
 		 * @arg no arg
 		 */
 		postData() {

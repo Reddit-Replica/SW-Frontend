@@ -497,7 +497,7 @@ export default {
 		return response.status;
 	},
 	/**
-	 * Make a request to get more downvoted posts data,
+	 * Make a request to get  downvoted posts data,
 	 * @action getUserDownVotedPostData=setUserPostData
 	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
 	 * @returns {integer} return status Code
@@ -586,7 +586,7 @@ export default {
 		return response.status;
 	},
 	/**
-	 * Make a request to get more hidden posts data,
+	 * Make a request to get  hidden posts data,
 	 * @action getUserHiddenPostData=setUserPostData
 	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
 	 * @returns {integer} return status Code
@@ -802,7 +802,7 @@ export default {
 	/**
 	 * Make a request to approve Post Or Comment,
 	 * @action approvePostOrComment=ApprovePostOrComment || ApprovePostOverview || ApproveCommentOverview
-	 * @param {object} payload An object contains baseurl ,ApprovePostOrCommentData type post or comment and id of the post .
+	 * @param {object} payload An object contains baseurl ,ApprovePostOrCommentData type post or comment and id of the post,username,page String overview or '' .
 	 * @returns {integer} return status Code
 	 */
 	async approvePostOrComment(context, payload) {
@@ -847,7 +847,7 @@ export default {
 	/**
 	 * Make a request to remove Post Or Comment,
 	 * @action removePostOrComment=removePostOrComment || removePostOverview
-	 * @param {object} payload An object contains baseurl ,removePostOrCommentData type post or comment and id of the post .
+	 * @param {object} payload An object contains baseurl ,removePostOrCommentData type post or comment and id of the post , page String 'overview' or '' .
 	 * @returns {integer} return status Code
 	 */
 	async removePostOrComment(context, payload) {
@@ -948,7 +948,7 @@ export default {
 	/**
 	 * Make a request to lock UnLock Post Or Comment,
 	 * @action lockUnLockPostOrComment=lockUnLockPostOrComment || lockUnLockPostOverview
-	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock .
+	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock , page overview or not .
 	 * @returns {integer} return status Code
 	 */
 	async lockUnLockPostOrComment(context, payload) {
@@ -999,9 +999,9 @@ export default {
 	},
 	/**
 	 * NOT USED YET
-	 * Make a request to lock UnLock Post Or Comment,
+	 * Make a request to mark UnMark Send Me Reply,
 	 * @action markUnMarkSendMeReply
-	 * @param {object} payload An object contains baseurl ,sendReplyData type post or comment and id of the post .
+	 * @param {object} payload An object contains baseurl ,sendReplyData type post or comment and id of the post.
 	 * @returns {integer} return status Code
 	 */
 	async markUnMarkSendMeReply(context, payload) {
@@ -1034,6 +1034,7 @@ export default {
 		return response.status;
 	},
 	/**
+	 * NOT USED YET
 	 * Make a request to lock UnLock Post Or Comment,
 	 * @action lockUnLockPostOrComment=lockUnLockPostOrComment || lockUnLockPostOverview
 	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock .
@@ -1066,6 +1067,7 @@ export default {
 		return response.status;
 	},
 	/**
+	 * NOT USED YET
 	 * Make a request to mark Post As Spoiler,
 	 * @action markPostAsSpoiler=markPostAsSpoiler
 	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock .
@@ -1098,6 +1100,7 @@ export default {
 		return response.status;
 	},
 	/**
+	 * NOT USED YET
 	 * Make a request to mark Post As Spoiler,
 	 * @action unmarkPostAsSpoiler=unmarkPostAsSpoiler
 	 * @param {object} payload An object contains baseurl ,spoilerData  .
@@ -1230,7 +1233,7 @@ export default {
 	/**
 	 * Make a request to pin Unpin Post,
 	 * @action pinUnpinPost=pinUnpinPost
-	 * @param {object} payload An object contains baseurl ,pinUnpinData  .
+	 * @param {object} payload An object contains baseurl ,pinUnpinData(id,pin true or false)  .
 	 * @returns {integer} return status Code
 	 */
 	async pinUnpinPost(context, payload) {
@@ -1262,7 +1265,7 @@ export default {
 	/**
 	 * Make a request to hide Unhide Post,
 	 * @action hideUnhidePost
-	 * @param {object} payload An object contains baseurl ,hideUnhideData  .
+	 * @param {object} payload An object contains baseurl ,hideUnhideData (id,key:hide or un unhide) .
 	 * @returns {integer} return status Code
 	 */
 	async hideUnhidePost(context, payload) {
@@ -1306,7 +1309,7 @@ export default {
 	/**
 	 * Make a request to mark Spam,
 	 * @action markSpam=markSpam || markSpamOverview
-	 * @param {object} payload An object contains baseurl ,markSpamData  .
+	 * @param {object} payload An object contains baseurl ,markSpamData(id of the post,type post or comment , reason), username,page :overview or not  .
 	 * @returns {integer} return status Code
 	 */
 	async markSpam(context, payload) {
@@ -1348,6 +1351,7 @@ export default {
 		return response.status;
 	},
 	/**
+	 * NOT USED YET
 	 * Make a request to unmark Spam,
 	 * @action unmarkSpam=unmarkSpam || unmarkSpamOverview
 	 * @param {object} payload An object contains baseurl ,unmarkSpamData  .

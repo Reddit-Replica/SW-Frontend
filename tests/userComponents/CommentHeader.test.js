@@ -1,5 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import CommentHeader from '../../../src/components/UserComponents/BaseUserComponents/CommentsComponents/CommentHeader.vue';
+import CommentHeader from '../../src/components/UserComponents/BaseUserComponents/CommentsComponents/CommentHeader.vue';
 import Vuex from 'vuex';
 import { describe, it, expect } from 'vitest';
 describe('Post Options Bar', () => {
