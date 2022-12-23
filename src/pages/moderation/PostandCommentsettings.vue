@@ -74,6 +74,9 @@ export default {
 		this.create = true;
 	},
 	computed: {
+		// @vuese
+		//return the sunreddit name
+		// @type string
 		subredditName() {
 			return this.$route.params.subredditName;
 		},
@@ -94,16 +97,24 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// get enable Spoiler
+		// @arg The argument is a Boolean value representing enable Spoiler
 		getenableSpoiler(value) {
 			this.enableSpoiler = value;
 			console.log('this.enableSpoiler');
 			console.log(this.enableSpoiler);
 		},
+         // @vuese
+		// get allow Images In Comment
+		// @arg The argument is a Boolean value representing allow Images In Comment
 		getallowImagesInComment(value) {
 			this.allowImagesInComment = value;
 			console.log('this.allowImagesInComment');
 			console.log(this.allowImagesInComment);
 		},
+		// @vuese
+		//send a request to set the settings
 		async saveChanges() {
 			const actionPayload = {
 				communityName: this.subredditName,
@@ -128,7 +139,8 @@ export default {
 				console.log(err);
 			}
 		},
-
+         	// @vuese
+		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
 				communityName: this.subredditName,
@@ -159,6 +171,9 @@ export default {
 			console.log(this.allowImagesInComment);
 		},
 		////////////////////////////////
+		// @vuese
+		// Used to show to call save popup
+		// @arg the argument is the title used in show popup
 		doneSuccessfully(title) {
 			this.savePost(title);
 		},

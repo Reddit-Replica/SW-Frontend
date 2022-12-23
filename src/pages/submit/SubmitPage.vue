@@ -154,15 +154,27 @@ export default {
 		// 	console.log(this.getTitle && (this.getSubreddit || this.getUsername));
 		// 	return this.getTitle && (this.getSubreddit || this.getUsername);
 		// },
+		// @vuese
+		//return the title
+		// @type string
 		Title() {
 			return this.$store.getters['posts/getTitle'];
 		},
+		// @vuese
+		//return the subreddit
+		// @type string
 		community() {
 			return this.$store.getters['posts/getSubreddit'];
 		},
+		// @vuese
+		//return the username
+		// @type string
 		user() {
 			return this.$store.getters['posts/getUser'];
 		},
+		// @vuese
+		//return the condition of validation of post
+		// @type Boolean
 		combination() {
 			return this.getTitle() && (this.getSubreddit || this.getUsername());
 		},
@@ -173,6 +185,8 @@ export default {
 		// 	// this.enable();
 		// 	if (value) this.buttonDisabled = false;
 		// },
+
+
 		Title(value) {
 			console.log(value);
 			// this.enable();
@@ -249,7 +263,7 @@ export default {
 			this.nsfw = this.$store.getters['posts/getNsfw'];
 		},
 		// @vuese
-		// get poiler of the post
+		// get spoiler of the post
 
 		getSpoiler() {
 			this.spoiler = this.$store.getters['posts/getSpoiler'];
@@ -309,6 +323,8 @@ export default {
 		getInSubreddit() {
 			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
 		},
+		// @vuese
+		// get the post detais in the type of shared post
 		async getPostDetails() {
 			try {
 				await this.$store.dispatch('listing/postDetails', {

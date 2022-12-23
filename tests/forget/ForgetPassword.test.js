@@ -25,51 +25,13 @@ let store = new Vuex.Store ({
       },
       actions: action,
     },
-    userModule: {
-      namespaced: true,
-      state: {
-        userData: {
-          displayName: '',
-          about: '',
-          banner: '',
-          picture: '',
-          karma: 0,
-          cakeDate: '2019-08-24',
-          socialLinks: [
-            {
-              type: 'Reddit',
-              displayText: 'medo',
-              link: '11',
-            },
-          ],
-          nsfw: true,
-          followed: true,
-          blocked: true,
-          moderatorOf: [
-            {
-              subredditName: '',
-              numOfMembers: 0,
-              nsfw: true,
-            },
-          ],
-        },
-        socialLinkItems: [
-          {
-            text: 'Custom URL',
-            imgSrc: 'img',
-            alt: 'custom url',
-            type: 'link' /* link or username */,
-            baseurl: '',
-          },
-        ],
-      },
-    },
+   
   },
 });
 
 describe ('ForgetPasswordpage.vue', () => {
   //it-> test block
-  it ('Render component exist', async () => {
+  it ('component exist', async () => {
     //our component
     const wrapper = shallowMount (ForgetPasswordpage, {
       global: {
