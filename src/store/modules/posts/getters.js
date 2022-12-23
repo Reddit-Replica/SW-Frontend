@@ -12,6 +12,13 @@ export default {
 	 * @getter {Array} getallSubredditsReturns=allSubredditsReturns getallSubredditsReturns allSubreddits .
 	 * @getter {object} getSubreddit=Subreddit getSubreddit Returns getSubreddit of post.
 	 * @getter {Boolean} getinSubreddit=inSubreddit getinSubreddit Returns inSubreddit of post.
+	 * @getter {Array} getImages=Images getImages Returns images of post.
+	 * @getter {Array} getImageCaptions=ImageCaptions getImageCaptions Returns ImageCaptions of post.
+	 * @getter {Array} getImageLinks=Links getImageLinks Returns Links of post.
+	 * @getter {string} getVideo=Video getVideo Returns Video of post.
+	 * @getter {string} getvideoOrimage=videoOrimage getvideoOrimage Returns videoOrimage of post.
+	 * @getter {object} getpostData=postData getpostData Returns postData of post.
+	 * @getter {object} getUser=User getUser Returns User of post.
 	 */
 	getTitle(state) {
 		console.log('getters title');

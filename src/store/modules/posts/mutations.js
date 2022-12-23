@@ -16,6 +16,13 @@ export default {
 	 * @mutator {Array} setallSubreddits={allSubreddits} Sets allsunreddits.
 	 * @mutator {object} setSubreddit={Subreddit} Sets the Subreddit.
 	 * @mutator {Boolean} setinSubreddit={inSubreddit} Sets the inSubreddit of the post.
+	 * @mutator {Boolean} setImages={Images} Sets the Images of the post.
+	 * @mutator {Boolean} setImageCaptions={ImageCaptions} Sets the ImageCaptions of the post.
+	 * @mutator {Boolean} setImageLinks={ImageLinks} Sets the ImageLinks of the post.
+	 * @mutator {Boolean} setVideo={Video} Sets the Video of the post.
+	 * @mutator {Boolean} setvideoOrimage={videoOrimag} Sets the videoOrimag of the post.
+	 * @mutator {Boolean} setpostData={postData} Sets the postData of the post.
+	 * @mutator {Boolean} setName={name} Sets the name of the post.
 	 */
 	setTitle(state, payload) {
 		console.log(payload);
