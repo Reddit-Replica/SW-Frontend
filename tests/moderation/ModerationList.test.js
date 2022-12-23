@@ -56,6 +56,9 @@ describe ('ModerationList', () => {
     permissions: ['everything'],
   };
   const subredditName = 'subredditName';
+  let noItems = true;
+  const search = 'asmaa';
+  const invitedMod = true;
 
   //--------------------------------------------------------
   //                     Rendering
@@ -76,5 +79,248 @@ describe ('ModerationList', () => {
       },
     });
     expect (wrapper.exists ()).toBe (true);
+  });
+
+  //--------------------------------------------------------
+  //                     Testing content page
+  //--------------------------------------------------------
+
+  it ('Testing No results is correct', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('No results for u/asmaa');
+  });
+
+  it ('Testing Invited moderators is correct', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('Invited moderators');
+  });
+
+  it ('Testing clicking leave mod button', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    const spamBtn = wrapper.find ('#leave-mod-button');
+    spamBtn
+      .trigger ('click')
+      .then (() => {
+        expect (wrapper.text ()).contain (
+          'Once you leave as a mod, you will lose mod permissions'
+        );
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
+  });
+
+  it ('Testing content of  Invite user as mod button', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#invite-user-mod-button').text ()).contain (
+      'Invite user as mod'
+    );
+  });
+
+  it ('Testing content of  leave as mod button', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#leave-mod-button').text ()).contain (
+      'Leave as mod'
+    );
+  });
+  
+  //--------------------------------------------------------
+  //                     Testing clickig buttons
+  //--------------------------------------------------------
+
+  it ('Testing clicking leave mod button', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    const spamBtn = wrapper.find ('#leave-mod-button');
+    spamBtn
+      .trigger ('click')
+      .then (() => {
+        expect (wrapper.text ()).contain (
+          'Once you leave as a mod, you will lose mod permissions'
+        );
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
+  });
+
+  it ('Testing clicking Invite Moderators button', () => {
+    const wrapper = mount (ModerationList, {
+      props: {
+        moderators,
+        search,
+        noItems,
+        invitedMod,
+      },
+      data () {
+        return {
+          moderators,
+          search,
+          noItems,
+          invitedMod,
+        };
+      },
+      computed: {
+        subredditName,
+      },
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    const spamBtn = wrapper.find ('#invite-user-mod-button');
+    spamBtn
+      .trigger ('click')
+      .then (() => {
+        expect (wrapper.text ()).contain ('Invite Moderators');
+      })
+      .catch (function () {
+        console.log ('Promise Rejected');
+      });
   });
 });
