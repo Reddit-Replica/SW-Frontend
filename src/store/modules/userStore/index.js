@@ -11,7 +11,9 @@ export default {
 	 * @property {Object} userData contain all user information DiasplayedName,about,banner.. .
 	 * @property {Array} SocialLinksItems contain array of static social links items data (picture,text,imgSrc,type).
 	 * @property {Object} blockedUsersData contain all blocked users Data.
-	 * @property {Object} commentsData contain all user comments Data.
+	 * @property {Object} listOfSubreddits contain  list Of Subreddits.
+	 * @property {Object} after .
+	 * @property {Object} before.
 	 */
 	state() {
 		return {

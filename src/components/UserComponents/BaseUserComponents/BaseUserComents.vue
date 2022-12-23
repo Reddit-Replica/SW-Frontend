@@ -42,6 +42,11 @@ export default {
 	},
 	emits: ['emitPopup'],
 	methods: {
+		/**
+		 * @vuese
+		 * emitPopup to show an popup with the message
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
 		},

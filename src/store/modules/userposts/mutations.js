@@ -2,7 +2,25 @@
  * The module 'setters' object.
  * @module UserPostsMutations
  * @type {object}
- * @mutator {object} setUserPostData=strProp Sets the post Data.
+ * @mutator {object} setUserPostData=postData Sets the post Data.
+ * @mutator {object} setUserMorePostData=postData Sets the more posts Data.
+ * @mutator {object} setUserPinnedPostData=pinnedPostData Sets the pinned Post Data.
+ * @mutator {object} setInsightsData=insightsData Sets the insights Data.
+ * @mutator {object} ApprovePostOrComment=postData Sets the post Data.
+ * @mutator {object} ApprovePostOverview=overviewData Sets the post Data.
+ * @mutator {object} ApproveCommentOverview=overviewData Sets the post Data.
+ * @mutator {object} markPostAsNSFW=postData Sets the post Data.
+ * @mutator {object} markPostAsNSFWOverview=overviewData Sets the post Data.
+ * @mutator {object} markUnMarkSendMeReply=postData Sets the post Data.
+ * @mutator {object} markUnMarkPostAsSpoilerOverview=overviewData Sets the post Data.
+ * @mutator {object} lockUnLockPostOrComment=postData Sets the post Data.
+ * @mutator {object} lockUnLockPostOverview=overviewData Sets the post Data.
+ * @mutator {object} pinUnpinPost=strProp Sets the post Data.
+ * @mutator {object} markSpam=postData Sets the post Data.
+ * @mutator {object} markSpamOverview=overviewData Sets the post Data.
+ * @mutator {object} setUserOverviewData=overviewData Sets the post Data.
+ * @mutator {object} setUserMoreOverviewData=overviewData Sets the post Data.
+ * @mutator {object} setUserSavedData=overviewData Sets the post Data.
  */
 
 export default {

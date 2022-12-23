@@ -41,7 +41,7 @@ export default {
 		EmptyPage,
 	},
 	// @vuese
-	// sate to know you authenticated or not
+	// state to know you authenticated or not
 	props: {
 		state: {
 			type: String,

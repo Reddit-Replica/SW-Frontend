@@ -49,10 +49,14 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// object contains subreddit description and number of members
 		subreddit: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// string contains subreddit name
 		subredditName: {
 			type: String,
 			required: true,

@@ -7,7 +7,12 @@ export default {
 	 * The Vuex 'UserState' object.
 	 * @module UserPostsState
 	 * @type {object}
-	 * @property {Object} postsData contain all user postsData Data.
+	 * @property {Object} postsData contain all user postsData.
+	 * @property {Object} insightsData contain all user insights Data.
+	 * @property {Object} commentData contain all user comment Data .
+	 * @property {Object} pinnedPostData contain all pinned Post Data.
+	 * @property {Object} overviewData contain all user overview Data.
+	 * @property {Object} savedData contain all user saved Data.
 	 */
 
 	state() {

@@ -409,6 +409,8 @@ export default {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// NOT USED YET
 		post: {
 			type: Object,
 			required: true,
@@ -446,6 +448,11 @@ export default {
 			once: false,
 		};
 	},
+	/**
+	 * @vuese
+	 * before mount we fetch a subreddit data to get its picture used in subreddit mini card
+	 * @arg no arg
+	 */
 	async beforeMount() {
 		if (this.postData.data.subreddit != null) {
 			await this.getSubreddit();
@@ -453,6 +460,11 @@ export default {
 		}
 		await this.fetchUserCardPicture();
 	},
+	/**
+	 * @vuese
+	 * at creation we get the user state is same as write the post or not tho set the user card state
+	 * @arg no arg
+	 */
 	created() {
 		this.loading = true;
 		if (
@@ -469,6 +481,11 @@ export default {
 			this.UserCardState = 'user'; /* means other user */
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * check and get the the subreddit picture
+		 * @arg no arg
+		 */
 		getSubredditPicture() {
 			if (
 				this.subredditData != null &&
@@ -481,12 +498,27 @@ export default {
 	},
 	emits: ['emitPopup'],
 	methods: {
+		/**
+		 * @vuese
+		 * start loading triggered when we request the insights data to show the loading spinner
+		 * @arg no arg
+		 */
 		startInsightLoading() {
 			this.insightsLoading = true;
 		},
+		/**
+		 * @vuese
+		 * finish loading triggered after finish the request of the insights data to hide the loading spinner
+		 * @arg no arg
+		 */
 		finishInsightLoading() {
 			this.insightsLoading = false;
 		},
+		/**
+		 * @vuese
+		 * fetch the user card data for the hovered card
+		 * @arg no arg
+		 */
 		async fetchUserCardPicture() {
 			let responseData = null;
 			console.log(

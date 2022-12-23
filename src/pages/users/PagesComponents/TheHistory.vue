@@ -45,7 +45,7 @@ export default {
 	},
 	props: {
 		// @vuese
-		// sate to know you authenticated or not
+		// state to know you authenticated or not
 		state: {
 			type: String,
 			required: true,

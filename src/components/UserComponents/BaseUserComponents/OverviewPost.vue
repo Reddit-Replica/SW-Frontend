@@ -469,6 +469,11 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * fetch the user card data for the hovered card
+		 * @arg no arg
+		 */
 		async fetchUserCardPicture() {
 			let responseData = null;
 			console.log(
