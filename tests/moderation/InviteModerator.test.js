@@ -120,19 +120,106 @@ describe ('InviteModerator.vue', () => {
       'Access mod notes, ban and mute users, and approve submitters*.'
     );
   });
-  // it ('Testing button Edit flair is correct', () => {
-  //   const wrapper = mount (InviteModerator, {
-  //     props: {
-  //       flair,
-  //       index,
-  //     },
-  //     global: {
-  //       // OR:
-  //       mocks: {
-  //         $store: store,
-  //       },
-  //     },
-  //   });
-  //   expect (wrapper.find ('#edit-flair-0').text ()).contain ('Edit');
-  // });
+
+  it ('Testing choose Manage Settings text is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('Manage Settings');
+  });
+
+  it ('Testing choose Manage Settings text details is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain (
+      'Manage community settings, appearance, emojis, rules, and AutoMod*.'
+    );
+  });
+
+  it ('Testing choose Manage Flair is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('Manage Flair');
+  });
+
+  it ('Testing choose Manage Flair is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('Create and manage user and post flair.');
+  });
+
+  it ('Testing choose Manage Posts & Comments is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain ('Manage Posts & Comments');
+  });
+
+  it ('Testing choose Manage Manage Posts & Comments is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.text ()).contain (
+      'Access queues, take action on content, and manage collections and events.'
+    );
+  });
+
+  it ('Testing choose Cancel button is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#cancel-button').text ()).contain ('Cancel');
+  });
+
+  it ('Testing choose Invite button is correct', () => {
+    const wrapper = mount (InviteModerator, {
+      global: {
+        // OR:
+        mocks: {
+          $store: store,
+        },
+      },
+    });
+    expect (wrapper.find ('#invite-moderation-button').text ()).contain (
+      'Invite'
+    );
+  });
 });
