@@ -6,20 +6,20 @@
  * @mutator {object} setUserMorePostData=postData Sets the more posts Data.
  * @mutator {object} setUserPinnedPostData=pinnedPostData Sets the pinned Post Data.
  * @mutator {object} setInsightsData=insightsData Sets the insights Data.
- * @mutator {object} ApprovePostOrComment=postData Sets the post Data.
- * @mutator {object} ApprovePostOverview=overviewData Sets the post Data.
- * @mutator {object} ApproveCommentOverview=overviewData Sets the post Data.
- * @mutator {object} markPostAsNSFW=postData Sets the post Data.
- * @mutator {object} markPostAsNSFWOverview=overviewData Sets the post Data.
- * @mutator {object} markUnMarkSendMeReply=postData Sets the post Data.
- * @mutator {object} markUnMarkPostAsSpoilerOverview=overviewData Sets the post Data.
- * @mutator {object} lockUnLockPostOrComment=postData Sets the post Data.
- * @mutator {object} lockUnLockPostOverview=overviewData Sets the post Data.
- * @mutator {object} pinUnpinPost=strProp Sets the post Data.
- * @mutator {object} markSpam=postData Sets the post Data.
- * @mutator {object} markSpamOverview=overviewData Sets the post Data.
- * @mutator {object} setUserOverviewData=overviewData Sets the post Data.
- * @mutator {object} setUserMoreOverviewData=overviewData Sets the post Data.
+ * @mutator {object} ApprovePostOrComment=postData Sets approve to the post Data.
+ * @mutator {object} ApprovePostOverview=overviewData Sets approve the overviewData.
+ * @mutator {object} ApproveCommentOverview=overviewData Sets approve to the overviewData.
+ * @mutator {object} markPostAsNSFW=postData Sets  mark unmark nsfw to the overviewData.
+ * @mutator {object} markPostAsNSFWOverview=overviewData Sets mark unmark nsfw  the overviewData.
+ * @mutator {object} markUnMarkSendMeReply=postData Sets mark unmark send me replies  the post Data.
+ * @mutator {object} markUnMarkPostAsSpoilerOverview=overviewData Sets mark un mark spoiler to the overviewData.
+ * @mutator {object} lockUnLockPostOrComment=postData Sets lock unlock to the post Data.
+ * @mutator {object} lockUnLockPostOverview=overviewData Sets lock unlock to the overview data.
+ * @mutator {object} pinUnpinPost=strProp Sets pin unpin the post Data.
+ * @mutator {object} markSpam=postData Sets mark spam to the post Data.
+ * @mutator {object} markSpamOverview=overviewData Sets the mark spam to overviewData.
+ * @mutator {object} setUserOverviewData=overviewData Sets the overviewData.
+ * @mutator {object} setUserMoreOverviewData=overviewData Sets the overviewData.
  * @mutator {object} setUserSavedData=overviewData Sets the post Data.
  */
 
