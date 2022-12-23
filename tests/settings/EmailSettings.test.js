@@ -68,4 +68,22 @@ describe('EmailsSettings', () => {
 		});
 		expect(wrapper.exists()).toBe(true);
 	});
+
+	it('button is correct', () => {
+		const wrapper =shallowMount(EmailsSettings, {
+			created() {
+				getSettings: vi.fn();
+			},
+			global: {
+				// OR:
+				mocks: {
+					$store: store,
+				},
+			},
+		});
+		const byId = wrapper.find('.h3-title');
+		expect(byId.text()).toBe('New followers');
+		
+	});
+	
 });

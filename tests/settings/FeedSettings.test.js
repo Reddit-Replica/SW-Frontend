@@ -25,7 +25,7 @@ let store = new Vuex.Store({
 					adultContent: true,
                     autoplayMedia: false,
                     create: false,
-                    
+
 				},
 			},
 			actions: action,
@@ -61,5 +61,21 @@ describe('EmailsSettings', () => {
 			},
 		});
 		expect(wrapper.exists()).toBe(true);
+	});
+    it('button1 is correct', () => {
+		const wrapper =shallowMount(FeedSettings, {
+			created() {
+				getSettings: vi.fn();
+			},
+			global: {
+				// OR:
+				mocks: {
+					$store: store,
+				},
+			},
+		});
+		const byId = wrapper.find('.h3-title');
+		expect(byId.text()).toBe('Adult content');
+		
 	});
 });
