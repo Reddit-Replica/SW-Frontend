@@ -76,6 +76,10 @@ describe ('deleteFlair.vue', () => {
       computed: {
         handleTime,
       },
+      methods: {
+        hideSure: vi.fn (),
+        deleteFlair: vi.fn (),
+      },
       global: {
         // OR:
         mocks: {
@@ -95,6 +99,10 @@ describe ('deleteFlair.vue', () => {
         ban,
         index,
       },
+      methods: {
+        hideSure: vi.fn (),
+        deleteFlair: vi.fn (),
+      },
       global: {
         // OR:
         mocks: {
@@ -111,6 +119,10 @@ describe ('deleteFlair.vue', () => {
         ban,
         index,
       },
+      methods: {
+        hideSure: vi.fn (),
+        deleteFlair: vi.fn (),
+      },
       global: {
         // OR:
         mocks: {
@@ -126,6 +138,10 @@ describe ('deleteFlair.vue', () => {
       props: {
         ban,
         index,
+      },
+      methods: {
+        hideSure: vi.fn (),
+        deleteFlair: vi.fn (),
       },
       global: {
         // OR:
