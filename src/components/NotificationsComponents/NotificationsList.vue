@@ -82,6 +82,8 @@ export default {
 	components: {
 		NotificationMessage,
 	},
+	//@vuese
+	//load some notifications and a random community
 	async beforeMount() {
 		await this.loadAllNotifications();
 		await this.getSuggestedCommunity();

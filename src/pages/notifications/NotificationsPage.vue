@@ -42,6 +42,8 @@ export default {
 		NotificationMessage,
 		SaveUnsavePopupMessage,
 	},
+	//@vuese
+	//Check if user not logged in to redirect to login page or to load notifications
 	beforeMount() {
 		if (localStorage.getItem('accessToken') == null)
 			this.$router.push('/login');
