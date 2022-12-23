@@ -716,20 +716,11 @@ export default {
 	},
 
 	//////////////////////SPAM////////////////////////
-<<<<<<< HEAD
-
-	/**
-	 * Make a request to get spammed users of the subreddit ,
-	 * @action loadListOfMuted=loadListOfMuted
-	 * @param {object} payload An object contains baseurl, after or before if there exiest.
-	 * @returns {object} set in mutations an object contains all its data
-=======
 	/**
 	 * action for Spam on the Subreddit
 	 * @action  loadListOfSpams
 	 * @param {Object} payload subreddit_Name,Sort,Type(Comments,Posts) .
 	 * @returns {void}
->>>>>>> db2e657711a80da19269a61fd2728c2a5df11ab5
 	 */
 	async loadListOfSpams(context, payload) {
 		const baseurl = payload.baseurl;
@@ -832,20 +823,11 @@ export default {
 			throw error;
 		}
 	},
-<<<<<<< HEAD
-
-	/**
-	 * Make a request to accept Invitation
-	 * @action approvedSpam=approvedSpam
-	 * @param {object} payload An object contains baseurl, approved user info
-	 * @returns {integer} status code
-=======
 	/**
 	 * action for approve posts on the Subreddit from moderator.
 	 * @action  EditedComments
 	 * @param {Object} payload Type(post, Comment) and the Id of it .
 	 * @returns {void}
->>>>>>> db2e657711a80da19269a61fd2728c2a5df11ab5
 	 */
 	async approvedSpam(context, payload) {
 		context.commit('approveSuccessfully', false);
