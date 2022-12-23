@@ -161,14 +161,14 @@ export default {
 	},
 	methods: {
 		//@vuese
-		//Change joined button text when hovering on
-		//@arg text
+		//Change button text from Joined to Leave when hovering on button
+		//@arg text to be written inside button
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
 		//@vuese
 		//Join a subreddit
-		//@arg text
+		//@arg no argument
 		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
@@ -189,7 +189,7 @@ export default {
 		},
 		//@vuese
 		//leave a subreddit
-		//@arg text
+		//@arg no argument
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
