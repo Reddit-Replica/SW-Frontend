@@ -15,6 +15,13 @@ describe('SocialLink.vue', () => {
 			props: {
 				data,
 			},
+			global: {
+				mocks: {
+					$route: {
+						fullPath: '',
+					},
+				},
+			},
 		});
 		expect(wrapper.exists()).toBe(true);
 		// const byId = wrapper.find('#social-link-config-header h3');
@@ -29,6 +36,11 @@ describe('SocialLink.vue', () => {
 		const wrapper = shallowMount(SociallinksConfig, {
 			props: {
 				data,
+			},
+			global: {
+				$route: {
+					fullPath: '',
+				},
 			},
 		});
 		expect(wrapper.exists()).toBe(true);
