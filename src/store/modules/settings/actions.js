@@ -1,5 +1,15 @@
 export default {
+	/**
+ * @module SettingsActions
+ */
 	//////////////email setting///////////////////
+
+		/**
+	 * Action for changenewFollowerEmail
+	 * @action changenewFollowerEmail
+	 * @param {Object} payload newFollowerEmail and base url.
+	 * @returns {void}
+	 */
 	async changenewFollowerEmail(context, payload) {
 		const setting = {
 			newFollowerEmail: payload.newFollowerEmail,
@@ -28,6 +38,12 @@ export default {
 		}
 		return response.status;
 	},
+		/**
+	 * Action for changeunsubscribeFromEmails
+	 * @action changeunsubscribeFromEmails
+	 * @param {Object} payload unsubscribeFromEmails and base url.
+	 * @returns {void}
+	 */
 	async changeunsubscribeFromEmails(context, payload) {
 		const setting = {
 			unsubscribeFromEmails: payload.unsubscribeFromEmails,
@@ -57,6 +73,12 @@ export default {
 		return response.status;
 	},
 	//////////////////// feed settings  ////////////////////////////////////////////
+		/**
+	 * Action for changeneadultContent
+	 * @action changeneadultContent
+	 * @param {Object} payload adultContent and base url.
+	 * @returns {void}
+	 */
 	async changeneadultContent(context, payload) {
 		const setting = {
 			adultContent: payload.adultContent,
@@ -85,6 +107,13 @@ export default {
 		}
 		return response.status;
 	},
+
+		/**
+	 * Action for changeautoplayMedia
+	 * @action changeautoplayMedia
+	 * @param {Object} payload autoplayMedia and base url.
+	 * @returns {void}
+	 */
 	async changeautoplayMedia(context, payload) {
 		const setting = {
 			autoplayMedia: payload.autoplayMedia,
@@ -115,7 +144,12 @@ export default {
 	},
 
 	//////////////////// profile setting ///////////////////////////////////////////
-
+	/**
+	 * Action for changedisplayName
+	 * @action changedisplayName
+	 * @param {Object} payload displayName and base url.
+	 * @returns {void}
+	 */
 	async changedisplayName(context, payload) {
 		const setting = {
 			displayName: payload.displayName,
@@ -144,6 +178,12 @@ export default {
 		}
 		return response.status;
 	},
+		/**
+	 * Action for changeAbout
+	 * @action changeAbout
+	 * @param {Object} payload About and base url.
+	 * @returns {void}
+	 */
 
 	async changeAbout(context, payload) {
 		const setting = {
@@ -173,6 +213,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeNsfw
+	 * @action changeNsfw
+	 * @param {Object} payload Nsfw and base url.
+	 * @returns {void}
+	 */
 	async changeNsfw(context, payload) {
 		const setting = {
 			nsfw: payload.nsfw,
@@ -201,6 +247,12 @@ export default {
 		}
 		return response.status;
 	},
+		/**
+	 * Action for changeAllowfollow
+	 * @action changeAllowfollow
+	 * @param {Object} payload Allowfollow and base url.
+	 * @returns {void}
+	 */
 	async changeAllowfollow(context, payload) {
 		const setting = {
 			allowToFollowYou: payload.allowToFollowYou,
@@ -231,7 +283,12 @@ export default {
 	},
 
 	//////////////////// this part for moderation setting //////////////////////////
-
+/**
+	 * Action for communitySettings
+	 * @action communitySettings
+	 * @param {Object} payload communitySettings and base url.
+	 * @returns {void}
+	 */
 	async communitySettings(context, payload) {
 		// console.log('welcome message');
 		// console.log(payload);
@@ -278,6 +335,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for postandcommentsSettings
+	 * @action postandcommentsSettings
+	 * @param {Object} payload postandcommentsSettings and base url.
+	 * @returns {void}
+	 */
 	async postandcommentsSettings(context, payload) {
 		const setting = {
 			subreddit: payload.communityName,
@@ -314,6 +377,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for fetchmoderationSettings
+	 * @action fetchmoderationSettings
+	 * @param {Object} payload communityName and base url.
+	 * @returns {void}
+	 */
 	async fetchmoderationSettings(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
@@ -342,6 +411,12 @@ export default {
 		context.commit('setmoderationSettings', responseData);
 		return response.status;
 	},
+	/**
+	 * Action for fetcpostandcommentsSettings
+	 * @action fetcpostandcommentsSettings
+	 * @param {Object} payload communityName and base url.
+	 * @returns {void}
+	 */
 	async fetcpostandcommentsSettings(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
