@@ -1,3 +1,14 @@
+/**
+ * The module 'setters' object.
+ * @name ModeratorsMutations
+ * @type {object}
+ * @mutator {object} setListOfSpams=Spams Sets the state object property.
+ * @mutator {object} approveSuccessfully=approveSuccessfully Sets the state object property.
+ * @mutator {object} setUnmoderated=Unmoderated Sets the state object property.
+ * @mutator {object} setEditedPosts=EditedPosts Sets the state object property.
+ * @mutator {object} setEditedComments=EditedComments Sets the state object property.
+ * @mutator {Object} setRemoved=Removed Sets the state object property.
+ */
 export default {
 	setListOfModerators(state, payload) {
 		state.listOfModerators = payload;
