@@ -36,4 +36,28 @@ describe('PeopleNav', () => {
         });
         expect(wrapper.exists()).toBe(true);
     });
+
+    it ('Testing if no users', () => {
+        const data = new Vuex.Store({
+            modules: {
+                searchingModule: {
+                    namespaced: true,
+                    state: {
+                        limitedUsers: {},
+                    },
+                },
+            },
+        });
+        const wrapper = mount (PeopleNav, {
+          props: {},
+          global: {
+            // OR:
+            mocks: {
+              $store: data,
+            },
+          },
+        });
+        const byId = wrapper.find('.no-res');
+        expect (wrapper.html().includes('People')).toBe(true);
+    });
 });

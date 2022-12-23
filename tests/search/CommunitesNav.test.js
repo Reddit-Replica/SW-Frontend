@@ -38,4 +38,30 @@ describe('CommunitesNav', () => {
         });
         expect(wrapper.exists()).toBe(true);
     });
+
+
+    it ('Testing if no users', () => {
+        const data = new Vuex.Store({
+            modules: {
+                searchingModule: {
+                    namespaced: true,
+                    state: {
+                        limitedsubs: {},
+                    },
+                },
+            },
+        });
+        const wrapper = mount (CommunitesNav, {
+          props: {},
+          global: {
+            // OR:
+            mocks: {
+              $store: data,
+            },
+          },
+        });
+        const byId = wrapper.find('.no-res');
+        expect (wrapper.html().includes('Results')).toBe(false);
+        
+    });
 });
