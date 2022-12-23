@@ -1752,6 +1752,12 @@ export default {
 			throw error;
 		}
 	},
+		/**
+	 * Action for fetchtrafficStatus
+	 * @action  fetchtrafficStatus
+	 * @param {Object} payload subreddit and base url.
+	 * @returns {void}
+	 */
 
 	async fetchtrafficStatus(context, payload) {
 		const baseurl = payload.baseurl;
