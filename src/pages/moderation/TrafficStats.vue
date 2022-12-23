@@ -223,6 +223,9 @@ export default {
 		myChart;
 	},
 	computed: {
+		// @vuese
+		//return the subreddit name
+		// @type string
 		subredditName() {
 			return this.$route.params.subredditName;
 		},
