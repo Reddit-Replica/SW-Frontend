@@ -19,15 +19,35 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * Sign With FaceBook(not Used).
+		 * @arg No arg.
+		 */
 		async facebookLogin() {},
+		/**
+		 * @vuese
+		 * Request FaceBook To get Object(not used).
+		 * @arg No arg.
+		 */
 		handleSdkInit({ FB, scope }) {
 			this.FB = FB;
 			this.scope = scope;
 			console.log('saaf');
 		},
+		/**
+		 * @vuese
+		 * Request To Auth FB (notused).
+		 * @arg No arg.
+		 */
 		OnFacebookAuthSuccess(idToken) {
 			console.log(idToken);
 		},
+		/**
+		 * @vuese
+		 * in Fail FB (notused).
+		 * @arg No arg.
+		 */
 		OnFacebookAuthFail(error) {
 			console.log(error);
 		},

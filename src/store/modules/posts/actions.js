@@ -244,7 +244,7 @@ export default {
 		}
 		return response.status;
 	},
-		/**
+	/**
 	 * Action for createSharedpost
 	 * @action  createSharedpost
 	 * @param {Object} payload post data and base url.

@@ -53,7 +53,8 @@ export default {
 			this.close = true;
 		},
 		//@vuese
-		//undo action
+		//undo action.
+		//@arg No arg.
 		undo() {
 			// Fire when the action is undone
 			// @arg The argument are a string value representing state, a string value representing id

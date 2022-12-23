@@ -126,6 +126,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * Go To User Account
+		 * @arg Name the userName
+		 */
 		gotoUser(name) {
 			this.$router.push('/user/' + name);
 		},
