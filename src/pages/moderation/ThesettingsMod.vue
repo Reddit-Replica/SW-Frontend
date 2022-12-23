@@ -797,7 +797,7 @@ export default {
 		},
 		// @vuese
 		//send a request to set the settings
-	
+
 		async saveChanges() {
 			this.errorr = false;
 			if (this.communityName == '') this.communityName = this.subredditName;
@@ -845,7 +845,7 @@ export default {
 				console.log(err);
 			}
 		},
-			// @vuese
+		// @vuese
 		//send a request to get the settings
 		async getSettings() {
 			if (this.communityName == '') this.communityName = this.subredditName;

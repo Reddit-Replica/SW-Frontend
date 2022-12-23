@@ -600,7 +600,7 @@ export default {
 				console.log(this.err);
 			}
 		},
-	// @vuese
+		// @vuese
 		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
@@ -632,7 +632,7 @@ export default {
 			console.log(this.allowToFollowYou);
 		},
 		////////////////////////////////
-			// @vuese
+		// @vuese
 		//send a request to get the settings
 		doneSuccessfully(title) {
 			this.savePost(title);
