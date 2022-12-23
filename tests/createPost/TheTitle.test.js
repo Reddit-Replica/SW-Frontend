@@ -65,68 +65,6 @@ describe ('TitleInput.vue', () => {
         expect (wrapper.find ('.title-input').text ()).contain ('');
       });
 
-  //--------------------------------------------------------
-  //                     Testing content page
-  //--------------------------------------------------------
-
-//   it ('Testing the sender name is correct', () => {
-//     const wrapper = mount (MessagesComponent, {
-//       props: {
-//         message,
-//         index,
-//       },
-//       computed: {
-//         handleTime,
-//         isInvitation,
-//       },
-//       global: {
-//         // OR:
-//         mocks: {
-//           $store: store,
-//         },
-//       },
-//     });
-//     expect (wrapper.find ('#message-sender-0').text ()).contain ('sender');
-//   });
-
-//   it ('Testing subject is correct', () => {
-//     const wrapper = mount (MessagesComponent, {
-//       props: {
-//         message,
-//         index,
-//       },
-//       computed: {
-//         handleTime,
-//         isInvitation,
-//       },
-//       global: {
-//         // OR:
-//         mocks: {
-//           $store: store,
-//         },
-//       },
-//     });
-//     expect (wrapper.find ('.subject-text').text ()).contain ('subject content');
-//   });
-
-//   it ('Testing text message is correct', () => {
-//     const wrapper = mount (MessagesComponent, {
-//       props: {
-//         message,
-//         index,
-//       },
-//       computed: {
-//         handleTime,
-//         isInvitation,
-//       },
-//       global: {
-//         // OR:
-//         mocks: {
-//           $store: store,
-//         },
-//       },
-//     });
-//     expect (wrapper.text ()).contain ('subject');
-//   });
+ 
 
 });
