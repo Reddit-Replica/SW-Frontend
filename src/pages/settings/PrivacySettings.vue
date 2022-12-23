@@ -380,6 +380,11 @@ export default {
 				this.focusInOut = 'focus-in';
 			}
 		},
+		/**
+		 * @vuese
+		 * used to emit popup message
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.popupMessages.push({
 				id: this.popupMessages.length,
