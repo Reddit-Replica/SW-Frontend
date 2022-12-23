@@ -114,20 +114,28 @@ export default {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Number of members in community in top communities list
 		members: {
 			type: Number,
 			default: 1,
 		},
+		//@vuese
+		//show number of members in community or not
 		showMembers: {
 			type: Boolean,
 			default: false,
 		},
+		//@vuese
+		//Is user a member in this community
 		isMember: {
 			type: Boolean,
 			default: false,
 		},
 	},
 	computed: {
+		//@vuese
+		//Number of members in community using K,M,..
 		membersCount() {
 			if (this.members >= 1000000) {
 				return parseFloat((this.members / 1000000).toFixed(1)) + ' M';
@@ -137,6 +145,8 @@ export default {
 				return this.members;
 			}
 		},
+		//@vuese
+		//Check if community has no image
 		noImage() {
 			return !this.image;
 		},
@@ -150,9 +160,15 @@ export default {
 		};
 	},
 	methods: {
+		//@vuese
+		//Change joined button text when hovering on
+		//@arg text
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
+		//@vuese
+		//Join a subreddit
+		//@arg text
 		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
@@ -164,11 +180,16 @@ export default {
 				});
 
 				this.doneJoined = true;
+				//@vuese
+				//emit fires to reload subreddit details
 				this.$emit('reload');
 			} else {
 				this.$router.replace('/login');
 			}
 		},
+		//@vuese
+		//leave a subreddit
+		//@arg text
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
@@ -182,15 +203,22 @@ export default {
 
 				if (this.$store.getters['community/getLeaveOwner'] === true) {
 					this.notdoneLeft = true;
+					//@vuese
+					//emit fires to reload subreddit details
 					this.$emit('reload');
 				} else {
 					this.doneLeft = true;
+					//@vuese
+					//emit fires to reload subreddit details
 					this.$emit('reload');
 				}
 			} else {
 				this.$router.replace('/login');
 			}
 		},
+		//@vuese
+		//Change router to subreddit router
+		//@arg no argument
 		goToSubreddit(name) {
 			this.$router.replace(`/r/${name}`);
 		},

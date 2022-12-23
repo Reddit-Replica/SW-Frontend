@@ -22,6 +22,8 @@ export default {
 		CommunitiesBar,
 		CardsBar,
 	},
+	//@vuese
+	//Check if user not logged in to redirect to login page
 	beforeMount() {
 		if (localStorage.getItem('accessToken') == null)
 			this.$router.push('/login');
