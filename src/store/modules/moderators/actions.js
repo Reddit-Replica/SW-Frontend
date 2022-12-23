@@ -627,7 +627,12 @@ export default {
 	},
 
 	//////////////////////SPAM////////////////////////
-
+	/**
+	 * action for Spam on the Subreddit
+	 * @action  loadListOfSpams
+	 * @param {Object} payload subreddit_Name,Sort,Type(Comments,Posts) .
+	 * @returns {void}
+	 */
 	async loadListOfSpams(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -729,7 +734,12 @@ export default {
 			throw error;
 		}
 	},
-
+	/**
+	 * action for approve posts on the Subreddit from moderator.
+	 * @action  EditedComments
+	 * @param {Object} payload Type(post, Comment) and the Id of it .
+	 * @returns {void}
+	 */
 	async approvedSpam(context, payload) {
 		context.commit('approveSuccessfully', false);
 		const spam = {
@@ -1373,6 +1383,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Unmoderated Posts and Comments
+	 * @action  unModerated
+	 * @param {Object} payload subreddit_Name ,Type of sorting.
+	 * @returns {void}
+	 */
 	async unModerated(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
@@ -1437,6 +1453,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Edited posts on the Subreddit
+	 * @action  EditedPosts
+	 * @param {Object} payload subreddit_Name, Sort type.
+	 * @returns {void}
+	 */
 	async EditedPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
@@ -1501,6 +1523,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Edited Comments on the Subreddit
+	 * @action  EditedComments
+	 * @param {Object} payload subreddit_Name .
+	 * @returns {void}
+	 */
 	async EditedComments(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
@@ -1586,6 +1614,12 @@ export default {
 		context.commit('settrafficStatus', responseData);
 		return response.status;
 	},
+	/**
+	 * action for Remove a post or comment from Moderator.
+	 * @action  removeFunction
+	 * @param {Object} payload Post_ID .
+	 * @returns {void}
+	 */
 	async removeFunction(context, payload) {
 		const baseurl = payload.baseurl;
 		// const id = payload.id;
@@ -1627,6 +1661,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Vote for post or comment.
+	 * @action  vote
+	 * @param {Object} payload Id of post , type and direction of post.
+	 * @returns {void}
+	 */
 	async vote(_, payload) {
 		const vote = {
 			id: payload.id,

@@ -1,3 +1,14 @@
+/**
+ * The module 'Moderators' object.
+ * @name moderatorsGetters
+ * @type {object}
+ * @getter {object} listOfSpams=Spams Returns Object contain Spams.
+ * @getter {object} approveSuccessfully=approvesSuccess Returns Object contain approvesSuccess Posts and Comments.
+ * @getter {object} Unmoderated=Unmoderatedposts Returns Object contain Unmoderated posts and comments.
+ * @getter {object} EditedPosts=EditedPosts Returns Object contain EditedPosts.
+ * @getter {Object} EditedComments=EditedComments Returns object contain EditedComments.
+ * @getter {object} Removed=Removed Returns Object contain Removed posts or comments.
+ */
 export default {
 	listOfModerators(state) {
 		return state.listOfModerators;

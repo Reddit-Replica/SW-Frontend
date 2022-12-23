@@ -7,8 +7,8 @@ export default {
 	// 	console.log(payload);
 	// },
 	/**
-	 * action for Search for users
-	 * @action  Search for Users
+	 * action for Search for Posts
+	 * @action  SearchPost
 	 * @param {Object} payload querey .
 	 * @returns {void}
 	 */
@@ -85,7 +85,7 @@ export default {
 	// },
 	/**
 	 * action for Search for users
-	 * @action  Search for Users
+	 * @action  SearchUser
 	 * @param {Object} payload querey .
 	 * @returns {void}
 	 */
@@ -192,6 +192,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for Search for Comments
+	 * @action  SearchComments
+	 * @param {Object} payload querey .
+	 * @returns {void}
+	 */
 	async SearchComments(context, payload) {
 		const baseurl = payload.baseurl;
 		console.log(payload.q);
@@ -260,6 +266,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for follow users
+	 * @action  follow
+	 * @param {Object} payload userName , follow type .
+	 * @returns {void}
+	 */
 	async follow(context, payload) {
 		const baseurl = payload.baseurl;
 		const userInfo = {
@@ -288,7 +300,7 @@ export default {
 	/**
 	 * Action for joining a specific subreddit.
 	 * @action joinSubreddit
-	 * @param {Object} contains message if it is a private subreddit, subreddit id and base url.
+	 * @param {Object} contains subreddit id and base url.
 	 * @returns {void}
 	 */
 	async joinSubreddit(_, payload) {

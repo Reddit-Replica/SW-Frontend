@@ -81,6 +81,12 @@ export default {
 		FollowJoin,
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * Return The Searched Users
+		 * @arg no arg
+		 * @type Object
+		 */
 		SearchedUsers() {
 			console.log(this.$store.getters['search/Getusers']);
 			return this.$store.getters['search/Getusers'];
@@ -90,9 +96,19 @@ export default {
 		this.showuser();
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * Toggle notFollowed Data
+		 * @arg no arg
+		 */
 		showuser() {
 			this.notFollowed = !this.value.following;
 		},
+		/**
+		 * @vuese
+		 * Request for Follow and unFollow user
+		 * @arg Name , Follow Status
+		 */
 		async toggle(user, follow) {
 			if (localStorage.getItem('accessToken')) {
 				this.notFollowed = !this.notFollowed;
@@ -128,6 +144,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * Go To User URL.
+		 * @arg Name Users's Name
+		 */
 		gotoUser(name) {
 			this.$router.push('/user/' + name);
 		},

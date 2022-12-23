@@ -600,7 +600,8 @@ export default {
 				console.log(this.err);
 			}
 		},
-
+	// @vuese
+		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
 				baseurl: this.$baseurl,
@@ -631,6 +632,8 @@ export default {
 			console.log(this.allowToFollowYou);
 		},
 		////////////////////////////////
+			// @vuese
+		//send a request to get the settings
 		doneSuccessfully(title) {
 			this.savePost(title);
 		},
@@ -720,6 +723,9 @@ export default {
 			}
 			console.log(responseStatus);
 		},
+		// @vuese
+		// get User Data
+		// @arg The argument is a Boolean value representing User Data
 		async getUserData() {
 			const actionPayload = {
 				userName: localStorage.getItem('userName'),
