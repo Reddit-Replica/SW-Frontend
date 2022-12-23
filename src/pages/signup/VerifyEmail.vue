@@ -24,6 +24,9 @@ export default {
 		// }
 	},
 	methods: {
+		// @vuese
+		// Request to Verify Email
+		// @arg no argument
 		async verify() {
 			try {
 				const actionPayload = {

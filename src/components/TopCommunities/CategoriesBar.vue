@@ -49,18 +49,20 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//text in categories list's button
 		buttonText() {
 			return this.smallList ? 'Show More' : 'Show Less';
 		},
 	},
 	//@vuese
-	//Load community suggested categories when creating 'Create Community' dialog
+	//Load all communities' categories
 	beforeMount() {
 		this.loadCategories();
 	},
 	methods: {
 		// @vuese
-		//Loading Community suggested categories
+		//Load all communities' categories
 		//@arg no argument
 		async loadCategories() {
 			try {
@@ -74,9 +76,15 @@ export default {
 			}
 			this.categories = this.$store.getters['community/categories'];
 		},
+		// @vuese
+		//set a specific category as selected
+		//@arg category
 		setClicked(category) {
 			this.categoryClicked = category;
 		},
+		// @vuese
+		//toggle between small/large categories lists
+		//@arg no argument
 		toggleShow() {
 			this.smallList = !this.smallList;
 		},

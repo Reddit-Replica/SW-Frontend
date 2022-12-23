@@ -595,10 +595,16 @@ export default {
 		this.create = true;
 	},
 	computed: {
+		// @vuese
+		//return the sunreddit name
+		// @type string
 		subredditName() {
 			// return this.$store.state.subredditName;
 			return this.$route.params.subredditName;
 		},
+		// @vuese
+		//return the nsfw
+		// @type Boolean
 		nsfww() {
 			return this.$store.getters['setting/getmoderationSettings'].NSFW;
 		},
@@ -723,6 +729,8 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// get the suggested topics
 		async getsuggestedTopics() {
 			try {
 				await this.$store.dispatch('community/getsuggestedTopics', {
@@ -734,6 +742,9 @@ export default {
 			}
 			this.topics = this.$store.getters['community/getTopics'];
 		},
+		// @vuese
+		// get the  choosen Type
+		// @arg The argument is a integer value representing type
 		chooseType(index) {
 			if (index == 2) {
 				this.typeChosen2 = true;
@@ -752,26 +763,41 @@ export default {
 				this.communityType = 'Public';
 			}
 		},
+		// @vuese
+		// get the  choosen Type
+		// @arg The argument is a Boolean value representing send WelcomeMessage
 		getSendmessage(value) {
 			this.sendWelcomeMessage = value;
 			// console.log('this.sendWelcomeMessage');
 			// console.log(this.sendWelcomeMessage);
 		},
+		// @vuese
+		// get the  nsfw
+		// @arg The argument is a Boolean value representing nsfw
 		getNsfw(value) {
 			console.log('val', value);
 			this.nsfw = value;
 			// console.log(this.nsfw);
 		},
+		// @vuese
+		// get Request to join
+		// @arg The argument is a Boolean value representing Request to join
 		getRequesttojoin(value) {
 			this.acceptingRequestsToJoin = value;
 			// console.log('this.acceptingRequestsToJoin');
 			// console.log(this.acceptingRequestsToJoin);
 		},
+		// @vuese
+		// get Requests to post
+		// @arg The argument is a Boolean value representing Request to post
 		getRequeststopost(value) {
 			this.acceptingRequestsToPost = value;
 			// console.log('this.acceptingRequestsToPost');
 			// console.log(this.acceptingRequestsToPost);
 		},
+		// @vuese
+		//send a request to set the settings
+
 		async saveChanges() {
 			this.errorr = false;
 			if (this.communityName == '') this.communityName = this.subredditName;
@@ -819,6 +845,8 @@ export default {
 				console.log(err);
 			}
 		},
+		// @vuese
+		//send a request to get the settings
 		async getSettings() {
 			if (this.communityName == '') this.communityName = this.subredditName;
 			const actionPayload = {
@@ -874,6 +902,9 @@ export default {
 			}
 		},
 		////////////////////////////////
+		// @vuese
+		// Used to show to call save popup
+		// @arg the argument is the title used in show popup
 		doneSuccessfully(title) {
 			this.savePost(title);
 		},

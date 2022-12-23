@@ -43,12 +43,17 @@
 export default {
 	emits: ['reload'],
 	methods: {
+		//@vuese
+		//mark all notifications as read
+		//@arg no argument
 		async markAllRead() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('notifications/markAllRead', {
 				baseurl: this.$baseurl,
 				token: accessToken,
 			});
+			//@vuese
+			//emit fires to reload the component to get the new data
 			this.$emit('reload');
 		},
 	},

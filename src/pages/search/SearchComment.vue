@@ -264,15 +264,25 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		// Get The Search Results of Comments
+		// @arg no argument
+		// @type Object
 		SearchedComments() {
 			console.log(this.$store.getters['search/GetComments']);
 			return this.$store.getters['search/GetComments'];
 		},
-
+		// @vuese
+		// Get The UserName
+		// @arg no argument
+		// @type String
 		userName() {
 			return localStorage.getItem('userName');
 		},
 	},
+	// @vuese
+	// while creat check the accessToken then load the search results
+	// @arg no argument
 	async created() {
 		if (localStorage.getItem('accessToken')) {
 			this.loading = true;
@@ -280,10 +290,16 @@ export default {
 		}
 		this.loading = false;
 	},
+	// @vuese
+	// before Mount do the search
+	// @arg no argument
 	beforeMount() {
 		this.search();
 	},
 	methods: {
+		// @vuese
+		//calculate time
+		// @arg The Time
 		calculateTime(time) {
 			var currentDate = new Date();
 			var returnValue = '';
@@ -305,6 +321,9 @@ export default {
 			}
 			return returnValue;
 		},
+		// @vuese
+		// request the Searched Comments with the query
+		// @arg no argument
 		async search() {
 			try {
 				await this.$store.dispatch('search/SearchComments', {
@@ -315,6 +334,9 @@ export default {
 				console.log(error);
 			}
 		},
+		// @vuese
+		// Go to Next type of data URL
+		// @arg value "Next type of data Name"
 		goSearch(value) {
 			if (value == 'cm') {
 				this.$router.push({
@@ -333,6 +355,9 @@ export default {
 				});
 			}
 		},
+		// @vuese
+		// Go to Comment Page
+		// @arg id , title , sub and PostUser of the comment
 		gotocomment(id, title, sub, postman) {
 			if (sub != null) {
 				this.$router.push(`/r/${sub}/comments/${id}/${title}`);

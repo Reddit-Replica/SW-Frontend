@@ -313,12 +313,17 @@ export default {
 				inSubreddit: this.inSubreddit,
 			});
 		},
+	// @vuese
+		// Used to  set the user
+		// @arg a string value representing image
 		setUser(image) {
 			this.isSet = true;
 			this.inSubreddit = false;
 			this.inputFocused = !this.inputFocused;
 			this.image = image;
 		},
+			// @vuese
+		// Used to  get the user data
 		async getUserdata() {
 			const actionPayload = {
 				userName: this.userName,
@@ -341,6 +346,8 @@ export default {
 			}
 			this.userData = response;
 		},
+		// @vuese
+		// Used to  load Subreddit Info
 		async loadSubredditInfo() {
 			console.log('hello');
 			try {
@@ -363,9 +370,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		// @vuese
-		//load Rules list from the store
-		// @arg no argument
+		
 		// async loadListOfRules() {
 		// 	try {
 		// 		await this.$store.dispatch('moderation/loadListOfRules', {

@@ -5,8 +5,8 @@ export default {
 	/**
 	 * Make a request to get inbox messages ,
 	 * @action loadInboxMessages=setInboxMessages
-	 * @param {object} payload An object contains baseurl.
-	 * @returns {integer} return an object contains all its data
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {object} set in mutations an object contains all its data
 	 */
 	async loadInboxMessages(context, payload) {
 		const baseurl = payload.baseurl;
@@ -74,8 +74,8 @@ export default {
 	/**
 	 * Make a request to get unread messages ,
 	 * @action loadUnreadMessages=setUnreadMessages
-	 * @param {object} payload An object contains baseurl.
-	 * @returns {integer} return an object contains all its data
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {object} set in mutations an object contains all its data
 	 */
 	async loadUnreadMessages(context, payload) {
 		const baseurl = payload.baseurl;
@@ -136,8 +136,8 @@ export default {
 	/**
 	 * Make a request to get user mentions ,
 	 * @action loadUserMentions=setUserMentions
-	 * @param {object} payload An object contains baseurl.
-	 * @returns {integer} return an object contains all its data
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {object} set in mutations an object contains all its data
 	 */
 	async loadUserMentions(context, payload) {
 		const baseurl = payload.baseurl;
@@ -199,8 +199,8 @@ export default {
 	/**
 	 * Make a request to get user messages ,
 	 * @action loadUserMessages=setUserMessages
-	 * @param {object} payload An object contains baseurl.
-	 * @returns {integer} return an object contains all its data
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {object} set in mutations an object contains all its data
 	 */
 	async loadUserMessages(context, payload) {
 		const baseurl = payload.baseurl;
@@ -280,8 +280,8 @@ export default {
 	/**
 	 * Make a request to get post replies ,
 	 * @action loadPostReplies=setPostReplies
-	 * @param {object} payload An object contains baseurl.
-	 * @returns {integer} return an object contains all its data
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {object} set in mutations an object contains all its data
 	 */
 	async loadPostReplies(context, payload) {
 		const baseurl = payload.baseurl;
@@ -346,8 +346,8 @@ export default {
 	/**
 	 * Make a request to get sent messages ,
 	 * @action loadSentMessages=setSentMessages
-	 * @param {object} payload An object contains baseurl.
-	 * @returns {integer} return an object contains all its data
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {object} set in mutations an object contains all its data
 	 */
 	async loadSentMessages(context, payload) {
 		const baseurl = payload.baseurl;
@@ -453,32 +453,6 @@ export default {
 		// 	throw error;
 		// }
 	},
-
-	//error
-	// async unreadMessage(_, payload) {
-	// 	const message = {
-	// 		id: payload.id,
-	// 	};
-	// 	const baseurl = payload.baseurl;
-
-	// 	const response = await fetch(baseurl + '/unread-message', {
-	// 		method: 'patch',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 			Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-	// 		},
-	// 		body: JSON.stringify(message),
-	// 	});
-
-	// 	const responseData = await response.json();
-
-	// 	if (!response.ok) {
-	// 		const error = new Error(
-	// 			responseData.message || 'Failed to send request.'
-	// 		);
-	// 		throw error;
-	// 	}
-	// },
 
 	/**
 	 * Make a request to block user
@@ -817,8 +791,8 @@ export default {
 	},
 	/**
 	 * Make a request to send private message
-	 * @action sendMessage=sentSuccessfully
-	 * @param {object} payload An object contains baseurl, message info
+	 * @action addComment=addSuccessfully
+	 * @param {object} payload An object contains baseurl, comment info
 	 * @returns {integer} status code
 	 */
 	async addComment(context, payload) {

@@ -108,11 +108,16 @@
 <script>
 export default {
 	emits: ['reload', 'showpop'],
+
 	props: {
+		//@vuese
+		//index of notification
 		index: {
 			type: Number,
 			default: 0,
 		},
+		//@vuese
+		//object of notification details
 		notification: {
 			type: Object,
 			default: () => {},
@@ -128,6 +133,8 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//text shown in notification dots button
 		dotsButtonText() {
 			if (this.notification.title.includes('replied')) {
 				return this.textNoUpdates;
@@ -135,12 +142,18 @@ export default {
 				return this.textHide;
 			}
 		},
+		//@vuese
+		//check if notification can be hidden
 		toHide() {
 			return !this.notification.title.includes('replied');
 		},
+		//@vuese
+		//check if notification can be replied back
 		replyBack() {
 			return this.notification.title.includes('replied');
 		},
+		//@vuese
+		//get username of who send the notification
 		content() {
 			return (
 				'u/' +
@@ -153,9 +166,15 @@ export default {
 	},
 
 	methods: {
+		//@vuese
+		//show/hide hide notification button
+		//@arg no argument
 		toggleButton() {
 			this.buttonShown = !this.buttonShown;
 		},
+		//@vuese
+		//calculate duration from a specific date until now
+		//@arg date
 		calcDuration(date) {
 			let currDate = Date.parse(new Date());
 			let ourDate = Date.parse(date);
@@ -214,6 +233,10 @@ export default {
 			}
 			return duration.durationNumber + ' ' + duration.durationText;
 		},
+
+		//@vuese
+		//hide a notification
+		//@arg no argument
 		async clickDotsButton() {
 			// if (this.toHide) {
 			const accessToken = localStorage.getItem('accessToken');
@@ -224,10 +247,17 @@ export default {
 			});
 			// }
 
+			//@vuese
+			//emit fires to show pop up message
 			this.$emit('showpop');
+			//@vuese
+			//emit fires to reload the component to get the new data
 			this.$emit('reload');
 		},
 
+		//@vuese
+		//read a notification
+		//@arg no argument
 		async readNotification() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('notifications/readNotification', {
@@ -235,6 +265,8 @@ export default {
 				token: accessToken,
 				notificationId: this.notification.id,
 			});
+			//@vuese
+			//emit fires to reload the component to get the new data
 			this.$emit('reload');
 		},
 	},

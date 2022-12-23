@@ -100,12 +100,19 @@ export default {
 		},
 	},
 	computed: {
+		// @vuese
+		//check if no communities in list
 		noCommunities() {
 			return this.topCommunities.length === 0;
 		},
 	},
 	methods: {
+		// @vuese
+		//reloading
+		//@arg no argument
 		reloadAgain() {
+			// @vuese
+			//emit fires when reloading to reload the component
 			this.$emit('reloadComponent');
 		},
 	},

@@ -151,18 +151,26 @@ export default {
 	},
 	// emits: ['checked'],
 	methods: {
+		// @vuese
+		// get new Follower Email
+		// @arg The argument is a Boolean value representing new Follower Email
 		getnewFollowerEmail(value) {
 			this.newFollowerEmail = value;
 			console.log('this.newFollowerEmail');
 			console.log(this.newFollowerEmail);
 			this.changenewFollowerEmail();
 		},
+		// @vuese
+		// get unsubscribe From Emails
+		// @arg The argument is a Boolean value representing unsubscribe From Emails
 		getunsubscribeFromEmails(value) {
 			this.unsubscribeFromEmails = value;
 			console.log('this.unsubscribeFromEmails');
 			console.log(this.unsubscribeFromEmails);
 			this.changeunsubscribeFromEmails();
 		},
+		// @vuese
+		// send request to change new Follower Email
 		async changenewFollowerEmail() {
 			const actionPayload = {
 				newFollowerEmail: this.newFollowerEmail,
@@ -184,6 +192,8 @@ export default {
 				console.log(err);
 			}
 		},
+		// @vuese
+		// send request to change unsubscribe From Emails
 		async changeunsubscribeFromEmails() {
 			const actionPayload = {
 				unsubscribeFromEmails: this.unsubscribeFromEmails,
@@ -204,6 +214,8 @@ export default {
 				console.log(err);
 			}
 		},
+		// @vuese
+		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
 				baseurl: this.$baseurl,
@@ -230,6 +242,8 @@ export default {
 			console.log(this.unsubscribeFromEmails);
 		},
 		////////////////////////////////
+		// @vuese
+		//send a request to get the settings
 		doneSuccessfully(title) {
 			this.savePost(title);
 		},

@@ -26,6 +26,9 @@ export default {
 		};
 	},
 	watch: {
+		// @vuese
+		// watch Title
+		// @arg The argument is an string value representing Title
 		inputTitle(value) {
 			this.inputCharCount = this.inputTitle.length;
 			this.inputTitle = value;
@@ -34,6 +37,8 @@ export default {
 		},
 	},
 	methods: {
+		// @vuese
+		// set the title in the store
 		setTitle() {
 			//this.$store.dispatch('setTitle', this.inputTitle);
 			//this.$store.state.title = this.inputTitle;
