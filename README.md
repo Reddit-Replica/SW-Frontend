@@ -45,6 +45,14 @@ npm run coverage
 This command  generates a coverage report index.html including details about all components
 The generated coverage report is found in the project directory under **/coverage**
 
+### Run mock server
+
+```
+npm run json
+```
+
+Runs on port:3000
+
 ### Generate Functional documentation report
 
 ```
@@ -52,6 +60,14 @@ vuese gen
 ```
 
 To generate the report under **/website** folder in the project directory
+
+### Generate Functional documentation report for store
+
+```
+npm run jsdoc
+```
+
+To generate the report under **/out** folder in the project directory
 
 ### Lints and fixes files
 
