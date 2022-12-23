@@ -571,7 +571,6 @@
 </template>
 
 <script>
-import BaseButton from '@/components/BaseComponents/BaseButton.vue';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePopupMessage.vue'; //
@@ -611,7 +610,6 @@ export default {
 	},
 	components: {
 		vSelect,
-		BaseButton,
 		SaveUnsavePopupMessage,
 	},
 	data() {
