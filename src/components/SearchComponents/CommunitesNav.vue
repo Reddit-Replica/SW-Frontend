@@ -29,6 +29,9 @@ export default {
 		},
 	},
 	computed: {
+		// @vuese
+		// Return The limited SubReddits
+		// @type Object
 		SearchedCms() {
 			console.log(this.$store.getters['search/limitedSubs']);
 			return this.$store.getters['search/limitedSubs'];
@@ -46,10 +49,16 @@ export default {
 	},
 	emits: ['change-joining'],
 	methods: {
+		// @vuese
+		// Emit the joining Value
+		// @arg Boolean Value of Joining
 		clickedFunction(boolVal) {
 			this.$emit('change-joining', boolVal);
 			// this.$emit('change-joining');
 		},
+		// @vuese
+		// Replace Route to communities
+		// @arg No arg
 		doFunc() {
 			this.$router.replace({
 				name: 'searchcm',

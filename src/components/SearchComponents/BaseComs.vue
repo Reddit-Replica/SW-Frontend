@@ -89,15 +89,35 @@ export default {
 		this.showuser();
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * Hide Card Element
+		 * @arg no arg
+		 */
 		notShowitem() {
 			document.getElementById('Card').style.display = 'none';
 		},
+		/**
+		 * @vuese
+		 * Show Card Element
+		 * @arg no arg
+		 */
 		showitem() {
 			document.getElementById('Card').style.display = 'block';
 		},
+		/**
+		 * @vuese
+		 * Toggle notFollowed Data
+		 * @arg no arg
+		 */
 		showuser() {
 			this.notFollowed = this.value.joined;
 		},
+		/**
+		 * @vuese
+		 * Request to Join and Unjoin
+		 * @arg no arg
+		 */
 		async toggle() {
 			if (localStorage.getItem('accessToken')) {
 				// console.log('Goes');
@@ -141,6 +161,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * Go To Subreddit URL.
+		 * @arg Name Subreddit's Name
+		 */
 		gotosub(subredditName) {
 			this.$router.push('/r/' + subredditName);
 		},
