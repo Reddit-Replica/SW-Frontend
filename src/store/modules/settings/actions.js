@@ -1,10 +1,10 @@
 export default {
 	/**
- * @module SettingsActions
- */
+	 * @module SettingsActions
+	 */
 	//////////////email setting///////////////////
 
-		/**
+	/**
 	 * Action for changenewFollowerEmail
 	 * @action changenewFollowerEmail
 	 * @param {Object} payload newFollowerEmail and base url.
@@ -38,7 +38,7 @@ export default {
 		}
 		return response.status;
 	},
-		/**
+	/**
 	 * Action for changeunsubscribeFromEmails
 	 * @action changeunsubscribeFromEmails
 	 * @param {Object} payload unsubscribeFromEmails and base url.
@@ -73,7 +73,7 @@ export default {
 		return response.status;
 	},
 	//////////////////// feed settings  ////////////////////////////////////////////
-		/**
+	/**
 	 * Action for changeneadultContent
 	 * @action changeneadultContent
 	 * @param {Object} payload adultContent and base url.
@@ -108,7 +108,7 @@ export default {
 		return response.status;
 	},
 
-		/**
+	/**
 	 * Action for changeautoplayMedia
 	 * @action changeautoplayMedia
 	 * @param {Object} payload autoplayMedia and base url.
@@ -178,7 +178,7 @@ export default {
 		}
 		return response.status;
 	},
-		/**
+	/**
 	 * Action for changeAbout
 	 * @action changeAbout
 	 * @param {Object} payload About and base url.
@@ -247,7 +247,7 @@ export default {
 		}
 		return response.status;
 	},
-		/**
+	/**
 	 * Action for changeAllowfollow
 	 * @action changeAllowfollow
 	 * @param {Object} payload Allowfollow and base url.
@@ -283,7 +283,7 @@ export default {
 	},
 
 	//////////////////// this part for moderation setting //////////////////////////
-/**
+	/**
 	 * Action for communitySettings
 	 * @action communitySettings
 	 * @param {Object} payload communitySettings and base url.

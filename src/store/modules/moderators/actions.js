@@ -1752,7 +1752,7 @@ export default {
 			throw error;
 		}
 	},
-		/**
+	/**
 	 * Action for fetchtrafficStatus
 	 * @action  fetchtrafficStatus
 	 * @param {Object} payload subreddit and base url.
