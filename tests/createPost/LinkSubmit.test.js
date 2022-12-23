@@ -1,11 +1,11 @@
 import {shallowMount,mount} from '@vue/test-utils';
-import TitleInput from '../../src/components/SubmitComponents/TitleInput.vue';
+import LinkSubmit from '../../src/components/SubmitComponents/LinkSubmit.vue';
 import {describe, it, expect, vi} from 'vitest';
 import Vuex from 'vuex';
 // import store from '../../src/store/index.js';
 import mockservice from '../../../mockservice.txt';
 
-describe ('TitleInput.vue', () => {
+describe ('LinkSubmit.vue', () => {
 
 
   const Action = {
@@ -22,7 +22,7 @@ describe ('TitleInput.vue', () => {
   //                     check 
   //--------------------------------------------------------
   it ('should exist', () => {
-    const wrapper =shallowMount (TitleInput, {
+    const wrapper =shallowMount (LinkSubmit, {
       props: {
       },
       computed: {
@@ -39,7 +39,7 @@ describe ('TitleInput.vue', () => {
     });
   });
   it ('Testing the sender name is correct', () => {
-        const wrapper = shallowMount (TitleInput, {
+        const wrapper = shallowMount (LinkSubmit, {
           props: {
             
           },
@@ -53,9 +53,9 @@ describe ('TitleInput.vue', () => {
             },
           },
         });
-        const title = wrapper.find ('.title-input');
+        const title = wrapper.find ('#title');
         title.setValue ('');
-        expect (wrapper.find ('.title-input').text ()).contain ('');
+        expect (wrapper.find ('#title').text ()).contain ('');
       });
 
  
