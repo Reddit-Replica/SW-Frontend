@@ -408,7 +408,7 @@ export default {
 	},
 
 	methods: {
-		 // @vuese
+		// @vuese
 		// used to check the render text of text editor
 		renderContent() {
 			// console.log('hello');

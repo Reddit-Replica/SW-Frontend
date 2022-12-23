@@ -29,8 +29,8 @@ export default {
 		},
 	},
 	// @vuese
-		// watch link content
-		// @arg The argument is an string value representing link content
+	// watch link content
+	// @arg The argument is an string value representing link content
 	watch: {
 		content(value) {
 			this.content = value;

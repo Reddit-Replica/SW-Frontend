@@ -313,7 +313,7 @@ export default {
 				inSubreddit: this.inSubreddit,
 			});
 		},
-	// @vuese
+		// @vuese
 		// Used to  set the user
 		// @arg a string value representing image
 		setUser(image) {
@@ -322,7 +322,7 @@ export default {
 			this.inputFocused = !this.inputFocused;
 			this.image = image;
 		},
-			// @vuese
+		// @vuese
 		// Used to  get the user data
 		async getUserdata() {
 			const actionPayload = {
@@ -370,7 +370,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 		},
-		
+
 		// async loadListOfRules() {
 		// 	try {
 		// 		await this.$store.dispatch('moderation/loadListOfRules', {

@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import NotificationsList from '../../src/components/NotificationsComponents/NotificationsList.vue';
 import Vuex from 'vuex';
 import { describe, it, expect, vi } from 'vitest';
-describe('NotificationMessage', () => {
+describe('NotificationsList', () => {
 	const notifications = [
 		{
 			isRead: false,

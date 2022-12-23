@@ -185,7 +185,7 @@ export default {
 		// 	// this.enable();
 		// 	if (value) this.buttonDisabled = false;
 		// },
-        
+
 		// @vuese
 		// watch Title
 		// @arg The argument is an string value representing Title
@@ -217,7 +217,7 @@ export default {
 
 			// if (value) this.buttonDisabled = false;
 		},
-        // @vuese
+		// @vuese
 		// watch community
 		// @arg The argument is an string value representing community
 		community(value) {
@@ -229,8 +229,8 @@ export default {
 			else this.buttonDisabled = true;
 		},
 		// @vuese
-		// watch userName 
-		// @arg The argument is an string value representing userName 
+		// watch userName
+		// @arg The argument is an string value representing userName
 		user(value) {
 			this.userName = value;
 			this.getTitle();

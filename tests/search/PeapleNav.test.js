@@ -58,6 +58,6 @@ describe('PeopleNav', () => {
           },
         });
         const byId = wrapper.find('.no-res');
-        expect (wrapper.html().includes('People')).toBe(true);
+        expect (wrapper.html().includes('Result')).toBe(false);
     });
 });
