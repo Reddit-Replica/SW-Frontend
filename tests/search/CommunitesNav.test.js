@@ -40,7 +40,7 @@ describe('CommunitesNav', () => {
     });
 
 
-    it ('Testing if no users', () => {
+    it ('Testing if no Subreddits', () => {
         const data = new Vuex.Store({
             modules: {
                 searchingModule: {
