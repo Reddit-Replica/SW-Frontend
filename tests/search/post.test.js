@@ -1,5 +1,5 @@
 import {shallowMount,mount} from '@vue/test-utils';
-import SearchPost from '../../src/components/SearchComponents/v.vue';
+import SearchPost from '../../src/components/SearchComponents/SearchPost.vue';
 import Vuex from 'vuex';
 
 import {describe, it, expect} from 'vitest';
