@@ -446,6 +446,12 @@ export default {
 		return response.status;
 	},
 	/////////////////////account setting ///////////////////////////
+	/**
+	 * Action for cchangeCountry
+	 * @action changeCountry
+	 * @param {Object} payload country and base url.
+	 * @returns {void}
+	 */
 	async changeCountry(context, payload) {
 		const setting = {
 			country: payload.country,
@@ -474,6 +480,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeGender
+	 * @action changeGender
+	 * @param {Object} payload  gender and base url.
+	 * @returns {void}
+	 */
 	async changeGender(context, payload) {
 		const setting = {
 			gender: payload.gender,
@@ -502,6 +514,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for fetchAccountSettings
+	 * @action fetchAccountSettings
+	 * @param {Object} payload  base url.
+	 * @returns {void}
+	 */
 	async fetchAccountSettings(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/account-settings', {
@@ -527,6 +545,12 @@ export default {
 		context.commit('setAccountSettings', responseData);
 		return response.status;
 	},
+	/**
+	 * Action for connect
+	 * @action connect
+	 * @param {Object} payload accessToken,password and base url.
+	 * @returns {void}
+	 */
 	async connect(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -556,6 +580,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for disconnect
+	 * @action disconnect
+	 * @param {Object} payload password and base url.
+	 * @returns {void}
+	 */
 	async disconnect(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -572,6 +602,12 @@ export default {
 		const responseData = await response.json();
 		return { status: response.status, responseData: responseData };
 	},
+	/**
+	 * Action for deleteAccount
+	 * @action deleteAccount
+	 * @param {Object} payload password,username and base url.
+	 * @returns {void}
+	 */
 	async deleteAccount(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -602,6 +638,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changePassword
+	 * @action changePassword
+	 * @param {Object} payload newPassword,currentPassword,confirmNewPassword and base url.
+	 * @returns {void}
+	 */
 	async changePassword(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -633,6 +675,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeEmail
+	 * @action changeEmail
+	 * @param {Object} payload newEmail,currentPassword and base url.
+	 * @returns {void}
+	 */
 	async changeEmail(context, payload) {
 		const setting = {
 			currentPassword: payload.currentPassword,
