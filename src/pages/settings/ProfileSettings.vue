@@ -501,7 +501,7 @@ export default {
 		// @vuese
 		// watch display Name
 		// @arg The argument is an string value representing display Name
-		
+
 		displayName(value) {
 			this.nameCount = 30;
 			this.displayName = value;
@@ -525,7 +525,7 @@ export default {
 		// 	this.images[index].imageUrl = URL.createObjectURL(file);
 		// },
 
-         // @vuese
+		// @vuese
 		// get display Name
 		async getdisplayName() {
 			const actionPayload = {
@@ -548,7 +548,7 @@ export default {
 				console.log(this.err);
 			}
 		},
-		 // @vuese
+		// @vuese
 		// get About
 		async getAbout() {
 			const actionPayload = {
@@ -595,7 +595,7 @@ export default {
 				console.log(this.err);
 			}
 		},
-        // @vuese
+		// @vuese
 		// get Allow follow you
 		// @arg The argument is a Boolean value representing  Allow follow you
 		async getAllowfollow(value) {
@@ -721,7 +721,7 @@ export default {
 			// }
 		},
 		// @vuese
-		// load cover 
+		// load cover
 		// @arg The argument is e for ubload pic
 		async loadCoverPic(e) {
 			const file = e.target.files[0];

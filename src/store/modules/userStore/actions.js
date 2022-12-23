@@ -39,6 +39,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Make a request to get user information with specific name ,
+	 * @action getUserTempData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} status code
+	 */
 	async getUserTempData(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
@@ -101,7 +107,12 @@ export default {
 		});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to get user posts data,
+	 * @action getUserCommentsData=setUserCommentsData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.username}/comments`);
@@ -145,7 +156,12 @@ export default {
 			});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to get user posts data,
+	 * @action getUserMoreCommentsData=setUserMoreCommentsData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.username}/comments`);
@@ -399,7 +415,12 @@ export default {
 			});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to get User Subreddits
+	 * @action getUserSubreddits=setSubreddits || setBefore
+	 * @param {object} payload An object contains baseurl,type,displayText,link
+	 * @returns {integer} status code
+	 */
 	async getUserSubreddits(context, payload) {
 		const beforeMod = payload.beforeMod;
 		const afterMod = payload.afterMod;
@@ -455,6 +476,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Make a request to delete User SocialLink
+	 * @action DeleteSocialLink=deleteUserSocialLink
+	 * @param {object} payload An object contains baseurl,type,displayText,link
+	 * @returns {integer} status code
+	 */
 	async DeleteSocialLink(context, payload) {
 		const socialInfo = {
 			type: payload.type,

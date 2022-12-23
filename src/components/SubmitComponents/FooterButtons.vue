@@ -180,8 +180,8 @@ export default {
 		},
 	},
 	// @vuese
-		//return the Subreddit
-		// @type string
+	//return the Subreddit
+	// @type string
 	computed: {
 		getSubreddit() {
 			var a = this.$store.getters['posts/getSubreddit'];
@@ -219,7 +219,7 @@ export default {
 			console.log('this.flairs');
 			console.log(this.flairs);
 		},
-        // @vuese
+		// @vuese
 		// get Post settings
 		async getPostsettings() {
 			this.insubreddit = await this.$store.getters['posts/getinSubreddit'];
@@ -261,7 +261,7 @@ export default {
 		// 	console.log(this.flairBackground);
 		// },
 
-		  // @vuese
+		// @vuese
 		// switch Select
 		switchSelect(event) {
 			let selected = event.target.value;

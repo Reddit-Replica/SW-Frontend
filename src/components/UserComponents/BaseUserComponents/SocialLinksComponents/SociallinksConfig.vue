@@ -91,6 +91,11 @@ export default {
 	// back event to back to social link dialog , save event for adding new social link to user
 	emits: ['back', 'save'],
 	methods: {
+		/**
+		 * @vuese
+		 * used an RegExp for validation of the url
+		 * @arg no arg
+		 */
 		validationOfUrl() {
 			let srt = this.socialLinkUrl;
 			let urlPattern = new RegExp(

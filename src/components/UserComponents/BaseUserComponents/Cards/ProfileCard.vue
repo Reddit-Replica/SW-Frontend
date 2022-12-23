@@ -350,6 +350,8 @@ export default {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// this flag used for knowing if it is an hove post card or not to handel the card style
 		notPostCard: {
 			type: Boolean,
 			required: false,

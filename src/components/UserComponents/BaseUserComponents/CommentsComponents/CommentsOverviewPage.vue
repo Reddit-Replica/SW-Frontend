@@ -57,6 +57,11 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * emitting the popup message
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.$emit('emitPopup', id, message);
 		},
