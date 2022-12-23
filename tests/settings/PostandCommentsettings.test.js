@@ -1,7 +1,7 @@
 
 import { describe, expect, it, vitest } from 'vitest';
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils';
-import ThesettingsMod from '../../src/pages/moderation/ThesettingsMod.vue';
+import PostandCommentsettings from '../../src/pages/moderation/PostandCommentsettings.vue';
 import Vuex from 'vuex';
 // import store from '../../src/store/index.js';
 import mockservice from '../../../mockservice.txt';
@@ -15,18 +15,28 @@ import Vue from 'vue';
 //Mocking the store
 let store = new Vuex.Store({
 	modules: {
-		
+		// setting: {
+		// 	namespaced: true,
+		// 	state: {
+		// 		accountSettings: {
+		// 			adultContent: true,
+        //             autoplayMedia: false,
+        //             create: false,
+                    
+		// 		},
+		// 	},
+		// 	actions: action,
+		// },
 	},
 });
 
 
-describe('ThesettingsMod', () => {
+describe('PostandCommentsettings', () => {
 	//it-> test block
 	it('component exist', async () => {
 		//our component
-		const wrapper = shallowMount(ThesettingsMod, {
+		const wrapper = shallowMount(PostandCommentsettings, {
 			created() {
-				
 			},
 			props: {},
 			computed: {},
@@ -35,7 +45,6 @@ describe('ThesettingsMod', () => {
 				};
 			},
 			methods: {
-				
 			},
 			global: {
 				components: {},
