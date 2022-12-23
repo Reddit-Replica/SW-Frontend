@@ -9,7 +9,7 @@ describe ('SearchPost', () => {
             searchingModule: {
             namespaced: true,
             state: {
-                comments: {
+                posts: {
                 id: '2sd22das',
                 dataId: '2sd22das',
                 postId: 'sdf2321f',
