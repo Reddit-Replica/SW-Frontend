@@ -347,7 +347,7 @@ export default {
 	methods: {
 		// @vuese
 		// for upload images and videos
-		// @arg The argument is e 
+		// @arg The argument is e
 		fileChange(e) {
 			const file1 = e.target.files;
 			const file = file1[0];
@@ -394,7 +394,7 @@ export default {
 		},
 		// @vuese
 		// to remove images from images preview
-		// @arg The argument is an integer value representing index pf image 
+		// @arg The argument is an integer value representing index pf image
 		removeImage(i) {
 			// this.images.pop();
 			this.imageFiles.splice(i, 1);
@@ -415,8 +415,8 @@ export default {
 		},
 		// @vuese
 		// to select image from images to preview
-		// @arg The argument is string value representing image 
-		// @arg The argument is integer value representing index of image 
+		// @arg The argument is string value representing image
+		// @arg The argument is integer value representing index of image
 		setSelected(img, i) {
 			// if (!this.remove) {
 			this.selectedImage = img;
@@ -428,7 +428,7 @@ export default {
 		},
 		// @vuese
 		// used to drag files
-		// @arg The argument is e 
+		// @arg The argument is e
 		dragFile(e) {
 			const file1 = e.dataTransfer.files;
 			const file = file1[0];
@@ -475,7 +475,7 @@ export default {
 		},
 		// @vuese
 		// used to set the value
-		// @arg The argument is an string value representing video 
+		// @arg The argument is an string value representing video
 		setVideo(value) {
 			this.$store.commit('posts/setVideo', {
 				video: value,
