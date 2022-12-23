@@ -27,6 +27,11 @@ export default {
 		if (this.$route.fullPath == '/settings/profile') this.enable = true;
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * nake request to delete the social link
+		 * @arg no arg
+		 */
 		async deleteSociallink() {
 			const actionPayload = {
 				type: this.type,
@@ -50,6 +55,11 @@ export default {
 			}
 		},
 		watch: {
+			/**
+			 * @vuese
+			 * watch change of the route NOT USED YET
+			 * @arg no arg
+			 */
 			$route(newr) {
 				if (newr.path == 'profile/settings') console.log('profileSettings');
 			},
@@ -70,6 +80,8 @@ export default {
 			default: '',
 			required: true,
 		},
+		// @vuese
+		// type of the social link used for making request to delete an social link
 		type: {
 			type: String,
 			default: '',

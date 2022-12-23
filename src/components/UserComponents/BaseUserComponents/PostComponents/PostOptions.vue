@@ -732,6 +732,11 @@ export default {
 		// await this.updatd();
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * this function return 1 if the the post is posted by the authinticated user
+		 * @arg no arg
+		 */
 		postedByAuthUser() {
 			if (localStorage.getItem('userName') == this.postData.data.postedBy)
 				return 1;
@@ -919,13 +924,18 @@ export default {
 			this.showPostContent = true;
 			this.$emit('expandPost');
 		},
+		/**
+		 * @vuese
+		 * collapse the post to show more details	 emits event
+		 * @arg no arg
+		 */
 		collapsePostContent() {
 			this.showPostContent = false;
 			this.$emit('collapsePost');
 		},
 		/**
 		 * @vuese
-		 * collapse the post to show more details	 emits event
+		 * approve the post available only if your are an moderator
 		 * @arg no arg
 		 */
 		async approvePost(id) {
@@ -1388,6 +1398,11 @@ export default {
 		},
 	},
 	watch: {
+			/**
+		 * @vuese
+		 * watch the change of the postData and reassign post data 
+		 * @arg no arg
+		 */
 		postData() {
 			this.LockedPostFlag =
 				this.postData.data.moderation != null &&

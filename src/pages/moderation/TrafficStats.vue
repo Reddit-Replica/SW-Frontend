@@ -223,6 +223,9 @@ export default {
 		myChart;
 	},
 	computed: {
+		// @vuese
+		//return the subreddit name
+		// @type string
 		subredditName() {
 			return this.$route.params.subredditName;
 		},
@@ -261,6 +264,8 @@ export default {
 				this.choosenSecondTitle = 'Month';
 			}
 		},
+		// @vuese
+		// get the traffic status
 		async getStates() {
 			const actionPayload = {
 				subreddit: this.subredditName,

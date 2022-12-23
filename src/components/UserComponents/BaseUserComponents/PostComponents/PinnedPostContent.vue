@@ -193,6 +193,11 @@ export default {
 		},
 	},
 	watch: {
+		/**
+		 * @vuese
+		 * watch when the post content change to get it html value
+		 * @arg no arg
+		 */
 		'pinnedPost.content'() {
 			this.setPostHybridContent();
 		},
