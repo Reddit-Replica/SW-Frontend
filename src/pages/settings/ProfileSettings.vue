@@ -483,20 +483,33 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		//return the tUser Data
+		// @type object
 		getUserDataGetter() {
 			// console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 	},
 	watch: {
+		// @vuese
+		// watch user
+		// @arg The argument is an object value representing userData
 		user(val) {
 			this.userData = val;
 		},
+		// @vuese
+		// watch display Name
+		// @arg The argument is an string value representing display Name
+		
 		displayName(value) {
 			this.nameCount = 30;
 			this.displayName = value;
 			this.nameCount = this.nameCount - this.displayName.length;
 		},
+		// @vuese
+		// watch about
+		// @arg The argument is an string value representing about
 		about(value) {
 			this.aboutCount = 200;
 			this.about = value;
@@ -504,7 +517,6 @@ export default {
 		},
 	},
 	methods: {
-		//@vuese
 		//Change images
 		//Index of image to change
 		// onChange(e, index) {
@@ -512,6 +524,9 @@ export default {
 		// 	this.images[index].image = file;
 		// 	this.images[index].imageUrl = URL.createObjectURL(file);
 		// },
+
+         // @vuese
+		// get display Name
 		async getdisplayName() {
 			const actionPayload = {
 				displayName: this.displayName,
@@ -533,6 +548,8 @@ export default {
 				console.log(this.err);
 			}
 		},
+		 // @vuese
+		// get About
 		async getAbout() {
 			const actionPayload = {
 				about: this.about,
@@ -553,6 +570,8 @@ export default {
 				console.log(this.err);
 			}
 		},
+		// @vuese
+		// get Nsfw
 		async getNsfw(value) {
 			this.nsfw = value;
 			console.log('this.nsfw');
@@ -576,7 +595,9 @@ export default {
 				console.log(this.err);
 			}
 		},
-
+        // @vuese
+		// get Allow follow you
+		// @arg The argument is a Boolean value representing  Allow follow you
 		async getAllowfollow(value) {
 			this.allowToFollowYou = value;
 			console.log('this.allowToFollowYou');
@@ -665,6 +686,9 @@ export default {
 				this.savedUnsavedPosts.shift();
 			}, 10000);
 		},
+		// @vuese
+		// load Profile Pic
+		// @arg The argument is e for ubload pic
 		async loadProfilePic(e) {
 			// const file2 = await e.target.files[0];
 			const file1 = e.target.files;
@@ -696,12 +720,9 @@ export default {
 			// 	this.error = error.message || 'Something went wrong';
 			// }
 		},
-		/**
-		 * @vuese
-		 * this function for upload an Cover Image for testing only after connecting to APi
-		 * it will be removed
-		 * @arg no arg
-		 */
+		// @vuese
+		// load cover 
+		// @arg The argument is e for ubload pic
 		async loadCoverPic(e) {
 			const file = e.target.files[0];
 			//const file2 = this.$refs.coverFile.files[0];
