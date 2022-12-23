@@ -1,3 +1,18 @@
+/**
+ * The module 'TopCommunityStore' object.
+ * @name TopCommunityGetters
+ * @type {Object}
+ * @getter {Array} getAllCommunities=allCommunities Returns an array contains allCommunities.
+ * @getter {Array} getCategoryCommunities=categoryCommunities Returns an array contains allCommunities in a specific category.
+ * @getter {String} getFirstCategory=firstCategory Returns a string contains name of a random category.
+ * @getter {String} getSecondCategory=secondCategory Returns a string contains name of a another random category.
+ * @getter {Array} getFirstCommunities=firstCommunities Returns an array contains top five communities in the first category.
+ * @getter {Array} getSecondCommunities=secondCommunities Returns an array contains top five communities in the second category.
+ * @getter {String} getOneCategory=oneCategory Returns a string contains name of a random category.
+ * @getter {Array} getOneCommunities=oneCommunities Returns an array contains all communities in this category.
+ * @getter {Array} getTrendingCommunities=trendingCommunities Returns an array contains all top viewed communities.
+ * @getter {Array} getSuggestedCommunity=suggestedCommunity Returns an array contains a random community.
+ */
 export default {
 	getAllCommunities(state) {
 		return state.allCommunities;
