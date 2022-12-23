@@ -3,6 +3,17 @@ import actions from './actions.js';
 import getters from './getters.js';
 
 export default {
+	/**
+	 * The Vuex 'Moderators' object.
+	 * @name moderators
+	 * @type {object}
+	 * @property {Object} listOfSpams contain all Spam Posts and Comments.
+	 * @property {Object} approveSuccessfully contain Post and Comments approve Successfully.
+	 * @property {Object} Unmoderated contain all Unmoderated Posts and Comments.
+	 * @property {Object} EditedComments contain Edited Comments.
+	 * @property {Object} EditedPosts contain all Edited Posts.
+	 * @property {Object} Removed contain all of Removed posts and comments.
+	 */
 	namespaced: true,
 	state() {
 		return {
