@@ -113,6 +113,8 @@ export default {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//Subreddit Banner Image URL
 		subredditBannerUrl: {
 			type: String,
 			default: '',
@@ -139,6 +141,9 @@ export default {
 		hoverJoin(text) {
 			this.hoverButtonText = text;
 		},
+		//@vuese
+		//Join a subreddit
+		//@arg no argument
 		async joinSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
@@ -151,11 +156,16 @@ export default {
 				});
 
 				this.doneJoined = true;
+				//@vuese
+				//emit fires to reload subreddit details
 				this.$emit('reload');
 			} else {
 				this.$router.replace('/login');
 			}
 		},
+		//@vuese
+		//leave a subreddit
+		//@arg no argument
 		async leaveSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 
@@ -169,9 +179,13 @@ export default {
 
 				if (this.$store.getters['community/getLeaveOwner'] === true) {
 					this.notdoneLeft = true;
+					//@vuese
+					//emit fires to reload subreddit details
 					this.$emit('reload');
 				} else {
 					this.doneLeft = true;
+					//@vuese
+					//emit fires to reload subreddit details
 					this.$emit('reload');
 				}
 			} else {
