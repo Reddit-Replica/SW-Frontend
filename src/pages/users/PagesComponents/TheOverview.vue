@@ -160,7 +160,7 @@ export default {
 		// } catch (error) {
 		// 	console.log(error);
 		// }
-		// this.requestStatusHandler(reqStatus, `user ${sortType} ovverview data`);
+		this.requestStatusHandler(reqStatus, `user ${sortType} ovverview data`);
 		// this.loading = false;
 		// // if (requestStatus == 200) //console.log('Successfully fetched data');
 		// // else if (requestStatus == 404) //console.log('not found');
@@ -285,12 +285,12 @@ export default {
 		 * handel the response from the request
 		 * @arg no arg
 		 */
-		requestStatusHandler(requestStatus, st) {
-			if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
-			else if (requestStatus == 404) console.log(`Not found  ${st} `);
-			else if (requestStatus == 500) console.log(' internal server error');
-			else if (requestStatus == 401) console.log(' access denied');
-			else console.log(`Error !!!!  ${st} !!!!!`);
+		requestStatusHandler(/*requestStatus, st*/) {
+			// if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
+			// else if (requestStatus == 404) console.log(`Not found  ${st} `);
+			// else if (requestStatus == 500) console.log(' internal server error');
+			// else if (requestStatus == 401) console.log(' access denied');
+			// else console.log(`Error !!!!  ${st} !!!!!`);
 		},
 		/**
 		 * @vuese
