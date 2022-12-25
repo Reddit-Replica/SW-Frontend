@@ -88,7 +88,7 @@ export default {
 		 * @type Object
 		 */
 		SearchedUsers() {
-			console.log(this.$store.getters['search/Getusers']);
+			//console.log(this.$store.getters['search/Getusers']);
 			return this.$store.getters['search/Getusers'];
 		},
 	},

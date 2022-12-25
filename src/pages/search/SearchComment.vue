@@ -269,7 +269,7 @@ export default {
 		// @arg no argument
 		// @type Object
 		SearchedComments() {
-			console.log(this.$store.getters['search/GetComments']);
+			//console.log(this.$store.getters['search/GetComments']);
 			return this.$store.getters['search/GetComments'];
 		},
 		// @vuese

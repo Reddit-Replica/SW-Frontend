@@ -405,7 +405,6 @@ export default {
 		//expand or collapse message details
 		// @arg The argument is a string value representing if its expand or collapse
 		expand(action) {
-			console.log('ss');
 			if (action == 'expand') {
 				this.expandAll = true;
 			} else if (action == 'collapse') {

@@ -133,7 +133,7 @@ describe ('AddrulePopup.vue', () => {
         expect (wrapper.text ()).not.contain ('Characters remaining');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

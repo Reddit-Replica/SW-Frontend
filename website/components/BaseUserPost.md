@@ -25,7 +25,7 @@
 |setPostHybridContent|get the content of the hybrid post|no arg|
 |insightsPostToggle|toggle the view of the insights post|no arg|
 |RequestInsightsData|Request the insights data|no arg|
-|deletePost|savePost() { if (this.state == 'unauth') { this.$router.push('/'); return; } console.log('save'); }, sharePost() { if (this.state == 'unauth') { this.$router.push('/'); return; } console.log('share'); // this.showShareOptions = true; }, hide the deleted post from the page|no arg|
+|deletePost|savePost() { if (this.state == 'unauth') { this.$router.push('/'); return; } //console.log('save'); }, sharePost() { if (this.state == 'unauth') { this.$router.push('/'); return; } //console.log('share'); // this.showShareOptions = true; }, hide the deleted post from the page|no arg|
 |hidePost|hide the hidden post from the page|no arg|
 |expandPostContent|expand Post to show its content|no arg|
 |collapsePostContent|collapse post to hide its details content|no arg|

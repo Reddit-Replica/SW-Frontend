@@ -154,7 +154,7 @@ describe ('ApprovedItem.vue', () => {
         expect (wrapper.text ()).contain ('Cancel');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

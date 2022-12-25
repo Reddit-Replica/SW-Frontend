@@ -116,7 +116,7 @@ export default {
 		// @arg no argument
 		// @type Object
 		SearchedCms() {
-			console.log(this.$store.getters['search/Getsubreddits']);
+			//console.log(this.$store.getters['search/Getsubreddits']);
 			return this.$store.getters['search/Getsubreddits'];
 		},
 		// @vuese

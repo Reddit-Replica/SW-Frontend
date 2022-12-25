@@ -139,8 +139,8 @@ export default {
 				this.fieldEmpty = true;
 				this.incorrectPassword = false;
 			} else if (this.oldPassword != localStorage.getItem('Password')) {
-				console.log(localStorage.getItem('Password'));
-				console.log(this.oldPassword);
+				//console.log(localStorage.getItem('Password'));
+				//console.log(this.oldPassword);
 				this.fieldEmpty = false;
 				this.incorrectPassword = true;
 			} else {

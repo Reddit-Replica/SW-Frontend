@@ -33,23 +33,23 @@ export default {
 		handleSdkInit({ FB, scope }) {
 			this.FB = FB;
 			this.scope = scope;
-			console.log('saaf');
+			// //console.log('saaf');
 		},
 		/**
 		 * @vuese
 		 * Request To Auth FB (notused).
 		 * @arg No arg.
 		 */
-		OnFacebookAuthSuccess(idToken) {
-			console.log(idToken);
+		OnFacebookAuthSuccess(/*idToken*/) {
+			// //console.log(idToken);
 		},
 		/**
 		 * @vuese
 		 * in Fail FB (notused).
 		 * @arg No arg.
 		 */
-		OnFacebookAuthFail(error) {
-			console.log(error);
+		OnFacebookAuthFail(/*error*/) {
+			// console.log(error);
 		},
 	},
 };

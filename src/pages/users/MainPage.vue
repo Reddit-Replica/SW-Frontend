@@ -148,7 +148,7 @@ export default {
 				!this.busyRequestMore &&
 				this.MoreFetch
 			) {
-				console.log('bottom1');
+				//console.log('bottom1');
 				let title = this.$route.params.title;
 				if (title == null) title = 'best';
 				this.loading = true;
@@ -157,7 +157,7 @@ export default {
 				this.busyRequestMore = true;
 				if (this.afterMod == '') this.MoreFetch = false;
 				this.busyRequestMore = false;
-				console.log('bottom2');
+				//console.log('bottom2');
 			}
 		},
 		test() {
@@ -242,13 +242,13 @@ export default {
 				this.$store.getters['listing/getPosts'].children
 			);
 			this.afterMod = this.$store.getters['listing/getPosts'].after;
-			console.log(this.afterMod);
+			//console.log(this.afterMod);
 		},
 		changeRoute(title) {
 			this.$router.push('/main/' + title);
 		},
 		async changeRouteQueryParam(title) {
-			console.log(title);
+			//console.log(title);
 			await this.$router.push({ path: '/main/top', query: { t: title } });
 			this.fetchPosts('top');
 		},

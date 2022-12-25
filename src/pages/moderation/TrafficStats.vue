@@ -178,8 +178,8 @@ import Chart from 'chart.js/auto';
 export default {
 	async created() {
 		await this.getStates();
-		console.log('after creation');
-		console.log(this.traffic);
+		//console.log('after creation');
+		//console.log(this.traffic);
 		let arr1 = [];
 		let arr2 = [];
 		let arr3 = [];
@@ -190,9 +190,9 @@ export default {
 			arr2.push(this.traffic.days[i].numberOfJoined);
 			arr3.push(this.traffic.days[i].numberOfLeft);
 		}
-		console.log(arr1);
-		console.log(arr2);
-		console.log(arr3);
+		//console.log(arr1);
+		//console.log(arr2);
+		//console.log(arr3);
 		const ctx = document.getElementById('myChart');
 		const labels = arr1;
 		const data = {
@@ -271,22 +271,22 @@ export default {
 				subreddit: this.subredditName,
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'moderation/fetchtrafficStatus',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
 			this.traffic = this.$store.getters['moderation/gettrafficStatus'];
-			//console.log(this.setting);
+			////console.log(this.setting);
 		},
 	},
 };

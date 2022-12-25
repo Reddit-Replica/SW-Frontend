@@ -133,9 +133,9 @@ import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePo
 export default {
 	async created() {
 		await this.getSettings();
-		console.log('after creation');
-		console.log(this.newFollowerEmail);
-		console.log(this.unsubscribeFromEmails);
+		//console.log('after creation');
+		//console.log(this.newFollowerEmail);
+		//console.log(this.unsubscribeFromEmails);
 		this.create = true;
 	},
 	components: {
@@ -156,8 +156,8 @@ export default {
 		// @arg The argument is a Boolean value representing new Follower Email
 		getnewFollowerEmail(value) {
 			this.newFollowerEmail = value;
-			console.log('this.newFollowerEmail');
-			console.log(this.newFollowerEmail);
+			//console.log('this.newFollowerEmail');
+			//console.log(this.newFollowerEmail);
 			this.changenewFollowerEmail();
 		},
 		// @vuese
@@ -165,8 +165,8 @@ export default {
 		// @arg The argument is a Boolean value representing unsubscribe From Emails
 		getunsubscribeFromEmails(value) {
 			this.unsubscribeFromEmails = value;
-			console.log('this.unsubscribeFromEmails');
-			console.log(this.unsubscribeFromEmails);
+			//console.log('this.unsubscribeFromEmails');
+			//console.log(this.unsubscribeFromEmails);
 			this.changeunsubscribeFromEmails();
 		},
 		// @vuese
@@ -183,8 +183,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
@@ -205,8 +205,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
@@ -220,26 +220,26 @@ export default {
 			const actionPayload = {
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/fetchAccountSettings',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
 			this.setting = await this.$store.getters['setting/getAccountSettings'];
-			console.log(this.setting);
+			//console.log(this.setting);
 			this.newFollowerEmail = this.setting.newFollowerEmail;
 			this.unsubscribeFromEmails = this.setting.unsubscribeFromEmails;
-			console.log(this.newFollowerEmail);
-			console.log(this.unsubscribeFromEmails);
+			//console.log(this.newFollowerEmail);
+			//console.log(this.unsubscribeFromEmails);
 		},
 		////////////////////////////////
 		// @vuese

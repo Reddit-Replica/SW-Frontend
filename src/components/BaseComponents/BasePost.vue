@@ -308,12 +308,10 @@ export default {
 		savedUnsavedInMainID(newID) {
 			if (newID == this.post.id)
 				this.saved = this.$store.state.latestSavedUnsavedPost.saved;
-			console.log('newvalue= ' + newID);
 		},
 		savedUnsavedInMainState(newState) {
 			if (this.$store.state.latestSavedUnsavedPost.id == this.post.id)
 				this.saved = newState;
-			console.log('newvalue= ' + newState);
 		},
 		post(newValue) {
 			this.counter = newValue.votes;

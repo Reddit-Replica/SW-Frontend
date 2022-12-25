@@ -81,7 +81,7 @@ export default {
 	},
 	// computed: {
 	// 	SearchedCms() {
-	// 		// console.log(this.$store.getters['search/Getsubreddits']);
+	// 		// //console.log(this.$store.getters['search/Getsubreddits']);
 	// 		return this.$store.getters['search/Getsubreddits'];
 	// 	},
 	// },
@@ -96,7 +96,7 @@ export default {
 		 */
 		showuser() {
 			this.notFollowed = this.value.joined;
-			// console.log('Goes');
+			// //console.log('Goes');
 		},
 		/**
 		 * @vuese
@@ -105,7 +105,7 @@ export default {
 		 */
 		async toggle() {
 			if (localStorage.getItem('accessToken')) {
-				// console.log('Goes');
+				// //console.log('Goes');
 				this.notFollowed = !this.notFollowed;
 				if (this.notFollowed) {
 					try {

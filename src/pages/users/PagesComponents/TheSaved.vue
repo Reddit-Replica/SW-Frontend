@@ -99,7 +99,7 @@ export default {
 		};
 	},
 	mounted() {
-		console.log('in saved', this.state);
+		//console.log('in saved', this.state);
 	},
 	/**
 	 * @vuese
@@ -137,9 +137,9 @@ export default {
 		// }
 		// this.requestStatusHandler(reqStatus, `user ${sortType} ovverview data`);
 		// this.loading = false;
-		// // if (requestStatus == 200) console.log('Successfully fetched data');
-		// // else if (requestStatus == 404) console.log('not found');
-		// // else if (requestStatus == 500) console.log(' internal server error');
+		// // if (requestStatus == 200) //console.log('Successfully fetched data');
+		// // else if (requestStatus == 404) //console.log('not found');
+		// // else if (requestStatus == 500) //console.log(' internal server error');
 		this.scroll();
 		this.$nextTick(() => {
 			window.addEventListener('scroll', this.scroll);
@@ -155,7 +155,7 @@ export default {
 		 * @arg no arg
 		 */
 		getUserSavedData() {
-			// console.log(this.$store.getters['userposts/getUserData']);
+			// //console.log(this.$store.getters['userposts/getUserData']);
 			return this.$store.getters['userposts/getUserSavedData'];
 		},
 	},
@@ -200,7 +200,7 @@ export default {
 				!this.busyRequestMore &&
 				this.MoreFetch
 			) {
-				console.log('bottom1');
+				//console.log('bottom1');
 				let sortType, t;
 				sortType = this.routeSortTypeAndTime().sortType;
 				t = this.routeSortTypeAndTime().t;
@@ -209,7 +209,7 @@ export default {
 				if (this.getUserOverviewData.overviewData.after == '')
 					this.MoreFetch = false;
 				this.busyRequestMore = false;
-				console.log('bottom2');
+				//console.log('bottom2');
 			}
 		},
 		/**
@@ -230,7 +230,7 @@ export default {
 				path: `/user/${this.$route.params.userName}/submitted`,
 				query: { sort: `${sortType}` },
 			});
-			console.log(sortType);
+			//console.log(sortType);
 			this.loading = true;
 			const reqStatus = await this.RequestUserSavedData(sortType);
 			this.requestStatusHandler(reqStatus, `user ${sortType} posts`);
@@ -246,12 +246,12 @@ export default {
 				path: `/user/${this.$route.params.userName}/`,
 				query: { sort: `top`, time: t },
 			});
-			console.log(t);
+			//console.log(t);
 			this.loading = true;
 			const reqStatus = await this.RequestUserOverviewData('top', t);
 			this.requestStatusHandler(reqStatus, `user ${t} posts`);
 			this.loading = false;
-			console.log('f', t);
+			//console.log('f', t);
 		},
 		/**
 		 * @vuese
@@ -290,7 +290,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log('req', requestStatus);
+			//console.log('req', requestStatus);
 			return requestStatus;
 		},
 		/**
@@ -319,7 +319,7 @@ export default {
 				} catch (error) {
 					this.error = error.message || 'Something went wrong';
 				}
-				console.log('req', requestStatus);
+				//console.log('req', requestStatus);
 				return requestStatus;
 			}
 		},

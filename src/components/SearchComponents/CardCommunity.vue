@@ -62,7 +62,7 @@ export default {
 		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
-			console.log(num);
+			//console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
 	},

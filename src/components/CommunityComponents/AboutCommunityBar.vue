@@ -745,7 +745,6 @@ export default {
 			// this.savedCommunitySubtopics = this.communitySubtopics;
 			//send request
 
-			console.log(this.subtopicsToShow);
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('community/AddSubTopic', {
 				subtopics: this.subtopicsToShow,

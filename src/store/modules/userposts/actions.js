@@ -37,7 +37,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -80,7 +80,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -96,7 +96,7 @@ export default {
 	 */
 	async getUserPinnedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		// console.log('pinned-post-body', payload.body);
+		// //console.log('pinned-post-body', payload.body);
 		// let url = new URL(baseurl + `/pinned-posts`);
 		// let params = {
 		// 	username: payload.body.username,
@@ -105,7 +105,7 @@ export default {
 		// 	url.searchParams.append(key, params[key])
 		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		console.log('stst');
+		//console.log('stst');
 		const response = await fetch(
 			baseurl + `/pinned-posts?username=${payload.body.username}`,
 			{
@@ -124,7 +124,7 @@ export default {
 			throw error;
 			// console.log(error);
 		}
-		console.log('getUserPinnedPostData', responseData);
+		//console.log('getUserPinnedPostData', responseData);
 		if (response.status == 200)
 			context.commit('setUserPinnedPostData', {
 				responseData,
@@ -139,7 +139,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserOverviewData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
@@ -153,7 +153,7 @@ export default {
 		// Object.keys(params).forEach((key) =>
 		// 	url.searchParams.append(key, params[key])
 		// );
-		// console.log(url);
+		// //console.log(url);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		const response = await fetch(
 			baseurl +
@@ -172,7 +172,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('overvie Actions', responseData);
+		//console.log('overvie Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserOverviewData', {
 				responseData,
@@ -187,7 +187,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserMoreOverviewData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
@@ -219,7 +219,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('overvie Actions', responseData);
+		//console.log('overvie Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserMoreOverviewData', {
 				responseData,
@@ -234,7 +234,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserSavedData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
@@ -265,7 +265,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('saved Actions', responseData);
+		//console.log('saved Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserOverviewData', {
 				responseData,
@@ -280,7 +280,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserMoreSavedData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
@@ -311,7 +311,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('saved Actions', responseData);
+		//console.log('saved Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserMoreOverviewData', {
 				responseData,
@@ -355,7 +355,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -399,7 +399,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -443,7 +443,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -488,7 +488,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -532,7 +532,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -577,7 +577,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -621,7 +621,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -666,7 +666,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setMoreUserPostData', {
 				responseData,
@@ -816,16 +816,16 @@ export default {
 			},
 			body: JSON.stringify(ApprovePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
-		console.log('commit');
+		//console.log(response.status);
+		//console.log(responseData);
+		//console.log('commit');
 		if (response.status == 200) {
 			if (ApprovePostOrCommentData.type == 'post') {
 				if (payload.page != 'overview')
@@ -861,15 +861,15 @@ export default {
 			},
 			body: JSON.stringify(removePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200 && removePostOrCommentData.type == 'post')
 			if (payload.page != 'overview')
 				context.commit('removePostOrComment', {
@@ -898,15 +898,15 @@ export default {
 			},
 			body: JSON.stringify(savePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if (response.status == 200)
 		// 	context.commit('rPostOrComment', {
 		// 		removePostOrCommentData,
@@ -930,15 +930,15 @@ export default {
 			},
 			body: JSON.stringify(savePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if (response.status == 200)
 		// 	context.commit('rPostOrComment', {
 		// 		removePostOrCommentData,
@@ -953,7 +953,7 @@ export default {
 	 */
 	async lockUnLockPostOrComment(context, payload) {
 		const lockUnlockData = payload.lockUnlockData; // id ,type
-		console.log(lockUnlockData);
+		//console.log(lockUnlockData);
 		const baseurl = payload.baseurl;
 		let response;
 		if (payload.key == 'lock') {
@@ -975,15 +975,15 @@ export default {
 				body: JSON.stringify(lockUnlockData),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
 			// );
 			// throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200 && lockUnlockData.type == 'post')
 			if (payload.page != 'overview')
 				context.commit('lockUnLockPostOrComment', {
@@ -1006,7 +1006,7 @@ export default {
 	 */
 	async markUnMarkSendMeReply(context, payload) {
 		const sendReplyData = payload.sendReplyData; // id ,type
-		console.log(sendReplyData);
+		//console.log(sendReplyData);
 		const baseurl = payload.baseurl;
 		let response;
 		response = await fetch(baseurl + '/send-replies', {
@@ -1018,15 +1018,15 @@ export default {
 			body: JSON.stringify(sendReplyData),
 		});
 
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
 			// );
 			// throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('markUnMarkSendMeReply', {
 				sendReplyData,
@@ -1058,8 +1058,8 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('ApprovePostOrComment', {
 			ApprovePostOrCommentData,
@@ -1091,8 +1091,8 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('markPostAsSpoiler', {
 			spoilerData,
@@ -1124,8 +1124,8 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('unmarkPostAsSpoiler', {
 			spoilerData,
@@ -1161,15 +1161,15 @@ export default {
 				body: JSON.stringify(spoilerData),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		if (payload.page != 'overview')
 			context.commit('markUnMarkPostAsSpoiler', {
@@ -1210,15 +1210,15 @@ export default {
 				body: JSON.stringify(nsfwData),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		if (payload.page != 'overview')
 			context.commit('markPostAsNSFW', {
@@ -1247,15 +1247,15 @@ export default {
 			},
 			body: JSON.stringify(pinUnpinData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('pinUnpinPost', {
 			pinUnpinData,
@@ -1291,15 +1291,15 @@ export default {
 				body: JSON.stringify({ id: hideUnhideData.id }),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		// context.commit('pinUnpinPost', {
 		// 	pinUnpinData,
@@ -1314,7 +1314,7 @@ export default {
 	 */
 	async markSpam(context, payload) {
 		const markSpamData = payload.markSpamData; // id of post pin boolean
-		console.log('markSpamActions', markSpamData);
+		//console.log('markSpamActions', markSpamData);
 		const baseurl = payload.baseurl;
 		let response;
 		try {
@@ -1329,16 +1329,16 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
 			// );
 			// throw error;
-			// console.log(responseData);
+			// //console.log(responseData);
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200 && markSpamData.type == 'post')
 			if (payload.page != 'overview')
 				context.commit('markSpam', {
@@ -1368,15 +1368,15 @@ export default {
 			},
 			body: JSON.stringify(unmarkSpamData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('unmarkSpam', {
 			payload,

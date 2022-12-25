@@ -26,7 +26,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -60,7 +60,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -95,7 +95,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -130,7 +130,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -166,7 +166,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -201,7 +201,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -235,7 +235,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -269,7 +269,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -290,8 +290,8 @@ export default {
 	 * @returns {void}
 	 */
 	async communitySettings(context, payload) {
-		// console.log('welcome message');
-		// console.log(payload);
+		// //console.log('welcome message');
+		// //console.log(payload);
 		const setting = {
 			communityName: payload.communityName,
 			mainTopic: payload.mainTopic,
@@ -307,7 +307,7 @@ export default {
 			acceptingRequestsToPost: payload.acceptingRequestsToPost,
 			approvedUsersHaveTheAbilityTo: payload.approvedUsersHaveTheAbilityTo,
 		};
-		console.log(setting);
+		//console.log(setting);
 		const baseurl = payload.baseurl;
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/edit`,
@@ -321,9 +321,9 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
-			// console.log(response);
+			// //console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -350,7 +350,7 @@ export default {
 		};
 
 		const baseurl = payload.baseurl;
-		// console.log(localStorage.getItem('accessToken'));
+		// //console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
 			baseurl + `/r/${payload.communityName}/about/edit-post-settings`,
 			{
@@ -365,7 +365,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -397,7 +397,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -407,7 +407,7 @@ export default {
 			console.log(error);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('setmoderationSettings', responseData);
 		return response.status;
 	},
@@ -431,7 +431,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -441,7 +441,7 @@ export default {
 			console.log(error);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('setpostandcommentsSettings', responseData);
 		return response.status;
 	},
@@ -468,7 +468,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -502,7 +502,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -532,7 +532,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -566,9 +566,9 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -614,7 +614,7 @@ export default {
 			password: payload.password,
 			username: payload.username,
 		};
-		console.log(payload);
+		//console.log(payload);
 		const response = await fetch(baseurl + '/delete-account', {
 			method: 'DELETE',
 			headers: {
@@ -624,9 +624,9 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -651,7 +651,7 @@ export default {
 			newPassword: payload.newPassword,
 			confirmNewPassword: payload.confirmNewPassword,
 		};
-		console.log(payload);
+		//console.log(payload);
 		const response = await fetch(baseurl + '/change-password', {
 			method: 'PUT',
 			headers: {
@@ -661,7 +661,7 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
 			localStorage.setItem('Password', payload.newPassword);
 		} else if (response.status == 401) {
@@ -697,9 +697,9 @@ export default {
 			body: JSON.stringify(setting),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		// if (response.status == 200) {
-		// 	console.log(response);
+		// 	//console.log(response);
 		// } else if (response.status == 401) {
 		// 	const error = new Error(responseData.error);
 		// 	console.log(error);

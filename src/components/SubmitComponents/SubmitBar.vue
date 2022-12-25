@@ -241,8 +241,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -269,12 +269,12 @@ export default {
 		async setsubreddit(title, image) {
 			this.subredditTitle = title;
 			await this.loadSubredditInfo();
-			console.log('print subreddit');
-			console.log(this.subreddit);
-			console.log(image);
+			//console.log('print subreddit');
+			//console.log(this.subreddit);
+			//console.log(image);
 			this.inSubreddit = true;
 
-			console.log(this.subredditTitle);
+			//console.log(this.subredditTitle);
 			this.communityName = title;
 			this.inputFocused = !this.inputFocused;
 			this.isSet = true;
@@ -329,7 +329,7 @@ export default {
 				userName: this.userName,
 				baseurl: this.$baseurl,
 			};
-			console.log('enter get user data');
+			//console.log('enter get user data');
 			let response;
 			try {
 				response = await this.$store.dispatch(
@@ -338,18 +338,18 @@ export default {
 				);
 
 				// if (response == 200) {
-				// 	console.log(response);
-				// 	console.log('    user data الحمد لله زى الفل');
+				// 	//console.log(response);
+				// 	//console.log('    user data الحمد لله زى الفل');
 				// }
 			} catch (err) {
-				console.log(this.err);
+				//console.log(this.err);
 			}
 			this.userData = response;
 		},
 		// @vuese
 		// Used to  load Subreddit Info
 		async loadSubredditInfo() {
-			console.log('hello');
+			//console.log('hello');
 			try {
 				await this.$store.dispatch('community/getSubreddit', {
 					baseurl: this.$baseurl,
@@ -359,7 +359,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
-			console.log(this.subreddit);
+			//console.log(this.subreddit);
 
 			try {
 				await this.$store.dispatch('moderation/loadListOfFlairs', {

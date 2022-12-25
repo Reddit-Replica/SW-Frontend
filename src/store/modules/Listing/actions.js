@@ -16,7 +16,7 @@ export default {
 	async fetchPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const title = payload.title;
-		console.log(payload);
+		//console.log(payload);
 		var query;
 		if (payload.afterMod != null && payload.query != undefined)
 			query = '?after=' + payload.afterMod + '&time=' + payload.query;
@@ -35,10 +35,10 @@ export default {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;
 		}
-		console.log(responseData.children);
+		//console.log(responseData.children);
 		for (let i = 0; i < responseData.children.length; i++) {
 			if (responseData.children[i].data.kind == 'post') {
-				console.log('here');
+				//console.log('here');
 				let r = await fetch(
 					baseurl +
 						'/post-details?id=' +
@@ -52,10 +52,10 @@ export default {
 					}
 				);
 				responseData.children[i].data.sharedPostDetails = await r.json();
-				console.log(responseData.children[i].data.sharedPostDetails);
+				//console.log(responseData.children[i].data.sharedPostDetails);
 			}
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('setPosts', responseData);
 	},
 	async postDetails(context, payload) {
@@ -69,9 +69,9 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log(responseData.subreddit);
+		//console.log(responseData.subreddit);
 		if (responseData.subreddit == '') delete responseData['subreddit'];
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(responseData.message || 'Failed to fetch!');
 			throw error;
@@ -89,7 +89,7 @@ export default {
 			);
 			responseData.sharedPostDetails = await rr.json();
 		}
-		console.log(responseData.sharedPostDetails);
+		//console.log(responseData.sharedPostDetails);
 		context.commit('setPostDetails', responseData);
 	},
 	async deleteComment(_, payload) {

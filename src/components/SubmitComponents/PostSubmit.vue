@@ -411,14 +411,14 @@ export default {
 		// @vuese
 		// used to check the render text of text editor
 		renderContent() {
-			// console.log('hello');
+			// //console.log('hello');
 			// // var renderer = require('quilljs-renderer');
 			// var Document = renderer.Document;
 
 			// // Load the built-in HTML formatter
 			// renderer.loadFormat('html');
 
-			// console.log('hello');
+			// //console.log('hello');
 			// this.data = doc.convertTo('html');
 			var QuillDeltaToHtmlConverter =
 				require('quill-delta-to-html').QuillDeltaToHtmlConverter;

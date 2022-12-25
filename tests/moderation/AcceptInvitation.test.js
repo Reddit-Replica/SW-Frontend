@@ -178,7 +178,7 @@ describe ('ModerationList', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -283,7 +283,7 @@ describe ('ModerationList', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -320,7 +320,7 @@ describe ('ModerationList', () => {
         expect (wrapper.text ()).contain ('Invite Moderators');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

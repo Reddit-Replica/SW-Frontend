@@ -17,16 +17,16 @@ export default {
 	// 	state.didAutoLogout = true;
 	// },
 	setResponse(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.response = payload.response;
 	},
 	setRandom(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.RandomUsers = payload;
-		console.log(state.RandomUsers);
+		//console.log(state.RandomUsers);
 	},
 	settype(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.type = payload;
 	},
 };

@@ -58,8 +58,8 @@ export default {
 	 * @arg no arg
 	 */
 	created() {
-		// console.log('in social link');
-		// console.log(this.$store.getters['user/getStaticSocialLinks']);
+		// //console.log('in social link');
+		// //console.log(this.$store.getters['user/getStaticSocialLinks']);
 		this.sociallinkItems = this.$store.getters['user/getStaticSocialLinks'];
 	},
 	// @vuese
@@ -104,7 +104,7 @@ export default {
 			this.socialLinkData = this.sociallinkItems.find(
 				(socialLink) => socialLink.text == text
 			);
-			console.log(this.socialLinkData);
+			//console.log(this.socialLinkData);
 			this.tryClose();
 			this.showSocialLinkConfig = true;
 		},

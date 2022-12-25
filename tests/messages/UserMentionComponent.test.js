@@ -412,11 +412,11 @@ describe ('PostreplyComponent.vue', () => {
             expect (wrapper.text ()).contain ('spammed');
           })
           .catch (function () {
-            console.log ('Promise Rejected');
+            //console.log ('Promise Rejected');
           });
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -451,11 +451,11 @@ describe ('PostreplyComponent.vue', () => {
               .toBeCalledWith ('uncaughtException', expect.any (Function));
           })
           .catch (function () {
-            console.log ('Promise Rejected');
+            //console.log ('Promise Rejected');
           });
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
   it ('Testing clicking unread', () => {
@@ -488,7 +488,7 @@ describe ('PostreplyComponent.vue', () => {
         expect (this.isRead == true).toBe (false);
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

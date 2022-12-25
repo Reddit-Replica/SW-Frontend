@@ -175,7 +175,7 @@ export default {
 		validatEmail(value) {
 			if (/^[a-zA-Z0-9\\/*+;&%?#@!^()_="\-:~`|[\]{}\s]*$/i.test(value)) {
 				this.invalidEmail = true;
-				console.log('hello');
+				//console.log('hello');
 				this.checkedEmail = false;
 				this.showSignemail = true;
 			} else {
@@ -202,19 +202,19 @@ export default {
 				const response = this.getResponse();
 
 				if (response == 200) {
-					console.log(response);
+					//console.log(response);
 					this.success = true;
 				}
 			} catch (err) {
 				this.error = err;
-				console.log(this.error);
+				//console.log(this.error);
 				this.success = false;
 			}
 		},
 		// @vuese
 		// enable button after recaptcha is verified
 		verifyRec() {
-			console.log('verified 2');
+			//console.log('verified 2');
 			this.buttonDisabled = false;
 		},
 		// @vuese

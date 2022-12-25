@@ -56,7 +56,7 @@ export default {
 	 * @arg no arg
 	 */
 	async created() {
-		// console.log('req-insights');
+		// //console.log('req-insights');
 		await this.RequestInsightsData(this.id);
 	},
 	methods: {
@@ -79,7 +79,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.$emit('finishLoading', 5);
-			console.log('dd', response);
+			//console.log('dd', response);
 			this.getInsightsData = response;
 		},
 	},
@@ -90,7 +90,7 @@ export default {
 		 * @arg no arg
 		 */
 		// getInsightsData() {
-		// 	console.log(this.$store.getters['userposts/getInsightsData']);
+		// 	//console.log(this.$store.getters['userposts/getInsightsData']);
 		// 	return this.$store.getters['userposts/getInsightsData'].insightsData;
 		// },
 	},

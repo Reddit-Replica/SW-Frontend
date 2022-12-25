@@ -360,7 +360,7 @@ export default {
 	},
 	// mounted() {
 	// 	this.userData = this.$store.getters['user/getUserData'];
-	// 	console.log(this.userData);
+	// 	//console.log(this.userData);
 	// 	this.uploadBanner();
 	// },
 	data() {
@@ -512,7 +512,7 @@ export default {
 		 */
 		toggleShowMoreOptions() {
 			this.showMoreOptions = !this.showMoreOptions;
-			// console.log(this.userName, this.$route.props.userName);
+			// //console.log(this.userName, this.$route.props.userName);
 		},
 		/**
 		 * @vuese
@@ -545,7 +545,7 @@ export default {
 
 			// const file = await this.$refs.profileFile.files[0];
 			const profilePictureUrl = await URL.createObjectURL(file);
-			// console.log(profilePictureUrl);
+			// //console.log(profilePictureUrl);
 			// document.querySelector('#profile-picture_user').src = profilePictureUrl;
 			try {
 				await this.$store.dispatch('user/AddProfilePicture', {

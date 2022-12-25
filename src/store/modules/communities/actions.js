@@ -185,7 +185,7 @@ export default {
 				body: JSON.stringify(description),
 			}
 		);
-		console.log(payload.description);
+		//console.log(payload.description);
 		const responseData = await response.json();
 
 		if (!response.ok) {
@@ -271,7 +271,7 @@ export default {
 	async getSubreddit(context, payload) {
 		context.commit('notFound', false);
 		const baseurl = payload.baseurl;
-		// console.log(payload);
+		// //console.log(payload);
 		const response = await fetch(baseurl + `/r/${payload.subredditName}`, {
 			method: 'GET',
 			headers: {
@@ -288,14 +288,14 @@ export default {
 		// 	throw error;
 		// }
 
-		// console.log(response.status);
+		// //console.log(response.status);
 		if (response.status == 200) {
 			context.commit('setSubreddit', responseData);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		} else if (response.status == 404) {
-			// console.log('notttttttt');
+			// //console.log('notttttttt');
 			context.commit('notFound', true);
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -423,7 +423,7 @@ export default {
 		}
 
 		context.commit('setPosts', responseData['children']);
-		console.log(responseData);
+		//console.log(responseData);
 	},
 	///////////////// moderation community norhan //////////////////
 	/**
@@ -446,7 +446,7 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			context.commit('setTopics', responseData.communityTopics);
-			console.log(responseData.children);
+			//console.log(responseData.children);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;
@@ -483,7 +483,7 @@ export default {
 			localStorage.setItem('response', response.status);
 		} else if (response.status == 400) {
 			const error = new Error(responseData);
-			console.log(responseData);
+			//console.log(responseData);
 			throw error;
 		} else {
 			console.log(error);
@@ -523,7 +523,7 @@ export default {
 			localStorage.setItem('response', response.status);
 		} else if (response.status == 400) {
 			const error = new Error(responseData);
-			console.log(responseData);
+			//console.log(responseData);
 			throw error;
 		} else {
 			console.log(error);

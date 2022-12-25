@@ -8,19 +8,19 @@ export default {
 	 * @mutator {object} setpostandcommentsSettings={postandcommentsSettings} Sets the post and comments Settings.
 	 */
 	setunsubscribeFromEmails(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.unsubscribeFromEmails = payload.unsubscribeFromEmails;
 	},
 	setAccountSettings(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.accountSettings = payload;
 	},
 	setmoderationSettings(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.moderationSettings = payload;
 	},
 	setpostandcommentsSettings(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.postandcommentsSettings = payload;
 	},
 };

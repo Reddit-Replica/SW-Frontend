@@ -327,15 +327,15 @@ export default {
 			try {
 				await this.$store.dispatch('available_user', actionPayload);
 				// const response = localStorage.getItem('response');
-				// console.log(response);
+				// //console.log(response);
 				this.messageErrorShowUser = false;
 				this.showSignuser = true;
 				this.checkedUser = true;
 				// document.querySelector('#regUsername').style.border =
 				// 	'0.5px solid #0079d3';
 			} catch (err) {
-				const response = localStorage.getItem('response');
-				console.log(response);
+				// const response = localStorage.getItem('response');
+				//console.log(response);
 				this.showSignuser = true;
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
@@ -349,7 +349,7 @@ export default {
 		//Verify Do Recpatcha
 		// @arg no argument
 		verifyRec() {
-			console.log('verified 2');
+			//console.log('verified 2');
 			this.buttonDisabled = false;
 		},
 		//@vuese
@@ -363,7 +363,7 @@ export default {
 			try {
 				await this.$store.dispatch('available_email', actionPayload);
 				// const response = localStorage.getItem('response');
-				// console.log(response);
+				// //console.log(response);
 				this.messageErrorShowEmail = false;
 				this.showSignemail = true;
 				this.checkused = true;
@@ -372,8 +372,8 @@ export default {
 				// 	'0.5px solid #0079d3';
 			} catch (err) {
 				if (this.flag) {
-					const response = localStorage.getItem('response');
-					console.log(response);
+					// const response = localStorage.getItem('response');
+					//console.log(response);
 					this.error_email = true;
 					this.error_email_message = 'Email is already taken';
 					this.showSignemail = true;
@@ -423,8 +423,8 @@ export default {
 			};
 			try {
 				await this.$store.dispatch('getRandomUsers', actionPayload);
-				console.log(this.$store.getters['getRandomUsers']);
-				console.log('hassan');
+				//console.log(this.$store.getters['getRandomUsers']);
+				//console.log('hassan');
 			} catch (err) {
 				this.error = err;
 			}

@@ -1,18 +1,52 @@
 # <div><img src="reddit.png" width="50" draggable="false" > Read-it FE</div>
 
-A Project that mimics the Frontend part of reddit.
-
 ---
 
-# Main commands for running the Project
+## 📝 Table of Contents
 
-## Project setup & installing packages
+- [About <a name = "about"></a>](#about-)
+- [website Features <a name = "website-features"></a>](#website-features-)
+- [Screen Video from the Website <a name = "screen-video"></a>](#screen-video-from-the-website-)
+- [Project setup <a name = "Project-setup"></a>](#project-setup-)
+- [Contributors <a name = "Contributors"></a>](#contributors-)
+
+## About <a name = "about"></a>
+
+- A Project that mimics the Frontend part of reddit.
+
+## Screen Video from the Website: <a name = "screen-video"></a>
+
+<video width="320" height="240" controls>
+  <source src="./video/Project.mp4" type="video/mp4">
+</video>
+
+## website Features: <a name = "website-features"></a>
+
+- Authentication
+- Create, update, and delete posts and comments.
+- create all types of post(text, link, drag and drop one image or more, drag and drop video).
+- Upvote/downvote posts and comments.
+- Nested comments threading.
+- Home page feed (front page).
+- Subreddit specific feed.
+- Create subreddits.
+- Join subreddits.
+- Add ban, mute, approve, and invite user to be a moderator of my subreddit.
+- Accept invitation of user to become moderator.
+- See trafic status o my subreddit.
+- view my posts, comments, history, ... in my page.
+- change my avatar, and add banner.
+... and more!
+
+
+## Main commands for running the Project <a name = "Project-setup"></a>
+### Project setup & installing packages
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 
 ```
 npm run serve
@@ -20,7 +54,7 @@ npm run serve
 
 Runs the project by default on port:8081
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 
 ```
 npm run build
@@ -28,7 +62,7 @@ npm run build
 
 The project is found in a **/dist** folder under the same directory after building
 
-### Run your unit tests
+#### Run your unit tests
 
 ```
 npm run test
@@ -36,7 +70,7 @@ npm run test
 
 This command runs all the unit tests.
 
-### Generating coverage report
+#### Generating coverage report
 
 ```
 npm run coverage
@@ -45,7 +79,7 @@ npm run coverage
 This command  generates a coverage report index.html including details about all components
 The generated coverage report is found in the project directory under **/coverage**
 
-### Run mock server
+#### Run mock server
 
 ```
 npm run json
@@ -53,7 +87,7 @@ npm run json
 
 Runs on port:3000
 
-### Generate Functional documentation report
+#### Generate Functional documentation report
 
 ```
 vuese gen
@@ -61,7 +95,7 @@ vuese gen
 
 To generate the report under **/website** folder in the project directory
 
-### Generate Functional documentation report for store
+#### Generate Functional documentation report for store
 
 ```
 npm run jsdoc
@@ -69,19 +103,19 @@ npm run jsdoc
 
 To generate the report under **/out** folder in the project directory
 
-### Lints and fixes files
+#### Lints and fixes files
 
 ```
 npm run lint
 ```
 
-### Prettier files and fixes it
+#### Prettier files and fixes it
 
 ```
 npm run prettier
 ```
 
-## Contributors <a name = "Contributors"></a>
+### Contributors <a name = "Contributors"></a>
 
 <table>
   <tr>

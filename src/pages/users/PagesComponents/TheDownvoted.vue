@@ -125,7 +125,7 @@ export default {
 				!this.busyRequestMore &&
 				this.MoreFetch
 			) {
-				console.log('bottom1');
+				//console.log('bottom1');
 				let sortType, t;
 				sortType = this.routeSortTypeAndTime().sortType;
 				t = this.routeSortTypeAndTime().t;
@@ -133,7 +133,7 @@ export default {
 				await this.RequestMoreUserPostData(sortType, t);
 				if (this.getUserPostData.postData.after == '') this.MoreFetch = false;
 				this.busyRequestMore = false;
-				console.log('bottom2');
+				//console.log('bottom2');
 			}
 		},
 		/**
@@ -149,13 +149,13 @@ export default {
 		 * handel the response from the request
 		 * @arg no arg
 		 */
-		requestStatusHandler(requestStatus, st) {
-			if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
-			else if (requestStatus == 404) console.log(`Not found  ${st} `);
-			else if (requestStatus == 500) console.log(' internal server error');
-			else if (requestStatus == 401) console.log(' access denied');
-			else console.log(`Error !!!!  ${st} !!!!!`);
-		},
+		// requestStatusHandler(requestStatus, st) {
+		// 	if (requestStatus == 200) //console.log(`Successfully fetched ${st} data`);
+		// 	else if (requestStatus == 404) //console.log(`Not found  ${st} `);
+		// 	else if (requestStatus == 500) //console.log(' internal server error');
+		// 	else if (requestStatus == 401) //console.log(' access denied');
+		// 	else //console.log(`Error !!!!  ${st} !!!!!`);
+		// },
 		/**
 		 * @vuese
 		 * handel  when you clicked on the sort bar
@@ -166,7 +166,7 @@ export default {
 				path: `/user/${this.$route.params.userName}/submitted`,
 				query: { sort: `${sortType}` },
 			});
-			console.log(sortType);
+			//console.log(sortType);
 			this.loading = true;
 			const reqStatus = await this.RequestUserPostData(sortType);
 			this.requestStatusHandler(reqStatus, `user ${sortType} posts`);
@@ -182,12 +182,12 @@ export default {
 				path: `/user/${this.$route.params.userName}/submitted`,
 				query: { sort: `top`, time: t },
 			});
-			console.log(t);
+			//console.log(t);
 			this.loading = true;
 			const reqStatus = await this.RequestUserPostData('top', t);
 			this.requestStatusHandler(reqStatus, `user ${t} posts`);
 			this.loading = false;
-			console.log('f', t);
+			//console.log('f', t);
 		},
 		/**
 		 * @vuese
@@ -214,7 +214,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log('req', requestStatus);
+			//console.log('req', requestStatus);
 			return requestStatus;
 		},
 		/**
@@ -242,7 +242,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log('req', requestStatus);
+			//console.log('req', requestStatus);
 			return requestStatus;
 		},
 	},

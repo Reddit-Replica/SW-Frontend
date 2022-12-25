@@ -33,7 +33,7 @@ export default {
 		// Return The limited SubReddits
 		// @type Object
 		SearchedCms() {
-			console.log(this.$store.getters['search/limitedSubs']);
+			//console.log(this.$store.getters['search/limitedSubs']);
 			return this.$store.getters['search/limitedSubs'];
 		},
 	},

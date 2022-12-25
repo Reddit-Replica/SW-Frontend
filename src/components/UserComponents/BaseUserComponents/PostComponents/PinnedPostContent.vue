@@ -183,11 +183,11 @@ export default {
 			if (this.pinnedPost.kind == 'hybrid') {
 				let QuillDeltaToHtmlConverter =
 					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-				console.log(this.pinnedPost.content);
+				//console.log(this.pinnedPost.content);
 				let deltaOps = this.pinnedPost.content.ops;
 				let cfg = {};
 				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-				console.log(converter.convert());
+				//console.log(converter.convert());
 				this.PostHybridContent = converter.convert();
 			}
 		},

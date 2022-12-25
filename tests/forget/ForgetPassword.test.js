@@ -136,7 +136,7 @@ it ('Testing clicking submit', () => {
       expect (this.userName == userName.element.value).toBe (true);
     })
     .catch (function () {
-      console.log ('Promise Rejected');
+      //console.log ('Promise Rejected');
     });
   return Promise.resolve ();
 });
@@ -232,7 +232,7 @@ test ('test signup button', async () => {
 				);
 			})
 			.catch(function () {
-				console.log('Promise Rejected');
+				//console.log('Promise Rejected');
 			});
 
 

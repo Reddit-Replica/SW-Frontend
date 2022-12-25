@@ -89,7 +89,7 @@ export default {
 			}
 		},
 		click() {
-			console.log(this.subreddit);
+			// //console.log(this.subreddit);
 		},
 		// @vuese
 		//load Rules list from the store

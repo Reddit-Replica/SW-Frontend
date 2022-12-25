@@ -57,8 +57,8 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 201) {
-			console.log(responseData);
-			console.log(response);
+			//console.log(responseData);
+			//console.log(response);
 			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -103,7 +103,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 201) {
-			console.log(response);
+			//console.log(response);
 			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -142,13 +142,13 @@ export default {
 		postInfo.append('spoiler', payload.spoiler);
 		if (payload.flairId) postInfo.append('flairId', payload.flairId);
 		postInfo.append('sendReplies', payload.sendReplies);
-		console.log(payload.images);
-		console.log(payload.imageCaptions);
-		console.log(payload.imageLinks);
-		console.log(payload.images.length);
-		console.log(payload.imageCaptions.length);
-		console.log(payload.imageLinks.length);
-		console.log(postInfo);
+		//console.log(payload.images);
+		//console.log(payload.imageCaptions);
+		//console.log(payload.imageLinks);
+		//console.log(payload.images.length);
+		//console.log(payload.imageCaptions.length);
+		//console.log(payload.imageLinks.length);
+		//console.log(postInfo);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
@@ -160,12 +160,12 @@ export default {
 		});
 		const responseData = await response.text();
 		if (response.status == 201) {
-			console.log(responseData);
-			console.log(response);
+			//console.log(responseData);
+			//console.log(response);
 			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
-			console.log(responseData.body);
+			//console.log(responseData.body);
 			throw error;
 		} else {
 			console.log(error);
@@ -194,7 +194,7 @@ export default {
 		if (payload.flairId) postInfo.append('flairId', payload.flairId);
 		postInfo.append('sendReplies', payload.sendReplies);
 		const baseurl = payload.baseurl;
-		console.log(videos[0]);
+		//console.log(videos[0]);
 		const response = await fetch(baseurl + '/submit', {
 			method: 'POST',
 			headers: {
@@ -205,8 +205,8 @@ export default {
 		});
 		const responseData = await response.text();
 		if (response.status == 201) {
-			console.log(responseData);
-			console.log(response);
+			//console.log(responseData);
+			//console.log(response);
 			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
@@ -234,7 +234,7 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			context.commit('setallSubreddits', responseData.children);
-			console.log(responseData.children);
+			//console.log(responseData.children);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;
@@ -276,8 +276,8 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 201) {
-			console.log(responseData);
-			console.log(response);
+			//console.log(responseData);
+			//console.log(response);
 			context.commit('setpostData', responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);

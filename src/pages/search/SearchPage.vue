@@ -385,7 +385,7 @@ export default {
 		// @arg no argument
 		// @type Object
 		SearchedPosts() {
-			console.log(this.$store.getters['search/GetPosts']);
+			//console.log(this.$store.getters['search/GetPosts']);
 			return this.$store.getters['search/GetPosts'];
 		},
 		// @vuese

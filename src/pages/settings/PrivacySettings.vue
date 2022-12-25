@@ -255,12 +255,12 @@ export default {
 		 * handles the status code of requested data
 		 * @arg no arg
 		 */
-		requestStatusHandler(requestStatus, st) {
+		requestStatusHandler(requestStatus /*, st*/) {
 			if (requestStatus == 200) {
 				// this.emitPopup('11', `Successfully  ${st}  a user`);
-				console.log(`Successfully fetched ${st} data`);
+				// console.log(`Successfully fetched ${st} data`);
 			} else if (requestStatus == 404) {
-				console.log(`Not found  ${st} user `);
+				// console.log(`Not found  ${st} user `);
 				// this.emitPopup('11', `Not found a user with that name`);
 			} else if (requestStatus == 500) {
 				console.log(' internal server error');
@@ -269,7 +269,7 @@ export default {
 				console.log(' access denied');
 				// this.emitPopup('11', `access denied`);
 			} else {
-				console.log(`Error !!!!  ${st} !!!!!`);
+				// console.log(`Error !!!!  ${st} !!!!!`);
 				// this.emitPopup('11', `Error !!!!  ${st} !!!!!`);
 			}
 			// this.emitPopup('11', `Error !!!!  ${st} !!!!!`);

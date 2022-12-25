@@ -45,7 +45,7 @@ export default {
 		};
 	},
 	listOfSubreddits(state) {
-		console.log(state.listOfSubreddits);
+		//console.log(state.listOfSubreddits);
 		return state.listOfSubreddits;
 	},
 	before(state) {

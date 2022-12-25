@@ -23,7 +23,7 @@ export default {
 		};
 	},
 	created() {
-		console.log(this.$route.fullPath == '/settings/profile');
+		//console.log(this.$route.fullPath == '/settings/profile');
 		if (this.$route.fullPath == '/settings/profile') this.enable = true;
 	},
 	methods: {
@@ -39,15 +39,15 @@ export default {
 				link: this.link,
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'user/DeleteSocialLink',
 					actionPayload
 				);
 				if (response == 204) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -60,9 +60,9 @@ export default {
 			 * watch change of the route NOT USED YET
 			 * @arg no arg
 			 */
-			$route(newr) {
-				if (newr.path == 'profile/settings') console.log('profileSettings');
-			},
+			// $route(newr) {
+			// if (newr.path == 'profile/settings') //console.log('profileSettings');
+			// },
 		},
 	},
 	props: {

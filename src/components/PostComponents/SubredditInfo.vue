@@ -60,7 +60,7 @@ export default {
 	},
 	methods: {
 		click() {
-			console.log(this.subreddit);
+			// //console.log(this.subreddit);
 		},
 		async loadSubredditInfo() {
 			try {
@@ -72,8 +72,8 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.subreddit = this.$store.getters['community/getSubreddit'];
-			console.log('here');
-			console.log(this.subreddit);
+			//console.log('here');
+			//console.log(this.subreddit);
 		},
 		async loadSubredditModerators() {
 			try {

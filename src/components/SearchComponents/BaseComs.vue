@@ -120,7 +120,7 @@ export default {
 		 */
 		async toggle() {
 			if (localStorage.getItem('accessToken')) {
-				// console.log('Goes');
+				// //console.log('Goes');
 				this.notFollowed = !this.notFollowed;
 				if (this.notFollowed) {
 					try {

@@ -98,7 +98,7 @@ export default {
 		//reload all communities or a specific category's communities based on router
 		//@arg no argument
 		reloadPage() {
-			console.log('reloadPage');
+			//console.log('reloadPage');
 			let category = this.$route.params.category;
 			if (!category) {
 				this.getAllCommunities();

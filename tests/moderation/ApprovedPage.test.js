@@ -152,7 +152,7 @@ describe ('TheApproved', () => {
         expect (wrapper.text ()).contain ('Cancel');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -192,7 +192,7 @@ describe ('TheApproved', () => {
         });
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

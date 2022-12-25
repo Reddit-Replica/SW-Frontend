@@ -80,7 +80,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -95,7 +95,7 @@ export default {
 			receiverUsername: payload.receiverUsername,
 		};
 		const baseurl = payload.baseurl;
-		console.log(body);
+		//console.log(body);
 		const response = await fetch(baseurl + '/mention', {
 			method: 'POST',
 			headers: {
@@ -106,7 +106,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -115,7 +115,7 @@ export default {
 		}
 	},
 	async commentedUsers(context, payload) {
-		console.log('in action');
+		//console.log('in action');
 		const baseurl = payload.baseurl;
 		const response = await fetch(
 			baseurl + '/commented-users?id=' + payload.postId,
@@ -129,8 +129,8 @@ export default {
 		);
 
 		const responseData = await response.json();
-		console.log('/commented-users response');
-		console.log(responseData);
+		//console.log('/commented-users response');
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -265,7 +265,7 @@ export default {
 			content: payload.content,
 			postId: payload.id,
 		};
-		console.log(newComment);
+		//console.log(newComment);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/edit-post', {
 			method: 'POST',
@@ -277,7 +277,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

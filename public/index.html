@@ -121,11 +121,11 @@
 
 			function statusChangeCallback(response) {
 				if (response.status === 'connected') {
-					console.log('Logged in and authenticated');
+					//console.log('Logged in and authenticated');
 					testAPI();
 					setElements(true);
 				} else {
-					console.log('Not authenticated');
+					//console.log('Not authenticated');
 					setElements(false);
 				}
 			}
@@ -139,7 +139,7 @@
 			function testAPI() {
 				// FB.api('/me?fields=name,email', function (response) {
 				// 	if (response && !response.error) {
-				// 		console.log(response);
+				// 		//console.log(response);
 				// 		buildProfile(response);
 				// 	}
 
@@ -149,17 +149,17 @@
 				// 		}
 				// 	});
 				// });
-				console.log('Welcome!  Fetching your information.... ');
+				//console.log('Welcome!  Fetching your information.... ');
 				FB.api('/me', function (response) {
-					console.log('Successful login for: ' + response.name);
+					//console.log('Successful login for: ' + response.name);
 				});
 			}
 
 			function setElements(isLoggedIn) {
 				if (isLoggedIn) {
-					console.log('is logged in!!!!!!!!!!!!!!!!!!!!');
+					//console.log('is logged in!!!!!!!!!!!!!!!!!!!!');
 				} else {
-					console.log('not logged in!!!!!!!!!!!!!!!!!!!!');
+					//console.log('not logged in!!!!!!!!!!!!!!!!!!!!');
 				}
 			}
 

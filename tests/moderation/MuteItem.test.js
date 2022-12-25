@@ -205,7 +205,7 @@ describe ('MuteItem.vue', () => {
         expect (wrapper.text ()).contain ('Are you sure you want to unmute mute?');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -239,7 +239,7 @@ describe ('MuteItem.vue', () => {
         expect (wrapper.text ()).contain ('Cancel');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -273,7 +273,7 @@ describe ('MuteItem.vue', () => {
         expect (wrapper.text ()).contain ('Unmute');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

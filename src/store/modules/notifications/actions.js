@@ -177,7 +177,7 @@ export default {
 	 * @param {Object} contains base url.
 	 * @returns {void} */
 	async createNotificationToken(context, payload) {
-		console.log('creation');
+		//console.log('creation');
 
 		if (localStorage.getItem('clientToken') == null) {
 			await this.dispatch('notifications/registerServiceWorker', {
@@ -196,21 +196,21 @@ export default {
 	 * @param {Object} contains base url.
 	 * @returns {void} */
 	async registerServiceWorker(_, payload) {
-		console.log('registerServiceWorker');
+		//console.log('registerServiceWorker');
 		// const host = payload.host;
 
 		if ('Notification' in window && navigator.serviceWorker) {
 			registerSW('/firebase-messaging-sw.js', {
 				async ready(reg) {
-					console.log('Service worker is Ready');
+					//console.log('Service worker is Ready');
 					// subsctibe to FCM
-					console.log('subscribeToken');
+					//console.log('subscribeToken');
 					try {
 						let token = await getToken(getMessaging(firebaseApp), {
 							vapidKey: process.env.VUE_APP_FIREBASE_VAPIDKEY,
 							serviceWorkerRegistration: reg,
 						});
-						console.log('Client token => ', token);
+						//console.log('Client token => ', token);
 
 						// send token to server
 						await store.dispatch('notifications/sendTokenToServer', {
@@ -231,29 +231,29 @@ export default {
 					} catch (err) {
 						console.error(err);
 						localStorage.removeItem('clientToken');
-						console.log('Retry to subscribe');
+						//console.log('Retry to subscribe');
 					}
 				},
 				async registered(reg) {
-					console.log('Service worker has been registered.');
+					//console.log('Service worker has been registered.');
 					setInterval(() => {
 						reg.update();
 					}, 1000 * 60 * 30); // 30 min checks
 				},
 				cached() {
-					// console.log('Content has been cached for offline use.');
+					// //console.log('Content has been cached for offline use.');
 				},
 				updatefound() {
-					console.log('New content is downloading.');
+					//console.log('New content is downloading.');
 				},
 				updated(reg) {
-					console.log('New content is available; please refresh.');
+					//console.log('New content is available; please refresh.');
 					document.dispatchEvent(
 						new CustomEvent('swUpdated', { detail: reg.waiting })
 					);
 				},
 				offline() {
-					console.log('No internet connection found.');
+					//console.log('No internet connection found.');
 				},
 				error(error) {
 					console.error('Error during service worker registration:', error);
@@ -268,7 +268,7 @@ export default {
 	 * @param {Object} contains base url.
 	 * @returns {void} */
 	async sendTokenToServer(_, payload) {
-		console.log('send');
+		//console.log('send');
 
 		const baseurl = payload.baseurl;
 		const data = { type: 'web', accessToken: payload.clientToken };
@@ -307,7 +307,7 @@ export default {
 				'/firebase-messaging-sw.js'
 			);
 		onMessageReceived(getMessaging(firebaseApp), (payload) => {
-			console.log('Message received. ', payload);
+			//console.log('Message received. ', payload);
 			let { notification, data } = payload;
 			let notificationTitle = 'Test title';
 			let notificationBody = 'Test body';
@@ -342,7 +342,7 @@ export default {
 	 * @param {Object} contains base url.
 	 * @returns {void} */
 	async removeNotificationToken(_, payload) {
-		console.log('removing');
+		//console.log('removing');
 
 		const baseurl = payload.baseurl;
 		const data = { type: 'web' };

@@ -149,7 +149,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		if (response.status == 200) {
 			const mentions = [];
 
@@ -219,7 +219,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		if (response.status == 200) {
 			const messages = [];
 
@@ -260,6 +260,7 @@ export default {
 					messages: messagesInMessage,
 				};
 				messages.push(message);
+				messagesInMessage = [];
 			}
 			context.commit('setUserMessages', messages);
 			context.commit('setAfter', after);
@@ -300,7 +301,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		if (response.status == 200) {
 			const replies = [];
 

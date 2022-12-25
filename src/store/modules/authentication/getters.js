@@ -19,7 +19,7 @@ export default {
 		return state.response;
 	},
 	getRandomUsers(state) {
-		console.log(state.RandomUsers);
+		//console.log(state.RandomUsers);
 		return state.RandomUsers;
 	},
 	gettype(state) {

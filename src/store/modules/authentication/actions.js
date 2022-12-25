@@ -31,7 +31,7 @@ export default {
 			//this.$cookies.set('response', response.status);
 			//this.$cookies.set('response', response.status);
 			//this.$cookie.setCookie('response', response.status);
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;
@@ -66,11 +66,11 @@ export default {
 				response: response.status,
 			});
 			//this.$cookies.set('response', response.status);
-			console.log(response);
-			console.log(responseData);
+			//console.log(response);
+			//console.log(responseData);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
-			console.log(responseData.error);
+			//console.log(responseData.error);
 			throw error;
 		} else {
 			const error = new Error('server error');
@@ -91,9 +91,9 @@ export default {
 		const baseurl = payload.baseurl;
 		const id = payload.id;
 		const token = payload.token;
-		console.log(id);
-		console.log(token);
-		console.log(userInfo);
+		//console.log(id);
+		//console.log(token);
+		//console.log(userInfo);
 
 		const response = await fetch(
 			baseurl + '/reset-password/' + id + '/' + token,
@@ -105,9 +105,9 @@ export default {
 		);
 
 		const responseData = await response.json();
-		console.log(response);
-		console.log(responseData);
-		//console.log(responseData.token);
+		//console.log(response);
+		//console.log(responseData);
+		////console.log(responseData.token);
 		if (response.status == 200) {
 			//localStorage.setItem('response', response.status);
 			context.commit('setResponse', {
@@ -119,7 +119,7 @@ export default {
 				this.$cookies.set('accessToken', responseData.token);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
-			console.log(responseData.error);
+			//console.log(responseData.error);
 			throw error;
 		} else if (response.status == 403) {
 			const error = new Error('invalid token');
@@ -151,15 +151,15 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
-		console.log(response.ok);
+		//console.log(responseData);
+		//console.log(response.ok);
 		if (response.ok) {
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
 				localStorage.setItem('Password', payload.password);
-				// console.log(localStorage.getItem('Password'));
-				// console.log(localStorage.getItem('Password'));
+				// //console.log(localStorage.getItem('Password'));
+				// //console.log(localStorage.getItem('Password'));
 				context.commit('setUser', {
 					userName: responseData.username,
 					accessToken: responseData.token,
@@ -198,15 +198,15 @@ export default {
 		const responseData = await response.json();
 		// localStorage.setItem('response', response.status);
 		//this.$cookies.set('response', response.status);
-		// console.log(response.status);
+		// //console.log(response.status);
 		if (response.status == 200) {
-			console.log(response);
-			console.log(response.status);
+			//console.log(response);
+			//console.log(response.status);
 			if (responseData.token && responseData.username) {
 				localStorage.setItem('accessToken', responseData.token);
 				localStorage.setItem('userName', responseData.username);
 				localStorage.setItem('Password', payload.password);
-				// console.log(localStorage.getItem('Password'));
+				// //console.log(localStorage.getItem('Password'));
 				// localStorage.setItem('response', response.status);
 				context.commit('setUser', {
 					userName: responseData.username,
@@ -258,7 +258,7 @@ export default {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ accessToken: userInfo.accessToken }),
 		});
-		console.log(payload.id_token);
+		//console.log(payload.id_token);
 		const responseData = await response.json();
 		if (response.status == 200 || response.status == 201) {
 			localStorage.setItem('accessToken', responseData.token);
@@ -283,15 +283,15 @@ export default {
 	 */
 	async available_user(context, payload) {
 		const baseurl = payload.baseurl;
-		// console.log(payload.username);
-		// console.log(baseurl);
-		console.log(baseurl + '/username-available?username=' + payload.username);
+		// //console.log(payload.username);
+		// //console.log(baseurl);
+		//console.log(baseurl + '/username-available?username=' + payload.username);
 		const response = await fetch(
 			baseurl + '/username-available' + '?username=' + payload.username
 		);
 		const responseData = await response.json();
 		// localStorage.setItem('response', response.status);
-		console.log(response.status);
+		//console.log(response.status);
 		if (response.ok) {
 			if (!responseData.Error) {
 				context.commit('setUser', {
@@ -311,15 +311,15 @@ export default {
 	 */
 	async available_email(context, payload) {
 		const baseurl = payload.baseurl;
-		// console.log(payload.username);
-		// console.log(baseurl);
-		console.log(baseurl + '/email-available?email=' + payload.email);
+		// //console.log(payload.username);
+		// //console.log(baseurl);
+		//console.log(baseurl + '/email-available?email=' + payload.email);
 		const response = await fetch(
 			baseurl + '/email-available' + '?email=' + payload.email
 		);
 		const responseData = await response.json();
 		// localStorage.setItem('response', response.status);
-		console.log(response.status);
+		//console.log(response.status);
 		if (
 			response.status == 200 ||
 			response.status == 201 ||
@@ -360,7 +360,7 @@ export default {
 		const baseurl = payload.baseurl;
 		const id = payload.id;
 		const token = payload.token;
-		console.log('Ahmed');
+		//console.log('Ahmed');
 		const response = await fetch(
 			baseurl + '/verify-email/' + id + '/' + token,
 			{
@@ -370,7 +370,7 @@ export default {
 		);
 
 		const responseData = await response.json();
-		//console.log(responseData.token);
+		////console.log(responseData.token);
 		if (response.status == 200) {
 			//localStorage.setItem('response', response.status);
 			context.commit('setResponse', {
@@ -382,7 +382,7 @@ export default {
 			// this.$cookies.set('accessToken', responseData.token);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
-			console.log(responseData.error);
+			//console.log(responseData.error);
 			throw error;
 		} else if (response.status == 403) {
 			const error = new Error('invalid token');
@@ -399,8 +399,8 @@ export default {
 const responseData = await response.json();
 
 if (response.ok) {
-	console.log(response);
-	console.log(response.status);
+	//console.log(response);
+	//console.log(response.status);
 } else if (!response.ok) {
 	const error = new Error(responseData.error);
 	throw error;

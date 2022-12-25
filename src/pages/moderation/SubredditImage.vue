@@ -177,23 +177,18 @@ export default {
 			const subredditName = this.$route.params.subredditName;
 			this.cover = URL.createObjectURL(file);
 			this.loaded2 = false;
-			let responseStatus;
 			try {
-				responseStatus = await this.$store.dispatch(
-					'community/addSubredditBanner',
-					{
-						baseurl: this.$baseurl,
-						file,
-						bannerImageUrl,
-						subredditName: subredditName,
-					}
-				);
+				await this.$store.dispatch('community/addSubredditBanner', {
+					baseurl: this.$baseurl,
+					file,
+					bannerImageUrl,
+					subredditName: subredditName,
+				});
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.doneSuccessfully();
 			this.loaded2 = true;
-			console.log(responseStatus);
 		},
 		// @vuese
 		//load subreddit img
@@ -207,11 +202,11 @@ export default {
 				token: accessToken,
 			});
 			this.subreddit = this.$store.getters['community/getSubreddit'];
-			console.log(this.subreddit);
+			//console.log(this.subreddit);
 			this.image = this.subreddit.picture;
 			this.cover = this.subreddit.banner;
-			console.log(this.image);
-			console.log(this.cover);
+			//console.log(this.image);
+			//console.log(this.cover);
 		},
 	},
 };

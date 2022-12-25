@@ -11,7 +11,7 @@ export default {
  
  */
 	async comment(context, payload) {
-		console.log(payload);
+		//console.log(payload);
 		const newComment = {
 			content: payload.text,
 			postId: payload.postId,
@@ -22,7 +22,7 @@ export default {
 			haveSubreddit: payload.haveSubreddit,
 		};
 		const baseurl = payload.baseurl;
-		console.log(newComment);
+		//console.log(newComment);
 		const response = await fetch(baseurl + '/comment', {
 			method: 'POST',
 			headers: {
@@ -33,7 +33,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -47,7 +47,7 @@ export default {
 			content: payload.content,
 			id: payload.id,
 		};
-		console.log(newComment);
+		//console.log(newComment);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/edit-user-text', {
 			method: 'PUT',
@@ -59,7 +59,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
@@ -148,7 +148,7 @@ export default {
 			id: payload.id,
 			type: payload.type,
 		};
-		console.log(comment);
+		//console.log(comment);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/delete', {
 			method: 'DELETE',
@@ -160,7 +160,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

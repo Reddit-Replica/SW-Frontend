@@ -89,8 +89,8 @@ export default {
 		fileChange(e) {
 			const file = e.target.files[0];
 			this.images.push(URL.createObjectURL(file));
-			// console.log('hello');
-			// console.log(file);
+			// //console.log('hello');
+			// //console.log(file);
 		},
 		removeImage() {
 			this.images.pop();
@@ -352,8 +352,8 @@ export default {
 			const file1 = e.target.files;
 			const file = file1[0];
 
-			console.log(file.type);
-			console.log(file.type == 'image/jpeg');
+			//console.log(file.type);
+			//console.log(file.type == 'image/jpeg');
 			//'video/mp4'
 			if (file.type == 'video/mp4') {
 				this.video = URL.createObjectURL(file);
@@ -369,8 +369,8 @@ export default {
 				this.images.push(URL.createObjectURL(file));
 				this.imageCaptions.push(this.caption);
 				this.imageLinks.push(this.link);
-				console.log(this.images.length);
-				console.log('after push');
+				//console.log(this.images.length);
+				//console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
 				// if (this.images.length == 1) {
@@ -401,17 +401,17 @@ export default {
 			this.images.splice(i, 1);
 			this.imageCaptions.splice(i, 1);
 			this.imageLinks.splice(i, 1);
-			console.log(this.images);
+			//console.log(this.images);
 			if (i != 0) this.setSelected(this.images[i - 1]);
 			// this.selectedImage =
 			else this.setSelected(this.images[i]);
 			// this.selectedImage = this.images[i];
 			this.remove = true;
-			console.log(this.images.length);
-			console.log('after pop');
-			console.log(this.images.length);
+			//console.log(this.images.length);
+			//console.log('after pop');
+			//console.log(this.images.length);
 
-			console.log(this.images.length);
+			//console.log(this.images.length);
 		},
 		// @vuese
 		// to select image from images to preview
@@ -432,7 +432,7 @@ export default {
 		dragFile(e) {
 			const file1 = e.dataTransfer.files;
 			const file = file1[0];
-			console.log(file);
+			//console.log(file);
 			this.dropped = true;
 
 			if (file.type == 'video/mp4') {
@@ -449,8 +449,8 @@ export default {
 				this.images.push(URL.createObjectURL(file));
 				this.imageCaptions.push(this.caption);
 				this.imageLinks.push(this.link);
-				console.log(this.images.length);
-				console.log('after push');
+				//console.log(this.images.length);
+				//console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
 				this.$store.commit('posts/setvideoOrimage', {

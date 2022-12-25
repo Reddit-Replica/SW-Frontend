@@ -101,7 +101,7 @@ describe ('AddBan.vue', () => {
         expect (wrapper.text ()).contain ('Username can not be empty');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 

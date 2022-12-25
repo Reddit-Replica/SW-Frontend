@@ -43,7 +43,7 @@ export default {
 		return state.topics;
 	},
 	notFound(state) {
-		console.log(state.notFound);
+		//console.log(state.notFound);
 		return state.notFound;
 	},
 };

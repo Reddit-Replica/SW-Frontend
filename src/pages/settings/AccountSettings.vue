@@ -707,7 +707,7 @@ export default {
 							: response.responseData;
 				this.email = this.newEmail;
 				this.changeEmailDialog = false;
-				console.log(response);
+				//console.log(response);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
@@ -788,7 +788,7 @@ export default {
 			this.connectedToGoogle = !this.connectedToGoogle;
 			try {
 				const googleUser = await this.$gAuth.signIn();
-				console.log(localStorage.getItem('Password'));
+				//console.log(localStorage.getItem('Password'));
 				await this.$store.dispatch('setting/connect', {
 					baseurl: this.$baseurl,
 					type: 'google',
@@ -815,7 +815,7 @@ export default {
 					this.changeGoogleDialog1 = false;
 					this.connectedToGoogle = false;
 				}
-				console.log(response);
+				//console.log(response);
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
@@ -859,7 +859,7 @@ export default {
 		//change gender
 		async changeGender(gender) {
 			this.gender = gender;
-			console.log(gender);
+			//console.log(gender);
 			const actionPayload = {
 				gender: this.gender,
 				baseurl: this.$baseurl,
@@ -870,8 +870,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -894,8 +894,8 @@ export default {
 					payload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -905,7 +905,7 @@ export default {
 				await this.$store.dispatch('logout_handle');
 				location.reload();
 			} catch (error) {
-				console.log('error');
+				//console.log('error');
 				// this.error = err;
 			}
 		},
@@ -913,7 +913,7 @@ export default {
 			const selectElement = document.querySelector('#select1');
 			const value = selectElement.options[selectElement.selectedIndex].value;
 			this.country = value;
-			console.log(value);
+			//console.log(value);
 			const actionPayload = {
 				country: this.country,
 				baseurl: this.$baseurl,
@@ -924,8 +924,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;

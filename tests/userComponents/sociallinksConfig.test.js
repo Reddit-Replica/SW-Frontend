@@ -45,7 +45,7 @@ describe('SocialLink.vue', () => {
 		});
 		expect(wrapper.exists()).toBe(true);
 		// const byId = await wrapper.find('#social-link-config-header');
-		// console.log(wrapper.html());
+		// //console.log(wrapper.html());
 		// expect(wrapper.html().).to;
 	});
 	// it('check rendering of social link config item ', async () => {

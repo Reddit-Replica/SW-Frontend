@@ -346,7 +346,7 @@ describe ('ListRules.vue', () => {
         expect (wrapper.text ()).contain ('Add rule');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

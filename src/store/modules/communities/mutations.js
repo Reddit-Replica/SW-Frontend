@@ -42,7 +42,7 @@ export default {
 		state.topics = payload;
 	},
 	notFound(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.notFound = payload;
 	},
 };

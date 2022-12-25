@@ -272,7 +272,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			if (responseData != null) this.userData = responseData;
-			console.log(this.userData);
 		},
 		async follow() {
 			if (localStorage.getItem('userName') != null) {
@@ -342,7 +341,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.replies = this.$store.getters['comments/getListOfReplies'].children;
-			console.log(this.replies);
 		},
 		newReply(reply) {
 			this.replies.unshift(reply);
@@ -416,7 +414,6 @@ export default {
 		async saveEditing(edittedComment) {
 			this.editing = false;
 			this.newComment = edittedComment;
-			console.log(edittedComment);
 			try {
 				await this.$store.dispatch('comments/editUserText', {
 					baseurl: this.$baseurl,

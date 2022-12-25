@@ -31,11 +31,11 @@ export default {
 	setUserMoreCommentsData(state, payload) {
 		if (payload.responseStatus == 200) {
 			// Object.assign(state.commentsData, payload.responseData); // assign data to user Data
-			console.log('before commit', payload.responseData);
+			//console.log('before commit', payload.responseData);
 			state.commentsData.before = payload.responseData.before;
 			state.commentsData.after = payload.responseData.after;
 			state.commentsData.children.push(...payload.responseData.children);
-			console.log('after commit', state.postData);
+			//console.log('after commit', state.postData);
 		}
 		return payload.responseStatus;
 	},
@@ -66,7 +66,7 @@ export default {
 		state.blockedUsersData = payload.responseData;
 	},
 	getSocialLinkIcon(state, payload) {
-		console.log(11, payload.id);
+		//console.log(11, payload.id);
 		state.socialLinkItems.forEach((element) => {
 			if (element.text === payload.id) {
 				return element.imgSrc;
@@ -97,10 +97,10 @@ export default {
 		let index = state.userData.socialLinks.findIndex(
 			(res) => res.displayText === payload.displayText
 		);
-		console.log('delete social link');
-		console.log(index);
-		console.log(payload.displayText);
-		console.log(state.userData.socialLinks.displayText);
+		//console.log('delete social link');
+		//console.log(index);
+		//console.log(payload.displayText);
+		//console.log(state.userData.socialLinks.displayText);
 		state.userData.socialLinks.splice(index, 1);
 
 		//state.userData.socialLinks.pop(payload.newSocialLink);

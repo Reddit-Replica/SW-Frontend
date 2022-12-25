@@ -81,7 +81,7 @@ export default {
 		}
 		this.requestStatusHandler(reqStatus, `user ${sortType} comments`);
 		this.loading = false;
-		console.log(this.getUserCommentsData);
+		//console.log(this.getUserCommentsData);
 
 		this.scroll();
 		this.$nextTick(() => {
@@ -106,7 +106,7 @@ export default {
 		 * @arg no arg
 		 */
 		getUserCommentsData() {
-			// console.log(this.$store.getters['user/getUserData']);
+			// //console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserCommentsData'];
 		},
 	},
@@ -143,7 +143,7 @@ export default {
 				!this.busyRequestMore &&
 				this.MoreFetch
 			) {
-				console.log('bottom1');
+				//console.log('bottom1');
 				let sortType, t;
 				sortType = this.routeSortTypeAndTime().sortType;
 				t = this.routeSortTypeAndTime().t;
@@ -152,7 +152,7 @@ export default {
 				if (this.getUserCommentsData.commentsData.after == '')
 					this.MoreFetch = false;
 				this.busyRequestMore = false;
-				console.log('bottom2');
+				//console.log('bottom2');
 			}
 		},
 		/**
@@ -173,16 +173,16 @@ export default {
 			if (requestStatus == 200) console.log(`Successfully fetched ${st} data`);
 			else if (requestStatus == 404) {
 				this.errorLoading = true;
-				console.log(`Not found  ${st} `);
+				//console.log(`Not found  ${st} `);
 			} else if (requestStatus == 500) {
 				this.errorLoading = true;
-				console.log(' internal server error');
+				//console.log(' internal server error');
 			} else if (requestStatus == 401) {
 				this.errorLoading = true;
-				console.log(' access denied');
+				//console.log(' access denied');
 			} else {
 				this.errorLoading = true;
-				console.log(`Error !!!!  ${st} !!!!!`);
+				//console.log(`Error !!!!  ${st} !!!!!`);
 			}
 		},
 		/**
@@ -195,7 +195,7 @@ export default {
 				path: `/user/${this.$route.params.userName}/comments`,
 				query: { sort: `${sortType}` },
 			});
-			console.log(sortType);
+			//console.log(sortType);
 			this.loading = true;
 			const reqStatus = await this.RequestUserCommentsData(sortType);
 			this.requestStatusHandler(reqStatus, `user ${sortType} comments`);
@@ -211,12 +211,12 @@ export default {
 				path: `/user/${this.$route.params.userName}/comments`,
 				query: { sort: `top`, time: t },
 			});
-			console.log(t);
+			//console.log(t);
 			this.loading = true;
 			const reqStatus = await this.RequestUserCommentsData('top', t);
 			this.requestStatusHandler(reqStatus, `user ${t} posts`);
 			this.loading = false;
-			console.log('f', t);
+			//console.log('f', t);
 		},
 		/**
 		 * @vuese
@@ -241,7 +241,7 @@ export default {
 				this.loading = false;
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log('req', requestStatus);
+			//console.log('req', requestStatus);
 			this.loading = false;
 			return requestStatus;
 		},
@@ -271,7 +271,7 @@ export default {
 				this.loading = false;
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log('req', requestStatus);
+			//console.log('req', requestStatus);
 			this.loading = false;
 			return requestStatus;
 		},

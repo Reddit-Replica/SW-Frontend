@@ -40,7 +40,6 @@ export default {
 				(response) => {
 					if (response.status == 'connected') {
 						this.loading = true;
-						console.log(response.authResponse);
 						this.sendAccessToken(response.authResponse.signedRequest);
 					} else {
 						this.fbErrorState = true;

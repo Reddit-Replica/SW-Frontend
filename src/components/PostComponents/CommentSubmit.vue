@@ -175,7 +175,6 @@ export default {
 	methods: {
 		userMentioned(userName) {
 			this.showMentionsList = false;
-			console.log(this.$refs.myQuillEditor.getContents());
 			this.$refs.myQuillEditor.setContents([
 				// this.$refs.myQuillEditor.getContents().ops,
 				{
@@ -219,17 +218,16 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log(write.commentBody.ops.length);
 			for (let i = 0; i < write.commentBody.ops.length; i++) {
 				if (write.commentBody.ops[i].attributes != undefined)
 					if (write.commentBody.ops[i].attributes.link != undefined) {
-						console.log(write.commentBody.ops[i].insert.split('/')[1]);
-						console.log({
-							baseurl: this.$baseurl,
-							postId: this.$route.path.split('/')[4],
-							commentId: this.$store.getters['comments/getCommentID'],
-							receiverUsername: write.commentBody.ops[i].insert.split('/')[2],
-						});
+						// //console.log(write.commentBody.ops[i].insert.split('/')[1]);
+						// //console.log({
+						// 	baseurl: this.$baseurl,
+						// 	postId: this.$route.path.split('/')[4],
+						// 	commentId: this.$store.getters['comments/getCommentID'],
+						// 	receiverUsername: write.commentBody.ops[i].insert.split('/')[2],
+						// });
 						try {
 							await this.$store.dispatch('postCommentActions/mention', {
 								baseurl: this.$baseurl,
@@ -259,7 +257,6 @@ export default {
 	},
 	watch: {
 		content(value) {
-			console.log(value);
 			for (let i = 0; i < value.ops.length; i++) {
 				if (value.ops[i].insert.search('@') != -1) {
 					this.showMentionsList = true;
@@ -268,8 +265,6 @@ export default {
 					// 	'u/'
 					// );
 				}
-				console.log(value.ops[i].insert);
-				console.log(value.ops[i].insert.search('@') != -1);
 			}
 		},
 	},
@@ -285,8 +280,6 @@ export default {
 			}
 			this.commentedUsers =
 				this.$store.getters['postCommentActions/getCommentedUsers'].usernames;
-			console.log('commentedUsers');
-			console.log(this.commentedUsers);
 		}
 	},
 };

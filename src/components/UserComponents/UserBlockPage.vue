@@ -165,7 +165,7 @@ export default {
 		 */
 		continueClicked() {
 			this.$emit('continueClicked');
-			console.log('continueClicked');
+			//console.log('continueClicked');
 		},
 		/**
 		 * @vuese
@@ -174,7 +174,7 @@ export default {
 		 */
 		goBackClicked() {
 			this.$emit('gobackClicked');
-			console.log('gobackClicked');
+			//console.log('gobackClicked');
 		},
 	},
 };

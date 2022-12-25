@@ -21,69 +21,69 @@ export default {
 	 * @getter {object} getUser=User getUser Returns User of post.
 	 */
 	getTitle(state) {
-		console.log('getters title');
+		//console.log('getters title');
 		return state.title;
 	},
 	getNsfw(state) {
-		console.log('getters nsfw');
+		//console.log('getters nsfw');
 		return state.nsfw;
 	},
 	getSpoiler(state) {
-		console.log('getters spoiler');
+		//console.log('getters spoiler');
 		return state.spoiler;
 	},
 	getFlairId(state) {
-		console.log('getters flair id');
+		//console.log('getters flair id');
 		return state.flairId;
 	},
 	getsendReplies(state) {
-		console.log('getters send replies');
+		//console.log('getters send replies');
 		return state.sendReplies;
 	},
 	getContent(state) {
-		console.log('getters content');
+		//console.log('getters content');
 		return state.content;
 	},
 	getallSubreddits(state) {
-		console.log('getters allsubreddits');
+		//console.log('getters allsubreddits');
 		return state.allSubreddits;
 	},
 	getSubreddit(state) {
-		console.log('getters subreddit');
+		//console.log('getters subreddit');
 		return state.subreddit;
 	},
 	getinSubreddit(state) {
-		console.log('getters in subreddit');
+		//console.log('getters in subreddit');
 		return state.inSubreddit;
 	},
 	getImages(state) {
-		console.log('getters images');
+		//console.log('getters images');
 		return state.images;
 	},
 	getImageCaptions(state) {
-		console.log('getters ImageCaptions');
+		//console.log('getters ImageCaptions');
 		return state.imageCaptions;
 	},
 	getImageLinks(state) {
-		console.log('getters ImageLinks');
+		//console.log('getters ImageLinks');
 		return state.imageLinks;
 	},
 	getVideo(state) {
-		console.log('getters video');
+		//console.log('getters video');
 		return state.video;
 	},
 	getvideoOrimage(state) {
-		console.log('getters videoOrimage');
+		//console.log('getters videoOrimage');
 		return state.videoOrimage;
 	},
 	getpostData(state) {
-		console.log('getters postData');
-		console.log(state.postData);
+		//console.log('getters postData');
+		//console.log(state.postData);
 		return state.postData;
 	},
 	getUser(state) {
-		console.log('getters name');
-		console.log(state.name);
+		//console.log('getters name');
+		//console.log(state.name);
 		return state.name;
 	},
 };

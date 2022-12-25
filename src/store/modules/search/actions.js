@@ -4,7 +4,7 @@
 export default {
 	// searchingQuery(context, payload) {
 	// 	context.commit('setSearchQuery', payload);
-	// 	console.log(payload);
+	// 	//console.log(payload);
 	// },
 	/**
 	 * action for Search for Posts
@@ -23,7 +23,7 @@ export default {
 		if (time) {
 			mediaQuery = mediaQuery + '&time=' + time;
 		}
-		// console.log(localStorage.getItem('accessToken'));
+		// //console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
 			baseurl + '/search?type=post&q=' + payload.q + mediaQuery,
 			{
@@ -34,7 +34,7 @@ export default {
 				},
 			}
 		);
-		console.log(response);
+		//console.log(response);
 		const responseData = await response.json();
 		if (response.status == 200 || response.status == 304) {
 			const posts = [];
@@ -48,11 +48,11 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
-			console.log(responseData);
-			// console.log(responseData[0]);
+			//console.log(responseData);
+			// //console.log(responseData[0]);
 			for (let i = 0; i < responseData.children.length; i++) {
-				console.log('responseData.children.id');
-				console.log(responseData.children[i].id);
+				//console.log('responseData.children.id');
+				//console.log(responseData.children[i].id);
 				const post = {
 					id: responseData.children[i].id,
 					dataId: responseData.children[i].data.id,
@@ -101,9 +101,9 @@ export default {
 				},
 			}
 		);
-		console.log(response);
+		//console.log(response);
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		if (response.status == 200 || response.status == 304) {
 			const users = [];
 			const temp = [];
@@ -150,12 +150,12 @@ export default {
 		// const response = await fetch(
 		// 	baseurl + '/search?type=subreddit' + '?q=' + payload.q
 		// );
-		console.log(payload.q);
+		//console.log(payload.q);
 		const response = await fetch(
 			baseurl + '/search?type=subreddit' + '&q=' + payload.q
 		);
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		if (response.status == 200 || response.status == 304) {
 			const subreddits = [];
 
@@ -200,7 +200,7 @@ export default {
 	 */
 	async SearchComments(context, payload) {
 		const baseurl = payload.baseurl;
-		console.log(payload.q);
+		//console.log(payload.q);
 		const response = await fetch(
 			baseurl + '/search?type=comment' + '&q=' + payload.q,
 			{
@@ -225,8 +225,8 @@ export default {
 			if (responseData.after) {
 				after = responseData.after;
 			}
-			console.log('responseData');
-			console.log(responseData);
+			//console.log('responseData');
+			//console.log(responseData);
 			for (let i = 0; i < responseData.children.length; i++) {
 				const comment = {
 					id: responseData.children[i].id,
@@ -291,9 +291,9 @@ export default {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
 			);
-			console.log('error in follow');
-			// console.log(responseData);
-			console.log(localStorage.getItem('accessToken'));
+			//console.log('error in follow');
+			// //console.log(responseData);
+			//console.log(localStorage.getItem('accessToken'));
 			throw error;
 		}
 	},

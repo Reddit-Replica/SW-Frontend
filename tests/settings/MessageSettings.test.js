@@ -71,7 +71,7 @@ describe ('MessagingSettings.vue', () => {
         expect (wrapper.text ()).contain ('Nobody');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -86,7 +86,7 @@ describe ('MessagingSettings.vue', () => {
         expect (wrapper.text ()).contain ('Nobody');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

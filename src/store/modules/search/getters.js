@@ -14,7 +14,7 @@
  */
 export default {
 	Getsubreddits(state) {
-		console.log(state.subreddits);
+		//console.log(state.subreddits);
 		return state.subreddits;
 	},
 	Getusers(state) {

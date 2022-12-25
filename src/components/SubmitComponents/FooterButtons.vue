@@ -216,8 +216,8 @@ export default {
 		// get Flairs
 		getFlairs() {
 			this.flairs = this.$store.getters['moderation/listOfFlairs'];
-			console.log('this.flairs');
-			console.log(this.flairs);
+			//console.log('this.flairs');
+			//console.log(this.flairs);
 		},
 		// @vuese
 		// get Post settings
@@ -228,15 +228,15 @@ export default {
 					communityName: this.subreddit,
 					baseurl: this.$baseurl,
 				};
-				console.log(actionPayload);
+				//console.log(actionPayload);
 				try {
 					const response = await this.$store.dispatch(
 						'setting/fetcpostandcommentsSettings',
 						actionPayload
 					);
 					if (response == 200) {
-						console.log(response);
-						console.log('الحمد لله زى الفل');
+						//console.log(response);
+						//console.log('الحمد لله زى الفل');
 					}
 				} catch (err) {
 					this.error = err;
@@ -245,8 +245,8 @@ export default {
 				this.setting = await this.$store.getters[
 					'setting/getpostandcommentsSettings'
 				];
-				console.log('getting settings');
-				console.log(this.setting);
+				//console.log('getting settings');
+				//console.log(this.setting);
 				if (this.setting.enableSpoiler) this.buttonDisabled = false;
 				else this.buttonDisabled = true;
 				this.getFlairs();
@@ -257,8 +257,8 @@ export default {
 		// setflairStyle(textColor, backgroundColor) {
 		// 	this.flairColor = textColor;
 		// 	this.flairBackground = backgroundColor;
-		// 	console.log(this.flairColor);
-		// 	console.log(this.flairBackground);
+		// 	//console.log(this.flairColor);
+		// 	//console.log(this.flairBackground);
 		// },
 
 		// @vuese

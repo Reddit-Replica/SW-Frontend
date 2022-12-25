@@ -234,7 +234,7 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
-				//console.log(this.subreddit);
+				////console.log(this.subreddit);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {

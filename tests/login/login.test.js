@@ -84,7 +84,7 @@ describe('LoginPage.vue', () => {
 				expect(wrapper.find('#showSignuser').exists()).toBe(true);
 			})
 			.catch(function () {
-				console.log('Promise Rejected');
+				//console.log('Promise Rejected');
 			});
 		return Promise.resolve();
 	});

@@ -753,10 +753,10 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		const spams = [];
-		console.log('responseData[0]');
-		console.log(responseData);
+		//console.log('responseData[0]');
+		//console.log(responseData);
 		if (response.status == 200) {
 			let before, after;
 			before = '';
@@ -1773,7 +1773,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -1783,7 +1783,7 @@ export default {
 			console.log(error);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('settrafficStatus', responseData);
 		return response.status;
 	},
@@ -1858,7 +1858,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

@@ -175,7 +175,6 @@ export default {
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
-				console.log(this.$store.getters['community/getLeaveOwner']);
 
 				if (this.$store.getters['community/getLeaveOwner'] === true) {
 					this.notdoneLeft = true;

@@ -418,7 +418,7 @@ import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePo
 export default {
 	// async created() {
 	// 	this.userData = await this.$store.getters['user/getUserData'];
-	// 	console.log(this.userData);
+	// 	//console.log(this.userData);
 	async created() {
 		await this.getSettings();
 		await this.getUserData();
@@ -429,12 +429,12 @@ export default {
 			if (this.userData.banner != '')
 				this.cover = this.$baseurl + '/' + this.userData.banner;
 		}
-		console.log('after creation');
-		console.log(this.userData);
-		console.log(this.displayName);
-		console.log(this.about);
-		console.log(this.nsfw);
-		console.log(this.allowToFollowYou);
+		//console.log('after creation');
+		//console.log(this.userData);
+		//console.log(this.displayName);
+		//console.log(this.about);
+		//console.log(this.nsfw);
+		//console.log(this.allowToFollowYou);
 
 		this.create = true;
 	},
@@ -487,7 +487,7 @@ export default {
 		//return the tUser Data
 		// @type object
 		getUserDataGetter() {
-			// console.log(this.$store.getters['user/getUserData']);
+			// //console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 	},
@@ -532,7 +532,7 @@ export default {
 				displayName: this.displayName,
 				baseurl: this.$baseurl,
 			};
-			console.log('enter get user data');
+			//console.log('enter get user data');
 			try {
 				const response = await this.$store.dispatch(
 					'setting/changedisplayName',
@@ -540,12 +540,12 @@ export default {
 				);
 
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
-				console.log(this.err);
+				//console.log(this.err);
 			}
 		},
 		// @vuese
@@ -562,20 +562,20 @@ export default {
 				);
 
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
-				console.log(this.err);
+				//console.log(this.err);
 			}
 		},
 		// @vuese
 		// get Nsfw
 		async getNsfw(value) {
 			this.nsfw = value;
-			console.log('this.nsfw');
-			console.log(this.nsfw);
+			//console.log('this.nsfw');
+			//console.log(this.nsfw);
 			const actionPayload = {
 				nsfw: this.nsfw,
 				baseurl: this.$baseurl,
@@ -587,12 +587,12 @@ export default {
 				);
 
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
-				console.log(this.err);
+				//console.log(this.err);
 			}
 		},
 		// @vuese
@@ -600,8 +600,8 @@ export default {
 		// @arg The argument is a Boolean value representing  Allow follow you
 		async getAllowfollow(value) {
 			this.allowToFollowYou = value;
-			console.log('this.allowToFollowYou');
-			console.log(this.allowToFollowYou);
+			//console.log('this.allowToFollowYou');
+			//console.log(this.allowToFollowYou);
 			const actionPayload = {
 				allowToFollowYou: this.allowToFollowYou,
 				baseurl: this.$baseurl,
@@ -613,12 +613,12 @@ export default {
 				);
 
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
-				console.log(this.err);
+				//console.log(this.err);
 			}
 		},
 		// @vuese
@@ -627,30 +627,30 @@ export default {
 			const actionPayload = {
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/fetchAccountSettings',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
 			this.setting = await this.$store.getters['setting/getAccountSettings'];
-			console.log(this.setting);
+			//console.log(this.setting);
 			this.displayName = this.setting.displayName;
 			this.about = this.setting.about;
 			this.nsfw = this.setting.nsfw;
 			this.allowToFollowYou = this.setting.allowToFollowYou;
-			console.log(this.displayName);
-			console.log(this.about);
-			console.log(this.nsfw);
-			console.log(this.allowToFollowYou);
+			//console.log(this.displayName);
+			//console.log(this.about);
+			//console.log(this.nsfw);
+			//console.log(this.allowToFollowYou);
 		},
 		////////////////////////////////
 		// @vuese
@@ -697,7 +697,7 @@ export default {
 
 			// const file = await this.$refs.profileFile.files[0];
 			const profilePictureUrl = await URL.createObjectURL(file);
-			// console.log(profilePictureUrl);
+			// //console.log(profilePictureUrl);
 			// document.querySelector('#profile-picture_user').src = profilePictureUrl;
 			// document.querySelector(
 			// 	'#image2'
@@ -732,9 +732,9 @@ export default {
 			// document.querySelector(
 			// 	'#cover-picture'
 			// ).style.backgroundImage = `url(${bannerImageUrl})`;
-			let responseStatus;
+			// let responseStatus;
 			try {
-				responseStatus = await this.$store.dispatch('user/AddProfileBanner', {
+				await this.$store.dispatch('user/AddProfileBanner', {
 					baseurl: this.$baseurl,
 					file,
 					bannerImageUrl,
@@ -742,7 +742,7 @@ export default {
 			} catch (error) {
 				this.error = error.message || 'Something went wrong';
 			}
-			console.log(responseStatus);
+			//console.log(responseStatus);
 		},
 		// @vuese
 		// get User Data
@@ -752,7 +752,7 @@ export default {
 				userName: localStorage.getItem('userName'),
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			let response = null;
 			try {
 				response = await this.$store.dispatch(
@@ -762,8 +762,8 @@ export default {
 				if (response) {
 					// this.userData = this.$store.getters['user/getUserData'];
 					this.userData = response;
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;

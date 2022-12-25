@@ -823,14 +823,13 @@ export default {
 		// //return user data
 		// // @type object
 		// getUserData() {
-		// 	// console.log(this.$store.getters['user/getUserData']);
+		// 	// //console.log(this.$store.getters['user/getUserData']);
 		// 	return this.$store.getters['user/getUserData'];
 		// },
 		// @vuese
 		//return user communities
 		// @type object
 		listOfSubreddits() {
-			console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/listOfSubreddits'];
 		},
 		// @vuese
@@ -944,7 +943,7 @@ export default {
 			} else {
 				alert('Did not enter a word to Search');
 			}
-			// console.log('function');
+			// //console.log('function');
 		},
 		// @vuese
 		// Used to go to Search page
@@ -975,7 +974,7 @@ export default {
 
 				location.reload();
 			} catch (error) {
-				console.log('error');
+				//console.log('error');
 				// this.error = err;
 			}
 		},
@@ -1001,7 +1000,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			if (responseData != null) this.getUserData = responseData;
-			console.log(this.getUserData);
 		},
 		/**
 		 * @vuese
@@ -1015,7 +1013,7 @@ export default {
 					baseurl: this.$baseurl,
 					token: accessToken,
 				});
-				// console.log(this.$store.getters['notifications/unreadCount']);
+				// //console.log(this.$store.getters['notifications/unreadCount']);
 			}
 		},
 	},
