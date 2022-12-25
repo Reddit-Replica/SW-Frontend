@@ -99,7 +99,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 app.config.globalProperties.$baseurl = isProduction
 	? '/api'
-	: 'https://www.read-it.live/api';
+	: 'http://localhost:3000';
 // app.component('VueRecaptcha', VueRecaptcha);
 
 app.mount('#app');
