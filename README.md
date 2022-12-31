@@ -8,7 +8,7 @@
 - [Screen Video from the Website <a name = "screen-video"></a>](#screen-video-from-the-website-)
 - [website Features <a name = "website-features"></a>](#website-features-)
 - [Drive Link <a name = "drive-link"></a>](#drive-link-)
-- [Project setup <a name = "Project-setup"></a>](#project-setup-)
+- [Project setup <a name = "project-setup"></a>](#project-setup-)
 - [Contributors <a name = "Contributors"></a>](#contributors-)
 
 ## About <a name = "about"></a>
