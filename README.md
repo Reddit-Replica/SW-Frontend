@@ -16,9 +16,7 @@
 
 ## Screen Video from the Website: <a name = "screen-video"></a>
 
-<video width="320" height="240" controls>
-  <source src="./video/Project.mp4" type="video/mp4">
-</video>
+https://drive.google.com/file/d/1gfAgC07YgixSjcbFhpg2c_FNQAH_LYy9/view?usp=sharing
 
 ## website Features: <a name = "website-features"></a>
 
