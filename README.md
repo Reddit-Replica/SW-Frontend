@@ -22,31 +22,40 @@ https://user-images.githubusercontent.com/88618793/210153405-c8d45f3a-6a4c-4a6a-
 
 
 <h3 align='left'>Add Comment</h3>
+
 https://user-images.githubusercontent.com/88618793/210153474-68039103-262f-4482-b93f-74b337430675.mp4
 
 <h3 align='left'>Create Post</h3>
+
 https://user-images.githubusercontent.com/88618793/210153555-d5283185-20b8-40de-bebf-db947d56d3d6.mp4
 
 <h3 align='left'>User Page</h3>
+
 https://user-images.githubusercontent.com/88618793/210153575-2b2c5f6e-8eba-490d-adb2-fc4a9427a4e8.mp4
 
 <h3 align='left'>User Settings</h3>
+
 https://user-images.githubusercontent.com/88618793/210153668-db11ae16-188b-43a8-a3f5-17949b38392b.mp4
 
 <h3 align='left'>Messages and Notifications</h3>
+
 https://user-images.githubusercontent.com/88618793/210153718-1a4ef8e2-6e1b-4c75-b213-6409129fa2f0.mp4
 
 <h3 align='left'>Leadeboard and Subreddit Page</h3>
+
 https://user-images.githubusercontent.com/88618793/210153805-8f874bc8-8c21-4c57-94bf-7d72acf11bff.mp4
 
 <h3 align='left'>Moderation Page</h3>
+
 https://user-images.githubusercontent.com/88618793/210153879-2ba60a63-663a-426a-a1da-c29be8e5c280.mp4
 
 <h3 align='left'>Searching and Share Post</h3>
+
 https://user-images.githubusercontent.com/88618793/210153925-f6c00aaf-66cf-497f-9b37-c0cd01920228.mp4
 
 
 ## Drive Link: <a name = "drive-link"></a>
+
 https://drive.google.com/drive/folders/1hYpEu922aeDHHsKUyx9lVgx0AeykMJJg
 
 ## website Features: <a name = "website-features"></a>
