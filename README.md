@@ -78,7 +78,7 @@ https://drive.google.com/drive/folders/1hYpEu922aeDHHsKUyx9lVgx0AeykMJJg
 - ... and more!
 
 
-## Main commands for running the Project <a name = "project-setup"></a>
+## Main commands for running the Project: <a name = "project-setup"></a>
 ### Project setup & installing packages
 
 ```
