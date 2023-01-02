@@ -1,5 +1,8 @@
 pipeline {
   agent any
+triggers {
+    githubPush()
+  }
 
   	environment {
 		DOCKERHUB_CREDENTIALS=credentials('Dockerhub')
@@ -9,7 +12,7 @@ pipeline {
     stage("unit test"){
       agent {
         docker {
-            image 'node:lts'
+            image 'node:16.17.1'
             reuseNode true
         }
     }
@@ -21,25 +24,27 @@ pipeline {
               // timeout(time: 20, unit: 'SECONDS') {sh "npm run serve"}
       }
   }
+	  
+      stage('Build') {
+
+		steps {
+			sh 'docker build -t waer/frontend:latest .'
+		}
+	}
 
   stage("intgration testing"){
     steps {
-              echo "till get its waerrrrrrrrrrrrr"
+              echo "i will let it here as example of succes pipline"
       }
   }
 
-		stage('Login') {
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
+	stage('Login') {
+		steps {
+			sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 		}
+	}
 
-    stage('Build') {
 
-			steps {
-				sh 'docker build -t waer/frontend:latest .'
-			}
-		}
 
     stage('Push') {
 			steps {
