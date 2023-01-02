@@ -75,7 +75,7 @@ https://drive.google.com/drive/folders/1hYpEu922aeDHHsKUyx9lVgx0AeykMJJg
 - See trafic status o my subreddit.
 - view my posts, comments, history, ... in my page.
 - change my avatar, and add banner.
-- <br/>
+<br/>
 ... and more!
 
 
