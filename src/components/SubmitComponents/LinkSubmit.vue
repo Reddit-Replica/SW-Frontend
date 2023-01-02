@@ -20,12 +20,17 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// set the link content of the post
 		setContent(value) {
 			this.$store.commit('posts/setContent', {
 				content: value,
 			});
 		},
 	},
+	// @vuese
+	// watch link content
+	// @arg The argument is an string value representing link content
 	watch: {
 		content(value) {
 			this.content = value;

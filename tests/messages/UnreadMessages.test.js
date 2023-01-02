@@ -375,11 +375,11 @@ describe ('UnreadMessage.vue', () => {
             expect (wrapper.text ()).contain ('');
           })
           .catch (function () {
-            console.log ('Promise Rejected');
+            //console.log ('Promise Rejected');
           });
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
     return Promise.resolve ();
   });
@@ -415,11 +415,11 @@ describe ('UnreadMessage.vue', () => {
             expect (wrapper.text ()).contain ('spammed');
           })
           .catch (function () {
-            console.log ('Promise Rejected');
+            //console.log ('Promise Rejected');
           });
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -451,11 +451,11 @@ describe ('UnreadMessage.vue', () => {
               .toBeCalledWith ('uncaughtException', expect.any (Function));
           })
           .catch (function () {
-            console.log ('Promise Rejected');
+            //console.log ('Promise Rejected');
           });
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

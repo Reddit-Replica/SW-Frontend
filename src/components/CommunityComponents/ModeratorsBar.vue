@@ -71,6 +71,8 @@ export default {
 		return {};
 	},
 	computed: {
+		// @vuese
+		//Check if user not logged in
 		notLoggedIn() {
 			return localStorage.getItem('accessToken') == null;
 		},

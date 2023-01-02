@@ -254,9 +254,9 @@ import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePo
 export default {
 	async created() {
 		await this.getSettings();
-		console.log('after creation');
-		console.log(this.adultContent);
-		console.log(this.autoplayMedia);
+		//console.log('after creation');
+		//console.log(this.adultContent);
+		//console.log(this.autoplayMedia);
 		this.create = true;
 	},
 	components: {
@@ -277,18 +277,26 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// get adult Content
+		// @arg The argument is a Boolean value representing adult Content
 		getadultContent(value) {
 			this.adultContent = value;
-			console.log('this.adultContent');
-			console.log(this.adultContent);
+			//console.log('this.adultContent');
+			//console.log(this.adultContent);
 			this.changeadultContent();
 		},
+		// @vuese
+		// get autoplay Media
+		// @arg The argument is a Boolean value representing  autoplay Media
 		getautoplayMedia(value) {
 			this.autoplayMedia = value;
-			console.log('this.autoplayMedia');
-			console.log(this.autoplayMedia);
+			//console.log('this.autoplayMedia');
+			//console.log(this.autoplayMedia);
 			this.changegetautoplayMedia();
 		},
+		// @vuese
+		// send request to change adult Content
 		async changeadultContent() {
 			const actionPayload = {
 				adultContent: this.adultContent,
@@ -301,8 +309,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
@@ -310,6 +318,8 @@ export default {
 				console.log(err);
 			}
 		},
+		// @vuese
+		// send request to change autoplay Media
 		async changegetautoplayMedia() {
 			const actionPayload = {
 				autoplayMedia: this.autoplayMedia,
@@ -321,8 +331,8 @@ export default {
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
@@ -330,31 +340,35 @@ export default {
 				console.log(err);
 			}
 		},
+		// @vuese
+		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/fetchAccountSettings',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
 				console.log(err);
 			}
 			this.setting = await this.$store.getters['setting/getAccountSettings'];
-			console.log(this.setting);
+			//console.log(this.setting);
 			this.adultContent = this.setting.adultContent;
 			this.autoplayMedia = this.setting.autoplayMedia;
-			console.log(this.adultContent);
-			console.log(this.autoplayMedia);
+			//console.log(this.adultContent);
+			//console.log(this.autoplayMedia);
 		},
+		// @vuese
+		//send a request to get the settings
 		doneSuccessfully(title) {
 			this.savePost(title);
 		},

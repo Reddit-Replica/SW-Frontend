@@ -109,7 +109,7 @@ export default {
 		},
 	},
 	async created() {
-		console.log(this.sharedId);
+		//console.log(this.sharedId);
 		if (this.sharedId) await this.getPostDetails();
 		this.subreddit = null;
 		if (!localStorage.getItem('accessToken')) {
@@ -151,30 +151,46 @@ export default {
 	},
 	computed: {
 		// enable() {
-		// 	console.log(this.getTitle && (this.getSubreddit || this.getUsername));
+		// 	//console.log(this.getTitle && (this.getSubreddit || this.getUsername));
 		// 	return this.getTitle && (this.getSubreddit || this.getUsername);
 		// },
+		// @vuese
+		//return the title
+		// @type string
 		Title() {
 			return this.$store.getters['posts/getTitle'];
 		},
+		// @vuese
+		//return the subreddit
+		// @type string
 		community() {
 			return this.$store.getters['posts/getSubreddit'];
 		},
+		// @vuese
+		//return the username
+		// @type string
 		user() {
 			return this.$store.getters['posts/getUser'];
 		},
+		// @vuese
+		//return the condition of validation of post
+		// @type Boolean
 		combination() {
 			return this.getTitle() && (this.getSubreddit || this.getUsername());
 		},
 	},
 	watch: {
 		// enable(value) {
-		// 	console.log(value);
+		// 	//console.log(value);
 		// 	// this.enable();
 		// 	if (value) this.buttonDisabled = false;
 		// },
+
+		// @vuese
+		// watch Title
+		// @arg The argument is an string value representing Title
 		Title(value) {
-			console.log(value);
+			//console.log(value);
 			// this.enable();
 			this.title = value;
 			// if(value=='')
@@ -201,7 +217,9 @@ export default {
 
 			// if (value) this.buttonDisabled = false;
 		},
-
+		// @vuese
+		// watch community
+		// @arg The argument is an string value representing community
 		community(value) {
 			this.subreddit = value;
 			this.getUsername();
@@ -210,6 +228,9 @@ export default {
 				this.buttonDisabled = false;
 			else this.buttonDisabled = true;
 		},
+		// @vuese
+		// watch userName
+		// @arg The argument is an string value representing userName
 		user(value) {
 			this.userName = value;
 			this.getTitle();
@@ -220,7 +241,7 @@ export default {
 		},
 
 		// try(value) {
-		// 	console.log(value);
+		// 	//console.log(value);
 		// 	// this.enable();
 		// 	if (value) this.buttonDisabled = false;
 		// },
@@ -240,7 +261,7 @@ export default {
 			else if (this.submitTypesActive[1])
 				this.kind = this.$store.getters['posts/getvideoOrimage'];
 			else if (this.submitTypesActive[2]) this.kind = 'link';
-			console.log(this.kind);
+			//console.log(this.kind);
 		},
 		// @vuese
 		// get the NSFW of the post
@@ -249,7 +270,7 @@ export default {
 			this.nsfw = this.$store.getters['posts/getNsfw'];
 		},
 		// @vuese
-		// get poiler of the post
+		// get spoiler of the post
 
 		getSpoiler() {
 			this.spoiler = this.$store.getters['posts/getSpoiler'];
@@ -309,6 +330,8 @@ export default {
 		getInSubreddit() {
 			this.inSubreddit = this.$store.getters['posts/getinSubreddit'];
 		},
+		// @vuese
+		// get the post detais in the type of shared post
 		async getPostDetails() {
 			try {
 				await this.$store.dispatch('listing/postDetails', {
@@ -341,21 +364,21 @@ export default {
 			this.getInSubreddit();
 			if (this.sharedId) this.kind = 'post';
 			// this.inSubreddit = false;
-			console.log('print values');
-			console.log(this.title);
-			console.log(this.kind);
-			console.log(this.inSubreddit);
-			console.log(JSON.stringify(this.images));
-			console.log(JSON.stringify(this.imageCaptions));
-			console.log(JSON.stringify(this.imageLinks));
-			// console.log(this.video);
-			console.log(this.spoiler);
-			console.log(this.nsfw);
-			console.log(this.sendReplies);
-			console.log(this.subreddit);
-			console.log(this.inSubreddit);
-			console.log('flair id');
-			console.log(this.flairId);
+			//console.log('print values');
+			//console.log(this.title);
+			//console.log(this.kind);
+			//console.log(this.inSubreddit);
+			//console.log(JSON.stringify(this.images));
+			//console.log(JSON.stringify(this.imageCaptions));
+			//console.log(JSON.stringify(this.imageLinks));
+			// //console.log(this.video);
+			//console.log(this.spoiler);
+			//console.log(this.nsfw);
+			//console.log(this.sendReplies);
+			//console.log(this.subreddit);
+			//console.log(this.inSubreddit);
+			//console.log('flair id');
+			//console.log(this.flairId);
 
 			if (
 				this.title === null ||
@@ -369,7 +392,7 @@ export default {
 			) {
 				return;
 			}
-			console.log('hello from hell');
+			//console.log('hello from hell');
 			this.disableButton = false;
 			if (this.kind == 'hybrid') {
 				const actionPayload = {
@@ -392,12 +415,12 @@ export default {
 					);
 
 					if (response == 201) {
-						console.log(response);
-						console.log('الحمد لله زى الفل');
+						//console.log(response);
+						//console.log('الحمد لله زى الفل');
 						this.success = true;
 						/////r/:subredditName/comments/:postId/:postName
 						this.postData = await this.$store.getters['posts/getpostData'];
-						console.log(this.postData);
+						//console.log(this.postData);
 						if (this.inSubreddit) {
 							setTimeout(
 								() =>
@@ -428,7 +451,7 @@ export default {
 					}
 				} catch (err) {
 					this.error = err;
-					console.log(this.error);
+					//console.log(this.error);
 					this.success = false;
 				}
 			} else if (this.kind == 'video') {
@@ -452,14 +475,14 @@ export default {
 					);
 
 					if (response == 201) {
-						console.log(response);
-						console.log('الحمد لله زى الفل');
+						//console.log(response);
+						//console.log('الحمد لله زى الفل');
 						this.success = true;
 						this.postData = await this.$store.getters['posts/getpostData'];
-						console.log(this.postData);
+						//console.log(this.postData);
 						let str = this.postData.split(':')[1];
 						str = str.slice(1, str.length - 2);
-						console.log(str);
+						//console.log(str);
 
 						if (this.inSubreddit) {
 							setTimeout(
@@ -491,7 +514,7 @@ export default {
 					}
 				} catch (err) {
 					this.error = err;
-					console.log(this.error);
+					//console.log(this.error);
 					this.success = false;
 				}
 			} else if (this.kind == 'link') {
@@ -515,11 +538,11 @@ export default {
 					);
 
 					if (response == 201) {
-						console.log(response);
-						console.log('الحمد لله زى الفل');
+						//console.log(response);
+						//console.log('الحمد لله زى الفل');
 						this.success = true;
 						this.postData = await this.$store.getters['posts/getpostData'];
-						console.log(this.postData);
+						//console.log(this.postData);
 						if (this.inSubreddit) {
 							setTimeout(
 								() =>
@@ -550,7 +573,7 @@ export default {
 					}
 				} catch (err) {
 					this.error = err;
-					console.log(this.error);
+					//console.log(this.error);
 					this.success = false;
 				}
 			} else if (this.kind == 'image') {
@@ -576,20 +599,20 @@ export default {
 					);
 
 					if (response == 201) {
-						console.log(response);
-						console.log('الحمد لله زى الفل');
+						//console.log(response);
+						//console.log('الحمد لله زى الفل');
 						this.success = true;
 						this.postData = await this.$store.getters['posts/getpostData'];
 						//const { id } = this.postData;
-						console.log('id//////');
-						console.log(this.postData);
-						//console.log(this.postData.id);
-						console.log(this.postData.split(':')[1]);
+						//console.log('id//////');
+						//console.log(this.postData);
+						////console.log(this.postData.id);
+						//console.log(this.postData.split(':')[1]);
 						let str = this.postData.split(':')[1];
 						str = str.slice(1, str.length - 2);
-						console.log(str);
+						//console.log(str);
 
-						console.log(this.postData.id);
+						//console.log(this.postData.id);
 						if (this.inSubreddit) {
 							setTimeout(
 								() =>
@@ -620,7 +643,7 @@ export default {
 					}
 				} catch (err) {
 					this.error = err;
-					console.log(this.error);
+					//console.log(this.error);
 					this.success = false;
 				}
 			} else if (this.kind == 'post') {
@@ -644,12 +667,12 @@ export default {
 					);
 
 					if (response == 201) {
-						console.log(response);
-						console.log('الحمد لله زى الفل');
+						//console.log(response);
+						//console.log('الحمد لله زى الفل');
 						this.success = true;
 						/////r/:subredditName/comments/:postId/:postName
 						this.postData = await this.$store.getters['posts/getpostData'];
-						console.log(this.postData);
+						//console.log(this.postData);
 						if (this.inSubreddit) {
 							setTimeout(
 								() =>
@@ -680,7 +703,7 @@ export default {
 					}
 				} catch (err) {
 					this.error = err;
-					console.log(this.error);
+					//console.log(this.error);
 					this.success = false;
 				}
 			}
@@ -700,8 +723,8 @@ export default {
 
 				// if(e.target.tagName == 'LI'){
 				// e.target.classList.add('li-active');
-				// console.log(+e.target.id);
-				// console.log(e.target.tagName);
+				// //console.log(+e.target.id);
+				// //console.log(e.target.tagName);
 
 				arr[+e.target.id].classList.add('li-active');
 				this.submitTypesActive[+e.target.id] = 1;

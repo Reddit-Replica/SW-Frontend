@@ -81,7 +81,7 @@
 				:class="{ blur: blur }"
 			></div>
 			<div v-if="post.link != undefined" class="post-link">
-				<router-link :to="post.link">{{ post.link }}</router-link>
+				<a :href="post.link">{{ post.link }}</a>
 			</div>
 			<div class="post-post" v-if="post.kind == 'post'">
 				<post-content
@@ -170,7 +170,6 @@ export default {
 			this.error = error.message || 'Something went wrong';
 		}
 		if (responseData != null) this.getUserData = responseData;
-		console.log(this.getUserData);
 	},
 	data() {
 		return {
@@ -243,23 +242,19 @@ export default {
 	},
 	methods: {
 		showCardM() {
-			console.log('hover');
 			this.showCard = true;
 		},
 		hideCardM() {
-			console.log('hover');
 			this.showCard = false;
 		},
 		showPCardM() {
-			console.log('hover');
 			this.showPCard = true;
 		},
 		hidePCardM() {
-			console.log('hover');
 			this.showPCard = false;
 		},
 		click() {
-			console.log(this.subreddit);
+			// //console.log(this.subreddit);
 		},
 	},
 };

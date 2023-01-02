@@ -124,6 +124,9 @@ export default {
 		//@arg no argument
 		hideAlone() {
 			// this.shownAlone = !this.shownAlone;
+
+			//@vuese
+			//emit fires to hide element
 			this.$emit('exit');
 		},
 	},

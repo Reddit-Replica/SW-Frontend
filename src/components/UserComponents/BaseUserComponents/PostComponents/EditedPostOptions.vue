@@ -674,7 +674,7 @@ export default {
 			// this.$emit('hidePost');
 		},
 		sharePost() {
-			console.log('share');
+			//console.log('share');
 			this.$emit('sharePost');
 			this.showShareOptions = !this.showShareOptions;
 		},
@@ -707,7 +707,7 @@ export default {
 			}
 		},
 		editPost() {
-			console.log('edit');
+			//console.log('edit');
 			this.$emit('editPost');
 		},
 		openOptionsBoxList() {
@@ -722,7 +722,7 @@ export default {
 			this.$emit('collapsePost');
 		},
 		async approvePost(id) {
-			console.log('approve');
+			//console.log('approve');
 			let approveSatus = -1;
 			if (!ApprovedComment) {
 				try {
@@ -751,7 +751,7 @@ export default {
 			}
 		},
 		async removePost(id) {
-			console.log('remove');
+			//console.log('remove');
 			let approveSatus = -1;
 			if (!RemovedComment) {
 				try {
@@ -798,7 +798,7 @@ export default {
 			}
 		},
 		async markUnMarkAsSpoiler(id) {
-			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			// //console.log('MarkUnMArk', this.nsfwCheckBox);
 			let type = 'unMark';
 			if (!this.postDataOptions.data.spoiler) {
 				type = 'mark';
@@ -817,7 +817,7 @@ export default {
 			}
 		},
 		async markUnMarkSendMeReply(id) {
-			// console.log('MarkUnMArk', this.nsfwCheckBox);
+			// //console.log('MarkUnMArk', this.nsfwCheckBox);
 			let state = false;
 			if (!this.postDataOptions.data.sendReplies) {
 				state = true;
@@ -840,7 +840,7 @@ export default {
 			this.showSafetyOptions = !this.showSafetyOptions;
 		},
 		async lockUnLockComments(id) {
-			console.log('lock un lock clicked');
+			//console.log('lock un lock clicked');
 			let approveSatus = -1;
 			let key = 'unlock';
 			if (
@@ -849,7 +849,7 @@ export default {
 			) {
 				key = 'lock';
 			}
-			console.log('main', key);
+			//console.log('main', key);
 			try {
 				approveSatus = await this.$store.dispatch(
 					'userposts/lockUnLockPostOrComment',
@@ -883,7 +883,7 @@ export default {
 			if (!this.postDataOptions.data.pin) {
 				key = true;
 			}
-			console.log('pin un pin clicked', key);
+			//console.log('pin un pin clicked', key);
 			try {
 				await this.$store.dispatch('userposts/pinUnpinPost', {
 					baseurl: this.$baseurl,
@@ -903,7 +903,7 @@ export default {
 			if (this.page == 'hidden') key = 'unhide';
 			this.postHiddenFlag = !this.postHiddenFlag;
 			this.$emit('hidePost');
-			console.log('hide un hide clicked', key);
+			//console.log('hide un hide clicked', key);
 			try {
 				approveSatus = await this.$store.dispatch('userposts/hideUnhidePost', {
 					baseurl: this.$baseurl,
@@ -1009,7 +1009,7 @@ export default {
 		},
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
-			console.log(num);
+			//console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
 	},

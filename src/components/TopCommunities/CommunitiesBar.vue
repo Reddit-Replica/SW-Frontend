@@ -35,6 +35,8 @@ export default {
 		};
 	},
 	watch: {
+		// @vuese
+		//watch router to fetch communities of the chosen category
 		'$route.params.category': {
 			handler: function () {
 				if (this.$route.params.category) {
@@ -46,6 +48,8 @@ export default {
 		},
 	},
 	computed: {
+		// @vuese
+		//title of communities list showing their category
 		title() {
 			if (this.$route.params.category) {
 				return this.textCategory + this.$route.params.category;
@@ -54,6 +58,8 @@ export default {
 			}
 		},
 	},
+	// @vuese
+	//load all communities or a specific category's communities based on router
 	created() {
 		if (this.$route.params.category) {
 			this.getCategoryCommunities(this.$route.params.category);
@@ -63,6 +69,9 @@ export default {
 	},
 
 	methods: {
+		// @vuese
+		//load all communities
+		//@arg no argument
 		async getAllCommunities() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('topCommunity/getAllCommunities', {
@@ -72,6 +81,9 @@ export default {
 			this.allCommunities =
 				this.$store.getters['topCommunity/getAllCommunities'];
 		},
+		// @vuese
+		//load specific category's communities
+		//@arg no argument
 		async getCategoryCommunities(category) {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('topCommunity/getCategoryCommunities', {
@@ -82,8 +94,11 @@ export default {
 			this.allCommunities =
 				this.$store.getters['topCommunity/getCategoryCommunities'];
 		},
+		// @vuese
+		//reload all communities or a specific category's communities based on router
+		//@arg no argument
 		reloadPage() {
-			console.log('reloadPage');
+			//console.log('reloadPage');
 			let category = this.$route.params.category;
 			if (!category) {
 				this.getAllCommunities();

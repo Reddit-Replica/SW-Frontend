@@ -9,7 +9,13 @@ import {
 // import axios from 'axios';
 import { register as registerSW } from 'register-service-worker';
 import store from '@/store';
+
 export default {
+	/**
+	 * Action for getting all notifications .
+	 * @action getAllNotifications=setNotifications, setUnreadCount
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getAllNotifications(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -37,6 +43,11 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Action for getting ten notifications .
+	 * @action getSomeNotifications=setSomeNotifications
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getSomeNotifications(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -63,6 +74,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for hiding a notification .
+	 * @action hideNotification=setHiddenSuccessfully
+	 * @param {Object} contains notification id and base url.
+	 * @returns {void} */
 	async hideNotification(context, payload) {
 		context.commit('setHiddenSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -90,6 +107,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for reading a notification .
+	 * @action readNotification=setReadSuccessfully
+	 * @param {Object} contains notification id and base url.
+	 * @returns {void} */
 	async readNotification(context, payload) {
 		context.commit('setReadSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -117,6 +140,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for reading all notifications.
+	 * @action markAllRead=setAllRead
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async markAllRead(context, payload) {
 		context.commit('setAllRead', false);
 		const baseurl = payload.baseurl;
@@ -142,8 +171,13 @@ export default {
 		}
 	},
 
+	/**
+	 * Action for checking if notifications token exists or not.
+	 * @action createNotificationToken=setClientToken
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async createNotificationToken(context, payload) {
-		console.log('creation');
+		//console.log('creation');
 
 		if (localStorage.getItem('clientToken') == null) {
 			await this.dispatch('notifications/registerServiceWorker', {
@@ -156,22 +190,27 @@ export default {
 		}
 	},
 
+	/**
+	 * Action for creating notifications token.
+	 * @action registerServiceWorker
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async registerServiceWorker(_, payload) {
-		console.log('registerServiceWorker');
+		//console.log('registerServiceWorker');
 		// const host = payload.host;
 
 		if ('Notification' in window && navigator.serviceWorker) {
 			registerSW('/firebase-messaging-sw.js', {
 				async ready(reg) {
-					console.log('Service worker is Ready');
+					//console.log('Service worker is Ready');
 					// subsctibe to FCM
-					console.log('subscribeToken');
+					//console.log('subscribeToken');
 					try {
 						let token = await getToken(getMessaging(firebaseApp), {
 							vapidKey: process.env.VUE_APP_FIREBASE_VAPIDKEY,
 							serviceWorkerRegistration: reg,
 						});
-						console.log('Client token => ', token);
+						//console.log('Client token => ', token);
 
 						// send token to server
 						await store.dispatch('notifications/sendTokenToServer', {
@@ -192,29 +231,29 @@ export default {
 					} catch (err) {
 						console.error(err);
 						localStorage.removeItem('clientToken');
-						console.log('Retry to subscribe');
+						//console.log('Retry to subscribe');
 					}
 				},
 				async registered(reg) {
-					console.log('Service worker has been registered.');
+					//console.log('Service worker has been registered.');
 					setInterval(() => {
 						reg.update();
 					}, 1000 * 60 * 30); // 30 min checks
 				},
 				cached() {
-					// console.log('Content has been cached for offline use.');
+					// //console.log('Content has been cached for offline use.');
 				},
 				updatefound() {
-					console.log('New content is downloading.');
+					//console.log('New content is downloading.');
 				},
 				updated(reg) {
-					console.log('New content is available; please refresh.');
+					//console.log('New content is available; please refresh.');
 					document.dispatchEvent(
 						new CustomEvent('swUpdated', { detail: reg.waiting })
 					);
 				},
 				offline() {
-					console.log('No internet connection found.');
+					//console.log('No internet connection found.');
 				},
 				error(error) {
 					console.error('Error during service worker registration:', error);
@@ -222,8 +261,14 @@ export default {
 			});
 		}
 	},
+
+	/**
+	 * Action for sending notifications token to the server if signed up.
+	 * @action sendTokenToServer
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async sendTokenToServer(_, payload) {
-		console.log('send');
+		//console.log('send');
 
 		const baseurl = payload.baseurl;
 		const data = { type: 'web', accessToken: payload.clientToken };
@@ -249,6 +294,12 @@ export default {
 			throw error;
 		}
 	},
+
+	/**
+	 * Action for listenning and showing notifications messages.
+	 * @action listenForegroundMessage
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async listenForegroundMessage(reg) {
 		// const host = payload.host;
 		if (!reg)
@@ -256,7 +307,7 @@ export default {
 				'/firebase-messaging-sw.js'
 			);
 		onMessageReceived(getMessaging(firebaseApp), (payload) => {
-			console.log('Message received. ', payload);
+			//console.log('Message received. ', payload);
 			let { notification, data } = payload;
 			let notificationTitle = 'Test title';
 			let notificationBody = 'Test body';
@@ -284,8 +335,14 @@ export default {
 				);
 		});
 	},
+
+	/**
+	 * Action for removing notifications token from the server if logged out.
+	 * @action sendTokenToServer
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async removeNotificationToken(_, payload) {
-		console.log('removing');
+		//console.log('removing');
 
 		const baseurl = payload.baseurl;
 		const data = { type: 'web' };

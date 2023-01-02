@@ -52,7 +52,7 @@ export default {
 		// //return user data
 		// // @type object
 		// getUserData() {
-		// 	// console.log(this.$store.getters['user/getUserData']);
+		// 	// //console.log(this.$store.getters['user/getUserData']);
 		// 	return this.$store.getters['user/getUserData'];
 		// },
 		// @vuese
@@ -89,7 +89,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			if (responseData != null) this.getUserData = responseData;
-			console.log(this.getUserData);
 		},
 	},
 };

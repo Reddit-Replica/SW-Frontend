@@ -16,69 +16,76 @@ export default {
 	 * @mutator {Array} setallSubreddits={allSubreddits} Sets allsunreddits.
 	 * @mutator {object} setSubreddit={Subreddit} Sets the Subreddit.
 	 * @mutator {Boolean} setinSubreddit={inSubreddit} Sets the inSubreddit of the post.
+	 * @mutator {Boolean} setImages={Images} Sets the Images of the post.
+	 * @mutator {Boolean} setImageCaptions={ImageCaptions} Sets the ImageCaptions of the post.
+	 * @mutator {Boolean} setImageLinks={ImageLinks} Sets the ImageLinks of the post.
+	 * @mutator {Boolean} setVideo={Video} Sets the Video of the post.
+	 * @mutator {Boolean} setvideoOrimage={videoOrimag} Sets the videoOrimag of the post.
+	 * @mutator {Boolean} setpostData={postData} Sets the postData of the post.
+	 * @mutator {Boolean} setName={name} Sets the name of the post.
 	 */
 	setTitle(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.title = payload.title;
 	},
 	setNsfw(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.nsfw = payload.nsfw;
 	},
 	setSpoiler(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.spoiler = payload.spoiler;
 	},
 	setFlairId(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.flairId = payload.flairId;
 	},
 	setsendReplies(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.sendReplies = payload.sendReplies;
 	},
 	setContent(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.content = payload.content;
 	},
 	setallSubreddits(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.allSubreddits = payload;
 	},
 	setSubreddit(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.subreddit = payload.subreddit;
 	},
 	setinSubreddit(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.inSubreddit = payload.inSubreddit;
 	},
 	setImages(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.images = payload.images;
 	},
 	setImageCaptions(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.imageCaptions = payload.imageCaptions;
 	},
 	setImageLinks(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.imageLinks = payload.imageLinks;
 	},
 	setVideo(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.video = payload.video;
 	},
 	setvideoOrimage(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.videoOrimage = payload.videoOrimage;
 	},
 	setpostData(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.postData = payload;
 	},
 	setName(state, payload) {
-		console.log(payload);
+		//console.log(payload);
 		state.name = payload.name;
 	},
 };

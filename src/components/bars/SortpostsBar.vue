@@ -355,7 +355,6 @@ export default {
 	},
 	watch: {
 		$route() {
-			console.log('rotechange');
 			if (this.$route.params.title != 'trending') this.risingListShow = false;
 		},
 	},

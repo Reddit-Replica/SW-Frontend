@@ -20,6 +20,8 @@ export default {
 	 * @property {Array} imageLinks This is the image links of the post.
 	 * @property {Boolean} sendReplies This is the send replies fof post.
 	 * @property {Array} allSubreddits This is allSubreddits in Server.
+	 * @property {object} postData This is post data
+	 * @property {object} name This is username.
 	 */
 	state() {
 		return {

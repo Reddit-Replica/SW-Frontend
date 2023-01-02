@@ -259,15 +259,15 @@ export default {
 					token: localStorage.getItem('accessToken'),
 				});
 
-				const response = localStorage.getItem('response');
-				console.log(response);
+				// const response = localStorage.getItem('response');
+				//console.log(response);
 				this.messageErrorShowUser = true;
 				this.showSignuser = true;
 				this.checkedUser = true;
 				this.error_message_user = 'Nice! Username available';
 			} catch (err) {
-				const response = localStorage.getItem('response');
-				console.log(response);
+				// const response = localStorage.getItem('response');
+				//console.log(response);
 				this.showSignuser = true;
 				this.checkedUser = false;
 				this.messageErrorShowUser = true;
@@ -275,7 +275,7 @@ export default {
 			}
 		},
 		verifyRec() {
-			console.log('verified 2');
+			//console.log('verified 2');
 			this.buttonDisabled = true;
 			this.verifyButton();
 		},
@@ -291,16 +291,16 @@ export default {
 			};
 			try {
 				await this.$store.dispatch('available_email', actionPayload);
-				const response = localStorage.getItem('response');
-				console.log(response);
+				// const response = localStorage.getItem('response');
+				//console.log(response);
 				this.messageErrorShowEmail = false;
 				this.showSignemail = true;
 				this.checkused = true;
 				this.checkedEmail = true;
 			} catch (err) {
 				if (this.flag) {
-					const response = localStorage.getItem('response');
-					console.log(response);
+					// const response = localStorage.getItem('response');
+					//console.log(response);
 					this.error_email = true;
 					this.error_email_message = 'Email is already taken';
 					this.showSignemail = true;

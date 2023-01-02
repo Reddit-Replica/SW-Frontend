@@ -41,7 +41,7 @@
 				<base-button
 					class="reorder-button"
 					id="reorder-rules-button"
-					:disabled="rulesCount > 1"
+					:disabled="rulesCount < 1"
 					:class="rulesCount > 1 ? '' : 'disable-button'"
 					@click="reorderRules()"
 					>Reorder rules</base-button
@@ -86,7 +86,7 @@
 				<base-button
 					class="reorder-button"
 					id="reorder-flairs-button"
-					:disabled="flairsCount > 1"
+					:disabled="flairsCount < 1"
 					:class="flairsCount > 1 ? '' : 'disable-button'"
 					@click="reorderFlairs()"
 					>Reorder</base-button

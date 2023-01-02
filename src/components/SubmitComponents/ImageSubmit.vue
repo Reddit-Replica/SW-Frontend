@@ -89,8 +89,8 @@ export default {
 		fileChange(e) {
 			const file = e.target.files[0];
 			this.images.push(URL.createObjectURL(file));
-			// console.log('hello');
-			// console.log(file);
+			// //console.log('hello');
+			// //console.log(file);
 		},
 		removeImage() {
 			this.images.pop();
@@ -345,12 +345,15 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// for upload images and videos
+		// @arg The argument is e
 		fileChange(e) {
 			const file1 = e.target.files;
 			const file = file1[0];
 
-			console.log(file.type);
-			console.log(file.type == 'image/jpeg');
+			//console.log(file.type);
+			//console.log(file.type == 'image/jpeg');
 			//'video/mp4'
 			if (file.type == 'video/mp4') {
 				this.video = URL.createObjectURL(file);
@@ -366,8 +369,8 @@ export default {
 				this.images.push(URL.createObjectURL(file));
 				this.imageCaptions.push(this.caption);
 				this.imageLinks.push(this.link);
-				console.log(this.images.length);
-				console.log('after push');
+				//console.log(this.images.length);
+				//console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
 				// if (this.images.length == 1) {
@@ -389,24 +392,31 @@ export default {
 				});
 			}
 		},
+		// @vuese
+		// to remove images from images preview
+		// @arg The argument is an integer value representing index pf image
 		removeImage(i) {
 			// this.images.pop();
 			this.imageFiles.splice(i, 1);
 			this.images.splice(i, 1);
 			this.imageCaptions.splice(i, 1);
 			this.imageLinks.splice(i, 1);
-			console.log(this.images);
+			//console.log(this.images);
 			if (i != 0) this.setSelected(this.images[i - 1]);
 			// this.selectedImage =
 			else this.setSelected(this.images[i]);
 			// this.selectedImage = this.images[i];
 			this.remove = true;
-			console.log(this.images.length);
-			console.log('after pop');
-			console.log(this.images.length);
+			//console.log(this.images.length);
+			//console.log('after pop');
+			//console.log(this.images.length);
 
-			console.log(this.images.length);
+			//console.log(this.images.length);
 		},
+		// @vuese
+		// to select image from images to preview
+		// @arg The argument is string value representing image
+		// @arg The argument is integer value representing index of image
 		setSelected(img, i) {
 			// if (!this.remove) {
 			this.selectedImage = img;
@@ -416,10 +426,13 @@ export default {
 
 			// }
 		},
+		// @vuese
+		// used to drag files
+		// @arg The argument is e
 		dragFile(e) {
 			const file1 = e.dataTransfer.files;
 			const file = file1[0];
-			console.log(file);
+			//console.log(file);
 			this.dropped = true;
 
 			if (file.type == 'video/mp4') {
@@ -436,8 +449,8 @@ export default {
 				this.images.push(URL.createObjectURL(file));
 				this.imageCaptions.push(this.caption);
 				this.imageLinks.push(this.link);
-				console.log(this.images.length);
-				console.log('after push');
+				//console.log(this.images.length);
+				//console.log('after push');
 				if (this.images.length > 1)
 					this.selectedImage = this.images[this.images.length - 1];
 				this.$store.commit('posts/setvideoOrimage', {
@@ -460,6 +473,9 @@ export default {
 				});
 			}
 		},
+		// @vuese
+		// used to set the value
+		// @arg The argument is an string value representing video
 		setVideo(value) {
 			this.$store.commit('posts/setVideo', {
 				video: value,
@@ -467,6 +483,9 @@ export default {
 		},
 	},
 	watch: {
+		// @vuese
+		// watch caption
+		// @arg The argument is an string value representing caption of image
 		caption(value) {
 			this.inputCharCount = this.caption.length;
 			this.caption = value;
@@ -474,6 +493,9 @@ export default {
 
 			return this.inputCharCount;
 		},
+		// @vuese
+		// watch link
+		// @arg The argument is an string value representing  link of image
 		link(value) {
 			this.link = value;
 			this.imageLinks[this.selectedIndex] = this.link;

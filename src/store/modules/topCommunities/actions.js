@@ -1,4 +1,12 @@
+/**
+ * @module TopCommunityActions
+ */
 export default {
+	/**
+	 * Action for getting all communities.
+	 * @action getAllCommunities=setAllCommunities
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getAllCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -35,6 +43,11 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Action for getting all communities in a specific category.
+	 * @action getCategoryCommunities=setCategoryCommunities
+	 * @param {Object} contains category and base url.
+	 * @returns {void} */
 	async getCategoryCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -71,6 +84,11 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Action for getting top five communities in two random categories.
+	 * @action getTwoCommunities=setFirstCategory,setFirstCommunities,setSecondCategory,setSecondCommunities
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getTwoCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -125,7 +143,7 @@ export default {
 	// 	});
 
 	// 	const responseData = await response.json();
-	// 	console.log(responseData);
+	// 	//console.log(responseData);
 	// 	if (!response.ok) {
 	// 		const error = new Error(
 	// 			responseData.message || 'Failed to send request.'
@@ -189,6 +207,12 @@ export default {
 	// 		throw error;
 	// 	}
 	// },
+
+	/**
+	 * Action for getting top viewed communities.
+	 * @action getTrendingCommunities=setTrendingCommunities
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getTrendingCommunities(context, payload) {
 		const baseurl = payload.baseurl;
 
@@ -223,6 +247,11 @@ export default {
 		}
 	},
 
+	/**
+	 * Action for getting a random community.
+	 * @action getSuggestedCommunity=setSuggestedCommunity
+	 * @param {Object} contains base url.
+	 * @returns {void} */
 	async getSuggestedCommunity(context, payload) {
 		const baseurl = payload.baseurl;
 

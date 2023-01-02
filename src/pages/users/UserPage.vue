@@ -121,7 +121,7 @@ export default {
 		 * @arg no arg
 		 */
 		getUserName() {
-			// console.log(this.$store.state.userName);
+			// //console.log(this.$store.state.userName);
 			return this.$store.getters.getUserName;
 		},
 		/**
@@ -130,7 +130,7 @@ export default {
 		 * @arg no arg
 		 */
 		getUserData() {
-			// console.log(this.$store.getters['user/getUserData']);
+			// //console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 		/**
@@ -201,22 +201,23 @@ export default {
 				this.state = 'profile';
 			/* means same authenticated user */ else
 				this.state = 'user'; /* means other user */
-			// console.log(this.state);
+			// //console.log(this.state);
 			/* after that we fetch data fetch user data */
 			document.title = localStorage.getItem('userName') + ' - Reddit';
 			const requestStatus = await this.RequestUserData();
-			console.log(requestStatus);
+			//console.log(requestStatus);
 			this.loading = false;
-			if (requestStatus == 200) console.log('Sucessfully fetched data');
-			else if (requestStatus == 404) {
-				console.log('not found');
+			// if (requestStatus == 200) console.log('Sucessfully fetched data');
+			if (requestStatus == 404) {
+				//console.log('not found');
 				this.notFound = true;
-			} else if (requestStatus == 500) console.log(' internal server error');
-			this.blockedFlag = true;
-			console.log(this.$store.getters['user/getUserData']);
-			// console.log(this.$store.getters['user/getStaticSocialLinks']);
+			} else if (requestStatus == 500)
+				//console.log(' internal server error');
+				this.blockedFlag = true;
+			//console.log(this.$store.getters['user/getUserData']);
+			// //console.log(this.$store.getters['user/getStaticSocialLinks']);
 			this.userData = this.$store.getters['user/getUserData'];
-			// console.log(this.userData);
+			// //console.log(this.userData);
 			// this.checkInOverviewPage;
 		}
 	},

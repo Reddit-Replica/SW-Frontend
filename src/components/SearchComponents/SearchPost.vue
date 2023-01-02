@@ -113,12 +113,19 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		// Get The Search Results of Posts
+		// @arg no argument
+		// @type Object
 		SearchedPosts() {
-			console.log(this.$store.getters['search/GetPosts']);
+			//console.log(this.$store.getters['search/GetPosts']);
 			return this.$store.getters['search/GetPosts'];
 		},
 	},
 	methods: {
+		// @vuese
+		// Go to Comment Page
+		// @arg id , title , sub and PostUser of the comment
 		gotocomment(id, title, sub, postman) {
 			if (sub != null) {
 				this.$router.push(`/r/${sub}/comments/${id}/${title}`);
@@ -126,6 +133,9 @@ export default {
 				this.$router.push(`/user/${postman}/comments/${id}/${title}`);
 			}
 		},
+		// @vuese
+		//calculate time
+		// @arg The Time
 		calculateTime(time) {
 			var currentDate = new Date();
 			var returnValue = '';

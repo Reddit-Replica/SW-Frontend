@@ -394,7 +394,7 @@ export default {
 		 * @arg no arg
 		 */
 		ReplyCommentHandler() {
-			console.log('reply clicked', this.postId);
+			//console.log('reply clicked', this.postId);
 			if (!this.commentContent.subreddit) {
 				// this.$router.push(
 				// 	`/user/${this.$route.params.userName}/comments/${this.postId}/comment/${this.commentContent.commentId}`
@@ -437,13 +437,13 @@ export default {
 			if (this.commentContent.commentBody) {
 				let QuillDeltaToHtmlConverter =
 					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-				console.log('comment body', this.commentContent.commentBody);
+				//console.log('comment body', this.commentContent.commentBody);
 
 				let deltaOps = this.commentContent.commentBody.ops;
 
 				let cfg = {};
 				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-				console.log('converter', converter.convert());
+				//console.log('converter', converter.convert());
 				this.PostHybridContent = converter.convert();
 			}
 			// }
@@ -618,7 +618,7 @@ export default {
 			if (this.moderation.approve) {
 				delete this.moderation.approve;
 			}
-			console.log('removeComment');
+			//console.log('removeComment');
 			try {
 				responseStatus = await this.$store.dispatch(
 					'userposts/removePostOrComment',
@@ -686,13 +686,13 @@ export default {
 		 */
 		async lockUnLockComment() {
 			let responseStatus = -1;
-			// console.log('lock un lock clicked');
+			// //console.log('lock un lock clicked');
 			let key = 'lock';
 			if (this.moderation.lock) {
 				key = 'unlock';
 			}
 			this.moderation.lock = !this.moderation.lock;
-			console.log('main', key);
+			//console.log('main', key);
 			try {
 				responseStatus = await this.$store.dispatch(
 					'userposts/lockUnLockPostOrComment',

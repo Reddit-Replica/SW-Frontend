@@ -129,7 +129,7 @@ export default {
 			if (value.length < 8) {
 				//
 				this.invalidPassword = true;
-				console.log('hello');
+				//console.log('hello');
 				this.checkedPassword = false;
 				this.showSignpassword = true;
 			} else {
@@ -145,7 +145,7 @@ export default {
 			if (value != this.password) {
 				//
 				this.invalidPasswordverify = true;
-				console.log('hello');
+				//console.log('hello');
 				this.checkedPasswordverify = false;
 				this.showSignpasswordverify = true;
 			} else {

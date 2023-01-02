@@ -52,7 +52,7 @@ export default {
 		//return list of spams
 		// @type object
 		listOfSpams() {
-			console.log(this.$store.getters['moderation/listOfSpams']);
+			//console.log(this.$store.getters['moderation/listOfSpams']);
 			return this.$store.getters['moderation/listOfSpams'];
 		},
 	},

@@ -20,21 +20,21 @@ export default {
 	emits: ['verified'],
 	methods: {
 		verifyMethod() {
-			console.log(
-				'verified'
-			); /* this will called after robot verification success */
+			// //console.log(
+			// 	'verified'
+			// ); /* this will called after robot verification success */
 			this.$emit('verified');
 		},
 		expiredMethod() {
-			console.log('expired'); /* will be called when verification Expired */
+			// //console.log('expired'); /* will be called when verification Expired */
 		},
 		renderMethod() {
-			console.log(
-				'rendered'
-			); /*will be called when the reCaptcha was Rendered on page */
+			// //console.log(
+			// 	'rendered'
+			// ); /*will be called when the reCaptcha was Rendered on page */
 		},
 		errorMethod() {
-			console.log('error'); /* will called when an error occurred */
+			// //console.log('error'); /* will called when an error occurred */
 		},
 	},
 };

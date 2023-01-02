@@ -21,10 +21,14 @@ export default {
 			category: '',
 		};
 	},
+	// @vuese
+	//load trending communities if user logged in
 	beforeMount() {
 		if (localStorage.getItem('accessToken')) this.getOneCommunities();
 	},
 	methods: {
+		// @vuese
+		//load trending communities
 		async getOneCommunities() {
 			const accessToken = localStorage.getItem('accessToken');
 			// await this.$store.dispatch('topCommunity/getOneCommunities', {
@@ -40,8 +44,10 @@ export default {
 			});
 			this.communities =
 				this.$store.getters['topCommunity/getTrendingCommunities'];
-			console.log(this.communities);
+			//console.log(this.communities);
 		},
+		// @vuese
+		//reload trending communities
 		reloadPage() {
 			this.getOneCommunities();
 		},

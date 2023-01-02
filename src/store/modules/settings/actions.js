@@ -1,5 +1,15 @@
 export default {
+	/**
+	 * @module SettingsActions
+	 */
 	//////////////email setting///////////////////
+
+	/**
+	 * Action for changenewFollowerEmail
+	 * @action changenewFollowerEmail
+	 * @param {Object} payload newFollowerEmail and base url.
+	 * @returns {void}
+	 */
 	async changenewFollowerEmail(context, payload) {
 		const setting = {
 			newFollowerEmail: payload.newFollowerEmail,
@@ -16,7 +26,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -28,6 +38,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeunsubscribeFromEmails
+	 * @action changeunsubscribeFromEmails
+	 * @param {Object} payload unsubscribeFromEmails and base url.
+	 * @returns {void}
+	 */
 	async changeunsubscribeFromEmails(context, payload) {
 		const setting = {
 			unsubscribeFromEmails: payload.unsubscribeFromEmails,
@@ -44,7 +60,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -57,6 +73,12 @@ export default {
 		return response.status;
 	},
 	//////////////////// feed settings  ////////////////////////////////////////////
+	/**
+	 * Action for changeneadultContent
+	 * @action changeneadultContent
+	 * @param {Object} payload adultContent and base url.
+	 * @returns {void}
+	 */
 	async changeneadultContent(context, payload) {
 		const setting = {
 			adultContent: payload.adultContent,
@@ -73,7 +95,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -85,6 +107,13 @@ export default {
 		}
 		return response.status;
 	},
+
+	/**
+	 * Action for changeautoplayMedia
+	 * @action changeautoplayMedia
+	 * @param {Object} payload autoplayMedia and base url.
+	 * @returns {void}
+	 */
 	async changeautoplayMedia(context, payload) {
 		const setting = {
 			autoplayMedia: payload.autoplayMedia,
@@ -101,7 +130,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -115,7 +144,12 @@ export default {
 	},
 
 	//////////////////// profile setting ///////////////////////////////////////////
-
+	/**
+	 * Action for changedisplayName
+	 * @action changedisplayName
+	 * @param {Object} payload displayName and base url.
+	 * @returns {void}
+	 */
 	async changedisplayName(context, payload) {
 		const setting = {
 			displayName: payload.displayName,
@@ -132,7 +166,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -144,6 +178,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeAbout
+	 * @action changeAbout
+	 * @param {Object} payload About and base url.
+	 * @returns {void}
+	 */
 
 	async changeAbout(context, payload) {
 		const setting = {
@@ -161,7 +201,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -173,6 +213,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeNsfw
+	 * @action changeNsfw
+	 * @param {Object} payload Nsfw and base url.
+	 * @returns {void}
+	 */
 	async changeNsfw(context, payload) {
 		const setting = {
 			nsfw: payload.nsfw,
@@ -189,7 +235,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -201,6 +247,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeAllowfollow
+	 * @action changeAllowfollow
+	 * @param {Object} payload Allowfollow and base url.
+	 * @returns {void}
+	 */
 	async changeAllowfollow(context, payload) {
 		const setting = {
 			allowToFollowYou: payload.allowToFollowYou,
@@ -217,7 +269,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -231,10 +283,15 @@ export default {
 	},
 
 	//////////////////// this part for moderation setting //////////////////////////
-
+	/**
+	 * Action for communitySettings
+	 * @action communitySettings
+	 * @param {Object} payload communitySettings and base url.
+	 * @returns {void}
+	 */
 	async communitySettings(context, payload) {
-		// console.log('welcome message');
-		// console.log(payload);
+		// //console.log('welcome message');
+		// //console.log(payload);
 		const setting = {
 			communityName: payload.communityName,
 			mainTopic: payload.mainTopic,
@@ -250,7 +307,7 @@ export default {
 			acceptingRequestsToPost: payload.acceptingRequestsToPost,
 			approvedUsersHaveTheAbilityTo: payload.approvedUsersHaveTheAbilityTo,
 		};
-		console.log(setting);
+		//console.log(setting);
 		const baseurl = payload.baseurl;
 		const response = await fetch(
 			baseurl + `/r/${payload.subredditName}/about/edit`,
@@ -264,9 +321,9 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
-			// console.log(response);
+			// //console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -278,6 +335,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for postandcommentsSettings
+	 * @action postandcommentsSettings
+	 * @param {Object} payload postandcommentsSettings and base url.
+	 * @returns {void}
+	 */
 	async postandcommentsSettings(context, payload) {
 		const setting = {
 			subreddit: payload.communityName,
@@ -287,7 +350,7 @@ export default {
 		};
 
 		const baseurl = payload.baseurl;
-		// console.log(localStorage.getItem('accessToken'));
+		// //console.log(localStorage.getItem('accessToken'));
 		const response = await fetch(
 			baseurl + `/r/${payload.communityName}/about/edit-post-settings`,
 			{
@@ -302,7 +365,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -314,6 +377,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for fetchmoderationSettings
+	 * @action fetchmoderationSettings
+	 * @param {Object} payload communityName and base url.
+	 * @returns {void}
+	 */
 	async fetchmoderationSettings(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
@@ -328,7 +397,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -338,10 +407,16 @@ export default {
 			console.log(error);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('setmoderationSettings', responseData);
 		return response.status;
 	},
+	/**
+	 * Action for fetcpostandcommentsSettings
+	 * @action fetcpostandcommentsSettings
+	 * @param {Object} payload communityName and base url.
+	 * @returns {void}
+	 */
 	async fetcpostandcommentsSettings(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
@@ -356,7 +431,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -366,11 +441,17 @@ export default {
 			console.log(error);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('setpostandcommentsSettings', responseData);
 		return response.status;
 	},
 	/////////////////////account setting ///////////////////////////
+	/**
+	 * Action for cchangeCountry
+	 * @action changeCountry
+	 * @param {Object} payload country and base url.
+	 * @returns {void}
+	 */
 	async changeCountry(context, payload) {
 		const setting = {
 			country: payload.country,
@@ -387,7 +468,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -399,6 +480,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeGender
+	 * @action changeGender
+	 * @param {Object} payload  gender and base url.
+	 * @returns {void}
+	 */
 	async changeGender(context, payload) {
 		const setting = {
 			gender: payload.gender,
@@ -415,7 +502,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -427,6 +514,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for fetchAccountSettings
+	 * @action fetchAccountSettings
+	 * @param {Object} payload  base url.
+	 * @returns {void}
+	 */
 	async fetchAccountSettings(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/account-settings', {
@@ -439,7 +532,7 @@ export default {
 		});
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -452,6 +545,12 @@ export default {
 		context.commit('setAccountSettings', responseData);
 		return response.status;
 	},
+	/**
+	 * Action for connect
+	 * @action connect
+	 * @param {Object} payload accessToken,password and base url.
+	 * @returns {void}
+	 */
 	async connect(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -467,9 +566,9 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -481,6 +580,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for disconnect
+	 * @action disconnect
+	 * @param {Object} payload password and base url.
+	 * @returns {void}
+	 */
 	async disconnect(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -497,13 +602,19 @@ export default {
 		const responseData = await response.json();
 		return { status: response.status, responseData: responseData };
 	},
+	/**
+	 * Action for deleteAccount
+	 * @action deleteAccount
+	 * @param {Object} payload password,username and base url.
+	 * @returns {void}
+	 */
 	async deleteAccount(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
 			password: payload.password,
 			username: payload.username,
 		};
-		console.log(payload);
+		//console.log(payload);
 		const response = await fetch(baseurl + '/delete-account', {
 			method: 'DELETE',
 			headers: {
@@ -513,9 +624,9 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -527,6 +638,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changePassword
+	 * @action changePassword
+	 * @param {Object} payload newPassword,currentPassword,confirmNewPassword and base url.
+	 * @returns {void}
+	 */
 	async changePassword(_, payload) {
 		const baseurl = payload.baseurl;
 		const body = {
@@ -534,7 +651,7 @@ export default {
 			newPassword: payload.newPassword,
 			confirmNewPassword: payload.confirmNewPassword,
 		};
-		console.log(payload);
+		//console.log(payload);
 		const response = await fetch(baseurl + '/change-password', {
 			method: 'PUT',
 			headers: {
@@ -544,7 +661,7 @@ export default {
 			body: JSON.stringify(body),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200) {
 			localStorage.setItem('Password', payload.newPassword);
 		} else if (response.status == 401) {
@@ -558,6 +675,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Action for changeEmail
+	 * @action changeEmail
+	 * @param {Object} payload newEmail,currentPassword and base url.
+	 * @returns {void}
+	 */
 	async changeEmail(context, payload) {
 		const setting = {
 			currentPassword: payload.currentPassword,
@@ -574,9 +697,9 @@ export default {
 			body: JSON.stringify(setting),
 		});
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		// if (response.status == 200) {
-		// 	console.log(response);
+		// 	//console.log(response);
 		// } else if (response.status == 401) {
 		// 	const error = new Error(responseData.error);
 		// 	console.log(error);

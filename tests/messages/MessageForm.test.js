@@ -102,7 +102,7 @@ describe ('MessageForm.vue', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
   it ('test error in empty subject', async () => {
@@ -135,7 +135,7 @@ describe ('MessageForm.vue', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
   it ('test error in empty fields', async () => {
@@ -170,7 +170,7 @@ describe ('MessageForm.vue', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
   it ('test error in empty text', async () => {
@@ -205,7 +205,7 @@ describe ('MessageForm.vue', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -239,7 +239,7 @@ describe ('MessageForm.vue', () => {
         expect (wrapper.text ()).not.contain ('we need something here');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -267,7 +267,7 @@ describe ('MessageForm.vue', () => {
         expect (formattingBtn.text () == 'hide help').toBe (true);
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -313,7 +313,7 @@ describe ('MessageForm.vue', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
   //--------------------------------------------------------
@@ -341,7 +341,7 @@ describe ('MessageForm.vue', () => {
         );
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 
@@ -378,7 +378,7 @@ describe ('MessageForm.vue', () => {
         expect (wrapper.text ()).contain ('your message has been delivered');
       })
       .catch (function () {
-        console.log ('Promise Rejected');
+        //console.log ('Promise Rejected');
       });
   });
 });

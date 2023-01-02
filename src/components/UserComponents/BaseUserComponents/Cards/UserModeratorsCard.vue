@@ -75,6 +75,8 @@ export default {
 			type: Array,
 			required: true,
 		},
+		// @vuese
+		// state profile page  or other user page to change the moderation card text
 		state: {
 			type: String,
 			required: true,
@@ -83,7 +85,7 @@ export default {
 	// @vuese
 	// at mounting we loop for each moderator to add button text if joined or not
 	mounted() {
-		// console.log(this.userModerators);
+		// //console.log(this.userModerators);
 		this.userModerators.forEach((element) => {
 			element.buttonText = 'joined';
 			if (!element.followed) element.buttonText = 'join';
@@ -159,6 +161,11 @@ export default {
 				}
 			});
 		},
+		/**
+		 * @vuese
+		 * emitting the popup message
+		 * @arg no arg
+		 */
 		emitPopup(id, message) {
 			this.popupMessages.push({
 				id: this.popupMessages.length,
@@ -170,9 +177,14 @@ export default {
 				this.popupMessages.shift();
 			}, 10000);
 		},
+		/**
+		 * @vuese
+		 * request to join  the subreddit
+		 * @arg no arg
+		 */
 		async joinsubreddit(id, key) {
 			// this.toogleJoin();
-			console.log('join');
+			//console.log('join');
 			let response = -1;
 			const accessToken = localStorage.getItem('accessToken');
 			response = await this.$store.dispatch('community/joinSubreddit', {
@@ -197,6 +209,11 @@ export default {
 				});
 			}
 		},
+		/**
+		 * @vuese
+		 * request to leave the certain subreddit
+		 * @arg no arg
+		 */
 		async leaveSubreddit(subredditName) {
 			let response;
 			const accessToken = localStorage.getItem('accessToken');

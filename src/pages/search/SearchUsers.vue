@@ -109,18 +109,32 @@ export default {
 		};
 	},
 	computed: {
+		// @vuese
+		// Get The Search Results of Users
+		// @arg no argument
+		// @type Object
 		SearchedUsers() {
-			console.log(this.$store.getters['search/Getusers']);
+			//console.log(this.$store.getters['search/Getusers']);
 			return this.$store.getters['search/Getusers'];
 		},
+		// @vuese
+		// Get The UserName
+		// @arg no argument
+		// @type String
 		userName() {
 			return localStorage.getItem('userName');
 		},
 	},
+	// @vuese
+	// before Mount check the accessToken then load the search results
+	// @arg no argument
 	beforeMount() {
 		this.search();
 		// this.intousers();
 	},
+	// @vuese
+	// while creat check the accessToken then load the search results
+	// @arg no argument
 	async created() {
 		if (localStorage.getItem('accessToken')) {
 			this.loading = true;
@@ -129,6 +143,9 @@ export default {
 		this.loading = false;
 	},
 	methods: {
+		// @vuese
+		// request the Searched Users with the query
+		// @arg no argument
 		async search() {
 			try {
 				await this.$store.dispatch('search/SearchUser', {
@@ -139,7 +156,9 @@ export default {
 				console.log(error);
 			}
 		},
-		//not true just writing what will it been do in action
+		// @vuese
+		// request the follow unfollow user
+		// @arg (Name and Action Type )
 		async toggle(user, follow) {
 			if (localStorage.getItem('accessToken')) {
 				try {
@@ -153,6 +172,9 @@ export default {
 				}
 			}
 		},
+		// @vuese
+		// Go to Next type of data URL
+		// @arg value "Next type of data Name"
 		goSearch(value) {
 			if (value == 'cm') {
 				this.$router.push({
@@ -171,6 +193,9 @@ export default {
 				});
 			}
 		},
+		// @vuese
+		// Go to User URL
+		// @arg value "User Name"
 		gotoUser(name) {
 			this.$router.push('/user/' + name);
 		},

@@ -36,15 +36,21 @@ export default {
 			secondCategoryCommunities: [],
 		};
 	},
+	//@vuese
+	//load categories and communities
 	beforeMount() {
 		this.getTwoCommunities();
 	},
 	computed: {
+		//@vuese
+		//check if first communities list is empty
 		emptyCommunitiesFirst() {
 			return (
 				this.firstCategoryCommunities === [] || !this.firstCategoryCommunities
 			);
 		},
+		//@vuese
+		//check if second communities list is empty
 		emptyCommunitiesSecond() {
 			return (
 				this.secondCategoryCommunities === [] || !this.secondCategoryCommunities
@@ -52,6 +58,8 @@ export default {
 		},
 	},
 	methods: {
+		//@vuese
+		//get two random categories and top five communities in them
 		async getTwoCommunities() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('topCommunity/getTwoCommunities', {
@@ -68,6 +76,8 @@ export default {
 				this.$store.getters['topCommunity/getSecondCommunities'];
 		},
 	},
+	//@vuese
+	//reload categories and communities to get new data
 	reloadPage() {
 		this.getTwoCommunities();
 	},

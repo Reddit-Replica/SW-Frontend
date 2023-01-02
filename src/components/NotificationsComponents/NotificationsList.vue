@@ -82,6 +82,8 @@ export default {
 	components: {
 		NotificationMessage,
 	},
+	//@vuese
+	//load some notifications and a random community
 	async beforeMount() {
 		await this.loadAllNotifications();
 		await this.getSuggestedCommunity();
@@ -94,17 +96,26 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//check if ther is no notification
 		noNotifications() {
 			return this.notifications.length == 0;
 		},
+		//@vuese
+		//router link of subreddit from the subreddit name
 		subredditLink() {
 			return 'r/' + this.randomSubredditName;
 		},
+		//@vuese
+		//router link of subreddit from the subreddit object
 		linkSubreddit() {
 			return '/r/' + this.suggestedCommunity[0].data.title;
 		},
 	},
 	methods: {
+		//@vuese
+		//load new ten notifications to show in list
+		//@arg no argument
 		async loadAllNotifications() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('notifications/getSomeNotifications', {
@@ -114,6 +125,9 @@ export default {
 			this.notifications =
 				this.$store.getters['notifications/getSomeNotifications'];
 		},
+		//@vuese
+		//mark all notifications as read
+		//@arg no argument
 		async markAllRead() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('notifications/markAllRead', {
@@ -122,9 +136,15 @@ export default {
 			});
 			this.loadAllNotifications();
 		},
+		//@vuese
+		//reload and get notifications to get new data
+		//@arg no argument
 		reloadPage() {
 			this.loadAllNotifications();
 		},
+		//@vuese
+		//get a random suggested notification to show if no notifications
+		//@arg no argument
 		async getSuggestedCommunity() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('topCommunity/getSuggestedCommunity', {

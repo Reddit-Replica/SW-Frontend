@@ -9,7 +9,7 @@ export default {
 	 * @returns {integer} status code
 	 */
 	async getUserData(context, payload) {
-		console.log('kkk', payload);
+		//console.log('kkk', payload);
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
 		const response = await fetch(baseurl + `/user/${payload.userName}/about`, {
@@ -19,17 +19,17 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		console.log('kkk', responseData);
-		// console.log(responseData);
+		//console.log('kkk', responseData);
+		// //console.log(responseData);
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to fetch User Data!'
 		// 	);
-		// 	console.log(response.status);
+		// 	//console.log(response.status);
 		// 	throw error;
 		// }
-		// console.log('medo', response.status);
-		// console.log(responseData);
+		// //console.log('medo', response.status);
+		// //console.log(responseData);
 		if (payload.auth == 'medo') {
 			if (response.status == 200)
 				context.commit('setUserData', {
@@ -39,6 +39,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Make a request to get user information with specific name ,
+	 * @action getUserTempData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} status code
+	 */
 	async getUserTempData(context, payload) {
 		const baseurl = payload.baseurl;
 		// const response = await fetch(baseurl + `/user`);
@@ -49,16 +55,16 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to fetch User Data!'
 		// 	);
-		// 	console.log(response.status);
+		// 	//console.log(response.status);
 		// 	throw error;
 		// }
-		// console.log('medo', response.status);
-		// console.log(responseData);
+		// //console.log('medo', response.status);
+		// //console.log(responseData);
 		if (response.status == 200) return responseData;
 		// context.commit('setUserData', {
 		// 	responseData,
@@ -73,7 +79,7 @@ export default {
 	 * @returns {integer} return status Code
 	 */
 	async getUserPostData(context, payload) {
-		console.log('ggg', payload.userName);
+		//console.log('ggg', payload.userName);
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.userName}/posts`);
 		let params = {
@@ -101,7 +107,12 @@ export default {
 		});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to get user posts data,
+	 * @action getUserCommentsData=setUserCommentsData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.username}/comments`);
@@ -137,7 +148,7 @@ export default {
 			);
 			console.log(error);
 		}
-		console.log(responseData.message);
+		//console.log(responseData.message);
 		if (response.status == 200)
 			context.commit('setUserCommentsData', {
 				responseData,
@@ -145,7 +156,12 @@ export default {
 			});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to get user posts data,
+	 * @action getUserMoreCommentsData=setUserMoreCommentsData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		let url = new URL(baseurl + `/user/${payload.username}/comments`);
@@ -177,7 +193,7 @@ export default {
 			);
 			console.log(error);
 		}
-		console.log(responseData.message);
+		//console.log(responseData.message);
 		if (response.status == 200)
 			context.commit('setUserMoreCommentsData', {
 				responseData,
@@ -239,10 +255,10 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			localStorage.setItem('response', response.status);
-			console.log('زى الفل الحمد لله');
+			//console.log('زى الفل الحمد لله');
 		} else if (response.status == 400) {
 			const error = new Error(responseData);
-			console.log(responseData);
+			//console.log(responseData);
 			throw error;
 		} else {
 			console.log(error);
@@ -250,7 +266,7 @@ export default {
 			throw error;
 		}
 		let profilePictureUrl = responseData.path;
-		console.log(profilePictureUrl);
+		//console.log(profilePictureUrl);
 		if (response.status == 200)
 			context.commit('addUserProfilePicture', {
 				profilePictureUrl,
@@ -279,10 +295,10 @@ export default {
 		const responseData = await response.text();
 		if (response.status == 200) {
 			localStorage.setItem('response', response.status);
-			console.log('زى الفل الحمد لله');
+			//console.log('زى الفل الحمد لله');
 		} else if (response.status == 400) {
 			const error = new Error(responseData);
-			console.log(responseData);
+			//console.log(responseData);
 			throw error;
 		} else {
 			console.log(error);
@@ -309,7 +325,7 @@ export default {
 	 */
 	async followUnfollowUser(context, payload) {
 		const followUnfollowData = payload.followUnfollowData;
-		console.log('actiom', followUnfollowData);
+		//console.log('actiom', followUnfollowData);
 		const baseurl = payload.baseurl;
 		const response = await fetch(baseurl + '/follow-user', {
 			method: 'POST',
@@ -319,18 +335,18 @@ export default {
 			},
 			body: JSON.stringify(followUnfollowData),
 		});
-		console.log(response.status);
+		//console.log(response.status);
 		const responseData = await response.json();
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'
 			);
-			console.log('error in follow');
-			console.log(responseData);
-			console.log(localStorage.getItem('accessToken'));
+			//console.log('error in follow');
+			//console.log(responseData);
+			//console.log(localStorage.getItem('accessToken'));
 			throw error;
 		}
-		console.log(response.status);
+		//console.log(response.status);
 		// if(response.status == 200)
 		context.commit('followUnfollowUser', {
 			followUnfollowData,
@@ -361,8 +377,8 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('blockUnblockUser', {
 			blockUnblockData,
@@ -391,15 +407,20 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('SetListOfBlockedUsers', {
 				responseData,
 			});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to get User Subreddits
+	 * @action getUserSubreddits=setSubreddits || setBefore
+	 * @param {object} payload An object contains baseurl,type,displayText,link
+	 * @returns {integer} status code
+	 */
 	async getUserSubreddits(context, payload) {
 		const beforeMod = payload.beforeMod;
 		const afterMod = payload.afterMod;
@@ -420,7 +441,7 @@ export default {
 			},
 		});
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		const subreddits = [];
 		if (response.status == 200) {
 			let before, after;
@@ -440,7 +461,7 @@ export default {
 				};
 				subreddits.push(subreddit);
 			}
-			// console.log(subreddits);
+			// //console.log(subreddits);
 			context.commit('setSubreddits', subreddits);
 			context.commit('setBefore', before);
 			context.commit('setAfter', after);
@@ -455,6 +476,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Make a request to delete User SocialLink
+	 * @action DeleteSocialLink=deleteUserSocialLink
+	 * @param {object} payload An object contains baseurl,type,displayText,link
+	 * @returns {integer} status code
+	 */
 	async DeleteSocialLink(context, payload) {
 		const socialInfo = {
 			type: payload.type,
@@ -462,7 +489,7 @@ export default {
 			link: payload.link,
 		};
 		const baseurl = payload.baseurl;
-		console.log(socialInfo);
+		//console.log(socialInfo);
 		const response = await fetch(baseurl + '/social-link', {
 			method: 'DELETE',
 			headers: {
@@ -474,8 +501,8 @@ export default {
 		//const responseData = await response.json();
 		let type = payload.type;
 		if (response.status == 204) {
-			// console.log(responseData);
-			console.log(response);
+			// //console.log(responseData);
+			//console.log(response);
 			context.commit('deleteUserSocialLink', {
 				type,
 			});

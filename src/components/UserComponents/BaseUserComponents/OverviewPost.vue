@@ -424,7 +424,7 @@ export default {
 		// 	this.postData.data.subreddit != 'string'
 		// ) {
 		// 	await this.getSubreddit();
-		// 	console.log('aaa', this.subredditData);
+		// 	//console.log('aaa', this.subredditData);
 		// }
 		// await this.fetchUserCardPicture();
 	},
@@ -450,7 +450,7 @@ export default {
 		 * @arg no arg
 		 */
 		getUserData() {
-			// console.log(this.$store.getters['user/getUserData']);
+			// //console.log(this.$store.getters['user/getUserData']);
 			return this.$store.getters['user/getUserData'];
 		},
 		/**
@@ -469,15 +469,20 @@ export default {
 		},
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * fetch the user card data for the hovered card
+		 * @arg no arg
+		 */
 		async fetchUserCardPicture() {
 			let responseData = null;
-			console.log(
-				localStorage.getItem('username'),
-				this.postData.data.postedBy
-			);
+			//console.log(
+			// 	localStorage.getItem('username'),
+			// 	this.postData.data.postedBy
+			// );
 			if (this.postData.data.postedBy == localStorage.getItem('userName')) {
 				this.userCardData = this.$store.getters['user/getUserData'].userData;
-				console.log('same');
+				//console.log('same');
 			} else {
 				try {
 					responseData = await this.$store.dispatch('user/getUserTempData', {
@@ -488,7 +493,7 @@ export default {
 					this.error = error.message || 'Something went wrong';
 				}
 				if (responseData != null) this.userCardData = responseData;
-				console.log(this.userCardData);
+				//console.log(this.userCardData);
 			}
 		},
 		/**
@@ -500,7 +505,7 @@ export default {
 			if (!this.once) {
 				if (this.postData.data.subreddit != null) {
 					await this.getSubreddit();
-					console.log('aaa', this.subredditData);
+					//console.log('aaa', this.subredditData);
 				}
 				await this.fetchUserCardPicture();
 				this.once = true;
@@ -602,7 +607,7 @@ export default {
 		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
-			console.log(num);
+			//console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
 		/**
@@ -614,11 +619,11 @@ export default {
 			if (this.postData.data.kind == 'hybrid') {
 				let QuillDeltaToHtmlConverter =
 					require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-				console.log(this.postData.data.content);
+				//console.log(this.postData.data.content);
 				let deltaOps = this.postData.data.content.ops;
 				let cfg = {};
 				let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-				console.log(converter.convert());
+				//console.log(converter.convert());
 				this.PostHybridContent = converter.convert();
 			}
 		},
@@ -638,7 +643,7 @@ export default {
 			this.insightsLoading = true;
 		},
 		finishInsightLoading() {
-			console.log('emits');
+			//console.log('emits');
 			this.insightsLoading = false;
 		},
 		/**
@@ -659,7 +664,7 @@ export default {
 			}
 		},
 		pinPostToProfile() {
-			console.log('pin');
+			//console.log('pin');
 		},
 		/**
 		 * @vuese
@@ -671,7 +676,7 @@ export default {
 				this.$router.push('/');
 				return;
 			}
-			console.log('delete,base');
+			//console.log('delete,base');
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},
@@ -685,7 +690,7 @@ export default {
 				this.$router.push('/');
 				return;
 			}
-			console.log('hide,base');
+			//console.log('hide,base');
 			/* call the End point */
 			this.deletedHiddenPost = true;
 		},

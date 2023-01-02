@@ -20,6 +20,10 @@ export default {
 	 * @property {Boolean} blockSuccessfully This property is boolean if block successfully.
 	 * @property {Boolean} votedSuccessfully This property is boolean if voted successfully.
 	 * @property {Boolean} replyMessageSuccessfully This property is boolean if reply message successfully.
+	 * @property {Boolean} replyMessageSuccessfully This property is boolean if reply message successfully.
+	 * @property {Boolean} addSuccessfully This property is boolean if reply comment Successfully.
+	 * @property {String} before This property is string of id before.
+	 * @property {String} after This property is string of id after.
 	 */
 	state() {
 		return {

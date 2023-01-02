@@ -49,10 +49,14 @@ export default {
 			required: true,
 			default: false,
 		},
+		// @vuese
+		// to know if the user page is for the authenticated user or other user or no authenticated user
 		state: {
 			type: String,
 			required: true,
 		},
+		// @vuese
+		// the user name of the current user so it used for block or follow the user
 		userName: {
 			type: String,
 			required: true,
@@ -68,7 +72,7 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(this.state);
+		//console.log(this.state);
 	},
 	methods: {
 		/**

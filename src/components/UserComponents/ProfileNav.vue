@@ -54,14 +54,16 @@
 
 <script>
 export default {
-	// @vuese
-	// user Name of the user for routing
 	props: {
+		// @vuese
+		// user Name of the user for routing
 		userName: {
 			type: String,
 			required: true,
 		},
 		state: {
+			// @vuese
+			// state of the user to know if is profile of authenticated user or profile of other user
 			type: String,
 			required: true,
 		},

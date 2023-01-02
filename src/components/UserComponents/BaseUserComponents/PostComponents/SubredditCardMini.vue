@@ -49,10 +49,14 @@
 <script>
 export default {
 	props: {
+		// @vuese
+		// object contains subreddit description and number of members
 		subreddit: {
 			type: Object,
 			required: true,
 		},
+		// @vuese
+		// string contains subreddit name
 		subredditName: {
 			type: String,
 			required: true,
@@ -66,7 +70,7 @@ export default {
 		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
-			console.log(num);
+			//console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
 	},

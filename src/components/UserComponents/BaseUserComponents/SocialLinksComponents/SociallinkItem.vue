@@ -23,10 +23,15 @@ export default {
 		};
 	},
 	created() {
-		console.log(this.$route.fullPath == '/settings/profile');
+		//console.log(this.$route.fullPath == '/settings/profile');
 		if (this.$route.fullPath == '/settings/profile') this.enable = true;
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * nake request to delete the social link
+		 * @arg no arg
+		 */
 		async deleteSociallink() {
 			const actionPayload = {
 				type: this.type,
@@ -34,15 +39,15 @@ export default {
 				link: this.link,
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'user/DeleteSocialLink',
 					actionPayload
 				);
 				if (response == 204) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -50,9 +55,14 @@ export default {
 			}
 		},
 		watch: {
-			$route(newr) {
-				if (newr.path == 'profile/settings') console.log('profileSettings');
-			},
+			/**
+			 * @vuese
+			 * watch change of the route NOT USED YET
+			 * @arg no arg
+			 */
+			// $route(newr) {
+			// if (newr.path == 'profile/settings') //console.log('profileSettings');
+			// },
 		},
 	},
 	props: {
@@ -70,6 +80,8 @@ export default {
 			default: '',
 			required: true,
 		},
+		// @vuese
+		// type of the social link used for making request to delete an social link
 		type: {
 			type: String,
 			default: '',

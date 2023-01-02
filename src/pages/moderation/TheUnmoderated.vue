@@ -51,7 +51,7 @@ export default {
 		//return Unmoderated post
 		// @type Object
 		UnmoderatedPosts() {
-			console.log(this.$store.getters['moderation/Unmoderated']);
+			//console.log(this.$store.getters['moderation/Unmoderated']);
 			return this.$store.getters['moderation/Unmoderated'];
 		},
 	},

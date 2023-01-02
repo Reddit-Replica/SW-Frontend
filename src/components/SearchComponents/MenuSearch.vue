@@ -52,6 +52,11 @@ export default {
 			// });
 			this.$emit('change-title', title);
 		},
+		/**
+		 * @vuese
+		 * Request The Sorting Type
+		 * @arg no arg
+		 */
 		async secfunc() {
 			// this.clicked = title;
 			const actionPayload = {
@@ -71,6 +76,11 @@ export default {
 				this.error = err;
 			}
 		},
+		/**
+		 * @vuese
+		 * Requesting the Timing Type
+		 * @arg no arg
+		 */
 		async timefunc() {
 			if (this.$route.query.sort) {
 				const actionPayload = {

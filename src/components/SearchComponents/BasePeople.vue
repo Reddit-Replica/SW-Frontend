@@ -77,9 +77,20 @@ export default {
 		this.showuser();
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * Toggle not followed value
+		 * @arg no arg
+		 */
 		showuser() {
 			this.notFollowed = !this.value.following;
 		},
+		/**
+		 * @vuese
+		 * Request To follow and unfollow User
+		 * @arg Name the userName
+		 * @arg follow the following Status
+		 */
 		async toggle(user, follow) {
 			if (localStorage.getItem('accessToken')) {
 				this.notFollowed = !this.notFollowed;
@@ -115,6 +126,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * Go To User Account
+		 * @arg Name the userName
+		 */
 		gotoUser(name) {
 			this.$router.push('/user/' + name);
 		},

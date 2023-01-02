@@ -478,14 +478,20 @@ export default {
 			type: Array,
 			default: () => [],
 		},
+		//@vuese
+		//Subreddit is marked as favourite
 		isFavourite: {
 			type: Boolean,
 			default: false,
 		},
+		//@vuese
+		//If user is a moderator of the subreddit
 		isModerator: {
 			type: Boolean,
 			default: false,
 		},
+		//@vuese
+		//Subreddit is marked as NSFW
 		nsfw: {
 			type: Boolean,
 			default: false,
@@ -520,27 +526,39 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//If subreddit has a description
 		emptyDescription() {
 			return (
 				!this.communityDescriptionProp || this.communityDescriptionProp === ''
 			);
 		},
+		//@vuese
+		//If subreddit has a main topic
 		topicChosen() {
 			return this.communityTopicProp;
 		},
+		//@vuese
+		//If subtopics list is not empty
 		subtopicChosen() {
 			return (
 				this.subtopicsToShow.length !== 0 ||
 				(this.subtopicsToShow.length === 0 && this.isSubtopicsSaved === false)
 			);
 		},
+		//@vuese
+		//Number of added subtopics
 		subtopicsCount() {
 			return this.subtopicsToShow.length;
 		},
+		//@vuese
+		//Toggle favourite button text
 		favouriteText() {
 			if (!this.isFavourite) return 'Add To Favorites';
 			else return 'Remove From Favorites';
 		},
+		//@vuese
+		//Subreddit date of creation
 		communityCreationDate() {
 			//extract year
 			let year = this.communityDate.substring(0, 4);
@@ -566,6 +584,8 @@ export default {
 
 			return month + ' ' + day + ', ' + year;
 		},
+		//@vuese
+		//If subreddit type is not public
 		notPublic() {
 			return this.communityType !== 'Public';
 		},
@@ -603,6 +623,8 @@ export default {
 				});
 			}
 
+			//@vuese
+			//emit fires to reload subreddit details
 			this.$emit('reload');
 
 			//hide list
@@ -645,6 +667,8 @@ export default {
 			setTimeout(() => {
 				this.doneDesc = false;
 			}, 1000);
+			//@vuese
+			//emit fires to reload subreddit details
 			this.$emit('reload');
 		},
 		//@vuese
@@ -670,6 +694,8 @@ export default {
 			setTimeout(() => {
 				this.doneTopic = false;
 			}, 1000);
+			//@vuese
+			//emit fires to reload subreddit details
 			this.$emit('reload');
 		},
 		//@vuese
@@ -719,7 +745,6 @@ export default {
 			// this.savedCommunitySubtopics = this.communitySubtopics;
 			//send request
 
-			console.log(this.subtopicsToShow);
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('community/AddSubTopic', {
 				subtopics: this.subtopicsToShow,
@@ -731,6 +756,9 @@ export default {
 			setTimeout(() => {
 				this.doneSubtopic = false;
 			}, 1000);
+
+			//@vuese
+			//emit fires to reload subreddit details
 			this.$emit('reload');
 		},
 		//@vuese
@@ -757,6 +785,9 @@ export default {
 				this.toogleSaveDialog();
 			}
 		},
+		//@vuese
+		//Toggle dialogs when save subtopics
+		//@arg no argument
 		saveSubtopicsInDialog() {
 			this.saveSubtopics();
 			this.toogleSaveDialog();

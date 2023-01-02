@@ -57,12 +57,12 @@ export default {
 	methods: {
 		/**
 		 * @vuese
-		 * get abbreviation of the number (convert to K,M)
+		 * get abbreviation of the number (convert to K,M)(Not Used)
 		 * @arg num the number to be converted
 		 */
 		getAbbreviationsOfNumber(num) {
 			var abbreviate = require('number-abbreviate');
-			console.log(num);
+			//console.log(num);
 			return abbreviate(num, 2); // => 1k
 		},
 	},

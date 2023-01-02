@@ -5,7 +5,7 @@ export default {
 	/**
 	 * Action for creating a new subreddit.
 	 * @action createSubreddit=createdSuccessfully
-	 * @param {Object} contains new subreddit data and base url.
+	 * @param {Object} contains new subreddit data (name, type, category, NSFW) and base url.
 	 * @returns {void} */
 	async createSubreddit(context, payload) {
 		context.commit('createdSuccessfully', false);
@@ -107,9 +107,9 @@ export default {
 		context.commit('setSavedCategories', responseData);
 	},
 	/**
-	 *  Action for toggling add a subreddit to favourite.
-	 * @action ToggleFavourite
-	 * @param {Object} contains base url
+	 *  Action for adding a subreddit to favourite.
+	 * @action addToFavourite
+	 * @param {Object} contains subreddit name and base url
 	 * @returns {void}
 	 */
 	async addToFavourite(_, payload) {
@@ -135,6 +135,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 *  Action for removing a subreddit from favourite.
+	 * @action removeFromFavourite
+	 * @param {Object} contains subreddit name and base url
+	 * @returns {void}
+	 */
 	async removeFromFavourite(_, payload) {
 		const baseurl = payload.baseurl;
 
@@ -161,7 +167,7 @@ export default {
 	/**
 	 *  Action for adding a description for a specific subreddit.
 	 * @action AddDescription
-	 * @param {Object} contains description and base url.
+	 * @param {Object} contains description, subreddit name and base url.
 	 * @returns {void}
 	 */
 	async AddDescription(_, payload) {
@@ -179,7 +185,7 @@ export default {
 				body: JSON.stringify(description),
 			}
 		);
-		console.log(payload.description);
+		//console.log(payload.description);
 		const responseData = await response.json();
 
 		if (!response.ok) {
@@ -192,7 +198,7 @@ export default {
 	/**
 	 * Action for adding a main topic for a specific subreddit.
 	 * @action AddMainTopic
-	 * @param {Object} contains topic and base url.
+	 * @param {Object} contains topic, subreddit name and base url.
 	 * @returns {void}
 	 */
 	async AddMainTopic(_, payload) {
@@ -223,7 +229,7 @@ export default {
 	/**
 	 * Action for adding subtopics for a specific subreddit.
 	 * @action AddSubTopic
-	 * @param {Object} contains subtopics array and base url.
+	 * @param {Object} contains subtopics array, subreddit name and base url.
 	 * @returns {void}
 	 */
 	async AddSubTopic(_, payload) {
@@ -259,13 +265,13 @@ export default {
 	/**
 	 * Action for fetching a specific subreddit's details.
 	 * @action getSubreddit=setSubreddit
-	 * @param {Object} contains base url
+	 * @param {Object} contains subreddit name and base url
 	 * @returns {void}
 	 */
 	async getSubreddit(context, payload) {
 		context.commit('notFound', false);
 		const baseurl = payload.baseurl;
-		// console.log(payload);
+		// //console.log(payload);
 		const response = await fetch(baseurl + `/r/${payload.subredditName}`, {
 			method: 'GET',
 			headers: {
@@ -282,14 +288,14 @@ export default {
 		// 	throw error;
 		// }
 
-		// console.log(response.status);
+		// //console.log(response.status);
 		if (response.status == 200) {
 			context.commit('setSubreddit', responseData);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
 		} else if (response.status == 404) {
-			// console.log('notttttttt');
+			// //console.log('notttttttt');
 			context.commit('notFound', true);
 			const error = new Error(responseData.error || 'Bad Request');
 			throw error;
@@ -388,7 +394,7 @@ export default {
 	/**
 	 * Action for fetching posts of a specific subreddit.
 	 * @action fetchSubredditPosts=setPosts
-	 * @param {Object} contains posts sorting type and base url.
+	 * @param {Object} contains posts sorting type, subreddit name and base url.
 	 * @returns {void}
 	 */
 	async fetchSubredditPosts(context, payload) {
@@ -417,9 +423,15 @@ export default {
 		}
 
 		context.commit('setPosts', responseData['children']);
-		console.log(responseData);
+		//console.log(responseData);
 	},
 	///////////////// moderation community norhan //////////////////
+	/**
+	 * Action for getting suggested topics for a specific subreddit.
+	 * @action getsuggestedTopics=setTopics
+	 * @param {Object} contains subreddit name and base url.
+	 * @returns {void}
+	 */
 	async getsuggestedTopics(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
@@ -434,7 +446,7 @@ export default {
 		const responseData = await response.json();
 		if (response.status == 200) {
 			context.commit('setTopics', responseData.communityTopics);
-			console.log(responseData.children);
+			//console.log(responseData.children);
 		} else if (response.status == 400) {
 			const error = new Error(responseData.error);
 			throw error;
@@ -445,6 +457,12 @@ export default {
 		return response.status;
 	},
 	////////// Subreddit pictures //////////
+	/**
+	 * Action for adding a picture for a specific subreddit.
+	 * @action addSubredditPicture=setSubredditPicture
+	 * @param {Object} contains subreddit picture, subreddit name and base url.
+	 * @returns {void}
+	 */
 	async addSubredditPicture(context, payload) {
 		const file = payload.file;
 		const baseurl = payload.baseurl;
@@ -465,7 +483,7 @@ export default {
 			localStorage.setItem('response', response.status);
 		} else if (response.status == 400) {
 			const error = new Error(responseData);
-			console.log(responseData);
+			//console.log(responseData);
 			throw error;
 		} else {
 			console.log(error);
@@ -479,6 +497,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Action for adding a banner image for a specific subreddit.
+	 * @action addSubredditBanner=setSubredditBanner
+	 * @param {Object} contains subreddit banner image, subreddit name and base url.
+	 * @returns {void}
+	 */
 	async addSubredditBanner(context, payload) {
 		const file = payload.file;
 		const baseurl = payload.baseurl;
@@ -499,7 +523,7 @@ export default {
 			localStorage.setItem('response', response.status);
 		} else if (response.status == 400) {
 			const error = new Error(responseData);
-			console.log(responseData);
+			//console.log(responseData);
 			throw error;
 		} else {
 			console.log(error);

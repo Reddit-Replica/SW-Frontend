@@ -1,4 +1,13 @@
+/**
+ * @module ModeratorsActions
+ */
 export default {
+	/**
+	 * Make a request to get all moderators of the subreddit ,
+	 * @action loadListOfAllModerators=loadListOfAllModerators
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfAllModerators(context, payload) {
 		const baseurl = payload.baseurl;
 		const response = await fetch(
@@ -37,6 +46,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get moderators of the subreddit ,
+	 * @action loadListOfModerators=loadListOfModerators
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfModerators(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -96,6 +111,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get invited moderators of the subreddit ,
+	 * @action loadListOfInvitedModerators=loadListOfInvitedModerators
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfInvitedModerators(context, payload) {
 		const beforeMod = payload.beforeMod;
 		const afterMod = payload.afterMod;
@@ -155,6 +176,12 @@ export default {
 		}
 	},
 
+	/**
+	 * handle time ,
+	 * @action handleTime=handleTime
+	 * @param {object} payload An object contains time I want to calculate.
+	 * @returns {void}
+	 */
 	handleTime(context, payload) {
 		var currentDate = new Date();
 		var returnValue = '';
@@ -177,6 +204,13 @@ export default {
 	},
 
 	/////////////////////APPROVED/////////////////////
+
+	/**
+	 * Make a request to get approved users of the subreddit ,
+	 * @action loadListOfApproved=loadListOfApproved
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfApproved(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -235,6 +269,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to approve user
+	 * @action approveUser=approveUser
+	 * @param {object} payload An object contains baseurl, approved user info.
+	 * @returns {void}
+	 */
 	async approveUser(context, payload) {
 		context.commit('approveUserSuccessfully', false);
 		const approve = {
@@ -276,6 +316,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to remove user
+	 * @action removeApprove=removeApprove
+	 * @param {object} payload An object contains baseurl, removed user info
+	 * @returns {void}
+	 */
 	async removeApprove(context, payload) {
 		context.commit('removeApproveSuccessfully', false);
 		const remove = {
@@ -316,6 +362,13 @@ export default {
 	},
 
 	/////////////////////MUTED/////////////////////
+
+	/**
+	 * Make a request to get muted users of the subreddit ,
+	 * @action loadListOfMuted=loadListOfMuted
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfMuted(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -374,6 +427,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to mute user
+	 * @action muteUser=muteUser
+	 * @param {object} payload An object contains baseurl, muted user info
+	 * @returns {void}
+	 */
 	async muteUser(context, payload) {
 		context.commit('muteUserSuccessfully', false);
 		let mute = {};
@@ -423,6 +482,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to unmute user
+	 * @action unmuteUser=unmuteUser
+	 * @param {object} payload An object contains baseurl, unmuted user info
+	 * @returns {void}
+	 */
 	async unmuteUser(context, payload) {
 		context.commit('unmuteUserSuccessfully', false);
 		const approve = {
@@ -466,6 +531,12 @@ export default {
 
 	/////////////////////LEAVE MOD/////////////////////
 
+	/**
+	 * Make a request to leave mod
+	 * @action leaveMod=leaveMod
+	 * @param {object} payload An object contains baseurl, subreddit name user want to leave
+	 * @returns {void}
+	 */
 	async leaveMod(context, payload) {
 		context.commit('leaveModSuccessfully', false);
 		const mod = {
@@ -506,6 +577,12 @@ export default {
 
 	/////////////////////INVITE MOD/////////////////////
 
+	/**
+	 * Make a request to invited mod
+	 * @action inviteMod=inviteMod
+	 * @param {object} payload An object contains baseurl, inivted user info
+	 * @returns {void}
+	 */
 	async inviteMod(context, payload) {
 		context.commit('inviteModSuccessfully', false);
 		const mod = {
@@ -550,6 +627,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to cancel Invitation
+	 * @action cancelInvitation=cancelInvitation
+	 * @param {object} payload An object contains baseurl, canceled user info
+	 * @returns {void}
+	 */
 	async cancelInvitation(context, payload) {
 		context.commit('cancelSuccessfully', false);
 		const cancel = {
@@ -589,6 +672,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to accept Invitation
+	 * @action acceptInvitation=acceptInvitation
+	 * @param {object} payload An object contains baseurl, accepted user info
+	 * @returns {void}
+	 */
 	async acceptInvitation(context, payload) {
 		context.commit('acceptSuccessfully', false);
 		const accept = {
@@ -627,7 +716,12 @@ export default {
 	},
 
 	//////////////////////SPAM////////////////////////
-
+	/**
+	 * action for Spam on the Subreddit
+	 * @action  loadListOfSpams
+	 * @param {Object} payload subreddit_Name,Sort,Type(Comments,Posts) .
+	 * @returns {void}
+	 */
 	async loadListOfSpams(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -659,10 +753,10 @@ export default {
 			}
 		);
 		const responseData = await response.json();
-		// console.log(responseData);
+		// //console.log(responseData);
 		const spams = [];
-		console.log('responseData[0]');
-		console.log(responseData);
+		//console.log('responseData[0]');
+		//console.log(responseData);
 		if (response.status == 200) {
 			let before, after;
 			before = '';
@@ -729,7 +823,12 @@ export default {
 			throw error;
 		}
 	},
-
+	/**
+	 * action for approve posts on the Subreddit from moderator.
+	 * @action  EditedComments
+	 * @param {Object} payload Type(post, Comment) and the Id of it .
+	 * @returns {void}
+	 */
 	async approvedSpam(context, payload) {
 		context.commit('approveSuccessfully', false);
 		const spam = {
@@ -770,6 +869,12 @@ export default {
 	},
 	//////////////////////RULES////////////////////////
 
+	/**
+	 * Make a request to add rule
+	 * @action addRule=addRule
+	 * @param {object} payload An object contains baseurl, rule info
+	 * @returns {void}
+	 */
 	async addRule(context, payload) {
 		context.commit('addRuleSuccessfully', false);
 		const newRule = {
@@ -816,6 +921,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get rules of the subreddit ,
+	 * @action loadListOfRules=loadListOfRules
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfRules(context, payload) {
 		const baseurl = payload.baseurl;
 		/////////////////////should be localStorage.getItem('accessToken');/////////////////////
@@ -861,6 +972,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to update rule
+	 * @action updateRule=updateRule
+	 * @param {object} payload An object contains baseurl, updated rule info
+	 * @returns {void}
+	 */
 	async updateRule(context, payload) {
 		context.commit('updateRuleSuccessfully', false);
 		const updatedRule = {
@@ -906,6 +1023,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to delete rule
+	 * @action updateRule=updateRule
+	 * @param {object} payload An object contains baseurl, deleted rule info
+	 * @returns {void}
+	 */
 	async deleteRule(context, payload) {
 		context.commit('deleteRuleSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -943,6 +1066,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to update rule order
+	 * @action updateRulesOrder=updateRulesOrder
+	 * @param {object} payload An object contains baseurl, updated rule order info
+	 * @returns {void}
+	 */
 	async updateRulesOrder(context, payload) {
 		context.commit('updateRulesSuccessfully', false);
 		const rulesOrder = [];
@@ -994,6 +1123,12 @@ export default {
 
 	//////////////////////FLAIR////////////////////////
 
+	/**
+	 * Make a request to get flairs of the subreddit ,
+	 * @action loadListOfFlairs=loadListOfFlairs
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfFlairs(context, payload) {
 		const baseurl = payload.baseurl;
 		/////////////////////should be localStorage.getItem('accessToken');/////////////////////
@@ -1042,6 +1177,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to add flair
+	 * @action addFlair=addFlair
+	 * @param {object} payload An object contains baseurl, flair info
+	 * @returns {void}
+	 */
 	async addFlair(context, payload) {
 		context.commit('addFlairSuccessfully', false);
 		const newFlair = {
@@ -1091,6 +1232,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to update flair
+	 * @action updateFlair=updateFlair
+	 * @param {object} payload An object contains baseurl, updated flair info
+	 * @returns {void}
+	 */
 	async updateFlair(context, payload) {
 		context.commit('updateFlairSuccessfully', false);
 		const updatedFlair = {
@@ -1140,6 +1287,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to delete flair
+	 * @action deleteFlair=deleteFlair
+	 * @param {object} payload An object contains baseurl, deleted flair info
+	 * @returns {void}
+	 */
 	async deleteFlair(context, payload) {
 		context.commit('deleteFlairSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -1178,6 +1331,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to update flairs order
+	 * @action updateFlairsOrder=updateFlairsOrder
+	 * @param {object} payload An object contains baseurl, updated flairs order info
+	 * @returns {void}
+	 */
 	async updateFlairsOrder(context, payload) {
 		context.commit('updateFlairsSuccessfully', false);
 		const flairsOrder = [];
@@ -1229,6 +1388,12 @@ export default {
 
 	//////////////////////BAN////////////////////////
 
+	/**
+	 * Make a request to ban user
+	 * @action banUser=banUser
+	 * @param {object} payload An object contains baseurl, ban user info
+	 * @returns {void}
+	 */
 	async banUser(context, payload) {
 		context.commit('banUserSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -1272,6 +1437,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to unban user
+	 * @action unBanUser=unBanUser
+	 * @param {object} payload An object contains baseurl, unban user info
+	 * @returns {void}
+	 */
 	async unBanUser(context, payload) {
 		context.commit('unBanUserSuccessfully', false);
 		const baseurl = payload.baseurl;
@@ -1312,6 +1483,12 @@ export default {
 		}
 	},
 
+	/**
+	 * Make a request to get banned users of the subreddit ,
+	 * @action loadListOfBanned=loadListOfBanned
+	 * @param {object} payload An object contains baseurl, after or before if there exiest.
+	 * @returns {void}
+	 */
 	async loadListOfBanned(context, payload) {
 		const baseurl = payload.baseurl;
 		const beforeMod = payload.beforeMod;
@@ -1373,6 +1550,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Unmoderated Posts and Comments
+	 * @action  unModerated
+	 * @param {Object} payload subreddit_Name ,Type of sorting.
+	 * @returns {void}
+	 */
 	async unModerated(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
@@ -1437,6 +1620,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Edited posts on the Subreddit
+	 * @action  EditedPosts
+	 * @param {Object} payload subreddit_Name, Sort type.
+	 * @returns {void}
+	 */
 	async EditedPosts(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
@@ -1501,6 +1690,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Edited Comments on the Subreddit
+	 * @action  EditedComments
+	 * @param {Object} payload subreddit_Name .
+	 * @returns {void}
+	 */
 	async EditedComments(context, payload) {
 		const baseurl = payload.baseurl;
 		const sub = payload.subredditName;
@@ -1557,6 +1752,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * Action for fetchtrafficStatus
+	 * @action  fetchtrafficStatus
+	 * @param {Object} payload subreddit and base url.
+	 * @returns {void}
+	 */
 
 	async fetchtrafficStatus(context, payload) {
 		const baseurl = payload.baseurl;
@@ -1572,7 +1773,7 @@ export default {
 		);
 		const responseData = await response.json();
 		if (response.status == 200) {
-			console.log(response);
+			//console.log(response);
 		} else if (response.status == 401) {
 			const error = new Error(responseData.error);
 			console.log(error);
@@ -1582,10 +1783,16 @@ export default {
 			console.log(error);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		context.commit('settrafficStatus', responseData);
 		return response.status;
 	},
+	/**
+	 * action for Remove a post or comment from Moderator.
+	 * @action  removeFunction
+	 * @param {Object} payload Post_ID .
+	 * @returns {void}
+	 */
 	async removeFunction(context, payload) {
 		const baseurl = payload.baseurl;
 		// const id = payload.id;
@@ -1627,6 +1834,12 @@ export default {
 			throw error;
 		}
 	},
+	/**
+	 * action for The Vote for post or comment.
+	 * @action  vote
+	 * @param {Object} payload Id of post , type and direction of post.
+	 * @returns {void}
+	 */
 	async vote(_, payload) {
 		const vote = {
 			id: payload.id,
@@ -1645,7 +1858,7 @@ export default {
 		});
 
 		const responseData = await response.json();
-		console.log(responseData);
+		//console.log(responseData);
 		if (!response.ok) {
 			const error = new Error(
 				responseData.message || 'Failed to send request.'

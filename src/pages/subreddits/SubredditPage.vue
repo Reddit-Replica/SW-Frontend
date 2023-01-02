@@ -137,10 +137,14 @@ export default {
 		TheSpinner,
 	},
 	props: {
+		//@vuese
+		//Subreddit name
 		subredditName: {
 			type: String,
 			default: '',
 		},
+		//@vuese
+		//First time to show subreddit page after creating it
 		firstCreated: {
 			type: Boolean,
 			default: false,
@@ -159,20 +163,30 @@ export default {
 		};
 	},
 	computed: {
+		//@vuese
+		//Show first welcoming dialog
 		showDialog() {
 			return this.firstTimeCreated && this.showFirstDialog;
 		},
+		//@vuese
+		//Subreddit's nick name
 		nickname() {
 			if (!this.subreddit.nickname) return this.subreddit.title;
 			else return this.subreddit.nickname;
 		},
+		//@vuese
+		//username of logged in user
 		userName() {
 			return localStorage.getItem('userName');
 		},
+		//@vuese
+		//If subreddit has no rules
 		noRules() {
 			return this.rules.length === 0;
 		},
 	},
+	//@vuese
+	//load all details of subreddit(details, topics, moderators, rules, posts)
 	async beforeMount() {
 		//fetch subreddit details
 		this.loading = true;
@@ -191,6 +205,8 @@ export default {
 		this.loading = false;
 	},
 	watch: {
+		//@vuese
+		//watch router to sort posts based on selected sorting type
 		'$route.params.title': {
 			handler: function () {
 				this.fetchSubredditPosts(this.$route.params.title);
@@ -198,11 +214,17 @@ export default {
 		},
 	},
 	methods: {
+		//@vuese
+		//reload subreddit's posts based on selected sorting type
+		//@arg no argument
 		reloadPosts() {
 			let title = this.$route.params.title;
 			if (title == null) title = 'hot';
 			this.fetchSubredditPosts(title);
 		},
+		//@vuese
+		//load subreddit's details
+		//@arg no argument
 		async getSubreddit() {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
@@ -212,7 +234,7 @@ export default {
 					token: accessToken,
 				});
 				this.subreddit = this.$store.getters['community/getSubreddit'];
-				//console.log(this.subreddit);
+				////console.log(this.subreddit);
 			} catch (err) {
 				console.log(err);
 				if (this.$store.getters['community/notFound']) {
@@ -220,6 +242,9 @@ export default {
 				}
 			}
 		},
+		//@vuese
+		//load subreddit's suggested topics
+		//@arg no argument
 		async getTopics() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('community/getsuggestedTopics', {
@@ -229,6 +254,9 @@ export default {
 			});
 			this.topics = this.$store.getters['community/getTopics'];
 		},
+		//@vuese
+		//load subreddit's moderators
+		//@arg no argument
 		async getModerators() {
 			const accessToken = localStorage.getItem('accessToken');
 			await this.$store.dispatch('moderation/loadListOfModerators', {
@@ -238,6 +266,9 @@ export default {
 			});
 			this.moderators = this.$store.getters['moderation/listOfModerators'];
 		},
+		//@vuese
+		//load subreddit's rules
+		//@arg no argument
 		async getRules() {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
@@ -251,16 +282,25 @@ export default {
 			}
 			this.rules = this.$store.getters['moderation/listOfRules'];
 		},
+		//@vuese
+		//reload subreddit's details, rules and moderators
+		//@arg no argument
 		reloadPage() {
 			this.getSubreddit();
 			this.getRules();
 			this.getModerators();
 			// this.fetchSubredditPosts(this.$route.params.title);
 		},
+		//@vuese
+		//Hide first welcoming dialog
+		//@arg no argument
 		hideFirstDialog() {
 			this.showFirstDialog = false;
 			location.reload();
 		},
+		//@vuese
+		//Go to create post page
+		//@arg no argument
 		createPost() {
 			this.hideFirstDialog();
 			this.$router.push({
@@ -268,6 +308,9 @@ export default {
 				params: { subredditName: this.subredditName },
 			});
 		},
+		//@vuese
+		//fetch posts based on selected sorting type
+		//@arg no argument
 		async fetchSubredditPosts(title) {
 			try {
 				const accessToken = localStorage.getItem('accessToken');
@@ -285,6 +328,9 @@ export default {
 			this.posts = this.$store.getters['community/getPosts'];
 		},
 
+		//@vuese
+		//Check if current user is a moderator of the subreddit
+		//@arg no argument
 		checkIfModerator() {
 			const username = localStorage.getItem('userName');
 			const moderators = this.subreddit['moderators'];
@@ -298,9 +344,15 @@ export default {
 				this.isModerator = true;
 			}
 		},
+		//@vuese
+		//Push router to sort subreddit posts based on selected sorting type
+		//@arg no argument
 		changeRoute(title) {
 			this.$router.push(`/r/${this.subreddit.title}/${title}`);
 		},
+		//@vuese
+		//Push router to sort TOP subreddit posts based on selected sorting time
+		//@arg no argument
 		async changeRouteQueryParam(title) {
 			await this.$router.push({
 				path: `top`,

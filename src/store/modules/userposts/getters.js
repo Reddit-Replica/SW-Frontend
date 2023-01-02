@@ -3,6 +3,10 @@
  * @module UserPostsGetters
  * @type {object}
  * @getter {object} getUserPostData=postData Returns Object contain postData.
+ * @getter {object} getUserPinnedPostData=pinnedPostData.pinnedPosts Returns Object contain pinnedPosts.
+ * @getter {object} getInsightsData=insightsData Returns Object contain insightsData.
+ * @getter {object} getUserOverviewData=overviewData Returns Object contain overviewData.
+ * @getter {object} getUserSavedData=overviewData Returns Object contain overviewData.
  */
 export default {
 	getUserPostData(state) {

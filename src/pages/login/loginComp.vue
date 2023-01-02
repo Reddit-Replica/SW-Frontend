@@ -142,8 +142,8 @@ export default {
 			try {
 				await this.$store.dispatch('loginhandle', actionPayload);
 				const response = localStorage.getItem('response');
-				// // console.log(response);
-				// console.log(response);
+				// // //console.log(response);
+				// //console.log(response);
 				if (response == 200) {
 					await this.$store.dispatch('notifications/createNotificationToken', {
 						baseurl: this.$baseurl,

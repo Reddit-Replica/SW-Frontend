@@ -68,12 +68,15 @@ import SaveUnsavePopupMessage from '../../components/PostComponents/SaveUnsavePo
 export default {
 	async created() {
 		await this.getSettings();
-		console.log('after creation');
-		console.log(this.enableSpoiler);
-		console.log(this.allowImagesInComment);
+		//console.log('after creation');
+		//console.log(this.enableSpoiler);
+		//console.log(this.allowImagesInComment);
 		this.create = true;
 	},
 	computed: {
+		// @vuese
+		//return the sunreddit name
+		// @type string
 		subredditName() {
 			return this.$route.params.subredditName;
 		},
@@ -94,16 +97,24 @@ export default {
 		};
 	},
 	methods: {
+		// @vuese
+		// get enable Spoiler
+		// @arg The argument is a Boolean value representing enable Spoiler
 		getenableSpoiler(value) {
 			this.enableSpoiler = value;
-			console.log('this.enableSpoiler');
-			console.log(this.enableSpoiler);
+			//console.log('this.enableSpoiler');
+			//console.log(this.enableSpoiler);
 		},
+		// @vuese
+		// get allow Images In Comment
+		// @arg The argument is a Boolean value representing allow Images In Comment
 		getallowImagesInComment(value) {
 			this.allowImagesInComment = value;
-			console.log('this.allowImagesInComment');
-			console.log(this.allowImagesInComment);
+			//console.log('this.allowImagesInComment');
+			//console.log(this.allowImagesInComment);
 		},
+		// @vuese
+		//send a request to set the settings
 		async saveChanges() {
 			const actionPayload = {
 				communityName: this.subredditName,
@@ -112,15 +123,15 @@ export default {
 				suggestedSort: this.suggestedSort,
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/postandcommentsSettings',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 					this.doneSuccessfully('changed');
 				}
 			} catch (err) {
@@ -128,21 +139,22 @@ export default {
 				console.log(err);
 			}
 		},
-
+		// @vuese
+		//send a request to get the settings
 		async getSettings() {
 			const actionPayload = {
 				communityName: this.subredditName,
 				baseurl: this.$baseurl,
 			};
-			console.log(actionPayload);
+			//console.log(actionPayload);
 			try {
 				const response = await this.$store.dispatch(
 					'setting/fetcpostandcommentsSettings',
 					actionPayload
 				);
 				if (response == 200) {
-					console.log(response);
-					console.log('الحمد لله زى الفل');
+					//console.log(response);
+					//console.log('الحمد لله زى الفل');
 				}
 			} catch (err) {
 				this.error = err;
@@ -151,14 +163,17 @@ export default {
 			this.setting = await this.$store.getters[
 				'setting/getpostandcommentsSettings'
 			];
-			console.log(this.setting);
+			//console.log(this.setting);
 			this.enableSpoiler = this.setting.enableSpoiler;
 			this.allowImagesInComment = this.setting.allowImagesInComment;
 			this.suggestedSort = this.setting.suggestedSort;
-			console.log(this.enableSpoiler);
-			console.log(this.allowImagesInComment);
+			//console.log(this.enableSpoiler);
+			//console.log(this.allowImagesInComment);
 		},
 		////////////////////////////////
+		// @vuese
+		// Used to show to call save popup
+		// @arg the argument is the title used in show popup
 		doneSuccessfully(title) {
 			this.savePost(title);
 		},

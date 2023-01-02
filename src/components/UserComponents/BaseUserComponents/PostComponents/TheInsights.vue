@@ -41,6 +41,8 @@ export default {
 			getInsightsData: {},
 		};
 	},
+	// @vuese
+	// id of the post to get its insights data
 	props: {
 		id: {
 			type: String,
@@ -48,11 +50,21 @@ export default {
 		},
 	},
 	emits: ['finishLoading', 'startLoading'],
+	/**
+	 * @vuese
+	 * at creation we request the insights data
+	 * @arg no arg
+	 */
 	async created() {
-		// console.log('req-insights');
+		// //console.log('req-insights');
 		await this.RequestInsightsData(this.id);
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * request the insights data for a certain post
+		 * @arg id arg
+		 */
 		async RequestInsightsData(id) {
 			this.$emit('startLoading', 5);
 			let response = null;
@@ -67,7 +79,7 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			this.$emit('finishLoading', 5);
-			console.log('dd', response);
+			//console.log('dd', response);
 			this.getInsightsData = response;
 		},
 	},
@@ -78,7 +90,7 @@ export default {
 		 * @arg no arg
 		 */
 		// getInsightsData() {
-		// 	console.log(this.$store.getters['userposts/getInsightsData']);
+		// 	//console.log(this.$store.getters['userposts/getInsightsData']);
 		// 	return this.$store.getters['userposts/getInsightsData'].insightsData;
 		// },
 	},

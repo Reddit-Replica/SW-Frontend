@@ -540,13 +540,12 @@ export default {
 		async '$route.params.postId'(value) {
 			if (value != undefined) {
 				await this.getPostDetails();
-				console.log('userName');
 				//if (this.$route.params.userName != undefined) this.RequestUserData();
 				if (this.postDetails.subreddit == undefined)
 					await this.RequestUserData();
 				this.fetchPostComments();
 				// document.getElementById('test').addEventListener('scroll', () => {
-				// 	console.log('scroll');
+				// 	//console.log('scroll');
 				// });
 			}
 		},
@@ -555,18 +554,17 @@ export default {
 	//before mount fetch posts according to type of sorting
 	async beforeMount() {
 		await this.getPostDetails();
-		console.log('userName');
 		//if (this.$route.params.userName != undefined) this.RequestUserData();
 		if (this.postDetails.subreddit == undefined) await this.RequestUserData();
 		this.fetchPostComments();
 		document.getElementById('test').addEventListener('scroll', () => {
-			console.log('scroll');
+			// //console.log('scroll');
 		});
 	},
 	methods: {
 		click() {},
 		handleScroll: function () {
-			console.log('scroll');
+			// //console.log('scroll');
 			if (window.scrollY > 50) {
 				this.fetchPostComments();
 			}
@@ -586,7 +584,6 @@ export default {
 			}
 		},
 		async fetchPostComments() {
-			console.log(this.$route.query.sort);
 			try {
 				await this.$store.dispatch('comments/fetchPostComments', {
 					baseurl: this.$baseurl,
@@ -600,10 +597,8 @@ export default {
 			}
 			this.userComments =
 				this.$store.getters['comments/getListOfComments'].children;
-			console.log(this.userComments);
 		},
 		async RequestUserData() {
-			console.log('inside request user data in post comment');
 			let responseData;
 			try {
 				responseData = await this.$store.dispatch('user/getUserTempData', {
@@ -614,7 +609,6 @@ export default {
 				this.error = error.message || 'Something went wrong';
 			}
 			if (responseData != null) this.userData = responseData;
-			console.log(this.userData);
 		},
 		renderingHTML() {
 			var QuillDeltaToHtmlConverter =
@@ -635,7 +629,6 @@ export default {
 		newComment(comment) {
 			if (localStorage.getItem('userName') != null) {
 				this.userComments.unshift(comment);
-				console.log(comment);
 			} else {
 				this.$router.replace('/login');
 			}
@@ -664,8 +657,6 @@ export default {
 				localStorage.getItem('userName') == this.postDetails.postedBy
 					? 'profile'
 					: 'user';
-			console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah');
-			console.log(this.postDetails);
 		},
 		//@vuese
 		//change the order of comments listing according to parameter passed to it

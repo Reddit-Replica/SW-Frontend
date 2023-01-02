@@ -37,7 +37,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -45,6 +45,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more user posts data,
+	 * @action getUserMorePostData=setUserMorePostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMorePostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/posts`);
@@ -74,7 +80,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -82,9 +88,15 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get  user pinned posts data,
+	 * @action getUserPinnedPostData=setUserPinnedPostData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getUserPinnedPostData(context, payload) {
 		const baseurl = payload.baseurl;
-		// console.log('pinned-post-body', payload.body);
+		// //console.log('pinned-post-body', payload.body);
 		// let url = new URL(baseurl + `/pinned-posts`);
 		// let params = {
 		// 	username: payload.body.username,
@@ -93,7 +105,7 @@ export default {
 		// 	url.searchParams.append(key, params[key])
 		// );
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
-		console.log('stst');
+		//console.log('stst');
 		const response = await fetch(
 			baseurl + `/pinned-posts?username=${payload.body.username}`,
 			{
@@ -112,7 +124,7 @@ export default {
 			throw error;
 			// console.log(error);
 		}
-		console.log('getUserPinnedPostData', responseData);
+		//console.log('getUserPinnedPostData', responseData);
 		if (response.status == 200)
 			context.commit('setUserPinnedPostData', {
 				responseData,
@@ -120,8 +132,14 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get overview posts data,
+	 * @action getUserOverviewData=setUserOverviewData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserOverviewData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
@@ -135,7 +153,7 @@ export default {
 		// Object.keys(params).forEach((key) =>
 		// 	url.searchParams.append(key, params[key])
 		// );
-		// console.log(url);
+		// //console.log(url);
 		// const response = await fetch(baseurl + `/userpostdata`); // mock server
 		const response = await fetch(
 			baseurl +
@@ -154,7 +172,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('overvie Actions', responseData);
+		//console.log('overvie Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserOverviewData', {
 				responseData,
@@ -162,8 +180,14 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more overview posts data,
+	 * @action getUserMoreOverviewData=setUserMoreOverviewData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreOverviewData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/overview`);
@@ -195,7 +219,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('overvie Actions', responseData);
+		//console.log('overvie Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserMoreOverviewData', {
 				responseData,
@@ -203,8 +227,14 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get  saved posts data,
+	 * @action getUserSavedData=setUserOverviewData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserSavedData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
@@ -235,7 +265,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('saved Actions', responseData);
+		//console.log('saved Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserOverviewData', {
 				responseData,
@@ -243,8 +273,14 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more saved posts data,
+	 * @action getUserMoreSavedData=setUserMoreOverviewData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreSavedData(context, payload) {
-		console.log('overvie Actions');
+		//console.log('overvie Actions');
 
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/saved`);
@@ -275,7 +311,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log('saved Actions', responseData);
+		//console.log('saved Actions', responseData);
 		if (response.status == 200)
 			context.commit('setUserMoreOverviewData', {
 				responseData,
@@ -283,6 +319,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get history posts data,
+	 * @action getUserHistoryPostData=setUserPostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserHistoryPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/history`);
@@ -313,7 +355,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -321,6 +363,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more history posts data,
+	 * @action getUserMoreHistoryPostData=setUserMorePostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreHistoryPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/history`);
@@ -351,7 +399,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -359,6 +407,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get upvoted posts data,
+	 * @action getUserUpVotedPostData=setUserMorePostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserUpVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
@@ -389,7 +443,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -397,6 +451,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more upvoted posts data,
+	 * @action getUserMoreUpVotedPostData=setUserMorePostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreUpVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/upvoted`);
@@ -428,7 +488,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -436,6 +496,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get  downvoted posts data,
+	 * @action getUserDownVotedPostData=setUserPostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserDownVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
@@ -466,7 +532,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -474,6 +540,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more downvoted posts data,
+	 * @action getUserMoreDownVotedPostData=setUserMorePostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreDownVotedPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/downvoted`);
@@ -505,7 +577,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserMorePostData', {
 				responseData,
@@ -513,6 +585,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get  hidden posts data,
+	 * @action getUserHiddenPostData=setUserPostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserHiddenPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
@@ -543,7 +621,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setUserPostData', {
 				responseData,
@@ -551,6 +629,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get more hidden posts data,
+	 * @action getUserMoreHiddenPostData=setMoreUserPostData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreHiddenPostData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/hidden`);
@@ -582,7 +666,7 @@ export default {
 			);
 			throw error;
 		}
-		console.log(responseData);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('setMoreUserPostData', {
 				responseData,
@@ -590,6 +674,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to get User Comments Data data,
+	 * @action getUserCommentsData=setUserCommentsData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/comments`);
@@ -627,6 +717,12 @@ export default {
 		});
 		return response.status;
 	},
+	/**
+	 * Make a request to  get User More Comments Data,
+	 * @action getUserMoreCommentsData=setUserMoreCommentsData
+	 * @param {object} payload An object contains baseurl and user name and query parameters sort,time,before,after,limit.
+	 * @returns {integer} return status Code
+	 */
 	async getUserMoreCommentsData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/user/${payload.userName}/comments`);
@@ -664,6 +760,12 @@ export default {
 		});
 		return response.status;
 	},
+	/**
+	 * Make a request to get Insights Data,
+	 * @action getInsightsData=setInsightsData
+	 * @param {object} payload An object contains baseurl and user name.
+	 * @returns {integer} return status Code
+	 */
 	async getInsightsData(context, payload) {
 		const baseurl = payload.baseurl;
 		// let url = new URL(baseurl + `/post-insights`);
@@ -697,6 +799,12 @@ export default {
 			});
 		return responseData;
 	},
+	/**
+	 * Make a request to approve Post Or Comment,
+	 * @action approvePostOrComment=ApprovePostOrComment || ApprovePostOverview || ApproveCommentOverview
+	 * @param {object} payload An object contains baseurl ,ApprovePostOrCommentData type post or comment and id of the post,username,page String overview or '' .
+	 * @returns {integer} return status Code
+	 */
 	async approvePostOrComment(context, payload) {
 		const ApprovePostOrCommentData = payload.ApprovePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
@@ -708,16 +816,16 @@ export default {
 			},
 			body: JSON.stringify(ApprovePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
-		console.log('commit');
+		//console.log(response.status);
+		//console.log(responseData);
+		//console.log('commit');
 		if (response.status == 200) {
 			if (ApprovePostOrCommentData.type == 'post') {
 				if (payload.page != 'overview')
@@ -736,6 +844,12 @@ export default {
 		}
 		return response.status;
 	},
+	/**
+	 * Make a request to remove Post Or Comment,
+	 * @action removePostOrComment=removePostOrComment || removePostOverview
+	 * @param {object} payload An object contains baseurl ,removePostOrCommentData type post or comment and id of the post , page String 'overview' or '' .
+	 * @returns {integer} return status Code
+	 */
 	async removePostOrComment(context, payload) {
 		const removePostOrCommentData = payload.removePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
@@ -747,15 +861,15 @@ export default {
 			},
 			body: JSON.stringify(removePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200 && removePostOrCommentData.type == 'post')
 			if (payload.page != 'overview')
 				context.commit('removePostOrComment', {
@@ -767,6 +881,12 @@ export default {
 				});
 		return response.status;
 	},
+	/**
+	 * Make a request to save Post Or CommentData,
+	 * @action savePostOrComment
+	 * @param {object} payload An object contains baseurl ,savePostOrCommentData type post or comment and id of the post .
+	 * @returns {integer} return status Code
+	 */
 	async savePostOrComment(context, payload) {
 		const savePostOrCommentData = payload.savePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
@@ -778,21 +898,27 @@ export default {
 			},
 			body: JSON.stringify(savePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if (response.status == 200)
 		// 	context.commit('rPostOrComment', {
 		// 		removePostOrCommentData,
 		// 	});
 		return response.status;
 	},
+	/**
+	 * Make a request to unsave Post Or CommentData,
+	 * @action unSavePostOrComment
+	 * @param {object} payload An object contains baseurl ,savePostOrCommentData type post or comment and id of the post .
+	 * @returns {integer} return status Code
+	 */
 	async unSavePostOrComment(context, payload) {
 		const savePostOrCommentData = payload.savePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
@@ -804,25 +930,30 @@ export default {
 			},
 			body: JSON.stringify(savePostOrCommentData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if (response.status == 200)
 		// 	context.commit('rPostOrComment', {
 		// 		removePostOrCommentData,
 		// 	});
 		return response.status;
 	},
-
+	/**
+	 * Make a request to lock UnLock Post Or Comment,
+	 * @action lockUnLockPostOrComment=lockUnLockPostOrComment || lockUnLockPostOverview
+	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock , page overview or not .
+	 * @returns {integer} return status Code
+	 */
 	async lockUnLockPostOrComment(context, payload) {
 		const lockUnlockData = payload.lockUnlockData; // id ,type
-		console.log(lockUnlockData);
+		//console.log(lockUnlockData);
 		const baseurl = payload.baseurl;
 		let response;
 		if (payload.key == 'lock') {
@@ -844,15 +975,15 @@ export default {
 				body: JSON.stringify(lockUnlockData),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
 			// );
 			// throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200 && lockUnlockData.type == 'post')
 			if (payload.page != 'overview')
 				context.commit('lockUnLockPostOrComment', {
@@ -866,9 +997,16 @@ export default {
 				});
 		return response.status;
 	},
+	/**
+	 * NOT USED YET
+	 * Make a request to mark UnMark Send Me Reply,
+	 * @action markUnMarkSendMeReply
+	 * @param {object} payload An object contains baseurl ,sendReplyData type post or comment and id of the post.
+	 * @returns {integer} return status Code
+	 */
 	async markUnMarkSendMeReply(context, payload) {
 		const sendReplyData = payload.sendReplyData; // id ,type
-		console.log(sendReplyData);
+		//console.log(sendReplyData);
 		const baseurl = payload.baseurl;
 		let response;
 		response = await fetch(baseurl + '/send-replies', {
@@ -880,21 +1018,28 @@ export default {
 			body: JSON.stringify(sendReplyData),
 		});
 
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
 			// );
 			// throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200)
 			context.commit('markUnMarkSendMeReply', {
 				sendReplyData,
 			});
 		return response.status;
 	},
+	/**
+	 * NOT USED YET
+	 * Make a request to lock UnLock Post Or Comment,
+	 * @action lockUnLockPostOrComment=lockUnLockPostOrComment || lockUnLockPostOverview
+	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock .
+	 * @returns {integer} return status Code
+	 */
 	async unlockPostOrComment(context, payload) {
 		const ApprovePostOrCommentData = payload.ApprovePostOrCommentData; // id ,type
 		const baseurl = payload.baseurl;
@@ -913,14 +1058,21 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('ApprovePostOrComment', {
 			ApprovePostOrCommentData,
 		});
 		return response.status;
 	},
+	/**
+	 * NOT USED YET
+	 * Make a request to mark Post As Spoiler,
+	 * @action markPostAsSpoiler=markPostAsSpoiler
+	 * @param {object} payload An object contains baseurl ,lockUnlockData type post or comment and id of the post, key lock or unlock .
+	 * @returns {integer} return status Code
+	 */
 	async markPostAsSpoiler(context, payload) {
 		const spoilerData = payload.spoilerData; // id of post
 		const baseurl = payload.baseurl;
@@ -939,14 +1091,21 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('markPostAsSpoiler', {
 			spoilerData,
 		});
 		return response.status;
 	},
+	/**
+	 * NOT USED YET
+	 * Make a request to mark Post As Spoiler,
+	 * @action unmarkPostAsSpoiler=unmarkPostAsSpoiler
+	 * @param {object} payload An object contains baseurl ,spoilerData  .
+	 * @returns {integer} return status Code
+	 */
 	async unmarkPostAsSpoiler(context, payload) {
 		const spoilerData = payload.spoilerData; // id of post
 		const baseurl = payload.baseurl;
@@ -965,14 +1124,20 @@ export default {
 			);
 			throw error;
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('unmarkPostAsSpoiler', {
 			spoilerData,
 		});
 		return response.status;
 	},
+	/**
+	 * Make a request to mark UnMark Post As Spoiler,
+	 * @action markUnMarkPostAsSpoiler=markUnMarkPostAsSpoiler || markUnMarkPostAsSpoilerOverview
+	 * @param {object} payload An object contains baseurl ,spoilerData  (id of post,type mark/unmark).
+	 * @returns {integer} return status Code
+	 */
 	async markUnMarkPostAsSpoiler(context, payload) {
 		const spoilerData = payload.spoilerData; // id of post
 		const baseurl = payload.baseurl;
@@ -996,15 +1161,15 @@ export default {
 				body: JSON.stringify(spoilerData),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		if (payload.page != 'overview')
 			context.commit('markUnMarkPostAsSpoiler', {
@@ -1016,6 +1181,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to mark un mark Post As NSFW,
+	 * @action markPostAsNSFW=markPostAsNSFW || markPostAsNSFWOverview
+	 * @param {object} payload An object contains baseurl ,nsfwData (type:mark/unmark,id of the post).
+	 * @returns {integer} return status Code
+	 */
 	async markPostAsNSFW(context, payload) {
 		const nsfwData = payload.nsfwData; // id of post
 		const baseurl = payload.baseurl;
@@ -1039,15 +1210,15 @@ export default {
 				body: JSON.stringify(nsfwData),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		if (payload.page != 'overview')
 			context.commit('markPostAsNSFW', {
@@ -1059,6 +1230,12 @@ export default {
 			});
 		return response.status;
 	},
+	/**
+	 * Make a request to pin Unpin Post,
+	 * @action pinUnpinPost=pinUnpinPost
+	 * @param {object} payload An object contains baseurl ,pinUnpinData(id,pin true or false)  .
+	 * @returns {integer} return status Code
+	 */
 	async pinUnpinPost(context, payload) {
 		const pinUnpinData = payload.pinUnpinData; // id of post pin boolean
 		const baseurl = payload.baseurl;
@@ -1070,21 +1247,27 @@ export default {
 			},
 			body: JSON.stringify(pinUnpinData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('pinUnpinPost', {
 			pinUnpinData,
 		});
 		return response.status;
 	},
+	/**
+	 * Make a request to hide Unhide Post,
+	 * @action hideUnhidePost
+	 * @param {object} payload An object contains baseurl ,hideUnhideData (id,key:hide or un unhide) .
+	 * @returns {integer} return status Code
+	 */
 	async hideUnhidePost(context, payload) {
 		const hideUnhideData = payload.hideUnhideData; // id of post pin boolean
 		const baseurl = payload.baseurl;
@@ -1108,24 +1291,30 @@ export default {
 				body: JSON.stringify({ id: hideUnhideData.id }),
 			});
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		// context.commit('pinUnpinPost', {
 		// 	pinUnpinData,
 		// });
 		return response.status;
 	},
+	/**
+	 * Make a request to mark Spam,
+	 * @action markSpam=markSpam || markSpamOverview
+	 * @param {object} payload An object contains baseurl ,markSpamData(id of the post,type post or comment , reason), username,page :overview or not  .
+	 * @returns {integer} return status Code
+	 */
 	async markSpam(context, payload) {
 		const markSpamData = payload.markSpamData; // id of post pin boolean
-		console.log('markSpamActions', markSpamData);
+		//console.log('markSpamActions', markSpamData);
 		const baseurl = payload.baseurl;
 		let response;
 		try {
@@ -1140,16 +1329,16 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		if (!response.ok) {
 			// const error = new Error(
 			// 	responseData.message || 'Failed to send request.'
 			// );
 			// throw error;
-			// console.log(responseData);
+			// //console.log(responseData);
 		}
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		if (response.status == 200 && markSpamData.type == 'post')
 			if (payload.page != 'overview')
 				context.commit('markSpam', {
@@ -1161,6 +1350,13 @@ export default {
 				});
 		return response.status;
 	},
+	/**
+	 * NOT USED YET
+	 * Make a request to unmark Spam,
+	 * @action unmarkSpam=unmarkSpam || unmarkSpamOverview
+	 * @param {object} payload An object contains baseurl ,unmarkSpamData  .
+	 * @returns {integer} return status Code
+	 */
 	async unmarkSpam(context, payload) {
 		const unmarkSpamData = payload.unmarkSpamData; // id of post pin boolean
 		const baseurl = payload.baseurl;
@@ -1172,15 +1368,15 @@ export default {
 			},
 			body: JSON.stringify(unmarkSpamData),
 		});
-		const responseData = await response.json();
+		// const responseData = await response.json();
 		// if (!response.ok) {
 		// 	const error = new Error(
 		// 		responseData.message || 'Failed to send request.'
 		// 	);
 		// 	throw error;
 		// }
-		console.log(response.status);
-		console.log(responseData);
+		//console.log(response.status);
+		//console.log(responseData);
 		// if(response.status == 200)
 		context.commit('unmarkSpam', {
 			payload,

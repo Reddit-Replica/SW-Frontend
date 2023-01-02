@@ -98,10 +98,10 @@ export default {
 		leftClick() {
 			this.lastLeftPic--;
 			this.lastRightPic++;
-			console.log('clicked');
+			//console.log('clicked');
 			this.indexShown++;
 			this.imagesShown.forEach((ele) => {
-				console.log(Number(ele.left) - 100);
+				//console.log(Number(ele.left) - 100);
 				ele.left = String(Number(ele.left) - 100);
 			});
 		},
@@ -111,9 +111,9 @@ export default {
 			this.lastRightPic--;
 			this.lastLeftPic++;
 			this.indexShown--;
-			console.log('clicked');
+			//console.log('clicked');
 			this.imagesShown.forEach((ele) => {
-				console.log(Number(ele.left) + 100);
+				//console.log(Number(ele.left) + 100);
 				ele.left = String(Number(ele.left) + 100);
 			});
 		},

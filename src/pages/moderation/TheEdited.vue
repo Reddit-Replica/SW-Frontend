@@ -50,11 +50,11 @@ export default {
 			return this.$route.params.subredditName;
 		},
 		EditedPosts() {
-			// console.log(this.$store.getters['moderation/EditedPosts']);
+			// //console.log(this.$store.getters['moderation/EditedPosts']);
 			return this.$store.getters['moderation/EditedPosts'];
 		},
 		EditedComments() {
-			console.log(this.$store.getters['moderation/EditedComments']);
+			//console.log(this.$store.getters['moderation/EditedComments']);
 			return this.$store.getters['moderation/EditedComments'];
 		},
 	},
@@ -68,7 +68,7 @@ export default {
 	},
 	methods: {
 		getdata(val) {
-			console.log(val);
+			//console.log(val);
 			if (val == 'Posts') {
 				this.comments == false;
 				this.posts == true;

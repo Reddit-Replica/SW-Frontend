@@ -29,8 +29,14 @@ export default {
 		BasePeople,
 	},
 	computed: {
+		/**
+		 * @vuese
+		 * Return Searched Users
+		 * @arg no arg
+		 * @type Object
+		 */
 		SearchedUsers() {
-			console.log(this.$store.getters['search/limitedUsers']);
+			//console.log(this.$store.getters['search/limitedUsers']);
 			return this.$store.getters['search/limitedUsers'];
 		},
 	},

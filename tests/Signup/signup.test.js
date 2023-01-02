@@ -82,7 +82,7 @@ describe('SignupPage.vue', () => {
 				expect(wrapper.find('#showSignemail').exists()).toBe(true);
 			})
 			.catch(function () {
-				console.log('Promise Rejected');
+				//console.log('Promise Rejected');
 			});
 		return Promise.resolve();
 	});

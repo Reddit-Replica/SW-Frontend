@@ -81,7 +81,7 @@ export default {
 	},
 	// computed: {
 	// 	SearchedCms() {
-	// 		// console.log(this.$store.getters['search/Getsubreddits']);
+	// 		// //console.log(this.$store.getters['search/Getsubreddits']);
 	// 		return this.$store.getters['search/Getsubreddits'];
 	// 	},
 	// },
@@ -89,13 +89,23 @@ export default {
 		this.showuser();
 	},
 	methods: {
+		/**
+		 * @vuese
+		 * Toggle notFollowed Data
+		 * @arg no arg
+		 */
 		showuser() {
 			this.notFollowed = this.value.joined;
-			// console.log('Goes');
+			// //console.log('Goes');
 		},
+		/**
+		 * @vuese
+		 * Request for Join and Leave Subreddits
+		 * @arg no arg
+		 */
 		async toggle() {
 			if (localStorage.getItem('accessToken')) {
-				// console.log('Goes');
+				// //console.log('Goes');
 				this.notFollowed = !this.notFollowed;
 				if (this.notFollowed) {
 					try {
@@ -136,6 +146,11 @@ export default {
 				}
 			}
 		},
+		/**
+		 * @vuese
+		 * Go To subreddit URL.
+		 * @arg Name Subreddit's Name
+		 */
 		gotosub(subredditName) {
 			this.$router.push('/r/' + subredditName);
 		},

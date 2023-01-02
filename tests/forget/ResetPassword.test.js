@@ -93,7 +93,7 @@ describe('ResetPassword.vue', () => {
 				);
 			})
 			.catch(function () {
-				console.log('Promise Rejected');
+				//console.log('Promise Rejected');
 			});
 
 

@@ -19,7 +19,6 @@ export default {
 		async handlesign() {
 			try {
 				const googleUser = await this.$gAuth.signIn();
-				console.log(googleUser);
 				const actionPayload = {
 					type: 'google',
 					id_token: googleUser.Bc.id_token,

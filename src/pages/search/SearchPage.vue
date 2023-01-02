@@ -192,6 +192,9 @@ export default {
 			// indexTrue: true,
 		};
 	},
+	// @vuese
+	// while creat check the accessToken then load the search results
+	// @arg no argument
 	async created() {
 		if (localStorage.getItem('accessToken')) {
 			this.loading = true;
@@ -201,6 +204,9 @@ export default {
 		}
 		setTimeout((this.loading = false), 2000);
 	},
+	// @vuese
+	// before Mount do the search
+	// @arg no argument
 	beforeMount() {
 		this.search();
 		this.usersearch();
@@ -208,9 +214,9 @@ export default {
 		// this.doSetQueue();
 	},
 	methods: {
-		// doSetQueue() {
-		// 	this.Queue = this.$router.query.q;
-		// },
+		// @vuese
+		// request the Searched post with the query
+		// @arg no argument
 		async search() {
 			try {
 				await this.$store.dispatch('search/SearchPost', {
@@ -221,6 +227,9 @@ export default {
 				console.log(error);
 			}
 		},
+		// @vuese
+		// request the Searched Users with the query
+		// @arg no argument
 		async usersearch() {
 			try {
 				await this.$store.dispatch('search/SearchUser', {
@@ -231,6 +240,9 @@ export default {
 				console.log(error);
 			}
 		},
+		// @vuese
+		// request the Communities post with the query
+		// @arg no argument
 		async comsearch() {
 			try {
 				await this.$store.dispatch('search/SearchSubreddit', {
@@ -241,6 +253,9 @@ export default {
 				console.log(error);
 			}
 		},
+		// @vuese
+		// Soritng menu choices action
+		// @arg no argument
 		itemsMenuOneFunction() {
 			this.ShowFirstitemChoice = !this.ShowFirstitemChoice;
 			this.ShowSecitemChoice = false;
@@ -255,19 +270,34 @@ export default {
 				this.choiceRelevant = false;
 			}
 		},
+		// @vuese
+		// Sort menu choices Toggle
+		// @arg no argument
 		changeFirstChoiceItem(item) {
 			this.FirstitemChoice = item;
 		},
+		// @vuese
+		// Time menu choices action
+		// @arg no argument
 		itemsMenuTwoFunction() {
 			this.ShowSecitemChoice = !this.ShowSecitemChoice;
 			this.ShowFirstitemChoice = false;
 		},
+		// @vuese
+		// Time menu choices Toggle
+		// @arg no argument
 		changeSecChoiceItem(item) {
 			this.SecitemChoice = item;
 		},
+		// @vuese
+		// Joined toggling
+		// @arg Data "the new value joined or not"
 		toggling(data) {
 			this.commcontent.notjoined = data;
 		},
+		// @vuese
+		// Go to Next type of data URL
+		// @arg value "Next type of data Name"
 		goSearch(value) {
 			if (value == 'cm') {
 				this.$router.push({
@@ -286,9 +316,9 @@ export default {
 				});
 			}
 		},
-		// PageReload() {
-		// 	window.reload();
-		// },
+		// @vuese
+		// Request The search Sorting Type
+		// @arg value "The search Sorting Type"
 		async searchwithSort(value) {
 			try {
 				if (!(this.SecitemChoice == 'Time')) {
@@ -310,6 +340,9 @@ export default {
 				console.log(error);
 			}
 		},
+		// @vuese
+		// Request The search Time Type
+		// @arg value "The search Timing Type"
 		async searchwithtime(value) {
 			let temp;
 			if (value == 'All Time') temp = 'all';
@@ -347,25 +380,35 @@ export default {
 		TheSpinner,
 	},
 	computed: {
+		// @vuese
+		// Get The Search Results of Posts
+		// @arg no argument
+		// @type Object
 		SearchedPosts() {
-			console.log(this.$store.getters['search/GetPosts']);
+			//console.log(this.$store.getters['search/GetPosts']);
 			return this.$store.getters['search/GetPosts'];
 		},
+		// @vuese
+		// Get The Search Results of Posts
+		// @arg no argument
+		// @type Object
 		SearchedUsers() {
 			return this.$store.getters['search/Getusers'];
 		},
 	},
 	watch: {
+		// @vuese
+		// Watch The Sorting Type to call The Request
+		// @arg value "New Sorting Type"
 		FirstitemChoice(value) {
 			this.searchwithSort(value);
 		},
+		// @vuese
+		// Watch The Timing Type to call The Request
+		// @arg value "New Timing Type"
 		SecitemChoice(value) {
 			this.searchwithtime(value);
 		},
-		// Queue(value) {
-		// 	console.log(value);
-		// 	this.PageReload();
-		// },
 	},
 };
 </script>
