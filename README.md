@@ -5,7 +5,7 @@
 ## 📝 Table of Contents
 
 - [About <a name = "about"></a>](#about-)
-- [Screen Video from the Website <a name = "screen-video"></a>](#screen-video-from-the-website-and-features)
+- [Screen Video from the Website and features <a name = "screen-video"></a>](#screen-video-from-the-website-)
 - [Drive Link <a name = "drive-link"></a>](#drive-link-)
 - [Project setup <a name = "project-setup"></a>](#project-setup-)
 - [Contributors <a name = "Contributors"></a>](#contributors-)
