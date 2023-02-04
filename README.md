@@ -78,6 +78,7 @@
 <li>Community Posts</li>
 <li>Community Comment</li>
 <li>Community categories</li>
+<li>Top Communities </li>
 </ul>
 <details open="" class="details-reset border rounded-2">
   <summary class="px-3 py-2">
