@@ -17,66 +17,86 @@
 
 ## Screen Video from the Website: <a name = "screen-video"></a>
 
-<h3 align='left'>Login</h3>
+<h3 dir="auto"><a id="user-content--user-authentication" class="anchor" aria-hidden="true" href="#-user-authentication"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a><em><g-emoji class="g-emoji" alias="lock" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f512.png">🔒</g-emoji> User Authentication</em></h3>
 
-https://user-images.githubusercontent.com/88618793/210153405-c8d45f3a-6a4c-4a6a-a5d5-91ff5dc1b05a.mp4
+<ul dir="auto">
+<li>Login using Google</li>
+<li>Login using Facebook</li>
+<li>Signup</li>
+<li>Login</li>
+<li>Forget password</li>
+<li>Forget username</li>
+<li>Change password</li>
+</ul>
+<details open="" class="details-reset border rounded-2">
+  <summary class="px-3 py-2">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-device-camera-video">
+    <path fill-rule="evenodd" d="M16 3.75a.75.75 0 00-1.136-.643L11 5.425V4.75A1.75 1.75 0 009.25 3h-7.5A1.75 1.75 0 000 4.75v6.5C0 12.216.784 13 1.75 13h7.5A1.75 1.75 0 0011 11.25v-.675l3.864 2.318A.75.75 0 0016 12.25v-8.5zm-5 5.075l3.5 2.1v-5.85l-3.5 2.1v1.65zM9.5 6.75v-2a.25.25 0 00-.25-.25h-7.5a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-4.5z"></path>
+</svg>
+    <span aria-label="Video description SW1.mp4" class="m-1">SW1.mp4</span>
+    <span class="dropdown-caret"></span>
+  </summary>
 
+  <video src="https://user-images.githubusercontent.com/88618793/210153405-c8d45f3a-6a4c-4a6a-a5d5-91ff5dc1b05a.mp4" data-canonical-src="https://user-images.githubusercontent.com/88618793/210153405-c8d45f3a-6a4c-4a6a-a5d5-91ff5dc1b05a.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
 
-<h3 align='left'>Add Comment</h3>
+  </video>
+</details>
 
-https://user-images.githubusercontent.com/88618793/210153474-68039103-262f-4482-b93f-74b337430675.mp4
+<details open="" class="details-reset border rounded-2">
+  <summary class="px-3 py-2">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-device-camera-video">
+    <path fill-rule="evenodd" d="M16 3.75a.75.75 0 00-1.136-.643L11 5.425V4.75A1.75 1.75 0 009.25 3h-7.5A1.75 1.75 0 000 4.75v6.5C0 12.216.784 13 1.75 13h7.5A1.75 1.75 0 0011 11.25v-.675l3.864 2.318A.75.75 0 0016 12.25v-8.5zm-5 5.075l3.5 2.1v-5.85l-3.5 2.1v1.65zM9.5 6.75v-2a.25.25 0 00-.25-.25h-7.5a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-4.5z"></path>
+</svg>
+    <span aria-label="Video description SW5.mp4" class="m-1">SW5.mp4</span>
+    <span class="dropdown-caret"></span>
+  </summary>
 
-<h3 align='left'>Create Post</h3>
+  <video src="https://user-images.githubusercontent.com/88618793/210153668-db11ae16-188b-43a8-a3f5-17949b38392b.mp4" data-canonical-src="https://user-images.githubusercontent.com/88618793/210153668-db11ae16-188b-43a8-a3f5-17949b38392b.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
 
-https://user-images.githubusercontent.com/88618793/210153555-d5283185-20b8-40de-bebf-db947d56d3d6.mp4
+  </video>
+</details>
+<hr>
+<h3 dir="auto"><a id="user-content-️-user-profile" class="anchor" aria-hidden="true" href="#️-user-profile"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a><em><g-emoji class="g-emoji" alias="frowning_man" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f64d-2642.png">🙍‍♂️</g-emoji> User Profile</em></h3>
 
-<h3 align='left'>User Page</h3>
+<ul dir="auto">
+<li>Profile overview (posts, comments, upvotes, downvotes, etc.)</li>
+<li>Your Posts</li>
+<li>Your Comment</li>
+<li>Your Upvotes</li>
+<li>Your Downvotes</li>
+<li>Your Saved Posts and Comments</li>
+<li>Your Hidden Posts and Comments</li>
+<li>Your History</li>
+<li>Your Followers</li>
+</ul>
 
-https://user-images.githubusercontent.com/88618793/210153575-2b2c5f6e-8eba-490d-adb2-fc4a9427a4e8.mp4
+<details open="" class="details-reset border rounded-2">
+  <summary class="px-3 py-2">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-device-camera-video">
+    <path fill-rule="evenodd" d="M16 3.75a.75.75 0 00-1.136-.643L11 5.425V4.75A1.75 1.75 0 009.25 3h-7.5A1.75 1.75 0 000 4.75v6.5C0 12.216.784 13 1.75 13h7.5A1.75 1.75 0 0011 11.25v-.675l3.864 2.318A.75.75 0 0016 12.25v-8.5zm-5 5.075l3.5 2.1v-5.85l-3.5 2.1v1.65zM9.5 6.75v-2a.25.25 0 00-.25-.25h-7.5a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-4.5z"></path>
+</svg>
+    <span aria-label="Video description SW4.mp4" class="m-1">SW4.mp4</span>
+    <span class="dropdown-caret"></span>
+  </summary>
 
-<h3 align='left'>User Settings</h3>
+  <video src="https://user-images.githubusercontent.com/88618793/210153575-2b2c5f6e-8eba-490d-adb2-fc4a9427a4e8.mp4" data-canonical-src="https://user-images.githubusercontent.com/88618793/210153575-2b2c5f6e-8eba-490d-adb2-fc4a9427a4e8.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
 
-https://user-images.githubusercontent.com/88618793/210153668-db11ae16-188b-43a8-a3f5-17949b38392b.mp4
+  </video>
+</details>
+<details open="" class="details-reset border rounded-2">
+  <summary class="px-3 py-2">
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-device-camera-video">
+    <path fill-rule="evenodd" d="M16 3.75a.75.75 0 00-1.136-.643L11 5.425V4.75A1.75 1.75 0 009.25 3h-7.5A1.75 1.75 0 000 4.75v6.5C0 12.216.784 13 1.75 13h7.5A1.75 1.75 0 0011 11.25v-.675l3.864 2.318A.75.75 0 0016 12.25v-8.5zm-5 5.075l3.5 2.1v-5.85l-3.5 2.1v1.65zM9.5 6.75v-2a.25.25 0 00-.25-.25h-7.5a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-4.5z"></path>
+</svg>
+    <span aria-label="Video description SW5.mp4" class="m-1">SW5.mp4</span>
+    <span class="dropdown-caret"></span>
+  </summary>
 
-<h3 align='left'>Messages and Notifications</h3>
+  <video src="https://user-images.githubusercontent.com/88618793/210153668-db11ae16-188b-43a8-a3f5-17949b38392b.mp4" data-canonical-src="https://user-images.githubusercontent.com/88618793/210153668-db11ae16-188b-43a8-a3f5-17949b38392b.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
 
-https://user-images.githubusercontent.com/88618793/210153718-1a4ef8e2-6e1b-4c75-b213-6409129fa2f0.mp4
-
-<h3 align='left'>Leadeboard and Subreddit Page</h3>
-
-https://user-images.githubusercontent.com/88618793/210153805-8f874bc8-8c21-4c57-94bf-7d72acf11bff.mp4
-
-<h3 align='left'>Moderation Page</h3>
-
-https://user-images.githubusercontent.com/88618793/210153879-2ba60a63-663a-426a-a1da-c29be8e5c280.mp4
-
-<h3 align='left'>Searching and Share Post</h3>
-
-https://user-images.githubusercontent.com/88618793/210153925-f6c00aaf-66cf-497f-9b37-c0cd01920228.mp4
-
-
-## Drive Link: <a name = "drive-link"></a>
-
-https://drive.google.com/drive/folders/1hYpEu922aeDHHsKUyx9lVgx0AeykMJJg
-
-## website Features: <a name = "website-features"></a>
-
-- Authentication
-- Create, update, share and delete posts and comments.
-- create all types of post(text, link, drag and drop one image or more, drag and drop video).
-- Upvote/downvote posts and comments.
-- Nested comments threading.
-- Home page feed (front page).
-- Subreddit specific feed.
-- Create subreddits.
-- Join subreddits.
-- Add ban, mute, approve, and invite user to be a moderator of my subreddit.
-- Accept invitation of user to become moderator.
-- See trafic status o my subreddit.
-- view my posts, comments, history, ... in my page.
-- change my avatar, and add banner.
-- ... and more!
-
+  </video>
+</details>
+<hr>
 
 ## Main commands for running the Project: <a name = "project-setup"></a>
 ### Project setup & installing packages
